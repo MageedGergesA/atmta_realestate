@@ -1,0 +1,709 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--
+                <template id="listing">
+                  <ul>
+                    <li t-foreach="objects" t-as="object">
+                      <a t-attf-href="#{ root }/objects/#{ object.id }">
+                        <t t-esc="object.display_name"/>
+                      </a>
+                    </li>
+                  </ul>
+                </template>
+                <template id="object">
+                  <h1><t t-esc="object.display_name"/></h1>
+                  <dl>
+                    <t t-foreach="object._fields" t-as="field">
+                      <dt><t t-esc="field"/></dt>
+                      <dd><t t-esc="object[field]"/></dd>
+                    </t>
+                  </dl>
+                </template>
+        -->
+        <!--    </data>-->
+
+        <!-- Clinic Visit Summary Report Template -->
+        <template id="report_visit_summary_document">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="visit">
+                    <div class="page">
+                        <h2>Visit Summary</h2>
+                        <p>
+                            <strong>Patient:</strong>
+                            <t t-esc="visit.patient_id.name"/>
+                        </p>
+                        <p>
+                            <strong>Doctor:</strong>
+                            <t t-esc="visit.doctor_id.user_id.name"/>
+                        </p>
+                        <p>
+                            <strong>Date:</strong>
+                            <t t-esc="visit.date"/>
+                        </p>
+                        <p>
+                            <strong>Visit Reason:</strong>
+                            <t t-esc="visit.visit_reason"/>
+                        </p>
+                        <h3>SOAP Notes</h3>
+                        <p>
+                            <strong>Subjective:</strong>
+                            <t t-esc="visit.subjective"/>
+                        </p>
+                        <p>
+                            <strong>Objective:</strong>
+                            <t t-esc="visit.objective"/>
+                        </p>
+                        <p>
+                            <strong>Assessment:</strong>
+                            <t t-esc="visit.assessment"/>
+                        </p>
+                        <p>
+                            <strong>Plan:</strong>
+                            <t t-esc="visit.plan"/>
+                        </p>
+                        <h3>Vitals</h3>
+                        <ul>
+                            <t t-foreach="visit.vital_signs_ids" t-as="vital">
+                                <li>
+                                    <t t-esc="vital.create_date"/>:
+                                    Temp:
+                                    <t t-esc="vital.temperature"/>
+                                    C,
+                                    BP:<t t-esc="vital.blood_pressure"/>,
+                                    HR:<t t-esc="vital.heart_rate"/>,
+                                    RR:<t t-esc="vital.respiratory_rate"/>,
+                                    SpO2:<t t-esc="vital.spo2"/>,
+                                    Wt:
+                                    <t t-esc="vital.weight"/>
+                                    kg,
+                                    Ht:
+                                    <t t-esc="vital.height"/>
+                                    cm
+                                </li>
+                            </t>
+                        </ul>
+                        <h3>Medical Records</h3>
+                        <ul>
+                            <t t-foreach="visit.medical_record_ids" t-as="rec">
+                                <li>
+                                    <strong>Diagnosis:</strong>
+                                    <t t-esc="rec.diagnosis"/>
+                                    <br/>
+                                    <strong>Notes:</strong>
+                                    <t t-esc="rec.notes"/>
+                                </li>
+                            </t>
+                        </ul>
+                        <h3>Attachments</h3>
+                        <ul>
+                            <t t-foreach="visit.attachment_ids" t-as="att">
+                                <li>
+                                    <t t-esc="att.name"/>
+                                </li>
+                            </t>
+                        </ul>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <!--    &lt;!&ndash; Add this block at the end of the prescription PDF template &ndash;&gt;-->
+        <!--    <t t-if="o.doctor_id.signature">-->
+        <!--        <div style="margin-top: 40px;">-->
+        <!--            <strong>Doctor Signature:</strong><br/>-->
+        <!--            <img t-att-src="'data:image/png;base64,%s' % o.doctor_id.signature.decode('utf-8')" style="max-width:200px; max-height:80px;"/>-->
+        <!--        </div>-->
+        <!--    </t>-->
+
+        <!--    <template id="email_template_lab_result_to_patient" inherit_id="mail.email_template_basic">-->
+        <!--        <t t-call="mail.email_template_basic">-->
+        <!--            <t t-set="body">-->
+        <!--                <p>Dear <t t-esc="object.request_id.patient_id.name"/>,</p>-->
+        <!--                <p>Your lab result is ready. Please find the details below:</p>-->
+        <!--                <p><strong>Test:</strong> <t t-esc="object.request_id.test_type"/></p>-->
+        <!--                <p><strong>Result:</strong> <t t-esc="object.result"/></p>-->
+        <!--                <t t-if="object.result_file">-->
+        <!--                    <p>The result file is attached.</p>-->
+        <!--                </t>-->
+        <!--                <p>Best regards,<br/>Your Clinic</p>-->
+        <!--            </t>-->
+        <!--        </t>-->
+        <!--    </template>-->
+
+        <!--    <template id="report_invoice_document">-->
+        <!--        <t t-call="web.html_container">-->
+        <!--            <t t-foreach="docs" t-as="invoice">-->
+        <!--                <div class="page">-->
+        <!--                    <h2>Invoice</h2>-->
+        <!--                    <p><strong>Patient:</strong> <t t-esc="invoice.patient_id.name"/></p>-->
+        <!--                    <p><strong>Date:</strong> <t t-esc="invoice.due_date"/></p>-->
+        <!--                    <table class="table table-sm">-->
+        <!--                        <thead>-->
+        <!--                            <tr>-->
+        <!--                                <th>Service/Medicine</th>-->
+        <!--                                <th>Quantity</th>-->
+        <!--                                <th>Unit Price</th>-->
+        <!--                                <th>Subtotal</th>-->
+        <!--                            </tr>-->
+        <!--                        </thead>-->
+        <!--                        <tbody>-->
+        <!--                            <t t-foreach="invoice.line_ids" t-as="line">-->
+        <!--                                <tr>-->
+        <!--                                    <td><t t-esc="line.product_id.display_name"/></td>-->
+        <!--                                    <td><t t-esc="line.quantity"/></td>-->
+        <!--                                    <td><t t-esc="line.price_unit"/></td>-->
+        <!--                                    <td><t t-esc="line.subtotal"/></td>-->
+        <!--                                </tr>-->
+        <!--                            </t>-->
+        <!--                        </tbody>-->
+        <!--                    </table>-->
+        <!--                    <h4>Total: <t t-esc="invoice.amount"/></h4>-->
+        <!--                </div>-->
+        <!--            </t>-->
+        <!--        </t>-->
+        <!--    </template>-->
+
+        <!-- Patient Portal: My Appointments -->
+        <template id="portal_my_appointments" name="My Appointments">
+            <t t-call="portal.portal_layout">
+                <div class="o_portal_wrap">
+                    <h2>My Appointments</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Provider</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="appointments" t-as="appt">
+                                <tr>
+                                    <td>
+                                        <t t-esc="appt.date_start"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="appt.provider_id.name"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="appt.status"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </template>
+
+        <!-- Patient Portal: My Bills -->
+        <template id="portal_my_bills" name="My Bills">
+            <t t-call="portal.portal_layout">
+                <div class="o_portal_wrap">
+                    <h2>My Bills</h2>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="bills" t-as="bill">
+                                <tr>
+                                    <td>
+                                        <t t-esc="bill.due_date"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="bill.amount"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="bill.status"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </template>
+
+        <!-- Patient Portal: My Lab Results -->
+        <template id="portal_my_lab_results" name="My Lab Results">
+            <t t-call="portal.portal_layout">
+                <div class="o_portal_wrap">
+                    <h2>My Lab Results</h2>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Test</th>
+                                <th>Date</th>
+                                <th>Result</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="lab_results" t-as="result">
+                                <tr>
+                                    <td>
+                                        <t t-esc="result.request_id.test_type"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="result.approval_date"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="result.result"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </template>
+
+        <!-- Patient Portal: My Prescriptions -->
+        <template id="portal_my_prescriptions" name="My Prescriptions">
+            <t t-call="portal.portal_layout">
+                <div class="o_portal_wrap">
+                    <h2>My Prescriptions</h2>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Doctor</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="prescriptions" t-as="presc">
+                                <tr>
+                                    <td>
+                                        <t t-esc="presc.date"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="presc.doctor_id.user_id.name"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="presc.notes"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </template>
+
+        <!-- Patient Portal: My Profile -->
+        <!--    <template id="portal_my_profile" name="My Profile">-->
+        <!--        <t t-call="portal.portal_layout">-->
+        <!--            <div class="o_portal_wrap">-->
+        <!--                <t t-if="no_patient_linked">-->
+        <!--                    <div class="alert alert-warning mt-4">-->
+        <!--                        <h4 class="alert-heading">No Patient Record Linked</h4>-->
+        <!--                        <p>Your user account is not linked to a patient record. Please contact the clinic administrator to resolve this.</p>-->
+        <!--                    </div>-->
+        <!--                </t>-->
+        <!--                <t t-if="not no_patient_linked">-->
+        <!--                    <h2>My Profile</h2>-->
+        <!--                    <div class="card mb-4">-->
+        <!--                        <div class="card-body">-->
+        <!--                            <p><strong>Name:</strong> <t t-esc="patient.name"/></p>-->
+        <!--                            <p><strong>Date of Birth:</strong> <t t-esc="patient.dob"/></p>-->
+        <!--                            <p><strong>Gender:</strong> <t t-esc="patient.gender"/></p>-->
+        <!--                            <p><strong>Email:</strong> <t t-esc="patient.email"/></p>-->
+        <!--                            <p><strong>Phone:</strong> <t t-esc="patient.phone"/></p>-->
+        <!--                            <p><strong>Address:</strong> <t t-esc="patient.address"/></p>-->
+        <!--                            <p><strong>Insurance:</strong> <t t-esc="patient.insurance_provider_id.name"/> <t t-esc="patient.insurance_plan"/> <t t-esc="patient.insurance_id_number"/></p>-->
+        <!--                            <p><strong>Eligibility:</strong> <t t-esc="patient.insurance_eligibility"/></p>-->
+        <!--                            <p><strong>Medical History:</strong> <t t-esc="patient.medical_history"/></p>-->
+        <!--                            <p><strong>Allergies:</strong> <t t-esc="patient.allergies"/></p>-->
+        <!--                            <p><strong>Immunizations:</strong> <t t-esc="patient.immunizations"/></p>-->
+        <!--                            <p><strong>Family History:</strong> <t t-esc="patient.family_history"/></p>-->
+        <!--                            <p><strong>Social History:</strong> <t t-esc="patient.social_history"/></p>-->
+        <!--                            <p><strong>Notes:</strong> <t t-esc="patient.notes"/></p>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                    <div class="row">-->
+        <!--                        <div class="col-md-6 mb-4">-->
+        <!--                            <div class="card">-->
+        <!--                                <div class="card-header">My Appointments</div>-->
+        <!--                                <div class="card-body p-0">-->
+        <!--                                    <table class="table table-striped mb-0">-->
+        <!--                                        <thead>-->
+        <!--                                            <tr><th>Date</th><th>Provider</th><th>Status</th></tr>-->
+        <!--                                        </thead>-->
+        <!--                                        <tbody>-->
+        <!--                                            <t t-foreach="appointments" t-as="appt">-->
+        <!--                                                <tr>-->
+        <!--                                                    <td><t t-esc="appt.date_start"/></td>-->
+        <!--                                                    <td><t t-esc="appt.provider_id.name"/></td>-->
+        <!--                                                    <td><t t-esc="appt.status"/></td>-->
+        <!--                                                </tr>-->
+        <!--                                            </t>-->
+        <!--                                        </tbody>-->
+        <!--                                    </table>-->
+        <!--                                </div>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                        <div class="col-md-6 mb-4">-->
+        <!--                            <div class="card">-->
+        <!--                                <div class="card-header">My Appointment Requests</div>-->
+        <!--                                <div class="card-body p-0">-->
+        <!--                                    <table class="table table-sm mb-0">-->
+        <!--                                        <thead>-->
+        <!--                                            <tr><th>Date</th><th>Status</th><th>Notes</th></tr>-->
+        <!--                                        </thead>-->
+        <!--                                        <tbody>-->
+        <!--                                            <t t-foreach="appointment_requests" t-as="req">-->
+        <!--                                                <tr>-->
+        <!--                                                    <td><t t-esc="req.requested_date"/></td>-->
+        <!--                                                    <td><t t-esc="req.status"/></td>-->
+        <!--                                                    <td><t t-esc="req.notes"/></td>-->
+        <!--                                                </tr>-->
+        <!--                                            </t>-->
+        <!--                                        </tbody>-->
+        <!--                                    </table>-->
+        <!--                                </div>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                    <div class="row">-->
+        <!--                        <div class="col-md-6 mb-4">-->
+        <!--                            <div class="card">-->
+        <!--                                <div class="card-header">My Bills</div>-->
+        <!--                                <div class="card-body p-0">-->
+        <!--                                    <table class="table table-bordered mb-0">-->
+        <!--                                        <thead>-->
+        <!--                                            <tr><th>Date</th><th>Amount</th><th>Status</th></tr>-->
+        <!--                                        </thead>-->
+        <!--                                        <tbody>-->
+        <!--                                            <t t-foreach="bills" t-as="bill">-->
+        <!--                                                <tr>-->
+        <!--                                                    <td><t t-esc="bill.due_date"/></td>-->
+        <!--                                                    <td><t t-esc="bill.amount"/></td>-->
+        <!--                                                    <td><t t-esc="bill.status"/></td>-->
+        <!--                                                </tr>-->
+        <!--                                            </t>-->
+        <!--                                        </tbody>-->
+        <!--                                    </table>-->
+        <!--                                </div>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                        <div class="col-md-6 mb-4">-->
+        <!--                            <div class="card">-->
+        <!--                                <div class="card-header">My Bill Payments</div>-->
+        <!--                                <div class="card-body p-0">-->
+        <!--                                    <table class="table table-sm mb-0">-->
+        <!--                                        <thead>-->
+        <!--                                            <tr><th>Bill</th><th>Amount</th><th>Date</th><th>Method</th></tr>-->
+        <!--                                        </thead>-->
+        <!--                                        <tbody>-->
+        <!--                                            <t t-foreach="bill_payments" t-as="pay">-->
+        <!--                                                <tr>-->
+        <!--                                                    <td><t t-esc="pay.billing_id.id"/></td>-->
+        <!--                                                    <td><t t-esc="pay.amount"/></td>-->
+        <!--                                                    <td><t t-esc="pay.payment_date"/></td>-->
+        <!--                                                    <td><t t-esc="pay.payment_method"/></td>-->
+        <!--                                                </tr>-->
+        <!--                                            </t>-->
+        <!--                                        </tbody>-->
+        <!--                                    </table>-->
+        <!--                                </div>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                    <div class="row">-->
+        <!--                        <div class="col-md-6 mb-4">-->
+        <!--                            <div class="card">-->
+        <!--                                <div class="card-header">My Claims</div>-->
+        <!--                                <div class="card-body p-0">-->
+        <!--                                    <table class="table table-sm mb-0">-->
+        <!--                                        <thead>-->
+        <!--                                            <tr><th>Company</th><th>Amount</th><th>Status</th><th>Denial Reason</th></tr>-->
+        <!--                                        </thead>-->
+        <!--                                        <tbody>-->
+        <!--                                            <t t-foreach="claims" t-as="claim">-->
+        <!--                                                <tr>-->
+        <!--                                                    <td><t t-esc="claim.insurance_company"/></td>-->
+        <!--                                                    <td><t t-esc="claim.claim_amount"/></td>-->
+        <!--                                                    <td><t t-esc="claim.status"/></td>-->
+        <!--                                                    <td><t t-esc="claim.denial_reason"/></td>-->
+        <!--                                                </tr>-->
+        <!--                                            </t>-->
+        <!--                                        </tbody>-->
+        <!--                                    </table>-->
+        <!--                                </div>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                        <div class="col-md-6 mb-4">-->
+        <!--                            <div class="card">-->
+        <!--                                <div class="card-header">My Lab Results</div>-->
+        <!--                                <div class="card-body p-0">-->
+        <!--                                    <table class="table table-hover mb-0">-->
+        <!--                                        <thead>-->
+        <!--                                            <tr><th>Test</th><th>Date</th><th>Result</th></tr>-->
+        <!--                                        </thead>-->
+        <!--                                        <tbody>-->
+        <!--                                            <t t-foreach="lab_results" t-as="result">-->
+        <!--                                                <tr>-->
+        <!--                                                    <td><t t-esc="result.request_id.test_type"/></td>-->
+        <!--                                                    <td><t t-esc="result.approval_date"/></td>-->
+        <!--                                                    <td><t t-esc="result.result"/></td>-->
+        <!--                                                </tr>-->
+        <!--                                            </t>-->
+        <!--                                        </tbody>-->
+        <!--                                    </table>-->
+        <!--                                </div>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                    <div class="row">-->
+        <!--                        <div class="col-md-6 mb-4">-->
+        <!--                            <div class="card">-->
+        <!--                                <div class="card-header">My Prescriptions</div>-->
+        <!--                                <div class="card-body p-0">-->
+        <!--                                    <table class="table table-sm mb-0">-->
+        <!--                                        <thead>-->
+        <!--                                            <tr><th>Date</th><th>Doctor</th><th>Notes</th></tr>-->
+        <!--                                        </thead>-->
+        <!--                                        <tbody>-->
+        <!--                                            <t t-foreach="prescriptions" t-as="presc">-->
+        <!--                                                <tr>-->
+        <!--                                                    <td><t t-esc="presc.date"/></td>-->
+        <!--                                                    <td><t t-esc="presc.doctor_id.user_id.name"/></td>-->
+        <!--                                                    <td><t t-esc="presc.notes"/></td>-->
+        <!--                                                </tr>-->
+        <!--                                            </t>-->
+        <!--                                        </tbody>-->
+        <!--                                    </table>-->
+        <!--                                </div>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                        <div class="col-md-6 mb-4">-->
+        <!--                            <div class="card">-->
+        <!--                                <div class="card-header">My Progress Notes</div>-->
+        <!--                                <div class="card-body p-0">-->
+        <!--                                    <table class="table table-sm mb-0">-->
+        <!--                                        <thead>-->
+        <!--                                            <tr><th>Date</th><th>Subjective</th><th>Assessment</th></tr>-->
+        <!--                                        </thead>-->
+        <!--                                        <tbody>-->
+        <!--                                            <t t-foreach="progress_notes" t-as="note">-->
+        <!--                                                <tr>-->
+        <!--                                                    <td><t t-esc="note.date"/></td>-->
+        <!--                                                    <td><t t-esc="note.subjective"/></td>-->
+        <!--                                                    <td><t t-esc="note.assessment"/></td>-->
+        <!--                                                </tr>-->
+        <!--                                            </t>-->
+        <!--                                        </tbody>-->
+        <!--                                    </table>-->
+        <!--                                </div>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                    <div class="row">-->
+        <!--                        <div class="col-md-6 mb-4">-->
+        <!--                            <div class="card">-->
+        <!--                                <div class="card-header">My Documents</div>-->
+        <!--                                <div class="card-body p-0">-->
+        <!--                                    <table class="table table-sm mb-0">-->
+        <!--                                        <thead>-->
+        <!--                                            <tr><th>Filename</th><th>Upload Date</th></tr>-->
+        <!--                                        </thead>-->
+        <!--                                        <tbody>-->
+        <!--                                            <t t-foreach="document_uploads" t-as="doc">-->
+        <!--                                                <tr>-->
+        <!--                                                    <td><t t-esc="doc.filename"/></td>-->
+        <!--                                                    <td><t t-esc="doc.upload_date"/></td>-->
+        <!--                                                </tr>-->
+        <!--                                            </t>-->
+        <!--                                        </tbody>-->
+        <!--                                    </table>-->
+        <!--                                </div>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                        <div class="col-md-6 mb-4">-->
+        <!--                            <div class="card">-->
+        <!--                                <div class="card-header">My Portal Messages</div>-->
+        <!--                                <div class="card-body p-0">-->
+        <!--                                    <table class="table table-sm mb-0">-->
+        <!--                                        <thead>-->
+        <!--                                            <tr><th>Date</th><th>Message</th></tr>-->
+        <!--                                        </thead>-->
+        <!--                                        <tbody>-->
+        <!--                                            <t t-foreach="portal_messages" t-as="msg">-->
+        <!--                                                <tr>-->
+        <!--                                                    <td><t t-esc="msg.date_sent"/></td>-->
+        <!--                                                    <td><t t-esc="msg.message"/></td>-->
+        <!--                                                </tr>-->
+        <!--                                            </t>-->
+        <!--                                        </tbody>-->
+        <!--                                    </table>-->
+        <!--                                </div>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                </t>-->
+        <!--            </div>-->
+        <!--        </t>-->
+        <!--    </template>-->
+
+        <!-- Website: Clinic Homepage -->
+        <template id="website_homepage" name="Clinic Homepage">
+            <t t-call="website.layout">
+                <div class="container mt-5">
+                    <div class="jumbotron">
+                        <h1 class="display-4">Welcome to Our Clinic</h1>
+                        <p class="lead">Comprehensive care for you and your family.</p>
+                        <hr class="my-4"/>
+                        <p>Book appointments, view your records, and more.</p>
+                        <a class="btn btn-primary btn-lg" href="/appointment/request">Request Appointment</a>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <!-- Website: Appointment Request Form -->
+        <template id="website_appointment_request" name="Appointment Request">
+            <t t-call="website.layout">
+                <div class="container mt-5">
+                    <h2>Request an Appointment</h2>
+                    <form action="/appointment/request/submit" method="post" class="mt-4">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" id="name" name="name" required="required"/>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required="required"/>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="phone">Phone</label>
+                                <input type="text" class="form-control" id="phone" name="phone"/>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="date">Preferred Date</label>
+                                <input type="date" class="form-control" id="date" name="date" required="required"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="notes">Notes</label>
+                            <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success">Submit Request</button>
+                    </form>
+                </div>
+            </t>
+        </template>
+
+        <template id="website_appointment_thankyou" name="Appointment Request Thank You">
+            <t t-call="website.layout">
+                <div class="container mt-5">
+                    <div class="alert alert-success">
+                        <h4 class="alert-heading">Thank you!</h4>
+                        <p>Your appointment request has been submitted.</p>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <!--    <template id="portal_my_home_inherit_clinic" inherit_id="portal.portal_my_home" name="Clinic Portal Home Dashboard">-->
+        <!--        <xpath expr="//div[@id='oe_structure_portal_my_home_1']" position="after">-->
+        <!--            <t t-call="atmta_clinic.portal_my_profile"/>-->
+        <!--        </xpath>-->
+        <!--    </template>-->
+
+        <!--    <template id="portal_my_home_patient_cards" inherit_id="portal.portal_my_home" name="Clinic Patient Portal Cards">-->
+        <!--        <xpath expr="//div[contains(@class, 'o_portal_docs')]" position="inside">-->
+        <!--            <div class="o_portal_category row g-2 mt-3" id="portal_patient_category">-->
+        <!--                <t t-call="portal.portal_docs_entry">-->
+        <!--                    <t t-set="icon" t-value="'/web/static/src/img/icons/calendar.svg'"/>-->
+        <!--                    <t t-set="title">Appointments</t>-->
+        <!--                    <t t-set="text">Follow, reschedule or cancel your appointments</t>-->
+        <!--                    <t t-set="url" t-value="'/my/appointments'"/>-->
+        <!--                </t>-->
+        <!--                <t t-call="portal.portal_docs_entry">-->
+        <!--                    <t t-set="icon" t-value="'/web/static/src/img/icons/chemistry.svg'"/>-->
+        <!--                    <t t-set="title">Lab Results</t>-->
+        <!--                    <t t-set="text">Access your lab results and reports</t>-->
+        <!--                    <t t-set="url" t-value="'/my/lab_results'"/>-->
+        <!--                </t>-->
+        <!--                <t t-call="portal.portal_docs_entry">-->
+        <!--                    <t t-set="icon" t-value="'/web/static/src/img/icons/invoice.svg'"/>-->
+        <!--                    <t t-set="title">Bills</t>-->
+        <!--                    <t t-set="text">View and pay your bills</t>-->
+        <!--                    <t t-set="url" t-value="'/my/bills'"/>-->
+        <!--                </t>-->
+        <!--                <t t-call="portal.portal_docs_entry">-->
+        <!--                    <t t-set="icon" t-value="'/web/static/src/img/icons/prescription.svg'"/>-->
+        <!--                    <t t-set="title">Prescriptions</t>-->
+        <!--                    <t t-set="text">See your prescriptions and notes</t>-->
+        <!--                    <t t-set="url" t-value="'/my/prescriptions'"/>-->
+        <!--                </t>-->
+        <!--                <t t-call="portal.portal_docs_entry">-->
+        <!--                    <t t-set="icon" t-value="'/web/image?model=res.company&amp;id=1&amp;field=logo'"/>-->
+        <!--                    <t t-set="title">Health Profile</t>-->
+        <!--                    <t t-set="text">View and manage your clinic patient profile and records</t>-->
+        <!--                    <t t-set="url" t-value="'/my/profile'"/>-->
+        <!--                </t>-->
+        <!--            </div>-->
+        <!--        </xpath>-->
+        <!--    </template>-->
+<template id="portal_my_home_profile" name="Profile" inherit_id="portal.portal_my_home" priority="25">
+    <xpath expr="//div[@id='portal_common_category']" position="after">
+        <div class="row g-2 mt-3">
+            <!-- Appointments -->
+            <div class="'o_portal_index_card">
+                <a t-att-href="'/my/appointments'" t-att-title="'Appointments'"
+                   t-attf-class="d-flex gap-2 gap-md-3 py-3 pe-2 px-md-3 h-100 rounded text-decoration-none #{bg_color if bg_color else 'bg-100'}">
+                    <div class="o_portal_icon d-none">
+                        <img t-attf-src="'/web/static/img/rfq.svg'"/>
+                    </div>
+                    <div t-att-class="'alert-link' if bg_color else ''">
+                        <div t-attf-class="mt-0 mb-1 fs-5 fw-normal lh-1 #{'d-flex gap-2' if placeholder_count or count else ''}">
+                            <t t-out="count"/>
+                            <span t-if="placeholder_count and not force_show"
+                                  t-att-class="'fw-bold' if show_count else 'd-none'"
+                                  t-att-data-placeholder_count="placeholder_count"/>
+                            <span>Appointments</span>
+                        </div>
+                        <div class="opacity-75">Follow, reschedule or cancel your appointments</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Lab Results -->
+            <div class="'o_portal_index_card">
+                <a t-att-href="'/my/lab_results'" t-att-title="'Lab Results'"
+                   t-attf-class="d-flex gap-2 gap-md-3 py-3 pe-2 px-md-3 h-100 rounded text-decoration-none #{bg_color if bg_color else 'bg-100'}">
+                    <div class="o_portal_icon d-none">
+                        <img t-attf-src="'/web/static/img/rfq.svg'"/>
+                    </div>
+                    <div t-att-class="'alert-link' if bg_color else ''">
+                        <div t-attf-class="mt-0 mb-1 fs-5 fw-normal lh-1 #{'d-flex gap-2' if placeholder_count or count else ''}">
+                            <t t-out="count"/>
+                            <span t-if="placeholder_count and not force_show"
+                                  t-att-class="'fw-bold' if show_count else 'd-none'"
+                                  t-att-data-placeholder_count="placeholder_count"/>
+                            <span>Lab Results</span>
+                        </div>
+                        <div class="opacity-75">Access your lab results and reports</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Repeat similarly for Bills, Prescriptions, and Health Profile -->
+        </div>
+    </xpath>
+</template>
+
+
+    </data>
+</odoo>

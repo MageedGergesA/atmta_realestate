@@ -1,0 +1,1267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <!-- Actions for all models -->
+    <record id="action_clinic_patient" model="ir.actions.act_window">
+      <field name="name">Patients</field>
+      <field name="res_model">clinic.patient</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_appointment" model="ir.actions.act_window">
+      <field name="name">Appointments</field>
+      <field name="res_model">clinic.appointment</field>
+      <field name="view_mode">list,form,calendar</field>
+    </record>
+    <record id="action_clinic_resource" model="ir.actions.act_window">
+      <field name="name">Resources</field>
+      <field name="res_model">clinic.resource</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_billing" model="ir.actions.act_window">
+      <field name="name">Billing</field>
+      <field name="res_model">clinic.billing</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_claim" model="ir.actions.act_window">
+      <field name="name">Claims</field>
+      <field name="res_model">clinic.claim</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_appointment_request" model="ir.actions.act_window">
+      <field name="name">Appointment Requests</field>
+      <field name="res_model">clinic.appointment.request</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_portal_message" model="ir.actions.act_window">
+      <field name="name">Portal Messages</field>
+      <field name="res_model">clinic.portal.message</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_document_upload" model="ir.actions.act_window">
+      <field name="name">Document Uploads</field>
+      <field name="res_model">clinic.document.upload</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_bill_pay" model="ir.actions.act_window">
+      <field name="name">Bill Payments</field>
+      <field name="res_model">clinic.bill.pay</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_telehealth_session" model="ir.actions.act_window">
+      <field name="name">Telehealth Sessions</field>
+      <field name="res_model">clinic.telehealth.session</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_virtual_waiting_room" model="ir.actions.act_window">
+      <field name="name">Virtual Waiting Room</field>
+      <field name="res_model">clinic.virtual.waiting.room</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_econsent" model="ir.actions.act_window">
+      <field name="name">e-Consent Forms</field>
+      <field name="res_model">clinic.econsent</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_dashboard" model="ir.actions.act_window">
+      <field name="name">Dashboards</field>
+      <field name="res_model">clinic.dashboard</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_report" model="ir.actions.act_window">
+      <field name="name">Reports</field>
+      <field name="res_model">clinic.report</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_predictive_analytics" model="ir.actions.act_window">
+      <field name="name">Predictive Analytics</field>
+      <field name="res_model">clinic.predictive.analytics</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_lab_integration" model="ir.actions.act_window">
+      <field name="name">Lab Integrations</field>
+      <field name="res_model">clinic.lab.integration</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_pharmacy_integration" model="ir.actions.act_window">
+      <field name="name">Pharmacy Integrations</field>
+      <field name="res_model">clinic.pharmacy.integration</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_wearable_integration" model="ir.actions.act_window">
+      <field name="name">Wearable Integrations</field>
+      <field name="res_model">clinic.wearable.integration</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_accounting_integration" model="ir.actions.act_window">
+      <field name="name">Accounting Integrations</field>
+      <field name="res_model">clinic.accounting.integration</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_audit_log" model="ir.actions.act_window">
+      <field name="name">Audit Logs</field>
+      <field name="res_model">clinic.audit.log</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_data_encryption" model="ir.actions.act_window">
+      <field name="name">Data Encryption</field>
+      <field name="res_model">clinic.data.encryption</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_doctor" model="ir.actions.act_window">
+      <field name="name">Doctors</field>
+      <field name="res_model">clinic.doctor</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_visit" model="ir.actions.act_window">
+      <field name="name">Visits</field>
+      <field name="res_model">clinic.visit</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_medical_record" model="ir.actions.act_window">
+      <field name="name">Medical Records</field>
+      <field name="res_model">clinic.medical.record</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_vital_signs" model="ir.actions.act_window">
+      <field name="name">Vital Signs</field>
+      <field name="res_model">clinic.vital.signs</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_lab_test_request" model="ir.actions.act_window">
+      <field name="name">Lab Test Requests</field>
+      <field name="res_model">clinic.lab.test.request</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_lab_result" model="ir.actions.act_window">
+      <field name="name">Lab Results</field>
+      <field name="res_model">clinic.lab.result</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_prescription" model="ir.actions.act_window">
+      <field name="name">Prescriptions</field>
+      <field name="res_model">clinic.prescription</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_medicine" model="ir.actions.act_window">
+      <field name="name">Medicines</field>
+      <field name="res_model">clinic.medicine</field>
+      <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clinic_insurance_provider" model="ir.actions.act_window">
+      <field name="name">Insurance Providers</field>
+      <field name="res_model">clinic.insurance.provider</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menus -->
+    <menuitem id="menu_clinic_root" name="Clinic" sequence="10"/>
+    <menuitem id="menu_clinic_patients" name="Patients" parent="menu_clinic_root" action="action_clinic_patient" sequence="10"/>
+    <menuitem id="menu_clinic_appointments" name="Appointments" parent="menu_clinic_root" action="action_clinic_appointment" sequence="20"/>
+    <menuitem id="menu_clinic_resources" name="Resources" parent="menu_clinic_root" action="action_clinic_resource" sequence="30"/>
+    <menuitem id="menu_clinic_billing" name="Billing" parent="menu_clinic_root" action="action_clinic_billing" sequence="40"/>
+    <menuitem id="menu_clinic_claims" name="Claims" parent="menu_clinic_root" action="action_clinic_claim" sequence="50"/>
+    <menuitem id="menu_clinic_portal" name="Patient Portal" parent="menu_clinic_root" sequence="60"/>
+    <menuitem id="menu_clinic_appointment_requests" name="Appointment Requests" parent="menu_clinic_portal" action="action_clinic_appointment_request" sequence="10"/>
+    <menuitem id="menu_clinic_portal_messages" name="Portal Messages" parent="menu_clinic_portal" action="action_clinic_portal_message" sequence="20"/>
+    <menuitem id="menu_clinic_document_uploads" name="Document Uploads" parent="menu_clinic_portal" action="action_clinic_document_upload" sequence="30"/>
+    <menuitem id="menu_clinic_bill_pay" name="Bill Payments" parent="menu_clinic_portal" action="action_clinic_bill_pay" sequence="40"/>
+    <menuitem id="menu_clinic_telehealth" name="Telehealth" parent="menu_clinic_root" sequence="70"/>
+    <menuitem id="menu_clinic_telehealth_sessions" name="Telehealth Sessions" parent="menu_clinic_telehealth" action="action_clinic_telehealth_session" sequence="10"/>
+    <menuitem id="menu_clinic_virtual_waiting_room" name="Virtual Waiting Room" parent="menu_clinic_telehealth" action="action_clinic_virtual_waiting_room" sequence="20"/>
+    <menuitem id="menu_clinic_econsent" name="e-Consent Forms" parent="menu_clinic_telehealth" action="action_clinic_econsent" sequence="30"/>
+    <menuitem id="menu_clinic_analytics" name="Analytics" parent="menu_clinic_root" sequence="80"/>
+    <menuitem id="menu_clinic_dashboard" name="Dashboards" parent="menu_clinic_analytics" action="action_clinic_dashboard" sequence="10"/>
+    <menuitem id="menu_clinic_report" name="Reports" parent="menu_clinic_analytics" action="action_clinic_report" sequence="20"/>
+    <menuitem id="menu_clinic_predictive_analytics" name="Predictive Analytics" parent="menu_clinic_analytics" action="action_clinic_predictive_analytics" sequence="30"/>
+    <menuitem id="menu_clinic_integrations" name="Integrations" parent="menu_clinic_root" sequence="90"/>
+    <menuitem id="menu_clinic_lab_integration" name="Lab Integrations" parent="menu_clinic_integrations" action="action_clinic_lab_integration" sequence="10"/>
+    <menuitem id="menu_clinic_pharmacy_integration" name="Pharmacy Integrations" parent="menu_clinic_integrations" action="action_clinic_pharmacy_integration" sequence="20"/>
+    <menuitem id="menu_clinic_wearable_integration" name="Wearable Integrations" parent="menu_clinic_integrations" action="action_clinic_wearable_integration" sequence="30"/>
+    <menuitem id="menu_clinic_accounting_integration" name="Accounting Integrations" parent="menu_clinic_integrations" action="action_clinic_accounting_integration" sequence="40"/>
+    <menuitem id="menu_clinic_compliance" name="Compliance" parent="menu_clinic_root" sequence="100"/>
+    <menuitem id="menu_clinic_audit_log" name="Audit Logs" parent="menu_clinic_compliance" action="action_clinic_audit_log" sequence="10"/>
+    <menuitem id="menu_clinic_data_encryption" name="Data Encryption" parent="menu_clinic_compliance" action="action_clinic_data_encryption" sequence="20"/>
+    <menuitem id="menu_clinic_doctors" name="Doctors" parent="menu_clinic_root" action="action_clinic_doctor" sequence="15"/>
+    <menuitem id="menu_clinic_ehr" name="EHR" parent="menu_clinic_root" sequence="12"/>
+    <menuitem id="menu_clinic_visits" name="Visits" parent="menu_clinic_ehr" action="action_clinic_visit" sequence="10"/>
+    <menuitem id="menu_clinic_medical_records" name="Medical Records" parent="menu_clinic_ehr" action="action_clinic_medical_record" sequence="20"/>
+    <menuitem id="menu_clinic_vital_signs" name="Vital Signs" parent="menu_clinic_ehr" action="action_clinic_vital_signs" sequence="30"/>
+    <menuitem id="menu_clinic_lab" name="Lab &amp; Diagnostics" parent="menu_clinic_root" sequence="13"/>
+    <menuitem id="menu_clinic_lab_test_requests" name="Lab Test Requests" parent="menu_clinic_lab" action="action_clinic_lab_test_request" sequence="10"/>
+    <menuitem id="menu_clinic_lab_results" name="Lab Results" parent="menu_clinic_lab" action="action_clinic_lab_result" sequence="20"/>
+    <menuitem id="menu_clinic_prescriptions" name="Prescriptions" parent="menu_clinic_root" sequence="14"/>
+    <menuitem id="menu_clinic_prescription" name="Prescriptions" parent="menu_clinic_prescriptions" action="action_clinic_prescription" sequence="10"/>
+    <menuitem id="menu_clinic_medicine" name="Medicines" parent="menu_clinic_prescriptions" action="action_clinic_medicine" sequence="20"/>
+    <menuitem id="menu_clinic_insurance" name="Insurance" parent="menu_clinic_root" sequence="16"/>
+    <menuitem id="menu_clinic_insurance_providers" name="Insurance Providers" parent="menu_clinic_insurance" action="action_clinic_insurance_provider" sequence="10"/>
+
+    <!-- List and form views for all models (stubs for new models) -->
+    <record id="view_clinic_patient_list" model="ir.ui.view">
+      <field name="name">clinic.patient.list</field>
+      <field name="model">clinic.patient</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="dob"/>
+          <field name="gender"/>
+          <field name="phone"/>
+          <field name="email"/>
+          <field name="address"/>
+          <field name="family_id"/>
+          <field name="tag_ids"/>
+          <field name="insurance_provider_id"/>
+          <field name="insurance_plan"/>
+          <field name="insurance_id_number"/>
+          <field name="insurance_eligibility"/>
+          <field name="notes"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_patient_form" model="ir.ui.view">
+      <field name="name">clinic.patient.form</field>
+      <field name="model">clinic.patient</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="dob"/>
+              <field name="gender"/>
+              <field name="phone"/>
+              <field name="email"/>
+              <field name="address"/>
+              <field name="family_id"/>
+              <field name="tag_ids"/>
+              <field name="insurance_provider_id"/>
+              <field name="insurance_plan"/>
+              <field name="insurance_id_number"/>
+              <field name="insurance_eligibility"/>
+              <field name="notes"/>
+              <field name="user_id"/>
+            </group>
+            <notebook>
+              <page string="Medical">
+                <field name="medical_history"/>
+                <field name="allergies"/>
+                <field name="immunizations"/>
+              </page>
+              <page string="Family/Social">
+                <field name="family_history"/>
+                <field name="social_history"/>
+              </page>
+              <page string="Progress Notes">
+                <field name="progress_note_ids">
+                  <list>
+                    <field name="date"/>
+                    <field name="subjective"/>
+                    <field name="assessment"/>
+                  </list>
+                  <form>
+                    <group>
+                      <field name="date"/>
+                      <field name="subjective"/>
+                      <field name="objective"/>
+                      <field name="assessment"/>
+                      <field name="plan"/>
+                    </group>
+                  </form>
+                </field>
+              </page>
+              <page string="Attachments">
+                <field name="document_upload_ids" context="{'default_patient_id': id}"/>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="view_clinic_appointment_list" model="ir.ui.view">
+      <field name="name">clinic.appointment.list</field>
+      <field name="model">clinic.appointment</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="date_start"/>
+          <field name="patient_id"/>
+          <field name="provider_id"/>
+          <field name="room_id"/>
+          <field name="status"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_appointment_form" model="ir.ui.view">
+      <field name="name">clinic.appointment.form</field>
+      <field name="model">clinic.appointment</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="patient_id"/>
+              <field name="provider_id"/>
+              <field name="date_start"/>
+              <field name="date_end"/>
+              <field name="room_id"/>
+              <field name="equipment_ids"/>
+              <field name="status"/>
+              <field name="notes"/>
+              <field name="invoice_id" readonly="1"/>
+              <button name="action_create_invoice" string="Create/View Invoice" type="object" class="btn-primary"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="view_clinic_resource_list" model="ir.ui.view">
+      <field name="name">clinic.resource.list</field>
+      <field name="model">clinic.resource</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="resource_type"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_resource_form" model="ir.ui.view">
+      <field name="name">clinic.resource.form</field>
+      <field name="model">clinic.resource</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="resource_type"/>
+              <field name="description"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <!-- Stubs for all new models: list and form views -->
+    <!-- Billing -->
+    <record id="view_clinic_billing_list" model="ir.ui.view">
+      <field name="name">clinic.billing.list</field>
+      <field name="model">clinic.billing</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="patient_id"/>
+          <field name="amount"/>
+          <field name="due_date"/>
+          <field name="status"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_billing_form" model="ir.ui.view">
+      <field name="name">clinic.billing.form</field>
+      <field name="model">clinic.billing</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <button name="print_invoice" string="Print Invoice" type="object" class="btn-primary"/>
+            <button name="send_invoice" string="Send Invoice" type="object" class="btn-secondary"/>
+          </header>
+          <sheet>
+            <group>
+              <field name="patient_id"/>
+              <field name="amount"/>
+              <field name="due_date"/>
+              <field name="status"/>
+              <field name="payment_link"/>
+              <field name="claim_id"/>
+            </group>
+            <notebook>
+              <page string="Invoice Lines">
+                <field name="line_ids">
+                  <list editable="bottom">
+                    <field name="product_id"/>
+                    <field name="quantity"/>
+                    <field name="price_unit"/>
+                    <field name="subtotal"/>
+                  </list>
+                  <form>
+                    <group>
+                      <field name="product_id"/>
+                      <field name="quantity"/>
+                      <field name="price_unit"/>
+                      <field name="subtotal" readonly="1"/>
+                    </group>
+                  </form>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <!-- Claim -->
+    <record id="view_clinic_claim_list" model="ir.ui.view">
+      <field name="name">clinic.claim.list</field>
+      <field name="model">clinic.claim</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="patient_id"/>
+          <field name="insurance_company"/>
+          <field name="claim_amount"/>
+          <field name="status"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_claim_form" model="ir.ui.view">
+      <field name="name">clinic.claim.form</field>
+      <field name="model">clinic.claim</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="patient_id"/>
+              <field name="billing_id"/>
+              <field name="insurance_company"/>
+              <field name="claim_amount"/>
+              <field name="status"/>
+              <field name="denial_reason"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <!-- Portal -->
+    <record id="view_clinic_appointment_request_list" model="ir.ui.view">
+      <field name="name">clinic.appointment.request.list</field>
+      <field name="model">clinic.appointment.request</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="patient_id"/>
+          <field name="requested_date"/>
+          <field name="status"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_appointment_request_form" model="ir.ui.view">
+      <field name="name">clinic.appointment.request.form</field>
+      <field name="model">clinic.appointment.request</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="patient_id"/>
+              <field name="requested_date"/>
+              <field name="status"/>
+              <field name="notes"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="view_clinic_portal_message_list" model="ir.ui.view">
+      <field name="name">clinic.portal.message.list</field>
+      <field name="model">clinic.portal.message</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="patient_id"/>
+          <field name="date_sent"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_portal_message_form" model="ir.ui.view">
+      <field name="name">clinic.portal.message.form</field>
+      <field name="model">clinic.portal.message</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="patient_id"/>
+              <field name="message"/>
+              <field name="date_sent"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="view_clinic_document_upload_list" model="ir.ui.view">
+      <field name="name">clinic.document.upload.list</field>
+      <field name="model">clinic.document.upload</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="patient_id"/>
+          <field name="filename"/>
+          <field name="upload_date"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_document_upload_form" model="ir.ui.view">
+      <field name="name">clinic.document.upload.form</field>
+      <field name="model">clinic.document.upload</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="patient_id"/>
+              <field name="document"/>
+              <field name="filename"/>
+              <field name="upload_date"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="view_clinic_bill_pay_list" model="ir.ui.view">
+      <field name="name">clinic.bill.pay.list</field>
+      <field name="model">clinic.bill.pay</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="billing_id"/>
+          <field name="amount"/>
+          <field name="payment_date"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_bill_pay_form" model="ir.ui.view">
+      <field name="name">clinic.bill.pay.form</field>
+      <field name="model">clinic.bill.pay</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="billing_id"/>
+              <field name="amount"/>
+              <field name="payment_date"/>
+              <field name="payment_method"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <!-- Telehealth -->
+    <record id="view_clinic_telehealth_session_list" model="ir.ui.view">
+      <field name="name">clinic.telehealth.session.list</field>
+      <field name="model">clinic.telehealth.session</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="appointment_id"/>
+          <field name="patient_id"/>
+          <field name="provider_id"/>
+          <field name="start_time"/>
+          <field name="status"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_telehealth_session_form" model="ir.ui.view">
+      <field name="name">clinic.telehealth.session.form</field>
+      <field name="model">clinic.telehealth.session</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="appointment_id"/>
+              <field name="patient_id"/>
+              <field name="provider_id"/>
+              <field name="start_time"/>
+              <field name="end_time"/>
+              <field name="video_url"/>
+              <field name="status"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="view_clinic_virtual_waiting_room_list" model="ir.ui.view">
+      <field name="name">clinic.virtual.waiting.room.list</field>
+      <field name="model">clinic.virtual.waiting.room</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="session_id"/>
+          <field name="patient_id"/>
+          <field name="check_in_time"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_virtual_waiting_room_form" model="ir.ui.view">
+      <field name="name">clinic.virtual.waiting.room.form</field>
+      <field name="model">clinic.virtual.waiting.room</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="session_id"/>
+              <field name="patient_id"/>
+              <field name="check_in_time"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="view_clinic_econsent_list" model="ir.ui.view">
+      <field name="name">clinic.econsent.list</field>
+      <field name="model">clinic.econsent</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="patient_id"/>
+          <field name="appointment_id"/>
+          <field name="signed"/>
+          <field name="signed_date"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_econsent_form" model="ir.ui.view">
+      <field name="name">clinic.econsent.form</field>
+      <field name="model">clinic.econsent</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="patient_id"/>
+              <field name="appointment_id"/>
+              <field name="consent_text"/>
+              <field name="signed"/>
+              <field name="signed_date"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <!-- Analytics -->
+    <record id="view_clinic_dashboard_list" model="ir.ui.view">
+      <field name="name">clinic.dashboard.list</field>
+      <field name="model">clinic.dashboard</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="dashboard_type"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_dashboard_form" model="ir.ui.view">
+      <field name="name">clinic.dashboard.form</field>
+      <field name="model">clinic.dashboard</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="dashboard_type"/>
+              <field name="data"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="view_clinic_report_list" model="ir.ui.view">
+      <field name="name">clinic.report.list</field>
+      <field name="model">clinic.report</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="report_type"/>
+          <field name="export_format"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_report_form" model="ir.ui.view">
+      <field name="name">clinic.report.form</field>
+      <field name="model">clinic.report</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="report_type"/>
+              <field name="data"/>
+              <field name="export_format"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="view_clinic_predictive_analytics_list" model="ir.ui.view">
+      <field name="name">clinic.predictive.analytics.list</field>
+      <field name="model">clinic.predictive.analytics</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="description"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_predictive_analytics_form" model="ir.ui.view">
+      <field name="name">clinic.predictive.analytics.form</field>
+      <field name="model">clinic.predictive.analytics</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="description"/>
+              <field name="result"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <!-- Integrations -->
+    <record id="view_clinic_lab_integration_list" model="ir.ui.view">
+      <field name="name">clinic.lab.integration.list</field>
+      <field name="model">clinic.lab.integration</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="integration_type"/>
+          <field name="status"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_lab_integration_form" model="ir.ui.view">
+      <field name="name">clinic.lab.integration.form</field>
+      <field name="model">clinic.lab.integration</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="integration_type"/>
+              <field name="status"/>
+              <field name="last_sync"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="view_clinic_pharmacy_integration_list" model="ir.ui.view">
+      <field name="name">clinic.pharmacy.integration.list</field>
+      <field name="model">clinic.pharmacy.integration</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="status"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_pharmacy_integration_form" model="ir.ui.view">
+      <field name="name">clinic.pharmacy.integration.form</field>
+      <field name="model">clinic.pharmacy.integration</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="status"/>
+              <field name="last_sync"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="view_clinic_wearable_integration_list" model="ir.ui.view">
+      <field name="name">clinic.wearable.integration.list</field>
+      <field name="model">clinic.wearable.integration</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="device_type"/>
+          <field name="status"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_wearable_integration_form" model="ir.ui.view">
+      <field name="name">clinic.wearable.integration.form</field>
+      <field name="model">clinic.wearable.integration</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="device_type"/>
+              <field name="status"/>
+              <field name="last_sync"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="view_clinic_accounting_integration_list" model="ir.ui.view">
+      <field name="name">clinic.accounting.integration.list</field>
+      <field name="model">clinic.accounting.integration</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="system"/>
+          <field name="status"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_accounting_integration_form" model="ir.ui.view">
+      <field name="name">clinic.accounting.integration.form</field>
+      <field name="model">clinic.accounting.integration</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="system"/>
+              <field name="status"/>
+              <field name="last_sync"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <!-- Compliance -->
+    <record id="view_clinic_audit_log_list" model="ir.ui.view">
+      <field name="name">clinic.audit.log.list</field>
+      <field name="model">clinic.audit.log</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="user_id"/>
+          <field name="action"/>
+          <field name="model"/>
+          <field name="record_id"/>
+          <field name="timestamp"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_audit_log_form" model="ir.ui.view">
+      <field name="name">clinic.audit.log.form</field>
+      <field name="model">clinic.audit.log</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="user_id"/>
+              <field name="action"/>
+              <field name="model"/>
+              <field name="record_id"/>
+              <field name="timestamp"/>
+              <field name="details"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="view_clinic_data_encryption_list" model="ir.ui.view">
+      <field name="name">clinic.data.encryption.list</field>
+      <field name="model">clinic.data.encryption</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="encrypted"/>
+          <field name="encryption_method"/>
+          <field name="last_encrypted"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_data_encryption_form" model="ir.ui.view">
+      <field name="name">clinic.data.encryption.form</field>
+      <field name="model">clinic.data.encryption</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="encrypted"/>
+              <field name="encryption_method"/>
+              <field name="last_encrypted"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="view_clinic_doctor_list" model="ir.ui.view">
+      <field name="name">clinic.doctor.list</field>
+      <field name="model">clinic.doctor</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="user_id"/>
+          <field name="specialization"/>
+          <field name="available"/>
+          <field name="rating"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_doctor_form" model="ir.ui.view">
+      <field name="name">clinic.doctor.form</field>
+      <field name="model">clinic.doctor</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="user_id"/>
+              <field name="specialization"/>
+              <field name="available"/>
+              <field name="rating"/>
+              <field name="feedback"/>
+              <field name="signature" widget="image"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="view_clinic_visit_list" model="ir.ui.view">
+      <field name="name">clinic.visit.list</field>
+      <field name="model">clinic.visit</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="patient_id"/>
+          <field name="doctor_id"/>
+          <field name="date"/>
+          <field name="visit_reason"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_visit_form" model="ir.ui.view">
+      <field name="name">clinic.visit.form</field>
+      <field name="model">clinic.visit</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <button name="print_visit_summary" string="Print Summary" type="object" class="btn-primary"/>
+          </header>
+          <sheet>
+            <group>
+              <field name="patient_id"/>
+              <field name="doctor_id"/>
+              <field name="appointment_id"/>
+              <field name="date"/>
+              <field name="visit_reason"/>
+            </group>
+            <notebook>
+              <page string="SOAP">
+                <field name="subjective"/>
+                <field name="objective"/>
+                <field name="assessment"/>
+                <field name="plan"/>
+              </page>
+              <page string="Vitals">
+                <field name="vital_signs_ids"/>
+              </page>
+              <page string="Medical Records">
+                <field name="medical_record_ids"/>
+              </page>
+              <page string="Attachments">
+                <field name="attachment_ids"/>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="view_clinic_medical_record_list" model="ir.ui.view">
+      <field name="name">clinic.medical.record.list</field>
+      <field name="model">clinic.medical.record</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="patient_id"/>
+          <field name="doctor_id"/>
+          <field name="diagnosis"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_medical_record_form" model="ir.ui.view">
+      <field name="name">clinic.medical.record.form</field>
+      <field name="model">clinic.medical.record</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="patient_id"/>
+              <field name="doctor_id"/>
+              <field name="visit_id"/>
+              <field name="diagnosis"/>
+              <field name="notes"/>
+              <field name="attachment_ids"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="view_clinic_vital_signs_list" model="ir.ui.view">
+      <field name="name">clinic.vital.signs.list</field>
+      <field name="model">clinic.vital.signs</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="visit_id"/>
+          <field name="temperature"/>
+          <field name="blood_pressure"/>
+          <field name="heart_rate"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_vital_signs_form" model="ir.ui.view">
+      <field name="name">clinic.vital.signs.form</field>
+      <field name="model">clinic.vital.signs</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="visit_id"/>
+              <field name="temperature"/>
+              <field name="blood_pressure"/>
+              <field name="heart_rate"/>
+              <field name="respiratory_rate"/>
+              <field name="spo2"/>
+              <field name="weight"/>
+              <field name="height"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="view_clinic_lab_test_request_list" model="ir.ui.view">
+      <field name="name">clinic.lab.test.request.list</field>
+      <field name="model">clinic.lab.test.request</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="patient_id"/>
+          <field name="doctor_id"/>
+          <field name="test_type"/>
+          <field name="status"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_lab_test_request_form" model="ir.ui.view">
+      <field name="name">clinic.lab.test.request.form</field>
+      <field name="model">clinic.lab.test.request</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="patient_id"/>
+              <field name="visit_id"/>
+              <field name="doctor_id"/>
+              <field name="test_type"/>
+              <field name="status"/>
+              <field name="result_id"/>
+              <field name="attachment_ids"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="view_clinic_lab_result_list" model="ir.ui.view">
+      <field name="name">clinic.lab.result.list</field>
+      <field name="model">clinic.lab.result</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="request_id"/>
+          <field name="approved"/>
+          <field name="approval_date"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_lab_result_form" model="ir.ui.view">
+      <field name="name">clinic.lab.result.form</field>
+      <field name="model">clinic.lab.result</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <button name="send_to_patient" string="Send to Patient" type="object" class="btn-primary" invisible="sent_to_patient == True"/>
+            <field name="sent_to_patient" readonly="1" widget="boolean_button" options="{'terminology': 'sent'}"/>
+          </header>
+          <sheet>
+            <group>
+              <field name="request_id"/>
+              <field name="result"/>
+              <field name="result_file"/>
+              <field name="approved"/>
+              <field name="approved_by"/>
+              <field name="approval_date"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="view_clinic_prescription_list" model="ir.ui.view">
+      <field name="name">clinic.prescription.list</field>
+      <field name="model">clinic.prescription</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="patient_id"/>
+          <field name="doctor_id"/>
+          <field name="date"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_prescription_line_tree" model="ir.ui.view">
+      <field name="name">clinic.prescription.line.tree</field>
+      <field name="model">clinic.prescription.line</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="medicine_id"/>
+          <field name="dosage"/>
+          <field name="frequency"/>
+          <field name="duration"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_prescription_line_form" model="ir.ui.view">
+      <field name="name">clinic.prescription.line.form</field>
+      <field name="model">clinic.prescription.line</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+            <field name="medicine_id"/>
+            <field name="dosage"/>
+            <field name="frequency"/>
+            <field name="duration"/>
+            <field name="instructions"/>
+          </group>
+        </form>
+      </field>
+    </record>
+    <record id="view_clinic_prescription_form" model="ir.ui.view">
+      <field name="name">clinic.prescription.form</field>
+      <field name="model">clinic.prescription</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="patient_id"/>
+              <field name="doctor_id"/>
+              <field name="visit_id"/>
+              <field name="date"/>
+              <field name="notes"/>
+              <field name="prescription_pdf"/>
+              <field name="sent_to_email"/>
+            </group>
+            <notebook>
+              <page string="Medicines">
+                <field name="medicine_ids" mode="list,form" context="{'form_view_ref':'view_clinic_prescription_line_form','tree_view_ref':'view_clinic_prescription_line_tree'}"/>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="view_clinic_medicine_list" model="ir.ui.view">
+      <field name="name">clinic.medicine.list</field>
+      <field name="model">clinic.medicine</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="code"/>
+          <field name="is_active"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_medicine_form" model="ir.ui.view">
+      <field name="name">clinic.medicine.form</field>
+      <field name="model">clinic.medicine</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="code"/>
+              <field name="is_active"/>
+              <field name="description"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="view_clinic_insurance_provider_list" model="ir.ui.view">
+      <field name="name">clinic.insurance.provider.list</field>
+      <field name="model">clinic.insurance.provider</field>
+      <field name="type">list</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="plan"/>
+          <field name="contact"/>
+        </list>
+      </field>
+    </record>
+    <record id="view_clinic_insurance_provider_form" model="ir.ui.view">
+      <field name="name">clinic.insurance.provider.form</field>
+      <field name="model">clinic.insurance.provider</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="plan"/>
+              <field name="contact"/>
+              <field name="notes"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Calendar view for Appointments -->
+    <record id="view_clinic_appointment_calendar" model="ir.ui.view">
+      <field name="name">clinic.appointment.calendar</field>
+      <field name="model">clinic.appointment</field>
+      <field name="arch" type="xml">
+        <!-- Color-coded by status; drag-and-drop enabled by default if user has write access -->
+        <calendar string="Appointments" date_start="date_start" date_stop="date_end" color="status" event_open_popup="true">
+          <field name="patient_id"/>
+          <field name="provider_id"/>
+          <field name="room_id"/>
+          <field name="status"/>
+          <field name="notes"/>
+        </calendar>
+      </field>
+    </record>
+
+    <!-- Add search view for Appointments -->
+    <record id="view_clinic_appointment_search" model="ir.ui.view">
+      <field name="name">clinic.appointment.search</field>
+      <field name="model">clinic.appointment</field>
+      <field name="arch" type="xml">
+        <search>
+          <field name="date_start" filter_domain="['|',('date_start','&gt;=',self),('date_end','&lt;=',self)]"/>
+          <field name="patient_id"/>
+          <field name="provider_id"/>
+          <field name="status"/>
+        </search>
+      </field>
+    </record>
+
+    <!-- Register Clinic Visit Summary Report -->
+    <record id="action_report_visit_summary" model="ir.actions.report">
+        <field name="name">Visit Summary</field>
+        <field name="model">clinic.visit</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">atmta_clinic.report_visit_summary_document</field>
+        <field name="report_file">atmta_clinic.report_visit_summary_document</field>
+        <field name="print_report_name">'Visit Summary - %s' % (object.patient_id.name)</field>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Register Invoice Report -->
+    <record id="action_report_invoice" model="ir.actions.report">
+        <field name="name">Invoice</field>
+        <field name="model">clinic.billing</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">atmta_clinic.report_invoice_document</field>
+        <field name="report_file">atmta_clinic.report_invoice_document</field>
+        <field name="print_report_name">'Invoice - %s' % (object.patient_id.name)</field>
+        <field name="binding_type">report</field>
+    </record>
+  </data>
+</odoo>

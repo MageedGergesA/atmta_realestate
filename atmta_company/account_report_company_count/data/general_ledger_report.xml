@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="general_ledger_report_description" model="account.report.column">
+        <field name="name">Description</field>
+        <field name="expression_label">description</field>
+        <field name="figure_type">string</field>
+        <field name="report_id" ref="account_reports.general_ledger_report"/>
+        <field name="sequence">90</field>
+    </record>
+    <record id="general_ledger_report_cheque_number" model="account.report.column">
+        <field name="name">Cheque Number</field>
+        <field name="expression_label">cheque_number</field>
+        <field name="figure_type">string</field>
+        <field name="report_id" ref="account_reports.general_ledger_report"/>
+        <field name="sequence">100</field>
+    </record>
+</odoo>

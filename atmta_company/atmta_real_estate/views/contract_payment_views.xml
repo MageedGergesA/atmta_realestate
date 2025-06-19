@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- List View -->
+    <record id="view_contract_payment_tree" model="ir.ui.view">
+        <field name="name">realestate.contract.payment.tree</field>
+        <field name="model">realestate.contract.payment</field>
+        <field name="arch" type="xml">
+            <list create="0" edit="0">
+                <field name="name" optional="show"/>
+                <field name="contract_id" optional="show"/>
+                <field name="partner_id" optional="show"/>
+                <field name="contract_line_id" optional="show"/>
+                <field name="date_due" optional="show"/>
+                <field name="amount" optional="show"/>
+                <field name="state" optional="show"/>
+                <field name="move_id" optional="show"/>
+                <field name="payment_plan_id" optional="show"/>
+                <field name="increment_rule_ids" widget="many2many_tags" optional="show"/>
+                <field name="discount_rule_ids" widget="many2many_tags" optional="show"/>
+                <field name="increase_amount" optional="show"/>
+                <field name="discount_amount" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_contract_payment_form" model="ir.ui.view">
+        <field name="name">realestate.contract.payment.form</field>
+        <field name="model">realestate.contract.payment</field>
+        <field name="arch" type="xml">
+            <form string="Payment Schedule" create="0" edit="0">
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        <!--                        <hr/>-->
+                    </div>
+<group>
+    <group string="Contract Info" col="2">
+        <field name="contract_id"/>
+        <field name="partner_id"/>
+        <field name="contract_line_id"/>
+    </group>
+
+    <group string="Pricing Rules &amp; Schedule" col="2">
+        <field name="payment_plan_id"/>
+        <field name="increment_rule_ids" widget="many2many_tags"/>
+        <field name="discount_rule_ids" widget="many2many_tags"/>
+    </group>
+
+    <group string="Schedule Details" col="2">
+        <field name="date_due"/>
+        <field name="amount"/>
+        <field name="move_id" readonly="1"/>
+    </group>
+
+    <group string="Price Breakdown" col="2">
+        <field name="increase_amount" readonly="1" optional="show"/>
+        <field name="discount_amount" readonly="1" optional="show"/>
+    </group>
+</group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_contract_payment" model="ir.actions.act_window">
+        <field name="name">Scheduled Payments</field>
+        <field name="res_model">realestate.contract.payment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>
