@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_property_form" model="ir.ui.view">
+        <field name="name">product.product.realestate.form</field>
+        <field name="model">product.product</field>
+        <field name="priority" eval="100"/>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+
+                <sheet>
+                    <field name="image_1920" widget="image" class="oe_avatar"
+                           options="{'convert_to_webp': True,'preview_image': 'image_128'}"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="is_property" widget="boolean_toggle"/>
+                            <field name="property_type_id"/>
+                            <field name="state"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Property Hierarchy">
+                            <group>
+                                <group string="Hierarchy">
+                                    <field name="child_ids" invisible="1"/>
+                                    <field name="is_parent_child" invisible="1"/>
+                                    <field name="parent_id"/>
+                                </group>
+                                <group>
+                                    <field name="child_ids" class="position-relative" widget="org_chart" nolabel="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="General Info">
+                            <group col="2">
+                                <group string="Basic Details">
+                                    <field name="property_ref"/>
+                                    <field name="property_number"/>
+                                    <field name="furnished_status"/>
+                                    <field name="area_sqm"/>
+                                    <field name="floor_number"/>
+                                </group>
+                                <group string="Rooms Layout">
+                                    <field name="bedroom_count"/>
+                                    <field name="bathroom_count"/>
+                                    <field name="living_room_count"/>
+                                    <field name="has_kitchen" widget="boolean_toggle"/>
+                                    <field name="has_balcony" widget="boolean_toggle"/>
+                                </group>
+                            </group>
+                            <group string="Notes">
+                                <field name="property_notes"/>
+                            </group>
+                        </page>
+
+                        <page string="Location">
+                            <group col="2">
+                                <group string="General Area">
+                                    <field name="country_id"/>
+                                    <field name="city"/>
+                                    <field name="district"/>
+                                </group>
+                                <group string="Exact Location">
+                                    <field name="sub_area"/>
+                                    <field name="street_name"/>
+                                    <field name="building_no"/>
+                                    <field name="landmark"/>
+                                </group>
+                            </group>
+                            <group string="Map Preview">
+                                <field name="gmap_url" widget="embed_map_viewer"/>
+                            </group>
+                        </page>
+
+                        <page string="Ownership">
+                            <group col="2">
+                                <group string="Ownership Details">
+                                    <field name="owner_id"/>
+                                    <field name="is_internal" widget="boolean_toggle"/>
+                                </group>
+                                <group string="Management">
+                                    <field name="manager_id"/>
+                                    <field name="next_available_date"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Attachments &amp; Media">
+                            <group string="Images and Videos">
+                                <field
+                                        name="property_Attachment_media_ids"
+                                        class="o_website_sale_image_list"
+                                        context="{'default_name': name}"
+                                        mode="kanban"
+                                        add-label="Add Media"
+                                        nolabel="1"
+                                        widget="x2_many_media_viewer"
+                                        options="{'convert_to_webp': True}"
+                                />
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_property_list" model="ir.ui.view">
+        <field name="name">product.product.realestate.list</field>
+        <field name="model">product.product</field>
+        <field name="priority" eval="100"/>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" optional="show"/>
+                <field name="property_type_id" optional="show"/>
+                <field name="state" optional="show"/>
+                <field name="area_sqm" optional="show"/>
+                <field name="bedroom_count" optional="show"/>
+                <field name="bathroom_count" optional="show"/>
+                <field name="manager_id" optional="show"/>
+                <field name="is_property" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_property_product_search" model="ir.ui.view">
+        <field name="name">product.product.realestate.search</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <search string="Search Properties">
+                <!-- Quick text fields -->
+                <field name="name" string="Name"/>
+                <field name="property_ref" string="Reference"/>
+                <field name="property_number" string="Number"/>
+                <field name="city"/>
+                <field name="district"/>
+                <field name="sub_area"/>
+                <field name="street_name"/>
+                <field name="landmark"/>
+
+                <!-- Filters -->
+                <filter name="available" string="Available" domain="[('state', '=', 'available')]"/>
+                <filter name="rented" string="Rented" domain="[('state', '=', 'rented')]"/>
+                <filter name="reserved" string="Reserved" domain="[('state', '=', 'reserved')]"/>
+                <filter name="maintenance" string="Under Maintenance" domain="[('state', '=', 'maintenance')]"/>
+                <filter name="inactive" string="Inactive" domain="[('state', '=', 'inactive')]"/>
+                <filter name="internal_assets" string="Company-Owned" domain="[('is_internal', '=', True)]"/>
+                <filter name="has_balcony" string="Has Balcony" domain="[('has_balcony', '=', True)]"/>
+                <filter name="has_kitchen" string="Has Kitchen" domain="[('has_kitchen', '=', True)]"/>
+
+                <!-- Group by options -->
+                <group expand="0" string="Group By">
+                    <filter name="group_type" string="Property Type" context="{'group_by': 'property_type_id'}"/>
+                    <filter name="group_status" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_city" string="City" context="{'group_by': 'city'}"/>
+                    <filter name="group_owner" string="Owner" context="{'group_by': 'owner_id'}"/>
+                    <filter name="group_manager" string="Manager" context="{'group_by': 'manager_id'}"/>
+                    <filter name="group_furnished" string="Furnished" context="{'group_by': 'furnished_status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="product_product_view_hierarchy" model="ir.ui.view">
+        <field name="name">product.product.view.hierarchy</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <hierarchy child_field="child_ids"
+                       draggable="1">
+                <field name="name"/>
+                <templates>
+                    <t t-name="hierarchy-box">
+                        <div t-attf-class="o_hierarchy_node_header d-flex justify-content-center pb-4"
+                             t-att-title="parent_id">
+                        </div>
+                        <div class="o_hierarchy_node_body d-flex flex-column text-center">
+                            <div class="w-100 position-relative">
+                                <field class="fw-bold" name="name"/>
+                                <br/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </hierarchy>
+        </field>
+    </record>
+
+
+    <record id="action_property_view" model="ir.actions.act_window">
+        <field name="name">Properties</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">list,form,hierarchy</field>
+        <field name="view_ids" eval="[(5, 0, 0), (0, 0, {'view_mode': 'list', 'view_id': ref('atmta_real_estate.view_property_list')}),
+                    (0, 0, {'view_mode': 'form', 'view_id': ref('atmta_real_estate.view_property_form')})]"/>
+        <field name="context">
+            {"search_default_property":1,"default_type":"service","default_is_property":True,"default_detailed_type":"service"}
+        </field>
+        <field name="search_view_id" ref="view_property_product_search"/>
+
+        <field name="domain">[('is_property','=',True)]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to define a new Property.
+            </p>
+            <p>
+                You must define a Property for everything you buy or sell,
+            </p>
+        </field>
+    </record>
+
+
+</odoo>

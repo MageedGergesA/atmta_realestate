@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Maps Viewer Widget for Odoo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            color: #333;
+        }
+        h1, h2, h3 {
+            color: #444;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-left: 5px solid #ccc;
+            overflow-x: auto;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📍 Google Maps Viewer Widget for Odoo</h1>
+    <p>This module introduces a new widget called <code>embed_map_viewer</code> that allows you to **embed Google Maps** directly inside Odoo form views.</p>
+
+    <h2>🔹 Features</h2>
+    <ul>
+        <li>✅ <strong>New Widget:</strong> <code>embed_map_viewer</code> – Add Google Maps to any Odoo field.</li>
+        <li>✅ **Easy Google Maps Embedding** – Simply copy and paste the **Google Maps embed code**.</li>
+        <li>✅ **Fully Responsive & Interactive** – Zoom, scroll, and interact with the embedded map.</li>
+        <li>✅ **No API Key Required** – Uses Google’s free embed feature.</li>
+        <li>✅ **Works on Any Odoo Form View** – Use it in CRM, Sales, Inventory, or any other module.</li>
+    </ul>
+
+    <h2>📌 How to Use</h2>
+
+    <h3>1️⃣ Copy Google Maps Embed Code</h3>
+    <p>Go to <a href="https://www.google.com/maps" target="_blank">Google Maps</a> and find the location you want to embed.</p>
+    <ol>
+        <li>Click the **"Share"** button.</li>
+        <li>Go to the **"Embed a Map"** tab.</li>
+        <li>Click **"Copy HTML"**.</li>
+    </ol>
+
+    <h3>2️⃣ Paste the Embed Code into Odoo</h3>
+    <p>Paste the copied <code>iframe</code> code inside the Odoo form field that uses the <code>embed_map_viewer</code> widget.</p>
+
+    <h3>📌 Example Embed Code:</h3>
+    <pre>
+    <code>
+    <img src="https://raw.githubusercontent.com/MageedGergesA/images-odoo-apps/refs/heads/main/Screenshot%20from%202025-02-17%2017-13-29.png"
+            width="600" height="450" style="border:0;" alt="Google Maps Viewer Widget Screenshot"/>
+    </code>
+    </pre>
+
+    <h3>3️⃣ Save and View the Map</h3>
+    <p>The embedded map will now appear inside the Odoo form view.</p>
+
+    <h2>🖥️ Screenshot</h2>
+    <p>Here’s how it looks inside Odoo:</p>
+    <img src="https://raw.githubusercontent.com/MageedGergesA/images-odoo-apps/refs/heads/main/Screenshot%20from%202025-02-17%2017-26-16.png" alt="Google Maps Viewer Widget Screenshot">
+
+    <h2>🎯 Use Cases</h2>
+    <ul>
+        <li>📍 **Customer & Supplier Addresses** – Embed location maps for contacts.</li>
+        <li>🏢 **Real Estate Listings** – Show property locations directly in Odoo.</li>
+        <li>🚚 **Logistics & Delivery Management** – Easily track locations.</li>
+    </ul>
+
+    <h2>📥 Installation</h2>
+    <ol>
+        <li>Download and install this module in Odoo.</li>
+        <li>Add a **text field** in your Odoo model with the <code>embed_map_viewer</code> widget.</li>
+    </ol>
+
+    <h3>📌 Example Odoo Field Definition:</h3>
+    <pre>
+    <code>
+    <field name="map_url" widget="embed_map_viewer"/>
+    </code>
+    </pre>
+
+    <h2>🚀 Get Started Now!</h2>
+    <p>Enhance your Odoo system with easy Google Maps integration. <strong>Get this module today!</strong></p>
+
+</body>
+</html>

@@ -1,0 +1,713 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <!--  Template for Widget org Chart  -->
+    <!--    <t t-name="atmta_real_estate.CustomerChartWidget">-->
+    <!--        <div class="org-chart">-->
+    <!--            <span>-->
+    <!--                <t t-log="OrgState.data['child'].length"/>-->
+    <!--            <t t-if="OrgState.data['parent'] || OrgState.data['child'].length != 0">-->
+    <!--                <p style="margin-top:20px;width:max-content;font-weight: 500;"><u>HIERARCHY</u></p>-->
+    <!--            </t>-->
+    <!--            </span>-->
+    <!--            <t t-if="OrgState.data['parent']">-->
+    <!--                <div class="org-node parent-node">-->
+    <!--                    <p style="width:max-content;font-weight: bold;margin-bottom: 0rem;"-->
+    <!--                       t-on-click="() => onChildClick(OrgState.data['parent']['id'],this)">-->
+    <!--                        <t t-esc="OrgState.data['parent']['name']"/>-->
+    <!--                    </p>-->
+    <!--                </div>-->
+    <!--            </t>-->
+    <!--                <div class="org-parent">-->
+    <!--                    <div t-if="OrgState.data['parent'] == undefined"-->
+    <!--                         class="org-node self-node"-->
+    <!--                         t-attf-class="#{OrgState.data['parent'] == undefined ? '' : 'o_treeEntry'}"-->
+    <!--                         style="margin-left:3px; margin-bottom: 0rem;font-size: 16px; font-weight: bold;">-->
+    <!--                        <p style="margin-bottom:0rem;width:max-content; ">-->
+    <!--                            <t t-if="OrgState.data['self'] != false">-->
+    <!--                                <t t-esc="OrgState.data['self']"/>-->
+    <!--                            </t>-->
+    <!--                        </p>-->
+    <!--                    </div>-->
+    <!--                    <div t-if="OrgState.data['parent'] != undefined"-->
+    <!--                         class="org-node self-node o_treeEntry"-->
+    <!--                         style="margin-left:3px; margin-bottom: 0rem;">-->
+    <!--                        <p style="margin-bottom:0rem;width:max-content;">-->
+    <!--                            <t t-if="OrgState.data['self'] != 'false'">-->
+    <!--                                <t t-esc="OrgState.data['self']"/>-->
+    <!--                            </t>-->
+    <!--                        </p>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            <t t-if="OrgState.data['child'].length != 0">-->
+    <!--                <div class="org-children ">-->
+    <!--                    <t t-foreach="OrgState.data['child']" t-as="data"-->
+    <!--                       t-key="data_index">-->
+    <!--                        <div class="org-node child-node o_treeEntry"-->
+    <!--                             style="margin-left:19px;width:max-content">-->
+    <!--                            <p style="margin-bottom: 0rem"-->
+    <!--                               t-on-click="() => onChildClick(data['id'],this)">-->
+    <!--                                <t t-esc="data['name']"/>-->
+    <!--                            </p>-->
+    <!--                        </div>-->
+    <!--                    </t>-->
+    <!--                </div>-->
+    <!--            </t>-->
+    <!--        </div>-->
+    <!--    </t>-->
+    <!--    <t t-name="atmta_real_estate.CustomerChartWidget">-->
+    <!--        <t t-set="parent" t-value="OrgState.data['parent']"/>-->
+    <!--        <t t-set="self" t-value="OrgState.data['self']"/>-->
+    <!--        <t t-set="children" t-value="OrgState.data['child']"/>-->
+
+    <!--        <style>-->
+    <!--            .org-chart-container {-->
+    <!--            display: flex;-->
+    <!--            flex-direction: column;-->
+    <!--            align-items: center;-->
+    <!--            padding: 20px;-->
+    <!--            font-family: "Inter", sans-serif;-->
+    <!--            }-->
+
+    <!--            .org-title {-->
+    <!--            font-size: 18px;-->
+    <!--            font-weight: 600;-->
+    <!--            margin-bottom: 20px;-->
+    <!--            text-decoration: underline;-->
+    <!--            }-->
+
+    <!--            .org-node {-->
+    <!--            display: flex;-->
+    <!--            flex-direction: column;-->
+    <!--            align-items: center;-->
+    <!--            margin: 12px;-->
+    <!--            padding: 10px;-->
+    <!--            border: 1px solid #ddd;-->
+    <!--            border-radius: 12px;-->
+    <!--            background-color: #fff;-->
+    <!--            box-shadow: 0 2px 6px rgba(0,0,0,0.08);-->
+    <!--            cursor: pointer;-->
+    <!--            transition: transform 0.2s ease;-->
+    <!--            }-->
+
+    <!--            .org-node:hover {-->
+    <!--            transform: scale(1.04);-->
+    <!--            }-->
+
+    <!--            .org-node-img {-->
+    <!--            width: 80px;-->
+    <!--            height: 80px;-->
+    <!--            object-fit: cover;-->
+    <!--            border-radius: 10px;-->
+    <!--            margin-bottom: 6px;-->
+    <!--            }-->
+
+    <!--            .org-node-name {-->
+    <!--            margin: 0;-->
+    <!--            font-weight: 500;-->
+    <!--            font-size: 14px;-->
+    <!--            text-align: center;-->
+    <!--            max-width: 120px;-->
+    <!--            }-->
+
+    <!--            .org-children {-->
+    <!--            display: flex;-->
+    <!--            flex-wrap: wrap;-->
+    <!--            justify-content: center;-->
+    <!--            margin-top: 20px;-->
+    <!--            }-->
+    <!--        </style>-->
+
+    <!--<div class="org-chart-container">-->
+    <!--    <t t-if="parent or children.length != 0">-->
+    <!--        <p class="org-title">HIERARCHY</p>-->
+    <!--    </t>-->
+
+    <!--    &lt;!&ndash; Parent &ndash;&gt;-->
+    <!--    <t t-if="parent">-->
+    <!--        <div class="org-node" t-on-click="() => onChildClick(parent['id'], this)">-->
+    <!--            <img t-att-src="'/web/image/product.product/' + parent['id'] + '/image_128'" alt="Parent" class="org-node-img"/>-->
+    <!--            <p class="org-node-name">-->
+    <!--                <t t-esc="parent['name']"/>-->
+    <!--            </p>-->
+    <!--        </div>-->
+    <!--    </t>-->
+
+    <!--    &lt;!&ndash; Self &ndash;&gt;-->
+    <!--    <div class="org-node">-->
+    <!--        <img t-att-src="'/web/image/product.product/' + id + '/image_128'" alt="Self" class="org-node-img"/>-->
+    <!--        <p class="org-node-name">-->
+    <!--            <t t-if="self">-->
+    <!--                <t t-esc="self"/>-->
+    <!--            </t>-->
+    <!--        </p>-->
+    <!--    </div>-->
+
+    <!--    &lt;!&ndash; Children &ndash;&gt;-->
+    <!--    <t t-if="children.length != 0">-->
+    <!--        <div class="org-children">-->
+    <!--            <t t-foreach="children" t-as="child" t-key="child['id']">-->
+    <!--                <div class="org-node" t-on-click="() => onChildClick(child['id'], this)">-->
+    <!--                    <img t-att-src="'/web/image/product.product/' + child['id'] + '/image_128'" alt="Child" class="org-node-img"/>-->
+    <!--                    <p class="org-node-name">-->
+    <!--                        <t t-esc="child['name']"/>-->
+    <!--                    </p>-->
+    <!--                </div>-->
+    <!--            </t>-->
+    <!--        </div>-->
+    <!--    </t>-->
+    <!--</div>-->
+    <!--    </t>-->
+    <!--    <t t-name="atmta_real_estate.CustomerChartWidget">-->
+    <!--        <t t-set="parent" t-value="OrgState.data['parent']"/>-->
+    <!--        <t t-set="self" t-value="OrgState.data['self']"/>-->
+    <!--        <t t-set="children" t-value="OrgState.data['child']"/>-->
+
+    <!--        <style>-->
+    <!--            .org-chart-container {-->
+    <!--            display: flex;-->
+    <!--            flex-direction: column;-->
+    <!--            align-items: center;-->
+    <!--            padding: 20px;-->
+    <!--            font-family: "Inter", sans-serif;-->
+    <!--            }-->
+
+    <!--            .org-title {-->
+    <!--            font-size: 18px;-->
+    <!--            font-weight: 600;-->
+    <!--            margin-bottom: 20px;-->
+    <!--            text-decoration: underline;-->
+    <!--            }-->
+
+    <!--            .org-node {-->
+    <!--            display: flex;-->
+    <!--            flex-direction: column;-->
+    <!--            align-items: center;-->
+    <!--            margin: 12px;-->
+    <!--            padding: 10px;-->
+    <!--            border: 1px solid #ddd;-->
+    <!--            border-radius: 12px;-->
+    <!--            background-color: #fff;-->
+    <!--            box-shadow: 0 2px 6px rgba(0,0,0,0.08);-->
+    <!--            cursor: pointer;-->
+    <!--            transition: transform 0.2s ease;-->
+    <!--            width: 120px;-->
+    <!--            }-->
+
+    <!--            .org-node:hover {-->
+    <!--            transform: scale(1.04);-->
+    <!--            }-->
+
+    <!--            .org-node-img {-->
+    <!--            width: 80px;-->
+    <!--            height: 80px;-->
+    <!--            object-fit: cover;-->
+    <!--            border-radius: 10px;-->
+    <!--            margin-bottom: 6px;-->
+    <!--            background: #f0f0f0;-->
+    <!--            }-->
+
+    <!--            .org-node-name {-->
+    <!--            margin: 0;-->
+    <!--            font-weight: 500;-->
+    <!--            font-size: 14px;-->
+    <!--            text-align: center;-->
+    <!--            word-wrap: break-word;-->
+    <!--            }-->
+
+    <!--            .org-children {-->
+    <!--            display: flex;-->
+    <!--            flex-wrap: wrap;-->
+    <!--            justify-content: center;-->
+    <!--            margin-top: 20px;-->
+    <!--            }-->
+    <!--        </style>-->
+
+    <!--        <div class="org-chart-container">-->
+    <!--            <t t-if="parent or children.length != 0">-->
+    <!--                <p class="org-title">HIERARCHY</p>-->
+    <!--            </t>-->
+
+    <!--            &lt;!&ndash; Parent &ndash;&gt;-->
+    <!--            <t t-if="parent">-->
+    <!--                <div class="org-node" t-on-click="() => onChildClick(parent['id'], this)">-->
+    <!--                    <img t-att-src="'/web/image/product.product/' + parent['id'] + '/image_128'" alt="Parent"-->
+    <!--                         class="org-node-img"/>-->
+    <!--                    <p class="org-node-name">-->
+    <!--                        <t t-esc="parent['name']"/>-->
+    <!--                    </p>-->
+    <!--                </div>-->
+    <!--            </t>-->
+
+    <!--            &lt;!&ndash; Self &ndash;&gt;-->
+    <!--            <t t-if="self">-->
+    <!--                <div class="org-node">-->
+    <!--                    <img t-att-src="'/web/image/product.product/' + self['id'] + '/image_128'" alt="Self"-->
+    <!--                         class="org-node-img"/>-->
+    <!--                    <p class="org-node-name">-->
+    <!--                        <t t-esc="self['name']"/>-->
+    <!--                    </p>-->
+    <!--                </div>-->
+    <!--            </t>-->
+
+    <!--            &lt;!&ndash; Children &ndash;&gt;-->
+    <!--            <t t-if="children.length">-->
+    <!--                <div class="org-children">-->
+    <!--                    <t t-foreach="children" t-as="child" t-key="child['id']">-->
+    <!--                        <div class="org-node" t-on-click="() => onChildClick(child['id'], this)">-->
+    <!--                            <img t-att-src="'/web/image/product.product/' + child['id'] + '/image_128'" alt="Product"-->
+    <!--                                 class="org-node-img"/>-->
+    <!--                            <p class="org-node-name">-->
+    <!--                                <t t-esc="child['name']"/>-->
+    <!--                            </p>-->
+    <!--                        </div>-->
+    <!--                    </t>-->
+    <!--                </div>-->
+    <!--            </t>-->
+
+    <!--        </div>-->
+    <!--    </t>-->
+    <!--<t t-name="atmta_real_estate.CustomerChartWidget">-->
+    <!--    <t t-set="parent" t-value="OrgState.data['parent']"/>-->
+    <!--    <t t-set="self" t-value="OrgState.data['self']"/>-->
+    <!--    <t t-set="children" t-value="OrgState.data['child']"/>-->
+
+    <!--    <style>-->
+    <!--        .org-chart-container {-->
+    <!--            font-family: "Inter", sans-serif;-->
+    <!--            display: flex;-->
+    <!--            flex-direction: column;-->
+    <!--            align-items: center;-->
+    <!--            padding: 20px;-->
+    <!--        }-->
+
+    <!--        .org-title {-->
+    <!--            font-size: 18px;-->
+    <!--            font-weight: 600;-->
+    <!--            margin-bottom: 20px;-->
+    <!--            text-decoration: underline;-->
+    <!--        }-->
+
+    <!--        .org-level {-->
+    <!--            position: relative;-->
+    <!--            display: flex;-->
+    <!--            justify-content: center;-->
+    <!--            align-items: center;-->
+    <!--            margin: 10px 0;-->
+    <!--        }-->
+
+    <!--        .org-node {-->
+    <!--            display: flex;-->
+    <!--            flex-direction: column;-->
+    <!--            align-items: center;-->
+    <!--            border: 1px solid #ddd;-->
+    <!--            border-radius: 12px;-->
+    <!--            background-color: #fff;-->
+    <!--            padding: 10px;-->
+    <!--            width: 120px;-->
+    <!--            box-shadow: 0 2px 6px rgba(0,0,0,0.08);-->
+    <!--            position: relative;-->
+    <!--        }-->
+
+    <!--        .org-node-img {-->
+    <!--            width: 80px;-->
+    <!--            height: 80px;-->
+    <!--            object-fit: cover;-->
+    <!--            border-radius: 10px;-->
+    <!--            margin-bottom: 6px;-->
+    <!--            background: #f0f0f0;-->
+    <!--        }-->
+
+    <!--        .org-node-name {-->
+    <!--            font-size: 14px;-->
+    <!--            font-weight: 500;-->
+    <!--            text-align: center;-->
+    <!--        }-->
+
+    <!--        .org-children-wrapper {-->
+    <!--            position: relative;-->
+    <!--            display: flex;-->
+    <!--            justify-content: center;-->
+    <!--            margin-top: 20px;-->
+    <!--        }-->
+
+    <!--        /* Horizontal line between children */-->
+    <!--        .org-children-wrapper::before {-->
+    <!--            content: "";-->
+    <!--            position: absolute;-->
+    <!--            top: 0;-->
+    <!--            left: 0;-->
+    <!--            right: 0;-->
+    <!--            height: 2px;-->
+    <!--            background-color: #ccc;-->
+    <!--            z-index: 0;-->
+    <!--        }-->
+
+    <!--        /* Vertical line from each child to horizontal */-->
+    <!--        .org-node-wrapper {-->
+    <!--            position: relative;-->
+    <!--            padding-top: 20px;-->
+    <!--        }-->
+
+    <!--        .org-node-wrapper::before {-->
+    <!--            content: "";-->
+    <!--            position: absolute;-->
+    <!--            top: 0;-->
+    <!--            left: 50%;-->
+    <!--            transform: translateX(-50%);-->
+    <!--            width: 2px;-->
+    <!--            height: 20px;-->
+    <!--            background-color: #ccc;-->
+    <!--            z-index: 0;-->
+    <!--        }-->
+
+    <!--        /* Vertical line from parent to horizontal */-->
+    <!--        .org-parent-connector {-->
+    <!--            position: relative;-->
+    <!--            height: 20px;-->
+    <!--            width: 2px;-->
+    <!--            background-color: #ccc;-->
+    <!--            margin: 0 auto;-->
+    <!--        }-->
+    <!--    </style>-->
+
+    <!--    <div class="org-chart-container">-->
+    <!--        <t t-if="parent or children.length">-->
+    <!--            <p class="org-title">HIERARCHY</p>-->
+    <!--        </t>-->
+
+    <!--        &lt;!&ndash; Parent &ndash;&gt;-->
+    <!--        <t t-if="parent">-->
+    <!--            <div class="org-level">-->
+    <!--                <div class="org-node" t-on-click="() => onChildClick(parent['id'], this)">-->
+    <!--                    <img t-att-src="'/web/image/product.product/' + parent['id'] + '/image_128'" alt="Parent" class="org-node-img"/>-->
+    <!--                    <p class="org-node-name"><t t-esc="parent['name']"/></p>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="org-parent-connector"></div>-->
+    <!--        </t>-->
+
+    <!--        &lt;!&ndash; Self &ndash;&gt;-->
+    <!--        <t t-if="self">-->
+    <!--            <div class="org-level">-->
+    <!--                <div class="org-node">-->
+    <!--                    <img t-att-src="'/web/image/product.product/' + self['id'] + '/image_128'" alt="Self" class="org-node-img"/>-->
+    <!--                    <p class="org-node-name"><t t-esc="self['name']"/></p>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </t>-->
+
+    <!--        &lt;!&ndash; Children &ndash;&gt;-->
+    <!--        <t t-if="children.length">-->
+    <!--            <div class="org-children-wrapper">-->
+    <!--                <t t-foreach="children" t-as="child" t-key="child['id']">-->
+    <!--                    <div class="org-node-wrapper">-->
+    <!--                        <div class="org-node" t-on-click="() => onChildClick(child['id'], this)">-->
+    <!--                            <img t-att-src="'/web/image/product.product/' + child['id'] + '/image_128'" alt="Child" class="org-node-img"/>-->
+    <!--                            <p class="org-node-name"><t t-esc="child['name']"/></p>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    <!--                </t>-->
+    <!--            </div>-->
+    <!--        </t>-->
+    <!--    </div>-->
+    <!--</t>-->
+    <!--<t t-name="atmta_real_estate.CustomerChartWidget">-->
+    <!--    <t t-set="parent" t-value="OrgState.data['parent']"/>-->
+    <!--    <t t-set="self" t-value="OrgState.data['self']"/>-->
+    <!--    <t t-set="children" t-value="OrgState.data['child']"/>-->
+
+    <!--    <style>-->
+    <!--        .org-chart-container {-->
+    <!--            font-family: "Inter", sans-serif;-->
+    <!--            display: flex;-->
+    <!--            flex-direction: column;-->
+    <!--            align-items: center;-->
+    <!--            padding: 40px 20px;-->
+    <!--        }-->
+
+    <!--        .org-title {-->
+    <!--            font-size: 18px;-->
+    <!--            font-weight: 600;-->
+    <!--            margin-bottom: 20px;-->
+    <!--            text-decoration: underline;-->
+    <!--        }-->
+
+    <!--        .org-node {-->
+    <!--            display: flex;-->
+    <!--            flex-direction: column;-->
+    <!--            align-items: center;-->
+    <!--            border: 1px solid #ccc;-->
+    <!--            border-radius: 10px;-->
+    <!--            background-color: #fff;-->
+    <!--            padding: 10px;-->
+    <!--            width: 120px;-->
+    <!--            box-shadow: 0 2px 6px rgba(0,0,0,0.1);-->
+    <!--            position: relative;-->
+    <!--            z-index: 2;-->
+    <!--        }-->
+
+    <!--        .org-node-img {-->
+    <!--            width: 80px;-->
+    <!--            height: 80px;-->
+    <!--            object-fit: cover;-->
+    <!--            border-radius: 8px;-->
+    <!--            background: #f0f0f0;-->
+    <!--            margin-bottom: 6px;-->
+    <!--        }-->
+
+    <!--        .org-node-name {-->
+    <!--            font-size: 14px;-->
+    <!--            font-weight: 500;-->
+    <!--            text-align: center;-->
+    <!--        }-->
+
+    <!--        .org-level {-->
+    <!--            display: flex;-->
+    <!--            justify-content: center;-->
+    <!--            align-items: center;-->
+    <!--            position: relative;-->
+    <!--        }-->
+
+    <!--        .org-line-down {-->
+    <!--            width: 2px;-->
+    <!--            height: 20px;-->
+    <!--            background-color: #ccc;-->
+    <!--            position: relative;-->
+    <!--            margin: 0 auto;-->
+    <!--        }-->
+
+    <!--        .org-children-wrapper {-->
+    <!--            position: relative;-->
+    <!--            display: flex;-->
+    <!--            justify-content: center;-->
+    <!--            margin-top: 20px;-->
+    <!--        }-->
+
+    <!--        /* Horizontal line connecting children */-->
+    <!--        .org-children-wrapper::before {-->
+    <!--            content: "";-->
+    <!--            position: absolute;-->
+    <!--            top: 0;-->
+    <!--            height: 2px;-->
+    <!--            background-color: #ccc;-->
+    <!--            left: calc(60px + 20px); /* node width / 2 + margin */-->
+    <!--            right: calc(60px + 20px);-->
+    <!--        }-->
+
+    <!--        .org-node-wrapper {-->
+    <!--            display: flex;-->
+    <!--            flex-direction: column;-->
+    <!--            align-items: center;-->
+    <!--            position: relative;-->
+    <!--            margin: 0 20px;-->
+    <!--        }-->
+
+    <!--        .org-node-wrapper::before {-->
+    <!--            content: "";-->
+    <!--            position: absolute;-->
+    <!--            top: -20px;-->
+    <!--            width: 2px;-->
+    <!--            height: 20px;-->
+    <!--            background-color: #ccc;-->
+    <!--            left: 50%;-->
+    <!--            transform: translateX(-50%);-->
+    <!--        }-->
+    <!--    </style>-->
+
+    <!--    <div class="org-chart-container">-->
+    <!--        <t t-if="parent or children.length">-->
+    <!--            <p class="org-title">HIERARCHY</p>-->
+    <!--        </t>-->
+
+    <!--        &lt;!&ndash; Parent &ndash;&gt;-->
+    <!--        <t t-if="parent">-->
+    <!--            <div class="org-level">-->
+    <!--                <div class="org-node" t-on-click="() => onChildClick(parent['id'], this)">-->
+    <!--                    <img t-att-src="'/web/image/product.product/' + parent['id'] + '/image_128'" class="org-node-img"/>-->
+    <!--                    <p class="org-node-name"><t t-esc="parent['name']"/></p>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="org-line-down"></div>-->
+    <!--        </t>-->
+
+    <!--        &lt;!&ndash; Self &ndash;&gt;-->
+    <!--        <t t-if="self">-->
+    <!--            <div class="org-level">-->
+    <!--                <div class="org-node">-->
+    <!--                    <img t-att-src="'/web/image/product.product/' + self['id'] + '/image_128'" class="org-node-img"/>-->
+    <!--                    <p class="org-node-name"><t t-esc="self['name']"/></p>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </t>-->
+
+    <!--        &lt;!&ndash; Children &ndash;&gt;-->
+    <!--        <t t-if="children.length">-->
+    <!--            <div class="org-children-wrapper">-->
+    <!--                <t t-foreach="children" t-as="child" t-key="child['id']">-->
+    <!--                    <div class="org-node-wrapper">-->
+    <!--                        <div class="org-node" t-on-click="() => onChildClick(child['id'], this)">-->
+    <!--                            <img t-att-src="'/web/image/product.product/' + child['id'] + '/image_128'" class="org-node-img"/>-->
+    <!--                            <p class="org-node-name"><t t-esc="child['name']"/></p>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    <!--                </t>-->
+    <!--            </div>-->
+    <!--        </t>-->
+    <!--    </div>-->
+    <!--</t>-->
+    <t t-name="atmta_real_estate.CustomerChartWidget">
+        <t t-set="parent" t-value="OrgState.data['parent']"/>
+        <t t-set="self" t-value="OrgState.data['self']"/>
+        <t t-set="children" t-value="OrgState.data['child']"/>
+
+        <style>
+            .org-chart-container {
+            font-family: "Inter", sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            }
+
+            .org-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-decoration: underline;
+            }
+
+            .org-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            padding: 10px;
+            width: 140px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 2;
+            }
+
+            .org-node-img {
+            width: 100px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            background: #f0f0f0;
+            margin-bottom: 6px;
+            }
+
+            .org-node-name {
+            font-size: 13px;
+            font-weight: 500;
+            text-align: center;
+            }
+
+            .org-level {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            }
+
+            .org-line-down {
+            width: 2px;
+            height: 30px;
+            background-color: #ccc;
+            margin: 0 auto;
+            }
+
+            .org-children-wrapper {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            margin-top: 0px;
+            padding-top: 20px;
+            }
+
+            .org-children-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: calc(50% - ((140px + 40px) * ((var(--child-count) - 1) / 2)));
+            width: calc(((140px + 40px) * (var(--child-count) - 1)));
+            height: 2px;
+            background-color: #ccc;
+            z-index: 1;
+            }
+
+            .org-node-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 20px;
+            position: relative;
+            }
+
+            .org-node-wrapper::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            width: 2px;
+            height: 20px;
+            background-color: #ccc;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            }
+        </style>
+
+        <div class="org-chart-container">
+            <t t-if="parent or children.length">
+                <p class="org-title">HIERARCHY</p>
+            </t>
+
+            <!-- Parent -->
+            <t t-if="parent">
+                <div class="org-level">
+                    <div class="org-node" t-on-click="() => onChildClick(parent['id'], this)">
+                        <img t-att-src="'/web/image/product.product/' + parent['id'] + '/image_128'"
+                             class="org-node-img"/>
+                        <p class="org-node-name">
+                            <t t-esc="parent['name']"/>
+                        </p>
+                    </div>
+                </div>
+                <div class="org-line-down"></div>
+            </t>
+
+            <!-- Self -->
+            <t t-if="self">
+                <div class="org-level">
+                    <div class="org-node">
+                        <img t-att-src="'/web/image/product.product/' + self['id'] + '/image_128'"
+                             class="org-node-img"/>
+                        <p class="org-node-name">
+                            <t t-esc="self['name']"/>
+                        </p>
+                    </div>
+                </div>
+            </t>
+
+            <!-- Children -->
+            <t t-if="children.length">
+                <div class="org-line-down"></div>
+                <div class="org-children-wrapper" t-att-style="'--child-count: ' + children.length">
+                    <t t-foreach="children" t-as="child" t-key="child['id']">
+                        <div class="org-node-wrapper">
+                            <div class="org-node" t-on-click="() => onChildClick(child['id'], this)">
+                                <img t-att-src="'/web/image/product.product/' + child['id'] + '/image_128'"
+                                     class="org-node-img"/>
+                                <p class="org-node-name">
+                                    <t t-esc="child['name']"/>
+                                </p>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </t>
+        </div>
+    </t>
+
+</templates>
