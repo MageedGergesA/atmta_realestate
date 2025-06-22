@@ -6,29 +6,85 @@
         <field name="arch" type="xml">
             <form string="Real Estate Contract">
                 <header>
-                    <button name="action_generate_payment_schedule"
+                    <button name="action_generate_payment_lines"
                             type="object"
                             string="Generate Payment Schedule"
-                            class="btn-primary"/>
-                    <field name="state" widget="statusbar"/>
+                            class="btn-info"
+                            invisible="state != 'draft'"/>
+
+                    <button name="action_confirm"
+                            type="object"
+                            string="Confirm Contract"
+                            class="btn-primary"
+                            invisible="state != 'ready'"/>
+
+                    <button name="action_generate_invoices"
+                            type="object"
+                            string="Create Invoices"
+                            class="btn-warning"
+                            invisible="state != 'confirmed'"/>
+
+                    <button name="action_activate"
+                            type="object"
+                            string="Activate"
+                            class="btn-success"
+                            invisible="state != 'invoiced'"/>
+
+                    <button name="action_terminate"
+                            type="object"
+                            string="Terminate"
+                            class="btn-danger"
+                            invisible="state != 'active'"/>
+
+                    <button name="action_reset_to_draft"
+                            type="object"
+                            string="Reset to Draft"
+                            class="btn-secondary"/>
+
+                    <field name="state"
+                           widget="statusbar"
+                           statusbar_visible="draft,ready,confirmed,invoiced,active,expired,terminated"/>
                 </header>
                 <sheet>
+                    <br/>
                     <div class="oe_button_box" name="button_box">
                         <button name="action_open_payments"
-                                icon="fa-pencil-square-o"
+                                icon="fa-line-chart"
                                 type="object"
-                                class="oe_stat_button"
+                                class="oe_stat_button m-1"
                                 invisible="payment_count == 0"
                         >
-                        <field string="Payments" name="payment_count" widget="statinfo"/>
+                            <field string="Payments" name="payment_count" widget="statinfo"/>
+                        </button>
+                        <button name="action_get_invoices"
+                                icon="fa-pencil-square-o"
+                                type="object"
+                                class="oe_stat_button m-1"
+                                invisible="payment_count == 0"
+                        >
+                            <field string="Invoices" name="invoice_count" widget="statinfo"/>
                         </button>
                     </div>
+                                        <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="True"/>
+                        </h1>
+                        <!--                        <hr/>-->
+                    </div>
+
                     <group>
-                        <field name="name"/>
-                        <field name="partner_id"/>
-                        <field name="start_date"/>
-                        <field name="end_date"/>
-                        <field name="notes"/>
+                        <group string="Contract Details" style="border-right:0.001rem solid #f5f5f5;">
+<!--                            <field name="name"/>-->
+                            <field name="partner_id"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="notes"/>
+                        </group>
+                        <group string="Financial Summary" col="4">
+                            <field name="total_scheduled" readonly="1"/>
+                            <field name="total_paid" readonly="1"/>
+                            <field name="balance_due" readonly="1"/>
+                        </group>
                     </group>
                     <notebook>
                         <page string="Contract Lines">
@@ -38,6 +94,8 @@
                                         <group col="2">
                                             <field name="contract_id"/>
                                             <field name="property_id"/>
+                                            <field name="start_date"/>
+                                            <field name="end_date"/>
                                             <field name="payment_plan_ids" widget="many2many_tags"/>
                                             <field name="price"/>
                                         </group>
@@ -49,13 +107,24 @@
 
                                 <list string="Contract Lines" editable="bottom">
                                     <field name="property_id"/>
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
                                     <field name="payment_plan_ids" widget="many2many_tags" options="{'no_create': True}"
                                            optional="show"/>
-                                    <field name="increment_rule_ids" widget="many2many_tags" options="{'no_create': True}"
+                                    <field name="increment_rule_ids" widget="many2many_tags"
+                                           options="{'no_create': True}"
                                            optional="show"/>
-                                    <field name="discount_rule_ids" widget="many2many_tags" options="{'no_create': True}"
+                                    <field name="discount_rule_ids" widget="many2many_tags"
+                                           options="{'no_create': True}"
                                            optional="show"/>
                                     <field name="price"/>
+                                    <field name="state" widget="badge"
+       decoration-success="state == 'active'"
+       decoration-danger="state in ('terminated', 'expired')"
+       decoration-info="state in ('confirmed', 'invoiced')"
+       decoration-warning="state == 'ready'"
+       decoration-muted="state == 'draft'" />
+
                                     <field name="notes"/>
                                 </list>
                             </field>

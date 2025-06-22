@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="ir_cron_check_contract_expiry" model="ir.cron">
+        <field name="name">Check Contract Expiry</field>
+        <field name="model_id" ref="model_realestate_contract"/>
+        <field name="state">code</field>
+        <field name="code">model.check_contract_expiry()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active">True</field>
+    </record>
+    <!--    -->
+    <record id="ir_cron_update_contract_line_status" model="ir.cron">
+        <field name="name">Update Contract Line Status</field>
+        <field name="model_id" ref="model_realestate_contract_line"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_update_line_statuses()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active">True</field>
+    </record>
+
+</odoo>

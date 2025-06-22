@@ -16,6 +16,7 @@ class RealEstateContractPayment(models.Model):
         ('paid', 'Paid'),
     ], default='draft', string="Status")
     move_id = fields.Many2one('account.move', string="Invoice")
+    move_state = fields.Selection(related='move_id.state', string="Invoice Status", store=True)
     increase_amount = fields.Float(string="Increase Amount", readonly=True)
     discount_amount = fields.Float(string="Discount Amount", readonly=True)
 
@@ -55,3 +56,29 @@ class RealEstateContractPayment(models.Model):
             prop_name = rec.contract_line_id.property_id.display_name or "Property"
             date_str = rec.date_due.strftime('%Y-%m-%d') if rec.date_due else 'N/A'
             rec.name = f"Rent for {prop_name} on {date_str}"
+
+    @api.depends('move_id.payment_state')
+    def _compute_state(self):
+        for rec in self:
+            if rec.move_id:
+                if rec.move_id.payment_state == 'paid':
+                    rec.state = 'paid'
+                elif rec.move_id.payment_state == 'not_paid':
+                    rec.state = 'invoiced'
+                else:
+                    rec.state = 'draft'
+            else:
+                rec.state = 'draft'
+
+
+    @api.depends('move_id.state', 'move_id.payment_state')
+    def _compute_payment_state(self):
+        for rec in self:
+            if not rec.move_id:
+                rec.state = 'draft'
+            elif rec.move_id.payment_state == 'paid':
+                rec.state = 'paid'
+            elif rec.move_id.state == 'posted':
+                rec.state = 'invoiced'
+            else:
+                rec.state = 'draft'

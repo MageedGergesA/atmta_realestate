@@ -7,7 +7,13 @@ class RealEstatePaymentPlan(models.Model):
     _description = 'Payment Plan Rule'
 
     # contract_line_id = fields.Many2one('realestate.contract.line', string="Contract Line", ondelete='cascade')
-    start_month = fields.Integer(string="Start After (Months)", required=True, tracking=True)
+    start_after = fields.Integer(string="Start After", required=True, default=0)
+    start_after_unit = fields.Selection([
+        ('day', 'Day(s)'),
+        ('week', 'Week(s)'),
+        ('month', 'Month(s)'),
+        ('year', 'Year(s)'),
+    ], string="Start After Unit", default='month', required=True)
     unit = fields.Selection([
         ('day', 'Days'),
         ('week', 'Weeks'),
@@ -18,9 +24,12 @@ class RealEstatePaymentPlan(models.Model):
 
     name = fields.Char(string="Label", compute="_compute_name", store=True, tracking=True)
 
-    @api.depends('interval', 'unit', 'start_month')
+    @api.depends('interval', 'unit', 'start_after', 'start_after_unit')
     def _compute_name(self):
         for rec in self:
-            unit_display = dict(rec._fields['unit'].selection).get(rec.unit, rec.unit)
-            month_str = f"starting from month {rec.start_month}" if rec.start_month else "from start"
-            rec.name = f"Pay Every {rec.interval} {unit_display.lower()}{'s' if rec.interval > 1 else ''} {month_str}"
+            interval_unit = dict(self._fields['unit'].selection).get(rec.unit, rec.unit)
+            start_unit = dict(self._fields['start_after_unit'].selection).get(rec.start_after_unit,
+                                                                              rec.start_after_unit)
+            stop_str = ""  # Optional, if you're later adding a stop_after field
+            rec.name = f"Pay every {rec.interval} {interval_unit.lower()}{'s' if rec.interval > 1 else ''}, " \
+                       f"starting after {rec.start_after} {start_unit.lower()}{'s' if rec.start_after != 1 else ''}{stop_str}"

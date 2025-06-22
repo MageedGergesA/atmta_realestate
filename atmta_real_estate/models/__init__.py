@@ -8,3 +8,4 @@ from . import payment_plans
 from . import contract_line
 from . import contract_payment
 from . import contract_increment_rule
+from . import account_move

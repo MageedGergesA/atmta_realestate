@@ -9,8 +9,17 @@
                 <field name="contract_id"/>
                 <field name="partner_id"/>
                 <field name="property_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
                 <field name="payment_plan_ids"/>
                 <field name="price"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-danger="state in ('terminated', 'expired')"
+                       decoration-info="state in ('confirmed', 'invoiced')"
+                       decoration-warning="state == 'ready'"
+                       decoration-muted="state == 'draft'"/>
+
             </list>
         </field>
     </record>
@@ -21,11 +30,23 @@
         <field name="model">realestate.contract.line</field>
         <field name="arch" type="xml">
             <form string="Contract Line" create="0" edit="0">
+                <header>
+                    <button name="action_terminate_line"
+                            type="object"
+                            string="Terminate"
+                            class="btn-danger"
+                            invisible="state != 'active'"/>
+                    <field name="state"
+                           widget="statusbar"
+                           statusbar_visible="draft,ready,confirmed,invoiced,active,expired,terminated"/>
+                </header>
                 <sheet>
                     <group col="2">
                         <field name="contract_id"/>
                         <field name="partner_id"/>
                         <field name="property_id"/>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
                         <field name="payment_plan_ids" widget="many2many_tags"/>
                         <field name="price"/>
                     </group>

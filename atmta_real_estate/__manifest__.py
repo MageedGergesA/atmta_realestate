@@ -25,11 +25,13 @@
         'views/property_product_views.xml',
         'views/contract_views.xml',
         'data/contract_sequence.xml',
+        'data/schedule_actions.xml',
         'views/payment_plan_views.xml',
         'views/contract_line_views.xml',
         'views/property_image.xml',
         'views/contract_payment_views.xml',
         'views/contract_increment_rule.xml',
+        'views/account_move.xml',
         'views/menus.xml',
     ],
     "assets":
