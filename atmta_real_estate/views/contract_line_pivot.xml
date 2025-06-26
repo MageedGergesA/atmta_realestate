@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<record id="view_realestate_contract_line_pivot" model="ir.ui.view">
+    <field name="name">realestate.report.contract.line.pivot</field>
+    <field name="model">realestate.report.contract.line</field>
+    <field name="arch" type="xml">
+        <pivot string="Contract Line Pivot Report">
+            <field name="partner_id" type="row"/>
+            <field name="contract_id" type="col"/>
+            <field name="property_id" type="col"/>
+            <field name="start_date" interval="month" type="col"/>
+            <field name="end_date" interval="month" type="col"/>
+            <field name="price" type="measure"/>
+        </pivot>
+    </field>
+</record><record id="action_contract_line_pivot" model="ir.actions.act_window">
+    <field name="name">Contract Line Report</field>
+    <field name="res_model">realestate.report.contract.line</field>
+    <field name="view_mode">pivot</field>
+    <field name="view_id" ref="view_realestate_contract_line_pivot"/>
+    <field name="view_mode">pivot</field>
+</record>
+
+</odoo>

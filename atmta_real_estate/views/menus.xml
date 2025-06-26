@@ -2,33 +2,91 @@
 <odoo>
 
     <!-- Root Menu -->
-    <menuitem id="real_estate_menu_root" name="Real Estate"/>
+    <menuitem id="real_estate_menu_root"
+              name="Real Estate"
+              action="atmta_real_estate.action_realestate_contract"
+              web_icon="atmta_real_estate,static/description/icon.png"/>
 
-    <!-- Property Management -->
-    <menuitem id="menu_real_estate_properties" name="Properties" parent="real_estate_menu_root" sequence="10"/>
+    <!-- Properties Section -->
+<!--    <menuitem id="menu_real_estate_properties"-->
+<!--              name="Properties"-->
+<!--              parent="real_estate_menu_root"-->
+<!--              sequence="10"/>-->
 
-    <menuitem id="menu_property_list" name="All Properties" parent="menu_real_estate_properties"
-              action="atmta_real_estate.action_property_view"/>
+    <menuitem id="menu_property_list"
+              name="All Properties"
+              parent="atmta_real_estate.real_estate_menu_root"
+              action="atmta_real_estate.action_property_view"
+              sequence="1"/>
 
-    <menuitem id="menu_property_type" name="Property Types" parent="menu_real_estate_properties"
-              action="atmta_real_estate.action_property_type"/>
+    <menuitem id="menu_property_type"
+              name="Property Types"
+              parent="atmta_real_estate.menu_real_estate_config"
+              action="atmta_real_estate.action_property_type"
+              sequence="2"/>
 
-    <!-- Contract Management -->
-    <menuitem id="menu_real_estate_contracts" name="Contracts" parent="real_estate_menu_root" sequence="20"/>
+    <!-- Contracts Section -->
+    <menuitem id="menu_real_estate_contracts"
+              name="Contracts"
+              parent="real_estate_menu_root"
+              sequence="20"/>
 
-    <menuitem id="menu_contract_list" name="All Contracts" parent="menu_real_estate_contracts"
-              action="atmta_real_estate.action_realestate_contract"/>
+    <menuitem id="menu_contract_list"
+              name="All Contracts"
+              parent="menu_real_estate_contracts"
+              action="atmta_real_estate.action_realestate_contract"
+              sequence="1"/>
 
-    <menuitem id="menu_contract_lines" name="Contract Units" parent="menu_real_estate_contracts"
-              action="atmta_real_estate.action_contract_line"/>
+    <menuitem id="menu_contract_lines"
+              name="Contract Units"
+              parent="menu_real_estate_contracts"
+              action="atmta_real_estate.action_contract_line"
+              sequence="2"/>
 
-    <menuitem id="menu_contract_payment" name="Scheduled Payments" parent="menu_real_estate_contracts"
-              action="atmta_real_estate.action_contract_payment"/>
+    <menuitem id="menu_contract_payment"
+              name="Scheduled Payments"
+              parent="menu_real_estate_contracts"
+              action="atmta_real_estate.action_contract_payment"
+              sequence="3"/>
 
-    <menuitem id="menu_payment_plan" name="Payment Plans" parent="menu_real_estate_contracts"
-              action="atmta_real_estate.action_payment_plan"/>
+    <!-- Configuration Section -->
+    <menuitem id="menu_real_estate_config"
+              name="Configuration"
+              parent="real_estate_menu_root"
+              sequence="30"/>
 
-    <menuitem id="menu_contract_increment_rule" name="Price Adjustment Rules" parent="menu_real_estate_contracts"
-              action="atmta_real_estate.action_contract_increment_rule"/>
+    <menuitem id="menu_payment_plan"
+              name="Payment Plans"
+              parent="menu_real_estate_config"
+              action="atmta_real_estate.action_payment_plan"
+              sequence="1"/>
+
+    <menuitem id="menu_contract_increment_rule"
+              name="Price Adjustment Rules"
+              parent="menu_real_estate_config"
+              action="atmta_real_estate.action_contract_increment_rule"
+              sequence="2"/>
+
+    <menuitem id="menu_real_estate_reports_root"
+              name="Reports"
+              parent="atmta_real_estate.real_estate_menu_root"
+              sequence="100"/>
+    <menuitem id="menu_contract_payment_pivot"
+              name="Contract Report"
+              parent="atmta_real_estate.menu_real_estate_reports_root"
+              action="atmta_real_estate.action_realestate_contract_pivot_report"
+              sequence="10"/>
+    <menuitem id="menu_utility_lines"
+          name="Utilities"
+          parent="atmta_real_estate.real_estate_menu_root"
+          action="atmta_real_estate.action_utility_lines"
+          sequence="50"/>
+
+    <menuitem id="menu_contract_line_report"
+          name="Contract Line Report"
+          parent="atmta_real_estate.menu_real_estate_reports_root"
+          action="atmta_real_estate.action_contract_line_pivot"
+          sequence="15"/>
+
 
 </odoo>

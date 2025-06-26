@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_unit_status_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+
+                <t t-foreach="docs" t-as="property">
+                    <div class="page">
+
+                        <!-- Header Section -->
+                        <div class="row" style="width: 100%; display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div style="flex: 1;" class="col-6">
+                                <h2 style="margin-bottom: 8px;">Unit Status Report</h2>
+                                <p style="margin: 4px 0; font-size: 14px;">
+                                    <strong>Name:</strong>
+                                    <t t-esc="property.name"/>
+                                </p>
+                                <p style="margin: 4px 0; font-size: 14px;">
+                                    <strong>Type:</strong>
+                                    <t t-esc="property.property_type_id.name or '-'"/>
+                                </p>
+                                <p style="margin: 4px 0; font-size: 14px;">
+                                    <strong>Manager:</strong>
+                                    <t t-esc="property.manager_id.name or '-'"/>
+                                </p>
+                                <p style="margin: 4px 0; font-size: 14px;">
+                                    <strong>Status:</strong>
+                                    <t t-esc="property.state"/>
+                                </p>
+                            </div>
+                            <div class="col-6" style="margin-top:50px; flex-shrink: 0; text-align: right;">
+                                <img t-att-src="'/web/image/product.product/' + str(property.id) + '/image_1920'" style="max-height: 100px; border-radius: 8px;"/>
+                            </div>
+                        </div>
+
+                        <!-- Rental Summary Section -->
+                        <div style="margin-top: 30px;">
+                            <h4 style="border-bottom: 1px solid #ccc; padding-bottom: 4px;">Rental Summary</h4>
+                            <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; font-weight: 500;">
+                                <tbody>
+                                    <tr>
+                                        <td style="padding: 8px 12px; border: 1px solid #ddd; text-align: center;">
+                                            Rental Count:
+                                        </td>
+                                        <td style="padding: 8px 12px; border: 1px solid #ddd;">
+                                            <t t-esc="property.rent_count"/>
+                                        </td>
+                                        <td style="padding: 8px 12px; border: 1px solid #ddd; text-align: center;">Total
+                                            Rented Months:
+                                        </td>
+                                        <td style="padding: 8px 12px; border: 1px solid #ddd;">
+                                            <t t-esc="property.total_rent_months"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px 12px; border: 1px solid #ddd; text-align: center;">
+                                            Actual Paid Months:
+                                        </td>
+                                        <td style="padding: 8px 12px; border: 1px solid #ddd;">
+                                            <t t-esc="property.actual_rent_months"/>
+                                        </td>
+                                        <td style="padding: 8px 12px; border: 1px solid #ddd; text-align: center;">
+                                            Revenue Collected:
+                                        </td>
+                                        <td style="padding: 8px 12px; border: 1px solid #ddd;">
+                                            <t t-esc="property.revenue_collected"/>
+                                            EGP
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px 12px; border: 1px solid #ddd; text-align: center;">
+                                            Revenue Expected:
+                                        </td>
+                                        <td style="padding: 8px 12px; border: 1px solid #ddd;">
+                                            <t t-esc="property.revenue_expected"/>
+                                            EGP
+                                        </td>
+                                        <td colspan="2" style="border: 1px solid #ddd;"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Contract History Table -->
+                        <div style="margin-top: 30px;">
+                            <h4 style="border-bottom: 1px solid #ccc; padding-bottom: 4px;">Contract History</h4>
+                            <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; font-weight: 500;">
+                                <thead style="background-color: #f5f5f5;">
+                                    <tr>
+                                        <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Contract
+                                        </th>
+                                        <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Tenant
+                                        </th>
+                                        <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Start</th>
+                                        <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">End</th>
+                                        <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Status
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="property.contract_history_ids" t-as="line">
+                                        <tr>
+                                            <td style="padding: 6px; border: 1px solid #ddd; text-align: center;">
+                                                <t t-esc="line.contract_id.name"/>
+                                            </td>
+                                            <td style="padding: 6px; border: 1px solid #ddd; text-align: center;">
+                                                <t t-esc="line.contract_id.partner_id.name"/>
+                                            </td>
+                                            <td style="padding: 6px; border: 1px solid #ddd; text-align: center;">
+                                                <t t-esc="line.start_date"/>
+                                            </td>
+                                            <td style="padding: 6px; border: 1px solid #ddd; text-align: center;">
+                                                <t t-esc="line.end_date"/>
+                                            </td>
+                                            <td style="padding: 6px; border: 1px solid #ddd; text-align: center;">
+                                                <t t-esc="line.state"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+    <record id="action_unit_status_report" model="ir.actions.report">
+        <field name="name">Unit Status Report</field>
+        <field name="model">product.product</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">atmta_real_estate.report_unit_status_template</field>
+        <field name="report_file">atmta_real_estate.report_unit_status_template</field>
+        <field name="binding_model_id" ref="model_product_product"/>
+        <field name="binding_type">action</field>
+        <field name="print_report_name">'Unit_Status_%s' % object.name</field>
+    </record>
+
+</odoo>

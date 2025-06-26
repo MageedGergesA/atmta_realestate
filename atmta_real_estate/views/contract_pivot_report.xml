@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<record id="view_realestate_contract_pivot_sql" model="ir.ui.view">
+    <field name="name">realestate.report.contract.pivot</field>
+    <field name="model">realestate.report.contract</field>
+    <field name="arch" type="xml">
+        <pivot string="Contract Payment Summary">
+            <field name="partner_id" type="row"/>
+            <field name="contract_id" type="col"/>
+            <field name="contract_line_id" type="col"/>
+            <field name="date_due" type="col" interval="month"/>
+            <field name="amount" type="measure"/>
+        </pivot>
+    </field>
+</record>
+
+    <record id="action_realestate_contract_pivot_report" model="ir.actions.act_window">
+    <field name="name">Contract Summary</field>
+    <field name="res_model">realestate.report.contract</field>
+    <field name="view_mode">pivot</field>
+    <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+            No contract data found.
+        </p>
+    </field>
+</record>
+
+</odoo>

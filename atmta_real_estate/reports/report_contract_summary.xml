@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<template id="report_contract_full">
+    <t t-call="web.html_container">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <!-- Header -->
+                <h2>Contract Report</h2>
+                <div style="margin-bottom: 10px;">
+                    <strong>Contract Name:</strong> <t t-esc="contract.name"/><br/>
+                    <strong>Tenant:</strong> <t t-esc="contract.partner_id.name"/><br/>
+                    <strong>Start Date:</strong> <t t-esc="contract.start_date"/><br/>
+                    <strong>End Date:</strong> <t t-esc="contract.end_date"/><br/>
+                    <strong>Status:</strong> <t t-esc="contract.state"/>
+                </div>
+
+                <!-- Contract Lines -->
+                <h4 style="margin-top:20px; border-bottom:1px solid #ccc;">Contract Units</h4>
+                <table class="table table-sm table-bordered" style="width: 100%; font-size: 12px;">
+                    <thead style="background-color: #f8f8f8;">
+                        <tr>
+                            <th>Unit</th>
+                            <th>Price</th>
+                            <th>Start</th>
+                            <th>End</th>
+                            <th>Status</th>
+                            <th>Payment Plans</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="contract.line_ids" t-as="line">
+                            <tr>
+                                <td><t t-esc="line.property_id.name"/></td>
+                                <td><t t-esc="line.price"/></td>
+                                <td><t t-esc="line.start_date"/></td>
+                                <td><t t-esc="line.end_date"/></td>
+                                <td><t t-esc="line.state"/></td>
+                                <td>
+                                    <t t-foreach="line.payment_plan_ids" t-as="plan">
+                                        <div><t t-esc="plan.name"/></div>
+                                    </t>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+
+                <!-- Totals -->
+                <h4 style="margin-top: 20px;">Summary</h4>
+                <ul>
+                    <li>Total Scheduled: <t t-esc="sum(p.amount for p in contract.payment_ids)"/> EGP</li>
+                    <li>Total Paid: <t t-esc="sum(p.amount for p in contract.payment_ids if p.state == 'paid')"/> EGP</li>
+                    <li>Remaining:
+                        <t t-esc="sum(p.amount for p in contract.payment_ids) - sum(p.amount for p in contract.payment_ids if p.state == 'paid')"/> EGP
+                    </li>
+                </ul>
+
+                <!-- Optional: Attachments or Notes -->
+                <t t-if="contract.notes">
+                    <h4>Notes</h4>
+                    <p t-esc="contract.notes"/>
+                </t>
+            </div>
+        </t>
+    </t>
+</template>
+    <record id="action_report_contract_full" model="ir.actions.report">
+        <field name="name">Contract Summary</field>
+        <field name="model">realestate.contract</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">atmta_real_estate.report_contract_full</field>
+        <field name="report_file">atmta_real_estate.report_contract_full</field>
+        <field name="binding_model_id" ref="model_realestate_contract"/>
+        <field name="binding_type">action</field>
+    </record>
+
+</odoo>

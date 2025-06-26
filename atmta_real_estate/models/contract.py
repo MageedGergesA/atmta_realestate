@@ -32,7 +32,12 @@ class RealEstateContract(models.Model):
     invoice_count = fields.Integer(compute='get_invoice_count', default=0)
     last_generated = fields.Datetime(string="Last Payment Generation", readonly=True)
     contract_payment_ids = fields.One2many('realestate.contract.payment', 'contract_id', string="Payments")
-
+    attachment_ids = fields.Many2many('ir.attachment', 'contract_attachment_rel', 'contract_id',
+                                      'attachment_contract_id', 'Attachments',
+                                      help="You may attach files to this template, to be added to all "
+                                           "emails created from this template")
+    is_renewed = fields.Boolean(string='Is Renewed Contract')
+    old_contract_id = fields.Many2one('realestate.contract', string='Old Contract')
     # New computed fields
     total_scheduled = fields.Monetary(
         string="Total Scheduled",
@@ -55,11 +60,25 @@ class RealEstateContract(models.Model):
         required=True
     )
 
+    utility_line_ids = fields.One2many('realestate.contract.utility.line', 'contract_id', string="Utilities")
+    total_utilities = fields.Monetary(string="Total Utilities", compute='_compute_utilities')
+    paid_utilities = fields.Monetary(string="Paid Utilities", compute='_compute_utilities')
+    net_income = fields.Monetary(string="Net Income", compute='_compute_utilities')
+
+    @api.depends('utility_line_ids.amount', 'utility_line_ids.bill_paid')
+    def _compute_utilities(self):
+        for contract in self:
+            utilities = contract.utility_line_ids
+            contract.total_utilities = sum(utilities.mapped('amount'))
+            contract.paid_utilities = sum(utilities.filtered(lambda l: l.bill_paid).mapped('amount'))
+            contract.net_income = contract.total_paid - contract.paid_utilities
+
     def action_generate_payment_lines(self):
         self.ensure_one()
         self.action_generate_payment_schedule()
-        self.state = 'ready'
-        self.line_ids.write({'state':'ready'})
+        if self.payment_ids:
+            self.state = 'ready'
+            self.line_ids.write({'state':'ready'})
 
     def action_reset_to_draft(self):
         for contract in self:
@@ -78,8 +97,9 @@ class RealEstateContract(models.Model):
         if self.state != 'confirmed':
             raise UserError("You must confirm the contract before generating invoices.")
         self.action_create_invoices()
-        self.state = 'invoiced'
-        self.line_ids.write({'state':'invoiced'})
+        if self.move_ids:
+            self.state = 'invoiced'
+            self.line_ids.write({'state':'invoiced'})
 
 
     def action_activate(self):
@@ -100,23 +120,30 @@ class RealEstateContract(models.Model):
         for contract in self:
             if contract.state not in ['confirmed', 'invoiced', 'active']:
                 raise UserError("Only confirmed, invoiced, or active contracts can be terminated.")
+
+            # Cancel only draft invoices
+            draft_moves = contract.contract_payment_ids.mapped('move_id').filtered(lambda m: m.state == 'draft')
+            for move in draft_moves:
+                move.button_cancel()
+
+            # Update contract and its lines
             contract.state = 'terminated'
-            contract.line_ids.filtered(lambda l: l.state not in ['expired']).write({'state': 'terminated'})
+            contract.line_ids.filtered(lambda l: l.state != 'expired').write({'state': 'terminated'})
 
     def check_contract_expiry(self):
         for contract in self.search([('state', '=', 'active')]):
             if contract.end_date and contract.end_date < fields.Date.today():
                 contract.state = 'expired'
 
-    @api.depends('contract_payment_ids.amount', 'contract_payment_ids.state',
-                 'contract_payment_ids.move_id.amount_total', 'contract_payment_ids.move_id.payment_state')
+    @api.depends('contract_payment_ids.amount', 'contract_payment_ids.move_state',
+                 'contract_payment_ids.move_id.amount_total', 'contract_payment_ids.move_id.state')
     def _compute_totals(self):
         for contract in self:
             scheduled = 0.0
             paid = 0.0
             for line in contract.contract_payment_ids:
                 scheduled += line.amount or 0.0
-                if line.move_id and line.move_id.payment_state == 'paid':
+                if line.move_id and line.move_id.state == 'posted':
                     paid += line.amount or 0.0
             contract.total_scheduled = scheduled
             contract.total_paid = paid
@@ -315,3 +342,6 @@ class RealEstateContract(models.Model):
             'view_mode': 'list,form',
             'domain': [('contract_id', '=', self.id)],
         }
+
+    def contract_xlsx_report(self):
+        print('hello')

@@ -6,19 +6,26 @@
         <field name="model">realestate.contract.line</field>
         <field name="arch" type="xml">
             <list create="0" edit="0">
-                <field name="contract_id"/>
-                <field name="partner_id"/>
-                <field name="property_id"/>
-                <field name="start_date"/>
-                <field name="end_date"/>
-                <field name="payment_plan_ids"/>
-                <field name="price"/>
+                <field name="contract_id" optional="show"/>
+                <field name="partner_id" optional="show"/>
+                <field name="property_id" optional="show"/>
+                <field name="start_date" optional="show"/>
+                <field name="end_date" optional="show"/>
+                <field name="payment_plan_ids" widget="many2many_tags" options="{'no_create': True}"
+                       optional="show"/>
+                <field name="increment_rule_ids" widget="many2many_tags"
+                       options="{'no_create': True}"
+                       optional="show"/>
+                <field name="discount_rule_ids" widget="many2many_tags"
+                       options="{'no_create': True}"
+                       optional="show"/>
+                <field name="price" optional="show"/>
                 <field name="state" widget="badge"
                        decoration-success="state == 'active'"
                        decoration-danger="state in ('terminated', 'expired')"
                        decoration-info="state in ('confirmed', 'invoiced')"
                        decoration-warning="state == 'ready'"
-                       decoration-muted="state == 'draft'"/>
+                       decoration-muted="state == 'draft'" optional="show"/>
 
             </list>
         </field>
@@ -41,16 +48,34 @@
                            statusbar_visible="draft,ready,confirmed,invoiced,active,expired,terminated"/>
                 </header>
                 <sheet>
-                    <group col="2">
-                        <field name="contract_id"/>
-                        <field name="partner_id"/>
-                        <field name="property_id"/>
-                        <field name="start_date"/>
-                        <field name="end_date"/>
-                        <field name="payment_plan_ids" widget="many2many_tags"/>
-                        <field name="price"/>
+                    <group col="2" string="Contract Unit Details">
+                        <field name="contract_id" string="Contract"/>
+                        <field name="partner_id" string="Customer"/>
+                        <field name="property_id" string="Unit"/>
+                        <field name="price" string="Base Price"/>
+                        <field name="start_date" string="Start Date"/>
+                        <field name="end_date" string="End Date"/>
                     </group>
-                    <group>
+
+                    <group string="Payment &amp; Price Rules" col="2">
+                        <field name="payment_plan_ids"
+                               string="Payment Plans"
+                               widget="many2many_tags"
+                               options="{'no_create': True}"
+                               optional="show"/>
+                        <field name="increment_rule_ids"
+                               string="Increment Rules"
+                               widget="many2many_tags"
+                               options="{'no_create': True}"
+                               optional="show"/>
+                        <field name="discount_rule_ids"
+                               string="Discount Rules"
+                               widget="many2many_tags"
+                               options="{'no_create': True}"
+                               optional="show"/>
+                    </group>
+
+                    <group string="Notes">
                         <field name="notes"/>
                     </group>
                 </sheet>
@@ -58,11 +83,23 @@
             </form>
         </field>
     </record>
+<record id="view_contract_line_pivot" model="ir.ui.view">
+    <field name="name">realestate.contract.line.pivot</field>
+    <field name="model">realestate.contract.line</field>
+    <field name="arch" type="xml">
+        <pivot string="Contract Units">
+            <field name="contract_id" type="row"/>
+            <field name="property_id" type="row"/>
+            <field name="state" type="col"/>
+            <field name="price" type="measure"/>
+        </pivot>
+    </field>
+</record>
 
     <record id="action_contract_line" model="ir.actions.act_window">
         <field name="name">Contract Lines</field>
         <field name="res_model">realestate.contract.line</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">list,form,pivot</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Create and manage individual property contract lines.

@@ -65,7 +65,7 @@
                             <field string="Invoices" name="invoice_count" widget="statinfo"/>
                         </button>
                     </div>
-                                        <div class="oe_title">
+                    <div class="oe_title">
                         <h1>
                             <field name="name" readonly="True"/>
                         </h1>
@@ -73,19 +73,27 @@
                     </div>
 
                     <group>
-                        <group string="Contract Details" style="border-right:0.001rem solid #f5f5f5;">
-<!--                            <field name="name"/>-->
+                        <!-- Contract Details -->
+                        <group string="Contract Details" col="2"
+                               style="padding-right: 16px; border-right: 1px solid #f0f0f0;">
                             <field name="partner_id"/>
                             <field name="start_date"/>
                             <field name="end_date"/>
                             <field name="notes"/>
                         </group>
-                        <group string="Financial Summary" col="4">
+
+                        <!-- Financial Summary -->
+                        <group string="Financial Summary" col="2" style="padding-left: 16px;">
                             <field name="total_scheduled" readonly="1"/>
                             <field name="total_paid" readonly="1"/>
                             <field name="balance_due" readonly="1"/>
+                            <hr/>
+                            <field name="is_renewed" widget="boolean_toggle"/>
+                            <field name="old_contract_id" invisible="is_renewed == False"/>
                         </group>
                     </group>
+                    <br/>
+                    <br/>
                     <notebook>
                         <page string="Contract Lines">
                             <field name="line_ids" widget="sol_o2m" mode="list,kanban">
@@ -106,9 +114,10 @@
                                 </form>
 
                                 <list string="Contract Lines" editable="bottom">
-                                    <field name="property_id"/>
-                                    <field name="start_date"/>
-                                    <field name="end_date"/>
+                                    <field name="property_id" optional="show"/>
+                                    <field name="property_type_id" optional="show"/>
+                                    <field name="start_date" optional="show"/>
+                                    <field name="end_date" optional="show"/>
                                     <field name="payment_plan_ids" widget="many2many_tags" options="{'no_create': True}"
                                            optional="show"/>
                                     <field name="increment_rule_ids" widget="many2many_tags"
@@ -119,18 +128,46 @@
                                            optional="show"/>
                                     <field name="price"/>
                                     <field name="state" widget="badge"
-       decoration-success="state == 'active'"
-       decoration-danger="state in ('terminated', 'expired')"
-       decoration-info="state in ('confirmed', 'invoiced')"
-       decoration-warning="state == 'ready'"
-       decoration-muted="state == 'draft'" />
+                                           decoration-success="state == 'active'"
+                                           decoration-danger="state in ('terminated', 'expired')"
+                                           decoration-info="state in ('confirmed', 'invoiced')"
+                                           decoration-warning="state == 'ready'"
+                                           decoration-muted="state == 'draft'"/>
 
                                     <field name="notes"/>
                                 </list>
                             </field>
                         </page>
+                        <page string="Utilities">
+                            <field name="utility_line_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="date"/>
+                                    <field name="amount"/>
+                                    <field name="bill_id"/>
+                                    <field name="bill_paid" readonly="1"/>
+                                </list>
+                            </field>
+
+                            <group>
+                                <field name="total_utilities" readonly="1"/>
+                                <field name="paid_utilities" readonly="1"/>
+                                <field name="net_income" readonly="1"/>
+                            </group>
+                        </page>
+
+                        <page string="Attachments">
+                            <group string="Attachments">
+                                <div class="d-flex align-items-center gap-3">
+                                    <field name="attachment_ids" widget="many2many_binary" class="m-0"/>
+                                </div>
+                            </group>
+                        </page>
                     </notebook>
+                    <br/>
                 </sheet>
+                <div class="o_attachment_preview"/>
+
                 <chatter/>
             </form>
         </field>
@@ -141,18 +178,151 @@
         <field name="model">realestate.contract</field>
         <field name="arch" type="xml">
             <list>
-                <field name="name"/>
-                <field name="partner_id"/>
-                <field name="start_date"/>
-                <field name="end_date"/>
-                <field name="state"/>
+                <header>
+                    <button name="contract_xlsx_report" type="object" string="Print XlSX Report" class="btn-primary"/>
+                </header>
+                <field name="name" optional="show"/>
+                <field name="partner_id" optional="show"/>
+                <field name="start_date" optional="show"/>
+                <field name="end_date" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-danger="state in ('terminated', 'expired')"
+                       decoration-info="state in ('confirmed', 'invoiced')"
+                       decoration-warning="state == 'ready'"
+                       decoration-muted="state == 'draft'" optional="show"/>
+                <field name="is_renewed" optional="show"/>
+
             </list>
         </field>
     </record>
 
+    <record id="view_contract_pivot" model="ir.ui.view">
+        <field name="name">realestate.contract.pivot</field>
+        <field name="model">realestate.contract</field>
+        <field name="arch" type="xml">
+            <pivot string="Contracts">
+                <field name="state" type="row"/>
+                <field name="partner_id" type="row"/>
+                <field name="start_date" type="col"/>
+                <field name="total_scheduled" type="measure"/>
+                <field name="total_paid" type="measure"/>
+                <field name="balance_due" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!--    <record id="view_realestate_contract_kanban" model="ir.ui.view">-->
+    <!--        <field name="name">realestate.contract.kanban</field>-->
+    <!--        <field name="model">realestate.contract</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <kanban class="o_kanban_example">-->
+    <!--                <field name="name"/>-->
+    <!--                <field name="partner_id"/>-->
+    <!--                <field name="state"/>-->
+    <!--                <field name="start_date"/>-->
+    <!--                <field name="end_date"/>-->
+
+    <!--                <templates>-->
+    <!--                    <t t-name="kanban-box">-->
+    <!--                        <div class="o_kanban_record">-->
+    <!--                            <div class="o_kanban_primary_left">-->
+    <!--                                <strong>-->
+    <!--                                    <field name="name"/>-->
+    <!--                                </strong>-->
+    <!--                                <br/>-->
+    <!--                                <span>-->
+    <!--                                    <field name="partner_id"/>-->
+    <!--                                </span>-->
+    <!--                                <br/>-->
+    <!--                                <span>-->
+    <!--                                    <field name="start_date"/>-->
+    <!--                                    →-->
+    <!--                                    <field name="end_date"/>-->
+    <!--                                </span>-->
+    <!--                            </div>-->
+
+    <!--                            <div class="o_kanban_primary_right">-->
+    <!--                                <span class="badge badge-pill"-->
+    <!--                                      t-attf-class="badge badge-#{record.state.raw_value}">-->
+    <!--                                    <field name="state" widget="badge"-->
+    <!--                                           decoration-success="state == 'active'"-->
+    <!--                                           decoration-danger="state in ('terminated', 'expired')"-->
+    <!--                                           decoration-info="state in ('confirmed', 'invoiced')"-->
+    <!--                                           decoration-warning="state == 'ready'"-->
+    <!--                                           decoration-muted="state == 'draft'" optional="show"/>-->
+    <!--                                </span>-->
+    <!--                            </div>-->
+    <!--                        </div>-->
+    <!--                    </t>-->
+    <!--                </templates>-->
+    <!--            </kanban>-->
+    <!--        </field>-->
+    <!--    </record>-->
+    <record id="view_realestate_contract_kanban" model="ir.ui.view">
+        <field name="name">realestate.contract.kanban</field>
+        <field name="model">realestate.contract</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_realestate_contract" default_order="start_date desc">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="state"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_card shadow rounded p-2"
+                             t-att-style="
+            'border-left: 5px solid ' + (
+                record.state.raw_value == 'active' and '#28a745' or
+                record.state.raw_value == 'terminated' and '#dc3545' or
+                record.state.raw_value == 'expired' and '#dc3545' or
+                record.state.raw_value == 'confirmed' and '#0d6efd' or
+                record.state.raw_value == 'invoiced' and '#0d6efd' or
+                record.state.raw_value == 'ready' and '#ffc107' or
+                record.state.raw_value == 'draft' and '#6c757d' or
+                '#dee2e6'
+            )
+        ">
+                            <div class="d-flex justify-content-between mb-2">
+                                <strong class="text-primary fs-5">
+                                    <field name="name"/>
+                                </strong>
+                                <span t-attf-class="badge rounded-pill bg-#{record.state.raw_value}">
+                                    <field name="state" widget="badge"
+                                           decoration-success="state == 'active'"
+                                           decoration-danger="state in ('terminated', 'expired')"
+                                           decoration-info="state in ('confirmed', 'invoiced')"
+                                           decoration-warning="state == 'ready'"
+                                           decoration-muted="state == 'draft'" optional="show"/>
+                                </span>
+                            </div>
+
+                            <div class="text-muted small mb-1">
+                                Tenant:
+                                <span class="text-dark fw-bold">
+                                    <field name="partner_id"/>
+                                </span>
+                            </div>
+
+                            <div class="text-muted small">
+                                <i class="fa fa-calendar me-1 text-info"/>
+                                <field name="start_date"/>
+                                →
+                                <field name="end_date"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
     <record id="action_realestate_contract" model="ir.actions.act_window">
         <field name="name">Contracts</field>
         <field name="res_model">realestate.contract</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">kanban,list,form,pivot</field>
     </record>
 </odoo>

@@ -14,6 +14,7 @@ class RealEstateContractPayment(models.Model):
         ('draft', 'Unpaid'),
         ('invoiced', 'Invoiced'),
         ('paid', 'Paid'),
+        ('cancelled', 'Cancelled'),
     ], default='draft', string="Status")
     move_id = fields.Many2one('account.move', string="Invoice")
     move_state = fields.Selection(related='move_id.state', string="Invoice Status", store=True)

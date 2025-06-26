@@ -9,3 +9,6 @@ from . import contract_line
 from . import contract_payment
 from . import contract_increment_rule
 from . import account_move
+from . import contract_pivot_report
+from . import contract_line_pivot
+from . import contract_utility_line

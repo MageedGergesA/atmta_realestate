@@ -11,6 +11,7 @@ class RealEstateContractLine(models.Model):
     contract_id = fields.Many2one('realestate.contract', string="Contract", required=True, ondelete='cascade')
     partner_id = fields.Many2one(related='contract_id.partner_id', string='Tenant/Partner')
     property_id = fields.Many2one('product.product', string="Property", domain="[('is_property', '=', True)]", required=True)
+    property_type_id = fields.Many2one(related='property_id.property_type_id', string='Property Type')
     payment_plan_ids = fields.Many2many(
         'realestate.payment.plan',
         'rel_contract_line_payment_plan',  # relation table name
@@ -90,3 +91,73 @@ class RealEstateContractLine(models.Model):
             if line.start_date > line.end_date:
                 raise ValidationError(_("Line start date must be before end date."))
 
+    @api.constrains('property_id', 'start_date', 'end_date', 'state')
+    def _check_overlapping_contracts(self):
+        for line in self:
+            if not line.start_date or not line.end_date or not line.property_id:
+                continue
+
+            overlapping_lines = self.search([
+                ('id', '!=', line.id),
+                ('property_id', '=', line.property_id.id),
+                ('start_date', '<=', line.end_date),
+                ('end_date', '>=', line.start_date),
+                ('state', 'in', ['confirmed', 'invoiced', 'active']),  # Active or upcoming
+            ])
+            if overlapping_lines:
+                raise ValidationError(
+                    f"The property '{line.property_id.name}' is already assigned to another contract "
+                    f"from {overlapping_lines[0].start_date} to {overlapping_lines[0].end_date}."
+                )
+
+    def _update_property_state(self):
+        for line in self:
+            if not line.property_id:
+                continue
+
+            overlapping_lines = self.search([
+                ('id', '!=', line.id),
+                ('property_id', '=', line.property_id.id),
+                ('state', 'in', ['confirmed', 'invoiced', 'active']),
+            ])
+
+            if line.state in ['confirmed', 'invoiced', 'active']:
+                line.property_id.state = 'rented'
+            elif not overlapping_lines:
+                # No active lines left on this property
+                line.property_id.state = 'available'
+
+    @api.onchange('state')
+    def _on_state_change(self):
+        self._update_property_state()
+
+    @api.model
+    def create(self, vals):
+        res = super().create(vals)
+        res._update_property_state()
+        return res
+
+    def write(self, vals):
+        res = super().write(vals)
+        self._update_property_state()
+        return res
+
+    def cron_update_contract_line_states(self):
+        today = fields.Date.today()
+
+        lines_to_expire = self.search([
+            ('state', 'in', ['confirmed', 'invoiced', 'active']),
+            ('end_date', '<', today),
+        ])
+        lines_to_expire.write({'state': 'expired'})
+
+        # Update property availability
+        properties = lines_to_expire.mapped('property_id')
+        for prop in properties:
+            active_lines = self.search_count([
+                ('property_id', '=', prop.id),
+                ('state', 'in', ['confirmed', 'invoiced', 'active']),
+                ('end_date', '>=', today),
+            ])
+            if not active_lines:
+                prop.state = 'available'

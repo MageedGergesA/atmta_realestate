@@ -3,7 +3,7 @@
     <record id="view_property_form" model="ir.ui.view">
         <field name="name">product.product.realestate.form</field>
         <field name="model">product.product</field>
-        <field name="priority" eval="100"/>
+        <field name="priority" eval="1"/>
         <field name="arch" type="xml">
             <form>
                 <header>
@@ -11,8 +11,7 @@
                 </header>
 
                 <sheet>
-                    <field name="image_1920" widget="image" class="oe_avatar"
-                           options="{'convert_to_webp': True,'preview_image': 'image_128'}"/>
+                    <field name="image_1920" widget="image" class="oe_avatar"/>
                     <group>
                         <group>
                             <field name="name"/>
@@ -87,8 +86,47 @@
                                 </group>
                             </group>
                         </page>
+                        <page string="Contract History">
+                            <field name="contract_history_ids">
+                                <list create="0" edit="0">
+                                    <field name="contract_id" optional="show"/>
+                                    <field name="partner_id" optional="show"/>
+                                    <!--                                    <field name="property_id" optional="show"/>-->
+                                    <field name="start_date" optional="show"/>
+                                    <field name="end_date" optional="show"/>
+                                    <field name="payment_plan_ids" widget="many2many_tags" options="{'no_create': True}"
+                                           optional="show"/>
+                                    <field name="increment_rule_ids" widget="many2many_tags"
+                                           options="{'no_create': True}"
+                                           optional="show"/>
+                                    <field name="discount_rule_ids" widget="many2many_tags"
+                                           options="{'no_create': True}"
+                                           optional="show"/>
+                                    <field name="price" optional="show"/>
+                                    <field name="state" widget="badge"
+                                           decoration-success="state == 'active'"
+                                           decoration-danger="state in ('terminated', 'expired')"
+                                           decoration-info="state in ('confirmed', 'invoiced')"
+                                           decoration-warning="state == 'ready'"
+                                           decoration-muted="state == 'draft'" optional="show"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Rental Stats">
+                            <group col="2">
+                                <group string="Rental History">
+                                    <field name="rent_count" readonly="1"/>
+                                    <field name="total_rent_months" readonly="1"/>
+                                    <field name="actual_rent_months" readonly="1"/>
+                                </group>
+                                <group string="Revenue Summary">
+                                    <field name="revenue_collected" readonly="1"/>
+                                    <field name="revenue_expected" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
 
-                        <page string="Attachments &amp; Media">
+                        <page string="Media">
                             <group string="Images and Videos">
                                 <field
                                         name="property_Attachment_media_ids"
@@ -102,9 +140,19 @@
                                 />
                             </group>
                         </page>
+                        <page string="Attachments">
+                            <group string="Attachments">
+                                <div class="d-flex align-items-center gap-3">
+                                    <field name="attachment_ids" widget="many2many_binary" class="m-0"/>
+                                </div>
+                            </group>
+                        </page>
                     </notebook>
                 </sheet>
+
                 <chatter/>
+                <div class="o_attachment_preview"/>
+
             </form>
         </field>
     </record>
@@ -187,13 +235,99 @@
             </hierarchy>
         </field>
     </record>
+    <record id="view_realestate_property_graph" model="ir.ui.view">
+        <field name="name">product.product.graph</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <graph string="Property Rent Summary" type="bar">
+                <field name="name" type="row"/>
+                <field name="revenue_collected" type="measure"/>
+                <field name="revenue_expected" type="measure"/>
+                <field name="total_rent_months" type="measure"/>
+                <field name="actual_rent_months" type="measure"/>
+            </graph>
+        </field>
+    </record>
 
+    <record id="property_product_kanban_view" model="ir.ui.view">
+        <field name="name">Property Product Kanban</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <kanban sample="1">
+                <field name="activity_state"/>
+                <field name="color"/>
+                <progressbar field="activity_state"
+                             colors='{"planned": "success", "today": "warning", "overdue": "danger"}'/>
+                <templates>
+                    <t t-name="card"
+                       t-attf-style="border-left: 6px solid #{
+                            record.state.raw_value == 'rented' and 'var(--success)' or
+                            record.state.raw_value == 'available' and 'var(--info)' or
+                            record.state.raw_value == 'inactive' and 'var(--danger)' or
+                            record.state.raw_value == 'maintenance' and 'var(--warning)' or
+                            '#dee2e6'
+                         }"
+                       class="o_kanban_card bg-light shadow-sm rounded d-flex justify-content-between align-items-justify p-2">
+                        <aside class="o_kanban_aside">
+                            <t t-if="record.image_1920">
+                                <field name="image_1920" widget="background_image" class="d-block position-relative"/>
+                            </t>
+                        </aside>
+
+                        <div class="flex-grow-1 w-100 d-flex flex-column justify-content-between mt-1" t-attf-style="border-left: 2px solid #{
+                            record.state.raw_value == 'rented' and 'var(--success)' or
+                            record.state.raw_value == 'available' and 'var(--info)' or
+                            record.state.raw_value == 'inactive' and 'var(--danger)' or
+                            record.state.raw_value == 'maintenance' and 'var(--warning)' or
+                            '#dee2e6'
+                         }; border-bottom: 2px solid #{
+                            record.state.raw_value == 'rented' and 'var(--success)' or
+                            record.state.raw_value == 'available' and 'var(--info)' or
+                            record.state.raw_value == 'inactive' and 'var(--danger)' or
+                            record.state.raw_value == 'maintenance' and 'var(--warning)' or
+                            '#dee2e6'
+                         }">
+                            <div class="p-1">
+                                <div class="d-flex">
+                                    <div class="justify-content-end m-2">
+                                        <field name="is_favorite" widget="boolean_favorite" nolabel="1"/>
+                                    </div>
+                                    <div class="justify-content-start fw-bold text-primary fs-5 mb-1 m-2">
+                                        <field name="name"/>
+                                    </div>
+                                </div>
+                                <t t-if="record.default_code.value">
+                                    <div class="text-muted small mb-2">Code:
+                                        <field name="default_code"/>
+                                    </div>
+                                </t>
+                                <div class="d-flex flex-wrap gap-2 mt-auto">
+                                    <field name="property_type_id"
+                                           widget="badge"
+                                           decoration-success="property_type_id != False"
+                                           class="badge bg-success text-white"/>
+
+                                    <field name="state"
+                                           widget="badge"
+                                           decoration-success="state in 'rented'"
+                                           decoration-danger="state in ('inactive', 'maintenance')"
+                                           decoration-info="state in ('available')"
+                                           decoration-warning="state == 'reserved'"
+                                           class="badge"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
 
     <record id="action_property_view" model="ir.actions.act_window">
         <field name="name">Properties</field>
         <field name="res_model">product.product</field>
-        <field name="view_mode">list,form,hierarchy</field>
-        <field name="view_ids" eval="[(5, 0, 0), (0, 0, {'view_mode': 'list', 'view_id': ref('atmta_real_estate.view_property_list')}),
+        <field name="view_mode">kanban,list,form,graph,hierarchy</field>
+        <field name="view_ids" eval="[(5, 0, 0),(0, 0, {'view_mode': 'kanban', 'view_id': ref('atmta_real_estate.property_product_kanban_view')}), (0, 0, {'view_mode': 'list', 'view_id': ref('atmta_real_estate.view_property_list')}),
                     (0, 0, {'view_mode': 'form', 'view_id': ref('atmta_real_estate.view_property_form')})]"/>
         <field name="context">
             {"search_default_property":1,"default_type":"service","default_is_property":True,"default_detailed_type":"service"}

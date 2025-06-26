@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="ir_cron_contract_line_expiry" model="ir.cron">
+        <field name="name">Contract Line Auto Expiry</field>
+        <field name="model_id" ref="model_realestate_contract_line"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_update_contract_line_states()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active">True</field>
+    </record>
+</odoo>

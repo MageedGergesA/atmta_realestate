@@ -1,3 +1,5 @@
+from dateutil.relativedelta import relativedelta
+
 from odoo import models, fields, api
 
 
@@ -6,6 +8,7 @@ class ProductProduct(models.Model):
     _parent_store = True
 
     # Property identity
+    property_image = fields.Binary(string='Image')
     is_property = fields.Boolean(string="Is Property", tracking=True)
     property_ref = fields.Char(string="Property Reference", tracking=True)
     property_number = fields.Char(string="Property Number", tracking=True)
@@ -54,6 +57,11 @@ class ProductProduct(models.Model):
         inverse_name='product_variant_id',
         copy=True,
     )
+    attachment_ids = fields.Many2many('ir.attachment', 'product_attachment_rel', 'product_id',
+                                      'attachment_id', 'Attachments',
+                                      help="You may attach files to this template, to be added to all "
+                                           "emails created from this template")
+    contract_history_ids = fields.One2many('realestate.contract.line', 'property_id', string='Contract Histtory')
     parent_id = fields.Many2one(
         'product.product',
         string="Parent Property",
@@ -136,3 +144,50 @@ class ProductProduct(models.Model):
             self.is_parent_child = True
         print(f';;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; {res}')
         return res
+
+    rent_count = fields.Integer(string="Times Rented", compute="_compute_rent_stats")
+    total_rent_months = fields.Float(string="Total Rental Duration (Months)", compute="_compute_rent_stats")
+    actual_rent_months = fields.Integer(string="Actual Rent Months", compute="_compute_rent_stats", store=True)
+    revenue_collected = fields.Monetary(string="Revenue Collected", compute="_compute_rent_stats")
+    revenue_expected = fields.Monetary(string="Total Expected Revenue", compute="_compute_rent_stats")
+
+    currency_id = fields.Many2one('res.currency', string="Currency", required=True,
+                                  default=lambda self: self.env.company.currency_id)
+
+    @api.depends('contract_history_ids', 'contract_history_ids.contract_id.payment_ids.state')
+    def _compute_rent_stats(self):
+        for property in self:
+            rent_count = 0
+            total_months = 0
+            actual_months = 0
+            revenue_collected = 0.0
+            revenue_expected = 0.0
+
+            for line in property.contract_history_ids.filtered(lambda l: l.property_id == property):
+                rent_count += 1
+
+                # Duration in months (from start to end)
+                if line.start_date and line.end_date:
+                    month_count = (line.end_date.year - line.start_date.year) * 12 + (
+                                line.end_date.month - line.start_date.month)
+                    if line.end_date.day >= line.start_date.day:
+                        month_count += 1
+                    total_months += month_count
+
+                # Related payments (only for this line)
+                payments = line.contract_id.payment_ids.filtered(lambda p: p.contract_line_id == line)
+
+                # Paid months (count of unique months with 'paid' payments)
+                paid_dates = payments.filtered(lambda p: p.move_state == 'posted').mapped('date_due')
+                unique_months = {(d.year, d.month) for d in paid_dates if d}
+                actual_months += len(unique_months)
+
+                # Revenue
+                revenue_collected += sum(p.amount for p in payments if p.move_state == 'posted')
+                revenue_expected += sum(p.amount for p in payments)
+
+            property.rent_count = rent_count
+            property.total_rent_months = total_months
+            property.actual_rent_months = actual_months
+            property.revenue_collected = revenue_collected
+            property.revenue_expected = revenue_expected

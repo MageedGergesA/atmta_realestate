@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_utility_line_form" model="ir.ui.view">
+        <field name="name">realestate.contract.utility.line.form</field>
+        <field name="model">realestate.contract.utility.line</field>
+        <field name="arch" type="xml">
+            <form string="Utility Line">
+                <header>
+                    <button name="action_confirm_utility"
+                            type="object"
+                            string="Confirm and Create Bill"
+                            class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_reset_to_draft_utility"
+                            type="object"
+                            string="Reset To Draft"
+                            class="btn-primary"
+                            />
+                    <field name="state"
+                           widget="statusbar"
+                           statusbar_visible="draft,confirmed"/>
+
+                </header>
+
+                <sheet>
+                    <group>
+                        <field name="contract_id"/>
+                        <field name="name"/>
+                        <field name="date"/>
+                        <field name="amount"/>
+<!--                        <field name="state"/>-->
+                        <field name="bill_id"/>
+                        <field name="bill_paid" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_utility_line_tree" model="ir.ui.view">
+        <field name="name">realestate.contract.utility.line.tree</field>
+        <field name="model">realestate.contract.utility.line</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="contract_id"/>
+                <field name="date"/>
+                <field name="amount"/>
+                <field name="state" widget="badge"/>
+                <field name="bill_id"/>
+                <field name="bill_paid"/>
+            </list>
+        </field>
+    </record>
+    <record id="action_utility_lines" model="ir.actions.act_window">
+        <field name="name">Utility Lines</field>
+        <field name="res_model">realestate.contract.utility.line</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create and manage contract utility lines here.
+            </p>
+        </field>
+    </record>
+
+</odoo>
