@@ -307,32 +307,30 @@ class RealEstateContract(models.Model):
     def action_create_invoices(self):
         invoices = self.env['account.move']
         for contract in self:
-            grouped = {}
-            for payment in contract.contract_payment_ids.filtered(lambda p: not p.move_id):
-                key = (payment.contract_id.id, payment.date_due)
-                grouped.setdefault(key, []).append(payment)
+            # Filter payments without invoices and sort them for consistency
+            payments = contract.contract_payment_ids.filtered(lambda p: not p.move_id).sorted('id')
 
-            for (contract_id, date_due), payments in grouped.items():
-                partner = contract.partner_id
-                lines = []
-                for p in payments:
-                    lines.append((0, 0, {
-                        'name': f'Rent for {p.contract_line_id.property_id.display_name} on {p.date_due}',
-                        'quantity': 1,
-                        'price_unit': p.amount,
-                        'account_id': p.contract_line_id.property_id.categ_id.property_account_income_categ_id.id,
-                    }))
+            for payment in payments:
+                # Create one invoice per payment
                 invoice = self.env['account.move'].create({
                     'move_type': 'out_invoice',
-                    'partner_id': partner.id,
+                    'partner_id': contract.partner_id.id,
                     'contract_id': contract.id,
-                    'invoice_date': date_due,
-                    'invoice_line_ids': lines,
+                    'invoice_date': payment.date_due,
+                    'invoice_line_ids': [(0, 0, {
+                        'name': f'Rent for {payment.contract_line_id.property_id.display_name} on {payment.date_due}',
+                        'quantity': 1,
+                        'price_unit': payment.amount,
+                        'account_id': payment.contract_line_id.property_id.categ_id.property_account_income_categ_id.id,
+                    })]
+                })
+
+                # Link the payment to the invoice
+                payment.write({
+                    'move_id': invoice.id,
+                    'state': 'invoiced'
                 })
                 invoices |= invoice
-                for p in payments:
-                    p.move_id = invoice.id
-                    p.state = 'invoiced'
 
     def action_get_invoices(self):
         return {

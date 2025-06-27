@@ -12,3 +12,4 @@ from . import account_move
 from . import contract_pivot_report
 from . import contract_line_pivot
 from . import contract_utility_line
+from . import maintenance_request

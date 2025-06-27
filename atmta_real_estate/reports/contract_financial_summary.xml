@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<template id="report_financial_summary">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2 class="text-center">Financial Summary for Contract: <span t-field="doc.name"/></h2>
+
+                    <!-- Contract Information -->
+                    <div class="row mb-4" style="background-color: #f8f9fa; padding: 15px; border-radius: 5px;">
+                        <div class="col-md-4">
+                            <p><strong>Tenant:</strong> <span t-field="doc.partner_id"/></p>
+                            <p><strong>Contract Period:</strong> <span t-field="doc.start_date"/> to <span t-field="doc.end_date"/></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p><strong>Status:</strong> <span t-field="doc.state"/></p>
+                            <p><strong>Currency:</strong> <span t-field="doc.currency_id"/></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p><strong>Total Scheduled:</strong> <span t-field="doc.total_scheduled"/></p>
+                            <p><strong>Total Paid:</strong> <span t-field="doc.total_paid"/></p>
+                            <p><strong>Balance Due:</strong> <span t-field="doc.balance_due"/></p>
+                        </div>
+                    </div>
+
+                    <!-- Financial KPIs -->
+                    <div class="row text-center mb-4">
+                        <div class="col-md-4">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h5>Total Contract Value</h5>
+                                    <h3 class="text-primary"><span t-field="doc.total_scheduled"/></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h5>Amount Received</h5>
+                                    <h3 class="text-success"><span t-field="doc.total_paid"/></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h5>Outstanding Balance</h5>
+                                    <h3 class="text-danger"><span t-field="doc.balance_due"/></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Performance -->
+                    <h4 class="mt-4 mb-3">Payment Performance</h4>
+                    <table class="table table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Metric</th>
+                                <th>Count</th>
+                                <th>Amount</th>
+                                <th>Percentage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Completed Payments</td>
+                                <td>
+                                    <span t-esc="len(doc.payment_ids.filtered(lambda p: p.state == 'paid'))"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="doc.total_paid"/>
+                                </td>
+                                <td class="text-right">
+                                    <t t-set="paid_percent" t-value="(doc.total_paid / doc.total_scheduled * 100) if doc.total_scheduled else 0"/>
+                                    <span t-esc="'%.2f' % paid_percent"/>%
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Pending Payments</td>
+                                <td>
+                                    <span t-esc="len(doc.payment_ids.filtered(lambda p: p.state != 'paid'))"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="doc.balance_due"/>
+                                </td>
+                                <td class="text-right">
+                                    <t t-set="pending_percent" t-value="(doc.balance_due / doc.total_scheduled * 100) if doc.total_scheduled else 0"/>
+                                    <span t-esc="'%.2f' % pending_percent"/>%
+                                </td>
+                            </tr>
+                            <tr class="table-active">
+                                <td><strong>Total</strong></td>
+                                <td>
+                                    <span t-esc="len(doc.payment_ids)"/>
+                                </td>
+                                <td class="text-right">
+                                    <strong><span t-field="doc.total_scheduled"/></strong>
+                                </td>
+                                <td class="text-right">100%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Utilities Summary -->
+                    <h4 class="mt-4 mb-3">Utilities Summary</h4>
+                    <table class="table table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Metric</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Total Utility Costs</td>
+                                <td class="text-right"><span t-field="doc.total_utilities"/></td>
+                            </tr>
+                            <tr>
+                                <td>Paid Utilities</td>
+                                <td class="text-right"><span t-field="doc.paid_utilities"/></td>
+                            </tr>
+                            <tr>
+                                <td>Outstanding Utilities</td>
+                                <td class="text-right">
+                                    <span t-esc="doc.total_utilities - doc.paid_utilities"/>
+                                </td>
+                            </tr>
+                            <tr class="table-active">
+                                <td><strong>Net Income (After Utilities)</strong></td>
+                                <td class="text-right">
+                                    <strong><span t-field="doc.net_income"/></strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Payment Status Visualization -->
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <h4>Payment Status</h4>
+                            <div style="text-align: center;">
+                                <t t-set="paid_width" t-value="(doc.total_paid / doc.total_scheduled * 100) if doc.total_scheduled else 0"/>
+                                <t t-set="pending_width" t-value="(doc.balance_due / doc.total_scheduled * 100) if doc.total_scheduled else 0"/>
+
+                                <div style="display: inline-block; position: relative; width: 300px; height: 20px; background-color: #f0f0f0; border-radius: 10px; overflow: hidden;">
+                                    <div t-att-style="'position:absolute;height:100%;width:' + str(paid_width) + '%;background-color:#28a745;'"/>
+                                    <div t-att-style="'position:absolute;height:100%;width:' + str(pending_width) + '%;background-color:#ffc107;left:' + str(paid_width) + '%;'"/>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-6 text-center">
+                                        <span class="badge bg-success">Paid: <span t-field="doc.total_paid"/></span>
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <span class="badge bg-warning">Pending: <span t-field="doc.balance_due"/></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Payment Distribution</h4>
+                            <table class="table table-sm">
+                                <tr>
+                                    <td>On-Time Payments</td>
+                                    <td>
+                                        <span t-esc="len(doc.payment_ids.filtered(lambda p: p.state == 'paid' and not p.is_late))"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Late Payments</td>
+                                    <td>
+<!--                                        <span t-esc="len(doc.payment_ids.filtered(lambda p: p.is_late))"/>-->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Pending Payments</td>
+                                    <td>
+                                        <span t-esc="len(doc.payment_ids.filtered(lambda p: p.state != 'paid'))"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Notes Section -->
+                    <div t-if="doc.notes" class="mt-4 p-3 bg-light">
+                        <h5>Additional Notes</h5>
+                        <div t-raw="doc.notes"/>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>    <record id="action_report_financial_summary" model="ir.actions.report">
+        <field name="name">Contract Financial Summary</field>
+        <field name="model">realestate.contract</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">atmta_real_estate.report_financial_summary</field>
+        <field name="report_file">atmta_real_estate.report_financial_summary</field>
+        <field name="binding_model_id" ref="model_realestate_contract"/>
+        <field name="binding_type">action</field>
+        <field name="print_report_name">'Unit_Status_%s' % object.name</field>
+    </record>
+
+</odoo>

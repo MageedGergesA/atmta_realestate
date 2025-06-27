@@ -250,70 +250,77 @@
     </record>
 
     <record id="property_product_kanban_view" model="ir.ui.view">
-        <field name="name">Property Product Kanban</field>
+        <field name="name">Product.template.product.kanban</field>
         <field name="model">product.product</field>
         <field name="arch" type="xml">
             <kanban sample="1">
+                <field name="currency_id"/>
                 <field name="activity_state"/>
-                <field name="color"/>
+                <field name="categ_id"/>
                 <progressbar field="activity_state"
                              colors='{"planned": "success", "today": "warning", "overdue": "danger"}'/>
+
                 <templates>
-                    <t t-name="card"
-                       t-attf-style="border-left: 6px solid #{
-                            record.state.raw_value == 'rented' and 'var(--success)' or
-                            record.state.raw_value == 'available' and 'var(--info)' or
-                            record.state.raw_value == 'inactive' and 'var(--danger)' or
-                            record.state.raw_value == 'maintenance' and 'var(--warning)' or
-                            '#dee2e6'
-                         }"
-                       class="o_kanban_card bg-light shadow-sm rounded d-flex justify-content-between align-items-justify p-2">
-                        <aside class="o_kanban_aside">
-                            <t t-if="record.image_1920">
-                                <field name="image_1920" widget="background_image" class="d-block position-relative"/>
-                            </t>
-                        </aside>
+                    <t t-name="kanban-box">
+                        <div t-att-class="'oe_kanban_global_click position-relative h-100' + (record.is_favorite.raw_value ? ' oe_kanban_card_favorite' : '')">
+                            <!-- Full-height status indicator -->
+                            <div class="position-absolute top-0 start-0 bottom-0"
+                                 t-attf-style="width: 4px; background-color: #{
+                        record.state.raw_value == 'rented' and 'var(--success)' or
+                        record.state.raw_value == 'available' and 'var(--info)' or
+                        record.state.raw_value == 'inactive' and 'var(--danger)' or
+                        record.state.raw_value == 'maintenance' and 'var(--warning)' or
+                        '#dee2e6'
+                     }">
+                            </div>
 
-                        <div class="flex-grow-1 w-100 d-flex flex-column justify-content-between mt-1" t-attf-style="border-left: 2px solid #{
-                            record.state.raw_value == 'rented' and 'var(--success)' or
-                            record.state.raw_value == 'available' and 'var(--info)' or
-                            record.state.raw_value == 'inactive' and 'var(--danger)' or
-                            record.state.raw_value == 'maintenance' and 'var(--warning)' or
-                            '#dee2e6'
-                         }; border-bottom: 2px solid #{
-                            record.state.raw_value == 'rented' and 'var(--success)' or
-                            record.state.raw_value == 'available' and 'var(--info)' or
-                            record.state.raw_value == 'inactive' and 'var(--danger)' or
-                            record.state.raw_value == 'maintenance' and 'var(--warning)' or
-                            '#dee2e6'
-                         }">
-                            <div class="p-1">
-                                <div class="d-flex">
-                                    <div class="justify-content-end m-2">
-                                        <field name="is_favorite" widget="boolean_favorite" nolabel="1"/>
+                            <div class="d-flex p-2 h-100" style="margin-left: 4px;">
+                                <!-- Main Content -->
+                                <div class="flex-grow-1 pe-2" style="min-width: 0; overflow: hidden;">
+                                    <!-- Header Row - Favorite now left of name -->
+                                    <div class="d-flex align-items-center mb-1">
+                                        <field name="is_favorite" widget="boolean_favorite" nolabel="1" class="me-1"/>
+                                        <h5 class="mb-0 fw-bold text-truncate" style="max-width: 200px;">
+                                            <field name="name" class="oe_kanban_card_title"/>
+                                        </h5>
                                     </div>
-                                    <div class="justify-content-start fw-bold text-primary fs-5 mb-1 m-2">
-                                        <field name="name"/>
+
+                                    <!-- Property Details -->
+                                    <div class="d-flex flex-column gap-1">
+                                        <div class="d-flex align-items-center">
+                                            <span class="text-muted small">Type:</span>
+                                            <div class="ms-1 text-truncate" style="max-width: 150px;">
+                                                <field name="property_type_id" widget="badge"
+                                                       decoration-success="state in 'rented'"
+                                                       decoration-danger="state in ('inactive')"
+                                                       decoration-info="state in ('available')"
+                                                       decoration-warning="state in ('maintenance','reserved')"
+                                                       class="badge"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex align-items-center">
+                                            <span class="text-muted small">Status:</span>
+                                            <div class="ms-1">
+                                                <field name="state" widget="badge"
+                                                       decoration-success="state in 'rented'"
+                                                       decoration-danger="state == 'inactive'"
+                                                       decoration-info="state in ('available')"
+                                                       decoration-warning="state in ('maintenance','reserved')"
+                                                       class="badge"/>
+                                            </div>
+                                        </div>
                                     </div>
+
                                 </div>
-                                <t t-if="record.default_code.value">
-                                    <div class="text-muted small mb-2">Code:
-                                        <field name="default_code"/>
-                                    </div>
-                                </t>
-                                <div class="d-flex flex-wrap gap-2 mt-auto">
-                                    <field name="property_type_id"
-                                           widget="badge"
-                                           decoration-success="property_type_id != False"
-                                           class="badge bg-success text-white"/>
 
-                                    <field name="state"
-                                           widget="badge"
-                                           decoration-success="state in 'rented'"
-                                           decoration-danger="state in ('inactive', 'maintenance')"
-                                           decoration-info="state in ('available')"
-                                           decoration-warning="state == 'reserved'"
-                                           class="badge"/>
+                                <!-- Image -->
+                                <div class="flex-shrink-0" style="width: 80px;">
+                                    <field name="image_128" widget="image"
+                                           options="{'img_class': 'img-fluid rounded border object-fit-cover h-100'}"
+                                           invisible="not image_128"
+                                           alt="Property Image"
+                                           class="h-100"/>
                                 </div>
                             </div>
                         </div>
@@ -322,6 +329,7 @@
             </kanban>
         </field>
     </record>
+
 
     <record id="action_property_view" model="ir.actions.act_window">
         <field name="name">Properties</field>

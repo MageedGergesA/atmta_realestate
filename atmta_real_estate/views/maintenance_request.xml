@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_maintenance_request_kanban" model="ir.ui.view">
+        <field name="name">realestate.maintenance.request.kanban</field>
+        <field name="model">realestate.maintenance.request</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_small_column">
+                <field name="state"/>
+                <field name="name"/>
+                <field name="property_id"/>
+                <field name="request_date"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_card shadow rounded p-2" t-att-style="
+                            'border-left: 5px solid ' + (
+                                record.state.raw_value == 'draft' and 'var(--secondary)' or
+                                record.state.raw_value == 'scheduled' and 'var(--warning)' or
+                                record.state.raw_value == 'in_progress' and 'var(--info)' or
+                                record.state.raw_value == 'done' and 'var(--success)' or
+                                record.state.raw_value == 'cancelled' and 'var(--danger)' or
+                                'var(--bs-border-color)'
+                            )
+                            ">
+                            <div class="p-1">
+
+                                <strong>
+                                    <field name="name"/>
+                                </strong>
+                                <div class="pt-1">
+                                    <field name="property_id"/>
+                                </div>
+                                <div  class="pt-1">
+                                    <field name="state"
+                                           widget="badge"
+                                           decoration-secondary="state == 'draft'"
+                                           decoration-warning="state == 'scheduled'"
+                                           decoration-info="state == 'in_progress'"
+                                           decoration-success="state == 'done'"
+                                           decoration-danger="state == 'cancelled'"/>
+
+                                </div>
+                                <div  class="p-1">
+                                    <field name="request_date"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_maintenance_request_tree" model="ir.ui.view">
+        <field name="name">realestate.maintenance.request.tree</field>
+        <field name="model">realestate.maintenance.request</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="property_id"/>
+                <field name="request_date"/>
+                <field name="scheduled_date"/>
+                <field name="completion_date"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'done'"
+                       decoration-info="state == 'in_progress'"
+                       decoration-warning="state == 'scheduled'"
+                       decoration-danger="state == 'cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_maintenance_request_form" model="ir.ui.view">
+        <field name="name">realestate.maintenance.request.form</field>
+        <field name="model">realestate.maintenance.request</field>
+        <field name="arch" type="xml">
+            <form string="Maintenance Request">
+                <header>
+                    <button name="action_schedule"
+                            type="object"
+                            string="Schedule"
+                            class="btn-primary"
+                            invisible="state != 'draft'"/>
+
+                    <button name="action_start_progress"
+                            type="object"
+                            string="Start Progress"
+                            class="btn-info"
+                            invisible="state != 'scheduled'"/>
+
+                    <button name="action_complete"
+                            type="object"
+                            string="Complete"
+                            class="btn-success"
+                            invisible="state != 'in_progress'"/>
+
+                    <button name="action_cancel"
+                            type="object"
+                            string="Cancel"
+                            class="btn-danger"
+                            invisible="state not in ['draft', 'scheduled', 'in_progress']"/>
+
+                    <button name="action_reset_to_draft"
+                            type="object"
+                            string="Reset to Draft"
+                            class="btn-light"/>
+
+                    <field name="state"
+                           widget="statusbar"
+                           statusbar_visible="draft,scheduled,in_progress,done,cancelled"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="True"/>
+                        </h1>
+                        <!--                        <hr/>-->
+                    </div>
+
+                    <group>
+                        <group string="Request Details" col="2">
+                            <field name="property_id"/>
+                            <field name="assigned_to"/>
+                            <field name="request_date"/>
+                            <field name="scheduled_date"/>
+                            <field name="completion_date"/>
+                        </group>
+
+                        <group string="Maintenance Info" col="2">
+                            <field name="description"/>
+                            <field name="cost"/>
+                            <field name="actual_cost"/>
+                        </group>
+
+                    </group>
+                    <notebook>
+                        <page string="Attachments">
+                            <group string="Attachments">
+                                <div class="d-flex align-items-center gap-3">
+                                    <field name="attachment_ids" widget="many2many_binary" class="m-0"/>
+                                </div>
+                            </group>
+                        </page>
+
+                    </notebook>
+                </sheet>
+                <chatter/>
+                <div class="o_attachment_preview"/>
+
+            </form>
+        </field>
+    </record>
+    <record id="action_maintenance_requests" model="ir.actions.act_window">
+        <field name="name">Maintenance Requests</field>
+        <field name="res_model">realestate.maintenance.request</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No maintenance requests found.
+            </p>
+        </field>
+    </record>
+
+</odoo>

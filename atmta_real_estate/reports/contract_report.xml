@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_contract_agreement">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <!-- Header -->
+                        <div class="text-center mb-4">
+                            <h2>REAL ESTATE RENTAL AGREEMENT</h2>
+                            <h4 class="text-muted">Contract Reference:
+                                <span t-field="doc.name"/>
+                            </h4>
+                        </div>
+
+                        <!-- Tenant Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h4>Tenant Information</h4>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <p>
+                                            <strong>Name:</strong>
+                                            <span t-field="doc.partner_id"/>
+                                        </p>
+                                    </div>
+                                    <div class="col-4">
+                                        <p>
+                                            <strong>Phone:</strong>
+                                            <span t-field="doc.partner_id.phone"/>
+                                        </p>
+                                    </div>
+                                    <div class="col-4">
+                                        <p>
+                                            <strong>Email:</strong>
+                                            <span t-field="doc.partner_id.email"/>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contract Terms -->
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <p>
+                                    <strong>Start Date:</strong>
+                                    <span t-field="doc.start_date"/>
+                                </p>
+                                <p>
+                                    <strong>End Date:</strong>
+                                    <span t-field="doc.end_date"/>
+                                </p>
+                            </div>
+                            <div class="col-6">
+                                <p>
+                                    <strong>Total Contract Value:</strong>
+                                    <span t-field="doc.total_scheduled"/>
+                                </p>
+                                <p>
+                                    <strong>Status:</strong>
+                                    <span t-field="doc.state"/>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Properties Section -->
+                        <h4>Leased Properties and Owners</h4>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Property</th>
+                                    <th>Owner/Landlord</th>
+                                    <th>Owner Contact</th>
+                                    <th>Period</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.line_ids" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <span t-field="line.property_id"/>
+                                            <br/>
+                                            <small t-field="line.property_id.description"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.property_id.owner_id"/>
+                                            <br/>
+                                            <small t-field="line.property_id.owner_id.company_name"
+                                                   t-if="line.property_id.owner_id.company_name"/>
+                                        </td>
+                                        <td>
+                                            <div t-if="line.property_id.owner_id.phone">
+                                                <i class="fa fa-phone"/>
+                                                <span t-field="line.property_id.owner_id.phone"/>
+                                            </div>
+                                            <div t-if="line.property_id.owner_id.email">
+                                                <i class="fa fa-envelope"/>
+                                                <span t-field="line.property_id.owner_id.email"/>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.start_date"/>
+                                            to
+                                            <br/>
+                                            <span t-field="line.end_date"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="line.price"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <!-- Payment Summary -->
+                        <div class="row mt-3">
+                            <div class="col-4">
+                                <p>
+                                    <strong>Total Scheduled:</strong>
+                                    <span t-field="doc.total_scheduled"/>
+                                </p>
+                            </div>
+                            <div class="col-4">
+                                <p>
+                                    <strong>Amount Paid:</strong>
+                                    <span t-field="doc.total_paid"/>
+                                </p>
+                            </div>
+                            <div class="col-4">
+                                <p>
+                                    <strong>Balance Due:</strong>
+                                    <span t-field="doc.balance_due"/>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Payment Terms -->
+                        <h4 class="mt-4">Terms and Conditions</h4>
+                        <div t-raw="doc.notes" t-if="doc.notes" class="border p-3"/>
+
+                        <!-- Signatures -->
+                        <div class="signature-section" style="margin-top: 80px;">
+                            <div style="width: 45%; float: left;">
+                                <p>Tenant Signature</p>
+                                <div style="border-top: 1px solid #000; width: 80%; margin-bottom: 30px;"></div>
+                                <p>Date: ___________________</p>
+                            </div>
+                            <div style="width: 45%; float: right;">
+                                <p>Company Stamp/Signature</p>
+                                <div style="border-top: 1px solid #000; width: 80%; margin-bottom: 30px;"></div>
+                                <p>Date: ___________________</p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+    <record id="action_report_contract" model="ir.actions.report">
+        <field name="name">Contract Agreement</field>
+        <field name="model">realestate.contract</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">atmta_real_estate.report_contract_agreement</field>
+        <field name="report_file">atmta_real_estate.report_contract_agreement</field>
+        <field name="binding_model_id" ref="model_realestate_contract"/>
+        <field name="binding_type">action</field>
+        <field name="print_report_name">'Unit_Status_%s' % object.name</field>
+    </record>
+
+</odoo>

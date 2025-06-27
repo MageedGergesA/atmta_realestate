@@ -120,10 +120,14 @@ class RealEstateContractLine(models.Model):
                 ('property_id', '=', line.property_id.id),
                 ('state', 'in', ['confirmed', 'invoiced', 'active']),
             ])
-
-            if line.state in ['confirmed', 'invoiced', 'active']:
+            print(f'-----{line.state}--------------- {line.property_id.state}')
+            if line.state == 'active' and line.property_id.state == 'maintenance':
+                raise ValidationError(
+                    f"The property '{line.property_id.name}' is under maintenance and cannot be activated."
+                )
+            elif line.state == 'active':
                 line.property_id.state = 'rented'
-            elif not overlapping_lines:
+            elif not overlapping_lines and not line.property_id.state == 'maintenance':
                 # No active lines left on this property
                 line.property_id.state = 'available'
 
