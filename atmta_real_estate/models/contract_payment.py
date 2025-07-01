@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 
 class RealEstateContractPayment(models.Model):
     _name = 'realestate.contract.payment'
@@ -6,8 +6,10 @@ class RealEstateContractPayment(models.Model):
     _description = 'Scheduled Contract Payment'
 
     contract_id = fields.Many2one('realestate.contract', string="Contract", required=True, ondelete='cascade')
+    is_single_property = fields.Boolean(related="contract_id.is_single_property")
+    is_multi_property = fields.Boolean(related="contract_id.is_multi_property")
     partner_id = fields.Many2one(related='contract_id.partner_id', string='Tenant/Partner')
-    contract_line_id = fields.Many2one('realestate.contract.line', string="Contract Line", required=True, ondelete='cascade')
+    contract_line_id = fields.Many2one('realestate.contract.line', string="Contract Line", ondelete='cascade')
     date_due = fields.Date(string="Due Date", required=True)
     amount = fields.Float(string="Amount", required=True)
     state = fields.Selection([
@@ -20,6 +22,7 @@ class RealEstateContractPayment(models.Model):
     move_state = fields.Selection(related='move_id.state', string="Invoice Status", store=True)
     increase_amount = fields.Float(string="Increase Amount", readonly=True)
     discount_amount = fields.Float(string="Discount Amount", readonly=True)
+    property_id = fields.Many2one('product.product', string="Property", domain="[('is_property', '=', True)]")
 
     payment_plan_id = fields.Many2one(
         'realestate.payment.plan',
@@ -49,14 +52,19 @@ class RealEstateContractPayment(models.Model):
         domain="[('discount', '=', True)]",
         ondelete='set null'
     )
-    name = fields.Char(string="Label", compute="_compute_name", store=True)
+    label = fields.Char(string="Label", compute="_compute_name", store=True)
+    name = fields.Char(
+        string="Reference",
+        copy=False,
+        help="Used during invoice creation to link payments to invoices"
+    )
 
-    @api.depends('contract_line_id', 'date_due')
+    @api.depends('property_id', 'date_due')
     def _compute_name(self):
         for rec in self:
-            prop_name = rec.contract_line_id.property_id.display_name or "Property"
+            prop_name = rec.property_id.display_name or "Property"
             date_str = rec.date_due.strftime('%Y-%m-%d') if rec.date_due else 'N/A'
-            rec.name = f"Rent for {prop_name} on {date_str}"
+            rec.label = f"Rent for {prop_name} on {date_str}"
 
     @api.depends('move_id.payment_state')
     def _compute_state(self):
@@ -83,3 +91,11 @@ class RealEstateContractPayment(models.Model):
                 rec.state = 'invoiced'
             else:
                 rec.state = 'draft'
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', _("New")) == _("New"):
+                vals['name'] = self.env['ir.sequence'].next_by_code('realestate.contract.payment') or 'New'
+        return super().create(vals_list)
+

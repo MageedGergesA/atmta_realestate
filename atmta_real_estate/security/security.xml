@@ -1,34 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <!-- Security Rules -->
-<record id="realestate_contract_group" model="res.groups">
-    <field name="name">Real Estate / Contract Manager</field>
-    <field name="category_id" ref="base.module_category_real_estate"/>
-</record>
+      <!-- Security Category -->
+    <record id="group_category_realestate" model="ir.module.category">
+        <field name="name">Real Estate</field>
+        <field name="sequence">10</field>
+    </record>
 
-<record id="realestate_property_group" model="res.groups">
-    <field name="name">Real Estate / Property Manager</field>
-    <field name="category_id" ref="base.module_category_real_estate"/>
-</record>
+    <!-- Group: Single Unit Contracts -->
+    <record id="group_realestate_single_property" model="res.groups">
+        <field name="name">Single Property Contracts</field>
+        <field name="category_id" ref="group_category_realestate"/>
+    </record>
 
-<!-- Access Rules -->
-<record id="realestate_contract_access" model="ir.model.access">
-    <field name="name">realestate.contract.access</field>
-    <field name="model_id" ref="model_realestate_contract"/>
-    <field name="group_id" ref="realestate_contract_group"/>
-    <field name="perm_read">1</field>
-    <field name="perm_write">1</field>
-    <field name="perm_create">1</field>
-    <field name="perm_unlink">1</field>
-</record>
+    <!-- Group: Multi Unit Contracts -->
+    <record id="group_realestate_multi_property" model="res.groups">
+        <field name="name">Multi Property Contracts</field>
+        <field name="category_id" ref="group_category_realestate"/>
+    </record>
 
-<record id="realestate_property_access" model="ir.model.access">
-    <field name="name">product.property.access</field>
-    <field name="model_id" ref="model_product_product"/>
-    <field name="group_id" ref="realestate_property_group"/>
-    <field name="perm_read">1</field>
-    <field name="perm_write">1</field>
-    <field name="perm_create">1</field>
-    <field name="perm_unlink">1</field>
-</record>
+    <!-- Access Rules -->
+    <!--<record id="realestate_contract_access" model="ir.model.access">-->
+    <!--    <field name="name">realestate.contract.access</field>-->
+    <!--    <field name="model_id" ref="model_realestate_contract"/>-->
+    <!--    <field name="group_id" ref="realestate_contract_group"/>-->
+    <!--    <field name="perm_read">1</field>-->
+    <!--    <field name="perm_write">1</field>-->
+    <!--    <field name="perm_create">1</field>-->
+    <!--    <field name="perm_unlink">1</field>-->
+    <!--</record>-->
+
+    <!--<record id="realestate_property_access" model="ir.model.access">-->
+    <!--    <field name="name">product.property.access</field>-->
+    <!--    <field name="model_id" ref="model_product_product"/>-->
+    <!--    <field name="group_id" ref="realestate_property_group"/>-->
+    <!--    <field name="perm_read">1</field>-->
+    <!--    <field name="perm_write">1</field>-->
+    <!--    <field name="perm_create">1</field>-->
+    <!--    <field name="perm_unlink">1</field>-->
+    <!--</record>-->
 </odoo>

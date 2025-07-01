@@ -166,7 +166,7 @@
         <field name="report_file">atmta_real_estate.report_contract_agreement</field>
         <field name="binding_model_id" ref="model_realestate_contract"/>
         <field name="binding_type">action</field>
-        <field name="print_report_name">'Unit_Status_%s' % object.name</field>
+        <field name="print_report_name">'contract_agreement%s' % object.name</field>
     </record>
 
 </odoo>

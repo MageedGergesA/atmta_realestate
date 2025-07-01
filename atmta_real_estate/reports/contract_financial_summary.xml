@@ -67,7 +67,7 @@
                             <tr>
                                 <td>Completed Payments</td>
                                 <td>
-                                    <span t-esc="len(doc.payment_ids.filtered(lambda p: p.state == 'paid'))"/>
+                                    <span t-esc="len(doc.contract_payment_ids.filtered(lambda p: p.state == 'paid'))"/>
                                 </td>
                                 <td class="text-right">
                                     <span t-field="doc.total_paid"/>
@@ -80,7 +80,7 @@
                             <tr>
                                 <td>Pending Payments</td>
                                 <td>
-                                    <span t-esc="len(doc.payment_ids.filtered(lambda p: p.state != 'paid'))"/>
+                                    <span t-esc="len(doc.contract_payment_ids.filtered(lambda p: p.state != 'paid'))"/>
                                 </td>
                                 <td class="text-right">
                                     <span t-field="doc.balance_due"/>
@@ -93,7 +93,7 @@
                             <tr class="table-active">
                                 <td><strong>Total</strong></td>
                                 <td>
-                                    <span t-esc="len(doc.payment_ids)"/>
+                                    <span t-esc="len(doc.contract_payment_ids)"/>
                                 </td>
                                 <td class="text-right">
                                     <strong><span t-field="doc.total_scheduled"/></strong>
@@ -164,19 +164,19 @@
                                 <tr>
                                     <td>On-Time Payments</td>
                                     <td>
-                                        <span t-esc="len(doc.payment_ids.filtered(lambda p: p.state == 'paid' and not p.is_late))"/>
+                                        <span t-esc="len(doc.contract_payment_ids.filtered(lambda p: p.state == 'paid' and not p.is_late))"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Late Payments</td>
                                     <td>
-<!--                                        <span t-esc="len(doc.payment_ids.filtered(lambda p: p.is_late))"/>-->
+<!--                                        <span t-esc="len(doc.contract_payment_ids.filtered(lambda p: p.is_late))"/>-->
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Pending Payments</td>
                                     <td>
-                                        <span t-esc="len(doc.payment_ids.filtered(lambda p: p.state != 'paid'))"/>
+                                        <span t-esc="len(doc.contract_payment_ids.filtered(lambda p: p.state != 'paid'))"/>
                                     </td>
                                 </tr>
                             </table>

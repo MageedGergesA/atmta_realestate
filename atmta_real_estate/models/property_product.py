@@ -40,8 +40,8 @@ class ProductProduct(models.Model):
     # Status & availability
     state = fields.Selection([
         ('available', 'Available'),
-        ('rented', 'Rented'),
         ('reserved', 'Reserved'),
+        ('rented', 'Rented'),
         ('maintenance', 'Under Maintenance'),
         ('inactive', 'Inactive'),
     ], string="Status", default='available', tracking=True)
@@ -65,7 +65,6 @@ class ProductProduct(models.Model):
     parent_id = fields.Many2one(
         'product.product',
         string="Parent Property",
-        domain="[('is_property', '=', True)]",
         tracking=True
     )
 
@@ -87,6 +86,15 @@ class ProductProduct(models.Model):
         'master_product_id',
         string="Sub Properties"
     )
+    def set_property_inactive(self):
+        for rec in self:
+            if rec.state not in ['reserved','rented', 'maintenance']:
+                rec.state = 'inactive'
+    def set_property_available(self):
+        for rec in self:
+            if rec.state in ['inactive']:
+                rec.state = 'available'
+
 
     @api.depends('parent_path')
     def _compute_master_product_id(self):
@@ -94,6 +102,11 @@ class ProductProduct(models.Model):
             if rec.parent_path:
                 rec.master_product_id = int(rec.parent_path.split('/')[0])
                 print(f'jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj{rec.master_product_id}')
+
+    # @api.onchange('parent_id','child_ids')
+    # def check_parent_childs(self):
+    #     for rec in self:
+    #         rec.get_child_dept()
 
     @api.model
     def get_child_dept(self, product_id, model):
@@ -150,11 +163,12 @@ class ProductProduct(models.Model):
     actual_rent_months = fields.Integer(string="Actual Rent Months", compute="_compute_rent_stats", store=True)
     revenue_collected = fields.Monetary(string="Revenue Collected", compute="_compute_rent_stats")
     revenue_expected = fields.Monetary(string="Total Expected Revenue", compute="_compute_rent_stats")
+    total_amount_due = fields.Monetary(string="Total Amount Due", compute="_compute_rent_stats")
 
     currency_id = fields.Many2one('res.currency', string="Currency", required=True,
                                   default=lambda self: self.env.company.currency_id)
 
-    @api.depends('contract_history_ids', 'contract_history_ids.contract_id.payment_ids.state')
+    @api.depends('contract_history_ids', 'contract_history_ids.contract_id.contract_payment_ids.move_state')
     def _compute_rent_stats(self):
         for property in self:
             rent_count = 0
@@ -175,7 +189,7 @@ class ProductProduct(models.Model):
                     total_months += month_count
 
                 # Related payments (only for this line)
-                payments = line.contract_id.payment_ids.filtered(lambda p: p.contract_line_id == line)
+                payments = line.contract_id.contract_payment_ids.filtered(lambda p: p.contract_line_id == line)
 
                 # Paid months (count of unique months with 'paid' payments)
                 paid_dates = payments.filtered(lambda p: p.move_state == 'posted').mapped('date_due')
@@ -191,3 +205,4 @@ class ProductProduct(models.Model):
             property.actual_rent_months = actual_months
             property.revenue_collected = revenue_collected
             property.revenue_expected = revenue_expected
+            property.total_amount_due = revenue_expected - revenue_collected

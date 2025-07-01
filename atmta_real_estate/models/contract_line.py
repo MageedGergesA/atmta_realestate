@@ -54,11 +54,7 @@ class RealEstateContractLine(models.Model):
 
     def _cron_update_line_statuses(self):
         today = fields.Date.today()
-        lines = self.search([
-            ('state', 'in', ['confirmed', 'invoiced', 'active']),
-            ('contract_id.state', '=', 'active')
-        ])
-
+        lines = self.search([('state', 'in', ['confirmed', 'invoiced', 'active']), ('contract_id.state', '=', 'active')])
         for line in lines:
             if line.state != 'terminated':
                 if line.start_date <= today <= line.end_date:

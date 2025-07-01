@@ -48,7 +48,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <t t-foreach="doc.payment_ids.sorted('date_due')" t-as="payment">
+                                <t t-foreach="doc.contract_payment_ids.sorted('date_due')" t-as="payment">
                                     <tr>
                                         <td>
                                             <span t-field="payment.date_due"/>

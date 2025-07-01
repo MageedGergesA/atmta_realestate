@@ -555,28 +555,28 @@
     <!--        </t>-->
     <!--    </div>-->
     <!--</t>-->
-    <t t-name="atmta_real_estate.CustomerChartWidget">
-        <t t-set="parent" t-value="OrgState.data['parent']"/>
-        <t t-set="self" t-value="OrgState.data['self']"/>
-        <t t-set="children" t-value="OrgState.data['child']"/>
+<t t-name="atmta_real_estate.CustomerChartWidget">
+    <t t-set="parent" t-value="OrgState.data['parent']"/>
+    <t t-set="self" t-value="OrgState.data['self']"/>
+    <t t-set="children" t-value="OrgState.data['child']"/>
 
-        <style>
-            .org-chart-container {
+    <style>
+        .org-chart-container {
             font-family: "Inter", sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 40px 20px;
-            }
+        }
 
-            .org-title {
+        .org-title {
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 20px;
             text-decoration: underline;
-            }
+        }
 
-            .org-node {
+        .org-node {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -584,68 +584,68 @@
             border-radius: 10px;
             background-color: #fff;
             padding: 10px;
-            width: 140px;
+            width: 160px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
             position: relative;
             z-index: 2;
-            }
+        }
 
-            .org-node-img {
-            width: 100px;
-            height: 80px;
+        .org-node-img {
+            width: 140px;
+            height: 120px;
             object-fit: cover;
             border-radius: 8px;
             background: #f0f0f0;
             margin-bottom: 6px;
-            }
+        }
 
-            .org-node-name {
+        .org-node-name {
             font-size: 13px;
             font-weight: 500;
             text-align: center;
-            }
+        }
 
-            .org-level {
+        .org-level {
             display: flex;
             justify-content: center;
             position: relative;
-            }
+        }
 
-            .org-line-down {
+        .org-line-down {
             width: 2px;
             height: 30px;
             background-color: #ccc;
             margin: 0 auto;
-            }
+        }
 
-            .org-children-wrapper {
+        .org-children-wrapper {
             display: flex;
             justify-content: center;
             position: relative;
             margin-top: 0px;
             padding-top: 20px;
-            }
+        }
 
-            .org-children-wrapper::before {
+        .org-children-wrapper::before {
             content: "";
             position: absolute;
             top: 0;
-            left: calc(50% - ((140px + 40px) * ((var(--child-count) - 1) / 2)));
-            width: calc(((140px + 40px) * (var(--child-count) - 1)));
+            left: calc(50% - ((160px + 40px) * ((var(--child-count) - 1) / 2)));
+            width: calc(((160px + 40px) * (var(--child-count) - 1)));
             height: 2px;
             background-color: #ccc;
             z-index: 1;
-            }
+        }
 
-            .org-node-wrapper {
+        .org-node-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin: 0 20px;
             position: relative;
-            }
+        }
 
-            .org-node-wrapper::before {
+        .org-node-wrapper::before {
             content: "";
             position: absolute;
             top: -20px;
@@ -655,59 +655,52 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 2;
-            }
-        </style>
+        }
+    </style>
 
-        <div class="org-chart-container">
-            <t t-if="parent or children.length">
-                <p class="org-title">HIERARCHY</p>
-            </t>
-
-            <!-- Parent -->
-            <t t-if="parent">
-                <div class="org-level">
-                    <div class="org-node" t-on-click="() => onChildClick(parent['id'], this)">
-                        <img t-att-src="'/web/image/product.product/' + parent['id'] + '/image_128'"
-                             class="org-node-img"/>
-                        <p class="org-node-name">
-                            <t t-esc="parent['name']"/>
-                        </p>
-                    </div>
+    <div class="org-chart-container">
+        <!-- Parent -->
+        <t t-if="parent">
+            <div class="org-level">
+                <div class="org-node" t-on-click="() => onChildClick(parent['id'], this)">
+                    <img t-att-src="parent['image_url']" class="org-node-img"/>
+                    <p class="org-node-name">
+                        <t t-esc="parent['name']"/>
+                    </p>
                 </div>
-                <div class="org-line-down"></div>
-            </t>
+            </div>
+            <div class="org-line-down"></div>
+        </t>
 
-            <!-- Self -->
-            <t t-if="self">
-                <div class="org-level">
-                    <div class="org-node">
-                        <img t-att-src="'/web/image/product.product/' + self['id'] + '/image_128'"
-                             class="org-node-img"/>
-                        <p class="org-node-name">
-                            <t t-esc="self['name']"/>
-                        </p>
-                    </div>
+        <!-- Self -->
+        <t t-if="self">
+            <div class="org-level">
+                <div class="org-node">
+                    <img t-att-src="self['image_url']" class="org-node-img"/>
+                    <p class="org-node-name">
+                        <t t-esc="self['name']"/>
+                    </p>
                 </div>
-            </t>
+            </div>
+        </t>
 
-            <!-- Children -->
-            <t t-if="children.length">
-                <div class="org-line-down"></div>
-                <div class="org-children-wrapper" t-att-style="'--child-count: ' + children.length">
-                    <t t-foreach="children" t-as="child" t-key="child['id']">
-                        <div class="org-node-wrapper">
-                            <div class="org-node" t-on-click="() => onChildClick(child['id'], this)">
-                                <img t-att-src="'/web/image/product.product/' + child['id'] + '/image_128'"
-                                     class="org-node-img"/>
-                                <p class="org-node-name">
-                                    <t t-esc="child['name']"/>
-                                </p>
-                            </div>
+        <!-- Children -->
+        <t t-if="children and children.length">
+            <div class="org-line-down"></div>
+            <div class="org-children-wrapper" t-att-style="'--child-count: ' + children.length">
+                <t t-foreach="children" t-as="child" t-key="child['id']">
+                    <div class="org-node-wrapper">
+                        <div class="org-node" t-on-click="() => onChildClick(child['id'], this)">
+                            <img t-att-src="child['image_url']" class="org-node-img"/>
+                            <p class="org-node-name">
+                                <t t-esc="child['name']"/>
+                            </p>
                         </div>
-                    </t>
-                </div>
-            </t>
-        </div>
-    </t>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </div>
+</t>
 
 </templates>

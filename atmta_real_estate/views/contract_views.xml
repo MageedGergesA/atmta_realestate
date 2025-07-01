@@ -46,33 +46,32 @@
                            statusbar_visible="draft,ready,confirmed,invoiced,active,expired,terminated"/>
                 </header>
                 <sheet>
-                    <br/>
+                    <!-- Top Stats -->
                     <div class="oe_button_box" name="button_box">
                         <button name="action_open_payments"
                                 icon="fa-line-chart"
                                 type="object"
                                 class="oe_stat_button m-1"
-                                invisible="payment_count == 0"
-                        >
+                                invisible="payment_count == 0">
                             <field string="Payments" name="payment_count" widget="statinfo"/>
                         </button>
                         <button name="action_get_invoices"
                                 icon="fa-pencil-square-o"
                                 type="object"
                                 class="oe_stat_button m-1"
-                                invisible="payment_count == 0"
-                        >
+                                invisible="payment_count == 0">
                             <field string="Invoices" name="invoice_count" widget="statinfo"/>
                         </button>
                     </div>
+
+                    <!-- Title -->
                     <div class="oe_title">
                         <h1>
-                            <field name="name" readonly="True"/>
+                            <field name="name" readonly="1"/>
                         </h1>
-                        <!--                        <hr/>-->
                     </div>
 
-                    <group>
+                    <group col="2">
                         <!-- Contract Details -->
                         <group string="Contract Details" col="2"
                                style="padding-right: 16px; border-right: 1px solid #f0f0f0;">
@@ -80,22 +79,29 @@
                             <field name="start_date"/>
                             <field name="end_date"/>
                             <field name="notes"/>
-                        </group>
-
-                        <!-- Financial Summary -->
-                        <group string="Financial Summary" col="2" style="padding-left: 16px;">
-                            <field name="total_scheduled" readonly="1"/>
-                            <field name="total_paid" readonly="1"/>
-                            <field name="balance_due" readonly="1"/>
-                            <hr/>
                             <field name="is_renewed" widget="boolean_toggle"/>
                             <field name="old_contract_id" invisible="is_renewed == False"/>
+                        </group>
+
+                        <!-- Property Settings -->
+                        <group string="Property Info" col="2">
+                            <field name="is_multi_property" groups="atmta_real_estate.group_realestate_multi_property"/>
+                            <field name="is_single_property" groups="atmta_real_estate.group_realestate_single_property"/>
+                            <field name="property_id" invisible="not is_single_property"/>
+                            <field name="property_type_id" invisible="not is_single_property"/>
+                            <field name="payment_plan_ids" widget="many2many_tags" invisible="not is_single_property"/>
+                            <field name="increment_rule_ids" widget="many2many_tags" invisible="not is_single_property"/>
+                            <field name="discount_rule_ids" widget="many2many_tags" invisible="not is_single_property"/>
+                            <field name="price"/>
                         </group>
                     </group>
                     <br/>
                     <br/>
+
+                    <!-- Notebook Tabs -->
                     <notebook>
-                        <page string="Contract Lines">
+                        <!-- Contract Lines Tab -->
+                        <page string="Contract Lines" invisible="not is_multi_property">
                             <field name="line_ids" widget="sol_o2m" mode="list,kanban">
                                 <form string="Contract Line">
                                     <sheet>
@@ -121,11 +127,9 @@
                                     <field name="payment_plan_ids" widget="many2many_tags" options="{'no_create': True}"
                                            optional="show"/>
                                     <field name="increment_rule_ids" widget="many2many_tags"
-                                           options="{'no_create': True}"
-                                           optional="show"/>
+                                           options="{'no_create': True}" optional="show"/>
                                     <field name="discount_rule_ids" widget="many2many_tags"
-                                           options="{'no_create': True}"
-                                           optional="show"/>
+                                           options="{'no_create': True}" optional="show"/>
                                     <field name="price"/>
                                     <field name="state" widget="badge"
                                            decoration-success="state == 'active'"
@@ -133,11 +137,42 @@
                                            decoration-info="state in ('confirmed', 'invoiced')"
                                            decoration-warning="state == 'ready'"
                                            decoration-muted="state == 'draft'"/>
-
                                     <field name="notes"/>
                                 </list>
                             </field>
                         </page>
+
+                        <!-- Payment Schedules Tab -->
+                        <page string="Payment Schedules">
+                            <field name="contract_payment_ids">
+                                <list>
+                                    <field name="name" optional="show"/>
+                                    <field name="label" optional="show"/>
+                                    <field name="contract_id" optional="show"/>
+                                    <field name="partner_id" optional="show"/>
+                                    <field name="contract_line_id" invisible="not is_multi_property" optional="hide"/>
+                                    <field name="property_id" optional="show"/>
+                                    <field name="date_due" optional="show"/>
+                                    <field name="amount" sum="Total Amount" optional="show"/>
+                                    <field name="move_state" optional="show" widget="badge"
+                                           decoration-success="move_state == 'posted'"
+                                           decoration-warning="move_state == 'draft'"
+                                           decoration-danger="move_state == 'cancel'"/>
+                                    <field name="move_id" optional="show" widget="badge"
+                                           decoration-success="move_state == 'posted'"
+                                           decoration-warning="move_state == 'draft'"
+                                           decoration-danger="move_state == 'cancel'"
+                                    />
+                                    <field name="payment_plan_id" optional="hide"/>
+                                    <field name="increment_rule_ids" widget="many2many_tags" optional="hide"/>
+                                    <field name="discount_rule_ids" widget="many2many_tags" optional="hide"/>
+                                    <field name="increase_amount" sum="Total Increase Amount" optional="hide"/>
+                                    <field name="discount_amount" sum="Total Discount Amount" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <!-- Utilities Tab -->
                         <page string="Utilities">
                             <field name="utility_line_ids">
                                 <list editable="bottom">
@@ -148,7 +183,6 @@
                                     <field name="bill_paid" readonly="1"/>
                                 </list>
                             </field>
-
                             <group>
                                 <field name="total_utilities" readonly="1"/>
                                 <field name="paid_utilities" readonly="1"/>
@@ -156,15 +190,22 @@
                             </group>
                         </page>
 
+                        <!-- Financial Summary Tab -->
+                        <page string="Financial Summary">
+                            <group string="Financial Summary" col="2" style="padding-left: 16px;">
+                                <field name="total_scheduled" readonly="1"/>
+                                <field name="total_paid" readonly="1"/>
+                                <field name="balance_due" readonly="1"/>
+                            </group>
+                        </page>
+
+                        <!-- Attachments Tab -->
                         <page string="Attachments">
                             <group string="Attachments">
-                                <div class="d-flex align-items-center gap-3">
-                                    <field name="attachment_ids" widget="many2many_binary" class="m-0"/>
-                                </div>
+                                <field name="attachment_ids" widget="many2many_binary"/>
                             </group>
                         </page>
                     </notebook>
-                    <br/>
                 </sheet>
                 <div class="o_attachment_preview"/>
 
@@ -178,9 +219,6 @@
         <field name="model">realestate.contract</field>
         <field name="arch" type="xml">
             <list>
-                <header>
-                    <button name="contract_xlsx_report" type="object" string="Print XlSX Report" class="btn-primary"/>
-                </header>
                 <field name="name" optional="show"/>
                 <field name="partner_id" optional="show"/>
                 <field name="start_date" optional="show"/>
@@ -211,54 +249,6 @@
             </pivot>
         </field>
     </record>
-
-    <!--    <record id="view_realestate_contract_kanban" model="ir.ui.view">-->
-    <!--        <field name="name">realestate.contract.kanban</field>-->
-    <!--        <field name="model">realestate.contract</field>-->
-    <!--        <field name="arch" type="xml">-->
-    <!--            <kanban class="o_kanban_example">-->
-    <!--                <field name="name"/>-->
-    <!--                <field name="partner_id"/>-->
-    <!--                <field name="state"/>-->
-    <!--                <field name="start_date"/>-->
-    <!--                <field name="end_date"/>-->
-
-    <!--                <templates>-->
-    <!--                    <t t-name="kanban-box">-->
-    <!--                        <div class="o_kanban_record">-->
-    <!--                            <div class="o_kanban_primary_left">-->
-    <!--                                <strong>-->
-    <!--                                    <field name="name"/>-->
-    <!--                                </strong>-->
-    <!--                                <br/>-->
-    <!--                                <span>-->
-    <!--                                    <field name="partner_id"/>-->
-    <!--                                </span>-->
-    <!--                                <br/>-->
-    <!--                                <span>-->
-    <!--                                    <field name="start_date"/>-->
-    <!--                                    →-->
-    <!--                                    <field name="end_date"/>-->
-    <!--                                </span>-->
-    <!--                            </div>-->
-
-    <!--                            <div class="o_kanban_primary_right">-->
-    <!--                                <span class="badge badge-pill"-->
-    <!--                                      t-attf-class="badge badge-#{record.state.raw_value}">-->
-    <!--                                    <field name="state" widget="badge"-->
-    <!--                                           decoration-success="state == 'active'"-->
-    <!--                                           decoration-danger="state in ('terminated', 'expired')"-->
-    <!--                                           decoration-info="state in ('confirmed', 'invoiced')"-->
-    <!--                                           decoration-warning="state == 'ready'"-->
-    <!--                                           decoration-muted="state == 'draft'" optional="show"/>-->
-    <!--                                </span>-->
-    <!--                            </div>-->
-    <!--                        </div>-->
-    <!--                    </t>-->
-    <!--                </templates>-->
-    <!--            </kanban>-->
-    <!--        </field>-->
-    <!--    </record>-->
     <record id="view_realestate_contract_kanban" model="ir.ui.view">
         <field name="name">realestate.contract.kanban</field>
         <field name="model">realestate.contract</field>

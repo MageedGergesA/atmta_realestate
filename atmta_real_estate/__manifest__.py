@@ -20,14 +20,17 @@
 
     # always loaded
     'data': [
+        'security/security.xml',
         'security/ir.model.access.csv',
         'views/property_type_views.xml',
         'views/property_product_views.xml',
         'views/contract_views.xml',
         'data/contract_sequence.xml',
+        'data/payment_schedule_sequence.xml',
         'data/maintenance_request_sequence.xml',
         'data/schedule_actions.xml',
         'data/property_status_update.xml',
+        'data/single_multi_contract_param.xml',
         'views/payment_plan_views.xml',
         'views/contract_line_views.xml',
         'views/property_image.xml',

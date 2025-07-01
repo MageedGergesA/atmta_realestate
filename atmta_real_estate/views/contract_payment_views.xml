@@ -5,11 +5,13 @@
         <field name="name">realestate.contract.payment.tree</field>
         <field name="model">realestate.contract.payment</field>
         <field name="arch" type="xml">
-            <list create="0" edit="0">
+            <list>
                 <field name="name" optional="show"/>
+                <field name="label" optional="hide"/>
                 <field name="contract_id" optional="show"/>
                 <field name="partner_id" optional="show"/>
-                <field name="contract_line_id" optional="show"/>
+                <field name="contract_line_id" invisible="not is_multi_property" optional="hide"/>
+                <field name="property_id" optional="show"/>
                 <field name="date_due" optional="show"/>
                 <field name="amount" sum="Total Amount" optional="show"/>
                 <field name="move_state" optional="show" widget="badge"
@@ -21,11 +23,11 @@
                    decoration-warning="move_state == 'draft'"
                    decoration-danger="move_state == 'cancel'"
                 />
-                <field name="payment_plan_id" optional="show"/>
-                <field name="increment_rule_ids" widget="many2many_tags" optional="show"/>
-                <field name="discount_rule_ids" widget="many2many_tags" optional="show"/>
-                <field name="increase_amount" sum="Total Increase Amount" optional="show"/>
-                <field name="discount_amount" sum="Total Discount Amount" optional="show"/>
+                <field name="payment_plan_id" optional="hide"/>
+                <field name="increment_rule_ids" widget="many2many_tags" optional="hide"/>
+                <field name="discount_rule_ids" widget="many2many_tags" optional="hide"/>
+                <field name="increase_amount" sum="Total Increase Amount" optional="hide"/>
+                <field name="discount_amount" sum="Total Discount Amount" optional="hide"/>
             </list>
         </field>
     </record>
@@ -48,9 +50,11 @@
                     </div>
                     <group>
                         <group string="Contract Info" col="2" style="border-right:1px solid #f5f5f5;">
+                            <field name="label"/>
                             <field name="contract_id"/>
                             <field name="partner_id"/>
-                            <field name="contract_line_id"/>
+                            <field name="contract_line_id" invisible="not is_multi_property"/>
+                            <field name="property_id"/>
                         </group>
 
                         <group string="Pricing Rules &amp; Schedule" col="2">
@@ -89,10 +93,21 @@
         </pivot>
     </field>
 </record>
+      <record id="view_realestate_contract_payment_calendar" model="ir.ui.view">
+        <field name="name">realestate.contract.payment.calendar</field>
+        <field name="model">realestate.contract.payment</field>
+        <field name="arch" type="xml">
+            <calendar string="Scheduled Payments" date_start="date_due" color="state" mode="month" create="0" edit="0">
+                <field name="name"/>
+                <field name="amount"/>
+                <field name="partner_id"/>
+            </calendar>
+        </field>
+    </record>
 
     <record id="action_contract_payment" model="ir.actions.act_window">
         <field name="name">Scheduled Payments</field>
         <field name="res_model">realestate.contract.payment</field>
-        <field name="view_mode">list,form,pivot</field>
+        <field name="view_mode">list,form,calendar,pivot</field>
     </record>
 </odoo>

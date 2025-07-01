@@ -1,8 +1,8 @@
 from odoo import models, fields, _, api
 from odoo.exceptions import UserError
-from odoo.tools import date_utils
 from dateutil.relativedelta import relativedelta
 import datetime
+
 
 class RealEstateContract(models.Model):
     _name = 'realestate.contract'
@@ -10,8 +10,8 @@ class RealEstateContract(models.Model):
     _description = 'Real Estate Contract'
 
     name = fields.Char(string="Contract Reference", required=True, copy=False, readonly=False,
-        index='trigram',
-        default=lambda self: _('New'))
+                       index='trigram',
+                       default=lambda self: _('New'))
     partner_id = fields.Many2one('res.partner', string="Tenant", required=True, tracking=True)
     start_date = fields.Date(string="Start Date", required=True, tracking=True)
     end_date = fields.Date(string="End Date", required=True, tracking=True)
@@ -26,7 +26,6 @@ class RealEstateContract(models.Model):
     ], string='Status', default='draft', tracking=True, readonly=True)
     notes = fields.Text(string="Terms and Conditions", tracking=True)
     line_ids = fields.One2many('realestate.contract.line', 'contract_id', string="Contract Lines")
-    payment_ids = fields.One2many('realestate.contract.payment', 'contract_id', string="Scheduled Payments")
     payment_count = fields.Integer(compute='get_payment_count', default=0)
     move_ids = fields.One2many('account.move', 'contract_id', string='Invoices')
     invoice_count = fields.Integer(compute='get_invoice_count', default=0)
@@ -65,6 +64,42 @@ class RealEstateContract(models.Model):
     paid_utilities = fields.Monetary(string="Paid Utilities", compute='_compute_utilities')
     net_income = fields.Monetary(string="Net Income", compute='_compute_utilities')
 
+    # is_single unit contract, will diable the contract lines, and unit,price,start and end date will be on the contract level
+    is_single_property = fields.Boolean(string='Is Single Unit Contract',
+                                        default=lambda self: self.env['ir.config_parameter'].sudo().get_param(
+                                            'atmta_real_estate.single_property_contract') == 'True')
+    property_id = fields.Many2one('product.product', string="Property", domain="[('is_property', '=', True)]")
+    property_type_id = fields.Many2one(related='property_id.property_type_id', string='Property Type')
+    price = fields.Float(string="Base Rent")
+    payment_plan_ids = fields.Many2many(
+        'realestate.payment.plan',
+        'rel_contract_payment_plan',  # relation table name
+        'contract_id',  # this model's column
+        'contract_payment_plan_id',  # related model's column
+        string='Payment Plans'
+    )
+    increment_rule_ids = fields.Many2many(
+        'realestate.contract.increment.rule',
+        'rel_contract_increment_rule_rel',
+        'contract_id',
+        'increment_rule_id',
+        string="Increment Rules",
+        domain=[('discount', '=', False)]
+    )
+    discount_rule_ids = fields.Many2many(
+        'realestate.contract.increment.rule',
+        'rel_contract_discount_rule_rel',
+        'contract_id',  # your model
+        'increment_rule_id',  # related model (must match id in target model)
+        string="Discount Rules",
+        domain=[('discount', '=', True)]
+    )
+
+    # is_multi unit contract, will enable the contract lines, and unit,price,start and end date will be on the contract level
+    is_multi_property = fields.Boolean(string='Is Multi Unit Contract',
+                                       default=lambda self: self.env['ir.config_parameter'].sudo().get_param(
+                                           'atmta_real_estate.multi_property_contract') == 'True')
+
     @api.depends('utility_line_ids.amount', 'utility_line_ids.bill_paid')
     def _compute_utilities(self):
         for contract in self:
@@ -76,21 +111,24 @@ class RealEstateContract(models.Model):
     def action_generate_payment_lines(self):
         self.ensure_one()
         self.action_generate_payment_schedule()
-        if self.payment_ids:
+        if self.contract_payment_ids:
             self.state = 'ready'
-            self.line_ids.write({'state':'ready'})
+            if self.is_multi_property:
+                self.line_ids.write({'state': 'ready'})
 
     def action_reset_to_draft(self):
         for contract in self:
             contract.state = 'draft'
-            contract.line_ids.write({'state': 'draft'})
+            if self.is_multi_property:
+                contract.line_ids.write({'state': 'draft'})
 
     def action_confirm(self):
         self.ensure_one()
         if self.state != 'ready':
             raise UserError("You must generate payment lines before confirming the contract.")
         self.state = 'confirmed'
-        self.line_ids.write({'state':'confirmed'})
+        if self.is_multi_property:
+            self.line_ids.write({'state': 'confirmed'})
 
     def action_generate_invoices(self):
         self.ensure_one()
@@ -99,22 +137,22 @@ class RealEstateContract(models.Model):
         self.action_create_invoices()
         if self.move_ids:
             self.state = 'invoiced'
-            self.line_ids.write({'state':'invoiced'})
-
+            if self.is_multi_property:
+                self.line_ids.write({'state': 'invoiced'})
 
     def action_activate(self):
         for contract in self:
             if contract.state != 'invoiced':
                 raise UserError("You must generate invoices before activating the contract.")
             contract.state = 'active'
-
-            # Auto-activate lines that match contract start date
-            for line in contract.line_ids:
-                if (
-                        line.state not in ['terminated', 'expired']
-                        and line.start_date == contract.start_date
-                ):
-                    line.state = 'active'
+            if self.is_multi_property:
+                # Auto-activate lines that match contract start date
+                for line in contract.line_ids:
+                    if (
+                            line.state not in ['terminated', 'expired']
+                            and line.start_date == contract.start_date
+                    ):
+                        line.state = 'active'
 
     def action_terminate(self):
         for contract in self:
@@ -128,31 +166,56 @@ class RealEstateContract(models.Model):
 
             # Update contract and its lines
             contract.state = 'terminated'
-            contract.line_ids.filtered(lambda l: l.state != 'expired').write({'state': 'terminated'})
+            if self.is_multi_property:
+                contract.line_ids.filtered(lambda l: l.state != 'expired').write({'state': 'terminated'})
 
     def check_contract_expiry(self):
-        for contract in self.search([('state', '=', 'active')]):
-            if contract.end_date and contract.end_date < fields.Date.today():
-                contract.state = 'expired'
+        today = fields.Date.today()
+        expired = self.search([('state', '=', 'active'), ('end_date', '<', today)])
+        expired.write({'state': 'expired'})
 
-    @api.depends('contract_payment_ids.amount', 'contract_payment_ids.move_state',
-                 'contract_payment_ids.move_id.amount_total', 'contract_payment_ids.move_id.state')
+    @api.depends('contract_payment_ids.amount',
+                 'contract_payment_ids.move_id.state')
     def _compute_totals(self):
-        for contract in self:
-            scheduled = 0.0
-            paid = 0.0
-            for line in contract.contract_payment_ids:
-                scheduled += line.amount or 0.0
-                if line.move_id and line.move_id.state == 'posted':
-                    paid += line.amount or 0.0
-            contract.total_scheduled = scheduled
-            contract.total_paid = paid
-            contract.balance_due = scheduled - paid
+        if not self:
+            return
 
-    @api.depends('payment_ids')
+        # First get all payment amounts (total scheduled)
+        payment_totals = self.env['realestate.contract.payment'].read_group(
+            [('contract_id', 'in', self.ids)],
+            ['amount', 'contract_id'],
+            ['contract_id']
+        )
+        scheduled_map = {x['contract_id'][0]: x['amount'] for x in payment_totals}
+
+        # Then get only posted payments
+        posted_totals = self.env['realestate.contract.payment'].read_group(
+            [('contract_id', 'in', self.ids),
+             ('move_id.state', '=', 'posted')],
+            ['amount', 'contract_id'],
+            ['contract_id']
+        )
+        paid_map = {x['contract_id'][0]: x['amount'] for x in posted_totals}
+
+        # Compute values
+        for contract in self:
+            total = scheduled_map.get(contract.id, 0.0)
+            paid = paid_map.get(contract.id, 0.0)
+            contract.update({
+                'total_scheduled': total,
+                'total_paid': paid,
+                'balance_due': total - paid
+            })
+
+    @api.depends('contract_payment_ids')
     def get_payment_count(self):
         for rec in self:
-            rec.payment_count = len(rec.payment_ids)
+            rec.payment_count = len(rec.contract_payment_ids)
+
+    @api.depends('contract_payment_ids')
+    def _compute_payment_count(self):
+        for contract in self:
+            contract.payment_count = len(contract.contract_payment_ids)
 
     @api.depends('move_ids')
     def get_invoice_count(self):
@@ -176,161 +239,180 @@ class RealEstateContract(models.Model):
             'domain': [('contract_id', '=', self.id)],
             'context': {
                 'default_contract_id': self.id,
-                'group_by': 'contract_line_id',  # 👈 This triggers default grouping
-            },        }
+                # 'group_by': 'contract_line_id',  # 👈 This triggers default grouping
+            }, }
 
     def action_generate_payment_schedule(self):
         now = datetime.datetime.now()
 
+        UNIT_TO_DAYS = {
+            'day': 1,
+            'week': 7,
+            'month': 30,
+            'year': 365
+        }
+
+        UNIT_TO_RELATIVEDELTA = {
+            'day': 'days',
+            'week': 'weeks',
+            'month': 'months',
+            'year': 'years'
+        }
+
+        def apply_rules(price, months_passed, rules):
+            applied_ids = []
+            total = 0.0
+            for rule in rules.filtered(
+                    lambda r: r.start_month <= months_passed and (
+                            r.duration_months == 0 or months_passed < r.start_month + r.duration_months)
+            ).sorted('priority'):
+                val = abs(rule.increase_value)
+                if rule.increase_type == 'percent':
+                    val = price * val / 100
+                price += val if rule in rules else -val
+                total += val
+                applied_ids.append(rule.id)
+            return price, total, applied_ids
+
         for contract in self:
-            # Skip if nothing changed
-            if contract.last_generated and contract.write_date <= contract.last_generated and all(
-                    line.write_date <= contract.last_generated for line in contract.line_ids
-            ):
+            if contract.last_generated and contract.write_date <= contract.last_generated:
                 continue
 
-            # Remove only non-invoiced lines
-            contract.contract_payment_ids.filtered(lambda p: not p.move_id).unlink()
-
-            for line in contract.line_ids:
-                if not line.payment_plan_ids:
+            if contract.is_multi_property:
+                if all(line.write_date <= contract.last_generated for line in contract.line_ids):
                     continue
 
-                # Use contract line's custom date range
+            # Remove previous non-invoiced payments
+            contract.contract_payment_ids.filtered(lambda p: not p.move_id).unlink()
+
+            payments_to_create = []
+
+            contract_lines = contract.line_ids if contract.is_multi_property else [contract]
+            for line in contract_lines:
+                plans = line.payment_plan_ids if contract.is_multi_property else contract.payment_plan_ids
+                if not plans:
+                    continue
+
                 start = line.start_date or contract.start_date
                 end = line.end_date or contract.end_date
                 current_date = start
 
                 while current_date <= end:
-                    current_price = line.price
-                    due_date = current_date
-
-                    # Compute time differences
+                    base_price = line.price if contract.is_multi_property else contract.price
                     delta = relativedelta(current_date, start)
-                    days_passed = (current_date - start).days
                     months_passed = delta.years * 12 + delta.months
+                    days_passed = (current_date - start).days
 
-                    def to_days(unit, value):
-                        return {
-                            'day': value,
-                            'week': value * 7,
-                            'month': value * 30,
-                            'year': value * 365,
-                        }.get(unit, 0)
+                    valid_plans = [
+                        p for p in plans
+                        if UNIT_TO_DAYS.get(p.start_after_unit, 0) * p.start_after <= days_passed
+                    ]
 
-                    # Filter valid payment plans
-                    valid_plans = line.payment_plan_ids.filtered(
-                        lambda r: to_days(r.start_after_unit, r.start_after) <= days_passed
-                    )
                     if not valid_plans:
                         current_date += relativedelta(days=1)
                         continue
 
-                    # Pick the best plan
-                    plan_rule = sorted(
-                        valid_plans,
-                        key=lambda r: to_days(r.start_after_unit, r.start_after),
-                        reverse=True
-                    )[0]
+                    plan = max(valid_plans, key=lambda p: UNIT_TO_DAYS.get(p.start_after_unit, 0) * p.start_after)
+                    unit_key = UNIT_TO_RELATIVEDELTA.get(plan.unit)
 
-                    # Resolve interval
-                    unit_map = {
-                        'day': 'days',
-                        'week': 'weeks',
-                        'month': 'months',
-                        'year': 'years',
-                    }
-                    unit_key = unit_map.get(plan_rule.unit)
                     if not unit_key:
-                        raise UserError(f"Invalid interval unit '{plan_rule.unit}' in payment plan.")
+                        raise UserError(f"Invalid interval unit '{plan.unit}' in payment plan.")
 
-                    interval_delta = relativedelta(**{unit_key: plan_rule.interval})
+                    increment_rules = line.increment_rule_ids if contract.is_multi_property else contract.increment_rule_ids
+                    discount_rules = line.discount_rule_ids if contract.is_multi_property else contract.discount_rule_ids
 
-                    increase_total = 0.0
-                    discount_total = 0.0
-                    applied_increment_ids = []
-                    applied_discount_ids = []
+                    # Apply increment
+                    price_with_increments, inc_total, inc_ids = apply_rules(base_price, months_passed, increment_rules)
 
-                    # Apply increment rules
-                    active_increments = line.increment_rule_ids.filtered(
-                        lambda r: r.start_month <= months_passed and (
-                                r.duration_months == 0 or months_passed < r.start_month + r.duration_months
-                        )
-                    ).sorted(key=lambda r: r.priority)
+                    # Apply discount
+                    final_price, disc_total, disc_ids = apply_rules(price_with_increments, months_passed,
+                                                                    discount_rules)
 
-                    for rule in active_increments:
-                        value = abs(rule.increase_value)
-                        if rule.increase_type == 'percent':
-                            value = current_price * value / 100
-                        current_price += value
-                        increase_total += value
-                        applied_increment_ids.append(rule.id)
-
-                    # Apply discount rules
-                    active_discounts = line.discount_rule_ids.filtered(
-                        lambda r: r.start_month <= months_passed and (
-                                r.duration_months == 0 or months_passed < r.start_month + r.duration_months
-                        )
-                    ).sorted(key=lambda r: r.priority)
-
-                    for rule in active_discounts:
-                        value = abs(rule.increase_value)
-                        if rule.increase_type == 'percent':
-                            value = current_price * value / 100
-                        current_price -= value
-                        discount_total += value
-                        applied_discount_ids.append(rule.id)
-
-                    # Avoid duplicates
-                    exists = self.env['realestate.contract.payment'].search_count([
+                    search_domain = [
                         ('contract_id', '=', contract.id),
-                        ('contract_line_id', '=', line.id),
-                        ('date_due', '=', due_date),
-                    ])
+                        ('date_due', '=', current_date)
+                    ]
+                    if contract.is_multi_property:
+                        search_domain.append(('contract_line_id', '=', line.id))
+
+                    exists = self.env['realestate.contract.payment'].search_count(search_domain, limit=1)
+
                     if not exists:
-                        self.env['realestate.contract.payment'].create({
+                        ref = f"CNT-{contract.id}-PAY-{line.id if contract.is_multi_property else '0'}-{current_date}"
+                        payments_to_create.append({
                             'contract_id': contract.id,
-                            'contract_line_id': line.id,
-                            'date_due': due_date,
-                            'amount': current_price,
-                            'payment_plan_id': plan_rule.id,
-                            'increase_amount': increase_total,
-                            'discount_amount': discount_total,
-                            'increment_rule_ids': [(6, 0, applied_increment_ids)],
-                            'discount_rule_ids': [(6, 0, applied_discount_ids)],
+                            'contract_line_id': line.id if contract.is_multi_property else False,
+                            'property_id': contract.property_id.id if contract.is_single_property else line.property_id.id,
+                            'date_due': current_date,
+                            # 'name': ref,
+                            'amount': final_price,
+                            'payment_plan_id': plan.id,
+                            'increase_amount': inc_total,
+                            'discount_amount': disc_total,
+                            'increment_rule_ids': [(6, 0, inc_ids)],
+                            'discount_rule_ids': [(6, 0, disc_ids)],
                         })
 
-                    current_date += interval_delta
+                    current_date += relativedelta(**{unit_key: plan.interval})
+
+            if payments_to_create:
+                self.env['realestate.contract.payment'].create(payments_to_create)
 
             contract.last_generated = now
 
     def action_create_invoices(self):
-        invoices = self.env['account.move']
-        for contract in self:
-            # Filter payments without invoices and sort them for consistency
-            payments = contract.contract_payment_ids.filtered(lambda p: not p.move_id).sorted('id')
+        # Prepare all invoice data
+        invoices_to_create = []
 
-            for payment in payments:
-                # Create one invoice per payment
-                invoice = self.env['account.move'].create({
-                    'move_type': 'out_invoice',
-                    'partner_id': contract.partner_id.id,
-                    'contract_id': contract.id,
-                    'invoice_date': payment.date_due,
-                    'invoice_line_ids': [(0, 0, {
-                        'name': f'Rent for {payment.contract_line_id.property_id.display_name} on {payment.date_due}',
-                        'quantity': 1,
-                        'price_unit': payment.amount,
-                        'account_id': payment.contract_line_id.property_id.categ_id.property_account_income_categ_id.id,
-                    })]
-                })
+        # Get all unpaid payments with prefetch
+        payments = self.env['realestate.contract.payment'].search([
+            ('contract_id', 'in', self.ids),
+            ('move_id', '=', False)
+        ])
 
-                # Link the payment to the invoice
+        if not payments:
+            raise UserError(_("No unpaid payments found"))
+
+        # Generate temporary references
+
+        # Prepare invoice vals
+        for payment in payments:
+            product = payment.contract_line_id.property_id
+            account_id = product.categ_id.property_account_income_categ_id.id
+
+            invoices_to_create.append({
+                'move_type': 'out_invoice',
+                'partner_id': payment.contract_id.partner_id.id,
+                'contract_id': payment.contract_id.id,
+                'invoice_date': payment.date_due,
+                'payment_reference': payment.name,
+                'invoice_line_ids': [(0, 0, {
+                    'name': f'Rent for {product.display_name} on {payment.date_due}',
+                    'product_id': product.id,
+                    'quantity': 1,
+                    'price_unit': payment.amount,
+                    'account_id': account_id,
+                })]
+            })
+
+        # Batch create invoices
+        invoices = self.env['account.move'].create(invoices_to_create)
+
+        # Link payments to invoices
+        invoice_map = {
+            inv.payment_reference: inv
+            for inv in invoices
+        }
+
+        # Update payments in bulk
+        for payment in payments:
+            if payment.name in invoice_map:
                 payment.write({
-                    'move_id': invoice.id,
-                    'state': 'invoiced'
+                    'move_id': invoice_map[payment.name].id,
+                    'state': 'invoiced',
                 })
-                invoices |= invoice
+
+        return invoices
 
     def action_get_invoices(self):
         return {
@@ -340,6 +422,3 @@ class RealEstateContract(models.Model):
             'view_mode': 'list,form',
             'domain': [('contract_id', '=', self.id)],
         }
-
-    def contract_xlsx_report(self):
-        print('hello')
