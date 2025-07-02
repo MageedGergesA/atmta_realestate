@@ -26,6 +26,7 @@
         'views/property_product_views.xml',
         'views/contract_views.xml',
         'data/contract_sequence.xml',
+        'data/property_sequence.xml',
         'data/payment_schedule_sequence.xml',
         'data/maintenance_request_sequence.xml',
         'data/schedule_actions.xml',

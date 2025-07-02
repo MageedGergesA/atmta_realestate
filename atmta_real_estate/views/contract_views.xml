@@ -92,7 +92,7 @@
                             <field name="payment_plan_ids" widget="many2many_tags" invisible="not is_single_property"/>
                             <field name="increment_rule_ids" widget="many2many_tags" invisible="not is_single_property"/>
                             <field name="discount_rule_ids" widget="many2many_tags" invisible="not is_single_property"/>
-                            <field name="price"/>
+                            <field name="price" invisible="not is_single_property"/>
                         </group>
                     </group>
                     <br/>
@@ -145,7 +145,7 @@
                         <!-- Payment Schedules Tab -->
                         <page string="Payment Schedules">
                             <field name="contract_payment_ids">
-                                <list>
+                                <list editable="bottom">
                                     <field name="name" optional="show"/>
                                     <field name="label" optional="show"/>
                                     <field name="contract_id" optional="show"/>
@@ -253,61 +253,105 @@
         <field name="name">realestate.contract.kanban</field>
         <field name="model">realestate.contract</field>
         <field name="arch" type="xml">
-            <kanban class="o_kanban_realestate_contract" default_order="start_date desc">
-                <field name="name"/>
-                <field name="partner_id"/>
-                <field name="state"/>
-                <field name="start_date"/>
-                <field name="end_date"/>
+<kanban class="o_kanban_realestate_contract" default_order="start_date desc">
+    <field name="name"/>
+    <field name="partner_id"/>
+    <field name="state"/>
+    <field name="start_date"/>
+    <field name="end_date"/>
 
-                <templates>
-                    <t t-name="kanban-box">
-                        <div class="oe_kanban_global_click o_kanban_card shadow rounded p-2"
-                             t-att-style="
-            'border-left: 5px solid ' + (
-                record.state.raw_value == 'active' and '#28a745' or
-                record.state.raw_value == 'terminated' and '#dc3545' or
-                record.state.raw_value == 'expired' and '#dc3545' or
-                record.state.raw_value == 'confirmed' and '#0d6efd' or
-                record.state.raw_value == 'invoiced' and '#0d6efd' or
-                record.state.raw_value == 'ready' and '#ffc107' or
-                record.state.raw_value == 'draft' and '#6c757d' or
-                '#dee2e6'
-            )
-        ">
-                            <div class="d-flex justify-content-between mb-2">
-                                <strong class="text-primary fs-5">
-                                    <field name="name"/>
-                                </strong>
-                                <span t-attf-class="badge rounded-pill bg-#{record.state.raw_value}">
-                                    <field name="state" widget="badge"
-                                           decoration-success="state == 'active'"
-                                           decoration-danger="state in ('terminated', 'expired')"
-                                           decoration-info="state in ('confirmed', 'invoiced')"
-                                           decoration-warning="state == 'ready'"
-                                           decoration-muted="state == 'draft'" optional="show"/>
-                                </span>
-                            </div>
+    <templates>
+        <t t-name="card" class="rounded shadow-sm">
+            <div class="oe_kanban_global_click ">
+            <div t-att-class="
+                'border-start border-4 p-3 ' +
+                (
+                    record.state.raw_value == 'active' and 'border-success' or
+                    record.state.raw_value in ['terminated', 'expired'] and 'border-danger' or
+                    record.state.raw_value in ['confirmed', 'invoiced'] and 'border-primary' or
+                    record.state.raw_value == 'ready' and 'border-warning' or
+                    'border-secondary'
+                )
+            ">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <strong class="text-primary fs-6">
+                        <field name="name"/>
+                    </strong>
+                    <field name="state" widget="badge"
+                           decoration-success="state == 'active'"
+                           decoration-danger="state in ('terminated', 'expired')"
+                           decoration-info="state in ('confirmed', 'invoiced')"
+                           decoration-warning="state == 'ready'"
+                           decoration-muted="state == 'draft'"
+                           optional="show"/>
+                </div>
 
-                            <div class="text-muted small mb-1">
-                                Tenant:
-                                <span class="text-dark fw-bold">
-                                    <field name="partner_id"/>
-                                </span>
-                            </div>
+                <div class="text-muted small mb-1">
+                    <i class="fa fa-user me-1 text-secondary"/>
+                    <span class="fw-semibold text-dark">
+                        <field name="partner_id"/>
+                    </span>
+                </div>
 
-                            <div class="text-muted small">
-                                <i class="fa fa-calendar me-1 text-info"/>
-                                <field name="start_date"/>
-                                →
-                                <field name="end_date"/>
-                            </div>
-                        </div>
-                    </t>
-                </templates>
-            </kanban>
+                <div class="text-muted small">
+                    <i class="fa fa-calendar me-1 text-info"/>
+                    <field name="start_date"/> → <field name="end_date"/>
+                </div>
+            </div>
+            </div>
+        </t>
+    </templates>
+</kanban>
         </field>
     </record>
+<record id="view_realestate_contract_search" model="ir.ui.view">
+    <field name="name">realestate.contract.search</field>
+    <field name="model">realestate.contract</field>
+    <field name="arch" type="xml">
+        <search string="Real Estate Contracts">
+            <!-- Default Filters -->
+            <filter string="Active" name="active" domain="[('state', '=', 'active')]" />
+            <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'confirmed')]" />
+            <filter string="Ready to Invoice" name="ready" domain="[('state', '=', 'ready')]" />
+            <filter string="Invoiced" name="invoiced" domain="[('state', '=', 'invoiced')]" />
+            <filter string="Expired" name="expired" domain="[('state', '=', 'expired')]" />
+            <filter string="Terminated" name="terminated" domain="[('state', '=', 'terminated')]" />
+
+            <!-- Searchable Fields -->
+            <field name="name"/>
+            <field name="partner_id"/>
+            <field name="property_id"/>
+            <field name="property_type_id"/>
+            <field name="state"/>
+            <field name="start_date"/>
+            <field name="end_date"/>
+            <field name="is_single_property"/>
+            <field name="is_multi_property"/>
+            <field name="is_renewed"/>
+            <field name="old_contract_id"/>
+
+            <!-- Group By Options -->
+            <group expand="1" string="Group By">
+                <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                <filter string="Tenant" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                <filter string="Property" name="group_property" context="{'group_by': 'property_id'}"/>
+                <filter string="Start Date" name="group_start_date" context="{'group_by': 'start_date'}"/>
+                <filter string="End Date" name="group_end_date" context="{'group_by': 'end_date'}"/>
+                <filter string="Property Type" name="group_type" context="{'group_by': 'property_type_id'}"/>
+                <filter string="Single vs Multi" name="group_single_multi" context="{'group_by': 'is_single_property'}"/>
+            </group>
+
+            <!-- Advanced Filters -->
+            <separator/>
+            <field name="total_scheduled"/>
+            <field name="total_paid"/>
+            <field name="balance_due"/>
+            <field name="total_utilities"/>
+            <field name="paid_utilities"/>
+            <field name="net_income"/>
+        </search>
+    </field>
+</record>
 
 
     <record id="action_realestate_contract" model="ir.actions.act_window">

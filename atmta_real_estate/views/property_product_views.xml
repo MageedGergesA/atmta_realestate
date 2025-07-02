@@ -13,6 +13,13 @@
                 </header>
 
                 <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="property_code" readonly="1"/>
+                        </h1>
+                    </div>
+                    <hr/>
+
                     <field name="image_1920" widget="image" class="oe_avatar"/>
                     <group>
                         <group>
@@ -29,8 +36,6 @@
                                     <field name="child_ids" invisible="1"/>
                                     <field name="is_parent_child" invisible="1"/>
                                     <field name="parent_id" domain="[('is_property', '=', True),('id','!=',id)]"/>
-                                </group>
-                                <group>
                                     <field name="child_ids" class="position-relative" widget="org_chart" nolabel="1"/>
                                 </group>
                             </group>
@@ -61,6 +66,7 @@
                             <group col="2">
                                 <group string="General Area">
                                     <field name="country_id"/>
+                                    <field name="state_id"/>
                                     <field name="city"/>
                                     <field name="district"/>
                                 </group>
@@ -187,6 +193,7 @@
                 <field name="name" string="Name"/>
                 <field name="property_ref" string="Reference"/>
                 <field name="property_number" string="Number"/>
+                <field name="state_id"/>
                 <field name="city"/>
                 <field name="district"/>
                 <field name="sub_area"/>
@@ -207,6 +214,7 @@
                 <group expand="0" string="Group By">
                     <filter name="group_type" string="Property Type" context="{'group_by': 'property_type_id'}"/>
                     <filter name="group_status" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_state" string="State" context="{'group_by': 'state_id'}"/>
                     <filter name="group_city" string="City" context="{'group_by': 'city'}"/>
                     <filter name="group_owner" string="Owner" context="{'group_by': 'owner_id'}"/>
                     <filter name="group_manager" string="Manager" context="{'group_by': 'manager_id'}"/>
@@ -227,7 +235,7 @@
                         <div t-attf-class="o_hierarchy_node_header d-flex justify-content-center pb-4"
                              t-att-title="parent_id">
                         </div>
-                        <div class="o_hierarchy_node_body d-flex flex-column text-center">
+                        <div class="o_hierarchy_node_body d-flex  text-center align-content-start justify-content-end align-items-center">
                             <div class="w-100 position-relative">
                                 <field class="fw-bold" name="name"/>
                                 <br/>
@@ -330,7 +338,7 @@
 <!--                    </t>-->
 <!--                </templates>-->
 <templates>
-    <t t-name="kanban-box">
+    <t t-name="card" class="mb-2 shadow-sm rounded">
         <div t-att-class="'oe_kanban_global_click position-relative h-100' + (record.is_favorite.raw_value ? ' oe_kanban_card_favorite' : '')">
             <!-- Full-height status indicator -->
             <div class="position-absolute top-0 start-0 bottom-0"
@@ -344,9 +352,9 @@
             </div>
 
             <!-- Main container with no padding -->
-            <div class="d-flex h-100 w-100" style="margin-left: 4px;">
+            <div class="d-flex h-100 w-100" style="margin-left: 12px;">
                 <!-- Main Content -->
-                <div class="flex-grow-1 pe-2" style="min-width: 0; overflow: hidden;">
+                <div class="flex-grow-1 pe-2 mt-2" style="min-width: 0; overflow: hidden;">
                     <!-- Header Row -->
                     <div class="d-flex align-items-center mb-1">
                         <field name="is_favorite" widget="boolean_favorite" nolabel="1" class="me-1"/>
@@ -384,7 +392,7 @@
                 </div>
 
                 <!-- Image - flush right -->
-                <div class="flex-shrink-0 d-flex align-items-stretch" style="width: 150px;">
+                <div class="flex-shrink-0 d-flex align-items-stretch p-1 me-1" style="width: 120px;">
                     <field name="image_128" widget="image"
                            options="{'img_class': 'img-fluid rounded border object-fit-cover w-100 h-100'}"
                            invisible="not image_128"

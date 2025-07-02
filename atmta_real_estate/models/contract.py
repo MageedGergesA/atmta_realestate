@@ -1,5 +1,5 @@
 from odoo import models, fields, _, api
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from dateutil.relativedelta import relativedelta
 import datetime
 
@@ -69,7 +69,7 @@ class RealEstateContract(models.Model):
                                         default=lambda self: self.env['ir.config_parameter'].sudo().get_param(
                                             'atmta_real_estate.single_property_contract') == 'True')
     property_id = fields.Many2one('product.product', string="Property", domain="[('is_property', '=', True)]")
-    property_type_id = fields.Many2one(related='property_id.property_type_id', string='Property Type')
+    property_type_id = fields.Many2one(related='property_id.property_type_id', string='Property Type', store=True)
     price = fields.Float(string="Base Rent")
     payment_plan_ids = fields.Many2many(
         'realestate.payment.plan',
@@ -99,6 +99,37 @@ class RealEstateContract(models.Model):
     is_multi_property = fields.Boolean(string='Is Multi Unit Contract',
                                        default=lambda self: self.env['ir.config_parameter'].sudo().get_param(
                                            'atmta_real_estate.multi_property_contract') == 'True')
+    _sql_constraints = [('contract_name_unique', 'unique(name)', 'Contract name already exists')]
+
+    @api.constrains('name')
+    def _check_unique_code(self):
+        for rec in self:
+            if rec.name:
+                existing = self.search([
+                    ('name', '=', rec.name),
+                    ('id', '!=', rec.id)
+                ], limit=1)
+                if existing:
+                    raise ValidationError(_("Name Code '%s' already exists.") % rec.name)
+
+
+    @api.onchange('is_single_property')
+    def _onchange_is_single(self):
+        for rec in self:
+            if rec.is_single_property:
+                rec.is_multi_property = False
+                rec.line_ids = False
+
+    @api.onchange('is_multi_property')
+    def _onchange_is_multi(self):
+        for rec in self:
+            if rec.is_multi_property:
+                rec.is_single_property = False
+                rec.discount_rule_ids = False
+                rec.increment_rule_ids = False
+                rec.payment_plan_ids = False
+                rec.property_id = False
+                rec.price = 0
 
     @api.depends('utility_line_ids.amount', 'utility_line_ids.bill_paid')
     def _compute_utilities(self):

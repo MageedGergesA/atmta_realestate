@@ -10,8 +10,8 @@
                 <field name="property_id"/>
                 <field name="request_date"/>
                 <templates>
-                    <t t-name="kanban-box">
-                        <div class="oe_kanban_global_click o_kanban_card shadow rounded p-2" t-att-style="
+                    <t t-name="card" class="shadow rounded p-2">
+                        <div class="oe_kanban_global_click o_kanban_card p-2" t-att-style="
                             'border-left: 5px solid ' + (
                                 record.state.raw_value == 'draft' and 'var(--secondary)' or
                                 record.state.raw_value == 'scheduled' and 'var(--warning)' or

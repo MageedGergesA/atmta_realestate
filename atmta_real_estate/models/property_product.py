@@ -1,6 +1,5 @@
-from dateutil.relativedelta import relativedelta
-
-from odoo import models, fields, api
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 
 
 class ProductProduct(models.Model):
@@ -8,6 +7,9 @@ class ProductProduct(models.Model):
     _parent_store = True
 
     # Property identity
+    property_code = fields.Char(string='Code', required=True, copy=False, readonly=False,
+                       index='trigram',
+                       default=lambda self: _('New'))
     property_image = fields.Binary(string='Image')
     is_property = fields.Boolean(string="Is Property", tracking=True)
     property_ref = fields.Char(string="Property Reference", tracking=True)
@@ -29,6 +31,7 @@ class ProductProduct(models.Model):
 
     # Location
     country_id = fields.Many2one('res.country', string="Country", tracking=True)
+    state_id = fields.Many2one(comodel_name='res.country.state', string='State', domain="[('country_id', '=', country_id)]")
     city = fields.Char(string="City", tracking=True)
     district = fields.Char(string="District", tracking=True)
     sub_area = fields.Char(string="Sub-area", tracking=True)
@@ -86,6 +89,19 @@ class ProductProduct(models.Model):
         'master_product_id',
         string="Sub Properties"
     )
+    _sql_constraints = [('property_code_unique', 'unique(property_code)', 'Property Code already exists')]
+
+    @api.constrains('property_code')
+    def _check_unique_code(self):
+        for rec in self:
+            if rec.property_code:
+                existing = self.search([
+                    ('property_code', '=', rec.property_code),
+                    ('id', '!=', rec.id)
+                ], limit=1)
+                if existing:
+                    raise ValidationError(_("Property Code '%s' already exists.") % rec.property_code)
+
     def set_property_inactive(self):
         for rec in self:
             if rec.state not in ['reserved','rented', 'maintenance']:
@@ -101,7 +117,6 @@ class ProductProduct(models.Model):
         for rec in self:
             if rec.parent_path:
                 rec.master_product_id = int(rec.parent_path.split('/')[0])
-                print(f'jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj{rec.master_product_id}')
 
     # @api.onchange('parent_id','child_ids')
     # def check_parent_childs(self):
@@ -137,9 +152,19 @@ class ProductProduct(models.Model):
         }
 
         return result
+    # @api.model_create_multi
+    # def create(self, vals_list):
+    #     for vals in vals_list:
+    #         if vals.get('name', _("New")) == _("New"):
+    #             vals['name'] = self.env['ir.sequence'].next_by_code('realestate.contract') or 'New'
+    #     return super().create(vals_list)
 
     @api.model_create_multi
     def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('property_code', _("New")) == _("New"):
+                vals['property_code'] = self.env['ir.sequence'].next_by_code('realestate.property.code') or 'New'
+
         """To show the widget at the time of creation"""
         res = super(ProductProduct, self).create(vals_list)
         for record in res:
@@ -147,7 +172,6 @@ class ProductProduct(models.Model):
                 record.is_parent_child = True
             else:
                 record.is_parent_child = False
-            print(f'-----------------------------------------------------------------------------{res}')
         return res
 
     def write(self, values):
@@ -155,7 +179,6 @@ class ProductProduct(models.Model):
         res = super(ProductProduct, self).write(values)
         if 'parent_id' in values:
             self.is_parent_child = True
-        print(f';;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; {res}')
         return res
 
     rent_count = fields.Integer(string="Times Rented", compute="_compute_rent_stats")

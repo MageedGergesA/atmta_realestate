@@ -15,18 +15,15 @@ export class OrgChart extends Component {
         this.orm = useService("orm");
         this.OrgState = useState({ data: {} });
 
-        const buildImageUrl = (id) => `/web/image/product.product/${id}/image_128?ts=${Date.now()}`;
-        const addImageUrl = (item) => ({ ...item, image_url: buildImageUrl(item.id) });
-
         const loadDetails = async (id, model) => {
-            if (!id || !model) return;
+            if (!id || typeof id !== "number" || !model) return;
 
             const result = await this.orm.call("product.product", "get_child_dept", [id, model]);
 
             this.OrgState.data = {
-                parent: result.parent ? addImageUrl(result.parent) : null,
-                self: addImageUrl(result.self),
-                child: result.child.map(addImageUrl),
+                parent: result.parent || null,
+                self: result.self,
+                child: result.child,
             };
         };
 
@@ -46,7 +43,9 @@ export class OrgChart extends Component {
             () => {
                 const productId = this.props.record.data.product_id?.res_id;
                 const model = this.props.record.resModel;
-                loadDetails(productId, model);
+                if (typeof productId === "number") {
+                    loadDetails(productId, model);
+                }
             },
             () => [this.props.record.data.product_id]
         );
@@ -56,19 +55,6 @@ export class OrgChart extends Component {
             const model = this.props.record.resModel;
             await loadDetails(id, model);
         });
-    }
-
-    async ProductDetails(product_id, model) {
-        const result = await this.orm.call("product.product", "get_child_dept", [product_id, model]);
-
-        const buildImageUrl = (id) => `/web/image/product.product/${id}/image_128?ts=${Date.now()}`;
-        const addImageUrl = (item) => ({ ...item, image_url: buildImageUrl(item.id) });
-
-        this.OrgState.data = {
-            parent: result.parent ? addImageUrl(result.parent) : null,
-            self: addImageUrl(result.self),
-            child: result.child.map(addImageUrl),
-        };
     }
 
     onChildClick(id, ev) {
@@ -89,7 +75,7 @@ export class OrgChart extends Component {
 
 export const orgChart = {
     component: OrgChart,
-    displayName: _t("Widget"),
+    displayName: _t("Org Chart"),
     supportedTypes: ["many2one"],
     extractProps: ({ attrs }) => ({}),
 };

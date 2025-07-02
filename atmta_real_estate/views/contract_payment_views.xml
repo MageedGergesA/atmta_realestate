@@ -16,12 +16,12 @@
                 <field name="amount" sum="Total Amount" optional="show"/>
                 <field name="move_state" optional="show" widget="badge"
                        decoration-success="move_state == 'posted'"
-                   decoration-warning="move_state == 'draft'"
-                   decoration-danger="move_state == 'cancel'" />
+                       decoration-warning="move_state == 'draft'"
+                       decoration-danger="move_state == 'cancel'"/>
                 <field name="move_id" optional="show" widget="badge"
-                   decoration-success="move_state == 'posted'"
-                   decoration-warning="move_state == 'draft'"
-                   decoration-danger="move_state == 'cancel'"
+                       decoration-success="move_state == 'posted'"
+                       decoration-warning="move_state == 'draft'"
+                       decoration-danger="move_state == 'cancel'"
                 />
                 <field name="payment_plan_id" optional="hide"/>
                 <field name="increment_rule_ids" widget="many2many_tags" optional="hide"/>
@@ -37,14 +37,14 @@
         <field name="name">realestate.contract.payment.form</field>
         <field name="model">realestate.contract.payment</field>
         <field name="arch" type="xml">
-            <form string="Payment Schedule" create="0" edit="0">
+            <form string="Payment Schedule">
                 <header>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
                     <div class="oe_title">
                         <h1>
-                            <field name="name"/>
+                            <field name="name" readonly="True"/>
                         </h1>
                         <!--                        <hr/>-->
                     </div>
@@ -78,22 +78,73 @@
             </form>
         </field>
     </record>
-<record id="view_contract_payment_pivot" model="ir.ui.view">
-    <field name="name">realestate.contract.payment.pivot</field>
-    <field name="model">realestate.contract.payment</field>
-    <field name="arch" type="xml">
-        <pivot string="Scheduled Payments">
-            <field name="contract_id" type="row"/>
-            <field name="contract_line_id" type="row"/>
-            <field name="date_due" type="col"/>
-            <field name="state" type="col"/>
-            <field name="amount" type="measure"/>
-            <field name="increase_amount" type="measure"/>
-            <field name="discount_amount" type="measure"/>
-        </pivot>
-    </field>
-</record>
-      <record id="view_realestate_contract_payment_calendar" model="ir.ui.view">
+    <record id="view_contract_payment_pivot" model="ir.ui.view">
+        <field name="name">realestate.contract.payment.pivot</field>
+        <field name="model">realestate.contract.payment</field>
+        <field name="arch" type="xml">
+            <pivot string="Scheduled Payments">
+                <field name="contract_id" type="row"/>
+                <field name="contract_line_id" type="row"/>
+                <field name="date_due" type="col"/>
+                <field name="state" type="col"/>
+                <field name="amount" type="measure"/>
+                <field name="increase_amount" type="measure"/>
+                <field name="discount_amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="view_realestate_contract_payment_search" model="ir.ui.view">
+        <field name="name">realestate.contract.payment.search</field>
+        <field name="model">realestate.contract.payment</field>
+        <field name="arch" type="xml">
+            <search string="Contract Payments">
+                <!-- Quick Search Fields -->
+                <field name="name" string="Reference"/>
+                <field name="label" string="Label"/>
+                <field name="amount"/>
+                <field name="date_due"/>
+                <field name="contract_id"/>
+                <field name="partner_id"/>
+                <field name="property_id"/>
+                <field name="state"/>
+                <field name="move_state"/>
+                <field name="discount_amount"/>
+                <field name="increase_amount"/>
+                <field name="payment_plan_id"/>
+                <field name="contract_line_id"/>
+
+                <!-- Filters -->
+                <filter name="draft" string="Unpaid" domain="[('state', '=', 'draft')]"/>
+                <filter name="invoiced" string="Invoiced" domain="[('state', '=', 'invoiced')]"/>
+                <filter name="paid" string="Paid" domain="[('state', '=', 'paid')]"/>
+                <filter name="cancelled" string="Cancelled" domain="[('state', '=', 'cancelled')]"/>
+
+                <separator/>
+
+                <!-- Filters on invoice state -->
+                <filter name="invoice_draft" string="Invoice Draft" domain="[('move_state', '=', 'draft')]"/>
+                <filter name="invoice_posted" string="Invoice Posted" domain="[('move_state', '=', 'posted')]"/>
+                <filter name="invoice_cancel" string="Invoice Cancelled" domain="[('move_state', '=', 'cancel')]"/>
+
+                <separator/>
+
+                <!-- Group By -->
+                <group expand="1" string="Group By">
+                    <filter name="group_contract" string="Contract" context="{'group_by': 'contract_id'}"/>
+                    <filter name="group_partner" string="Tenant/Partner" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_property" string="Property" context="{'group_by': 'property_id'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_invoice_state" string="Invoice State" context="{'group_by': 'move_state'}"/>
+                    <filter name="group_due_date" string="Due Date" context="{'group_by': 'date_due'}"/>
+                    <filter name="group_plan" string="Payment Plan" context="{'group_by': 'payment_plan_id'}"/>
+                    <filter name="group_contract_line" string="Contract Line"
+                            context="{'group_by': 'contract_line_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_realestate_contract_payment_calendar" model="ir.ui.view">
         <field name="name">realestate.contract.payment.calendar</field>
         <field name="model">realestate.contract.payment</field>
         <field name="arch" type="xml">

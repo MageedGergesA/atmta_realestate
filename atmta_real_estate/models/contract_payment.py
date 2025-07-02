@@ -1,4 +1,6 @@
 from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
+
 
 class RealEstateContractPayment(models.Model):
     _name = 'realestate.contract.payment'
@@ -58,6 +60,21 @@ class RealEstateContractPayment(models.Model):
         copy=False,
         help="Used during invoice creation to link payments to invoices"
     )
+
+    _sql_constraints = [('contract_payment_name_unique', 'unique(name)', 'Contract Payment already exists')]
+
+    @api.constrains('name')
+    def _check_unique_code(self):
+        for rec in self:
+            if rec.name:
+                existing = self.search([
+                    ('name', '=', rec.name),
+                    ('id', '!=', rec.id)
+                ], limit=1)
+                if existing:
+                    raise ValidationError(_("Name Code '%s' already exists.") % rec.name)
+
+
 
     @api.depends('property_id', 'date_due')
     def _compute_name(self):
