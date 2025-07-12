@@ -3,12 +3,14 @@
     <record id="view_property_form" model="ir.ui.view">
         <field name="name">product.product.realestate.form</field>
         <field name="model">product.product</field>
-        <field name="priority" eval="1"/>
+        <field name="priority" eval="9"/>
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button name="set_property_inactive" type="object" string="Set Inactive" invisible="state in ('reserved','rented', 'maintenance', 'inactive')"/>
-                    <button name="set_property_available" type="object" string="Set To Available" invisible="state not in ('inactive')"/>
+                    <button name="set_property_inactive" type="object" string="Set Inactive"
+                            invisible="state in ('reserved','rented', 'maintenance', 'inactive')"/>
+                    <button name="set_property_available" type="object" string="Set To Available"
+                            invisible="state not in ('inactive')"/>
                     <field name="state" widget="statusbar"/>
                 </header>
 
@@ -26,7 +28,7 @@
                             <field name="name"/>
                             <field name="is_property" widget="boolean_toggle"/>
                             <field name="property_type_id"/>
-<!--                            <field name="state"/>-->
+                            <!--                            <field name="state"/>-->
                         </group>
                     </group>
                     <notebook>
@@ -95,28 +97,14 @@
                             </group>
                         </page>
                         <page string="Contract History">
-                            <field name="contract_history_ids">
+                            <field name="rental_history_ids">
                                 <list create="0" edit="0">
-                                    <field name="contract_id" optional="show"/>
-                                    <field name="partner_id" optional="show"/>
-                                    <!--                                    <field name="property_id" optional="show"/>-->
-                                    <field name="start_date" optional="show"/>
-                                    <field name="end_date" optional="show"/>
-                                    <field name="payment_plan_ids" widget="many2many_tags" options="{'no_create': True}"
-                                           optional="show"/>
-                                    <field name="increment_rule_ids" widget="many2many_tags"
-                                           options="{'no_create': True}"
-                                           optional="show"/>
-                                    <field name="discount_rule_ids" widget="many2many_tags"
-                                           options="{'no_create': True}"
-                                           optional="show"/>
-                                    <field name="price" optional="show"/>
-                                    <field name="state" widget="badge"
-                                           decoration-success="state == 'active'"
-                                           decoration-danger="state in ('terminated', 'expired')"
-                                           decoration-info="state in ('confirmed', 'invoiced')"
-                                           decoration-warning="state == 'ready'"
-                                           decoration-muted="state == 'draft'" optional="show"/>
+                                    <field name="contract_id"/>
+                                    <field name="property_id"/>
+                                    <field name="tenant_id"/>
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                    <field name="is_multi"/>
                                 </list>
                             </field>
                         </page>
@@ -227,7 +215,7 @@
         <field name="name">product.product.view.hierarchy</field>
         <field name="model">product.product</field>
         <field name="arch" type="xml">
-            <hierarchy child_field="child_ids"
+      <hierarchy child_field="child_ids"
                        draggable="1">
                 <field name="name"/>
                 <templates>
@@ -271,138 +259,138 @@
                 <progressbar field="activity_state"
                              colors='{"planned": "success", "today": "warning", "overdue": "danger"}'/>
 
-<!--                <templates>-->
-<!--                    <t t-name="kanban-box">-->
-<!--                        <div t-att-class="'oe_kanban_global_click position-relative h-100' + (record.is_favorite.raw_value ? ' oe_kanban_card_favorite' : '')">-->
-<!--                            &lt;!&ndash; Full-height status indicator &ndash;&gt;-->
-<!--                            <div class="position-absolute top-0 start-0 bottom-0"-->
-<!--                                 t-attf-style="width: 4px; background-color: #{-->
-<!--                        record.state.raw_value == 'rented' and 'var(&#45;&#45;success)' or-->
-<!--                        record.state.raw_value == 'available' and 'var(&#45;&#45;info)' or-->
-<!--                        record.state.raw_value == 'inactive' and 'var(&#45;&#45;danger)' or-->
-<!--                        record.state.raw_value == 'maintenance' and 'var(&#45;&#45;warning)' or-->
-<!--                        '#dee2e6'-->
-<!--                     }">-->
-<!--                            </div>-->
+                <!--                <templates>-->
+                <!--                    <t t-name="kanban-box">-->
+                <!--                        <div t-att-class="'oe_kanban_global_click position-relative h-100' + (record.is_favorite.raw_value ? ' oe_kanban_card_favorite' : '')">-->
+                <!--                            &lt;!&ndash; Full-height status indicator &ndash;&gt;-->
+                <!--                            <div class="position-absolute top-0 start-0 bottom-0"-->
+                <!--                                 t-attf-style="width: 4px; background-color: #{-->
+                <!--                        record.state.raw_value == 'rented' and 'var(&#45;&#45;success)' or-->
+                <!--                        record.state.raw_value == 'available' and 'var(&#45;&#45;info)' or-->
+                <!--                        record.state.raw_value == 'inactive' and 'var(&#45;&#45;danger)' or-->
+                <!--                        record.state.raw_value == 'maintenance' and 'var(&#45;&#45;warning)' or-->
+                <!--                        '#dee2e6'-->
+                <!--                     }">-->
+                <!--                            </div>-->
 
-<!--                            <div class="d-flex p-2 h-100" style="margin-left: 4px;">-->
-<!--                                &lt;!&ndash; Main Content &ndash;&gt;-->
-<!--                                <div class="flex-grow-1 pe-2" style="min-width: 0; overflow: hidden;">-->
-<!--                                    &lt;!&ndash; Header Row - Favorite now left of name &ndash;&gt;-->
-<!--                                    <div class="d-flex align-items-center mb-1">-->
-<!--                                        <field name="is_favorite" widget="boolean_favorite" nolabel="1" class="me-1"/>-->
-<!--                                        <h5 class="mb-0 fw-bold text-truncate" style="max-width: 200px;">-->
-<!--                                            <field name="name" class="oe_kanban_card_title"/>-->
-<!--                                        </h5>-->
-<!--                                    </div>-->
+                <!--                            <div class="d-flex p-2 h-100" style="margin-left: 4px;">-->
+                <!--                                &lt;!&ndash; Main Content &ndash;&gt;-->
+                <!--                                <div class="flex-grow-1 pe-2" style="min-width: 0; overflow: hidden;">-->
+                <!--                                    &lt;!&ndash; Header Row - Favorite now left of name &ndash;&gt;-->
+                <!--                                    <div class="d-flex align-items-center mb-1">-->
+                <!--                                        <field name="is_favorite" widget="boolean_favorite" nolabel="1" class="me-1"/>-->
+                <!--                                        <h5 class="mb-0 fw-bold text-truncate" style="max-width: 200px;">-->
+                <!--                                            <field name="name" class="oe_kanban_card_title"/>-->
+                <!--                                        </h5>-->
+                <!--                                    </div>-->
 
-<!--                                    &lt;!&ndash; Property Details &ndash;&gt;-->
-<!--                                    <div class="d-flex flex-column gap-1">-->
-<!--                                        <div class="d-flex align-items-center">-->
-<!--                                            <span class="text-muted small">Type:</span>-->
-<!--                                            <div class="ms-1 text-truncate" style="max-width: 150px;">-->
-<!--                                                <field name="property_type_id" widget="badge"-->
-<!--                                                       decoration-success="state in 'rented'"-->
-<!--                                                       decoration-danger="state in ('inactive')"-->
-<!--                                                       decoration-info="state in ('available')"-->
-<!--                                                       decoration-warning="state in ('maintenance','reserved')"-->
-<!--                                                       class="badge"/>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
+                <!--                                    &lt;!&ndash; Property Details &ndash;&gt;-->
+                <!--                                    <div class="d-flex flex-column gap-1">-->
+                <!--                                        <div class="d-flex align-items-center">-->
+                <!--                                            <span class="text-muted small">Type:</span>-->
+                <!--                                            <div class="ms-1 text-truncate" style="max-width: 150px;">-->
+                <!--                                                <field name="property_type_id" widget="badge"-->
+                <!--                                                       decoration-success="state in 'rented'"-->
+                <!--                                                       decoration-danger="state in ('inactive')"-->
+                <!--                                                       decoration-info="state in ('available')"-->
+                <!--                                                       decoration-warning="state in ('maintenance','reserved')"-->
+                <!--                                                       class="badge"/>-->
+                <!--                                            </div>-->
+                <!--                                        </div>-->
 
-<!--                                        <div class="d-flex align-items-center">-->
-<!--                                            <span class="text-muted small">Status:</span>-->
-<!--                                            <div class="ms-1">-->
-<!--                                                <field name="state" widget="badge"-->
-<!--                                                       decoration-success="state in 'rented'"-->
-<!--                                                       decoration-danger="state == 'inactive'"-->
-<!--                                                       decoration-info="state in ('available')"-->
-<!--                                                       decoration-warning="state in ('maintenance','reserved')"-->
-<!--                                                       class="badge"/>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
+                <!--                                        <div class="d-flex align-items-center">-->
+                <!--                                            <span class="text-muted small">Status:</span>-->
+                <!--                                            <div class="ms-1">-->
+                <!--                                                <field name="state" widget="badge"-->
+                <!--                                                       decoration-success="state in 'rented'"-->
+                <!--                                                       decoration-danger="state == 'inactive'"-->
+                <!--                                                       decoration-info="state in ('available')"-->
+                <!--                                                       decoration-warning="state in ('maintenance','reserved')"-->
+                <!--                                                       class="badge"/>-->
+                <!--                                            </div>-->
+                <!--                                        </div>-->
+                <!--                                    </div>-->
 
-<!--                                </div>-->
+                <!--                                </div>-->
 
-<!--                                &lt;!&ndash; Image &ndash;&gt;-->
-<!--                                <div class="flex-shrink-0" style="width: 150px;">-->
-<!--                                    <field name="image_128" widget="image"-->
-<!--                                           options="{'img_class': 'img-fluid rounded border object-fit-cover h-100'}"-->
-<!--                                           invisible="not image_128"-->
-<!--                                           alt="Property Image"-->
-<!--                                           class="h-100"/>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </t>-->
-<!--                </templates>-->
-<templates>
-    <t t-name="card" class="mb-2 shadow-sm rounded">
-        <div t-att-class="'oe_kanban_global_click position-relative h-100' + (record.is_favorite.raw_value ? ' oe_kanban_card_favorite' : '')">
-            <!-- Full-height status indicator -->
-            <div class="position-absolute top-0 start-0 bottom-0"
-                 t-attf-style="width: 4px; background-color: #{
+                <!--                                &lt;!&ndash; Image &ndash;&gt;-->
+                <!--                                <div class="flex-shrink-0" style="width: 150px;">-->
+                <!--                                    <field name="image_128" widget="image"-->
+                <!--                                           options="{'img_class': 'img-fluid rounded border object-fit-cover h-100'}"-->
+                <!--                                           invisible="not image_128"-->
+                <!--                                           alt="Property Image"-->
+                <!--                                           class="h-100"/>-->
+                <!--                                </div>-->
+                <!--                            </div>-->
+                <!--                        </div>-->
+                <!--                    </t>-->
+                <!--                </templates>-->
+                <templates>
+                    <t t-name="card" class="mb-2 shadow-sm rounded">
+                        <div t-att-class="'oe_kanban_global_click position-relative h-100' + (record.is_favorite.raw_value ? ' oe_kanban_card_favorite' : '')">
+                            <!-- Full-height status indicator -->
+                            <div class="position-absolute top-0 start-0 bottom-0"
+                                 t-attf-style="width: 4px; background-color: #{
                     record.state.raw_value == 'rented' and 'var(--success)' or
                     record.state.raw_value == 'available' and 'var(--info)' or
                     record.state.raw_value == 'inactive' and 'var(--danger)' or
                     record.state.raw_value == 'maintenance' and 'var(--warning)' or
                     '#dee2e6'
                  }">
-            </div>
+                            </div>
 
-            <!-- Main container with no padding -->
-            <div class="d-flex h-100 w-100" style="margin-left: 12px;">
-                <!-- Main Content -->
-                <div class="flex-grow-1 pe-2 mt-2" style="min-width: 0; overflow: hidden;">
-                    <!-- Header Row -->
-                    <div class="d-flex align-items-center mb-1">
-                        <field name="is_favorite" widget="boolean_favorite" nolabel="1" class="me-1"/>
-                        <h5 class="mb-0 fw-bold text-truncate" style="max-width: 200px;">
-                            <field name="name" class="oe_kanban_card_title"/>
-                        </h5>
-                    </div>
+                            <!-- Main container with no padding -->
+                            <div class="d-flex h-100 w-100" style="margin-left: 12px;">
+                                <!-- Main Content -->
+                                <div class="flex-grow-1 pe-2 mt-2" style="min-width: 0; overflow: hidden;">
+                                    <!-- Header Row -->
+                                    <div class="d-flex align-items-center mb-1">
+                                        <field name="is_favorite" widget="boolean_favorite" nolabel="1" class="me-1"/>
+                                        <h5 class="mb-0 fw-bold text-truncate" style="max-width: 200px;">
+                                            <field name="name" class="oe_kanban_card_title"/>
+                                        </h5>
+                                    </div>
 
-                    <!-- Property Details -->
-                    <div class="d-flex flex-column gap-1">
-                        <div class="d-flex align-items-center">
-                            <span class="text-muted small">Type:</span>
-                            <div class="ms-1 text-truncate" style="max-width: 150px;">
-                                <field name="property_type_id" widget="badge"
-                                       decoration-success="state in 'rented'"
-                                       decoration-danger="state in ('inactive')"
-                                       decoration-info="state in ('available')"
-                                       decoration-warning="state in ('maintenance','reserved')"
-                                       class="badge"/>
+                                    <!-- Property Details -->
+                                    <div class="d-flex flex-column gap-1">
+                                        <div class="d-flex align-items-center">
+                                            <span class="text-muted small">Type:</span>
+                                            <div class="ms-1 text-truncate" style="max-width: 150px;">
+                                                <field name="property_type_id" widget="badge"
+                                                       decoration-success="state in 'rented'"
+                                                       decoration-danger="state in ('inactive')"
+                                                       decoration-info="state in ('available')"
+                                                       decoration-warning="state in ('maintenance','reserved')"
+                                                       class="badge"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex align-items-center">
+                                            <span class="text-muted small">Status:</span>
+                                            <div class="ms-1">
+                                                <field name="state" widget="badge"
+                                                       decoration-success="state in 'rented'"
+                                                       decoration-danger="state == 'inactive'"
+                                                       decoration-info="state in ('available')"
+                                                       decoration-warning="state in ('maintenance','reserved')"
+                                                       class="badge"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Image - flush right -->
+                                <div class="flex-shrink-0 d-flex align-items-stretch p-1 me-1" style="width: 120px;">
+                                    <field name="image_128" widget="image"
+                                           options="{'img_class': 'img-fluid rounded border object-fit-cover w-100 h-100'}"
+                                           invisible="not image_128"
+                                           alt="Property Image"
+                                           class="h-100 w-100"/>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="d-flex align-items-center">
-                            <span class="text-muted small">Status:</span>
-                            <div class="ms-1">
-                                <field name="state" widget="badge"
-                                       decoration-success="state in 'rented'"
-                                       decoration-danger="state == 'inactive'"
-                                       decoration-info="state in ('available')"
-                                       decoration-warning="state in ('maintenance','reserved')"
-                                       class="badge"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Image - flush right -->
-                <div class="flex-shrink-0 d-flex align-items-stretch p-1 me-1" style="width: 120px;">
-                    <field name="image_128" widget="image"
-                           options="{'img_class': 'img-fluid rounded border object-fit-cover w-100 h-100'}"
-                           invisible="not image_128"
-                           alt="Property Image"
-                           class="h-100 w-100"/>
-                </div>
-            </div>
-        </div>
-    </t>
-</templates>
+                    </t>
+                </templates>
             </kanban>
         </field>
     </record>
@@ -413,7 +401,7 @@
         <field name="res_model">product.product</field>
         <field name="view_mode">kanban,list,form,graph,hierarchy</field>
         <field name="view_ids" eval="[(5, 0, 0),(0, 0, {'view_mode': 'kanban', 'view_id': ref('atmta_real_estate.property_product_kanban_view')}), (0, 0, {'view_mode': 'list', 'view_id': ref('atmta_real_estate.view_property_list')}),
-                    (0, 0, {'view_mode': 'form', 'view_id': ref('atmta_real_estate.view_property_form')})]"/>
+                    (0, 0, {'view_mode': 'form', 'view_id': ref('atmta_real_estate.view_property_form')}),(0, 0, {'view_mode': 'hierarchy', 'view_id': ref('atmta_real_estate.product_product_view_hierarchy')})]"/>
         <field name="context">
             {"search_default_property":1,"default_type":"service","default_is_property":True,"default_detailed_type":"service"}
         </field>

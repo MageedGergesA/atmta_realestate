@@ -10,7 +10,6 @@ class ProductProduct(models.Model):
     property_code = fields.Char(string='Code', required=True, copy=False, readonly=False,
                        index='trigram',
                        default=lambda self: _('New'))
-    property_image = fields.Binary(string='Image')
     is_property = fields.Boolean(string="Is Property", tracking=True)
     property_ref = fields.Char(string="Property Reference", tracking=True)
     property_number = fields.Char(string="Property Number", tracking=True)
@@ -64,7 +63,8 @@ class ProductProduct(models.Model):
                                       'attachment_id', 'Attachments',
                                       help="You may attach files to this template, to be added to all "
                                            "emails created from this template")
-    contract_history_ids = fields.One2many('realestate.contract.line', 'property_id', string='Contract Histtory')
+    contract_history_ids = fields.One2many('realestate.contract.line', 'property_id', string='Contract History')
+    rental_history_ids = fields.One2many('realestate.property.rental.history', 'property_id', string='Rental History')
     parent_id = fields.Many2one(
         'product.product',
         string="Parent Property",
@@ -84,12 +84,7 @@ class ProductProduct(models.Model):
     master_product_id = fields.Many2one(
         'product.product', 'Master Product', compute='_compute_master_product_id', store=True)
 
-    child_org_ids = fields.One2many(
-        'product.product',
-        'master_product_id',
-        string="Sub Properties"
-    )
-    _sql_constraints = [('property_code_unique', 'unique(property_code)', 'Property Code already exists')]
+    _sql_constraints = [('property_code_uniq', 'UNIQUE(property_code)', 'Property Code must be unique.')]
 
     @api.constrains('property_code')
     def _check_unique_code(self):
@@ -136,28 +131,25 @@ class ProductProduct(models.Model):
             'parent': {
                 'id': parent.id,
                 'name': parent.name,
+                'property_code': parent.property_code,
             } if parent else None,
 
             'self': {
                 'id': product.id,
                 'name': product.name,
+                'property_code': product.property_code,
             },
 
             'child': [
                 {
                     'id': child.id,
                     'name': child.name,
+                    'property_code': child.property_code,
                 } for child in children
             ]
         }
 
         return result
-    # @api.model_create_multi
-    # def create(self, vals_list):
-    #     for vals in vals_list:
-    #         if vals.get('name', _("New")) == _("New"):
-    #             vals['name'] = self.env['ir.sequence'].next_by_code('realestate.contract') or 'New'
-    #     return super().create(vals_list)
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -181,18 +173,58 @@ class ProductProduct(models.Model):
             self.is_parent_child = True
         return res
 
-    rent_count = fields.Integer(string="Times Rented", compute="_compute_rent_stats")
-    total_rent_months = fields.Float(string="Total Rental Duration (Months)", compute="_compute_rent_stats")
-    actual_rent_months = fields.Integer(string="Actual Rent Months", compute="_compute_rent_stats", store=True)
-    revenue_collected = fields.Monetary(string="Revenue Collected", compute="_compute_rent_stats")
-    revenue_expected = fields.Monetary(string="Total Expected Revenue", compute="_compute_rent_stats")
-    total_amount_due = fields.Monetary(string="Total Amount Due", compute="_compute_rent_stats")
+    rent_count = fields.Integer(
+        string="Times Rented",
+        compute="_compute_rent_statistics",
+        store=True,
+        compute_sudo=True
+    )
+    total_rent_months = fields.Float(
+        string="Total Rental Duration (Months)",
+        compute="_compute_rent_statistics",
+        store=True,
+        compute_sudo=True
+    )
+    actual_rent_months = fields.Integer(
+        string="Actual Rent Months",
+        compute="_compute_rent_statistics",
+        store=True,
+        compute_sudo=True
+    )
+    revenue_collected = fields.Monetary(
+        string="Revenue Collected",
+        compute="_compute_rent_statistics",
+        store=True,
+        compute_sudo=True
+    )
+    revenue_expected = fields.Monetary(
+        string="Total Expected Revenue",
+        compute="_compute_rent_statistics",
+        store=True,
+        compute_sudo=True
+    )
+    total_amount_due = fields.Monetary(
+        string="Total Amount Due",
+        compute="_compute_rent_statistics",
+        store=True,
+        compute_sudo=True
+    )
 
-    currency_id = fields.Many2one('res.currency', string="Currency", required=True,
-                                  default=lambda self: self.env.company.currency_id)
+    currency_id = fields.Many2one(
+        'res.currency',
+        string="Currency",
+        required=True,
+        default=lambda self: self.env.company.currency_id
+    )
 
-    @api.depends('contract_history_ids', 'contract_history_ids.contract_id.contract_payment_ids.move_state')
-    def _compute_rent_stats(self):
+    @api.depends(
+        'rental_history_ids.start_date',
+        'rental_history_ids.end_date',
+        'rental_history_ids.contract_id.contract_payment_ids.move_state',
+        'rental_history_ids.contract_id.contract_payment_ids.amount',
+        'rental_history_ids.contract_id.contract_payment_ids.date_due',
+    )
+    def _compute_rent_statistics(self):
         for property in self:
             rent_count = 0
             total_months = 0
@@ -200,24 +232,38 @@ class ProductProduct(models.Model):
             revenue_collected = 0.0
             revenue_expected = 0.0
 
-            for line in property.contract_history_ids.filtered(lambda l: l.property_id == property):
+            history_lines = property.rental_history_ids.filtered(
+                lambda l: l.contract_id.state not in ['draft', 'terminated']
+            )
+            print(f'---------------------------------- {history_lines}')
+
+            for line in history_lines:
                 rent_count += 1
 
-                # Duration in months (from start to end)
+                # Rental duration
                 if line.start_date and line.end_date:
-                    month_count = (line.end_date.year - line.start_date.year) * 12 + (
+                    months = (line.end_date.year - line.start_date.year) * 12 + (
                                 line.end_date.month - line.start_date.month)
                     if line.end_date.day >= line.start_date.day:
-                        month_count += 1
-                    total_months += month_count
+                        months += 1
+                    total_months += max(0, months)
 
-                # Related payments (only for this line)
-                payments = line.contract_id.contract_payment_ids.filtered(lambda p: p.contract_line_id == line)
+                # Get related payments
+                contract = line.contract_id
+                payments = contract.contract_payment_ids
+                print("Payments:------------------------------", payments)
 
-                # Paid months (count of unique months with 'paid' payments)
+                # Narrow down to payments related to the correct property (line or direct)
+                # if line.is_multi:
+                #     payments = payments.filtered(lambda p: p.contract_line_id == line.contract_line_id)
+                # else:
+                #     payments = payments.filtered(lambda p: p.contract_line_id == False)
+
+                # Paid months
                 paid_dates = payments.filtered(lambda p: p.move_state == 'posted').mapped('date_due')
-                unique_months = {(d.year, d.month) for d in paid_dates if d}
-                actual_months += len(unique_months)
+                print(payments, paid_dates)
+                unique_paid_months = {(d.year, d.month) for d in paid_dates if d}
+                actual_months += len(unique_paid_months)
 
                 # Revenue
                 revenue_collected += sum(p.amount for p in payments if p.move_state == 'posted')

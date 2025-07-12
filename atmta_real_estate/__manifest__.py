@@ -16,7 +16,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'product', 'google_maps_viewer_widget', 'mail','sale'],
+    'depends': ['base', 'product', 'google_maps_viewer_widget', 'mail','sale','web_hierarchy'],
 
     # always loaded
     'data': [
@@ -24,6 +24,7 @@
         'security/ir.model.access.csv',
         'views/property_type_views.xml',
         'views/property_product_views.xml',
+        'views/property_rental_history.xml',
         'views/contract_views.xml',
         'data/contract_sequence.xml',
         'data/property_sequence.xml',
@@ -40,13 +41,15 @@
         'views/contract_increment_rule.xml',
         'views/maintenance_request.xml',
         'views/account_move.xml',
-        'views/contract_pivot_report.xml',
-        'views/contract_line_pivot.xml',
+        # 'views/contract_pivot_report.xml',
+        # 'views/contract_line_pivot.xml',
+        'views/res_partner.xml',
         'views/menus.xml',
         'reports/property_report.xml',
         'reports/contract_report.xml',
         'reports/contract_payments_report.xml',
         'reports/contract_financial_summary.xml',
+        'reports/real_estate_contract.xml',
     ],
     "assets":
         {
@@ -63,4 +66,6 @@
     'demo': [
         'demo/demo.xml',
     ],
+    'license': 'LGPL-3',
+
 }

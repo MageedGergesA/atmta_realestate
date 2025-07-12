@@ -130,9 +130,9 @@ class RealEstateContractLine(models.Model):
     def _on_state_change(self):
         self._update_property_state()
 
-    @api.model
-    def create(self, vals):
-        res = super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        res = super().create(vals_list)
         res._update_property_state()
         return res
 

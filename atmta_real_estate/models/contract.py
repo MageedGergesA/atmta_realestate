@@ -2,6 +2,7 @@ from odoo import models, fields, _, api
 from odoo.exceptions import UserError, ValidationError
 from dateutil.relativedelta import relativedelta
 import datetime
+from hijri.core import Hijriah
 
 
 class RealEstateContract(models.Model):
@@ -14,7 +15,9 @@ class RealEstateContract(models.Model):
                        default=lambda self: _('New'))
     partner_id = fields.Many2one('res.partner', string="Tenant", required=True, tracking=True)
     start_date = fields.Date(string="Start Date", required=True, tracking=True)
+    # hijri_start_date = fields.Date(string="Hijri Start Date", compute='_compute_hijri_date', store=True)
     end_date = fields.Date(string="End Date", required=True, tracking=True)
+    # hijri_end_date = fields.Date(string="Hijri End Date", compute='_compute_hijri_date', store=True)
     state = fields.Selection([
         ('draft', 'Draft'),
         ('ready', 'Ready'),
@@ -25,6 +28,22 @@ class RealEstateContract(models.Model):
         ('terminated', 'Terminated'),
     ], string='Status', default='draft', tracking=True, readonly=True)
     notes = fields.Text(string="Terms and Conditions", tracking=True)
+    # fields from the tenancy contract
+    main_contract_no = fields.Char(string='Main Contract No')
+    country_id = fields.Many2one(related='partner_id.country_id')
+    contract_type = fields.Many2one('contract.type',string='Contract Type') #
+    contract_sealing_location_id = fields.Many2one(comodel_name='res.country.state', string='Contract Sealing Location', domain="[('country_id', '=', country_id)]")
+    contract_sealing_date = fields.Date(string='Contract Sealing Date')
+    contract_no = fields.Char(string='Contract No')
+    lessor_rep_id = fields.Many2one('res.partner', string='Lessor Representative')
+    lessor_id = fields.Many2one('res.partner', string='Lessor')
+    # fields from the tenancy contract
+    issuer = fields.Char(string="Issuer")
+    title_need_no = fields.Char(string='Title Need No')
+    place_of_issue = fields.Char(string='Place Of Issue')
+    issue_Date = fields.Date(string='Issue Date')
+    # fields from the tenancy contract
+    use_manual_payment = fields.Boolean(string='Generate Payment Schedule Lines')
     line_ids = fields.One2many('realestate.contract.line', 'contract_id', string="Contract Lines")
     payment_count = fields.Integer(compute='get_payment_count', default=0)
     move_ids = fields.One2many('account.move', 'contract_id', string='Invoices')
@@ -101,6 +120,13 @@ class RealEstateContract(models.Model):
                                            'atmta_real_estate.multi_property_contract') == 'True')
     _sql_constraints = [('contract_name_unique', 'unique(name)', 'Contract name already exists')]
 
+    # @api.depends('start_date', 'end_date')
+    # def _compute_hijri_date(self):
+    #     for rec in self:
+    #         if rec.start_date:
+    #             rec.hijri_start_date = Hijriah(rec.start_date)
+    #         if rec.end_date:
+    #             rec.hijri_end_date = Hijriah(rec.end_date)
     @api.constrains('name')
     def _check_unique_code(self):
         for rec in self:
@@ -243,11 +269,6 @@ class RealEstateContract(models.Model):
         for rec in self:
             rec.payment_count = len(rec.contract_payment_ids)
 
-    @api.depends('contract_payment_ids')
-    def _compute_payment_count(self):
-        for contract in self:
-            contract.payment_count = len(contract.contract_payment_ids)
-
     @api.depends('move_ids')
     def get_invoice_count(self):
         for rec in self:
@@ -258,7 +279,14 @@ class RealEstateContract(models.Model):
         for vals in vals_list:
             if vals.get('name', _("New")) == _("New"):
                 vals['name'] = self.env['ir.sequence'].next_by_code('realestate.contract') or 'New'
-        return super().create(vals_list)
+        contracts = super().create(vals_list)
+        contracts._sync_contract_history()
+        return contracts
+
+    def write(self, vals):
+        result = super().write(vals)
+        self._sync_contract_history()
+        return result
 
     def action_open_payments(self):
         self.ensure_one()
@@ -290,7 +318,7 @@ class RealEstateContract(models.Model):
             'year': 'years'
         }
 
-        def apply_rules(price, months_passed, rules):
+        def apply_rules(price, months_passed, rules, is_discount=False):
             applied_ids = []
             total = 0.0
             for rule in rules.filtered(
@@ -300,7 +328,10 @@ class RealEstateContract(models.Model):
                 val = abs(rule.increase_value)
                 if rule.increase_type == 'percent':
                     val = price * val / 100
-                price += val if rule in rules else -val
+                if is_discount:
+                    price -= val
+                else:
+                    price += val
                 total += val
                 applied_ids.append(rule.id)
             return price, total, applied_ids
@@ -310,8 +341,9 @@ class RealEstateContract(models.Model):
                 continue
 
             if contract.is_multi_property:
-                if all(line.write_date <= contract.last_generated for line in contract.line_ids):
-                    continue
+                if contract.last_generated:
+                    if all(line.write_date <= contract.last_generated for line in contract.line_ids):
+                        continue
 
             # Remove previous non-invoiced payments
             contract.contract_payment_ids.filtered(lambda p: not p.move_id).unlink()
@@ -355,9 +387,9 @@ class RealEstateContract(models.Model):
                     # Apply increment
                     price_with_increments, inc_total, inc_ids = apply_rules(base_price, months_passed, increment_rules)
 
-                    # Apply discount
+                    # Apply discount (subtracts from total)
                     final_price, disc_total, disc_ids = apply_rules(price_with_increments, months_passed,
-                                                                    discount_rules)
+                                                                    discount_rules, is_discount=True)
 
                     search_domain = [
                         ('contract_id', '=', contract.id),
@@ -404,11 +436,9 @@ class RealEstateContract(models.Model):
         if not payments:
             raise UserError(_("No unpaid payments found"))
 
-        # Generate temporary references
-
         # Prepare invoice vals
         for payment in payments:
-            product = payment.contract_line_id.property_id
+            product = payment.contract_line_id.property_id if payment.contract_line_id else payment.contract_id.property_id
             account_id = product.categ_id.property_account_income_categ_id.id
 
             invoices_to_create.append({
@@ -442,7 +472,6 @@ class RealEstateContract(models.Model):
                     'move_id': invoice_map[payment.name].id,
                     'state': 'invoiced',
                 })
-
         return invoices
 
     def action_get_invoices(self):
@@ -453,3 +482,36 @@ class RealEstateContract(models.Model):
             'view_mode': 'list,form',
             'domain': [('contract_id', '=', self.id)],
         }
+
+    def _sync_contract_history(self):
+        ContractLineHistory = self.env['realestate.property.rental.history']
+
+        for contract in self:
+            # Delete old history for this contract
+            ContractLineHistory.sudo().search([('contract_id', '=', contract.id)]).unlink()
+
+            if contract.is_single_property and contract.property_id:
+                ContractLineHistory.create({
+                    'contract_id': contract.id,
+                    'property_id': contract.property_id.id,
+                    'start_date': contract.start_date,
+                    'end_date': contract.end_date,
+                    'is_multi': False,
+                })
+            elif contract.is_multi_property:
+                for line in contract.line_ids.filtered(lambda l: l.property_id):
+                    ContractLineHistory.create({
+                        'contract_id': contract.id,
+                        'property_id': line.property_id.id,
+                        'start_date': line.start_date,
+                        'end_date': line.end_date,
+                        'contract_line_id': line.id,
+                        'is_multi': True,
+                    })
+
+
+
+class ContractType(models.Model):
+    _name = 'contract.type'
+
+    name = fields.Char(string='Name')

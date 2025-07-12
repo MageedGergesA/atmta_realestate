@@ -1,5 +1,11 @@
+from email.policy import default
+
+from dateutil.relativedelta import relativedelta
+
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
+from hijridate import Hijri, Gregorian
+from datetime import datetime, timedelta
 
 
 class RealEstateContractPayment(models.Model):
@@ -13,6 +19,85 @@ class RealEstateContractPayment(models.Model):
     partner_id = fields.Many2one(related='contract_id.partner_id', string='Tenant/Partner')
     contract_line_id = fields.Many2one('realestate.contract.line', string="Contract Line", ondelete='cascade')
     date_due = fields.Date(string="Due Date", required=True)
+    date_due_deadline = fields.Date(string="Due Date Deadline", compute="_compute_date_due_deadline", store=True)
+    hijri_date_due = fields.Char(
+        string="Hijri Due Date",
+        compute='_compute_hijri_date',
+        store=True,
+        help="Stores in format: '15 Ramadan 1445 هـ'"
+    )
+
+    @api.depends('date_due')
+    def _compute_hijri_date(self):
+        for rec in self:
+            if rec.date_due:
+                greg_date = fields.Date.from_string(rec.date_due)
+                hijri = Gregorian(greg_date.year, greg_date.month, greg_date.day).to_hijri()
+                # Format as dd/month_name/yyyy with Arabic month names
+                # arabic_months = {
+                #     1: "محرم",
+                #     2: "صفر",
+                #     3: "ربيع الأول",
+                #     4: "ربيع الثاني",
+                #     5: "جمادى الأولى",
+                #     6: "جمادى الآخرة",
+                #     7: "رجب",
+                #     8: "شعبان",
+                #     9: "رمضان",
+                #     10: "شوال",
+                #     11: "ذو القعدة",
+                #     12: "ذو الحجة"
+                # }
+                # month_name_ar = arabic_months.get(hijri.month, "")
+                # rec.hijri_date_due = f"{hijri.day}/\u200E{month_name_ar}/\u200E{hijri.year}"
+                rec.hijri_date_due = f"{hijri.day}/{hijri.month}/{hijri.year}"
+            else:
+                rec.hijri_date_due = False
+
+    from datetime import timedelta
+
+    hijri_date_due_deadline = fields.Char(string='Hijri Deadline (30 days)', compute='_compute_hijri_deadline', store=True)
+
+    @api.depends('hijri_date_due')
+    def _compute_hijri_deadline(self):
+        for rec in self:
+            if rec.hijri_date_due:
+                try:
+                    # Parse the existing Hijri date (format: dd/mm/yyyy)
+                    parts = rec.hijri_date_due.split('/')
+                    print(rec.hijri_date_due,parts)
+                    if len(parts) == 3:
+                        day = int(parts[0])
+                        month = int(parts[1])  # Directly use month number
+                        year = int(parts[2])
+                        print('------==32-=4=32-4=23-4=23-4=23-4=32-4')
+
+                        # Convert to Gregorian
+                        greg_date = Hijri(year, month, day).to_gregorian()
+
+                        # Add 30 days
+                        deadline_date = greg_date + timedelta(days=30)
+
+                        # Convert back to Hijri
+                        hijri_deadline = Gregorian(deadline_date.year, deadline_date.month,
+                                                   deadline_date.day).to_hijri()
+
+                        # Format the result as dd/mm/yyyy
+                        rec.hijri_date_due_deadline = f"{hijri_deadline.day:02d}/{hijri_deadline.month:02d}/{hijri_deadline.year}"
+                    else:
+                        rec.hijri_date_due_deadline = False
+                except:
+                    rec.hijri_date_due_deadline = False
+            else:
+                rec.hijri_date_due_deadline = False    # hijri_date_due_deadline = fields.Date(string="Hijri Start Date")
+
+
+    @api.depends('date_due')
+    def _compute_date_due_deadline(self):
+        for rec in self:
+            if rec.date_due:
+                rec.date_due_deadline = rec.date_due + relativedelta(days=30)
+
     amount = fields.Float(string="Amount", required=True)
     state = fields.Selection([
         ('draft', 'Unpaid'),

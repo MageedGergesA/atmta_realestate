@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_partner_form_inherit_real_estate" model="ir.ui.view">
+        <field name="name">res.partner.form.real_estate.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/group" position="inside">
+                <field name="id_type"/>
+                <field name="id_number"/>
+                <field name="is_lessor"/>
+                <field name="organization_type_id"/>
+                <field name="unified_number"/>
+                <field name="cr_number"/>
+                <field name="cr_date"/>
+                <field name="issued_by"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_organization_type_real_estate" model="ir.ui.view">
+        <field name="name">organization.type.form.real_estate.inherit</field>
+        <field name="model">organization.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="name"/>
+            </form>
+        </field>
+    </record>
+
+</odoo>

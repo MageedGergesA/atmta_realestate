@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Action -->
+    <record id="action_property_rental_history" model="ir.actions.act_window">
+        <field name="name">Property Rental History</field>
+        <field name="res_model">realestate.property.rental.history</field>
+        <field name="view_mode">kanban,list,form,calendar,pivot</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No rental history yet. Start creating property rental history records.
+            </p>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_property_rental_history_list" model="ir.ui.view">
+        <field name="name">realestate.property.rental.history.list</field>
+        <field name="model">realestate.property.rental.history</field>
+        <field name="arch" type="xml">
+            <list create="0" edit="0">
+                <field name="contract_id"/>
+                <field name="property_id"/>
+                <field name="tenant_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="is_multi"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_property_rental_history_form" model="ir.ui.view">
+        <field name="name">realestate.property.rental.history.form</field>
+        <field name="model">realestate.property.rental.history</field>
+        <field name="arch" type="xml">
+            <form create="0" edit="0">
+                <sheet>
+                    <group>
+                        <field name="contract_id"/>
+                        <field name="contract_line_id"/>
+                        <field name="property_id"/>
+                        <field name="tenant_id" readonly="1"/>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="is_multi"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="view_property_rental_history_kanban" model="ir.ui.view">
+        <field name="name">realestate.property.rental.history.kanban</field>
+        <field name="model">realestate.property.rental.history</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card">
+                            <div class="o_kanban_record_top">
+                                <strong><field name="property_id"/></strong>
+                                <br/>
+                                <field name="tenant_id"/>
+                            </div>
+                            <div>
+                                <span><field name="start_date"/> ➜ <field name="end_date"/></span>
+                            </div>
+                            <div>
+                                <field name="contract_id"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Calendar View -->
+    <record id="view_property_rental_history_calendar" model="ir.ui.view">
+        <field name="name">realestate.property.rental.history.calendar</field>
+        <field name="model">realestate.property.rental.history</field>
+        <field name="arch" type="xml">
+            <calendar string="Property Rental Calendar" date_start="start_date" date_stop="end_date" color="property_id">
+                <field name="property_id"/>
+                <field name="contract_id"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- Pivot View -->
+    <record id="view_property_rental_history_pivot" model="ir.ui.view">
+        <field name="name">realestate.property.rental.history.pivot</field>
+        <field name="model">realestate.property.rental.history</field>
+        <field name="arch" type="xml">
+            <pivot string="Property Rental Stats">
+                <field name="property_id" type="row"/>
+                <field name="tenant_id" type="col"/>
+                <field name="start_date" interval="month"/>
+            </pivot>
+        </field>
+    </record>
+</odoo>

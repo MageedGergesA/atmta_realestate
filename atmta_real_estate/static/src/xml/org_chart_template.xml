@@ -75,10 +75,13 @@
 
             .org-children-wrapper {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 20px;
-            justify-items: center;
+            justify-content: center;
+            max-width: 540px; /* 3 x 160px + 2 x 20px gap */
+            margin: 0 auto;
             }
+
 
             .org-node-wrapper {
             display: flex;
@@ -109,6 +112,9 @@
                     <div class="org-node" t-on-click="() => onChildClick(parent['id'], this)">
                         <img t-att-src="'/web/image/product.product/' + parent.id + '/image_128'" class="org-node-img"/>
                         <p class="org-node-name">
+                            <strong>
+                            <t t-esc="parent['property_code']"/>
+                            </strong><br/>
                             <t t-esc="parent['name']"/>
                         </p>
                     </div>
@@ -122,11 +128,15 @@
                     <div class="org-node">
                         <img t-att-src="'/web/image/product.product/' + self.id + '/image_128'" class="org-node-img"/>
                         <p class="org-node-name">
+                            <strong>
+                            <t t-esc="self['property_code']"/>
+                            </strong><br/>
                             <t t-esc="self['name']"/>
                         </p>
                     </div>
                 </div>
             </t>
+
 
             <!-- Children -->
             <t t-if="children and children.length">
@@ -140,6 +150,9 @@
                                         <img t-att-src="'/web/image/product.product/' + child.id + '/image_128'"
                                              class="org-node-img"/>
                                         <p class="org-node-name">
+                                            <strong>
+                                            <t t-esc="child['property_code']"/>
+                                            </strong> <br/>
                                             <t t-esc="child['name']"/>
                                         </p>
                                     </div>

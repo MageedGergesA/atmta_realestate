@@ -24,6 +24,12 @@
               parent="menu_property_management"
               action="atmta_real_estate.action_property_type"
               sequence="20"/>
+    <menuitem id="menu_property_history"
+              name="Rental History"
+              parent="menu_property_management"
+              action="action_property_rental_history"
+              sequence="10"/>
+
 
     <!-- ========== CONTRACTS SECTION ========== -->
     <menuitem id="menu_contract_management"
@@ -39,7 +45,6 @@
 
     <menuitem id="menu_contract_units"
               name="Contract Units"
-              groups="atmta_real_estate.group_realestate_multi_property"
               parent="menu_contract_management"
               action="atmta_real_estate.action_contract_line"
               sequence="20"/>
@@ -70,27 +75,27 @@
               sequence="40"/>
 
     <!-- ========== REPORTS SECTION ========== -->
-    <menuitem id="menu_reports"
-              name="Reports"
-              parent="real_estate_menu_root"
-              sequence="100"/>
+<!--    <menuitem id="menu_reports"-->
+<!--              name="Reports"-->
+<!--              parent="real_estate_menu_root"-->
+<!--              sequence="100"/>-->
 
-    <menuitem id="menu_contract_reports"
-              name="Contract Reports"
-              parent="menu_reports"
-              sequence="10"/>
+<!--    <menuitem id="menu_contract_reports"-->
+<!--              name="Contract Reports"-->
+<!--              parent="menu_reports"-->
+<!--              sequence="10"/>-->
 
-    <menuitem id="menu_contract_pivot_report"
-              name="Contract Overview"
-              parent="menu_contract_reports"
-              action="atmta_real_estate.action_realestate_contract_pivot_report"
-              sequence="10"/>
+<!--    <menuitem id="menu_contract_pivot_report"-->
+<!--              name="Contract Overview"-->
+<!--              parent="menu_contract_reports"-->
+<!--              action="atmta_real_estate.action_realestate_contract_pivot_report"-->
+<!--              sequence="10"/>-->
 
-    <menuitem id="menu_contract_line_report"
-              name="Unit Analysis"
-              parent="menu_contract_reports"
-              action="atmta_real_estate.action_contract_line_pivot"
-              sequence="20"/>
+<!--    <menuitem id="menu_contract_line_report"-->
+<!--              name="Unit Analysis"-->
+<!--              parent="menu_contract_reports"-->
+<!--              action="atmta_real_estate.action_contract_line_pivot"-->
+<!--              sequence="20"/>-->
 
     <!-- ========== CONFIGURATION SECTION ========== -->
     <menuitem id="menu_configuration"

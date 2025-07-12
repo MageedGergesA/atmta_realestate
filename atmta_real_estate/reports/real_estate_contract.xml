@@ -1,0 +1,927 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="paperformat_real_estate_contract" model="report.paperformat">
+        <field name="name">A4 - statement</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">12</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">15</field>
+        <field name="dpi">90</field>
+        <field name="css_margins" eval="True"/>
+    </record>
+
+    <!-- Internal Layout -->
+    <template id="realestate_contract_internal_layout">
+        <div class="article" t-att-data-oe-model="doc and doc._name"
+             t-att-data-oe-id="doc and doc.id"
+             t-att-data-oe-lang="doc and doc.env.context.get('lang')">
+            <t t-raw="0"/>
+        </div>
+        <div class="footer">
+            <div class="row">
+                <div class="col-2 offset-3 text-right">
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <span class="page"/>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Main Report -->
+    <template id="report_realestate_contract_template">
+        <t t-call="web.html_container">
+            <t t-call="atmta_real_estate.realestate_contract_internal_layout">
+                <div class="d-flex justify-content-between align-items-center w-100 mb-4">
+                    <!-- Left: Company Logo & Details -->
+                    <div class="d-flex align-items-center" style="width: 33%;">
+                        <div>
+                            <img t-if="user.company_id.logo" class="o_company_logo_big"
+                                 t-att-src="image_data_uri(user.company_id.logo)"
+                                 alt="Logo" style="max-height: 80px;"/>
+                            <div t-if="user.company_id.report_header" t-field="user.company_id.report_header"
+                                 class="o_company_tagline fw-bold mt-2" style="font-size: 0.9rem;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Center: Contract Title -->
+                    <div class="text-center" style="width: 34%;">
+                        <h2 style="color:#02594f; margin: 5px 0;">عقد إيجار</h2>
+                        <h4 style="color:#cdbc7a; margin: 0;">TENANCY CONTRACT</h4>
+                    </div>
+
+                    <!-- Right: Company Address -->
+                    <div style="width: 33%; text-align: right;">
+                        <ul class="list-unstyled" style="margin: 0; padding: 0;">
+                            <li t-if="user.company_id.is_company_details_empty">
+                                <span t-field="user.company_id.partner_id"
+                                      t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
+                                      style="font-size: 0.9rem; line-height: 1.4;">
+                                </span>
+                            </li>
+                            <li t-else="">
+                                <span t-field="user.company_id.company_details"
+                                      style="font-size: 0.9rem; line-height: 1.4;">
+                                </span>
+                            </li>
+                            <li t-if="not forced_vat"/>
+                            <li t-else="" style="margin-top: 5px;">
+                                <span style="font-weight: bold;">
+                                    <t t-esc="user.company_id.country_id.vat_label or 'Tax ID'"/>:
+                                </span>
+                                <span t-esc="forced_vat"/>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <t t-foreach="docs" t-as="doc">
+
+                    <!-- Section 1: Contract Data -->
+                    <div class="" style="margin-bottom: -15px;">
+                        <div class="row" style="background-color:#02594f; color:white; padding:15px 15px;">
+                            <div class="col-5" style="font-weight:900; text-align:left;">Contract Data</div>
+                            <div class="col-5" style="font-weight:900; text-align:right;">بيانات العقد</div>
+                            <div class="col-2" style="font-weight:900; text-align:right;">1</div>
+                        </div>
+                        <table class="table table-sm table-borderless" style="width: 100%;">
+                            <!-- Header Row (Full Width) -->
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: #e3e9e3; height: 48px;">
+                                <td colspan="2"
+                                    style="width: 30%; text-align: left; padding: 8px; vertical-align: middle;">Main
+                                    Contract No.
+                                </td>
+                                <td colspan="2"
+                                    style="width: 40%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.main_contract_no"/>
+                                </td>
+                                <td colspan="2"
+                                    style="width: 30%; text-align: right; padding: 8px; vertical-align: middle;">رقم سجل
+                                    العقد الأساسي
+                                </td>
+                            </tr>
+
+                            <!-- Row 1: Contract Type + No Contract -->
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: white; height: 48px;">
+                                <!-- Contract Type -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Contract
+                                    Type:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.main_contract_no"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:نوع
+                                    العقد
+                                </td>
+                                <!-- No Contract -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">No
+                                    Contract:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.contract_no"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:رقم
+                                    سجل
+                                    العقد
+                                </td>
+                            </tr>
+
+                            <!-- Row 2: Sealing Location + Sealing Date -->
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: #e3e9e3; height: 48px;">
+                                <!-- Sealing Location -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Contract
+                                    Sealing Location:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.contract_sealing_location_id.name"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:مكان
+                                    إبرام العقد
+                                </td>
+                                <!-- Sealing Date -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Contract
+                                    Sealing Date:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.contract_sealing_date"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:تاريخ
+                                    إبرام العقد
+                                </td>
+                            </tr>
+
+                            <!-- Row 3: Tenancy Dates -->
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: white; height: 48px;">
+                                <!-- Tenancy End Date -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Tenancy
+                                    End Date:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.end_date"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:تاريخ
+                                    نهاية الإيجار
+                                </td>
+                                <!-- Tenancy Start Date -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Tenancy
+                                    Start Date:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.start_date"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:تاريخ
+                                    بداية الإيجار
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="" style="margin-bottom: -15px;">
+                        <div class="row" style="background-color:#02594f; color:white; padding:15px 15px;">
+                            <div class="col-5" style="font-weight:900; text-align:left;">Lessor Data</div>
+                            <div class="col-5" style="font-weight:900; text-align:right;">بيانات المؤجر</div>
+                            <div class="col-2" style="font-weight:900; text-align:right;">2</div>
+                        </div>
+                        <table class="table table-sm table-borderless" style="width: 100%;">
+                            <!-- Header Row (Full Width) -->
+                            <!-- Row 1: Contract Type + No Contract -->
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: white; height: 48px;">
+                                <!-- Contract Type -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Company
+                                    name/Founder:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.lessor_id.name"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:اسم
+                                    الَّشركة/المؤَّسسة
+                                </td>
+                                <!-- No Contract -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Type
+                                    Organization:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.lessor_id.organization_type_id.name"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:نوع
+                                    المنظمة
+                                </td>
+                            </tr>
+
+                            <!-- Row 2: Sealing Location + Sealing Date -->
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: #e3e9e3; height: 48px;">
+                                <!-- Sealing Location -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Unified
+                                    Number:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.lessor_id.unified_number"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:الرقم
+                                    الموحد
+                                </td>
+                                <!-- Sealing Date -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">CR No:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.lessor_id.cr_number"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:رقم
+                                    الِّسجل الِّتجاري
+                                </td>
+                            </tr>
+
+                            <!-- Row 3: Tenancy Dates -->
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: white; height: 48px;">
+                                <!-- Tenancy End Date -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">CR Date:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.lessor_id.cr_date"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:تاريخ
+                                    السجل التجاري
+                                </td>
+                                <!-- Tenancy Start Date -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Tenancy
+                                    Start Date:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.start_date"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:جهة
+                                    الاصدار
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- Section 4: Tenant Data -->
+                    <div class="" style="margin-bottom: -15px;">
+                        <div class="row" style="background-color:#02594f; color:white; padding:15px 15px;">
+                            <div class="col-5" style="font-weight:900; text-align:left;">Tenant Data</div>
+                            <div class="col-5" style="font-weight:900; text-align:right;">بيانات المستأجر</div>
+                            <div class="col-2" style="font-weight:900; text-align:right;">3</div>
+                        </div>
+
+                        <table class="table table-sm table-borderless" style="width: 100%;">
+                            <!-- Name Row -->
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: #e3e9e3; height: 48px;">
+                                <td colspan="2"
+                                    style="width: 30%; text-align: left; padding: 8px; vertical-align: middle;">Name:
+                                </td>
+                                <td colspan="2"
+                                    style="width: 40%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.partner_id.name"/>
+                                </td>
+                                <td colspan="2"
+                                    style="width: 30%; text-align: right; padding: 8px; vertical-align: middle;">:اﻷسم
+                                </td>
+                            </tr>
+
+                            <!-- Nationality Row -->
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: white; height: 48px;">
+                                <td colspan="2"
+                                    style="width: 30%; text-align: left; padding: 8px; vertical-align: middle;">
+                                    Nationality:
+                                </td>
+                                <td colspan="2"
+                                    style="width: 40%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.partner_id.country_id.name"/>
+                                </td>
+                                <td colspan="2"
+                                    style="width: 30%; text-align: right; padding: 8px; vertical-align: middle;">
+                                    :الجنسَّية
+                                </td>
+                            </tr>
+
+                            <!-- ID Type + ID Number Row -->
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: #e3e9e3; height: 48px;">
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">ID
+                                    Type:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.partner_id.id_type"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:نوع
+                                    الهوية
+                                </td>
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">ID
+                                    Number:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.partner_id.id_number"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:رقم
+                                    الهوية
+                                </td>
+                            </tr>
+
+                            <!-- Mobile + Email Row -->
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: white; height: 48px;">
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Mobile:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.partner_id.phone"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:رقم
+                                    الجوال
+                                </td>
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Email:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.partner_id.email"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:البريد
+                                    الإلكتروني
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+                    <!-- Section 5: Tenant Representative -->
+                    <div class="" style="margin-bottom: -15px;">
+                        <div class="row" style="background-color:#02594f; color:white; padding:15px 15px;">
+                            <div class="col-5" style="font-weight:900; text-align:left;">Tenant Representative Data
+                            </div>
+                            <div class="col-5" style="font-weight:900; text-align:right;">بيانات ُممِّثل المستأجر</div>
+                            <div class="col-2" style="font-weight:900; text-align:right;">4</div>
+                        </div>
+
+                        <table class="table table-sm table-borderless" style="width: 100%;">
+                            <t t-if="doc.lessor_rep_id and doc.lessor_rep_id != doc.partner_id">
+                                <!-- Name Row -->
+                                <tr style="border-bottom:0.01em solid #02594f !important; background-color: #e3e9e3; height: 48px;">
+                                    <td colspan="2"
+                                        style="width: 30%; text-align: left; padding: 8px; vertical-align: middle;">
+                                        Name:
+                                    </td>
+                                    <td colspan="2"
+                                        style="width: 40%; text-align: center; padding: 8px; vertical-align: middle;">
+                                        <span t-esc="doc.lessor_rep_id.name"/>
+                                    </td>
+                                    <td colspan="2"
+                                        style="width: 30%; text-align: right; padding: 8px; vertical-align: middle;">
+                                        :اﻷسم
+                                    </td>
+                                </tr>
+
+                                <!-- Nationality Row -->
+                                <tr style="border-bottom:0.01em solid #02594f !important; background-color: white; height: 48px;">
+                                    <td colspan="2"
+                                        style="width: 30%; text-align: left; padding: 8px; vertical-align: middle;">
+                                        Nationality:
+                                    </td>
+                                    <td colspan="2"
+                                        style="width: 40%; text-align: center; padding: 8px; vertical-align: middle;">
+                                        <span t-esc="doc.lessor_rep_id.country_id.name"/>
+                                    </td>
+                                    <td colspan="2"
+                                        style="width: 30%; text-align: right; padding: 8px; vertical-align: middle;">
+                                        :الجنسَّية
+                                    </td>
+                                </tr>
+
+                                <!-- ID Type + ID Number Row -->
+                                <tr style="border-bottom:0.01em solid #02594f !important; background-color: #e3e9e3; height: 48px;">
+                                    <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">ID
+                                        Type:
+                                    </td>
+                                    <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                        <span t-esc="doc.lessor_rep_id.id_type"/>
+                                    </td>
+                                    <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">
+                                        :نوع
+                                        الهوية
+                                    </td>
+                                    <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">ID
+                                        Number:
+                                    </td>
+                                    <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                        <span t-esc="doc.lessor_rep_id.id_number"/>
+                                    </td>
+                                    <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">
+                                        :رقم
+                                        الهوية
+                                    </td>
+                                </tr>
+
+                                <!-- Mobile + Email Row -->
+                                <tr style="border-bottom:0.01em solid #02594f !important; background-color: white; height: 48px;">
+                                    <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">
+                                        Mobile:
+                                    </td>
+                                    <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                        <span t-esc="doc.lessor_rep_id.phone"/>
+                                    </td>
+                                    <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">
+                                        :رقم
+                                        الجوال
+                                    </td>
+                                    <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">
+                                        Email:
+                                    </td>
+                                    <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                        <span t-esc="doc.lessor_rep_id.email"/>
+                                    </td>
+                                    <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">
+                                        :البريد
+                                        الإلكتروني
+                                    </td>
+                                </tr>
+                            </t>
+                            <t t-else="">
+                                <tr style="border-bottom:0.01em solid #02594f !important; background-color: white; height: 48px;">
+                                    <td colspan="3"
+                                        style="width: 30%; text-align: left; padding: 8px; vertical-align: middle;">
+                                        The tenant is represented by himself or herself.
+                                    </td>
+                                    <td colspan="3"
+                                        style="width: 30%; text-align: right; padding: 8px; vertical-align: middle;">
+                                        .المستأجر ممثل بنفسه
+                                    </td>
+                                </tr>
+
+                            </t>
+                        </table>
+                    </div>
+                    <br/>
+                    <br/>
+                    <!-- Section 7: Ownership Document -->
+                    <div class="" style="margin-bottom: -15px;">
+                        <div class="row" style="background-color:#02594f; color:white; padding:15px 15px;">
+                            <div class="col-5" style="font-weight:900; text-align:left;">Ownership Document Data</div>
+                            <div class="col-5" style="font-weight:900; text-align:right;">مستندات الملكية</div>
+                            <div class="col-2" style="font-weight:900; text-align:right;">5</div>
+                        </div>
+                        <table class="table table-sm table-borderless" style="width: 100%;">
+                            <!-- Header Row (Full Width) -->
+
+                            <!-- Row 1: Contract Type + No Contract -->
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: #e3e9e3; height: 48px;">
+                                <!-- Contract Type -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Issuer:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.issuer"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:جهة
+                                    اﻷصدار
+                                </td>
+                                <!-- No Contract -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Title
+                                    Need No:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.title_need_no"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:رقم
+                                    المستند
+                                </td>
+                            </tr>
+                            <tr style="border-bottom:0.01em solid #fff !important; background-color: white; height: 48px;">
+                                <!-- Contract Type -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Place Of
+                                    Issue:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.place_of_issue"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:مكان
+                                    الاصدار
+                                </td>
+                                <!-- No Contract -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Issue
+                                    Date:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.issue_Date"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">تاريخ
+                                    الاصدار:
+                                </td>
+                            </tr>
+
+                            <!-- Row 2: Sealing Location + Sealing Date -->
+
+                            <!-- Row 3: Tenancy Dates -->
+                        </table>
+                    </div>
+
+                    <!-- Section 8:Parent Property Data -->
+
+                    <div class="" style="margin-bottom: -15px;">
+                        <div class="row" style="background-color:#02594f; color:white; padding:15px 15px;">
+                            <div class="col-5" style="font-weight:900; text-align:left;">Property Data</div>
+                            <div class="col-5" style="font-weight:900; text-align:right;">بيانات العقار</div>
+                            <div class="col-2" style="font-weight:900; text-align:right;">6</div>
+                        </div>
+
+                        <table class="table table-sm table-borderless">
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: #e3e9e3; height: 48px;">
+                                <td colspan="2"
+                                    style="width: 30%; text-align: left; padding: 8px; vertical-align: middle;">National
+                                    Address:
+                                </td>
+                                <td colspan="2"
+                                    style="width: 40%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.property_id.street_name"/>
+                                </td>
+                                <td colspan="2"
+                                    style="width: 30%; text-align: right; padding: 8px; vertical-align: middle;">
+                                    :العنوان الوطني
+                                </td>
+                            </tr>
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: white; height: 48px;">
+                                <!-- Contract Type -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Property
+                                    Usage:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.property_id.property_ref"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:الغرض
+                                    من استخدام العقار
+                                </td>
+                                <!-- No Contract -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">property
+                                    Type:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.issue_Date"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:نوع
+                                    العقار
+                                </td>
+                            </tr>
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: #e3e9e3; height: 48px;">
+                                <!-- Contract Type -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Number
+                                    Of Units:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.property_id.property_number"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:عدد
+                                    الوحدات
+                                </td>
+                                <!-- No Contract -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Number
+                                    Of Floors:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.property_id.floor_number"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:عدد
+                                    الطوابق
+                                </td>
+                            </tr>
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: white; height: 48px;">
+                                <!-- Contract Type -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Number
+                                    Of Parking Lots:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.property_id.property_number"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:عدد
+                                    المواقف
+                                </td>
+                                <!-- No Contract -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Number
+                                    Of Elevators:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.property_id.floor_number"/>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:عدد
+                                    المصاعد
+                                </td>
+                            </tr>
+
+
+                        </table>
+                    </div>
+
+                    <!--                    Child Property Data-->
+                    <div class="" style="margin-bottom: -15px;">
+                        <div class="row" style="background-color:#02594f; color:white; padding:15px 15px;">
+                            <div class="col-5" style="font-weight:900; text-align:left;">Property Data</div>
+                            <div class="col-5" style="font-weight:900; text-align:right;">بيانات العقار</div>
+                            <div class="col-2" style="font-weight:900; text-align:right;">7</div>
+                        </div>
+
+                        <table class="table table-sm table-borderless">
+                            <!-- Unit Information Row 1 -->
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: #e3e9e3; height: 48px;">
+                                <!-- Unit Type -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Type
+                                    Unit:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.property_id.property_type_id.name"/> <!-- Replace with your actual field -->
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:نوع
+                                    الوحدة
+                                </td>
+
+                                <!-- Unit Number -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">No.
+                                    Unit:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.property_id.property_number"/> <!-- Replace with your actual field -->
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:رقم
+                                    الوحدة
+                                </td>
+                            </tr>
+
+                            <!-- Unit Information Row 2 -->
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: white; height: 48px;">
+                                <!-- Floor Number -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">No.
+                                    Floor:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.property_id.floor_number"/> <!-- Replace with your actual field -->
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:رقم
+                                    الطابق
+                                </td>
+
+                                <!-- Unit Area -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Area
+                                    Unit:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.property_id.area_sqm"/> <!-- Replace with your actual field -->
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:مساحة
+                                    الوحدة
+                                </td>
+                            </tr>
+
+                            <!-- Furnishing Information Row 3 -->
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: #e3e9e3; height: 48px;">
+                                <!-- Furnished -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">
+                                    Furnished:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.property_id.furnished_status"/> <!-- Replace with your actual field -->
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">
+                                    :مؤثثة
+                                </td>
+
+                                <!-- Kitchen Cabinets -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Kitchen
+                                    Cabinets:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <t t-if="doc.property_id.has_kitchen">
+                                        <span>Yes</span>
+                                    </t>
+                                    <t t-else="">
+                                        <span>No</span>
+                                    </t>
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:خزائن
+                                    مطبخ مركبة
+                                </td>
+                            </tr>
+
+                            <!-- AC Information Row 4 -->
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: white; height: 48px;">
+                                <!-- Number of AC Units -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Number
+                                    of AC Units:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.property_id.floor_number"/> <!-- Replace with your actual field -->
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:عدد
+                                    وحدات التكييف
+                                </td>
+
+                                <!-- Furnishing Status -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">
+                                    Furnishing Status:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.property_id.furnished_status"/> <!-- Replace with your actual field -->
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:حالة
+                                    التأثيث
+                                </td>
+                            </tr>
+
+                            <!-- Room Types Section -->
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: #e3e9e3; height: 48px;">
+                                <!-- Room Type 1 -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Type
+                                    Room:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span>Bedrooms</span> <!-- Replace with your actual field -->
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:نوع
+                                    الغرفة
+                                </td>
+
+                                <!-- Room Count 1 -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">
+                                    Number:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.property_id.bedroom_count"/> <!-- Replace with your actual field -->
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">
+                                    :العدد
+                                </td>
+                            </tr>
+
+                            <!-- Repeat similar structure for other room types (Kitchen, Bedrooms) -->
+
+                            <!-- Meter Information Section -->
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: white; height: 48px;">
+                                <!-- Electricity Meter -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">
+                                    Electricity meter number:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.property_id.bedroom_count"/> <!-- Replace with your actual field -->
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:رقم
+                                    عداد الكهرباء
+                                </td>
+
+                                <!-- Current Reading -->
+                                <td style="width: 15%; text-align: left; padding: 8px; vertical-align: middle;">Current
+                                    meter reading:
+                                </td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="doc.property_id.bedroom_count"/> <!-- Replace with your actual field -->
+                                </td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">
+                                    :القراءة الحالية
+                                </td>
+                            </tr>
+
+                            <!-- Repeat similar structure for Gas and Water meters -->
+                        </table>
+                    </div>
+
+                    <!-- Section 12: Payment Schedule -->
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div class="" style="margin-bottom: -15px;">
+                        <div class="row" style="background-color:#02594f; color:white; padding:15px 15px;">
+                            <div class="col-5" style="font-weight:900; text-align:left;">Rent Payment Schedule</div>
+                            <div class="col-5" style="font-weight:900; text-align:right;">جدول سداد الإيجار</div>
+                            <div class="col-2" style="font-weight:900; text-align:right;">8</div>
+                        </div>
+
+                        <table class="table table-sm table-borderless">
+                            <!-- Header Row -->
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: #e3e9e3; height: 48px;">
+                                <!--            <td style="width: 5%; text-align: center; padding: 8px; vertical-align: middle;">.No</td>-->
+                                <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">القيمة
+                                    <br/>Amount
+                                </td>
+                                <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">نهاية
+                                    مهلة السداد<br/>End of payment deadline(AH)
+                                </td>
+                                <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">تاريخ
+                                    الاستحقاق<br/>Due Date(AH)
+                                </td>
+
+                                <td style="width: 10%; text-align: center; padding: 8px; vertical-align: middle;">الفترة
+                                    الإيجارية<br/>Rental Period
+                                </td>
+                                <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">نهاية
+                                    مهلة السداد<br/>End of payment deadline(AD)
+                                </td>
+
+                                <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">اريخ
+                                    الاستحقاق<br/>Due Date(AD)
+                                </td>
+
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:الرقم
+                                    المسلسل
+                                </td>
+                            </tr>
+
+                            <!-- Payment Rows -->
+                            <t t-set="total_amount" t-value="0"/>
+                            <t t-set="counter" t-value="1"/>
+                            <t t-foreach="doc.contract_payment_ids.sorted('date_due')" t-as="line">
+
+                                <tr t-attf-style="border-bottom:0.01em solid #02594f !important; background-color:{{'white' if counter % 2 != 0 else '#e3e9e3' }}; height: 48px;">                                    <!-- Serial Number -->
+                                    <!--                <td style="width: 5%; text-align: center; padding: 8px; vertical-align: middle;">-->
+                                    <!--                    <span t-esc="counter"/>-->
+                                    <!--                </td>-->
+                                    <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">
+                                        <span t-esc="line.amount" t-options="{'widget': 'float', 'precision': 2}"/>
+                                    </td>
+
+                                    <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">
+                                        <span t-esc="line.hijri_date_due_deadline"/>
+                                    </td>
+
+                                    <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">
+                                        <span t-esc="line.hijri_date_due"/>
+                                    </td>
+
+                                    <!-- Payment Deadline (AH) -->
+                                    <!-- Amount -->
+
+
+                                    <!-- Rental Period -->
+                                    <td style="width: 10%; text-align: center; padding: 8px; vertical-align: middle;">
+                                        <span></span>يوم
+                                    </td>
+
+                                    <!-- Due Date (AH) -->
+
+                                    <!-- Due Date (AD) -->
+                                    <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">
+                                        <span t-esc="line.date_due_deadline"/>
+                                    </td>
+
+                                    <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">
+                                        <span t-esc="line.date_due"/>
+                                    </td>
+
+                                    <!-- Payment Deadline (AD) -->
+
+                                    <!-- Arabic Serial Number -->
+                                    <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">
+                                        :
+                                        <span t-esc="counter"/>
+                                    </td>
+                                </tr>
+                                <t t-set="counter" t-value="counter + 1"/>
+                                <t t-set="total_amount" t-value="line.amount + total_amount"/>
+
+                            </t>
+
+                            <!-- Total Row -->
+                            <tr style="border-bottom:0.01em solid #02594f !important; background-color: #e3e9e3; height: 48px;">
+                                <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <span t-esc="total_amount"
+                                          t-options="{'widget': 'float', 'precision': 2}"/>
+                                </td>
+                                <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;"></td>
+                                <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;"></td>
+                                <td style="width: 10%; text-align: center; padding: 8px; vertical-align: middle;"></td>
+                                <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;"></td>
+                                <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;"></td>
+                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">
+                                    :المجموع
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Report Action -->
+    <record id="action_realestate_contract_report" model="ir.actions.report">
+        <field name="name">Real Estate Contract</field>
+        <field name="model">realestate.contract</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">atmta_real_estate.report_realestate_contract_template</field>
+        <field name="report_file">atmta_real_estate.report_realestate_contract_template</field>
+        <field name="binding_model_id" ref="atmta_real_estate.model_realestate_contract"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Contract - %s' % object.name</field>
+        <field name="paperformat_id" ref="paperformat_real_estate_contract"/>
+
+    </record>
+
+</odoo>
