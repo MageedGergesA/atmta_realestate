@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_realestate_contract_wizard_form" model="ir.ui.view">
+        <field name="name">realestate.contracts.wizard.form</field>
+        <field name="model">realestate.contracts.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>Customize Contract Report</h1>
+                    </div>
+
+                    <group string="Select Sections to Include" col="2">
+                        <!-- Contract Parties -->
+                        <group string="Contract Parties" col="2">
+                            <field name="lessor_data"/>
+                            <field name="tenant_data"/>
+                            <field name="tenant_representative_data"/>
+                        </group>
+
+                        <!-- Contract & Documents -->
+                        <group string="Contract &amp; Documents" col="2">
+                            <field name="contract_data"/>
+                            <field name="ownership_doc_data"/>
+                        </group>
+
+                        <!-- Property Info -->
+                        <group string="Property Information" col="2">
+                            <field name="parent_property_data"/>
+                            <field name="property_data"/>
+                        </group>
+
+                        <!-- Payments -->
+                        <group string="Rent Payment" col="2">
+                            <field name="rent_payment_data"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Page Options">
+                            <group string="Page Break Options">
+                                <field name="contract_data_break"/>
+                                <field name="lessor_data_break"/>
+                                <field name="tenant_data_break"/>
+                                <field name="tenant_representative_data_break"/>
+                                <field name="ownership_doc_data_break"/>
+                                <field name="parent_property_data_break"/>
+                                <field name="property_data_break"/>
+                            </group>
+                        </page>
+                    </notebook>
+
+                    <footer>
+                        <button name="action_print" string="Generate Report" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="real_estate_contract_wiz_action" model="ir.actions.act_window">
+        <field name="name">Customize Contract Report</field>
+        <field name="res_model">realestate.contracts.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_res_id': id}</field>
+    </record>
+</odoo>

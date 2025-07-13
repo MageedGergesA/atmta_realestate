@@ -10,35 +10,47 @@
                             type="object"
                             string="Generate Payment Schedule"
                             class="btn-info"
+                            groups="atmta_real_estate.group_realestate_user"
                             invisible="state != 'draft'"/>
 
                     <button name="action_confirm"
                             type="object"
                             string="Confirm Contract"
                             class="btn-primary"
+                            groups="atmta_real_estate.group_realestate_user"
                             invisible="state != 'ready'"/>
 
                     <button name="action_generate_invoices"
                             type="object"
                             string="Create Invoices"
                             class="btn-warning"
-                            invisible="state != 'confirmed'"/>
+                            invisible="state != 'confirmed'"
+                            groups="account.group_account_user,account.group_account_invoice,atmta_real_estate.group_realestate_user"/>
 
                     <button name="action_activate"
                             type="object"
                             string="Activate"
                             class="btn-success"
+                            groups="atmta_real_estate.group_realestate_user"
                             invisible="state != 'invoiced'"/>
 
                     <button name="action_terminate"
                             type="object"
                             string="Terminate"
                             class="btn-danger"
+                            groups="atmta_real_estate.group_realestate_user"
                             invisible="state != 'active'"/>
 
                     <button name="action_reset_to_draft"
                             type="object"
                             string="Reset to Draft"
+                            groups="atmta_real_estate.group_realestate_user"
+                            class="btn-secondary"/>
+
+                    <button name="action_open_report_wizard"
+                            type="object"
+                            groups="atmta_real_estate.group_realestate_user"
+                            string="Print Contract Report"
                             class="btn-secondary"/>
 
                     <field name="state"
@@ -97,6 +109,10 @@
                             <field name="contract_sealing_date"/>
                             <field name="is_renewed" widget="boolean_toggle"/>
                             <field name="old_contract_id" invisible="is_renewed == False"/>
+                                                        <field name="property_id"/>
+                            <field name="property_type_id"/>
+                            <field name="price"/>
+
                         </group>
                     </group>
 
@@ -117,9 +133,6 @@
                         <!-- ✅ Single Property Details -->
                         <group string="Single Property Details" col="2"
                                invisible="not use_manual_payment or not is_single_property">
-                            <field name="property_id"/>
-                            <field name="property_type_id"/>
-                            <field name="price"/>
                             <field name="payment_plan_ids" widget="many2many_tags"/>
                             <field name="increment_rule_ids" widget="many2many_tags"/>
                             <field name="discount_rule_ids" widget="many2many_tags"/>

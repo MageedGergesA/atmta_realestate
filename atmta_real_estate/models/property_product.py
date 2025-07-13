@@ -83,6 +83,33 @@ class ProductProduct(models.Model):
     parent_path = fields.Char(index=True)
     master_product_id = fields.Many2one(
         'product.product', 'Master Product', compute='_compute_master_product_id', store=True)
+    # new fields from report
+    property_usage_id = fields.Many2one('property.usage', string='Property Usage')
+    number_of_floors = fields.Integer(string='Number Of Floors')
+    number_of_units = fields.Integer(string='Number Of Units')
+    number_of_elevators = fields.Integer(string='Number Of Elevators')
+    number_of_parking_lots = fields.Integer(string='Number Of Parking Lots')
+    number_of_ac = fields.Integer(string='Number Of ACs')
+    is_furnished = fields.Boolean(string='Is Furnished')
+    ac_type = fields.Selection([
+        ('split', _('Split AC')),
+        ('window', _('Window AC')),
+        ('central', _('Central AC')),
+        ('cassette', _('Cassette AC')),
+        ('portable', _('Portable AC')),
+        ('floor_standing', _('Floor Standing AC')),
+        ('ducted', _('Ducted AC')),
+        ('vrf', _('VRF AC')),
+    ], string='AC Type')
+    electricity_meter_number = fields.Char(string="Electricity Meter Number")
+    electricity_current_reading = fields.Float(string="Electricity Current Reading", digits=(16, 2))
+    gas_meter_number = fields.Char(string="Gas Meter Number")
+    gas_current_reading = fields.Float(string="Gas Current Reading", digits=(16, 2))
+    water_meter_number = fields.Char(string="Water Meter Number")
+    water_current_reading = fields.Float(string="Water Current Reading", digits=(16, 2))
+
+    # new fields from report
+
 
     _sql_constraints = [('property_code_uniq', 'UNIQUE(property_code)', 'Property Code must be unique.')]
 
@@ -275,3 +302,9 @@ class ProductProduct(models.Model):
             property.revenue_collected = revenue_collected
             property.revenue_expected = revenue_expected
             property.total_amount_due = revenue_expected - revenue_collected
+
+
+class PropertyUsage(models.Model):
+    _name = 'property.usage'
+
+    name = fields.Char(string='Name')

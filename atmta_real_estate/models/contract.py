@@ -301,6 +301,16 @@ class RealEstateContract(models.Model):
                 # 'group_by': 'contract_line_id',  # 👈 This triggers default grouping
             }, }
 
+    def action_open_report_wizard(self):
+        return {
+            'name': 'Contract Report',
+            'type': 'ir.actions.act_window',
+            'res_model': 'realestate.contracts.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'default_res_id': self.id},
+        }
+
     def action_generate_payment_schedule(self):
         now = datetime.datetime.now()
 

@@ -44,22 +44,52 @@
                         </page>
                         <page string="General Info">
                             <group col="2">
-                                <group string="Basic Details">
+
+                                <!-- Identification -->
+                                <group string="Identification">
                                     <field name="property_ref"/>
                                     <field name="property_number"/>
-                                    <field name="furnished_status"/>
                                     <field name="area_sqm"/>
                                     <field name="floor_number"/>
+                                    <field name="is_furnished" widget="boolean_toggle"/>
+                                    <field name="furnished_status"/>
                                 </group>
-                                <group string="Rooms Layout">
+
+                                <!-- Rooms & Features -->
+                                <group string="Room Layout &amp; Features">
                                     <field name="bedroom_count"/>
                                     <field name="bathroom_count"/>
                                     <field name="living_room_count"/>
                                     <field name="has_kitchen" widget="boolean_toggle"/>
                                     <field name="has_balcony" widget="boolean_toggle"/>
+                                    <field name="number_of_ac"/>
+                                    <field name="ac_type"/>
                                 </group>
+
+                                <!-- Structural Details -->
+                                <group string="Building Details">
+                                    <field name="property_usage_id"/>
+                                    <field name="number_of_floors"/>
+                                    <field name="number_of_units"/>
+                                    <field name="number_of_elevators"/>
+                                    <field name="number_of_parking_lots"/>
+                                </group>
+
+                                <!-- AC & Furnishing -->
+                                <!-- Utility Information -->
+                                <group string="Utility Meters">
+                                    <field name="electricity_meter_number"/>
+                                    <field name="electricity_current_reading"/>
+                                    <field name="gas_meter_number"/>
+                                    <field name="gas_current_reading"/>
+                                    <field name="water_meter_number"/>
+                                    <field name="water_current_reading"/>
+                                </group>
+
                             </group>
-                            <group string="Notes">
+
+                            <!-- Notes Section -->
+                            <group string="Additional Notes">
                                 <field name="property_notes"/>
                             </group>
                         </page>
@@ -215,7 +245,7 @@
         <field name="name">product.product.view.hierarchy</field>
         <field name="model">product.product</field>
         <field name="arch" type="xml">
-      <hierarchy child_field="child_ids"
+            <hierarchy child_field="child_ids"
                        draggable="1">
                 <field name="name"/>
                 <templates>
@@ -258,73 +288,6 @@
                 <field name="categ_id"/>
                 <progressbar field="activity_state"
                              colors='{"planned": "success", "today": "warning", "overdue": "danger"}'/>
-
-                <!--                <templates>-->
-                <!--                    <t t-name="kanban-box">-->
-                <!--                        <div t-att-class="'oe_kanban_global_click position-relative h-100' + (record.is_favorite.raw_value ? ' oe_kanban_card_favorite' : '')">-->
-                <!--                            &lt;!&ndash; Full-height status indicator &ndash;&gt;-->
-                <!--                            <div class="position-absolute top-0 start-0 bottom-0"-->
-                <!--                                 t-attf-style="width: 4px; background-color: #{-->
-                <!--                        record.state.raw_value == 'rented' and 'var(&#45;&#45;success)' or-->
-                <!--                        record.state.raw_value == 'available' and 'var(&#45;&#45;info)' or-->
-                <!--                        record.state.raw_value == 'inactive' and 'var(&#45;&#45;danger)' or-->
-                <!--                        record.state.raw_value == 'maintenance' and 'var(&#45;&#45;warning)' or-->
-                <!--                        '#dee2e6'-->
-                <!--                     }">-->
-                <!--                            </div>-->
-
-                <!--                            <div class="d-flex p-2 h-100" style="margin-left: 4px;">-->
-                <!--                                &lt;!&ndash; Main Content &ndash;&gt;-->
-                <!--                                <div class="flex-grow-1 pe-2" style="min-width: 0; overflow: hidden;">-->
-                <!--                                    &lt;!&ndash; Header Row - Favorite now left of name &ndash;&gt;-->
-                <!--                                    <div class="d-flex align-items-center mb-1">-->
-                <!--                                        <field name="is_favorite" widget="boolean_favorite" nolabel="1" class="me-1"/>-->
-                <!--                                        <h5 class="mb-0 fw-bold text-truncate" style="max-width: 200px;">-->
-                <!--                                            <field name="name" class="oe_kanban_card_title"/>-->
-                <!--                                        </h5>-->
-                <!--                                    </div>-->
-
-                <!--                                    &lt;!&ndash; Property Details &ndash;&gt;-->
-                <!--                                    <div class="d-flex flex-column gap-1">-->
-                <!--                                        <div class="d-flex align-items-center">-->
-                <!--                                            <span class="text-muted small">Type:</span>-->
-                <!--                                            <div class="ms-1 text-truncate" style="max-width: 150px;">-->
-                <!--                                                <field name="property_type_id" widget="badge"-->
-                <!--                                                       decoration-success="state in 'rented'"-->
-                <!--                                                       decoration-danger="state in ('inactive')"-->
-                <!--                                                       decoration-info="state in ('available')"-->
-                <!--                                                       decoration-warning="state in ('maintenance','reserved')"-->
-                <!--                                                       class="badge"/>-->
-                <!--                                            </div>-->
-                <!--                                        </div>-->
-
-                <!--                                        <div class="d-flex align-items-center">-->
-                <!--                                            <span class="text-muted small">Status:</span>-->
-                <!--                                            <div class="ms-1">-->
-                <!--                                                <field name="state" widget="badge"-->
-                <!--                                                       decoration-success="state in 'rented'"-->
-                <!--                                                       decoration-danger="state == 'inactive'"-->
-                <!--                                                       decoration-info="state in ('available')"-->
-                <!--                                                       decoration-warning="state in ('maintenance','reserved')"-->
-                <!--                                                       class="badge"/>-->
-                <!--                                            </div>-->
-                <!--                                        </div>-->
-                <!--                                    </div>-->
-
-                <!--                                </div>-->
-
-                <!--                                &lt;!&ndash; Image &ndash;&gt;-->
-                <!--                                <div class="flex-shrink-0" style="width: 150px;">-->
-                <!--                                    <field name="image_128" widget="image"-->
-                <!--                                           options="{'img_class': 'img-fluid rounded border object-fit-cover h-100'}"-->
-                <!--                                           invisible="not image_128"-->
-                <!--                                           alt="Property Image"-->
-                <!--                                           class="h-100"/>-->
-                <!--                                </div>-->
-                <!--                            </div>-->
-                <!--                        </div>-->
-                <!--                    </t>-->
-                <!--                </templates>-->
                 <templates>
                     <t t-name="card" class="mb-2 shadow-sm rounded">
                         <div t-att-class="'oe_kanban_global_click position-relative h-100' + (record.is_favorite.raw_value ? ' oe_kanban_card_favorite' : '')">
