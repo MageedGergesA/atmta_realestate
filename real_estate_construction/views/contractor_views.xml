@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_contractor_list" model="ir.ui.view">
+        <field name="name">realestate.contractor.list</field>
+        <field name="model">realestate.contractor</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="specialization"/>
+                <field name="license_number"/>
+                <field name="rating"/>
+                <field name="milestone_count"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_contractor_form" model="ir.ui.view">
+        <field name="name">realestate.contractor.form</field>
+        <field name="model">realestate.contractor</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_create_subcontract_po" type="object"
+                            string="Create Subcontract PO" class="oe_highlight"
+                            invisible="contract_po_id"/>
+                    <button name="action_release_retention" type="object"
+                            string="Release Retention" class="btn-warning"
+                            invisible="retention_released or total_retention_held &lt;= 0"
+                            confirm="Create a vendor bill for the accumulated retention?"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object"
+                                name="action_view_purchase_orders" icon="fa-shopping-cart"
+                                invisible="po_count == 0">
+                            <field name="po_count" widget="statinfo" string="POs"/>
+                        </button>
+                        <button class="oe_stat_button" type="object"
+                                name="action_view_bills" icon="fa-file-text-o"
+                                invisible="bill_count == 0">
+                            <field name="bill_count" widget="statinfo" string="Bills"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="specialization"/>
+                            <field name="license_number"/>
+                            <field name="rating"/>
+                            <field name="service_product_id" options="{'no_create': True}"
+                                   help="Service product used on subcontract PO lines. Auto-created on PO creation if blank."/>
+                            <field name="contract_po_id" readonly="1"
+                                   invisible="not contract_po_id"/>
+                        </group>
+                        <group>
+                            <field name="contact_email"/>
+                            <field name="contact_phone"/>
+                            <field name="active"/>
+                            <field name="retention_pct"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                        </group>
+                    </group>
+                    <group string="Procurement Summary">
+                        <group>
+                            <field name="total_po_committed" readonly="1"/>
+                            <field name="total_billed" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="total_paid" readonly="1"/>
+                            <field name="outstanding_payable" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Retention Summary">
+                        <group>
+                            <field name="total_certified" readonly="1"/>
+                            <field name="total_retention_held" readonly="1"/>
+                            <field name="retention_released" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Milestones">
+                            <field name="milestone_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="project_id"/>
+                                    <field name="completion_percentage" widget="progressbar"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Payment Certificates">
+                            <field name="payment_certificate_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="project_id"/>
+                                    <field name="milestone_id"/>
+                                    <field name="period_end"/>
+                                    <field name="current_certified_pct"/>
+                                    <field name="gross_amount"/>
+                                    <field name="retention_amount"/>
+                                    <field name="net_payable"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes"><field name="notes"/></page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="action_contractor" model="ir.actions.act_window">
+        <field name="name">Contractors</field>
+        <field name="res_model">realestate.contractor</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,59 @@
+.o_boundary_picker {
+    .o_boundary_toolbar {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        padding: 0.5rem 0.75rem;
+        background: #f1f4f9;
+        border: 1px solid #e1e7ef;
+        border-radius: 6px 6px 0 0;
+        flex-wrap: wrap;
+    }
+    .o_boundary_count {
+        margin-left: 0.5rem;
+        font-size: 0.9rem;
+        color: #2e5cdc;
+    }
+    .o_boundary_hint {
+        margin-left: auto;
+        color: #6b7785;
+        font-size: 0.82rem;
+    }
+    .o_boundary_map {
+        height: 500px;
+        width: 100%;
+        border: 1px solid #e1e7ef;
+        border-top: none;
+        border-radius: 0 0 6px 6px;
+        cursor: crosshair;
+    }
+    .o_boundary_map_disabled {
+        cursor: not-allowed;
+        opacity: 0.75;
+    }
+    .leaflet-container {
+        background: #fff;
+    }
+    .o_boundary_marker {
+        background: transparent;
+        border: none;
+    }
+    .o_boundary_marker_pin {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: #2e5cdc;
+        color: #fff;
+        border: 2px solid #fff;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.85rem;
+        cursor: grab;
+    }
+    .o_boundary_marker_pin:active {
+        cursor: grabbing;
+    }
+}

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_property_form_inherit_handover" model="ir.ui.view">
+        <field name="name">realestate.property.form.handover</field>
+        <field name="model">realestate.property</field>
+        <field name="inherit_id" ref="atmta_real_estate.view_property_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Smart button -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_handovers" type="object" class="oe_stat_button"
+                        icon="fa-key"
+                        invisible="handover_count == 0">
+                    <field name="handover_count" widget="statinfo" string="Handovers"/>
+                </button>
+            </xpath>
+
+            <!-- Ribbon badges -->
+            <xpath expr="//div[@name='status_ribbon']" position="inside">
+                <field name="handover_ready" widget="boolean_toggle" readonly="1"
+                       invisible="not handover_ready"/>
+                <field name="ready_to_move" widget="boolean_toggle" readonly="1"
+                       invisible="not ready_to_move"/>
+            </xpath>
+
+            <!-- Tab -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Readiness &amp; Handover" name="readiness">
+                    <group>
+                        <group string="Sub-scores">
+                            <field name="readiness_structural" widget="percentage"/>
+                            <field name="readiness_finishing" widget="percentage"/>
+                            <field name="readiness_utilities" widget="percentage"/>
+                            <field name="readiness_inspection" widget="percentage"/>
+                        </group>
+                        <group string="Overall">
+                            <field name="readiness_overall" widget="progressbar" readonly="1"/>
+                            <field name="handover_ready" readonly="1" widget="boolean_toggle"/>
+                            <field name="ready_to_deliver" readonly="1" widget="boolean_toggle"/>
+                            <field name="ready_to_move" readonly="1" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

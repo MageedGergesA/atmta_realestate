@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_property_form_maquette" model="ir.ui.view">
+        <field name="name">realestate.property.form.maquette</field>
+        <field name="model">realestate.property</field>
+        <field name="inherit_id" ref="atmta_real_estate.view_property_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Smart buttons (unit-level) -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_in_maquette" type="object" class="oe_stat_button"
+                        icon="fa-cube"
+                        invisible="hierarchy_level != 'unit'">
+                    <span class="o_stat_text">3D Maquette</span>
+                </button>
+                <button name="action_view_gallery" type="object" class="oe_stat_button"
+                        icon="fa-picture-o"
+                        invisible="image_count == 0">
+                    <field name="image_count" widget="statinfo" string="Images"/>
+                </button>
+            </xpath>
+
+            <!-- Tab inside the main notebook -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Plans &amp; 3D" name="plans_3d"
+                      invisible="hierarchy_level != 'unit'">
+                    <group>
+                        <group string="3D Mapping">
+                            <field name="maquette_mesh_name"
+                                   placeholder="e.g., unit_A_1201 — must match a mesh in the project's GLB"/>
+                            <field name="maquette_color_override"
+                                   placeholder="#FF8800 (optional)"/>
+                        </group>
+                        <group string="Files">
+                            <field name="floor_plan_pdf"
+                                   filename="floor_plan_pdf_filename"
+                                   widget="binary"/>
+                            <field name="floor_plan_pdf_filename" invisible="1"/>
+                            <field name="interior_glb"
+                                   filename="interior_glb_filename" widget="binary"/>
+                            <field name="interior_glb_filename" invisible="1"/>
+                        </group>
+                    </group>
+                    <group string="Floor Plan (Image)">
+                        <field name="floor_plan_image"
+                               filename="floor_plan_image_filename"
+                               widget="image" options="{'size': [600, 400]}" nolabel="1"/>
+                        <field name="floor_plan_image_filename" invisible="1"/>
+                    </group>
+                    <group string="3D Interior" invisible="not interior_glb">
+                        <field name="id" widget="glb_viewer" nolabel="1"/>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="real_estate_investment.InvestmentDashboard">
+        <div class="o_action o_inv_dashboard d-flex flex-column h-100">
+            <div class="o_iv_toolbar d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
+                <div>
+                    <h3 class="mb-0 d-inline-block me-3"><i class="fa fa-line-chart me-2"/>Investment Dashboard</h3>
+                    <span class="text-muted small">Last update: <t t-esc="state.lastUpdate or '—'"/></span>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-sm btn-primary" t-on-click="() => this.refresh()"><i class="fa fa-refresh"/></button>
+                    <button class="btn btn-sm btn-outline-secondary"
+                            t-att-class="{ 'btn-success text-white': state.autoRefresh }"
+                            t-on-click="() => this.toggleAutoRefresh()">
+                        <i class="fa fa-clock-o me-1"/>
+                        <t t-if="state.autoRefresh">Auto ON</t><t t-else="">Auto OFF</t>
+                    </button>
+                </div>
+            </div>
+
+            <div t-if="state.loading" class="text-center p-5"><i class="fa fa-spinner fa-spin fa-3x text-muted"/></div>
+
+            <div t-if="state.data" class="o_iv_body p-3">
+
+                <div class="row mb-3">
+                    <div class="col-md-2"><div class="o_iv_kpi o_iv_blue">
+                        <div class="o_iv_label">Studies</div>
+                        <div class="o_iv_value"><t t-esc="state.data.kpis.total_studies"/></div>
+                        <div class="o_iv_sub"><t t-esc="state.data.kpis.approved"/> approved</div>
+                    </div></div>
+                    <div class="col-md-2"><div class="o_iv_kpi o_iv_green">
+                        <div class="o_iv_label">Positive NPV</div>
+                        <div class="o_iv_value"><t t-esc="state.data.kpis.positive"/></div>
+                        <div class="o_iv_sub"><t t-esc="state.data.kpis.positive_rate"/>% of studies</div>
+                    </div></div>
+                    <div class="col-md-2"><div class="o_iv_kpi o_iv_teal">
+                        <div class="o_iv_label">Avg NPV</div>
+                        <div class="o_iv_value"><t t-esc="state.data.currency"/> <t t-esc="formatMoney(state.data.kpis.avg_npv)"/></div>
+                        <div class="o_iv_sub">across studies</div>
+                    </div></div>
+                    <div class="col-md-2"><div class="o_iv_kpi o_iv_purple">
+                        <div class="o_iv_label">Avg IRR</div>
+                        <div class="o_iv_value"><t t-esc="state.data.kpis.avg_irr"/>%</div>
+                        <div class="o_iv_sub">internal rate</div>
+                    </div></div>
+                    <div class="col-md-2"><div class="o_iv_kpi o_iv_orange">
+                        <div class="o_iv_label">Avg Payback</div>
+                        <div class="o_iv_value"><t t-esc="state.data.kpis.avg_payback"/></div>
+                        <div class="o_iv_sub">years</div>
+                    </div></div>
+                    <div class="col-md-2"><div class="o_iv_kpi o_iv_red">
+                        <div class="o_iv_label">Rejected</div>
+                        <div class="o_iv_value"><t t-esc="state.data.kpis.rejected"/></div>
+                        <div class="o_iv_sub">studies</div>
+                    </div></div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-8">
+                        <div class="o_iv_card">
+                            <div class="o_iv_card_title"><i class="fa fa-map-marker me-2"/>Projects — colored by NPV</div>
+                            <div t-ref="map" class="o_iv_map"/>
+                            <div class="small mt-2">
+                                <span class="me-3"><span class="o_dot" style="background:#28a745"/>Positive NPV</span>
+                                <span class="me-3"><span class="o_dot" style="background:#dc3545"/>Negative NPV</span>
+                                <span class="me-3"><span class="o_dot" style="background:#9e9e9e"/>No Study</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="o_iv_card mb-3">
+                            <div class="o_iv_card_title">Study Status</div>
+                            <div class="o_iv_chart"><canvas t-ref="donutFeas"/></div>
+                        </div>
+                        <div class="o_iv_card">
+                            <div class="o_iv_card_title">Scenario Sensitivity (Avg NPV)</div>
+                            <div class="o_iv_chart"><canvas t-ref="barSens"/></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="o_iv_card">
+                            <div class="o_iv_card_title">Top Studies by NPV</div>
+                            <div class="o_iv_chart_lg"><canvas t-ref="barNpv"/></div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="o_iv_card">
+                            <div class="o_iv_card_title">IRR Distribution</div>
+                            <div class="o_iv_chart_lg"><canvas t-ref="barIrr"/></div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="o_iv_card">
+                            <div class="o_iv_card_title">Payback Period</div>
+                            <div class="o_iv_chart_lg"><canvas t-ref="barPb"/></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="o_iv_card">
+                            <div class="o_iv_card_title"><i class="fa fa-trophy me-2 text-success"/>Top Studies (positive NPV)</div>
+                            <div class="o_iv_list">
+                                <div t-foreach="state.data.top_list" t-as="s" t-key="s.id"
+                                     class="o_iv_item" t-on-click="() => this.openStudy(s.id)">
+                                    <div class="d-flex justify-content-between">
+                                        <strong><t t-esc="s.project or s.name"/></strong>
+                                        <span class="badge" t-att-class="s.is_positive ? 'bg-success' : 'bg-danger'">
+                                            <t t-esc="state.data.currency"/> <t t-esc="formatMoney(s.npv)"/>
+                                        </span>
+                                    </div>
+                                    <div class="small text-muted">IRR <t t-esc="Math.round(s.irr * 10) / 10"/>% · Payback <t t-esc="Math.round(s.payback * 10) / 10"/>y</div>
+                                </div>
+                                <div t-if="!state.data.top_list.length" class="text-muted text-center p-3">No studies</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="o_iv_card">
+                            <div class="o_iv_card_title"><i class="fa fa-warning me-2 text-danger"/>Negative NPV Studies</div>
+                            <div class="o_iv_list">
+                                <div t-foreach="state.data.bottom_list" t-as="s" t-key="s.id"
+                                     class="o_iv_item" t-on-click="() => this.openStudy(s.id)">
+                                    <div class="d-flex justify-content-between">
+                                        <strong><t t-esc="s.project or s.name"/></strong>
+                                        <span class="badge bg-danger">
+                                            <t t-esc="state.data.currency"/> <t t-esc="formatMoney(s.npv)"/>
+                                        </span>
+                                    </div>
+                                    <div class="small text-muted">IRR <t t-esc="Math.round(s.irr * 10) / 10"/>%</div>
+                                </div>
+                                <div t-if="!state.data.bottom_list.length" class="text-muted text-center p-3">No negative-NPV studies. 🎉</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="o_iv_card">
+                            <div class="o_iv_card_title"><i class="fa fa-flask me-2 text-info"/>Recent Scenarios</div>
+                            <div class="o_iv_list">
+                                <div t-foreach="state.data.scen_list" t-as="sc" t-key="sc.id"
+                                     class="o_iv_item" t-on-click="() => this.openScenario(sc.id)">
+                                    <div class="d-flex justify-content-between">
+                                        <strong><t t-esc="sc.name"/></strong>
+                                        <span class="badge" t-att-class="sc.is_positive ? 'bg-success' : 'bg-danger'">
+                                            <t t-esc="state.data.currency"/> <t t-esc="formatMoney(sc.npv)"/>
+                                        </span>
+                                    </div>
+                                    <div class="small text-muted"><t t-esc="sc.project"/> · <t t-esc="sc.type"/></div>
+                                </div>
+                                <div t-if="!state.data.scen_list.length" class="text-muted text-center p-3">No scenarios run</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </t>
+
+</templates>

@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_property_form" model="ir.ui.view">
+        <field name="name">realestate.property.form</field>
+        <field name="model">realestate.property</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="set_property_inactive" type="object" string="Set Inactive"
+                            invisible="state in ('reserved','rented','sold','maintenance','inactive')"/>
+                    <button name="set_property_available" type="object" string="Set To Available"
+                            invisible="state != 'inactive'"/>
+                    <button name="action_mark_for_resale" type="object" string="Mark for Resale"
+                            class="btn-warning" invisible="state != 'sold'"
+                            confirm="This will re-open the property for sale. Continue?"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="available,reserved,rented,sold"/>
+                </header>
+
+                <sheet>
+                    <!-- Smart button box: every count and quick navigator lives here.
+                         Extensions append more buttons via XPath. -->
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_hierarchy" type="object" class="oe_stat_button"
+                                icon="fa-sitemap"
+                                invisible="not parent_id and child_count == 0">
+                            <field name="child_count" widget="statinfo" string="Sub-properties"/>
+                        </button>
+                        <button name="action_view_unit_stock" type="object" class="oe_stat_button"
+                                icon="fa-cubes" string="Stock"
+                                invisible="hierarchy_level != 'unit'"/>
+                    </div>
+
+                    <field name="image_1920" widget="image" class="oe_avatar"/>
+
+                    <div class="oe_title">
+                        <label for="name" class="text-muted small mb-0"/>
+                        <h1 class="mb-0 d-flex align-items-center gap-2">
+                            <field name="name" placeholder="Property name" class="flex-grow-1"/>
+                        </h1>
+                        <div class="text-muted small">
+                            <field name="property_code" readonly="1" class="d-inline"/>
+                            <span class="mx-1">·</span>
+                            <field name="hierarchy_level" readonly="1" class="d-inline"/>
+                        </div>
+                        <!-- Status ribbon. Extensions inject their badges here via XPath. -->
+                        <div name="status_ribbon" class="d-flex flex-wrap gap-2 mt-2">
+                            <field name="occupancy_state" widget="badge"
+                                   decoration-success="occupancy_state == 'rented'"
+                                   decoration-warning="occupancy_state == 'partial'"
+                                   decoration-info="occupancy_state == 'available'"/>
+                        </div>
+                    </div>
+
+                    <group>
+                        <group string="Identification">
+                            <field name="property_type_id"/>
+                            <field name="property_ref"/>
+                            <field name="property_number"/>
+                            <field name="hierarchy_level"/>
+                            <field name="parent_id" options="{'no_create': True}"
+                                   domain="['!', ('id', 'child_of', id)]"/>
+                        </group>
+                        <group string="Dimensions &amp; Use">
+                            <field name="area_sqm"/>
+                            <field name="floor_number" invisible="hierarchy_level != 'unit'"/>
+                            <field name="property_usage_id"/>
+                            <field name="is_furnished" widget="boolean_toggle"
+                                   invisible="hierarchy_level != 'unit'"/>
+                            <field name="furnished_status"
+                                   invisible="hierarchy_level != 'unit' or not is_furnished"/>
+                            <field name="next_available_date"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Layout &amp; Features" name="layout"
+                              invisible="hierarchy_level != 'unit'">
+                            <group>
+                                <group string="Rooms">
+                                    <field name="bedroom_count"/>
+                                    <field name="bathroom_count"/>
+                                    <field name="living_room_count"/>
+                                </group>
+                                <group string="Features">
+                                    <field name="has_kitchen" widget="boolean_toggle"/>
+                                    <field name="has_balcony" widget="boolean_toggle"/>
+                                    <field name="number_of_ac"/>
+                                    <field name="ac_type"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Building Specs" name="building_specs"
+                              invisible="hierarchy_level == 'unit'">
+                            <group>
+                                <group string="Structure">
+                                    <field name="number_of_floors"/>
+                                    <field name="number_of_units"/>
+                                    <field name="number_of_elevators"/>
+                                    <field name="number_of_parking_lots"/>
+                                </group>
+                                <group string="Utility Meters">
+                                    <field name="electricity_meter_number"/>
+                                    <field name="electricity_current_reading"/>
+                                    <field name="gas_meter_number"/>
+                                    <field name="gas_current_reading"/>
+                                    <field name="water_meter_number"/>
+                                    <field name="water_current_reading"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Location" name="location">
+                            <group>
+                                <group string="Area">
+                                    <field name="country_id"/>
+                                    <field name="state_id"/>
+                                    <field name="city"/>
+                                    <field name="district"/>
+                                </group>
+                                <group string="Address">
+                                    <field name="sub_area"/>
+                                    <field name="street_name"/>
+                                    <field name="building_no"/>
+                                    <field name="landmark"/>
+                                </group>
+                                <group string="Coordinates">
+                                    <field name="latitude"/>
+                                    <field name="longitude"/>
+                                </group>
+                            </group>
+                            <separator string="Map"/>
+                            <field name="latitude" widget="property_map"
+                                   options="{'longitude_field': 'longitude'}"
+                                   nolabel="1" class="w-100"/>
+                        </page>
+
+                        <page string="Sub-properties" name="hierarchy"
+                              invisible="hierarchy_level == 'unit' and child_count == 0">
+                            <field name="child_ids" readonly="1">
+                                <list>
+                                    <field name="property_code"/>
+                                    <field name="name"/>
+                                    <field name="hierarchy_level"/>
+                                    <field name="area_sqm"/>
+                                    <field name="state" widget="badge"
+                                           decoration-success="state == 'rented'"
+                                           decoration-info="state == 'available'"
+                                           decoration-warning="state in ('reserved','maintenance')"
+                                           decoration-muted="state in ('inactive','sold')"/>
+                                    <field name="occupancy_state" widget="badge"
+                                           decoration-success="occupancy_state == 'rented'"
+                                           decoration-warning="occupancy_state == 'partial'"
+                                           decoration-info="occupancy_state == 'available'"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Ownership" name="ownership">
+                            <group>
+                                <group string="Owner">
+                                    <field name="owner_id"/>
+                                    <field name="is_internal" widget="boolean_toggle"/>
+                                </group>
+                                <group string="Manager">
+                                    <field name="manager_id"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Media &amp; Files" name="media">
+                            <group string="Gallery">
+                                <field name="property_Attachment_media_ids"
+                                       class="o_website_sale_image_list"
+                                       context="{'default_name': name}"
+                                       mode="kanban"
+                                       add-label="Add Media"
+                                       nolabel="1"
+                                       widget="x2_many_media_viewer"
+                                       options="{'convert_to_webp': True}"/>
+                            </group>
+                            <group string="Attachments">
+                                <field name="attachment_ids" widget="many2many_binary" nolabel="1"/>
+                            </group>
+                        </page>
+
+                        <page string="Notes" name="notes">
+                            <field name="property_notes" nolabel="1"
+                                   placeholder="Free-form notes about this property…"/>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <chatter/>
+                <div class="o_attachment_preview"/>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="view_property_list" model="ir.ui.view">
+        <field name="name">realestate.property.list</field>
+        <field name="model">realestate.property</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="property_code" optional="show"/>
+                <field name="name" optional="show"/>
+                <field name="hierarchy_level" optional="show"/>
+                <field name="parent_id" optional="hide"/>
+                <field name="property_type_id" optional="show"/>
+                <field name="state" optional="show"/>
+                <field name="occupancy_state" optional="show" widget="badge"
+                       decoration-success="occupancy_state == 'rented'"
+                       decoration-warning="occupancy_state == 'partial'"
+                       decoration-info="occupancy_state == 'available'"/>
+                <field name="area_sqm" optional="show"/>
+                <field name="bedroom_count" optional="show"/>
+                <field name="bathroom_count" optional="show"/>
+                <field name="manager_id" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_property_search" model="ir.ui.view">
+        <field name="name">realestate.property.search</field>
+        <field name="model">realestate.property</field>
+        <field name="arch" type="xml">
+            <search string="Search Properties">
+                <field name="name" string="Name"/>
+                <field name="property_code" string="Code"/>
+                <field name="property_ref" string="Reference"/>
+                <field name="property_number" string="Number"/>
+                <field name="state_id"/>
+                <field name="city"/>
+                <field name="district"/>
+                <field name="sub_area"/>
+                <field name="street_name"/>
+                <field name="landmark"/>
+
+                <filter name="available" string="Available" domain="[('state', '=', 'available')]"/>
+                <filter name="rented" string="Rented" domain="[('state', '=', 'rented')]"/>
+                <filter name="reserved" string="Reserved" domain="[('state', '=', 'reserved')]"/>
+                <filter name="maintenance" string="Under Maintenance" domain="[('state', '=', 'maintenance')]"/>
+                <filter name="inactive" string="Inactive" domain="[('state', '=', 'inactive')]"/>
+                <separator/>
+                <filter name="roots" string="Top-level" domain="[('parent_id', '=', False)]"/>
+                <filter name="leaves" string="Leaves (no sub-properties)" domain="[('child_ids', '=', False)]"/>
+                <separator/>
+                <filter name="internal_assets" string="Company-Owned" domain="[('is_internal', '=', True)]"/>
+                <filter name="has_balcony" string="Has Balcony" domain="[('has_balcony', '=', True)]"/>
+                <filter name="has_kitchen" string="Has Kitchen" domain="[('has_kitchen', '=', True)]"/>
+
+                <group expand="0" string="Group By">
+                    <filter name="group_level" string="Hierarchy Level" context="{'group_by': 'hierarchy_level'}"/>
+                    <filter name="group_parent" string="Parent Property" context="{'group_by': 'parent_id'}"/>
+                    <filter name="group_type" string="Property Type" context="{'group_by': 'property_type_id'}"/>
+                    <filter name="group_status" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_occupancy" string="Occupancy" context="{'group_by': 'occupancy_state'}"/>
+                    <filter name="group_state" string="State" context="{'group_by': 'state_id'}"/>
+                    <filter name="group_city" string="City" context="{'group_by': 'city'}"/>
+                    <filter name="group_owner" string="Owner" context="{'group_by': 'owner_id'}"/>
+                    <filter name="group_manager" string="Manager" context="{'group_by': 'manager_id'}"/>
+                    <filter name="group_furnished" string="Furnished" context="{'group_by': 'furnished_status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_property_hierarchy" model="ir.ui.view">
+        <field name="name">realestate.property.hierarchy</field>
+        <field name="model">realestate.property</field>
+        <field name="arch" type="xml">
+            <hierarchy child_field="child_ids" draggable="1">
+                <field name="name"/>
+                <field name="property_code"/>
+                <field name="hierarchy_level"/>
+                <field name="state"/>
+                <field name="occupancy_state"/>
+                <field name="child_count"/>
+                <templates>
+                    <t t-name="hierarchy-box">
+                        <div class="o_hierarchy_node_header d-flex flex-column align-items-center pb-2">
+                            <img t-att-src="'/web/image/realestate.property/' + record.id.raw_value + '/image_128'"
+                                 t-att-alt="record.name.value"
+                                 style="width: 56px; height: 56px; object-fit: cover; border-radius: 6px;"
+                                 t-att-onerror="'this.style.display=&quot;none&quot;'"/>
+                        </div>
+                        <div class="o_hierarchy_node_body d-flex flex-column align-items-center text-center px-2">
+                            <field name="property_code" class="text-muted small"/>
+                            <field name="name" class="fw-bold"/>
+                            <div class="d-flex gap-1 mt-1">
+                                <field name="hierarchy_level" widget="badge" class="badge bg-secondary"/>
+                                <field name="occupancy_state" widget="badge"
+                                       decoration-success="occupancy_state == 'rented'"
+                                       decoration-warning="occupancy_state == 'partial'"
+                                       decoration-info="occupancy_state == 'available'"/>
+                            </div>
+                            <div class="text-muted small mt-1" t-if="record.child_count.raw_value">
+                                <field name="child_count"/> sub
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </hierarchy>
+        </field>
+    </record>
+
+
+    <record id="view_property_kanban" model="ir.ui.view">
+        <field name="name">realestate.property.kanban</field>
+        <field name="model">realestate.property</field>
+        <field name="arch" type="xml">
+            <kanban sample="1">
+                <field name="currency_id"/>
+                <field name="activity_state"/>
+                <field name="categ_id"/>
+                <progressbar field="activity_state"
+                             colors='{"planned": "success", "today": "warning", "overdue": "danger"}'/>
+                <templates>
+                    <t t-name="card" class="mb-2 shadow-sm rounded">
+                        <div t-att-class="'oe_kanban_global_click position-relative h-100' + (record.is_favorite.raw_value ? ' oe_kanban_card_favorite' : '')">
+                            <div class="position-absolute top-0 start-0 bottom-0"
+                                 t-attf-style="width: 4px; background-color: #{
+                    record.state.raw_value == 'rented' and 'var(--success)' or
+                    record.state.raw_value == 'available' and 'var(--info)' or
+                    record.state.raw_value == 'inactive' and 'var(--danger)' or
+                    record.state.raw_value == 'maintenance' and 'var(--warning)' or
+                    '#dee2e6'
+                 }">
+                            </div>
+
+                            <div class="d-flex h-100 w-100" style="margin-left: 12px;">
+                                <div class="flex-grow-1 pe-2 mt-2" style="min-width: 0; overflow: hidden;">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <field name="is_favorite" widget="boolean_favorite" nolabel="1" class="me-1"/>
+                                        <h5 class="mb-0 fw-bold text-truncate" style="max-width: 200px;">
+                                            <field name="name" class="oe_kanban_card_title"/>
+                                        </h5>
+                                    </div>
+
+                                    <div class="d-flex flex-column gap-1">
+                                        <div class="d-flex align-items-center">
+                                            <span class="text-muted small">Level:</span>
+                                            <div class="ms-1">
+                                                <field name="hierarchy_level" widget="badge" class="badge bg-secondary"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex align-items-center">
+                                            <span class="text-muted small">Type:</span>
+                                            <div class="ms-1 text-truncate" style="max-width: 150px;">
+                                                <field name="property_type_id" widget="badge"
+                                                       decoration-success="state in 'rented'"
+                                                       decoration-danger="state in ('inactive')"
+                                                       decoration-info="state in ('available')"
+                                                       decoration-warning="state in ('maintenance','reserved')"
+                                                       class="badge"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex align-items-center">
+                                            <span class="text-muted small">Status:</span>
+                                            <div class="ms-1">
+                                                <field name="state" widget="badge"
+                                                       decoration-success="state in 'rented'"
+                                                       decoration-danger="state == 'inactive'"
+                                                       decoration-info="state in ('available')"
+                                                       decoration-warning="state in ('maintenance','reserved')"
+                                                       class="badge"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex align-items-center">
+                                            <span class="text-muted small">Occupancy:</span>
+                                            <div class="ms-1">
+                                                <field name="occupancy_state" widget="badge"
+                                                       decoration-success="occupancy_state == 'rented'"
+                                                       decoration-warning="occupancy_state == 'partial'"
+                                                       decoration-info="occupancy_state == 'available'"
+                                                       class="badge"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex-shrink-0 d-flex align-items-stretch p-1 me-1" style="width: 120px;">
+                                    <field name="image_128" widget="image"
+                                           options="{'img_class': 'img-fluid rounded border object-fit-cover w-100 h-100'}"
+                                           invisible="not image_128"
+                                           alt="Property Image"
+                                           class="h-100 w-100"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+    <record id="action_property_view" model="ir.actions.act_window">
+        <field name="name">Properties</field>
+        <field name="res_model">realestate.property</field>
+        <field name="view_mode">kanban,list,form,hierarchy</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+                    (0, 0, {'view_mode': 'kanban', 'view_id': ref('atmta_real_estate.view_property_kanban')}),
+                    (0, 0, {'view_mode': 'list', 'view_id': ref('atmta_real_estate.view_property_list')}),
+                    (0, 0, {'view_mode': 'form', 'view_id': ref('atmta_real_estate.view_property_form')}),
+                    (0, 0, {'view_mode': 'hierarchy', 'view_id': ref('atmta_real_estate.view_property_hierarchy')})]"/>
+        <field name="search_view_id" ref="view_property_search"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to define a new Property.
+            </p>
+        </field>
+    </record>
+
+
+</odoo>

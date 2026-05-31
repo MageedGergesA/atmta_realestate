@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_project_kanban" model="ir.ui.view">
+        <field name="name">realestate.project.kanban</field>
+        <field name="model">realestate.project</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" sample="1" class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="city"/>
+                <field name="unit_count"/>
+                <field name="sold_unit_count"/>
+                <field name="available_unit_count"/>
+                <field name="state"/>
+                <field name="project_type"/>
+                <templates>
+                    <t t-name="card" class="oe_kanban_card p-2">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <div class="fw-bold"><field name="name"/></div>
+                                <div class="text-muted small"><field name="code"/> · <field name="project_type"/></div>
+                            </div>
+                            <field name="state" widget="badge"/>
+                        </div>
+                        <div class="small text-muted mt-1"><field name="city"/></div>
+                        <div class="mt-2 small">
+                            <span><i class="fa fa-home me-1"/><field name="unit_count"/> units</span>
+                            <span class="ms-2 text-success">· <field name="sold_unit_count"/> sold</span>
+                            <span class="ms-2 text-info">· <field name="available_unit_count"/> avail</span>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_project_list" model="ir.ui.view">
+        <field name="name">realestate.project.list</field>
+        <field name="model">realestate.project</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="project_type"/>
+                <field name="city"/>
+                <field name="unit_count"/>
+                <field name="sold_unit_count"/>
+                <field name="available_unit_count"/>
+                <field name="state" widget="badge"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_project_form" model="ir.ui.view">
+        <field name="name">realestate.project.form</field>
+        <field name="model">realestate.project</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_set_construction" type="object" string="Start Construction"
+                            class="oe_highlight" invisible="state != 'planning'"/>
+                    <button name="action_set_marketing" type="object" string="Open for Sales"
+                            invisible="state != 'construction'"/>
+                    <button name="action_set_handover" type="object" string="Begin Handover"
+                            invisible="state != 'marketing'"/>
+                    <button name="action_complete" type="object" string="Complete"
+                            invisible="state != 'handover'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('completed','cancelled')"/>
+                    <button name="action_reset_planning" type="object" string="Back to Planning"
+                            invisible="state != 'cancelled'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="planning,construction,marketing,handover,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_phases" type="object" class="oe_stat_button" icon="fa-layer-group">
+                            <field name="phase_count" widget="statinfo" string="Phases"/>
+                        </button>
+                        <button name="action_view_units" type="object" class="oe_stat_button" icon="fa-home">
+                            <field name="unit_count" widget="statinfo" string="Units"/>
+                        </button>
+                        <button name="action_view_stock" type="object" class="oe_stat_button"
+                                icon="fa-cubes" string="Stock" invisible="not stock_location_id"/>
+                        <field name="stock_location_id" invisible="1"/>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Project Name"/></h1>
+                        <div class="text-muted"><field name="code" readonly="1"/></div>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_type"/>
+                            <field name="developer_id"/>
+                            <field name="manager_id"/>
+                            <field name="start_date"/>
+                            <field name="expected_completion_date"/>
+                            <field name="actual_completion_date" invisible="state != 'completed'"/>
+                        </group>
+                        <group>
+                            <field name="country_id"/>
+                            <field name="state_id"/>
+                            <field name="city"/>
+                            <field name="district"/>
+                            <field name="address_line"/>
+                            <label for="latitude" string="Coordinates"/>
+                            <div class="o_row">
+                                <field name="latitude" placeholder="Latitude"
+                                       readonly="boundary_point_count > 0"/>
+                                <field name="longitude" placeholder="Longitude"
+                                       readonly="boundary_point_count > 0"/>
+                                <field name="boundary_point_count" invisible="1"/>
+                            </div>
+                            <div invisible="boundary_point_count == 0" class="text-muted small">
+                                <i class="fa fa-info-circle"/> Auto-computed from plot boundary
+                            </div>
+                        </group>
+                    </group>
+                    <group string="Scale &amp; Finance">
+                        <group>
+                            <field name="total_land_area"/>
+                            <field name="total_built_up_area"/>
+                        </group>
+                        <group>
+                            <field name="expected_budget"/>
+                            <field name="expected_revenue"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Plot Boundary" name="plot_boundary">
+                            <field name="boundary_point_ids" widget="boundary_picker" nolabel="1"/>
+                        </page>
+                        <page string="Phases">
+                            <field name="phase_ids" context="{'default_project_id': id}">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="start_date"/>
+                                    <field name="expected_completion_date"/>
+                                    <field name="expected_delivery_date"/>
+                                    <field name="unit_count"/>
+                                    <field name="sold_unit_count"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Inventory Summary">
+                            <group>
+                                <group>
+                                    <field name="unit_count" readonly="1"/>
+                                    <field name="available_unit_count" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="reserved_unit_count" readonly="1"/>
+                                    <field name="sold_unit_count" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_realestate_project" model="ir.actions.act_window">
+        <field name="name">Projects</field>
+        <field name="res_model">realestate.project</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+
+</odoo>

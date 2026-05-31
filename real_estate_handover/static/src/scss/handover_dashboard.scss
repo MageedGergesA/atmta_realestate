@@ -1,0 +1,33 @@
+.o_ho_dashboard {
+    background: #f4f5f9; min-height: 0;
+    .o_ho_toolbar { background: white; }
+    .o_ho_body { overflow-y: auto; min-height: 0; }
+    .o_ho_kpi {
+        background: white; border-radius: 8px; padding: 14px 16px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 4px solid #888; height: 100%;
+    }
+    .o_ho_label { color: #666; font-size: 10pt; font-weight: 500; }
+    .o_ho_value { font-size: 22pt; font-weight: bold; line-height: 1.1; margin: 4px 0; }
+    .o_ho_sub { color: #888; font-size: 9pt; }
+    .o_ho_blue   { border-left-color: #0d6efd; .o_ho_value { color: #0d6efd; } }
+    .o_ho_green  { border-left-color: #28a745; .o_ho_value { color: #28a745; } }
+    .o_ho_orange { border-left-color: #fd7e14; .o_ho_value { color: #fd7e14; } }
+    .o_ho_teal   { border-left-color: #00897b; .o_ho_value { color: #00897b; } }
+    .o_ho_red    { border-left-color: #dc3545; .o_ho_value { color: #dc3545; } }
+    .o_ho_purple { border-left-color: #6a1b9a; .o_ho_value { color: #6a1b9a; } }
+    .o_ho_card {
+        background: white; border-radius: 8px; padding: 14px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05); height: 100%;
+    }
+    .o_ho_card_title { font-size: 11pt; font-weight: 600; color: #333; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #eee; }
+    .o_ho_map { height: 380px; width: 100%; border-radius: 6px; }
+    .o_ho_chart { height: 180px; }
+    .o_ho_chart_lg { height: 240px; }
+    .o_ho_list { max-height: 320px; overflow-y: auto; }
+    .o_ho_item {
+        padding: 8px 10px; border-bottom: 1px solid #eee; cursor: pointer;
+        &:hover { background: #f8f9fa; }
+        &:last-child { border-bottom: none; }
+    }
+    .o_dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+}

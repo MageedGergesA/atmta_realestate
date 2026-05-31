@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_phase_list" model="ir.ui.view">
+        <field name="name">realestate.phase.list</field>
+        <field name="model">realestate.phase</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle"/>
+                <field name="project_id"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="start_date"/>
+                <field name="expected_completion_date"/>
+                <field name="expected_delivery_date"/>
+                <field name="unit_count"/>
+                <field name="sold_unit_count"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_phase_form" model="ir.ui.view">
+        <field name="name">realestate.phase.form</field>
+        <field name="model">realestate.phase</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_set_construction" type="object" string="Start Construction"
+                            class="oe_highlight" invisible="state != 'planning'"/>
+                    <button name="action_set_ready" type="object" string="Mark Ready"
+                            invisible="state != 'construction'"/>
+                    <button name="action_set_delivered" type="object" string="Deliver"
+                            invisible="state != 'ready'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_units" type="object" class="oe_stat_button" icon="fa-home">
+                            <field name="unit_count" widget="statinfo" string="Units"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Phase Name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id" options="{'no_create': True}"/>
+                            <field name="code"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="expected_completion_date"/>
+                            <field name="expected_delivery_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Units">
+                            <field name="property_ids" context="{'default_phase_id': id, 'default_project_id': project_id}" readonly="1">
+                                <list>
+                                    <field name="property_code"/>
+                                    <field name="name"/>
+                                    <field name="hierarchy_level"/>
+                                    <field name="base_price"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_realestate_phase" model="ir.actions.act_window">
+        <field name="name">Phases</field>
+        <field name="res_model">realestate.phase</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

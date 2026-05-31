@@ -1,0 +1,303 @@
+// Real-estate public portal — enterprise-grade landing pages.
+// Scoped under .o_re_public_root to avoid bleeding into the rest of website.
+
+.o_re_public_root {
+    --re-accent: #1e293b;
+    --re-accent-2: #2563eb;
+    --re-muted: #64748b;
+    --re-border: #e2e8f0;
+    --re-bg: #f8fafc;
+    --re-card-shadow: 0 1px 2px rgba(15, 23, 42, .05),
+                       0 8px 24px rgba(15, 23, 42, .06);
+    --re-card-shadow-hover: 0 4px 12px rgba(15, 23, 42, .08),
+                             0 24px 48px rgba(15, 23, 42, .12);
+
+    background: var(--re-bg);
+
+    .re-hero {
+        background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+        color: #fff;
+        padding: 64px 0 56px;
+        position: relative;
+        overflow: hidden;
+
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,.08), transparent 40%),
+                radial-gradient(circle at 20% 90%, rgba(255,255,255,.05), transparent 40%);
+            pointer-events: none;
+        }
+        .re-hero-inner { position: relative; z-index: 1; }
+        .re-eyebrow {
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 8px;
+        }
+        h1 {
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.1;
+            margin: 0 0 8px;
+        }
+        .re-hero-meta {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+        }
+    }
+
+    .re-project-card {
+        background: #fff;
+        border: 1px solid var(--re-border);
+        border-radius: 14px;
+        overflow: hidden;
+        transition: transform .25s ease, box-shadow .25s ease;
+        box-shadow: var(--re-card-shadow);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        &:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--re-card-shadow-hover);
+            text-decoration: none;
+        }
+        .re-card-image {
+            height: 220px;
+            background: #0f172a;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            &::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(to top, rgba(15, 23, 42, .45), transparent 50%);
+            }
+        }
+        .re-card-image.placeholder {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        }
+        .re-card-body {
+            padding: 18px 20px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .re-card-title {
+            color: var(--re-accent);
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0 0 4px;
+        }
+        .re-card-sub {
+            color: var(--re-muted);
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+        .re-card-badges {
+            margin-top: auto;
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .re-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            background: #eff6ff;
+            color: #1d4ed8;
+        }
+        .re-badge.re-badge-3d {
+            background: #ecfeff;
+            color: #0e7490;
+        }
+    }
+
+    .re-stats-strip {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin: -32px 0 32px;
+        position: relative;
+        z-index: 2;
+
+        @media (max-width: 768px) { grid-template-columns: repeat(2, 1fr); }
+
+        .re-stat {
+            background: #fff;
+            border: 1px solid var(--re-border);
+            border-radius: 12px;
+            padding: 14px 18px;
+            box-shadow: var(--re-card-shadow);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .re-stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: #f1f5f9;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--re-accent-2);
+            font-size: 18px;
+        }
+        .re-stat-value {
+            font-weight: 700;
+            font-size: 1.35rem;
+            color: var(--re-accent);
+            line-height: 1;
+        }
+        .re-stat-label {
+            font-size: 0.78rem;
+            color: var(--re-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 2px;
+        }
+    }
+
+    .re-viewer-card {
+        background: #fff;
+        border: 1px solid var(--re-border);
+        border-radius: 14px;
+        box-shadow: var(--re-card-shadow);
+        overflow: hidden;
+    }
+    .re-viewer-tabs {
+        border-bottom: 1px solid var(--re-border);
+        padding: 8px 12px 0;
+        background: #f8fafc;
+        .nav-link {
+            border: none;
+            border-bottom: 2px solid transparent;
+            border-radius: 0;
+            color: var(--re-muted);
+            font-weight: 600;
+            padding: 10px 16px;
+            &.active {
+                color: var(--re-accent-2);
+                background: transparent;
+                border-bottom-color: var(--re-accent-2);
+            }
+        }
+    }
+    .re-viewer-body {
+        background: #f1f5f9;
+        min-height: 620px;
+        position: relative;
+    }
+
+    .re-cta-floating {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        z-index: 1030;
+        background: var(--re-accent-2);
+        color: #fff;
+        border: none;
+        padding: 14px 22px;
+        border-radius: 999px;
+        font-weight: 600;
+        box-shadow: 0 16px 36px rgba(37, 99, 235, .35);
+        transition: transform .2s ease, box-shadow .2s ease;
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 44px rgba(37, 99, 235, .45);
+            color: #fff;
+        }
+    }
+
+    .re-eoi-card {
+        background: #fff;
+        border: 1px solid var(--re-border);
+        border-radius: 14px;
+        box-shadow: var(--re-card-shadow);
+        margin-top: 24px;
+
+        .card-body { padding: 28px 28px 24px; }
+        h3 { font-weight: 700; color: var(--re-accent); margin-bottom: 8px; }
+        .text-muted { color: var(--re-muted) !important; }
+        .form-control { border-radius: 8px; }
+        .btn-primary {
+            background: var(--re-accent-2);
+            border-color: var(--re-accent-2);
+            border-radius: 8px;
+            font-weight: 600;
+            padding: 12px 18px;
+        }
+    }
+
+    .re-thanks-card,
+    .re-error-card {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: var(--re-card-shadow);
+        max-width: 600px;
+        margin: 64px auto;
+        padding: 56px 40px;
+        text-align: center;
+    }
+}
+
+// 2D viewer: zoom hint chip
+.o_master_plan_2d_holder {
+    position: relative;
+    .o_master_plan_2d_zoom_toolbar {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: rgba(15, 23, 42, .85);
+        color: #fff;
+        border-radius: 8px;
+        padding: 4px 6px;
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        z-index: 5;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, .25);
+
+        button {
+            background: transparent;
+            border: 0;
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            font-size: 14px;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            &:hover { background: rgba(255, 255, 255, .15); }
+            &:disabled { opacity: .4; cursor: not-allowed; }
+        }
+        .o_zoom_level {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 0 6px;
+            min-width: 34px;
+            text-align: center;
+        }
+    }
+    .o_master_plan_2d_canvas {
+        transform-origin: 0 0;
+        transition: transform .12s ease-out;
+        will-change: transform;
+        cursor: grab;
+        &.is-dragging { cursor: grabbing; transition: none; }
+    }
+}

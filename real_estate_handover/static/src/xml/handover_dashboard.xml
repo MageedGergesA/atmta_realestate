@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="real_estate_handover.HandoverDashboard">
+        <div class="o_action o_ho_dashboard d-flex flex-column h-100">
+            <div class="o_ho_toolbar d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
+                <div>
+                    <h3 class="mb-0 d-inline-block me-3"><i class="fa fa-key me-2"/>Handover Dashboard</h3>
+                    <span class="text-muted small">Last update: <t t-esc="state.lastUpdate or '—'"/></span>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-sm btn-primary" t-on-click="() => this.refresh()"><i class="fa fa-refresh"/></button>
+                    <button class="btn btn-sm btn-outline-secondary"
+                            t-att-class="{ 'btn-success text-white': state.autoRefresh }"
+                            t-on-click="() => this.toggleAutoRefresh()">
+                        <i class="fa fa-clock-o me-1"/>
+                        <t t-if="state.autoRefresh">Auto ON</t><t t-else="">Auto OFF</t>
+                    </button>
+                </div>
+            </div>
+
+            <div t-if="state.loading" class="text-center p-5"><i class="fa fa-spinner fa-spin fa-3x text-muted"/></div>
+
+            <div t-if="state.data" class="o_ho_body p-3">
+
+                <div class="row mb-3">
+                    <div class="col-md-2"><div class="o_ho_kpi o_ho_blue">
+                        <div class="o_ho_label">Scheduled (week)</div>
+                        <div class="o_ho_value"><t t-esc="state.data.kpis.scheduled_this_week"/></div>
+                        <div class="o_ho_sub"><t t-esc="state.data.kpis.scheduled"/> total</div>
+                    </div></div>
+                    <div class="col-md-2"><div class="o_ho_kpi o_ho_orange">
+                        <div class="o_ho_label">In Inspection</div>
+                        <div class="o_ho_value"><t t-esc="state.data.kpis.in_inspection"/></div>
+                        <div class="o_ho_sub">in inspection / snagging</div>
+                    </div></div>
+                    <div class="col-md-2"><div class="o_ho_kpi o_ho_green">
+                        <div class="o_ho_label">Completed MTD</div>
+                        <div class="o_ho_value"><t t-esc="state.data.kpis.completed_mtd"/></div>
+                        <div class="o_ho_sub">handovers</div>
+                    </div></div>
+                    <div class="col-md-2"><div class="o_ho_kpi o_ho_red">
+                        <div class="o_ho_label">Open Snagging</div>
+                        <div class="o_ho_value"><t t-esc="state.data.kpis.open_snagging"/></div>
+                        <div class="o_ho_sub"><t t-esc="state.data.kpis.critical_snagging"/> critical</div>
+                    </div></div>
+                    <div class="col-md-2"><div class="o_ho_kpi o_ho_teal">
+                        <div class="o_ho_label">Active Warranties</div>
+                        <div class="o_ho_value"><t t-esc="state.data.kpis.active_warranties"/></div>
+                        <div class="o_ho_sub"><t t-esc="state.data.kpis.expiring_warranties"/> expiring 30d</div>
+                    </div></div>
+                    <div class="col-md-2"><div class="o_ho_kpi o_ho_purple">
+                        <div class="o_ho_label">Avg Readiness</div>
+                        <div class="o_ho_value"><t t-esc="state.data.kpis.avg_readiness"/>%</div>
+                        <div class="o_ho_sub"><t t-esc="state.data.kpis.ready_to_move"/> ready to move</div>
+                    </div></div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-8">
+                        <div class="o_ho_card">
+                            <div class="o_ho_card_title"><i class="fa fa-map-marker me-2"/>Handover Properties — colored by readiness</div>
+                            <div t-ref="map" class="o_ho_map"/>
+                            <div class="small mt-2">
+                                <span class="me-3"><span class="o_dot" style="background:#dc3545"/>&lt; 50%</span>
+                                <span class="me-3"><span class="o_dot" style="background:#fd7e14"/>50–75%</span>
+                                <span class="me-3"><span class="o_dot" style="background:#0d6efd"/>75–99%</span>
+                                <span class="me-3"><span class="o_dot" style="background:#28a745"/>100% Ready</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="o_ho_card mb-3">
+                            <div class="o_ho_card_title">Handover States</div>
+                            <div class="o_ho_chart"><canvas t-ref="donutHo"/></div>
+                        </div>
+                        <div class="o_ho_card">
+                            <div class="o_ho_card_title">Open Snagging by Severity</div>
+                            <div class="o_ho_chart"><canvas t-ref="donutSev"/></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <div class="o_ho_card">
+                            <div class="o_ho_card_title">Readiness Distribution</div>
+                            <div class="o_ho_chart_lg"><canvas t-ref="barReadiness"/></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="o_ho_card">
+                            <div class="o_ho_card_title">Snagging States</div>
+                            <div class="o_ho_chart_lg"><canvas t-ref="donutSnSt"/></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="o_ho_card">
+                            <div class="o_ho_card_title">Handover Trend (6 mo)</div>
+                            <div class="o_ho_chart_lg"><canvas t-ref="lineTrend"/></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="o_ho_card">
+                            <div class="o_ho_card_title"><i class="fa fa-calendar me-2 text-info"/>Upcoming Handovers</div>
+                            <div class="o_ho_list">
+                                <div t-foreach="state.data.upcoming" t-as="h" t-key="h.id"
+                                     class="o_ho_item" t-on-click="() => this.openHandover(h.id)">
+                                    <div class="d-flex justify-content-between">
+                                        <strong><t t-esc="h.property"/></strong>
+                                        <span class="badge bg-info"><t t-esc="h.scheduled_date"/></span>
+                                    </div>
+                                    <div class="small text-muted"><t t-esc="h.buyer"/></div>
+                                    <div class="small">Checklist: <t t-esc="Math.round(h.checklist_progress)"/>%</div>
+                                </div>
+                                <div t-if="!state.data.upcoming.length" class="text-muted text-center p-3">None scheduled</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="o_ho_card">
+                            <div class="o_ho_card_title"><i class="fa fa-exclamation-circle me-2 text-danger"/>Open Snagging</div>
+                            <div class="o_ho_list">
+                                <div t-foreach="state.data.snag_list" t-as="s" t-key="s.id"
+                                     class="o_ho_item" t-on-click="() => this.openSnagging(s.id)">
+                                    <div class="d-flex justify-content-between">
+                                        <strong><t t-esc="s.name"/></strong>
+                                        <span class="badge" t-att-class="s.severity == 'critical' ? 'bg-danger' : (s.severity == 'major' ? 'bg-warning text-dark' : 'bg-info')">
+                                            <t t-esc="s.severity"/>
+                                        </span>
+                                    </div>
+                                    <div class="small text-muted"><t t-esc="s.property"/></div>
+                                    <div class="small"><t t-esc="s.description"/></div>
+                                </div>
+                                <div t-if="!state.data.snag_list.length" class="text-muted text-center p-3">No open snags. 🎉</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="o_ho_card">
+                            <div class="o_ho_card_title"><i class="fa fa-shield me-2 text-success"/>Expiring Warranties (30d)</div>
+                            <div class="o_ho_list">
+                                <div t-foreach="state.data.warranty_list" t-as="w" t-key="w.id"
+                                     class="o_ho_item" t-on-click="() => this.openWarranty(w.id)">
+                                    <div class="d-flex justify-content-between">
+                                        <strong><t t-esc="w.property"/></strong>
+                                        <span class="badge bg-warning text-dark"><t t-esc="w.days_left"/>d</span>
+                                    </div>
+                                    <div class="small text-muted"><t t-esc="w.buyer"/></div>
+                                    <div class="small">Expires <t t-esc="w.end_date"/></div>
+                                </div>
+                                <div t-if="!state.data.warranty_list.length" class="text-muted text-center p-3">None expiring soon</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </t>
+
+</templates>

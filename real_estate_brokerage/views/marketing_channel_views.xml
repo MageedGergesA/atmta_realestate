@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_marketing_channel_list" model="ir.ui.view">
+        <field name="name">realestate.marketing.channel.list</field>
+        <field name="model">realestate.marketing.channel</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="base_url"/>
+                <field name="icon"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_marketing_channel" model="ir.actions.act_window">
+        <field name="name">Marketing Channels</field>
+        <field name="res_model">realestate.marketing.channel</field>
+        <field name="view_mode">list</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_payment_certificate_list" model="ir.ui.view">
+        <field name="name">realestate.construction.payment.certificate.list</field>
+        <field name="model">realestate.construction.payment.certificate</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="milestone_id" optional="show"/>
+                <field name="contractor_id"/>
+                <field name="period_end"/>
+                <field name="current_certified_pct" string="This Period %"/>
+                <field name="cumulative_certified_pct" string="Cumulative %"/>
+                <field name="gross_amount" sum="Gross"/>
+                <field name="retention_amount" sum="Retention"/>
+                <field name="net_payable" sum="Net"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'certified'"
+                       decoration-warning="state == 'invoiced'"
+                       decoration-success="state == 'paid'"
+                       decoration-muted="state in ('draft','cancelled')"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_payment_certificate_form" model="ir.ui.view">
+        <field name="name">realestate.construction.payment.certificate.form</field>
+        <field name="model">realestate.construction.payment.certificate</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_certify" type="object" string="Certify"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_create_vendor_bill" type="object" string="Create Vendor Bill"
+                            class="oe_highlight" invisible="state != 'certified'"/>
+                    <button name="action_mark_paid" type="object" string="Mark Paid"
+                            invisible="state != 'invoiced'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('paid','cancelled')"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id" options="{'no_create': True}"/>
+                            <field name="milestone_id" options="{'no_create': True}"/>
+                            <field name="contractor_id" options="{'no_create': True}"/>
+                            <field name="contractor_partner_id" invisible="1"/>
+                            <field name="contract_value"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                        </group>
+                        <group>
+                            <field name="period_start"/>
+                            <field name="period_end"/>
+                            <field name="previous_certified_pct"/>
+                            <field name="current_certified_pct"/>
+                            <field name="cumulative_certified_pct" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Source PO">
+                        <group>
+                            <field name="purchase_order_id" options="{'no_create': True}"
+                                   readonly="state != 'draft'"/>
+                            <field name="purchase_order_line_id" options="{'no_create': True}"
+                                   readonly="state != 'draft'"
+                                   invisible="not purchase_order_id"/>
+                            <field name="is_po_linked" invisible="1"/>
+                        </group>
+                    </group>
+                    <group string="Amounts">
+                        <group>
+                            <field name="gross_amount" readonly="1"/>
+                            <field name="retention_pct"/>
+                            <field name="retention_amount" readonly="1"/>
+                            <field name="net_payable" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="vendor_bill_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <field name="notes" placeholder="Inspector notes / supporting docs reference..."/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="action_payment_certificate" model="ir.actions.act_window">
+        <field name="name">Payment Certificates</field>
+        <field name="res_model">realestate.construction.payment.certificate</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Standalone Brokerage app (top-level, appears in app launcher) -->
+    <menuitem id="menu_brokerage_root"
+              name="Brokerage"
+              web_icon="real_estate_brokerage,static/description/icon.png"
+              sequence="26"/>
+
+    <menuitem id="menu_brokerage_pipeline"
+              name="Pipeline"
+              parent="menu_brokerage_root"
+              action="action_realestate_listing_pipeline"
+              sequence="10"/>
+
+    <menuitem id="menu_brokerage_listings"
+              name="Listings"
+              parent="menu_brokerage_root"
+              action="action_realestate_listing"
+              sequence="20"/>
+
+    <menuitem id="menu_brokerage_leads"
+              name="Leads"
+              parent="menu_brokerage_root"
+              action="action_realestate_lead"
+              sequence="30"/>
+
+    <menuitem id="menu_brokerage_viewings"
+              name="Viewings"
+              parent="menu_brokerage_root"
+              action="action_realestate_viewing"
+              sequence="40"/>
+
+    <menuitem id="menu_brokerage_offers"
+              name="Offers"
+              parent="menu_brokerage_root"
+              action="action_realestate_offer"
+              sequence="50"/>
+
+    <menuitem id="menu_brokerage_transactions"
+              name="Transactions"
+              parent="menu_brokerage_root"
+              action="action_realestate_transaction"
+              sequence="60"/>
+
+    <!-- Configuration section inside Brokerage -->
+    <menuitem id="menu_brokerage_config"
+              name="Configuration"
+              parent="menu_brokerage_root"
+              sequence="200"/>
+
+    <menuitem id="menu_brokerage_config_channels"
+              name="Marketing Channels"
+              parent="menu_brokerage_config"
+              action="action_marketing_channel"
+              sequence="10"/>
+
+    <menuitem id="menu_brokerage_config_lost_reasons"
+              name="Lead Lost Reasons"
+              parent="menu_brokerage_config"
+              action="action_lost_reason"
+              sequence="20"/>
+
+</odoo>

@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="portal_my_home_realestate" name="Real Estate" inherit_id="portal.portal_my_home" priority="40">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Sale Contracts</t>
+                <t t-set="url" t-value="'/my/sale-contracts'"/>
+                <t t-set="placeholder_count" t-value="'sale_contract_count'"/>
+            </t>
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Installments</t>
+                <t t-set="url" t-value="'/my/installments'"/>
+                <t t-set="placeholder_count" t-value="'installment_count'"/>
+            </t>
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Snagging Issues</t>
+                <t t-set="url" t-value="'/my/snagging'"/>
+                <t t-set="placeholder_count" t-value="'snagging_count'"/>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="portal_my_sale_contracts" name="My Sale Contracts">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-set="title">Sale Contracts</t>
+            <h3 class="mb-3">My Sale Contracts</h3>
+            <t t-if="not contracts">
+                <p class="text-muted">You don't have any sale contracts yet.</p>
+            </t>
+            <t t-if="contracts">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Reference</th>
+                                <th>Property</th>
+                                <th>Contract Date</th>
+                                <th>Sale Price</th>
+                                <th>Paid</th>
+                                <th>Balance</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="contracts" t-as="c">
+                                <td><a t-attf-href="/my/sale-contracts/#{c.id}"><t t-esc="c.name"/></a></td>
+                                <td><t t-esc="c.property_id.display_name"/></td>
+                                <td><t t-esc="c.contract_date"/></td>
+                                <td><span t-field="c.sale_price" t-options='{"widget": "monetary", "display_currency": c.currency_id}'/></td>
+                                <td><span t-field="c.paid_amount" t-options='{"widget": "monetary", "display_currency": c.currency_id}'/></td>
+                                <td><span t-field="c.balance_due" t-options='{"widget": "monetary", "display_currency": c.currency_id}'/></td>
+                                <td><span class="badge bg-secondary"><t t-esc="c.state"/></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="portal_my_sale_contract_detail" name="Sale Contract Detail">
+        <t t-call="portal.portal_layout">
+            <t t-set="title" t-value="contract.name"/>
+            <h3 class="mb-3"><t t-esc="contract.name"/></h3>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <p><strong>Unit:</strong> <t t-esc="contract.property_id.display_name"/></p>
+                    <p><strong>Project:</strong> <t t-esc="contract.project_id.name or '-'"/></p>
+                    <p><strong>Contract Date:</strong> <t t-esc="contract.contract_date"/></p>
+                    <p><strong>Expected Handover:</strong> <t t-esc="contract.expected_handover_date or '-'"/></p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Sale Price:</strong> <span t-field="contract.sale_price" t-options='{"widget": "monetary", "display_currency": contract.currency_id}'/></p>
+                    <p><strong>Paid:</strong> <span t-field="contract.paid_amount" t-options='{"widget": "monetary", "display_currency": contract.currency_id}'/></p>
+                    <p><strong>Balance:</strong> <span t-field="contract.balance_due" t-options='{"widget": "monetary", "display_currency": contract.currency_id}'/></p>
+                    <p><strong>Progress:</strong>
+                        <div class="progress" style="height: 20px;">
+                            <div class="progress-bar bg-success" t-attf-style="width: #{contract.progress}%;">
+                                <t t-esc="round(contract.progress, 1)"/>%
+                            </div>
+                        </div>
+                    </p>
+                </div>
+            </div>
+            <h4>Payment Schedule</h4>
+            <t t-if="not schedule">
+                <p class="text-muted">The installment schedule appears here once the contract is signed and invoiced.</p>
+            </t>
+            <table t-if="schedule" class="table table-sm">
+                <thead>
+                    <tr><th>#</th><th>Due Date</th><th>Amount</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="schedule" t-as="row">
+                        <td><t t-esc="row_index + 1"/></td>
+                        <td><t t-esc="row['date']"/></td>
+                        <td><span t-esc="row['amount']" t-options='{"widget": "monetary", "display_currency": row["currency"]}'/></td>
+                        <td>
+                            <span t-if="row['paid']" class="badge bg-success">Paid</span>
+                            <span t-else="" class="badge bg-warning">Due</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <t t-if="handovers or warranties">
+                <h4 class="mt-4">Handover &amp; Warranty</h4>
+                <table t-if="handovers" class="table table-sm">
+                    <thead><tr><th>Handover</th><th>Date</th><th>Checklist</th><th>Status</th></tr></thead>
+                    <tbody>
+                        <tr t-foreach="handovers" t-as="h">
+                            <td><t t-esc="h.name"/></td>
+                            <td><t t-esc="h.actual_date or h.scheduled_date or '-'"/></td>
+                            <td><t t-esc="round(h.checklist_progress, 0)"/>%</td>
+                            <td><span class="badge bg-secondary"><t t-esc="h.state"/></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table t-if="warranties" class="table table-sm">
+                    <thead><tr><th>Warranty</th><th>From</th><th>To</th><th>Status</th></tr></thead>
+                    <tbody>
+                        <tr t-foreach="warranties" t-as="w">
+                            <td><t t-esc="w.name"/></td>
+                            <td><t t-esc="w.start_date"/></td>
+                            <td><t t-esc="w.end_date"/></td>
+                            <td><span class="badge bg-secondary"><t t-esc="w.state"/></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </t>
+
+            <t t-if="has_floor_plan or gallery">
+                <h4 class="mt-4">Unit</h4>
+                <div t-if="has_floor_plan" class="mb-3">
+                    <img t-attf-src="/my/re-image/#{contract.property_id.id}/floor-plan"
+                         class="img-fluid border" alt="Floor plan" style="max-height:400px;"/>
+                </div>
+                <div t-if="gallery" class="d-flex flex-wrap gap-2">
+                    <img t-foreach="gallery" t-as="g" t-attf-src="/my/re-image/gallery/#{g.id}"
+                         class="border rounded" style="height:120px;width:auto;" alt="Unit image"/>
+                </div>
+            </t>
+
+            <div class="mt-4"><a href="/my/sale-contracts" class="btn btn-secondary">Back</a></div>
+        </t>
+    </template>
+
+    <template id="portal_my_installments" name="My Installments">
+        <t t-call="portal.portal_layout">
+            <t t-set="title">My Installments</t>
+            <h3 class="mb-3">All My Installments</h3>
+            <div class="row mb-3">
+                <div class="col-md-4"><p><strong>Total:</strong> <t t-esc="total"/></p></div>
+                <div class="col-md-4"><p><strong>Paid:</strong> <t t-esc="paid"/></p></div>
+                <div class="col-md-4"><p><strong>Balance:</strong> <t t-esc="balance"/></p></div>
+            </div>
+            <table class="table table-sm">
+                <thead>
+                    <tr><th>Contract</th><th>Property</th><th>Due Date</th><th>Amount</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="rows" t-as="r">
+                        <td><a t-attf-href="/my/sale-contracts/#{r['contract'].id}"><t t-esc="r['contract'].name"/></a></td>
+                        <td><t t-esc="r['contract'].property_id.display_name"/></td>
+                        <td><t t-esc="r['date']"/></td>
+                        <td><span t-esc="r['amount']" t-options='{"widget": "monetary", "display_currency": r["currency"]}'/></td>
+                        <td>
+                            <span t-if="r['paid']" class="badge bg-success">Paid</span>
+                            <span t-else="" class="badge bg-warning">Due</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </t>
+    </template>
+
+    <template id="portal_my_snagging" name="My Snagging Issues">
+        <t t-call="portal.portal_layout">
+            <t t-set="title">Snagging Issues</t>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="m-0">My Snagging Issues</h3>
+                <a href="/my/snagging/new" class="btn btn-primary btn-sm">Report new issue</a>
+            </div>
+            <t t-if="not issues">
+                <p class="text-muted">You have no snagging issues filed.</p>
+            </t>
+            <t t-if="issues">
+                <table class="table table-sm">
+                    <thead>
+                        <tr><th>Ref</th><th>Reported</th><th>Property</th><th>Description</th><th>Severity</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="issues" t-as="i">
+                            <td><t t-esc="i.name"/></td>
+                            <td><t t-esc="i.reported_date"/></td>
+                            <td><t t-esc="i.property_id.display_name"/></td>
+                            <td><t t-esc="i.description"/></td>
+                            <td><span class="badge bg-warning"><t t-esc="i.severity"/></span></td>
+                            <td><span class="badge bg-secondary"><t t-esc="i.state"/></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </t>
+        </t>
+    </template>
+
+    <template id="portal_my_snagging_new" name="Submit Snagging Issue">
+        <t t-call="portal.portal_layout">
+            <t t-set="title">Report a Snag</t>
+            <h3 class="mb-3">Report a Snagging Issue</h3>
+            <t t-if="not handovers">
+                <p class="text-muted">You don't have an active handover record to report against.</p>
+            </t>
+            <t t-if="handovers">
+                <form action="/my/snagging/new" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <div class="mb-3">
+                        <label class="form-label">Handover</label>
+                        <select name="handover_id" class="form-select" required="required">
+                            <option t-foreach="handovers" t-as="h" t-att-value="h.id">
+                                <t t-esc="h.name"/> — <t t-esc="h.property_id.display_name"/>
+                            </option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Location on Unit</label>
+                        <input type="text" name="location" class="form-control" placeholder="e.g. Master bathroom"/>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Severity</label>
+                        <select name="severity" class="form-select">
+                            <option value="minor">Minor</option>
+                            <option value="major">Major</option>
+                            <option value="critical">Critical</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea name="description" class="form-control" rows="4" required="required"/>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <a href="/my/snagging" class="btn btn-secondary">Cancel</a>
+                </form>
+            </t>
+        </t>
+    </template>
+
+</odoo>

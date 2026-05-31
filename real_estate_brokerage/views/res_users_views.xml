@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_users_form_inherit_realestate_agent" model="ir.ui.view">
+        <field name="name">res.users.form.realestate.agent</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Real Estate Agent" name="realestate_agent">
+                    <group>
+                        <group>
+                            <field name="is_realestate_agent"/>
+                            <field name="agent_license_number" invisible="not is_realestate_agent"/>
+                            <field name="commission_share_default" invisible="not is_realestate_agent"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

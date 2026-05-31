@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- UTM source so we can filter EOIs from the portal in CRM. -->
+    <record id="utm_source_re_portal" model="utm.source">
+        <field name="name">Real Estate Portal</field>
+    </record>
+
+    <!-- ================================================================ -->
+    <!-- Project list                                                     -->
+    <!-- ================================================================ -->
+    <template id="public_projects_index" name="Real Estate Projects">
+        <t t-call="website.layout">
+            <div class="o_re_public_root">
+                <section class="re-hero">
+                    <div class="container re-hero-inner">
+                        <div class="re-eyebrow">Real Estate Portfolio</div>
+                        <h1 class="display-5">Our Projects</h1>
+                        <p class="re-hero-meta mt-2 mb-0">
+                            Explore our portfolio — click any project to walk its 2D plan and 3D maquette.
+                        </p>
+                    </div>
+                </section>
+
+                <div class="container py-5">
+                    <t t-if="not projects">
+                        <div class="text-center py-5">
+                            <p class="text-muted">No projects available yet.</p>
+                        </div>
+                    </t>
+                    <div class="row g-4" t-if="projects">
+                        <div t-foreach="projects" t-as="p" class="col-12 col-md-6 col-lg-4">
+                            <a t-attf-href="/projects/#{p.id}" class="re-project-card">
+                                <div t-if="p.master_plan_2d" class="re-card-image"
+                                     t-attf-style="background-image:url(/web/image/realestate.project/#{p.id}/master_plan_2d);"/>
+                                <div t-else="" class="re-card-image placeholder"/>
+                                <div class="re-card-body">
+                                    <h3 class="re-card-title"><t t-esc="p.name"/></h3>
+                                    <div class="re-card-sub"><t t-esc="p.code"/></div>
+                                    <div class="re-card-badges">
+                                        <span t-if="p.has_master_plan_2d" class="re-badge">
+                                            <i class="fa fa-map-o"/> 2D Plan
+                                        </span>
+                                        <span t-if="p.has_maquette" class="re-badge re-badge-3d">
+                                            <i class="fa fa-cube"/> 3D Maquette
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- ================================================================ -->
+    <!-- Project detail                                                   -->
+    <!-- ================================================================ -->
+    <template id="public_project_page" name="Project Detail">
+        <t t-call="website.layout">
+            <div class="o_re_public_root o_re_public_project"
+                 t-att-data-project-id="project.id"
+                 t-att-data-has-2d="'1' if project.has_master_plan_2d else '0'"
+                 t-att-data-has-3d="'1' if project.has_maquette else '0'">
+
+                <!-- Hero -->
+                <section class="re-hero">
+                    <div class="container re-hero-inner">
+                        <div class="re-eyebrow">
+                            <a href="/projects" class="text-white-50 text-decoration-none">
+                                <i class="fa fa-arrow-left me-1"/> All projects
+                            </a>
+                        </div>
+                        <h1 class="display-5"><t t-esc="project.name"/></h1>
+                        <div class="re-hero-meta">
+                            <t t-esc="project.code"/>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="container">
+                    <!-- Floating stats -->
+                    <div class="re-stats-strip">
+                        <div class="re-stat">
+                            <span class="re-stat-icon"><i class="fa fa-building-o"/></span>
+                            <div>
+                                <div class="re-stat-value"><t t-esc="units_total"/></div>
+                                <div class="re-stat-label">Total units</div>
+                            </div>
+                        </div>
+                        <div class="re-stat">
+                            <span class="re-stat-icon" style="color:#059669;"><i class="fa fa-check-circle"/></span>
+                            <div>
+                                <div class="re-stat-value"><t t-esc="units_available"/></div>
+                                <div class="re-stat-label">Available</div>
+                            </div>
+                        </div>
+                        <div class="re-stat">
+                            <span class="re-stat-icon" style="color:#d97706;"><i class="fa fa-bookmark"/></span>
+                            <div>
+                                <div class="re-stat-value"><t t-esc="units_reserved"/></div>
+                                <div class="re-stat-label">Reserved</div>
+                            </div>
+                        </div>
+                        <div class="re-stat">
+                            <span class="re-stat-icon" style="color:#475569;"><i class="fa fa-key"/></span>
+                            <div>
+                                <div class="re-stat-value"><t t-esc="units_sold"/></div>
+                                <div class="re-stat-label">Sold</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Viewer card (full width) -->
+                    <div class="re-viewer-card mb-4">
+                        <ul class="nav nav-tabs re-viewer-tabs" role="tablist"
+                            t-if="project.has_master_plan_2d or project.has_maquette">
+                            <li class="nav-item" t-if="project.has_master_plan_2d">
+                                <button class="nav-link active" data-bs-toggle="tab"
+                                        data-bs-target="#tab2d" type="button">
+                                    <i class="fa fa-map-o me-1"/> 2D Master Plan
+                                </button>
+                            </li>
+                            <li class="nav-item" t-if="project.has_maquette">
+                                <button t-att-class="'nav-link ' + ('active' if not project.has_master_plan_2d else '')"
+                                        data-bs-toggle="tab" data-bs-target="#tab3d" type="button">
+                                    <i class="fa fa-cube me-1"/> 3D Maquette
+                                </button>
+                            </li>
+                        </ul>
+                        <div class="tab-content re-viewer-body">
+                            <div t-if="project.has_master_plan_2d"
+                                 class="tab-pane fade show active" id="tab2d" role="tabpanel">
+                                <div class="o_re_portal_2d_mount h-100"
+                                     t-att-data-project-id="project.id"
+                                     style="min-height:600px;">
+                                    <div class="d-flex align-items-center justify-content-center h-100 text-muted">
+                                        <i class="fa fa-spinner fa-spin me-2"/> Loading 2D plan…
+                                    </div>
+                                </div>
+                            </div>
+                            <div t-if="project.has_maquette"
+                                 t-att-class="'tab-pane fade ' + ('show active' if not project.has_master_plan_2d else '')"
+                                 id="tab3d" role="tabpanel">
+                                <div class="o_re_portal_3d_mount h-100"
+                                     t-att-data-project-id="project.id"
+                                     style="min-height:600px;">
+                                    <div class="d-flex align-items-center justify-content-center h-100 text-muted">
+                                        <i class="fa fa-spinner fa-spin me-2"/> Loading 3D maquette…
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- EOI form (below the viewer, collapsible) -->
+                    <div class="re-eoi-card" id="eoi-section">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-12 col-lg-5">
+                                    <h3>Interested in this project?</h3>
+                                    <p class="text-muted mb-0">
+                                        Send your details and our team will get back to you within one business day.
+                                        Pick a specific unit on the plan to express interest in it directly.
+                                    </p>
+                                </div>
+                                <div class="col-12 col-lg-7 mt-3 mt-lg-0">
+                                    <t t-call="real_estate_portal.public_eoi_form_partial">
+                                        <t t-set="project" t-value="project"/>
+                                        <t t-set="property_id" t-value="0"/>
+                                        <t t-set="form_action" t-value="'/projects/%s/eoi' % project.id"/>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="height:60px;"/>
+                </div>
+
+                <!-- Floating CTA -->
+                <a href="#eoi-section" class="re-cta-floating">
+                    <i class="fa fa-envelope me-1"/> Express Interest
+                </a>
+            </div>
+        </t>
+    </template>
+
+    <!-- ================================================================ -->
+    <!-- EOI form partial (reusable on project page + modal)              -->
+    <!-- ================================================================ -->
+    <template id="public_eoi_form_partial" name="EOI Form Partial">
+        <form t-att-action="form_action" method="post" class="o_re_eoi_form">
+            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+            <input type="hidden" name="property_id" t-att-value="property_id or 0"/>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label small mb-1">Full Name *</label>
+                    <input type="text" name="name" class="form-control" required="required"/>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label small mb-1">Email</label>
+                    <input type="email" name="email" class="form-control"/>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label small mb-1">Phone</label>
+                    <input type="tel" name="phone" class="form-control"/>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label small mb-1">Preferred Date (optional)</label>
+                    <input type="datetime-local" name="visit_date" class="form-control"/>
+                </div>
+                <div class="col-12">
+                    <label class="form-label small mb-1">Message</label>
+                    <textarea name="message" class="form-control" rows="3"
+                              placeholder="Tell us a bit about what you're looking for…"/>
+                </div>
+                <div class="col-12 d-flex justify-content-between align-items-center">
+                    <small class="text-muted">Provide at least an email or a phone.</small>
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="fa fa-paper-plane me-1"/> Send my interest
+                    </button>
+                </div>
+            </div>
+        </form>
+    </template>
+
+    <!-- ================================================================ -->
+    <!-- Thank-you + error pages                                          -->
+    <!-- ================================================================ -->
+    <template id="public_eoi_thanks" name="EOI Submitted">
+        <t t-call="website.layout">
+            <div class="o_re_public_root">
+                <div class="container">
+                    <div class="re-thanks-card">
+                        <i class="fa fa-check-circle text-success" style="font-size:3rem;"/>
+                        <h2 class="mt-3">Thank you!</h2>
+                        <p>
+                            <t t-if="is_visit">Your viewing request</t>
+                            <t t-else="">Your expression of interest</t>
+                            for <strong t-esc="(property and property.display_name) or project.name"/>
+                            has been received.
+                        </p>
+                        <p class="text-muted small">Reference: <t t-esc="lead.name"/></p>
+                        <a t-attf-href="/projects/#{project.id}" class="btn btn-outline-primary mt-3">
+                            Back to project
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="public_eoi_error" name="EOI Submission Error">
+        <t t-call="website.layout">
+            <div class="o_re_public_root">
+                <div class="container">
+                    <div class="re-error-card">
+                        <i class="fa fa-exclamation-circle text-danger" style="font-size:3rem;"/>
+                        <h2 class="mt-3">We couldn't submit your form</h2>
+                        <p class="text-danger" t-esc="error"/>
+                        <a t-attf-href="/projects/#{project.id}" class="btn btn-outline-primary mt-3">
+                            Try again
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>

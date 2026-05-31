@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_sale_contract_list" model="ir.ui.view">
+        <field name="name">realestate.sale.contract.list</field>
+        <field name="model">realestate.sale.contract</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="property_id"/>
+                <field name="partner_id"/>
+                <field name="agent_id"/>
+                <field name="contract_date"/>
+                <field name="sale_price"/>
+                <field name="paid_amount" optional="show"/>
+                <field name="balance_due" optional="show"/>
+                <field name="progress" widget="progressbar" optional="show"/>
+                <field name="state" widget="badge"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sale_contract_form" model="ir.ui.view">
+        <field name="name">realestate.sale.contract.form</field>
+        <field name="model">realestate.sale.contract</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_sign" type="object" string="Sign &amp; Invoice"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_handover" type="object" string="Hand Over"
+                            class="oe_highlight" invisible="state != 'signed'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('handed_over','cancelled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,signed,handed_over"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_invoice" type="object" class="oe_stat_button"
+                                icon="fa-file-text-o" string="Invoice"
+                                invisible="not invoice_id"/>
+                        <button name="action_view_sale_order" type="object" class="oe_stat_button"
+                                icon="fa-shopping-cart" string="Sale Order"
+                                invisible="not sale_order_id"/>
+                        <field name="invoice_id" invisible="1"/>
+                        <field name="sale_order_id" invisible="1"/>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="property_id" options="{'no_create': True}"/>
+                            <field name="project_id" readonly="1"/>
+                            <field name="phase_id" readonly="1"/>
+                            <field name="partner_id"/>
+                            <field name="agent_id"/>
+                            <field name="reservation_id" readonly="1" invisible="not reservation_id"/>
+                        </group>
+                        <group>
+                            <field name="sale_price"/>
+                            <field name="payment_term_id" options="{'no_create': True}"
+                                   readonly="state != 'draft'"/>
+                            <field name="contract_date"/>
+                            <field name="signing_date"/>
+                            <field name="expected_handover_date"/>
+                            <field name="handover_date" invisible="state != 'handed_over'"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                        </group>
+                    </group>
+                    <group string="Balances">
+                        <group>
+                            <field name="invoiced_amount" readonly="1"/>
+                            <field name="paid_amount" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="balance_due" readonly="1"/>
+                            <field name="progress" widget="progressbar" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Installments (legacy)" invisible="not installment_ids">
+                            <field name="installment_ids">
+                                <list>
+                                    <field name="sequence"/>
+                                    <field name="kind"/>
+                                    <field name="date_due"/>
+                                    <field name="amount" sum="Total"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="move_id" optional="show"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <button name="action_generate_invoice" type="object"
+                                            string="Invoice" icon="fa-file-text"
+                                            invisible="state != 'pending'"/>
+                                    <button name="action_mark_paid" type="object"
+                                            string="Mark Paid" icon="fa-check"
+                                            invisible="state == 'paid'"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Cancellation" invisible="state != 'cancelled'">
+                            <group>
+                                <field name="cancellation_reason"/>
+                            </group>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sale_contract" model="ir.actions.act_window">
+        <field name="name">Sale Contracts</field>
+        <field name="res_model">realestate.sale.contract</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

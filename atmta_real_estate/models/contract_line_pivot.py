@@ -9,7 +9,7 @@ class ContractLineReport(models.Model):
     contract_id = fields.Many2one('realestate.contract', string="Contract", readonly=True)
     contract_line_id = fields.Many2one('realestate.contract.line', string="Contract Unit", readonly=True)
     partner_id = fields.Many2one('res.partner', string="Customer", readonly=True)
-    property_id = fields.Many2one('product.product', string="Property", readonly=True)
+    property_id = fields.Many2one('realestate.property', string="Property", readonly=True)
     start_date = fields.Date(string="Start Date", readonly=True)
     end_date = fields.Date(string="End Date", readonly=True)
     state = fields.Selection([

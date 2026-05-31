@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_construction_task_list" model="ir.ui.view">
+        <field name="name">realestate.construction.task.list</field>
+        <field name="model">realestate.construction.task</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle"/>
+                <field name="project_id"/>
+                <field name="milestone_id"/>
+                <field name="name"/>
+                <field name="assignee_id"/>
+                <field name="weight"/>
+                <field name="expected_end_date"/>
+                <field name="completion_pct" widget="progressbar"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'in_progress'"
+                       decoration-success="state == 'done'"
+                       decoration-muted="state in ('pending','skipped')"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_construction_task_form" model="ir.ui.view">
+        <field name="name">realestate.construction.task.form</field>
+        <field name="model">realestate.construction.task</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_start" type="object" string="Start"
+                            class="oe_highlight" invisible="state != 'pending'"/>
+                    <button name="action_done" type="object" string="Done"
+                            class="oe_highlight" invisible="state in ('done','skipped')"/>
+                    <button name="action_skip" type="object" string="Skip"
+                            invisible="state in ('done','skipped')"/>
+                    <button name="action_reopen" type="object" string="Reopen"
+                            invisible="state == 'pending'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Task name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="milestone_id" options="{'no_create': True}"/>
+                            <field name="project_id" readonly="1"/>
+                            <field name="assignee_id"/>
+                            <field name="contractor_id"/>
+                            <field name="weight"/>
+                        </group>
+                        <group>
+                            <field name="expected_start_date"/>
+                            <field name="expected_end_date"/>
+                            <field name="actual_start_date"/>
+                            <field name="actual_end_date"/>
+                            <field name="completion_pct" widget="progressbar" readonly="1"/>
+                        </group>
+                    </group>
+                    <field name="notes" placeholder="Task notes..."/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="action_construction_task" model="ir.actions.act_window">
+        <field name="name">Tasks</field>
+        <field name="res_model">realestate.construction.task</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

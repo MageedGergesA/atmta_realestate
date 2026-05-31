@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_property_form_inherit_developer" model="ir.ui.view">
+        <field name="name">realestate.property.form.developer</field>
+        <field name="model">realestate.property</field>
+        <field name="inherit_id" ref="atmta_real_estate.view_property_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Smart buttons -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_reservations" type="object" class="oe_stat_button"
+                        icon="fa-bookmark"
+                        invisible="reservation_count == 0">
+                    <field name="reservation_count" widget="statinfo" string="Reservations"/>
+                </button>
+                <button name="action_view_sale_contracts" type="object" class="oe_stat_button"
+                        icon="fa-file-text-o"
+                        invisible="sale_contract_count == 0">
+                    <field name="sale_contract_count" widget="statinfo" string="Sale Contracts"/>
+                </button>
+            </xpath>
+
+            <!-- Badges in the ribbon -->
+            <xpath expr="//div[@name='status_ribbon']" position="inside">
+                <field name="sale_status" widget="badge"
+                       decoration-info="sale_status == 'for_sale'"
+                       decoration-warning="sale_status in ('reserved','under_contract')"
+                       decoration-success="sale_status == 'sold'"/>
+                <field name="construction_status" widget="badge"
+                       decoration-info="construction_status == 'under_construction'"
+                       decoration-warning="construction_status == 'ready'"
+                       decoration-success="construction_status == 'delivered'"/>
+            </xpath>
+
+            <!-- Development tab -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Development" name="development"
+                      invisible="hierarchy_level != 'unit'">
+                    <group>
+                        <group string="Project">
+                            <field name="project_id" options="{'no_create': True}"/>
+                            <field name="phase_id" options="{'no_create': True}"/>
+                            <field name="base_price"/>
+                        </group>
+                        <group string="Current Hold">
+                            <field name="active_reservation_id" readonly="1"
+                                   invisible="not active_reservation_id"/>
+                        </group>
+                    </group>
+                    <separator string="Reservations"/>
+                    <field name="reservation_ids" readonly="1">
+                        <list>
+                            <field name="name"/>
+                            <field name="partner_id"/>
+                            <field name="hold_started_at"/>
+                            <field name="hold_expiry_at"/>
+                            <field name="state" widget="badge"/>
+                            <field name="currency_id" column_invisible="1"/>
+                        </list>
+                    </field>
+                    <separator string="Sale Contracts"/>
+                    <field name="sale_contract_ids" readonly="1">
+                        <list>
+                            <field name="name"/>
+                            <field name="partner_id"/>
+                            <field name="sale_price"/>
+                            <field name="contract_date"/>
+                            <field name="state" widget="badge"/>
+                            <field name="currency_id" column_invisible="1"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_snagging_list" model="ir.ui.view">
+        <field name="name">realestate.snagging.issue.list</field>
+        <field name="model">realestate.snagging.issue</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state in ('resolved','verified')"
+                  decoration-danger="severity == 'critical'"
+                  decoration-warning="severity == 'major'">
+                <field name="name"/>
+                <field name="handover_id"/>
+                <field name="property_id"/>
+                <field name="description"/>
+                <field name="severity" widget="badge"/>
+                <field name="contractor_id"/>
+                <field name="reported_date"/>
+                <field name="target_resolution_date" optional="show"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_snagging_form" model="ir.ui.view">
+        <field name="name">realestate.snagging.issue.form</field>
+        <field name="model">realestate.snagging.issue</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_assign" type="object" string="Assign"
+                            class="oe_highlight" invisible="state != 'open'"/>
+                    <button name="action_start" type="object" string="Start"
+                            invisible="state != 'assigned'"/>
+                    <button name="action_resolve" type="object" string="Mark Resolved"
+                            class="oe_highlight" invisible="state not in ('in_progress','assigned')"/>
+                    <button name="action_verify" type="object" string="Verify Fix"
+                            class="oe_highlight" invisible="state != 'resolved'"/>
+                    <button name="action_reject" type="object" string="Reject"
+                            invisible="state in ('verified','rejected')"/>
+                    <button name="action_reopen" type="object" string="Reopen"
+                            invisible="state not in ('resolved','verified','rejected')"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name" readonly="1"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="handover_id" options="{'no_create': True}"/>
+                            <field name="property_id" readonly="1"/>
+                            <field name="severity"/>
+                            <field name="location_on_unit"/>
+                        </group>
+                        <group>
+                            <field name="contractor_id" options="{'no_create': True}"/>
+                            <field name="reporter_id" readonly="1"/>
+                            <field name="reported_date"/>
+                            <field name="target_resolution_date"/>
+                            <field name="resolved_date" readonly="1"/>
+                            <field name="verified_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description" nolabel="1"/>
+                    </group>
+                    <group string="Photo">
+                        <field name="photo" widget="image" nolabel="1"/>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="action_snagging" model="ir.actions.act_window">
+        <field name="name">Snagging Issues</field>
+        <field name="res_model">realestate.snagging.issue</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

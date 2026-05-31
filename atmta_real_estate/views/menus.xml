@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <!-- Main Application Menu -->
+    <!-- Top-level Real Estate app -->
     <menuitem id="real_estate_menu_root"
               name="Real Estate"
               web_icon="atmta_real_estate,static/description/icon.png"
               sequence="10"/>
 
-    <!-- ========== PROPERTIES SECTION ========== -->
+    <!-- Rental Dashboard (very top) -->
+    <menuitem id="menu_rental_dashboard"
+              name="Dashboard"
+              parent="real_estate_menu_root"
+              action="action_rental_dashboard"
+              sequence="1"/>
+
+    <!-- Properties Map dashboard -->
+    <menuitem id="menu_properties_map_dashboard"
+              name="Properties Map"
+              parent="real_estate_menu_root"
+              action="action_properties_map_dashboard"
+              sequence="5"/>
+
+    <!-- Properties section -->
     <menuitem id="menu_property_management"
               name="Properties"
               parent="real_estate_menu_root"
@@ -16,22 +30,22 @@
     <menuitem id="menu_property_list"
               name="All Properties"
               parent="menu_property_management"
-              action="atmta_real_estate.action_property_view"
+              action="action_property_view"
               sequence="10"/>
 
     <menuitem id="menu_property_types"
               name="Property Types"
               parent="menu_property_management"
-              action="atmta_real_estate.action_property_type"
+              action="action_property_type"
               sequence="20"/>
+
     <menuitem id="menu_property_history"
               name="Rental History"
               parent="menu_property_management"
               action="action_property_rental_history"
-              sequence="10"/>
+              sequence="30"/>
 
-
-    <!-- ========== CONTRACTS SECTION ========== -->
+    <!-- Contracts section -->
     <menuitem id="menu_contract_management"
               name="Contracts"
               parent="real_estate_menu_root"
@@ -40,64 +54,41 @@
     <menuitem id="menu_contract_list"
               name="All Contracts"
               parent="menu_contract_management"
-              action="atmta_real_estate.action_realestate_contract"
+              action="action_realestate_contract"
               sequence="10"/>
 
     <menuitem id="menu_contract_units"
               name="Contract Units"
               parent="menu_contract_management"
-              action="atmta_real_estate.action_contract_line"
+              action="action_contract_line"
               sequence="20"/>
 
     <menuitem id="menu_payment_schedules"
               name="Payment Schedules"
               parent="menu_contract_management"
-              action="atmta_real_estate.action_contract_payment"
+              action="action_contract_payment"
               sequence="30"/>
 
-    <!-- ========== MAINTENANCE SECTION ========== -->
+    <!-- Utilities (top-level under Real Estate root) -->
+    <menuitem id="menu_utilities_management"
+              name="Utilities"
+              parent="real_estate_menu_root"
+              action="action_utility_lines"
+              sequence="40"/>
+
+    <!-- Maintenance section -->
     <menuitem id="menu_maintenance_management"
               name="Maintenance"
               parent="real_estate_menu_root"
-              sequence="30"/>
+              sequence="50"/>
 
     <menuitem id="menu_maintenance_requests"
               name="Requests"
               parent="menu_maintenance_management"
-              action="atmta_real_estate.action_maintenance_requests"
+              action="action_maintenance_requests"
               sequence="10"/>
 
-    <!-- ========== UTILITIES SECTION ========== -->
-    <menuitem id="menu_utilities_management"
-              name="Utilities"
-              parent="real_estate_menu_root"
-              action="atmta_real_estate.action_utility_lines"
-              sequence="40"/>
-
-    <!-- ========== REPORTS SECTION ========== -->
-<!--    <menuitem id="menu_reports"-->
-<!--              name="Reports"-->
-<!--              parent="real_estate_menu_root"-->
-<!--              sequence="100"/>-->
-
-<!--    <menuitem id="menu_contract_reports"-->
-<!--              name="Contract Reports"-->
-<!--              parent="menu_reports"-->
-<!--              sequence="10"/>-->
-
-<!--    <menuitem id="menu_contract_pivot_report"-->
-<!--              name="Contract Overview"-->
-<!--              parent="menu_contract_reports"-->
-<!--              action="atmta_real_estate.action_realestate_contract_pivot_report"-->
-<!--              sequence="10"/>-->
-
-<!--    <menuitem id="menu_contract_line_report"-->
-<!--              name="Unit Analysis"-->
-<!--              parent="menu_contract_reports"-->
-<!--              action="atmta_real_estate.action_contract_line_pivot"-->
-<!--              sequence="20"/>-->
-
-    <!-- ========== CONFIGURATION SECTION ========== -->
+    <!-- Configuration -->
     <menuitem id="menu_configuration"
               name="Configuration"
               parent="real_estate_menu_root"
@@ -106,13 +97,13 @@
     <menuitem id="menu_payment_plans"
               name="Payment Plans"
               parent="menu_configuration"
-              action="atmta_real_estate.action_payment_plan"
+              action="action_payment_plan"
               sequence="10"/>
 
     <menuitem id="menu_price_adjustment_rules"
               name="Price Adjustment Rules"
               parent="menu_configuration"
-              action="atmta_real_estate.action_contract_increment_rule"
+              action="action_contract_increment_rule"
               sequence="20"/>
 
 </odoo>

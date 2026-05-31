@@ -74,6 +74,10 @@
                                 invisible="payment_count == 0">
                             <field string="Invoices" name="invoice_count" widget="statinfo"/>
                         </button>
+                        <button name="action_view_sale_order" type="object"
+                                icon="fa-shopping-cart" class="oe_stat_button m-1"
+                                string="Sale Order" invisible="not sale_order_id"/>
+                        <field name="sale_order_id" invisible="1"/>
                     </div>
 
                     <!-- Title -->
@@ -221,10 +225,18 @@
                             <field name="utility_line_ids">
                                 <list>
                                     <field name="name"/>
+                                    <field name="vendor_id"/>
                                     <field name="date"/>
                                     <field name="amount"/>
+                                    <field name="state" widget="badge"/>
                                     <field name="bill_id"/>
                                     <field name="bill_paid" readonly="1"/>
+                                    <button name="action_confirm_utility" type="object"
+                                            icon="fa-check" title="Confirm &amp; Create Bill"
+                                            invisible="state != 'draft'"/>
+                                    <button name="action_register_payment_utility" type="object"
+                                            icon="fa-money" title="Register Payment"
+                                            invisible="state != 'confirmed' or bill_paid"/>
                                 </list>
                             </field>
                             <group>

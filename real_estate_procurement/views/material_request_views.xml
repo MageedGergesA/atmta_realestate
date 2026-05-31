@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_material_request_list" model="ir.ui.view">
+        <field name="name">realestate.material.request.list</field>
+        <field name="model">realestate.material.request</field>
+        <field name="arch" type="xml">
+            <list decoration-info="state == 'approved'"
+                  decoration-warning="state == 'submitted'"
+                  decoration-success="state in ('received','done')"
+                  decoration-muted="state == 'cancelled'"
+                  decoration-danger="priority == '1' and state in ('draft','submitted')">
+                <field name="name"/>
+                <field name="priority" widget="priority"/>
+                <field name="project_id" optional="show"/>
+                <field name="property_id" optional="hide"/>
+                <field name="source_model" optional="hide"/>
+                <field name="requested_by_id" widget="many2one_avatar_user"/>
+                <field name="needed_by"/>
+                <field name="line_count"/>
+                <field name="estimated_total" sum="Total"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="po_count" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'approved'"
+                       decoration-warning="state == 'submitted'"
+                       decoration-success="state in ('received','done')"
+                       decoration-muted="state == 'cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_material_request_form" model="ir.ui.view">
+        <field name="name">realestate.material.request.form</field>
+        <field name="model">realestate.material.request</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit" type="object" string="Submit"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="oe_highlight" invisible="state != 'submitted'"
+                            groups="real_estate_procurement.group_procurement_approver"/>
+                    <button name="action_create_purchase_orders" type="object" string="Create Purchase Order(s)"
+                            class="oe_highlight" invisible="state != 'approved'"/>
+                    <button name="action_back_to_draft" type="object" string="Back to Draft"
+                            invisible="state not in ('submitted','approved')"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('done','cancelled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,submitted,approved,ordered,received,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object"
+                                name="action_view_purchase_orders" icon="fa-shopping-cart"
+                                invisible="po_count == 0">
+                            <field name="po_count" widget="statinfo" string="POs"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="source_ref"/>
+                            <field name="project_id" options="{'no_create': True}"/>
+                            <field name="property_id" options="{'no_create': True}"/>
+                            <field name="priority" widget="priority"/>
+                        </group>
+                        <group>
+                            <field name="requested_by_id" widget="many2one_avatar_user" readonly="1"/>
+                            <field name="needed_by"/>
+                            <field name="approved_by_id" widget="many2one_avatar_user" readonly="1"
+                                   invisible="not approved_by_id"/>
+                            <field name="approval_date" readonly="1" invisible="not approval_date"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lines" name="lines">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="product_id"
+                                           options="{'no_create': True}"/>
+                                    <field name="description" optional="hide"/>
+                                    <field name="qty"/>
+                                    <field name="uom_id" groups="uom.group_uom"/>
+                                    <field name="unit_price_hint" optional="show"/>
+                                    <field name="estimated_cost" optional="show"/>
+                                    <field name="received_qty" optional="show" readonly="1"/>
+                                    <field name="po_line_id" optional="hide" readonly="1"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="estimated_total" widget="monetary"/>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes" placeholder="Justification, links, supporting docs..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_material_request_search" model="ir.ui.view">
+        <field name="name">realestate.material.request.search</field>
+        <field name="model">realestate.material.request</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="property_id"/>
+                <field name="requested_by_id"/>
+                <filter string="My Requests" name="my_requests"
+                        domain="[('requested_by_id', '=', uid)]"/>
+                <filter string="Urgent" name="urgent" domain="[('priority', '=', '1')]"/>
+                <separator/>
+                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Submitted" name="submitted" domain="[('state', '=', 'submitted')]"/>
+                <filter string="Approved" name="approved" domain="[('state', '=', 'approved')]"/>
+                <filter string="Ordered" name="ordered" domain="[('state', 'in', ['ordered','partial'])]"/>
+                <filter string="Done" name="done" domain="[('state', 'in', ['received','done'])]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Project" name="group_project" context="{'group_by': 'project_id'}"/>
+                    <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Requested By" name="group_user" context="{'group_by': 'requested_by_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_material_request" model="ir.actions.act_window">
+        <field name="name">Material Requests</field>
+        <field name="res_model">realestate.material.request</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_material_request_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Raise a new material request</p>
+            <p>Material requests are the entry point for procurement across the suite.
+            They group items needed for a construction task, a handover snag, a rental
+            ticket or any other source — once approved, they spawn purchase orders to
+            the preferred supplier(s).</p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_feasibility_list" model="ir.ui.view">
+        <field name="name">realestate.investment.feasibility.list</field>
+        <field name="model">realestate.investment.feasibility</field>
+        <field name="arch" type="xml">
+            <list decoration-success="is_positive" decoration-danger="not is_positive and state=='approved'">
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="analysis_date"/>
+                <field name="discount_rate"/>
+                <field name="npv"/>
+                <field name="irr"/>
+                <field name="payback_period"/>
+                <field name="state" widget="badge"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_feasibility_kanban" model="ir.ui.view">
+        <field name="name">realestate.investment.feasibility.kanban</field>
+        <field name="model">realestate.investment.feasibility</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" sample="1">
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="npv"/>
+                <field name="irr"/>
+                <field name="is_positive"/>
+                <field name="currency_id"/>
+                <templates>
+                    <t t-name="card" class="oe_kanban_card p-2">
+                        <div class="fw-bold"><field name="name"/></div>
+                        <div class="small text-muted"><field name="project_id"/></div>
+                        <div class="mt-2">
+                            <span t-attf-class="badge #{record.is_positive.raw_value ? 'bg-success' : 'bg-danger'}">
+                                NPV: <field name="npv" widget="monetary"/>
+                            </span>
+                        </div>
+                        <div class="mt-1 small">IRR: <field name="irr"/>%</div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_feasibility_form" model="ir.ui.view">
+        <field name="name">realestate.investment.feasibility.form</field>
+        <field name="model">realestate.investment.feasibility</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_generate_default_flows" type="object" string="Seed Empty Years"
+                            invisible="cash_flow_ids != []"/>
+                    <button name="action_pull_project_estimates" type="object" string="Pull from Project"
+                            invisible="not project_id"/>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_reject" type="object" string="Reject"
+                            invisible="state != 'draft'"/>
+                    <button name="action_archive_study" type="object" string="Archive"
+                            invisible="state in ('archived',)"/>
+                    <button name="action_reset_draft" type="object" string="Reset to Draft"
+                            invisible="state == 'draft'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="POSITIVE" bg_color="bg-success" invisible="not is_positive"/>
+                    <widget name="web_ribbon" title="NEGATIVE" bg_color="bg-danger" invisible="is_positive or state == 'draft'"/>
+                    <div class="oe_title"><h1><field name="name" readonly="1"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="project_id" options="{'no_create': True}"/>
+                            <field name="analysis_date"/>
+                            <field name="base_year"/>
+                            <field name="analysis_period_years"/>
+                        </group>
+                        <group>
+                            <field name="discount_rate"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                        </group>
+                    </group>
+                    <group string="Financial Metrics">
+                        <group>
+                            <field name="total_inflow" readonly="1"/>
+                            <field name="total_outflow" readonly="1"/>
+                            <field name="net_undiscounted" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="npv" readonly="1"/>
+                            <field name="irr" readonly="1" widget="percentage"/>
+                            <field name="payback_period" readonly="1"/>
+                            <field name="is_positive" readonly="1" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Cash Flows">
+                            <field name="cash_flow_ids" context="{'default_feasibility_id': id}">
+                                <list editable="bottom">
+                                    <field name="period_index"/>
+                                    <field name="period_label" readonly="1"/>
+                                    <field name="description"/>
+                                    <field name="inflow"/>
+                                    <field name="outflow"/>
+                                    <field name="net_flow" sum="Net" readonly="1"/>
+                                    <field name="discounted_flow" sum="PV" readonly="1"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Scenarios">
+                            <field name="scenario_ids" context="{'default_feasibility_id': id}">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="scenario_type"/>
+                                    <field name="inflow_factor"/>
+                                    <field name="outflow_factor"/>
+                                    <field name="discount_rate_override"/>
+                                    <field name="npv" readonly="1"/>
+                                    <field name="irr" readonly="1"/>
+                                    <field name="is_positive" readonly="1" widget="boolean_toggle"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Description"><field name="description"/></page>
+                        <page string="Notes"><field name="notes"/></page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_feasibility" model="ir.actions.act_window">
+        <field name="name">Feasibility Studies</field>
+        <field name="res_model">realestate.investment.feasibility</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="real_estate_brokerage.BrokerageDashboard">
+        <div class="o_action o_brokerage_dashboard d-flex flex-column h-100">
+
+            <div class="o_bd_toolbar d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
+                <div>
+                    <h3 class="mb-0 d-inline-block me-3"><i class="fa fa-handshake-o me-2"/>Brokerage Dashboard</h3>
+                    <span class="text-muted small">Last update: <t t-esc="state.lastUpdate or '—'"/></span>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <button class="btn btn-sm btn-primary" t-on-click="() => this.refresh()">
+                        <i class="fa fa-refresh me-1"/>Refresh
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary"
+                            t-att-class="{ 'btn-success text-white': state.autoRefresh }"
+                            t-on-click="() => this.toggleAutoRefresh()">
+                        <i class="fa fa-clock-o me-1"/>
+                        <t t-if="state.autoRefresh">Auto ON</t><t t-else="">Auto OFF</t>
+                    </button>
+                </div>
+            </div>
+
+            <div t-if="state.loading" class="text-center p-5">
+                <i class="fa fa-spinner fa-spin fa-3x text-muted"/>
+            </div>
+
+            <div t-if="state.data" class="o_bd_body p-3">
+
+                <!-- KPI ROW -->
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        <div class="o_bd_kpi o_bd_blue">
+                            <div class="o_bd_label">Active Listings</div>
+                            <div class="o_bd_value"><t t-esc="state.data.kpis.active_listings"/></div>
+                            <div class="o_bd_sub"><t t-esc="state.data.kpis.under_offer"/> under offer</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="o_bd_kpi o_bd_purple">
+                            <div class="o_bd_label">Open Leads</div>
+                            <div class="o_bd_value"><t t-esc="state.data.kpis.open_leads"/></div>
+                            <div class="o_bd_sub"><t t-esc="state.data.kpis.hot_leads"/> hot</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="o_bd_kpi o_bd_teal">
+                            <div class="o_bd_label">Viewings (this week)</div>
+                            <div class="o_bd_value"><t t-esc="state.data.kpis.viewings_this_week"/></div>
+                            <div class="o_bd_sub"><t t-esc="state.data.kpis.pending_offers"/> pending offers</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="o_bd_kpi o_bd_orange">
+                            <div class="o_bd_label">Sold (MTD)</div>
+                            <div class="o_bd_value"><t t-esc="state.data.kpis.sold_mtd"/></div>
+                            <div class="o_bd_sub"><t t-esc="state.data.kpis.conversion_rate"/>% conv</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="o_bd_kpi o_bd_green">
+                            <div class="o_bd_label">Commission MTD</div>
+                            <div class="o_bd_value"><t t-esc="state.data.currency"/> <t t-esc="formatMoney(state.data.kpis.commissions_mtd)"/></div>
+                            <div class="o_bd_sub">paid out</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="o_bd_kpi o_bd_indigo">
+                            <div class="o_bd_label">Pipeline</div>
+                            <div class="o_bd_value"><t t-esc="state.data.currency"/> <t t-esc="formatMoney(state.data.kpis.total_pipeline)"/></div>
+                            <div class="o_bd_sub">in flight</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MAP + DONUTS -->
+                <div class="row mb-3">
+                    <div class="col-md-8">
+                        <div class="o_bd_card">
+                            <div class="o_bd_card_title"><i class="fa fa-map-marker me-2"/>Active Listings Map</div>
+                            <div t-ref="map" class="o_bd_map"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="o_bd_card mb-3">
+                            <div class="o_bd_card_title">Listings by State</div>
+                            <div class="o_bd_chart"><canvas t-ref="donutListing"/></div>
+                        </div>
+                        <div class="o_bd_card">
+                            <div class="o_bd_card_title">Days on Market</div>
+                            <div class="o_bd_chart"><canvas t-ref="barDom"/></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FUNNEL + AGENTS + VELOCITY -->
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <div class="o_bd_card">
+                            <div class="o_bd_card_title">Lead Funnel</div>
+                            <div class="o_bd_chart_lg"><canvas t-ref="barFunnel"/></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="o_bd_card">
+                            <div class="o_bd_card_title">Top Agents (paid commission)</div>
+                            <div class="o_bd_chart_lg"><canvas t-ref="barAgents"/></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="o_bd_card">
+                            <div class="o_bd_card_title">Sales Velocity (6 mo)</div>
+                            <div class="o_bd_chart_lg"><canvas t-ref="lineVelocity"/></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LISTS -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="o_bd_card">
+                            <div class="o_bd_card_title"><i class="fa fa-user-plus me-2"/>Recent Leads</div>
+                            <div class="o_bd_list">
+                                <div t-foreach="state.data.recent_leads" t-as="l" t-key="l.id"
+                                     class="o_bd_item" t-on-click="() => this.openLead(l.id)">
+                                    <div class="d-flex justify-content-between">
+                                        <strong><t t-esc="l.partner_name"/></strong>
+                                        <span class="badge bg-secondary"><t t-esc="l.state"/></span>
+                                    </div>
+                                    <div class="small text-muted"><t t-esc="l.source"/> · <t t-esc="l.agent"/></div>
+                                </div>
+                                <div t-if="!state.data.recent_leads.length" class="text-muted text-center p-3">No leads</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="o_bd_card">
+                            <div class="o_bd_card_title"><i class="fa fa-calendar me-2"/>Upcoming Viewings</div>
+                            <div class="o_bd_list">
+                                <div t-foreach="state.data.upcoming_viewings" t-as="v" t-key="v.id"
+                                     class="o_bd_item" t-on-click="() => this.openViewing(v.id)">
+                                    <div class="d-flex justify-content-between">
+                                        <strong><t t-esc="v.property"/></strong>
+                                        <span class="small text-info"><t t-esc="v.scheduled_at"/></span>
+                                    </div>
+                                    <div class="small text-muted"><t t-esc="v.partner"/> · <t t-esc="v.agent"/></div>
+                                </div>
+                                <div t-if="!state.data.upcoming_viewings.length" class="text-muted text-center p-3">No viewings booked</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="o_bd_card">
+                            <div class="o_bd_card_title"><i class="fa fa-handshake-o me-2"/>Pending Offers</div>
+                            <div class="o_bd_list">
+                                <div t-foreach="state.data.pending_offers" t-as="o" t-key="o.id"
+                                     class="o_bd_item" t-on-click="() => this.openOffer(o.id)">
+                                    <div class="d-flex justify-content-between">
+                                        <strong><t t-esc="o.buyer"/></strong>
+                                        <span class="text-success fw-bold"><t t-esc="state.data.currency"/> <t t-esc="formatMoney(o.amount)"/></span>
+                                    </div>
+                                    <div class="small text-muted"><t t-esc="o.listing"/> · expires <t t-esc="o.expiry_date or '—'"/></div>
+                                </div>
+                                <div t-if="!state.data.pending_offers.length" class="text-muted text-center p-3">No pending offers</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </t>
+
+</templates>

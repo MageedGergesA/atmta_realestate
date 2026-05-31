@@ -1,0 +1,161 @@
+.o_maquette_root {
+    position: relative;
+    width: 100%;
+    height: 75vh;
+    min-height: 500px;
+    background: #f8fafc;
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.o_maquette_loader {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    background: rgba(248, 250, 252, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .o_maquette_loader_inner {
+        text-align: center;
+        color: #475569;
+    }
+}
+
+.o_maquette_error {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    z-index: 6;
+}
+
+.o_maquette_toolbar {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    flex-shrink: 0;
+}
+
+.o_maquette_legend {
+    font-size: 12px;
+    color: #475569;
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.o_maquette_legend_dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 4px;
+    vertical-align: middle;
+}
+.o_maquette_legend_count {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.o_maquette_canvas_wrap {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+}
+
+.o_maquette_canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    outline: none;
+}
+
+.o_maquette_hover_tip {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(15, 23, 42, 0.85);
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    pointer-events: none;
+}
+
+.o_maquette_side_panel {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 320px;
+    background: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.15);
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    z-index: 4;
+}
+.o_maquette_side_panel_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: #f1f5f9;
+    border-bottom: 1px solid #e2e8f0;
+}
+.o_maquette_side_panel_title {
+    font-weight: 600;
+    color: #0f172a;
+}
+.o_maquette_side_panel_body {
+    padding: 12px;
+    max-height: 65vh;
+    overflow-y: auto;
+}
+.o_maquette_state_badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.o_maquette_info_table {
+    th {
+        font-weight: 500;
+        color: #64748b;
+        width: 35%;
+    }
+    td {
+        color: #0f172a;
+    }
+}
+.o_maquette_floor_plan img {
+    width: 100%;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    background: #ffffff;
+}
+
+.o_maquette_save_first {
+    margin: 12px;
+}
+
+// Full-screen preview client action — let the viewer fill the page.
+.o_maquette_preview {
+    height: 100%;
+    .o_maquette_preview_holder {
+        flex: 1 1 auto;
+        min-height: 70vh;
+        position: relative;
+    }
+    .o_maquette_preview_holder .o_maquette_root {
+        height: 100%;
+        min-height: 0;
+    }
+}

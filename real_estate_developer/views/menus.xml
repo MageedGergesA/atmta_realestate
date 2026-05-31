@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Standalone Developer app -->
+    <menuitem id="menu_developer_root"
+              name="Developer"
+              web_icon="real_estate_developer,static/description/icon.png"
+              sequence="27"/>
+
+    <menuitem id="menu_developer_projects"
+              name="Projects"
+              parent="menu_developer_root"
+              action="action_realestate_project"
+              sequence="10"/>
+
+    <menuitem id="menu_developer_phases"
+              name="Phases"
+              parent="menu_developer_root"
+              action="action_realestate_phase"
+              sequence="20"/>
+
+    <menuitem id="menu_developer_reservations"
+              name="Reservations"
+              parent="menu_developer_root"
+              action="action_unit_reservation"
+              sequence="30"/>
+
+    <menuitem id="menu_developer_sale_contracts"
+              name="Sale Contracts"
+              parent="menu_developer_root"
+              action="action_sale_contract"
+              sequence="40"/>
+
+    <menuitem id="menu_developer_installments"
+              name="Installments"
+              parent="menu_developer_root"
+              action="action_sale_installment"
+              sequence="50"/>
+
+    <menuitem id="menu_developer_config"
+              name="Configuration"
+              parent="menu_developer_root"
+              sequence="200"/>
+
+</odoo>

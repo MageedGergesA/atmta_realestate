@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_viewing_calendar" model="ir.ui.view">
+        <field name="name">realestate.viewing.calendar</field>
+        <field name="model">realestate.viewing</field>
+        <field name="arch" type="xml">
+            <calendar date_start="scheduled_at" date_stop="end_at"
+                      mode="week" color="agent_id" event_open_popup="true">
+                <field name="listing_id"/>
+                <field name="partner_id"/>
+                <field name="agent_id"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_viewing_list" model="ir.ui.view">
+        <field name="name">realestate.viewing.list</field>
+        <field name="model">realestate.viewing</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="scheduled_at"/>
+                <field name="listing_id"/>
+                <field name="property_id" optional="hide"/>
+                <field name="partner_id"/>
+                <field name="agent_id"/>
+                <field name="state" widget="badge"/>
+                <field name="feedback_rating" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_viewing_form" model="ir.ui.view">
+        <field name="name">realestate.viewing.form</field>
+        <field name="model">realestate.viewing</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_mark_completed" type="object" string="Mark Completed"
+                            class="oe_highlight" invisible="state != 'scheduled'"/>
+                    <button name="action_mark_no_show" type="object" string="No-show"
+                            invisible="state != 'scheduled'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state != 'scheduled'"/>
+                    <button name="action_create_offer" type="object" string="Create Offer"
+                            invisible="state != 'completed'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="listing_id" options="{'no_create': True}"/>
+                            <field name="property_id" readonly="1"/>
+                            <field name="lead_id" options="{'no_create': True}"/>
+                            <field name="partner_id"/>
+                            <field name="agent_id" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="scheduled_at"/>
+                            <field name="duration"/>
+                            <field name="end_at" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Feedback" invisible="state == 'scheduled'">
+                        <field name="feedback_rating"/>
+                        <field name="next_action"/>
+                        <field name="feedback" nolabel="1" colspan="2"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_realestate_viewing" model="ir.actions.act_window">
+        <field name="name">Viewings</field>
+        <field name="res_model">realestate.viewing</field>
+        <field name="view_mode">calendar,list,form</field>
+    </record>
+
+</odoo>

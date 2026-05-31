@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_listing_search" model="ir.ui.view">
+        <field name="name">realestate.listing.search</field>
+        <field name="model">realestate.listing</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="property_id"/>
+                <field name="lister_agent_id"/>
+                <filter name="my_listings" string="My Listings" domain="[('lister_agent_id', '=', uid)]"/>
+                <separator/>
+                <filter name="active" string="Active" domain="[('state', '=', 'active')]"/>
+                <filter name="under_offer" string="Under Offer" domain="[('state', '=', 'under_offer')]"/>
+                <filter name="sold" string="Sold" domain="[('state', '=', 'sold')]"/>
+                <filter name="open" string="Open" domain="[('state', 'in', ['draft','active','under_offer'])]"/>
+                <filter name="featured" string="Featured" domain="[('featured', '=', True)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_agent" string="Lister Agent" context="{'group_by': 'lister_agent_id'}"/>
+                    <filter name="group_type" string="Property Type" context="{'group_by': 'property_type_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_listing_list" model="ir.ui.view">
+        <field name="name">realestate.listing.list</field>
+        <field name="model">realestate.listing</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="property_id"/>
+                <field name="list_price"/>
+                <field name="lister_agent_id"/>
+                <field name="list_date"/>
+                <field name="days_on_market"/>
+                <field name="viewing_count" string="Viewings"/>
+                <field name="offer_count" string="Offers"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-primary="state == 'active'"
+                       decoration-warning="state == 'under_offer'"
+                       decoration-success="state == 'sold'"
+                       decoration-muted="state in ('withdrawn','expired')"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_listing_kanban" model="ir.ui.view">
+        <field name="name">realestate.listing.kanban</field>
+        <field name="model">realestate.listing</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" sample="1" class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="property_id"/>
+                <field name="list_price"/>
+                <field name="lister_agent_id"/>
+                <field name="days_on_market"/>
+                <field name="viewing_count"/>
+                <field name="offer_count"/>
+                <field name="featured"/>
+                <field name="color"/>
+                <field name="currency_id"/>
+                <templates>
+                    <t t-name="card" class="oe_kanban_card o_kanban_record p-2">
+                        <div class="d-flex justify-content-between">
+                            <strong><field name="property_id"/></strong>
+                            <i class="fa fa-star text-warning" t-if="record.featured.raw_value"/>
+                        </div>
+                        <div class="small text-muted"><field name="name"/></div>
+                        <div class="mt-2 fw-bold">
+                            <field name="list_price" widget="monetary"/>
+                        </div>
+                        <div class="mt-2 d-flex gap-2 align-items-center small text-muted">
+                            <span><i class="fa fa-eye me-1"/><field name="viewing_count"/></span>
+                            <span><i class="fa fa-handshake-o me-1"/><field name="offer_count"/></span>
+                            <span class="ms-auto"><field name="days_on_market"/>d</span>
+                        </div>
+                        <div class="mt-1">
+                            <field name="lister_agent_id" widget="many2one_avatar_user"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_listing_form" model="ir.ui.view">
+        <field name="name">realestate.listing.form</field>
+        <field name="model">realestate.listing</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_activate" type="object" string="Activate" class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button name="action_withdraw" type="object" string="Withdraw"
+                            invisible="state not in ('active','under_offer')"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset to Draft"
+                            invisible="state in ('draft','sold')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,active,under_offer,sold"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_viewings" type="object" class="oe_stat_button" icon="fa-calendar">
+                            <field name="viewing_count" widget="statinfo" string="Viewings"/>
+                        </button>
+                        <button name="action_view_offers" type="object" class="oe_stat_button" icon="fa-handshake-o">
+                            <field name="offer_count" widget="statinfo" string="Offers"/>
+                        </button>
+                        <button name="action_view_transaction" type="object" class="oe_stat_button" icon="fa-money"
+                                invisible="not transaction_id">
+                            <div class="o_stat_info"><span class="o_stat_text">Transaction</span></div>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Sold" bg_color="bg-success" invisible="state != 'sold'"/>
+                    <widget name="web_ribbon" title="Withdrawn" bg_color="bg-secondary" invisible="state != 'withdrawn'"/>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="property_id" options="{'no_create': True}"/>
+                            <field name="lister_agent_id" options="{'no_create': True}"/>
+                            <field name="co_agent_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                            <field name="featured"/>
+                        </group>
+                        <group>
+                            <label for="list_price"/>
+                            <div class="o_row">
+                                <field name="list_price"/>
+                                <field name="currency_id" groups="base.group_multi_currency"/>
+                            </div>
+                            <field name="property_base_price" widget="monetary"/>
+                            <field name="price_vs_base" widget="percentage"
+                                   decoration-success="price_vs_base &lt;= 0"
+                                   decoration-warning="price_vs_base &gt; 0 and price_vs_base &lt;= 0.1"
+                                   decoration-danger="price_vs_base &gt; 0.1"/>
+                            <label for="last_sold_price"/>
+                            <div class="o_row">
+                                <field name="last_sold_price" widget="monetary" nolabel="1"/>
+                                <span invisible="not last_sold_date">on </span>
+                                <field name="last_sold_date" nolabel="1" invisible="not last_sold_date"/>
+                            </div>
+                            <field name="list_date"/>
+                            <field name="expiry_date"/>
+                            <field name="days_on_market"/>
+                            <field name="final_sale_price" invisible="state != 'sold'"/>
+                            <field name="list_to_sale_ratio" widget="percentage" invisible="state != 'sold'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Marketing" name="marketing">
+                            <group>
+                                <field name="marketing_channel_ids" widget="many2many_tags"/>
+                            </group>
+                            <field name="description_html" placeholder="Marketing description..."/>
+                        </page>
+                        <page string="Viewings" name="viewings">
+                            <field name="viewing_ids" context="{'default_listing_id': id}">
+                                <list>
+                                    <field name="scheduled_at"/>
+                                    <field name="partner_id"/>
+                                    <field name="agent_id"/>
+                                    <field name="duration"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="feedback_rating"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Offers" name="offers">
+                            <field name="offer_ids" context="{'default_listing_id': id}">
+                                <list>
+                                    <field name="offer_date"/>
+                                    <field name="partner_id"/>
+                                    <field name="amount"/>
+                                    <field name="expiry_date"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_realestate_listing" model="ir.actions.act_window">
+        <field name="name">Listings</field>
+        <field name="res_model">realestate.listing</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="view_listing_search"/>
+        <field name="context">{'search_default_open': 1}</field>
+    </record>
+
+    <record id="action_realestate_listing_pipeline" model="ir.actions.act_window">
+        <field name="name">Sales Pipeline</field>
+        <field name="res_model">realestate.listing</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="view_listing_search"/>
+        <field name="context">{'search_default_open': 1}</field>
+    </record>
+
+</odoo>

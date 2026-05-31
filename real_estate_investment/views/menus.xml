@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_investment_root"
+              name="Investment"
+              web_icon="real_estate_investment,static/description/icon.png"
+              sequence="30"/>
+
+    <menuitem id="menu_investment_feasibility"
+              name="Feasibility Studies"
+              parent="menu_investment_root"
+              action="action_feasibility"
+              sequence="10"/>
+
+    <menuitem id="menu_investment_scenarios"
+              name="All Scenarios"
+              parent="menu_investment_root"
+              action="action_scenario"
+              sequence="20"/>
+</odoo>

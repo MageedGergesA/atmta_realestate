@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="action_brokerage_dashboard" model="ir.actions.client">
+        <field name="name">Brokerage Dashboard</field>
+        <field name="tag">realestate.brokerage_dashboard</field>
+    </record>
+
+    <menuitem id="menu_brokerage_dashboard"
+              name="Dashboard"
+              parent="menu_brokerage_root"
+              action="action_brokerage_dashboard"
+              sequence="1"/>
+
+</odoo>

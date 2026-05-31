@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+
+    <record id="seq_realestate_listing" model="ir.sequence">
+        <field name="name">Real Estate Listing</field>
+        <field name="code">realestate.listing</field>
+        <field name="prefix">LST-</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <record id="seq_realestate_lead" model="ir.sequence">
+        <field name="name">Real Estate Lead</field>
+        <field name="code">realestate.lead</field>
+        <field name="prefix">LEAD-</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <record id="seq_realestate_viewing" model="ir.sequence">
+        <field name="name">Property Viewing</field>
+        <field name="code">realestate.viewing</field>
+        <field name="prefix">VIEW-</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <record id="seq_realestate_offer" model="ir.sequence">
+        <field name="name">Property Offer</field>
+        <field name="code">realestate.offer</field>
+        <field name="prefix">OFR-</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <record id="seq_realestate_transaction" model="ir.sequence">
+        <field name="name">Property Transaction</field>
+        <field name="code">realestate.transaction</field>
+        <field name="prefix">TXN-</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+</odoo>

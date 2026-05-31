@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_transaction_list" model="ir.ui.view">
+        <field name="name">realestate.transaction.list</field>
+        <field name="model">realestate.transaction</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="property_id"/>
+                <field name="buyer_id"/>
+                <field name="seller_id" optional="show"/>
+                <field name="sale_price"/>
+                <field name="total_commission" optional="show"/>
+                <field name="closing_date"/>
+                <field name="transaction_type"/>
+                <field name="state" widget="badge"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_transaction_form" model="ir.ui.view">
+        <field name="name">realestate.transaction.form</field>
+        <field name="model">realestate.transaction</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_record_deposit" type="object" string="Record Deposit"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_sign_contract" type="object" string="Sign Contract"
+                            invisible="state not in ('draft','deposit_received')"/>
+                    <button name="action_close" type="object" string="Close"
+                            class="oe_highlight" invisible="state not in ('contract_signed','deposit_received')"/>
+                    <button name="action_add_default_commissions" type="object" string="Add Default Commissions"
+                            invisible="state == 'closed' or commission_ids != []"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('closed','cancelled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,deposit_received,contract_signed,closed"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Closed" bg_color="bg-success" invisible="state != 'closed'"/>
+                    <widget name="web_ribbon" title="Cancelled" bg_color="bg-danger" invisible="state != 'cancelled'"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_invoice" type="object" class="oe_stat_button"
+                                icon="fa-file-text-o" string="Invoice"
+                                invisible="not invoice_id"/>
+                        <button name="action_view_sale_order" type="object" class="oe_stat_button"
+                                icon="fa-shopping-cart" string="Sale Order"
+                                invisible="not sale_order_id"/>
+                        <field name="invoice_id" invisible="1"/>
+                        <field name="sale_order_id" invisible="1"/>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="listing_id" options="{'no_create': True}"/>
+                            <field name="property_id" readonly="1"/>
+                            <field name="offer_id" options="{'no_create': True}"/>
+                            <field name="transaction_type"/>
+                        </group>
+                        <group>
+                            <field name="seller_id"/>
+                            <field name="buyer_id"/>
+                            <field name="lister_agent_id" readonly="1"/>
+                            <field name="selling_agent_id" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                    <group string="Money &amp; Dates">
+                        <group>
+                            <label for="sale_price"/>
+                            <div class="o_row">
+                                <field name="sale_price"/>
+                                <field name="currency_id" groups="base.group_multi_currency"/>
+                            </div>
+                            <field name="deposit_amount"/>
+                            <field name="deposit_paid_date"/>
+                            <field name="payment_term_id" options="{'no_create': True}"
+                                   invisible="transaction_type != 'in_house'"
+                                   readonly="state == 'closed'"/>
+                        </group>
+                        <group>
+                            <field name="sale_agreement_date"/>
+                            <field name="closing_date"/>
+                            <field name="total_commission" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Commissions" name="commissions">
+                            <field name="commission_ids">
+                                <list editable="bottom">
+                                    <field name="partner_id"/>
+                                    <field name="role"/>
+                                    <field name="calculation_method"/>
+                                    <field name="percentage" invisible="calculation_method != 'percentage'"/>
+                                    <field name="fixed_amount" invisible="calculation_method != 'fixed'"/>
+                                    <field name="amount" sum="Total"/>
+                                    <field name="bill_id" optional="show"/>
+                                    <field name="paid" readonly="1"/>
+                                    <field name="payment_date" optional="show"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <button name="action_create_vendor_bill" type="object"
+                                            icon="fa-file-text-o" title="Create Vendor Bill"
+                                            invisible="bill_id != False"/>
+                                    <button name="action_mark_paid" type="object"
+                                            icon="fa-money" title="Mark Paid (register payment)"
+                                            invisible="paid"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Documents" name="docs">
+                            <field name="document_ids" widget="many2many_binary"/>
+                        </page>
+                        <page string="Cancellation" name="cancel" invisible="state != 'cancelled'">
+                            <group>
+                                <field name="cancellation_reason"/>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_realestate_transaction" model="ir.actions.act_window">
+        <field name="name">Transactions</field>
+        <field name="res_model">realestate.transaction</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

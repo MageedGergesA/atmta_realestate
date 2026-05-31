@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_contract_form_inherit_deposit" model="ir.ui.view">
+        <field name="name">realestate.contract.form.deposit</field>
+        <field name="model">realestate.contract</field>
+        <field name="inherit_id" ref="view_realestate_contract_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Security Deposit" name="deposit">
+                    <header>
+                        <button name="action_record_deposit" type="object" string="Record Deposit"
+                                class="oe_highlight" invisible="deposit_state != 'none'"/>
+                        <button name="action_refund_deposit" type="object" string="Refund (Full)"
+                                invisible="deposit_state != 'held'"/>
+                        <button name="action_partial_refund_deposit" type="object" string="Refund (Partial)"
+                                invisible="deposit_state != 'held'"/>
+                        <button name="action_forfeit_deposit" type="object" string="Forfeit"
+                                invisible="deposit_state != 'held'"/>
+                        <button name="action_reset_deposit" type="object" string="Reset"
+                                invisible="deposit_state == 'none'"/>
+                    </header>
+                    <group>
+                        <group>
+                            <field name="deposit_state" widget="badge"
+                                   decoration-info="deposit_state == 'held'"
+                                   decoration-success="deposit_state == 'refunded'"
+                                   decoration-warning="deposit_state == 'partial_refund'"
+                                   decoration-danger="deposit_state == 'forfeited'"/>
+                            <field name="deposit_amount"/>
+                            <field name="deposit_paid_date" readonly="deposit_state == 'none'"/>
+                        </group>
+                        <group>
+                            <field name="deposit_refund_amount"
+                                   readonly="deposit_state in ('none','held')"/>
+                            <field name="deposit_forfeit_amount" readonly="1"/>
+                            <field name="deposit_settled_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Notes">
+                        <field name="deposit_notes" nolabel="1"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <record id="checklist_template_standard" model="realestate.handover.checklist.template">
+        <field name="name">Standard Residential Handover</field>
+        <field name="description">Default handover checklist used for residential unit deliveries.</field>
+    </record>
+
+    <record id="check_electricity" model="realestate.handover.checklist.template.item">
+        <field name="template_id" ref="checklist_template_standard"/>
+        <field name="sequence">10</field>
+        <field name="name">Electricity meter activated</field>
+        <field name="category">utilities</field>
+    </record>
+    <record id="check_water" model="realestate.handover.checklist.template.item">
+        <field name="template_id" ref="checklist_template_standard"/>
+        <field name="sequence">20</field>
+        <field name="name">Water meter activated</field>
+        <field name="category">utilities</field>
+    </record>
+    <record id="check_gas" model="realestate.handover.checklist.template.item">
+        <field name="template_id" ref="checklist_template_standard"/>
+        <field name="sequence">30</field>
+        <field name="name">Gas connection verified</field>
+        <field name="category">utilities</field>
+    </record>
+    <record id="check_final_clean" model="realestate.handover.checklist.template.item">
+        <field name="template_id" ref="checklist_template_standard"/>
+        <field name="sequence">40</field>
+        <field name="name">Final cleaning completed</field>
+        <field name="category">cleaning</field>
+    </record>
+    <record id="check_walkthrough" model="realestate.handover.checklist.template.item">
+        <field name="template_id" ref="checklist_template_standard"/>
+        <field name="sequence">50</field>
+        <field name="name">Walkthrough inspection with buyer</field>
+        <field name="category">inspection</field>
+    </record>
+    <record id="check_keys" model="realestate.handover.checklist.template.item">
+        <field name="template_id" ref="checklist_template_standard"/>
+        <field name="sequence">60</field>
+        <field name="name">Keys / access cards handed over</field>
+        <field name="category">keys</field>
+    </record>
+    <record id="check_smoke_alarm" model="realestate.handover.checklist.template.item">
+        <field name="template_id" ref="checklist_template_standard"/>
+        <field name="sequence">70</field>
+        <field name="name">Smoke alarm / fire safety check</field>
+        <field name="category">safety</field>
+    </record>
+    <record id="check_owner_doc" model="realestate.handover.checklist.template.item">
+        <field name="template_id" ref="checklist_template_standard"/>
+        <field name="sequence">80</field>
+        <field name="name">Ownership / title document delivered</field>
+        <field name="category">documents</field>
+    </record>
+    <record id="check_warranty_doc" model="realestate.handover.checklist.template.item">
+        <field name="template_id" ref="checklist_template_standard"/>
+        <field name="sequence">90</field>
+        <field name="name">Warranty information delivered</field>
+        <field name="category">documents</field>
+    </record>
+</odoo>

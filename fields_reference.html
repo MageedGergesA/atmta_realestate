@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<title>Atmta Real Estate — Fields Reference (EN / مصري)</title>
+<style>
+  :root {
+    --bg: #f7f9fc;
+    --card: #ffffff;
+    --border: #e1e7ef;
+    --text: #1f2933;
+    --muted: #6b7785;
+    --accent: #2e5cdc;
+    --accent-soft: #eaf0ff;
+    --tech: #6f42c1;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Cairo", Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); }
+  body { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
+  nav { position: sticky; top: 0; height: 100vh; background: var(--card); border-right: 1px solid var(--border); padding: 1.25rem 0.75rem; overflow-y: auto; }
+  nav h1 { font-size: 1rem; margin: 0 0 0.6rem 0; color: var(--accent); }
+  nav .lead { font-size: 0.82rem; color: var(--muted); margin-bottom: 1rem; }
+  nav ul { list-style: none; padding: 0; margin: 0; }
+  nav li { margin: 0.15rem 0; }
+  nav a { color: var(--text); text-decoration: none; font-size: 0.85rem; display: block; padding: 0.25rem 0.5rem; border-radius: 4px; }
+  nav a:hover { background: var(--accent-soft); color: var(--accent); }
+  nav .modgroup { font-weight: 700; color: var(--accent); margin-top: 0.7rem; font-size: 0.85rem; padding: 0.3rem 0.5rem; }
+  nav .sub a { padding-left: 1.2rem; font-size: 0.78rem; color: var(--muted); }
+  main { padding: 1.5rem 2rem; max-width: none; }
+  h2 { color: var(--accent); border-bottom: 2px solid var(--accent-soft); padding-bottom: 0.4rem; margin-top: 2rem; }
+  h3 { color: var(--text); margin-top: 1.6rem; font-size: 1.15rem; }
+  h3 code { color: var(--tech); font-size: 0.9em; }
+  .desc { color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+  .desc-ar { color: var(--text); font-size: 0.95rem; line-height: 1.75; direction: rtl; text-align: right; font-family: "Cairo", "Tahoma", sans-serif; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; margin: 0.8rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 0.4rem 0; font-size: 0.88rem; table-layout: fixed; }
+  th, td { text-align: left; padding: 0.45rem 0.6rem; border-bottom: 1px solid var(--border); vertical-align: top; word-wrap: break-word; }
+  th { background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+  th.tech, td.tech { width: 18%; }
+  th.type, td.type { width: 14%; font-size: 0.78rem; color: var(--muted); }
+  th.en, td.en { width: 32%; }
+  th.ar, td.ar { width: 36%; direction: rtl; text-align: right; font-family: "Cairo", "Tahoma", sans-serif; font-size: 0.9rem; }
+  td code { color: var(--tech); font-size: 0.88em; font-family: ui-monospace, monospace; }
+  td.type { font-family: ui-monospace, monospace; }
+  .badge { display: inline-block; background: var(--accent-soft); color: var(--accent); padding: 0.15rem 0.5rem; border-radius: 10px; font-size: 0.72rem; font-weight: 600; }
+  .badge-warn { background: #fef3c7; color: #b45309; }
+  .badge-ok { background: #e8f7ee; color: #28a745; }
+  .legend { font-size: 0.82rem; color: var(--muted); padding: 0.6rem 1rem; background: var(--accent-soft); border-radius: 6px; margin-bottom: 1rem; }
+</style>
+</head>
+<body>
+
+<nav>
+  <h1>Fields Reference</h1>
+  <div class="lead">English + مصري — field-by-field guide</div>
+  <ul>
+    <li><a href="#overview">Overview / مقدمة</a></li>
+
+    <li class="modgroup">atmta_real_estate</li>
+    <li class="sub"><a href="#m-property">realestate.property</a></li>
+    <li class="sub"><a href="#m-property-image">property.image</a></li>
+    <li class="sub"><a href="#m-property-type">property.type / usage</a></li>
+    <li class="sub"><a href="#m-payment-plan">realestate.payment.plan</a></li>
+    <li class="sub"><a href="#m-partner">res.partner ext.</a></li>
+    <li class="sub"><a href="#m-contract">realestate.contract</a></li>
+    <li class="sub"><a href="#m-contract-line">realestate.contract.line</a></li>
+    <li class="sub"><a href="#m-contract-deposit">contract deposit</a></li>
+    <li class="sub"><a href="#m-contract-payment">realestate.contract.payment</a></li>
+    <li class="sub"><a href="#m-increment-rule">increment.rule</a></li>
+    <li class="sub"><a href="#m-utility-line">utility.line</a></li>
+    <li class="sub"><a href="#m-rental-property">rental property ext.</a></li>
+    <li class="sub"><a href="#m-rental-history">rental.history</a></li>
+    <li class="sub"><a href="#m-maintenance">maintenance.request</a></li>
+    <li class="sub"><a href="#m-account-move">account.move ext.</a></li>
+
+    <li class="modgroup">real_estate_brokerage</li>
+    <li class="sub"><a href="#m-broker-property">property ext. (brokerage)</a></li>
+    <li class="sub"><a href="#m-listing">realestate.listing</a></li>
+    <li class="sub"><a href="#m-lead">realestate.lead</a></li>
+    <li class="sub"><a href="#m-offer">realestate.offer</a></li>
+    <li class="sub"><a href="#m-viewing">realestate.viewing</a></li>
+    <li class="sub"><a href="#m-transaction">realestate.transaction</a></li>
+    <li class="sub"><a href="#m-commission">realestate.commission</a></li>
+    <li class="sub"><a href="#m-marketing-channel">marketing.channel</a></li>
+    <li class="sub"><a href="#m-lost-reason">lost.reason</a></li>
+    <li class="sub"><a href="#m-res-users">res.users ext.</a></li>
+
+    <li class="modgroup">real_estate_developer</li>
+    <li class="sub"><a href="#m-project">realestate.project</a></li>
+    <li class="sub"><a href="#m-phase">realestate.phase</a></li>
+    <li class="sub"><a href="#m-dev-property">property ext. (developer)</a></li>
+    <li class="sub"><a href="#m-reservation">unit.reservation</a></li>
+    <li class="sub"><a href="#m-sale-contract">sale.contract</a></li>
+    <li class="sub"><a href="#m-sale-installment">sale.installment</a></li>
+    <li class="sub"><a href="#m-installment-plan">installment.plan</a></li>
+    <li class="sub"><a href="#m-boundary-point">boundary.point</a></li>
+
+    <li class="modgroup">real_estate_construction</li>
+    <li class="sub"><a href="#m-cons-project">project ext. (construction)</a></li>
+    <li class="sub"><a href="#m-cons-phase">phase ext. (construction)</a></li>
+    <li class="sub"><a href="#m-milestone">construction.milestone</a></li>
+    <li class="sub"><a href="#m-task">construction.task</a></li>
+    <li class="sub"><a href="#m-cost-line">construction.cost.line</a></li>
+    <li class="sub"><a href="#m-payment-cert">payment.certificate</a></li>
+    <li class="sub"><a href="#m-contractor">realestate.contractor</a></li>
+
+    <li class="modgroup">real_estate_handover</li>
+    <li class="sub"><a href="#m-handover">realestate.handover</a></li>
+    <li class="sub"><a href="#m-handover-property">property ext. (handover)</a></li>
+    <li class="sub"><a href="#m-snagging">snagging.issue</a></li>
+    <li class="sub"><a href="#m-checklist-template">checklist.template</a></li>
+    <li class="sub"><a href="#m-checklist-item">checklist.item</a></li>
+    <li class="sub"><a href="#m-warranty">realestate.warranty</a></li>
+
+    <li class="modgroup">real_estate_investment</li>
+    <li class="sub"><a href="#m-feasibility">investment.feasibility</a></li>
+    <li class="sub"><a href="#m-cash-flow">investment.cash.flow</a></li>
+    <li class="sub"><a href="#m-scenario">investment.scenario</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<section id="overview">
+  <h2>Overview · مقدمة</h2>
+  <p class="desc"><b>EN:</b> A field-by-field reference for every Odoo model in the Atmta Real Estate suite. Each table shows the technical field name, type, an English explanation, and the Egyptian-Arabic explanation in plain colloquial language.</p>
+  <p class="desc-ar"><b>عربي:</b> مرجع لكل فيلد (Field) في كل موديل في نظام عتمتا للعقارات. كل جدول فيه اسم الفيلد التقني، نوعه، وشرح بالإنجليزي وبعده شرح بالمصري بكلام بسيط.</p>
+  <div class="legend">
+    <b>Legend / دليل:</b> <code>field_name</code> = technical name (اسم تقني) ·
+    <span class="badge">M2o</span> = Many2one ·
+    <span class="badge">O2m</span> = One2many ·
+    <span class="badge">M2m</span> = Many2many ·
+    <span class="badge-ok badge">stored compute</span> · <span class="badge-warn badge">required</span>
+  </div>
+</section>
+
+<!-- ===================== atmta_real_estate ===================== -->
+<h2>Module: atmta_real_estate</h2>
+
+<section id="m-property">
+  <h3><code>realestate.property</code> — Property / العقار</h3>
+  <p class="desc"><b>EN:</b> The core record for any piece of real estate — could be a whole compound, a building, a floor, or one unit. Hierarchical: a building's child records can be floors, a floor's children are units.</p>
+  <p class="desc-ar"><b>عربي:</b> ده الموديل الأساسي بتاع أي عقار سواء كومباوند، عمارة، دور، أو شقة. وممكن العقار يبقى تابع لعقار أكبر منه (مثلاً شقة تابعة لعمارة).</p>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>property_code</code></td><td class="type">Char · required · unique</td><td class="en">Auto-generated identifier (e.g. PROP-00031). The unique code that points to this property everywhere.</td><td class="ar">الكود التلقائي للعقار (زي PROP-00031). الكود ده هو اللي بيتربط بيه العقار في كل حتة في النظام.</td></tr>
+    <tr><td><code>property_ref</code></td><td class="type">Char</td><td class="en">Manual reference — anything the team writes (e.g. owner's internal code).</td><td class="ar">مرجع يدوي بتكتبه إنت — أي رقم أو اسم تعرف العقار بيه داخلياً.</td></tr>
+    <tr><td><code>property_number</code></td><td class="type">Char</td><td class="en">Unit number on the building / sign (e.g. Apt 12B).</td><td class="ar">رقم الوحدة المكتوب على الباب أو على اللوحة (مثلاً شقة 12 ب).</td></tr>
+    <tr><td><code>property_type_id</code></td><td class="type">M2o → property.type</td><td class="en">Category (villa, apartment, shop, office, warehouse, etc.).</td><td class="ar">نوع العقار (فيلا، شقة، محل، مكتب، مخزن، الخ).</td></tr>
+    <tr><td><code>area_sqm</code></td><td class="type">Float</td><td class="en">Total area in square meters.</td><td class="ar">المساحة بالمتر المربع.</td></tr>
+    <tr><td><code>floor_number</code></td><td class="type">Integer</td><td class="en">Which floor the unit is on (for apartments/offices).</td><td class="ar">رقم الدور (للشقق أو المكاتب).</td></tr>
+    <tr><td><code>bedroom_count</code></td><td class="type">Integer</td><td class="en">Number of bedrooms.</td><td class="ar">عدد غرف النوم.</td></tr>
+    <tr><td><code>bathroom_count</code></td><td class="type">Integer</td><td class="en">Number of bathrooms.</td><td class="ar">عدد الحمامات.</td></tr>
+    <tr><td><code>living_room_count</code></td><td class="type">Integer</td><td class="en">Number of living/reception rooms.</td><td class="ar">عدد الصالات / غرف المعيشة.</td></tr>
+    <tr><td><code>has_kitchen</code></td><td class="type">Boolean</td><td class="en">Whether the unit has a kitchen.</td><td class="ar">في مطبخ ولا لأ.</td></tr>
+    <tr><td><code>has_balcony</code></td><td class="type">Boolean</td><td class="en">Whether it has a balcony / terrace.</td><td class="ar">في بلكونة أو تراس.</td></tr>
+    <tr><td><code>furnished_status</code></td><td class="type">Selection</td><td class="en">unfurnished / semi-furnished / fully furnished.</td><td class="ar">مفروشة، نص مفروشة، مفروشة بالكامل.</td></tr>
+    <tr><td><code>property_notes</code></td><td class="type">Text</td><td class="en">Free-text description / extra info.</td><td class="ar">ملاحظات أو وصف إضافي عن العقار.</td></tr>
+    <tr><td><code>country_id / state_id / city / district / sub_area / street_name / building_no / landmark</code></td><td class="type">M2o + Chars</td><td class="en">Full physical address breakdown.</td><td class="ar">عنوان العقار كامل (دولة، محافظة، مدينة، حي، شارع، رقم العمارة، علامة مميزة).</td></tr>
+    <tr><td><code>latitude / longitude</code></td><td class="type">Float (7-decimal)</td><td class="en">GPS coordinates — used to plot the property on the map.</td><td class="ar">إحداثيات GPS اللي بنرسم بيها العقار على الخريطة.</td></tr>
+    <tr><td><code>state</code></td><td class="type">Selection · default=available</td><td class="en">Status: available / reserved / rented / <b>sold</b> / maintenance / inactive. Once sold, only "Mark for Resale" re-opens it.</td><td class="ar">حالة العقار: متاح، محجوز، مؤجر، <b>متباع</b>، صيانة، موقوف. لما يتباع، ميتباعش تاني إلا بعد ما تضغط زرار «طرح للبيع تاني».</td></tr>
+    <tr><td><code>resale_count</code></td><td class="type">Integer · readonly</td><td class="en">How many times the property has been re-opened for sale after being sold. Audit trail.</td><td class="ar">العقار اتطرح للبيع كام مرة بعد ما اتباع. للتتبع.</td></tr>
+    <tr><td><code>occupancy_state</code></td><td class="type">Selection · computed</td><td class="en">For parent properties: available / partial / rented (aggregates children).</td><td class="ar">حالة الإشغال للعقارات الكبيرة (عمارة مثلاً) بناءً على الوحدات اللي جواها: متاحة، جزء مؤجر، كلها مؤجرة.</td></tr>
+    <tr><td><code>next_available_date</code></td><td class="type">Date</td><td class="en">When the unit becomes free again (e.g. lease end).</td><td class="ar">تاريخ ما العقار يبقى متاح تاني (آخر تاريخ في الإيجار مثلاً).</td></tr>
+    <tr><td><code>owner_id</code></td><td class="type">M2o → res.partner</td><td class="en">Property owner.</td><td class="ar">مالك العقار.</td></tr>
+    <tr><td><code>is_internal</code></td><td class="type">Boolean</td><td class="en">True = company's own asset (not a third party's).</td><td class="ar">العقار ده ملك الشركة نفسها؟ ولا ملك حد بره.</td></tr>
+    <tr><td><code>manager_id</code></td><td class="type">M2o → res.users</td><td class="en">Internal property manager.</td><td class="ar">المسؤول الداخلي عن العقار (مدير العقار).</td></tr>
+    <tr><td><code>hierarchy_level</code></td><td class="type">Selection · required</td><td class="en">compound / building / floor / unit / room — position in the property tree.</td><td class="ar">العقار ده: كمبوند، عمارة، دور، شقة، أو غرفة.</td></tr>
+    <tr><td><code>parent_id / child_ids / parent_path</code></td><td class="type">Hierarchical</td><td class="en">Tree links — a unit's parent is its floor, a building's children are its floors.</td><td class="ar">الترابط بين العقارات: الشقة تابعة لدور، الدور تابع لعمارة، وهكذا.</td></tr>
+    <tr><td><code>property_usage_id</code></td><td class="type">M2o → property.usage</td><td class="en">Intended use (residential, commercial, mixed).</td><td class="ar">الاستخدام: سكني، تجاري، إداري، الخ.</td></tr>
+    <tr><td><code>number_of_floors / number_of_units / number_of_elevators / number_of_parking_lots / number_of_ac</code></td><td class="type">Integer</td><td class="en">Counts for parent properties — total floors in a building, parking slots, etc.</td><td class="ar">أعداد للعقارات الكبيرة: عدد الأدوار، عدد الوحدات، عدد الأسانسيرات، أماكن العربيات، عدد التكييفات.</td></tr>
+    <tr><td><code>ac_type</code></td><td class="type">Selection</td><td class="en">Type of A/C (split, central, VRF, etc.).</td><td class="ar">نوع التكييف: سبليت، مركزي، VRF، الخ.</td></tr>
+    <tr><td><code>is_furnished</code></td><td class="type">Boolean</td><td class="en">Quick boolean alongside furnished_status.</td><td class="ar">العقار مفروش ولا لأ (فيلد سريع).</td></tr>
+    <tr><td><code>electricity_meter_number / water_meter_number / gas_meter_number</code></td><td class="type">Char</td><td class="en">Utility meter IDs.</td><td class="ar">أرقام عدادات الكهرباء، الميه، الغاز.</td></tr>
+    <tr><td><code>electricity_current_reading / water_current_reading / gas_current_reading</code></td><td class="type">Float</td><td class="en">Latest meter readings.</td><td class="ar">آخر قراءة لكل عداد.</td></tr>
+    <tr><td><code>currency_id</code></td><td class="type">M2o → res.currency</td><td class="en">Currency for prices on this property.</td><td class="ar">العملة اللي بتتسعر بيها الأسعار للعقار ده.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-property-image">
+  <h3><code>property.image</code> — Property images / صور العقار</h3>
+  <p class="desc"><b>EN:</b> Photos and videos for marketing the property.</p>
+  <p class="desc-ar"><b>عربي:</b> الصور والفيديوهات بتاعت العقار اللي بتتعرض في الإعلانات.</p>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Caption / file label.</td><td class="ar">اسم الصورة أو الكابشن.</td></tr>
+    <tr><td><code>sequence</code></td><td class="type">Integer</td><td class="en">Display order.</td><td class="ar">ترتيب العرض.</td></tr>
+    <tr><td><code>image_1920</code></td><td class="type">Image</td><td class="en">The actual photo (up to 1920px).</td><td class="ar">الصورة نفسها (لحد 1920 بكسل).</td></tr>
+    <tr><td><code>property_id</code></td><td class="type">M2o → realestate.property</td><td class="en">Which property the image belongs to.</td><td class="ar">الصورة دي بتاعة أنهي عقار.</td></tr>
+    <tr><td><code>video_url</code></td><td class="type">Char</td><td class="en">YouTube / Vimeo link.</td><td class="ar">لينك فيديو يوتيوب أو فيميو.</td></tr>
+    <tr><td><code>embed_code</code></td><td class="type">Html · computed</td><td class="en">Embeddable iframe HTML built from the video URL.</td><td class="ar">كود embed بيتعمل تلقائياً من لينك الفيديو.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-property-type">
+  <h3><code>property.type</code> &amp; <code>property.usage</code> — Master lists / تصنيفات</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>property.type.name</code></td><td class="type">Char · required</td><td class="en">Property category name (Villa / Apartment / Office / Shop ...).</td><td class="ar">اسم نوع العقار (فيلا، شقة، مكتب، محل، الخ).</td></tr>
+    <tr><td><code>property.type.description</code></td><td class="type">Text</td><td class="en">Free-text description.</td><td class="ar">وصف اختياري.</td></tr>
+    <tr><td><code>property.usage.name</code></td><td class="type">Char</td><td class="en">Usage label (residential / commercial / mixed).</td><td class="ar">نوع الاستخدام (سكني / تجاري / مختلط).</td></tr>
+  </table></div>
+</section>
+
+<section id="m-payment-plan">
+  <h3><code>realestate.payment.plan</code> — Rental payment frequency / مواعيد دفع الإيجار</h3>
+  <p class="desc"><b>EN:</b> A reusable rule that controls when rent invoices fire (every month, every 3 months, etc.).</p>
+  <p class="desc-ar"><b>عربي:</b> قاعدة متكررة بتتحكم في إن الإيجار بيتحاسب كل قد إيه (شهري، كل 3 شهور، سنوي).</p>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>start_after</code></td><td class="type">Integer</td><td class="en">Wait N units before first payment.</td><td class="ar">استنى كذا فترة قبل أول دفعة.</td></tr>
+    <tr><td><code>start_after_unit</code></td><td class="type">Selection</td><td class="en">Unit of the wait (day/week/month/year).</td><td class="ar">وحدة الاستنى (يوم/أسبوع/شهر/سنة).</td></tr>
+    <tr><td><code>unit</code></td><td class="type">Selection</td><td class="en">Recurring period unit.</td><td class="ar">الوحدة الزمنية اللي بتتكرر بيها الدفعة.</td></tr>
+    <tr><td><code>interval</code></td><td class="type">Integer</td><td class="en">Frequency multiplier (every 2 months → unit=month, interval=2).</td><td class="ar">المضاعف بتاع التكرار (كل شهرين = شهر × 2).</td></tr>
+    <tr><td><code>name</code></td><td class="type">Char · computed</td><td class="en">Auto-built label like "Monthly".</td><td class="ar">اسم يتولد تلقائياً (شهري، ربع سنوي، الخ).</td></tr>
+  </table></div>
+</section>
+
+<section id="m-partner">
+  <h3><code>res.partner</code> (extended) — Contact extras / إضافات للعميل</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>id_type</code></td><td class="type">Selection</td><td class="en">national_id / passport / driving_licence.</td><td class="ar">نوع البطاقة: رقم قومي، باسبور، رخصة قيادة.</td></tr>
+    <tr><td><code>id_number</code></td><td class="type">Char</td><td class="en">The ID number itself.</td><td class="ar">رقم البطاقة نفسه.</td></tr>
+    <tr><td><code>is_lessor</code></td><td class="type">Boolean</td><td class="en">Flag: this contact is a landlord/lessor.</td><td class="ar">العميل ده مؤجر (مالك بيأجر) ولا لأ.</td></tr>
+    <tr><td><code>organization_type_id</code></td><td class="type">M2o</td><td class="en">If it's a company — type (LLC, SAE, etc.).</td><td class="ar">لو شركة، نوع الكيان (شركة محدودة، مساهمة، الخ).</td></tr>
+    <tr><td><code>unified_number / cr_number / cr_date / issued_by</code></td><td class="type">Char/Date</td><td class="en">Business registration numbers and dates.</td><td class="ar">السجل التجاري والرقم الموحد وتاريخ الإصدار وجهة الإصدار.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-contract">
+  <h3><code>realestate.contract</code> — Rental contract / عقد الإيجار</h3>
+  <p class="desc"><b>EN:</b> The lease agreement between landlord and tenant. Can be for a single property or multiple properties on one contract.</p>
+  <p class="desc-ar"><b>عربي:</b> عقد الإيجار بين المالك والمستأجر. ممكن يبقى لعقار واحد أو أكتر من عقار في نفس العقد.</p>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Auto-generated contract reference.</td><td class="ar">رقم العقد التلقائي.</td></tr>
+    <tr><td><code>partner_id</code></td><td class="type">M2o → res.partner · required</td><td class="en">Tenant (the one paying rent).</td><td class="ar">المستأجر (اللي بيدفع الإيجار).</td></tr>
+    <tr><td><code>start_date / end_date</code></td><td class="type">Date · required</td><td class="en">Lease start and end.</td><td class="ar">تاريخ بداية ونهاية الإيجار.</td></tr>
+    <tr><td><code>state</code></td><td class="type">Selection</td><td class="en">draft → ready → confirmed → invoiced → active → expired / terminated.</td><td class="ar">حالة العقد: مسودة، جاهز، مؤكد، اتعملت فواتير، فعّال، انتهى، أو اتلغى.</td></tr>
+    <tr><td><code>notes</code></td><td class="type">Text</td><td class="en">Terms &amp; conditions.</td><td class="ar">شروط وأحكام العقد.</td></tr>
+    <tr><td><code>contract_no / main_contract_no</code></td><td class="type">Char</td><td class="en">Official paper-contract reference (the printed one).</td><td class="ar">رقم العقد الورقي الرسمي.</td></tr>
+    <tr><td><code>contract_type</code></td><td class="type">M2o → contract.type</td><td class="en">Type of agreement (rental, lease, sublease).</td><td class="ar">نوع العقد (إيجار، إيجار من الباطن، الخ).</td></tr>
+    <tr><td><code>contract_sealing_location_id / contract_sealing_date</code></td><td class="type">M2o + Date</td><td class="en">Where and when the contract was officially registered.</td><td class="ar">فين وإمتى انختم العقد رسمياً.</td></tr>
+    <tr><td><code>lessor_id / lessor_rep_id</code></td><td class="type">M2o → res.partner</td><td class="en">Landlord and their representative (if any).</td><td class="ar">المؤجر وممثله القانوني (لو موجود).</td></tr>
+    <tr><td><code>issuer / title_need_no / place_of_issue / issue_Date</code></td><td class="type">Char/Date</td><td class="en">Legal property-title details for the printed contract.</td><td class="ar">بيانات سند الملكية اللي بيتكتب في العقد.</td></tr>
+    <tr><td><code>is_single_property / is_multi_property</code></td><td class="type">Boolean</td><td class="en">Whether the contract covers one or many properties.</td><td class="ar">العقد بيشمل عقار واحد ولا أكتر من عقار.</td></tr>
+    <tr><td><code>property_id</code></td><td class="type">M2o → realestate.property</td><td class="en">For single-unit contracts — the unit being rented.</td><td class="ar">العقار اللي بيتأجر (للعقود اللي فيها عقار واحد).</td></tr>
+    <tr><td><code>property_type_id</code></td><td class="type">M2o · related</td><td class="en">Mirror of property type (auto-filled).</td><td class="ar">نوع العقار (بيتعبى تلقائي).</td></tr>
+    <tr><td><code>price</code></td><td class="type">Float</td><td class="en">Base monthly rent (single-unit contracts).</td><td class="ar">الإيجار الشهري الأساسي (للعقود اللي عقار واحد).</td></tr>
+    <tr><td><code>line_ids</code></td><td class="type">O2m → contract.line</td><td class="en">Per-property lines (multi-property contracts).</td><td class="ar">سطور العقد (لو فيه أكتر من عقار).</td></tr>
+    <tr><td><code>payment_plan_ids</code></td><td class="type">M2m → payment.plan</td><td class="en">Which payment schedules apply.</td><td class="ar">جداول الدفع اللي بتطبق على العقد.</td></tr>
+    <tr><td><code>increment_rule_ids / discount_rule_ids</code></td><td class="type">M2m → increment.rule</td><td class="en">Rent escalation / discount rules.</td><td class="ar">قواعد زيادة الإيجار أو خصم على الإيجار.</td></tr>
+    <tr><td><code>use_manual_payment</code></td><td class="type">Boolean</td><td class="en">Manually create payment lines instead of auto-generating them.</td><td class="ar">تعمل جدول الدفعات يدوياً بدل ما النظام يولده.</td></tr>
+    <tr><td><code>contract_payment_ids</code></td><td class="type">O2m → contract.payment</td><td class="en">Scheduled rent payments.</td><td class="ar">جدول دفعات الإيجار.</td></tr>
+    <tr><td><code>payment_count / invoice_count</code></td><td class="type">Integer · computed</td><td class="en">Counts of scheduled payments and posted invoices.</td><td class="ar">عدد الدفعات والفواتير.</td></tr>
+    <tr><td><code>move_ids</code></td><td class="type">O2m → account.move</td><td class="en">Linked accounting invoices.</td><td class="ar">الفواتير المحاسبية المرتبطة بالعقد.</td></tr>
+    <tr><td><code>total_scheduled / total_paid / balance_due</code></td><td class="type">Monetary · computed</td><td class="en">Sum of all scheduled, all paid, and remaining balance.</td><td class="ar">إجمالي المجدول، المدفوع، والمتبقي.</td></tr>
+    <tr><td><code>utility_line_ids / total_utilities / paid_utilities / net_income</code></td><td class="type">O2m + Monetary</td><td class="en">Utility charges on this contract + their totals + net cash to landlord.</td><td class="ar">المرافق (كهرباء/ميه/غاز) ومجاميعها وصافي الدخل للمؤجر.</td></tr>
+    <tr><td><code>is_renewed / old_contract_id</code></td><td class="type">Boolean + M2o</td><td class="en">Renewal flag + pointer to the previous contract.</td><td class="ar">لو العقد تجديد، الفيلد ده بيتأشر وبيشاور على العقد القديم.</td></tr>
+    <tr><td><code>attachment_ids</code></td><td class="type">M2m → ir.attachment</td><td class="en">PDF / images attached to the contract.</td><td class="ar">المستندات المرفقة (صور أو PDFs).</td></tr>
+    <tr><td><code>last_generated</code></td><td class="type">Datetime</td><td class="en">Last time payment lines were regenerated.</td><td class="ar">آخر مرة اتعمل فيها توليد لدفعات العقد.</td></tr>
+    <tr><td><code>currency_id</code></td><td class="type">M2o → res.currency</td><td class="en">Contract currency.</td><td class="ar">عملة العقد.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-contract-line">
+  <h3><code>realestate.contract.line</code> — Multi-property contract lines / بنود العقد متعدد العقارات</h3>
+  <p class="desc"><b>EN:</b> One row per property in a contract that covers more than one unit. Each line carries its own rent, dates, and rules.</p>
+  <p class="desc-ar"><b>عربي:</b> سطر لكل عقار لو العقد فيه أكتر من عقار. كل سطر بإيجاره ومدته وقواعده.</p>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>contract_id</code></td><td class="type">M2o · required</td><td class="en">Parent contract.</td><td class="ar">العقد الأب.</td></tr>
+    <tr><td><code>property_id</code></td><td class="type">M2o · required</td><td class="en">The specific unit on this line.</td><td class="ar">العقار اللي السطر ده بتاعه.</td></tr>
+    <tr><td><code>partner_id</code></td><td class="type">M2o · related</td><td class="en">Tenant (mirrored from parent contract).</td><td class="ar">المستأجر (نفس بيانات العقد الأب).</td></tr>
+    <tr><td><code>price</code></td><td class="type">Float · required</td><td class="en">Rent for this property.</td><td class="ar">إيجار العقار ده تحديداً.</td></tr>
+    <tr><td><code>start_date / end_date</code></td><td class="type">Date · required</td><td class="en">Line-level lease dates (can differ from parent).</td><td class="ar">مدة الإيجار للسطر ده (ممكن تختلف عن العقد الأب).</td></tr>
+    <tr><td><code>payment_plan_ids / increment_rule_ids / discount_rule_ids</code></td><td class="type">M2m</td><td class="en">Same per-line as the parent.</td><td class="ar">قواعد الدفع والزيادات والخصومات على مستوى السطر.</td></tr>
+    <tr><td><code>state</code></td><td class="type">Selection</td><td class="en">Line state — usually mirrors parent.</td><td class="ar">حالة السطر (عادةً زي العقد الأب).</td></tr>
+    <tr><td><code>notes</code></td><td class="type">Text</td><td class="en">Per-line notes.</td><td class="ar">ملاحظات على السطر.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-contract-deposit">
+  <h3>Contract Deposit (extension on contract) — Security deposit / التأمين</h3>
+  <p class="desc"><b>EN:</b> Fields added to the rental contract to track the refundable security deposit.</p>
+  <p class="desc-ar"><b>عربي:</b> فيلدز إضافية على عقد الإيجار لتتبع التأمين اللي بيدفعه المستأجر ويرجعله أو يتحجزله.</p>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>deposit_amount</code></td><td class="type">Monetary</td><td class="en">Refundable security deposit collected upfront.</td><td class="ar">مبلغ التأمين اللي بيتدفع في بداية العقد.</td></tr>
+    <tr><td><code>deposit_state</code></td><td class="type">Selection</td><td class="en">none / held / refunded / forfeited / partial_refund.</td><td class="ar">حالة التأمين: مفيش، محتجز، اترد كله، اتحجز كله، اترد جزء.</td></tr>
+    <tr><td><code>deposit_paid_date / deposit_settled_date</code></td><td class="type">Date</td><td class="en">When the deposit was paid and when it was settled (returned / forfeited).</td><td class="ar">إمتى اندفع التأمين وإمتى اتسوّى (رجع أو اتخصم).</td></tr>
+    <tr><td><code>deposit_refund_amount</code></td><td class="type">Monetary</td><td class="en">How much is being returned to the tenant.</td><td class="ar">المبلغ اللي راجع للمستأجر.</td></tr>
+    <tr><td><code>deposit_forfeit_amount</code></td><td class="type">Monetary · computed</td><td class="en">Amount the landlord keeps (deposit minus refund).</td><td class="ar">المبلغ اللي بيتحجز للمؤجر (الفرق بين التأمين والمبلغ اللي اترد).</td></tr>
+    <tr><td><code>deposit_notes</code></td><td class="type">Text</td><td class="en">Reason for any deduction.</td><td class="ar">سبب الخصم لو في خصم.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-contract-payment">
+  <h3><code>realestate.contract.payment</code> — Scheduled rent payment / دفعة إيجار مجدولة</h3>
+  <p class="desc"><b>EN:</b> One row per future rent payment — the payment schedule that Odoo will invoice on its due date.</p>
+  <p class="desc-ar"><b>عربي:</b> سطر لكل دفعة إيجار مستقبلية — جدول الدفعات اللي النظام بيعمل عليها فواتير لما يجي معادها.</p>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>contract_id</code></td><td class="type">M2o · required</td><td class="en">Parent contract.</td><td class="ar">العقد الأب.</td></tr>
+    <tr><td><code>contract_line_id</code></td><td class="type">M2o</td><td class="en">Which line on a multi-property contract.</td><td class="ar">أنهي سطر لو العقد متعدد العقارات.</td></tr>
+    <tr><td><code>partner_id</code></td><td class="type">M2o · related</td><td class="en">Tenant.</td><td class="ar">المستأجر.</td></tr>
+    <tr><td><code>property_id</code></td><td class="type">M2o</td><td class="en">The property the rent is for.</td><td class="ar">العقار اللي الإيجار بتاعه.</td></tr>
+    <tr><td><code>date_due / date_due_deadline</code></td><td class="type">Date</td><td class="en">Due date + 30-day grace deadline.</td><td class="ar">معاد الدفع + معاد الإنذار بعد 30 يوم.</td></tr>
+    <tr><td><code>hijri_date_due / hijri_date_due_deadline</code></td><td class="type">Char · computed</td><td class="en">Same dates in Hijri calendar.</td><td class="ar">نفس المواعيد بالتاريخ الهجري.</td></tr>
+    <tr><td><code>amount</code></td><td class="type">Float · required</td><td class="en">Payment amount (already includes increment/discount rules applied).</td><td class="ar">قيمة الدفعة (بعد ما اتطبقت قواعد الزيادة والخصم).</td></tr>
+    <tr><td><code>state</code></td><td class="type">Selection</td><td class="en">draft / invoiced / paid / cancelled.</td><td class="ar">مسودة، اتعملت فاتورة، مدفوعة، أو ملغية.</td></tr>
+    <tr><td><code>move_id / move_state</code></td><td class="type">M2o → account.move</td><td class="en">Link to the actual invoice + its state.</td><td class="ar">لينك للفاتورة وحالتها.</td></tr>
+    <tr><td><code>increase_amount / discount_amount</code></td><td class="type">Float · readonly</td><td class="en">What was added by escalation / subtracted by discount.</td><td class="ar">إيه اللي زاد من قواعد الزيادة وإيه اللي اتخصم من قواعد الخصم.</td></tr>
+    <tr><td><code>payment_plan_id</code></td><td class="type">M2o → payment.plan</td><td class="en">Which rule generated this payment.</td><td class="ar">أنهي قاعدة هي اللي ولّدت الدفعة دي.</td></tr>
+    <tr><td><code>increment_rule_ids / discount_rule_ids / discount_rule_id</code></td><td class="type">M2m / M2o</td><td class="en">Rules applied to this specific payment.</td><td class="ar">القواعد اللي اتطبقت على الدفعة دي تحديداً.</td></tr>
+    <tr><td><code>label</code></td><td class="type">Char · computed</td><td class="en">Auto-built description like "Rent for Unit 12B on 2026-06-01".</td><td class="ar">وصف بيتولد تلقائي زي «إيجار شقة 12 ب لـ 1 يونيه 2026».</td></tr>
+    <tr><td><code>name</code></td><td class="type">Char</td><td class="en">Internal reference linking payment to invoice.</td><td class="ar">مرجع داخلي يربط الدفعة بالفاتورة.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-increment-rule">
+  <h3><code>realestate.contract.increment.rule</code> — Rent escalation / discount rule / قواعد زيادة أو خصم الإيجار</h3>
+  <p class="desc"><b>EN:</b> A rule that automatically adjusts the rent after N months — either as a fixed amount or a % of the base. Same model handles increases and discounts.</p>
+  <p class="desc-ar"><b>عربي:</b> قاعدة بتعدل الإيجار تلقائياً بعد كذا شهر — إما مبلغ ثابت أو نسبة من الإيجار الأصلي. نفس الموديل بيستخدم للزيادة والخصم.</p>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>start_month</code></td><td class="type">Integer · required</td><td class="en">After how many months the rule kicks in.</td><td class="ar">بعد كام شهر تبدأ القاعدة تشتغل.</td></tr>
+    <tr><td><code>increase_type</code></td><td class="type">Selection</td><td class="en">fixed / percent.</td><td class="ar">مبلغ ثابت ولا نسبة مئوية.</td></tr>
+    <tr><td><code>increase_value</code></td><td class="type">Float · required</td><td class="en">The amount or % to add (or subtract for discounts).</td><td class="ar">القيمة أو النسبة اللي هتتزاد (أو تتخصم في حالة الخصم).</td></tr>
+    <tr><td><code>discount</code></td><td class="type">Boolean</td><td class="en">True = it's a discount (subtract), False = increase.</td><td class="ar">لو متأشر = خصم، لو لأ = زيادة.</td></tr>
+    <tr><td><code>duration_months</code></td><td class="type">Integer · default=0</td><td class="en">How many months the adjustment stays applied (0 = once only).</td><td class="ar">القاعدة تطبق لكام شهر (0 = مرة واحدة بس).</td></tr>
+    <tr><td><code>priority</code></td><td class="type">Integer</td><td class="en">Order of application when multiple rules apply.</td><td class="ar">ترتيب تطبيق القاعدة لو في كذا قاعدة.</td></tr>
+    <tr><td><code>name</code></td><td class="type">Char · computed</td><td class="en">Auto-label like "+5% from month 12".</td><td class="ar">عنوان بيتولد تلقائي.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-utility-line">
+  <h3><code>realestate.contract.utility.line</code> — Utility charges / المرافق على العقد</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>contract_id</code></td><td class="type">M2o · required</td><td class="en">Parent contract.</td><td class="ar">العقد الأب.</td></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Utility name (Electricity / Water / Gas / Maintenance).</td><td class="ar">اسم المرفق: كهرباء، ميه، غاز، صيانة.</td></tr>
+    <tr><td><code>amount</code></td><td class="type">Monetary · required</td><td class="en">Expected amount for this utility.</td><td class="ar">المبلغ المتوقع.</td></tr>
+    <tr><td><code>date</code></td><td class="type">Date</td><td class="en">Bill date.</td><td class="ar">تاريخ الفاتورة.</td></tr>
+    <tr><td><code>bill_id</code></td><td class="type">M2o → account.move</td><td class="en">Linked vendor bill once paid to the provider.</td><td class="ar">فاتورة المورد المرتبطة (مثلاً شركة الكهرباء).</td></tr>
+    <tr><td><code>bill_paid</code></td><td class="type">Boolean · computed</td><td class="en">Whether the linked bill has been paid.</td><td class="ar">الفاتورة اتدفعت ولا لسه.</td></tr>
+    <tr><td><code>state</code></td><td class="type">Selection</td><td class="en">draft / confirmed.</td><td class="ar">مسودة أو مؤكدة.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-rental-property">
+  <h3>Property (rental extension) — Rental metrics on the property / إحصائيات الإيجار على العقار</h3>
+  <p class="desc"><b>EN:</b> Computed fields added to <code>realestate.property</code> that summarize its rental history.</p>
+  <p class="desc-ar"><b>عربي:</b> فيلدز تلقائية بتتضاف للعقار وبتلخص تاريخ تأجيره.</p>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>contract_history_ids</code></td><td class="type">O2m → contract.line</td><td class="en">All multi-property contract lines that ever included this unit.</td><td class="ar">كل سطور العقود اللي العقار ده اتأجر فيها (متعدد العقارات).</td></tr>
+    <tr><td><code>rental_history_ids</code></td><td class="type">O2m → rental.history</td><td class="en">Tenancy history log.</td><td class="ar">سجل المستأجرين على مر الزمن.</td></tr>
+    <tr><td><code>single_contract_ids</code></td><td class="type">O2m → contract</td><td class="en">Single-unit contracts on this property.</td><td class="ar">العقود المنفردة على العقار ده.</td></tr>
+    <tr><td><code>for_rent</code></td><td class="type">Boolean</td><td class="en">Marketing flag — "available to rent".</td><td class="ar">العقار معروض للإيجار حالياً.</td></tr>
+    <tr><td><code>rental_status</code></td><td class="type">Selection · computed</td><td class="en">not_rented / for_rent / rented.</td><td class="ar">مش مؤجر، متاح للإيجار، مؤجر.</td></tr>
+    <tr><td><code>rent_count</code></td><td class="type">Integer · computed</td><td class="en">How many times it's been rented.</td><td class="ar">اتأجر كام مرة.</td></tr>
+    <tr><td><code>total_rent_months / actual_rent_months</code></td><td class="type">Float / Integer · computed</td><td class="en">Total rental duration scheduled vs actually rented.</td><td class="ar">مدة الإيجار المجدولة والفعلية بالأشهر.</td></tr>
+    <tr><td><code>revenue_collected / revenue_expected / total_amount_due</code></td><td class="type">Monetary · computed</td><td class="en">Cash collected vs expected vs still owed on this property.</td><td class="ar">اللي اتحصل، اللي مفروض يتحصل، واللي لسه مستحق.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-rental-history">
+  <h3><code>realestate.property.rental.history</code> — Rental history log / سجل تأجير العقار</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>contract_id</code></td><td class="type">M2o · required</td><td class="en">The contract this entry came from.</td><td class="ar">العقد اللي السطر ده اتولد منه.</td></tr>
+    <tr><td><code>property_id</code></td><td class="type">M2o · required</td><td class="en">The property.</td><td class="ar">العقار.</td></tr>
+    <tr><td><code>tenant_id</code></td><td class="type">M2o · related</td><td class="en">Who rented it.</td><td class="ar">المستأجر.</td></tr>
+    <tr><td><code>start_date / end_date</code></td><td class="type">Date</td><td class="en">Tenancy dates.</td><td class="ar">بداية ونهاية الإيجار.</td></tr>
+    <tr><td><code>is_multi</code></td><td class="type">Boolean · readonly</td><td class="en">True if from a multi-property contract.</td><td class="ar">جاي من عقد متعدد العقارات.</td></tr>
+    <tr><td><code>contract_line_id</code></td><td class="type">M2o → contract.line</td><td class="en">The specific line if multi-property.</td><td class="ar">سطر العقد المحدد لو متعدد العقارات.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-maintenance">
+  <h3><code>realestate.maintenance.request</code> — Maintenance request / طلب صيانة</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Auto-generated request reference.</td><td class="ar">رقم الطلب التلقائي.</td></tr>
+    <tr><td><code>property_id</code></td><td class="type">M2o · required</td><td class="en">Which unit needs the maintenance.</td><td class="ar">العقار اللي محتاج صيانة.</td></tr>
+    <tr><td><code>description</code></td><td class="type">Text</td><td class="en">Issue description.</td><td class="ar">وصف المشكلة.</td></tr>
+    <tr><td><code>request_date / scheduled_date / completion_date</code></td><td class="type">Date</td><td class="en">When requested, scheduled, finished.</td><td class="ar">معاد الطلب، الجدولة، والتنفيذ.</td></tr>
+    <tr><td><code>cost / actual_cost</code></td><td class="type">Float</td><td class="en">Estimated vs actual cost.</td><td class="ar">التكلفة المتوقعة والفعلية.</td></tr>
+    <tr><td><code>state</code></td><td class="type">Selection</td><td class="en">draft / scheduled / in_progress / done / cancelled.</td><td class="ar">مسودة، مجدول، شغال، خلص، أو ملغي.</td></tr>
+    <tr><td><code>assigned_to</code></td><td class="type">M2o → res.users</td><td class="en">Technician handling it.</td><td class="ar">الفني المسؤول.</td></tr>
+    <tr><td><code>attachment_ids</code></td><td class="type">M2m</td><td class="en">Photos / quotes / invoices.</td><td class="ar">صور أو عروض أو فواتير مرفقة.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-account-move">
+  <h3><code>account.move</code> (extended) — Invoice → contract link / فاتورة بترتبط بعقد</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>contract_id</code></td><td class="type">M2o → realestate.contract</td><td class="en">Links each accounting invoice back to the rental/sale contract it came from.</td><td class="ar">يربط الفاتورة المحاسبية بالعقد اللي اتعملت منه.</td></tr>
+  </table></div>
+</section>
+
+<!-- ===================== real_estate_brokerage ===================== -->
+<h2>Module: real_estate_brokerage</h2>
+
+<section id="m-broker-property">
+  <h3>Property (brokerage extension) — Listing &amp; transaction summary on the property / ملخص الإعلانات والصفقات على العقار</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>listing_ids</code></td><td class="type">O2m → realestate.listing</td><td class="en">All for-sale listings ever created on this property.</td><td class="ar">كل إعلانات البيع اللي اتعملت على العقار ده.</td></tr>
+    <tr><td><code>active_listing_id</code></td><td class="type">M2o · computed</td><td class="en">The currently-active listing (if any).</td><td class="ar">الإعلان النشط حالياً.</td></tr>
+    <tr><td><code>for_sale</code></td><td class="type">Boolean · computed</td><td class="en">True when there's an active listing.</td><td class="ar">العقار معروض للبيع دلوقتي.</td></tr>
+    <tr><td><code>transaction_ids</code></td><td class="type">O2m → realestate.transaction</td><td class="en">Sale transactions on this property.</td><td class="ar">صفقات البيع اللي حصلت.</td></tr>
+    <tr><td><code>last_transaction_id</code></td><td class="type">M2o · computed</td><td class="en">Most recent closed sale.</td><td class="ar">آخر صفقة اتقفلت.</td></tr>
+    <tr><td><code>is_sold</code></td><td class="type">Boolean · computed</td><td class="en">True when a transaction is closed.</td><td class="ar">اتباع.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-listing">
+  <h3><code>realestate.listing</code> — Sales listing / إعلان البيع</h3>
+  <p class="desc"><b>EN:</b> Marketing record — the unit's "for sale" sign. Holds the asking price, marketing channels, and the agent who's selling it.</p>
+  <p class="desc-ar"><b>عربي:</b> الإعلان نفسه — يعني «العقار ده للبيع». فيه السعر المطلوب وقنوات التسويق والوسيط اللي شغال عليه.</p>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Auto-generated reference (LST-00001).</td><td class="ar">رقم الإعلان التلقائي.</td></tr>
+    <tr><td><code>property_id</code></td><td class="type">M2o · required</td><td class="en">Property being listed.</td><td class="ar">العقار المعروض.</td></tr>
+    <tr><td><code>state</code></td><td class="type">Selection</td><td class="en">draft → active → under_offer → sold / withdrawn / expired.</td><td class="ar">مسودة، نشط، عليه عرض، اتباع، اتسحب، أو انتهى.</td></tr>
+    <tr><td><code>list_price</code></td><td class="type">Monetary</td><td class="en">Asking price for this listing.</td><td class="ar">السعر المطلوب.</td></tr>
+    <tr><td><code>property_base_price</code></td><td class="type">Monetary · related · readonly</td><td class="en">Developer/valuation reference price on the property (read-only mirror).</td><td class="ar">السعر الأساسي للعقار (سعر المطور أو التقييم) — مجرد مرجع.</td></tr>
+    <tr><td><code>price_vs_base</code></td><td class="type">Float · computed</td><td class="en">% deviation of asking price from base.</td><td class="ar">نسبة الفرق بين السعر المطلوب والسعر الأساسي.</td></tr>
+    <tr><td><code>last_sold_price / last_sold_date</code></td><td class="type">Monetary + Date · computed</td><td class="en">Last closed sale on the same property (history reference).</td><td class="ar">آخر مرة العقار ده اتباع — بكام وفي تاريخ كام.</td></tr>
+    <tr><td><code>list_date / expiry_date</code></td><td class="type">Date</td><td class="en">Listed on, expires on.</td><td class="ar">تاريخ نشر الإعلان وتاريخ انتهاؤه.</td></tr>
+    <tr><td><code>sold_date / withdrawn_date</code></td><td class="type">Date · readonly</td><td class="en">When sold / withdrawn.</td><td class="ar">إمتى اتباع أو اتسحب.</td></tr>
+    <tr><td><code>days_on_market</code></td><td class="type">Integer · computed</td><td class="en">Days the listing has been live.</td><td class="ar">عدد أيام الإعلان شغال.</td></tr>
+    <tr><td><code>lister_agent_id</code></td><td class="type">M2o → res.users</td><td class="en">The primary agent handling the listing.</td><td class="ar">الوسيط الرئيسي المسؤول.</td></tr>
+    <tr><td><code>co_agent_ids</code></td><td class="type">M2m → res.users</td><td class="en">Additional supporting agents.</td><td class="ar">وسطاء مساعدين.</td></tr>
+    <tr><td><code>marketing_channel_ids</code></td><td class="type">M2m → marketing.channel</td><td class="en">Where this listing is published (Bayut, Property Finder, etc.).</td><td class="ar">القنوات اللي الإعلان متنشر عليها (بيوت، بروبرتي فايندر، الموقع، الخ).</td></tr>
+    <tr><td><code>description_html</code></td><td class="type">Html</td><td class="en">Marketing description shown on portals.</td><td class="ar">الوصف التسويقي اللي بيظهر في الإعلان.</td></tr>
+    <tr><td><code>featured</code></td><td class="type">Boolean</td><td class="en">Highlighted / boosted listing.</td><td class="ar">إعلان مميز (مدفوع للظهور).</td></tr>
+    <tr><td><code>viewing_ids / viewing_count</code></td><td class="type">O2m / Integer</td><td class="en">Site visits booked on this listing.</td><td class="ar">مواعيد المعاينة على الإعلان.</td></tr>
+    <tr><td><code>offer_ids / offer_count</code></td><td class="type">O2m / Integer</td><td class="en">Offers received.</td><td class="ar">العروض اللي وصلت.</td></tr>
+    <tr><td><code>accepted_offer_id</code></td><td class="type">M2o · computed</td><td class="en">The accepted offer (if any).</td><td class="ar">العرض المقبول.</td></tr>
+    <tr><td><code>transaction_id</code></td><td class="type">M2o → transaction · readonly</td><td class="en">Linked transaction once the deal moves forward.</td><td class="ar">الصفقة المرتبطة بعد قبول العرض.</td></tr>
+    <tr><td><code>final_sale_price / list_to_sale_ratio</code></td><td class="type">Monetary + Float</td><td class="en">Final price + final/asking ratio (e.g. 92%).</td><td class="ar">السعر النهائي ونسبته من السعر المطلوب.</td></tr>
+    <tr><td><code>notes</code></td><td class="type">Html</td><td class="en">Internal notes (not shown to public).</td><td class="ar">ملاحظات داخلية مش بتظهر للعميل.</td></tr>
+    <tr><td><code>color</code></td><td class="type">Integer</td><td class="en">Kanban color tag.</td><td class="ar">لون البطاقة في الكانبان.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-lead">
+  <h3><code>realestate.lead</code> — Buyer lead / عميل محتمل (مشتري)</h3>
+  <p class="desc"><b>EN:</b> A prospective buyer's record — name, budget, preferences, and pipeline state.</p>
+  <p class="desc-ar"><b>عربي:</b> العميل المحتمل اللي ممكن يشتري — بياناته، ميزانيته، وتفضيلاته، وفي أنهي مرحلة من المحادثة.</p>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Auto-generated lead reference.</td><td class="ar">رقم العميل التلقائي.</td></tr>
+    <tr><td><code>partner_id</code></td><td class="type">M2o → res.partner</td><td class="en">The contact card (CRM-style).</td><td class="ar">كرت التواصل للعميل (CRM).</td></tr>
+    <tr><td><code>partner_name / phone / email</code></td><td class="type">Char · related</td><td class="en">Quick-access mirrors of contact details.</td><td class="ar">الاسم والتليفون والإيميل (نسخ من كرت التواصل).</td></tr>
+    <tr><td><code>source</code></td><td class="type">Selection</td><td class="en">walk_in / website / referral / portal / call / other.</td><td class="ar">جاي منين: داخل المعرض، الموقع، توصية، بوابة عقارية، تليفون، تاني.</td></tr>
+    <tr><td><code>state</code></td><td class="type">Selection</td><td class="en">new → qualified → matched → viewing_scheduled → offer → converted / lost.</td><td class="ar">جديد، مؤهل، اتلقت له عقارات، عنده ميعاد معاينة، عمل عرض، تحول لمشتري، أو اتفقد.</td></tr>
+    <tr><td><code>agent_id</code></td><td class="type">M2o → res.users</td><td class="en">Assigned agent.</td><td class="ar">الوسيط المسؤول عنه.</td></tr>
+    <tr><td><code>budget_min / budget_max</code></td><td class="type">Monetary</td><td class="en">Buyer's price range.</td><td class="ar">ميزانية العميل (من — لـ).</td></tr>
+    <tr><td><code>area_min / area_max</code></td><td class="type">Float</td><td class="en">Desired area range (sqm).</td><td class="ar">المساحة المطلوبة (بالمتر).</td></tr>
+    <tr><td><code>bedroom_count_min</code></td><td class="type">Integer</td><td class="en">Minimum bedrooms required.</td><td class="ar">أقل عدد غرف نوم مقبول.</td></tr>
+    <tr><td><code>property_type_ids</code></td><td class="type">M2m → property.type</td><td class="en">Preferred property categories.</td><td class="ar">نوع العقار المفضل.</td></tr>
+    <tr><td><code>preferred_country_id / preferred_state_id / preferred_city / preferred_district</code></td><td class="type">M2o + Char</td><td class="en">Preferred location.</td><td class="ar">المنطقة المفضلة.</td></tr>
+    <tr><td><code>matched_listing_ids</code></td><td class="type">M2m → listing</td><td class="en">Listings the agent matched to this lead's criteria.</td><td class="ar">الإعلانات اللي اللاءمت احتياجاته.</td></tr>
+    <tr><td><code>viewing_ids / offer_ids</code></td><td class="type">O2m</td><td class="en">Viewings and offers from this lead.</td><td class="ar">المعاينات والعروض من العميل ده.</td></tr>
+    <tr><td><code>loss_reason_id</code></td><td class="type">M2o → lost.reason</td><td class="en">Why the lead was lost (if applicable).</td><td class="ar">سبب الفقدان لو اتفقد.</td></tr>
+    <tr><td><code>priority</code></td><td class="type">Selection (0–5)</td><td class="en">Star rating — Normal / Low / Medium / High / Very High / Critical.</td><td class="ar">أولوية: عادي، منخفض، متوسط، عالي، عالي جداً، حرج.</td></tr>
+    <tr><td><code>notes / color</code></td><td class="type">Html / Integer</td><td class="en">Free notes + kanban color.</td><td class="ar">ملاحظات ولون البطاقة.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-offer">
+  <h3><code>realestate.offer</code> — Purchase offer / عرض شراء</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Auto-generated offer reference.</td><td class="ar">رقم العرض التلقائي.</td></tr>
+    <tr><td><code>listing_id</code></td><td class="type">M2o · required</td><td class="en">The listing the offer is on.</td><td class="ar">الإعلان اللي العرض ده عليه.</td></tr>
+    <tr><td><code>property_id</code></td><td class="type">M2o · related</td><td class="en">Auto-filled property.</td><td class="ar">العقار (بيتعبى تلقائي من الإعلان).</td></tr>
+    <tr><td><code>lead_id</code></td><td class="type">M2o → lead</td><td class="en">Linked lead (if from a tracked buyer).</td><td class="ar">العميل المحتمل اللي طلع منه العرض.</td></tr>
+    <tr><td><code>partner_id</code></td><td class="type">M2o · required</td><td class="en">The buyer.</td><td class="ar">المشتري.</td></tr>
+    <tr><td><code>agent_id</code></td><td class="type">M2o → res.users</td><td class="en">Agent handling the offer.</td><td class="ar">الوسيط بتاع العرض.</td></tr>
+    <tr><td><code>amount</code></td><td class="type">Monetary · required</td><td class="en">Offered amount.</td><td class="ar">قيمة العرض.</td></tr>
+    <tr><td><code>offer_date / expiry_date</code></td><td class="type">Date</td><td class="en">When the offer was made + when it expires.</td><td class="ar">معاد العرض ومعاد انتهائه.</td></tr>
+    <tr><td><code>listing_list_price</code></td><td class="type">Monetary · related · readonly</td><td class="en">The asking price (reference).</td><td class="ar">السعر المطلوب — مجرد مرجع.</td></tr>
+    <tr><td><code>listing_base_price</code></td><td class="type">Monetary · related · readonly</td><td class="en">Property base price (reference).</td><td class="ar">السعر الأساسي — مجرد مرجع.</td></tr>
+    <tr><td><code>offer_vs_list</code></td><td class="type">Float · computed</td><td class="en">Offer as % of asking (e.g. 0.95 = 95%).</td><td class="ar">العرض كنسبة من السعر المطلوب (مثلاً 95٪).</td></tr>
+    <tr><td><code>offer_vs_base</code></td><td class="type">Float · computed</td><td class="en">Deviation of offer from base price.</td><td class="ar">الفرق بين العرض والسعر الأساسي.</td></tr>
+    <tr><td><code>state</code></td><td class="type">Selection</td><td class="en">submitted / countered / accepted / rejected / withdrawn / expired.</td><td class="ar">اتقدم، عليه مفاوضة، مقبول، مرفوض، اتسحب، انتهى.</td></tr>
+    <tr><td><code>conditions</code></td><td class="type">Text</td><td class="en">Buyer's conditions (subject to financing, inspection, etc.).</td><td class="ar">شروط المشتري (مثلاً مشروط بالقرض أو بفحص العقار).</td></tr>
+    <tr><td><code>deposit_amount</code></td><td class="type">Monetary</td><td class="en">Earnest deposit the buyer is putting down.</td><td class="ar">العربون اللي المشتري بيدفعه.</td></tr>
+    <tr><td><code>proposed_closing_date</code></td><td class="type">Date</td><td class="en">Buyer's proposed closing date.</td><td class="ar">معاد إغلاق الصفقة المقترح.</td></tr>
+    <tr><td><code>rejection_reason</code></td><td class="type">Char · readonly</td><td class="en">If rejected, why.</td><td class="ar">سبب الرفض لو اترفض.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-viewing">
+  <h3><code>realestate.viewing</code> — Property viewing appointment / معاينة العقار</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Auto-generated reference.</td><td class="ar">رقم المعاينة التلقائي.</td></tr>
+    <tr><td><code>listing_id</code></td><td class="type">M2o · required</td><td class="en">Which listing.</td><td class="ar">على أنهي إعلان.</td></tr>
+    <tr><td><code>lead_id</code></td><td class="type">M2o → lead</td><td class="en">Visiting lead (if any).</td><td class="ar">العميل اللي جاي يعاين.</td></tr>
+    <tr><td><code>partner_id</code></td><td class="type">M2o → res.partner</td><td class="en">Attendee contact.</td><td class="ar">الشخص الحاضر.</td></tr>
+    <tr><td><code>agent_id</code></td><td class="type">M2o → res.users</td><td class="en">Agent showing the property.</td><td class="ar">الوسيط اللي بيعرض العقار.</td></tr>
+    <tr><td><code>scheduled_at / end_at / duration</code></td><td class="type">Datetime / Float</td><td class="en">Start time, computed end, and duration (hours).</td><td class="ar">معاد البداية، النهاية، والمدة بالساعات.</td></tr>
+    <tr><td><code>state</code></td><td class="type">Selection</td><td class="en">scheduled / completed / cancelled / no_show.</td><td class="ar">مجدول، تم، اتلغى، أو معدش الزبون.</td></tr>
+    <tr><td><code>feedback / feedback_rating</code></td><td class="type">Text / Selection</td><td class="en">Post-viewing notes + interest level.</td><td class="ar">ملاحظات بعد المعاينة ومستوى اهتمام العميل.</td></tr>
+    <tr><td><code>next_action</code></td><td class="type">Selection</td><td class="en">follow_up_call / send_proposal / second_viewing / expect_offer / none.</td><td class="ar">الخطوة الجاية: مكالمة، إرسال عرض، معاينة تانية، استنى عرض، أو مفيش.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-transaction">
+  <h3><code>realestate.transaction</code> — Sale transaction / صفقة البيع</h3>
+  <p class="desc"><b>EN:</b> The actual deal — what gets paid, who's the buyer/seller, when it closes.</p>
+  <p class="desc-ar"><b>عربي:</b> الصفقة نفسها — المبلغ، المشتري والبائع، معاد الإغلاق.</p>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Auto-generated reference.</td><td class="ar">رقم الصفقة التلقائي.</td></tr>
+    <tr><td><code>listing_id / offer_id / property_id</code></td><td class="type">M2o</td><td class="en">Source listing, accepted offer, and the property.</td><td class="ar">الإعلان والعرض المقبول والعقار.</td></tr>
+    <tr><td><code>transaction_type</code></td><td class="type">Selection</td><td class="en">in_house (developer direct) / brokerage (with commissions).</td><td class="ar">داخلي (مطور بيبيع مباشرة) ولا وساطة (فيه عمولة).</td></tr>
+    <tr><td><code>seller_id / buyer_id</code></td><td class="type">M2o → res.partner</td><td class="en">The two parties.</td><td class="ar">البائع والمشتري.</td></tr>
+    <tr><td><code>lister_agent_id / selling_agent_id</code></td><td class="type">M2o → res.users</td><td class="en">The two agents (listing + selling).</td><td class="ar">وسيط الإعلان ووسيط البيع.</td></tr>
+    <tr><td><code>sale_price</code></td><td class="type">Monetary · required</td><td class="en">Final agreed price.</td><td class="ar">السعر النهائي المتفق عليه.</td></tr>
+    <tr><td><code>deposit_amount / deposit_paid_date</code></td><td class="type">Monetary / Date</td><td class="en">Earnest deposit and when it was paid.</td><td class="ar">العربون ومعاد دفعه.</td></tr>
+    <tr><td><code>sale_agreement_date / closing_date</code></td><td class="type">Date</td><td class="en">Agreement signed on; closing on.</td><td class="ar">معاد التوقيع ومعاد الإغلاق.</td></tr>
+    <tr><td><code>state</code></td><td class="type">Selection</td><td class="en">draft → deposit_received → contract_signed → closed / cancelled.</td><td class="ar">مسودة، اتدفع العربون، اتوقع العقد، اتقفلت، أو اتلغت.</td></tr>
+    <tr><td><code>commission_ids</code></td><td class="type">O2m → commission</td><td class="en">Commission split rows.</td><td class="ar">سطور العمولة (لكل طرف).</td></tr>
+    <tr><td><code>total_commission</code></td><td class="type">Monetary · computed</td><td class="en">Sum of all commissions on the deal.</td><td class="ar">إجمالي العمولات.</td></tr>
+    <tr><td><code>cancellation_reason</code></td><td class="type">Char · readonly</td><td class="en">If cancelled, why.</td><td class="ar">سبب الإلغاء.</td></tr>
+    <tr><td><code>document_ids</code></td><td class="type">M2m → ir.attachment</td><td class="en">Contract PDFs, ID copies, etc.</td><td class="ar">المستندات (العقد، البطاقات، الخ).</td></tr>
+  </table></div>
+</section>
+
+<section id="m-commission">
+  <h3><code>realestate.commission</code> — Commission split line / سطر عمولة</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>transaction_id</code></td><td class="type">M2o · required</td><td class="en">The transaction being split.</td><td class="ar">الصفقة اللي العمولة عليها.</td></tr>
+    <tr><td><code>partner_id</code></td><td class="type">M2o · required</td><td class="en">Recipient (who receives the money).</td><td class="ar">المستلم (اللي بياخد العمولة).</td></tr>
+    <tr><td><code>role</code></td><td class="type">Selection</td><td class="en">lister / selling / referrer / brokerage / other.</td><td class="ar">دوره: وسيط الإعلان، وسيط البيع، محول الصفقة، الشركة، أو تاني.</td></tr>
+    <tr><td><code>calculation_method</code></td><td class="type">Selection</td><td class="en">percentage / fixed.</td><td class="ar">حسبتها نسبة ولا مبلغ ثابت.</td></tr>
+    <tr><td><code>percentage / fixed_amount</code></td><td class="type">Float / Monetary</td><td class="en">Either the % or the fixed amount, depending on method.</td><td class="ar">النسبة أو المبلغ الثابت حسب الطريقة.</td></tr>
+    <tr><td><code>amount</code></td><td class="type">Monetary · computed</td><td class="en">Auto-calculated final amount.</td><td class="ar">المبلغ النهائي بيتحسب تلقائي.</td></tr>
+    <tr><td><code>paid / payment_date / payment_move_id</code></td><td class="type">Boolean / Date / M2o</td><td class="en">Payment status + date + journal entry.</td><td class="ar">اندفعت؟ امتى؟ والقيد المحاسبي.</td></tr>
+    <tr><td><code>notes</code></td><td class="type">Char</td><td class="en">Free note.</td><td class="ar">ملاحظة.</td></tr>
+    <tr><td><code>sequence</code></td><td class="type">Integer</td><td class="en">Display order.</td><td class="ar">ترتيب العرض.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-marketing-channel">
+  <h3><code>realestate.marketing.channel</code> — Marketing channel / قناة التسويق</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Channel name (Bayut, PropertyFinder, Facebook, Website).</td><td class="ar">اسم القناة (بيوت، بروبرتي فايندر، فيسبوك، الموقع).</td></tr>
+    <tr><td><code>base_url</code></td><td class="type">Char</td><td class="en">Public URL where listings get published.</td><td class="ar">رابط الموقع اللي بينتشر عليه الإعلان.</td></tr>
+    <tr><td><code>icon</code></td><td class="type">Char</td><td class="en">Font Awesome icon class for the UI.</td><td class="ar">أيقونة بتظهر في الواجهة.</td></tr>
+    <tr><td><code>sequence / active</code></td><td class="type">Integer / Boolean</td><td class="en">Display order + activation flag.</td><td class="ar">ترتيب + شغال ولا لأ.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-lost-reason">
+  <h3><code>realestate.lost.reason</code> — Lead loss reason / سبب فقدان العميل</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Reason label (e.g. "Out of budget").</td><td class="ar">السبب (مثلاً «الميزانية أقل»).</td></tr>
+    <tr><td><code>sequence / active</code></td><td class="type">Integer / Boolean</td><td class="en">Order + activation.</td><td class="ar">ترتيب + شغال ولا لأ.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-res-users">
+  <h3><code>res.users</code> (extended) — Agent fields / فيلدز الوسيط</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>is_realestate_agent</code></td><td class="type">Boolean</td><td class="en">Flag — this user is a real estate agent.</td><td class="ar">اليوزر ده وسيط عقاري.</td></tr>
+    <tr><td><code>agent_license_number</code></td><td class="type">Char</td><td class="en">Agent's regulator license.</td><td class="ar">رقم رخصة الوسيط.</td></tr>
+    <tr><td><code>commission_share_default</code></td><td class="type">Float</td><td class="en">Default commission % for this agent (seeds new transactions).</td><td class="ar">نسبة العمولة الافتراضية للوسيط (بتتعبى تلقائي في الصفقات الجديدة).</td></tr>
+  </table></div>
+</section>
+
+<!-- ===================== real_estate_developer ===================== -->
+<h2>Module: real_estate_developer</h2>
+
+<section id="m-project">
+  <h3><code>realestate.project</code> — Development project / مشروع التطوير</h3>
+  <p class="desc"><b>EN:</b> A real-estate development project — a compound, a tower, or any group of units built and sold together.</p>
+  <p class="desc-ar"><b>عربي:</b> مشروع عقاري — كومباوند، برج، أو أي مجموعة وحدات بتتبني وتتباع مع بعض.</p>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name / code</code></td><td class="type">Char</td><td class="en">Project name + auto-generated code.</td><td class="ar">اسم المشروع وكوده التلقائي.</td></tr>
+    <tr><td><code>project_type</code></td><td class="type">Selection</td><td class="en">residential / commercial / mixed / land / industrial.</td><td class="ar">نوع المشروع: سكني، تجاري، مختلط، أراضي، صناعي.</td></tr>
+    <tr><td><code>state</code></td><td class="type">Selection</td><td class="en">planning → construction → marketing → handover → completed / cancelled.</td><td class="ar">المرحلة: تخطيط، تنفيذ، تسويق، تسليم، اكتمل، اتلغى.</td></tr>
+    <tr><td><code>developer_id</code></td><td class="type">M2o → res.partner</td><td class="en">Developer company.</td><td class="ar">شركة التطوير.</td></tr>
+    <tr><td><code>manager_id</code></td><td class="type">M2o → res.users</td><td class="en">Internal project manager.</td><td class="ar">مدير المشروع داخلياً.</td></tr>
+    <tr><td><code>country_id / state_id / city / district / address_line</code></td><td class="type">M2o + Char</td><td class="en">Full project location.</td><td class="ar">موقع المشروع كامل.</td></tr>
+    <tr><td><code>latitude / longitude</code></td><td class="type">Float</td><td class="en">Centroid coordinates (auto-set from boundary).</td><td class="ar">إحداثيات وسط المشروع (بتتحسب تلقائي من حدود القطعة).</td></tr>
+    <tr><td><code>boundary_point_ids / boundary_point_count</code></td><td class="type">O2m → boundary.point + Integer</td><td class="en">Polygon points defining the plot boundary on the map.</td><td class="ar">نقاط المضلع اللي بيرسم حدود قطعة الأرض على الخريطة.</td></tr>
+    <tr><td><code>start_date / expected_completion_date / actual_completion_date</code></td><td class="type">Date</td><td class="en">Start, expected completion, and actual completion.</td><td class="ar">البداية، النهاية المتوقعة، والنهاية الفعلية.</td></tr>
+    <tr><td><code>total_land_area / total_built_up_area</code></td><td class="type">Float</td><td class="en">Land area and total built area (sqm).</td><td class="ar">مساحة الأرض ومساحة البناء بالكامل.</td></tr>
+    <tr><td><code>expected_budget / expected_revenue</code></td><td class="type">Monetary</td><td class="en">Budgeted cost and expected sales revenue.</td><td class="ar">التكلفة المتوقعة والإيراد المتوقع.</td></tr>
+    <tr><td><code>currency_id</code></td><td class="type">M2o</td><td class="en">Project currency.</td><td class="ar">عملة المشروع.</td></tr>
+    <tr><td><code>phase_ids / phase_count</code></td><td class="type">O2m → phase</td><td class="en">Sub-phases of the project.</td><td class="ar">مراحل المشروع.</td></tr>
+    <tr><td><code>property_ids / unit_count / available_unit_count / reserved_unit_count / sold_unit_count</code></td><td class="type">O2m + Integers</td><td class="en">All units + counts by state.</td><td class="ar">كل الوحدات وعدد كل حالة (متاح، محجوز، متباع).</td></tr>
+    <tr><td><code>description / notes</code></td><td class="type">Html</td><td class="en">Marketing description + internal notes.</td><td class="ar">وصف تسويقي وملاحظات داخلية.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-phase">
+  <h3><code>realestate.phase</code> — Project phase / مرحلة من المشروع</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name / code / sequence</code></td><td class="type">Char / Integer</td><td class="en">Phase name, code, display order.</td><td class="ar">اسم المرحلة، كودها، ترتيبها.</td></tr>
+    <tr><td><code>project_id</code></td><td class="type">M2o · required</td><td class="en">Parent project.</td><td class="ar">المشروع الأب.</td></tr>
+    <tr><td><code>state</code></td><td class="type">Selection</td><td class="en">planning / construction / ready / delivered / cancelled.</td><td class="ar">تخطيط، تنفيذ، جاهز، اتسلم، اتلغى.</td></tr>
+    <tr><td><code>start_date / expected_completion_date / expected_delivery_date</code></td><td class="type">Date</td><td class="en">Key dates for the phase.</td><td class="ar">مواعيد المرحلة.</td></tr>
+    <tr><td><code>property_ids / unit_count / available_unit_count / sold_unit_count</code></td><td class="type">O2m + Integers</td><td class="en">Units in the phase + counts.</td><td class="ar">وحدات المرحلة وأعدادها.</td></tr>
+    <tr><td><code>description</code></td><td class="type">Html</td><td class="en">Free description.</td><td class="ar">وصف.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-dev-property">
+  <h3>Property (developer extension) — Off-plan fields on the property / فيلدز البيع تحت الإنشاء</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>project_id / phase_id</code></td><td class="type">M2o</td><td class="en">Project and phase the unit belongs to.</td><td class="ar">المشروع والمرحلة اللي الوحدة تابعة لهم.</td></tr>
+    <tr><td><code>base_price</code></td><td class="type">Monetary</td><td class="en">Developer's reference price for the unit.</td><td class="ar">السعر الأساسي للوحدة من المطور.</td></tr>
+    <tr><td><code>reservation_ids / active_reservation_id</code></td><td class="type">O2m + M2o</td><td class="en">All reservations on the unit + the current active one.</td><td class="ar">كل الحجوزات والحجز النشط حالياً.</td></tr>
+    <tr><td><code>sale_contract_ids / sale_contract_count</code></td><td class="type">O2m + Integer</td><td class="en">Sale contracts on this unit.</td><td class="ar">عقود البيع للوحدة دي.</td></tr>
+    <tr><td><code>is_sold</code></td><td class="type">Boolean · computed</td><td class="en">True when there's a signed/handed-over contract.</td><td class="ar">اتباع.</td></tr>
+    <tr><td><code>sale_status</code></td><td class="type">Selection · computed</td><td class="en">not_listed / for_sale / reserved / under_contract / sold — unified pipeline status.</td><td class="ar">حالة البيع: مش معروض، للبيع، محجوز، تحت العقد، متباع — حالة موحدة عبر كل القنوات.</td></tr>
+    <tr><td><code>construction_status</code></td><td class="type">Selection · computed</td><td class="en">planning / under_construction / ready / delivered — physical readiness.</td><td class="ar">حالة البناء: تخطيط، تحت الإنشاء، جاهز، اتسلم.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-reservation">
+  <h3><code>realestate.unit.reservation</code> — Unit reservation / حجز وحدة</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Auto-generated reference.</td><td class="ar">رقم الحجز التلقائي.</td></tr>
+    <tr><td><code>property_id</code></td><td class="type">M2o · required</td><td class="en">Unit being reserved.</td><td class="ar">الوحدة المحجوزة.</td></tr>
+    <tr><td><code>project_id / phase_id</code></td><td class="type">M2o · related</td><td class="en">Auto-filled.</td><td class="ar">المشروع والمرحلة (تلقائي).</td></tr>
+    <tr><td><code>partner_id</code></td><td class="type">M2o · required</td><td class="en">Buyer.</td><td class="ar">المشتري.</td></tr>
+    <tr><td><code>agent_id</code></td><td class="type">M2o → res.users</td><td class="en">Sales agent.</td><td class="ar">بائع المبيعات.</td></tr>
+    <tr><td><code>state</code></td><td class="type">Selection</td><td class="en">hold → booked → confirmed (becomes sale contract) / expired / cancelled.</td><td class="ar">على الـ hold، محجوز، اتأكد (بقى عقد بيع)، انتهى، اتلغى.</td></tr>
+    <tr><td><code>hold_started_at / hold_duration_hours / hold_expiry_at</code></td><td class="type">Datetime / Float / Datetime</td><td class="en">When hold started, how long, auto-computed expiry.</td><td class="ar">بداية الحجز، مدته، ومعاد انتهاؤه التلقائي.</td></tr>
+    <tr><td><code>booking_fee</code></td><td class="type">Monetary</td><td class="en">Fee paid to lock the booking.</td><td class="ar">مبلغ الحجز اللي بيتدفع لتثبيت الحجز.</td></tr>
+    <tr><td><code>proposed_price</code></td><td class="type">Monetary</td><td class="en">Proposed sale price for the unit.</td><td class="ar">سعر البيع المقترح.</td></tr>
+    <tr><td><code>property_base_price / proposed_vs_base</code></td><td class="type">Monetary + Float · computed</td><td class="en">Base price + % deviation.</td><td class="ar">السعر الأساسي والفرق بالنسبة المئوية.</td></tr>
+    <tr><td><code>installment_plan_id</code></td><td class="type">M2o → installment.plan</td><td class="en">Payment plan template selected.</td><td class="ar">قالب جدول الأقساط المختار.</td></tr>
+    <tr><td><code>sale_contract_id</code></td><td class="type">M2o · readonly</td><td class="en">The sale contract created when reservation converts.</td><td class="ar">عقد البيع اللي اتعمل لما الحجز اتأكد.</td></tr>
+    <tr><td><code>notes</code></td><td class="type">Html</td><td class="en">Free notes.</td><td class="ar">ملاحظات.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-sale-contract">
+  <h3><code>realestate.sale.contract</code> — Off-plan sale contract / عقد بيع تحت الإنشاء</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Auto-generated reference.</td><td class="ar">رقم العقد التلقائي.</td></tr>
+    <tr><td><code>partner_id</code></td><td class="type">M2o · required</td><td class="en">Buyer.</td><td class="ar">المشتري.</td></tr>
+    <tr><td><code>property_id</code></td><td class="type">M2o · required</td><td class="en">Unit being sold.</td><td class="ar">الوحدة المتباعة.</td></tr>
+    <tr><td><code>reservation_id</code></td><td class="type">M2o · readonly</td><td class="en">Origin reservation (if any).</td><td class="ar">الحجز اللي العقد طلع منه.</td></tr>
+    <tr><td><code>agent_id</code></td><td class="type">M2o → res.users</td><td class="en">Sales agent.</td><td class="ar">بائع المبيعات.</td></tr>
+    <tr><td><code>state</code></td><td class="type">Selection</td><td class="en">draft → signed → handed_over / cancelled.</td><td class="ar">مسودة، اتوقع، اتسلم، أو اتلغى.</td></tr>
+    <tr><td><code>contract_date / signing_date / expected_handover_date / handover_date</code></td><td class="type">Date</td><td class="en">Key contract dates.</td><td class="ar">تاريخ العقد، التوقيع، التسليم المتوقع، التسليم الفعلي.</td></tr>
+    <tr><td><code>sale_price</code></td><td class="type">Monetary · required</td><td class="en">Agreed sale price.</td><td class="ar">سعر البيع المتفق عليه.</td></tr>
+    <tr><td><code>installment_plan_id / installment_ids</code></td><td class="type">M2o + O2m</td><td class="en">Plan template + the generated schedule rows.</td><td class="ar">قالب الأقساط وجدول الأقساط المتولد.</td></tr>
+    <tr><td><code>paid_amount / invoiced_amount / balance_due</code></td><td class="type">Monetary · computed</td><td class="en">Paid, invoiced, and remaining balance.</td><td class="ar">المدفوع، اللي اتعملت له فواتير، والمتبقي.</td></tr>
+    <tr><td><code>progress</code></td><td class="type">Float · computed</td><td class="en">paid / sale_price (%).</td><td class="ar">نسبة المدفوع من إجمالي السعر.</td></tr>
+    <tr><td><code>cancellation_reason</code></td><td class="type">Char</td><td class="en">Why cancelled (if applicable).</td><td class="ar">سبب الإلغاء.</td></tr>
+    <tr><td><code>notes</code></td><td class="type">Html</td><td class="en">Free notes.</td><td class="ar">ملاحظات.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-sale-installment">
+  <h3><code>realestate.sale.installment</code> — Sale installment row / قسط من البيع</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>sale_contract_id</code></td><td class="type">M2o · required</td><td class="en">Parent contract.</td><td class="ar">العقد الأب.</td></tr>
+    <tr><td><code>kind</code></td><td class="type">Selection</td><td class="en">down / installment / balloon.</td><td class="ar">نوع القسط: دفعة مقدمة، قسط دوري، أو دفعة بالون كبيرة.</td></tr>
+    <tr><td><code>amount</code></td><td class="type">Monetary · required</td><td class="en">Installment amount.</td><td class="ar">قيمة القسط.</td></tr>
+    <tr><td><code>date_due</code></td><td class="type">Date · required</td><td class="en">Due date.</td><td class="ar">معاد الاستحقاق.</td></tr>
+    <tr><td><code>state</code></td><td class="type">Selection</td><td class="en">pending / invoiced / paid / cancelled.</td><td class="ar">منتظر، اتعملت فاتورة، مدفوع، أو ملغي.</td></tr>
+    <tr><td><code>move_id / move_state</code></td><td class="type">M2o → account.move</td><td class="en">Linked invoice + state.</td><td class="ar">الفاتورة المرتبطة وحالتها.</td></tr>
+    <tr><td><code>sequence</code></td><td class="type">Integer</td><td class="en">Order in the schedule.</td><td class="ar">ترتيب القسط.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-installment-plan">
+  <h3><code>realestate.installment.plan</code> — Installment plan template / قالب جدول أقساط</h3>
+  <p class="desc"><b>EN:</b> Reusable template defining down payment, recurring installments, grace period, and balloon. Applied to sale contracts to generate the schedule.</p>
+  <p class="desc-ar"><b>عربي:</b> قالب جاهز بيحدد الدفعة المقدمة، الأقساط الدورية، فترة السماح، والدفعة الختامية. بيتطبق على عقد البيع علشان يولّد جدول الأقساط.</p>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name / description / active</code></td><td class="type">Char / Text / Boolean</td><td class="en">Plan name, description, activation flag.</td><td class="ar">اسم الخطة، وصفها، شغالة ولا لأ.</td></tr>
+    <tr><td><code>down_payment_method</code></td><td class="type">Selection</td><td class="en">percentage / amount.</td><td class="ar">الدفعة المقدمة: نسبة مئوية ولا مبلغ ثابت.</td></tr>
+    <tr><td><code>down_payment_value</code></td><td class="type">Float · required</td><td class="en">Either the % or the fixed amount.</td><td class="ar">قيمة الدفعة (نسبة أو مبلغ).</td></tr>
+    <tr><td><code>recurrence</code></td><td class="type">Selection</td><td class="en">monthly / quarterly / semiannual / annual.</td><td class="ar">دورية الأقساط: شهري، ربع سنوي، نص سنوي، سنوي.</td></tr>
+    <tr><td><code>total_installments</code></td><td class="type">Integer · required</td><td class="en">How many recurring installments.</td><td class="ar">عدد الأقساط الدورية.</td></tr>
+    <tr><td><code>grace_period_months</code></td><td class="type">Integer</td><td class="en">Months between down payment and first installment.</td><td class="ar">عدد الشهور بين الدفعة المقدمة وأول قسط.</td></tr>
+    <tr><td><code>balloon_method</code></td><td class="type">Selection</td><td class="en">none / percentage / amount.</td><td class="ar">دفعة البالون: مفيش، نسبة، أو مبلغ.</td></tr>
+    <tr><td><code>balloon_value</code></td><td class="type">Float</td><td class="en">Balloon value (% or fixed).</td><td class="ar">قيمة الدفعة الكبيرة الأخيرة.</td></tr>
+    <tr><td><code>balloon_at_handover</code></td><td class="type">Boolean</td><td class="en">If true, balloon is due at handover; otherwise after last installment.</td><td class="ar">لو متأشر، دفعة البالون بتيجي عند التسليم؛ لو لأ، بعد آخر قسط.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-boundary-point">
+  <h3><code>realestate.project.boundary.point</code> — Plot boundary corner / نقطة على حدود قطعة الأرض</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>project_id</code></td><td class="type">M2o · required</td><td class="en">Project the point belongs to.</td><td class="ar">المشروع.</td></tr>
+    <tr><td><code>sequence</code></td><td class="type">Integer</td><td class="en">Order around the polygon.</td><td class="ar">ترتيب النقطة في المضلع.</td></tr>
+    <tr><td><code>latitude / longitude</code></td><td class="type">Float · required</td><td class="en">GPS coordinates of this corner.</td><td class="ar">إحداثيات النقطة.</td></tr>
+    <tr><td><code>label</code></td><td class="type">Char</td><td class="en">Optional name (e.g. "NW corner").</td><td class="ar">اسم اختياري (مثلاً «الركن الشمال الغربي»).</td></tr>
+  </table></div>
+</section>
+
+<!-- ===================== real_estate_construction ===================== -->
+<h2>Module: real_estate_construction</h2>
+
+<section id="m-cons-project">
+  <h3>Project (construction extension) — Build metrics on the project / إحصائيات البناء على المشروع</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>milestone_ids / milestone_count</code></td><td class="type">O2m + Integer</td><td class="en">All construction milestones.</td><td class="ar">المعالم الإنشائية للمشروع.</td></tr>
+    <tr><td><code>cost_line_ids</code></td><td class="type">O2m → cost.line</td><td class="en">All cost line entries.</td><td class="ar">كل بنود التكاليف.</td></tr>
+    <tr><td><code>construction_progress</code></td><td class="type">Float · computed</td><td class="en">Weighted milestone completion % at project level.</td><td class="ar">نسبة تقدم البناء (موزونة بالمعالم).</td></tr>
+    <tr><td><code>actual_cost / cost_variance</code></td><td class="type">Monetary · computed</td><td class="en">Sum of costs + variance vs budget.</td><td class="ar">التكلفة الفعلية والفرق عن الميزانية.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-cons-phase">
+  <h3>Phase (construction extension) — Build progress on the phase / تقدم البناء للمرحلة</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>milestone_ids</code></td><td class="type">O2m → milestone</td><td class="en">Milestones in this phase.</td><td class="ar">معالم البناء في المرحلة دي.</td></tr>
+    <tr><td><code>construction_progress</code></td><td class="type">Float · computed</td><td class="en">Phase-level weighted progress.</td><td class="ar">نسبة تقدم المرحلة.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-milestone">
+  <h3><code>realestate.construction.milestone</code> — Construction milestone / معلم بنائي</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Milestone name (e.g. "Foundation").</td><td class="ar">اسم المعلم (مثلاً «الأساسات»).</td></tr>
+    <tr><td><code>sequence</code></td><td class="type">Integer</td><td class="en">Display order.</td><td class="ar">ترتيب العرض.</td></tr>
+    <tr><td><code>project_id / phase_id</code></td><td class="type">M2o</td><td class="en">Parent project + optional phase.</td><td class="ar">المشروع الأب والمرحلة الاختيارية.</td></tr>
+    <tr><td><code>category</code></td><td class="type">Selection</td><td class="en">excavation / foundation / structure / masonry / mep / facade / finishing / landscape / handover_prep / other.</td><td class="ar">تصنيف: حفر، أساسات، هيكل، مباني، كهرومكانيكا، واجهات، تشطيب، لاندسكيب، تجهيز تسليم، تاني.</td></tr>
+    <tr><td><code>weight</code></td><td class="type">Float</td><td class="en">Share of total project progress (%).</td><td class="ar">وزن المعلم في تقدم المشروع كله (نسبة).</td></tr>
+    <tr><td><code>expected_start_date / expected_end_date / actual_start_date / actual_end_date</code></td><td class="type">Date</td><td class="en">Planned and actual dates.</td><td class="ar">المواعيد المخططة والفعلية.</td></tr>
+    <tr><td><code>completion_percentage</code></td><td class="type">Float</td><td class="en">% complete (readonly when tasks exist — auto-derived from them).</td><td class="ar">نسبة الإنجاز (بتتقفل لما يكون فيه مهام — بتتحسب منها).</td></tr>
+    <tr><td><code>state</code></td><td class="type">Selection · computed</td><td class="en">not_started / in_progress / completed / delayed / cancelled.</td><td class="ar">لم يبدأ، شغال، اكتمل، متأخر، أو ملغي.</td></tr>
+    <tr><td><code>contractor_id</code></td><td class="type">M2o → contractor</td><td class="en">Contractor responsible.</td><td class="ar">المقاول المسؤول.</td></tr>
+    <tr><td><code>budget_amount</code></td><td class="type">Monetary</td><td class="en">Budgeted cost for this milestone.</td><td class="ar">الميزانية المخصصة للمعلم.</td></tr>
+    <tr><td><code>actual_cost / cost_variance</code></td><td class="type">Monetary · computed</td><td class="en">Sum of cost lines + variance.</td><td class="ar">التكلفة الفعلية والفرق عن الميزانية.</td></tr>
+    <tr><td><code>cost_line_ids</code></td><td class="type">O2m → cost.line</td><td class="en">Cost entries on this milestone.</td><td class="ar">بنود التكاليف على المعلم.</td></tr>
+    <tr><td><code>task_ids / task_count / task_done_count</code></td><td class="type">O2m + Integers</td><td class="en">Sub-tasks under this milestone + counts.</td><td class="ar">المهام الفرعية وأعدادها.</td></tr>
+    <tr><td><code>completion_from_tasks</code></td><td class="type">Float · computed</td><td class="en">Weighted task completion — pushed into completion_percentage when tasks exist.</td><td class="ar">نسبة إنجاز محسوبة من المهام (بتتحط في نسبة الإنجاز لما يكون فيه مهام).</td></tr>
+    <tr><td><code>dependency_ids</code></td><td class="type">M2m → milestone</td><td class="en">Predecessors — milestones that must finish first.</td><td class="ar">المعالم اللي لازم تخلص قبل ما المعلم ده يبدأ.</td></tr>
+    <tr><td><code>dependent_ids</code></td><td class="type">M2m · readonly</td><td class="en">Milestones that depend on this one (auto-reverse).</td><td class="ar">المعالم اللي بتعتمد على المعلم ده (تلقائي).</td></tr>
+    <tr><td><code>earliest_possible_start</code></td><td class="type">Date · computed</td><td class="en">Cannot start before this date (latest end among predecessors).</td><td class="ar">أقرب تاريخ ممكن المعلم يبدأ فيه (آخر معاد نهاية من اللي قبله).</td></tr>
+    <tr><td><code>is_blocked_by_delay / delay_days</code></td><td class="type">Boolean + Integer · computed</td><td class="en">Whether an upstream slip pushed your start + how many days.</td><td class="ar">هل في تأخير من معلم سابق دفّعك للأمام؟ وكام يوم تأخر.</td></tr>
+    <tr><td><code>notes</code></td><td class="type">Html</td><td class="en">Free notes.</td><td class="ar">ملاحظات.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-task">
+  <h3><code>realestate.construction.task</code> — Task under a milestone / مهمة جوة المعلم</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Task title.</td><td class="ar">اسم المهمة.</td></tr>
+    <tr><td><code>milestone_id</code></td><td class="type">M2o · required</td><td class="en">Parent milestone.</td><td class="ar">المعلم الأب.</td></tr>
+    <tr><td><code>sequence</code></td><td class="type">Integer</td><td class="en">Display order.</td><td class="ar">ترتيب العرض.</td></tr>
+    <tr><td><code>weight</code></td><td class="type">Float</td><td class="en">Relative weight inside the milestone (for completion rollup).</td><td class="ar">وزن المهمة في حساب نسبة الإنجاز للمعلم.</td></tr>
+    <tr><td><code>assignee_id</code></td><td class="type">M2o → res.users</td><td class="en">Person responsible.</td><td class="ar">الشخص المسؤول.</td></tr>
+    <tr><td><code>contractor_id</code></td><td class="type">M2o → contractor</td><td class="en">Contractor (often inherits milestone's).</td><td class="ar">المقاول (غالباً نفس مقاول المعلم).</td></tr>
+    <tr><td><code>state</code></td><td class="type">Selection</td><td class="en">pending / in_progress / done / skipped.</td><td class="ar">منتظرة، شغالة، تمت، أو اتخطت.</td></tr>
+    <tr><td><code>expected_start_date / expected_end_date / actual_start_date / actual_end_date</code></td><td class="type">Date</td><td class="en">Planned and actual dates.</td><td class="ar">المواعيد المخططة والفعلية.</td></tr>
+    <tr><td><code>completion_pct</code></td><td class="type">Float · computed</td><td class="en">100 if done/skipped, 50 if in progress, 0 otherwise.</td><td class="ar">100 لو تمت أو اتخطت، 50 لو شغالة، 0 لو لسه.</td></tr>
+    <tr><td><code>notes</code></td><td class="type">Html</td><td class="en">Free notes.</td><td class="ar">ملاحظات.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-cost-line">
+  <h3><code>realestate.construction.cost.line</code> — Cost line entry / بند تكلفة</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Description of the cost.</td><td class="ar">وصف التكلفة.</td></tr>
+    <tr><td><code>project_id / phase_id / milestone_id</code></td><td class="type">M2o</td><td class="en">Which level the cost is attributed to.</td><td class="ar">التكلفة دي تابعة لأنهي مستوى (مشروع، مرحلة، معلم).</td></tr>
+    <tr><td><code>contractor_id</code></td><td class="type">M2o → contractor</td><td class="en">Contractor / vendor.</td><td class="ar">المقاول أو المورد.</td></tr>
+    <tr><td><code>date</code></td><td class="type">Date · required</td><td class="en">Cost date.</td><td class="ar">تاريخ التكلفة.</td></tr>
+    <tr><td><code>amount</code></td><td class="type">Monetary · required</td><td class="en">Amount spent.</td><td class="ar">المبلغ.</td></tr>
+    <tr><td><code>category</code></td><td class="type">Selection</td><td class="en">material / labor / equipment / subcontract / permit / other.</td><td class="ar">تصنيف: خامات، عمالة، معدات، مقاول من الباطن، تراخيص، تاني.</td></tr>
+    <tr><td><code>vendor_bill_id</code></td><td class="type">M2o → account.move</td><td class="en">Linked vendor bill.</td><td class="ar">فاتورة المورد المرتبطة.</td></tr>
+    <tr><td><code>notes</code></td><td class="type">Text</td><td class="en">Free notes.</td><td class="ar">ملاحظات.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-payment-cert">
+  <h3><code>realestate.construction.payment.certificate</code> — Payment certificate / مستخلص دفع</h3>
+  <p class="desc"><b>EN:</b> Certifies a contractor's % completion on a milestone for a billing period. Generates a vendor bill for the net amount (after retention).</p>
+  <p class="desc-ar"><b>عربي:</b> مستخلص بيشهد بنسبة الإنجاز للمقاول عن فترة معينة. بيتعمل منه فاتورة مورد بالصافي بعد خصم نسبة الحجز (الرتنشن).</p>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Auto-generated reference (CERT-XXXXX).</td><td class="ar">رقم المستخلص التلقائي.</td></tr>
+    <tr><td><code>project_id / milestone_id / contractor_id</code></td><td class="type">M2o</td><td class="en">Project, milestone (optional), and contractor.</td><td class="ar">المشروع، المعلم (اختياري)، والمقاول.</td></tr>
+    <tr><td><code>period_start / period_end</code></td><td class="type">Date</td><td class="en">Billing period covered by this certificate.</td><td class="ar">الفترة اللي المستخلص بيغطيها.</td></tr>
+    <tr><td><code>contract_value</code></td><td class="type">Monetary</td><td class="en">Total contract value with this contractor (base for the %).</td><td class="ar">إجمالي قيمة العقد مع المقاول (أساس حساب النسبة).</td></tr>
+    <tr><td><code>previous_certified_pct</code></td><td class="type">Float</td><td class="en">Cumulative % from earlier certificates.</td><td class="ar">إجمالي النسبة المعتمدة من قبل.</td></tr>
+    <tr><td><code>current_certified_pct</code></td><td class="type">Float · required</td><td class="en">Additional % for this period.</td><td class="ar">النسبة الإضافية للفترة دي.</td></tr>
+    <tr><td><code>cumulative_certified_pct</code></td><td class="type">Float · computed</td><td class="en">Previous + current.</td><td class="ar">إجمالي تراكمي = السابق + الحالي.</td></tr>
+    <tr><td><code>gross_amount</code></td><td class="type">Monetary · computed</td><td class="en">contract_value × current %.</td><td class="ar">المبلغ الإجمالي قبل الحجز.</td></tr>
+    <tr><td><code>retention_pct</code></td><td class="type">Float</td><td class="en">% withheld (defaults from contractor).</td><td class="ar">نسبة الحجز (بتتعبى تلقائي من المقاول).</td></tr>
+    <tr><td><code>retention_amount</code></td><td class="type">Monetary · computed</td><td class="en">gross × retention %.</td><td class="ar">مبلغ الحجز.</td></tr>
+    <tr><td><code>net_payable</code></td><td class="type">Monetary · computed</td><td class="en">gross − retention.</td><td class="ar">الصافي اللي بيتدفع للمقاول.</td></tr>
+    <tr><td><code>state</code></td><td class="type">Selection</td><td class="en">draft → certified → invoiced → paid / cancelled.</td><td class="ar">مسودة، معتمد، اتعمل فاتورة، اتدفع، أو اتلغى.</td></tr>
+    <tr><td><code>vendor_bill_id</code></td><td class="type">M2o → account.move</td><td class="en">Linked vendor bill once invoiced.</td><td class="ar">فاتورة المورد لما يتعمل لها فاتورة.</td></tr>
+    <tr><td><code>notes</code></td><td class="type">Html</td><td class="en">Inspection notes / supporting docs reference.</td><td class="ar">ملاحظات الفحص أو مراجع المستندات.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-contractor">
+  <h3><code>realestate.contractor</code> — Contractor / المقاول</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Contractor name.</td><td class="ar">اسم المقاول.</td></tr>
+    <tr><td><code>partner_id</code></td><td class="type">M2o → res.partner · required</td><td class="en">Vendor record for accounting/payment.</td><td class="ar">كرت التواصل للمحاسبة والدفع.</td></tr>
+    <tr><td><code>specialization</code></td><td class="type">Selection</td><td class="en">civil / mep / finishing / landscape / facade / hvac / elevator / general / other.</td><td class="ar">تخصصه: مدني، كهرومكانيكا، تشطيب، لاندسكيب، واجهات، تكييف، أسانسير، عام، تاني.</td></tr>
+    <tr><td><code>license_number</code></td><td class="type">Char</td><td class="en">License number.</td><td class="ar">رقم الرخصة.</td></tr>
+    <tr><td><code>rating</code></td><td class="type">Selection · A/B/C</td><td class="en">Internal rating.</td><td class="ar">تقييم داخلي A / B / C.</td></tr>
+    <tr><td><code>contact_email / contact_phone</code></td><td class="type">Char · related</td><td class="en">Email + phone (mirrored from partner).</td><td class="ar">إيميل وتليفون.</td></tr>
+    <tr><td><code>active</code></td><td class="type">Boolean</td><td class="en">Active in the system.</td><td class="ar">شغال ولا لأ.</td></tr>
+    <tr><td><code>milestone_ids / milestone_count</code></td><td class="type">O2m / Integer</td><td class="en">Milestones assigned to this contractor.</td><td class="ar">المعالم اللي مسندة للمقاول ده.</td></tr>
+    <tr><td><code>retention_pct</code></td><td class="type">Float · default=5%</td><td class="en">Default % withheld from every certificate.</td><td class="ar">نسبة الحجز الافتراضية من كل مستخلص.</td></tr>
+    <tr><td><code>payment_certificate_ids</code></td><td class="type">O2m → payment.certificate</td><td class="en">All certificates issued to this contractor.</td><td class="ar">كل المستخلصات اللي اتعملت للمقاول.</td></tr>
+    <tr><td><code>total_certified / total_retention_held</code></td><td class="type">Monetary · computed</td><td class="en">Cumulative gross certified + retention currently held.</td><td class="ar">إجمالي المعتمد ومبلغ الحجز المحتجز حالياً.</td></tr>
+    <tr><td><code>retention_released</code></td><td class="type">Boolean · readonly</td><td class="en">True once the final retention release has been issued.</td><td class="ar">اتأشر لما الحجز اترد.</td></tr>
+  </table></div>
+</section>
+
+<!-- ===================== real_estate_handover ===================== -->
+<h2>Module: real_estate_handover</h2>
+
+<section id="m-handover">
+  <h3><code>realestate.handover</code> — Handover event / حدث التسليم</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Auto-generated reference.</td><td class="ar">رقم التسليم التلقائي.</td></tr>
+    <tr><td><code>sale_contract_id</code></td><td class="type">M2o · required</td><td class="en">The sale contract being handed over.</td><td class="ar">عقد البيع اللي بيتسلم.</td></tr>
+    <tr><td><code>property_id / partner_id / project_id / phase_id</code></td><td class="type">M2o · related</td><td class="en">Auto-filled context fields.</td><td class="ar">العقار، المشتري، المشروع، والمرحلة (تلقائي).</td></tr>
+    <tr><td><code>template_id</code></td><td class="type">M2o → checklist.template</td><td class="en">Checklist template used.</td><td class="ar">قالب تشكلست التسليم.</td></tr>
+    <tr><td><code>checklist_item_ids / checklist_done_count / checklist_total_count / checklist_progress</code></td><td class="type">O2m + Integers + Float</td><td class="en">Checklist rows + counts + % complete.</td><td class="ar">بنود التشكلست وعددها ونسبة الإنجاز.</td></tr>
+    <tr><td><code>snagging_issue_ids / open_snagging_count / total_snagging_count</code></td><td class="type">O2m + Integers</td><td class="en">Defects raised + counts.</td><td class="ar">العيوب المرصودة وأعدادها.</td></tr>
+    <tr><td><code>scheduled_date / actual_date</code></td><td class="type">Datetime</td><td class="en">Scheduled handover + actual completion.</td><td class="ar">معاد التسليم المحدد والفعلي.</td></tr>
+    <tr><td><code>state</code></td><td class="type">Selection</td><td class="en">scheduled → inspection → snagging → completed / cancelled.</td><td class="ar">مجدول، معاينة، عيوب، اتسلم، اتلغى.</td></tr>
+    <tr><td><code>warranty_period_months</code></td><td class="type">Integer · default=12</td><td class="en">Warranty months created at handover.</td><td class="ar">عدد شهور الضمان اللي بتتعمل عند التسليم.</td></tr>
+    <tr><td><code>warranty_id</code></td><td class="type">M2o → warranty</td><td class="en">Linked warranty (auto-created on completion).</td><td class="ar">سند الضمان (بيتعمل تلقائي عند الإكمال).</td></tr>
+    <tr><td><code>notes</code></td><td class="type">Html</td><td class="en">Free notes.</td><td class="ar">ملاحظات.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-handover-property">
+  <h3>Property (handover extension) — Readiness metrics on the property / مؤشرات جاهزية التسليم</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>handover_ids / handover_count</code></td><td class="type">O2m + Integer · computed</td><td class="en">Handover records on this unit.</td><td class="ar">سجلات التسليم على الوحدة.</td></tr>
+    <tr><td><code>warranty_ids</code></td><td class="type">O2m · computed</td><td class="en">Warranties on the unit.</td><td class="ar">سندات الضمان على الوحدة.</td></tr>
+    <tr><td><code>readiness_structural / readiness_finishing / readiness_utilities / readiness_inspection</code></td><td class="type">Float · 0-100</td><td class="en">% complete by dimension (structure, finishing, utilities, inspection).</td><td class="ar">نسبة الجاهزية حسب البُعد (هيكل، تشطيبات، مرافق، فحص).</td></tr>
+    <tr><td><code>readiness_overall</code></td><td class="type">Float · computed</td><td class="en">Average of the four readiness dimensions.</td><td class="ar">متوسط الجاهزية الكلية.</td></tr>
+    <tr><td><code>handover_ready</code></td><td class="type">Boolean · computed</td><td class="en">True when all dimensions are 100%.</td><td class="ar">جاهز للتسليم لما الكل 100٪.</td></tr>
+    <tr><td><code>ready_to_deliver</code></td><td class="type">Boolean · computed</td><td class="en">Construction done, handover not yet scheduled.</td><td class="ar">البناء خلص لكن التسليم مش مجدول.</td></tr>
+    <tr><td><code>ready_to_move</code></td><td class="type">Boolean · computed</td><td class="en">Handover complete — buyer can move in.</td><td class="ar">التسليم خلص — المشتري ممكن يدخل.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-snagging">
+  <h3><code>realestate.snagging.issue</code> — Snagging / defect / عيب أو ملاحظة في التسليم</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Auto-generated reference.</td><td class="ar">رقم العيب التلقائي.</td></tr>
+    <tr><td><code>handover_id</code></td><td class="type">M2o → handover</td><td class="en">Handover the issue was found in.</td><td class="ar">حدث التسليم اللي العيب ظهر فيه.</td></tr>
+    <tr><td><code>property_id / sale_contract_id</code></td><td class="type">M2o · related</td><td class="en">Auto-filled context.</td><td class="ar">العقار وعقد البيع (تلقائي).</td></tr>
+    <tr><td><code>description</code></td><td class="type">Text · required</td><td class="en">Description of the defect.</td><td class="ar">وصف العيب.</td></tr>
+    <tr><td><code>photo</code></td><td class="type">Binary</td><td class="en">Photo of the defect.</td><td class="ar">صورة العيب.</td></tr>
+    <tr><td><code>location_on_unit</code></td><td class="type">Char</td><td class="en">Where in the unit (e.g. "master bathroom ceiling").</td><td class="ar">فين في الوحدة (مثلاً «سقف حمام النوم الرئيسي»).</td></tr>
+    <tr><td><code>severity</code></td><td class="type">Selection</td><td class="en">minor / major / critical.</td><td class="ar">خطورته: بسيط، كبير، حرج.</td></tr>
+    <tr><td><code>state</code></td><td class="type">Selection</td><td class="en">open → assigned → in_progress → resolved → verified / rejected.</td><td class="ar">مفتوح، اتسند لمقاول، شغال، اتحل، اتأكد، أو اترفض.</td></tr>
+    <tr><td><code>contractor_id</code></td><td class="type">M2o → contractor</td><td class="en">Contractor assigned to fix it.</td><td class="ar">المقاول المسؤول عن الإصلاح.</td></tr>
+    <tr><td><code>reporter_id</code></td><td class="type">M2o → res.users</td><td class="en">Who reported it.</td><td class="ar">مين اللي بلغ بالعيب.</td></tr>
+    <tr><td><code>reported_date / target_resolution_date / resolved_date / verified_date</code></td><td class="type">Date</td><td class="en">Key dates through the lifecycle.</td><td class="ar">المواعيد المهمة (التبليغ، الحل المتوقع، الحل الفعلي، التأكيد).</td></tr>
+    <tr><td><code>notes</code></td><td class="type">Html</td><td class="en">Free notes.</td><td class="ar">ملاحظات.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-checklist-template">
+  <h3><code>realestate.handover.checklist.template</code> — Checklist template / قالب تشكلست</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name / description / active</code></td><td class="type">Char / Text / Boolean</td><td class="en">Template name + description + activation.</td><td class="ar">اسم القالب، وصفه، شغال ولا لأ.</td></tr>
+    <tr><td><code>item_ids</code></td><td class="type">O2m → template.item</td><td class="en">Items in the template (copied to each handover).</td><td class="ar">بنود التشكلست (بتتنسخ على كل تسليم).</td></tr>
+  </table></div>
+  <h3 style="margin-top:1rem"><code>realestate.handover.checklist.template.item</code> — Template item / بند في القالب</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>template_id</code></td><td class="type">M2o · required</td><td class="en">Parent template.</td><td class="ar">القالب الأب.</td></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Item title.</td><td class="ar">عنوان البند.</td></tr>
+    <tr><td><code>category</code></td><td class="type">Selection</td><td class="en">utilities / inspection / cleaning / documents / keys / safety / other.</td><td class="ar">تصنيف: مرافق، فحص، نظافة، مستندات، مفاتيح، أمان، تاني.</td></tr>
+    <tr><td><code>description</code></td><td class="type">Text</td><td class="en">Detail.</td><td class="ar">تفاصيل.</td></tr>
+    <tr><td><code>sequence</code></td><td class="type">Integer</td><td class="en">Order.</td><td class="ar">ترتيب.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-checklist-item">
+  <h3><code>realestate.handover.checklist.item</code> — Handover checklist item / بند تشكلست لتسليم محدد</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>handover_id</code></td><td class="type">M2o · required</td><td class="en">Parent handover.</td><td class="ar">حدث التسليم.</td></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Item title.</td><td class="ar">عنوان البند.</td></tr>
+    <tr><td><code>category</code></td><td class="type">Selection</td><td class="en">utilities / inspection / cleaning / documents / keys / safety / other.</td><td class="ar">تصنيف.</td></tr>
+    <tr><td><code>description</code></td><td class="type">Text</td><td class="en">Detail.</td><td class="ar">تفاصيل.</td></tr>
+    <tr><td><code>status</code></td><td class="type">Selection</td><td class="en">pending / done / skipped / failed.</td><td class="ar">منتظر، تم، اتخطى، فشل.</td></tr>
+    <tr><td><code>completed_at / completed_by_id</code></td><td class="type">Datetime / M2o</td><td class="en">When + by whom.</td><td class="ar">امتى ومين.</td></tr>
+    <tr><td><code>sequence / notes</code></td><td class="type">Integer / Text</td><td class="en">Order + notes.</td><td class="ar">ترتيب + ملاحظات.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-warranty">
+  <h3><code>realestate.warranty</code> — Warranty / سند ضمان</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Auto-generated reference.</td><td class="ar">رقم الضمان التلقائي.</td></tr>
+    <tr><td><code>sale_contract_id</code></td><td class="type">M2o · required</td><td class="en">Sale contract the warranty covers.</td><td class="ar">عقد البيع المغطى.</td></tr>
+    <tr><td><code>property_id / partner_id</code></td><td class="type">M2o · related</td><td class="en">Auto-filled (unit + buyer).</td><td class="ar">العقار والمشتري (تلقائي).</td></tr>
+    <tr><td><code>period_months</code></td><td class="type">Integer · required · default=12</td><td class="en">Warranty length in months.</td><td class="ar">مدة الضمان بالأشهر.</td></tr>
+    <tr><td><code>start_date / end_date</code></td><td class="type">Date</td><td class="en">Coverage start / end.</td><td class="ar">بداية ونهاية الضمان.</td></tr>
+    <tr><td><code>coverage_notes / exclusion_notes</code></td><td class="type">Html</td><td class="en">What's covered and what's excluded.</td><td class="ar">المغطى والمستثنى من الضمان.</td></tr>
+    <tr><td><code>state</code></td><td class="type">Selection · computed</td><td class="en">active / expired / cancelled.</td><td class="ar">فعال، منتهي، أو ملغي.</td></tr>
+  </table></div>
+</section>
+
+<!-- ===================== real_estate_investment ===================== -->
+<h2>Module: real_estate_investment</h2>
+
+<section id="m-feasibility">
+  <h3><code>realestate.investment.feasibility</code> — Investment feasibility study / دراسة جدوى استثمارية</h3>
+  <p class="desc"><b>EN:</b> Financial appraisal of a project — computes NPV, IRR, and payback period from cash flow rows. Approves or rejects investment.</p>
+  <p class="desc-ar"><b>عربي:</b> تقييم مالي للمشروع — بيحسب صافي القيمة الحالية (NPV)، ومعدل العائد الداخلي (IRR)، وفترة الاسترداد من جدول التدفقات. وعلى أساسه بيتقرر القبول أو الرفض.</p>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Study name (auto-generated default).</td><td class="ar">اسم الدراسة.</td></tr>
+    <tr><td><code>project_id</code></td><td class="type">M2o → project</td><td class="en">Linked project (or leave blank for hypothetical).</td><td class="ar">المشروع المرتبط بالدراسة (لو فيه).</td></tr>
+    <tr><td><code>state</code></td><td class="type">Selection</td><td class="en">draft / approved / rejected / archived.</td><td class="ar">مسودة، معتمد، مرفوض، مؤرشف.</td></tr>
+    <tr><td><code>description</code></td><td class="type">Html</td><td class="en">Free description.</td><td class="ar">وصف.</td></tr>
+    <tr><td><code>analysis_date / base_year / analysis_period_years</code></td><td class="type">Date / Integer</td><td class="en">When analyzed, base year, total years analyzed.</td><td class="ar">معاد التحليل، السنة الأساس، عدد سنين التحليل.</td></tr>
+    <tr><td><code>discount_rate</code></td><td class="type">Float · default=10%</td><td class="en">Discount rate for NPV calculation.</td><td class="ar">معدل الخصم اللي بيستخدم في حساب صافي القيمة الحالية.</td></tr>
+    <tr><td><code>currency_id</code></td><td class="type">M2o</td><td class="en">Study currency.</td><td class="ar">عملة الدراسة.</td></tr>
+    <tr><td><code>cash_flow_ids / scenario_ids</code></td><td class="type">O2m</td><td class="en">Cash flow rows + sensitivity scenarios.</td><td class="ar">سطور التدفقات النقدية وسيناريوهات الحساسية.</td></tr>
+    <tr><td><code>total_inflow / total_outflow / net_undiscounted</code></td><td class="type">Monetary · computed</td><td class="en">Totals + simple net (no discounting).</td><td class="ar">إجمالي الداخل، الخارج، والصافي بدون خصم.</td></tr>
+    <tr><td><code>npv</code></td><td class="type">Monetary · computed</td><td class="en">Net Present Value after discounting.</td><td class="ar">صافي القيمة الحالية بعد الخصم.</td></tr>
+    <tr><td><code>irr</code></td><td class="type">Float · computed</td><td class="en">Internal Rate of Return (%).</td><td class="ar">معدل العائد الداخلي.</td></tr>
+    <tr><td><code>payback_period</code></td><td class="type">Float · computed</td><td class="en">Years until cumulative cash flow turns positive.</td><td class="ar">عدد السنين لاسترداد رأس المال.</td></tr>
+    <tr><td><code>is_positive</code></td><td class="type">Boolean · computed</td><td class="en">True when NPV > 0.</td><td class="ar">صافي القيمة الحالية موجب — يعني المشروع مربح.</td></tr>
+    <tr><td><code>notes</code></td><td class="type">Html</td><td class="en">Free notes.</td><td class="ar">ملاحظات.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-cash-flow">
+  <h3><code>realestate.investment.cash.flow</code> — Cash flow row / سطر تدفق نقدي</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>feasibility_id</code></td><td class="type">M2o · required</td><td class="en">Parent study.</td><td class="ar">الدراسة الأب.</td></tr>
+    <tr><td><code>period_index</code></td><td class="type">Integer · required</td><td class="en">0 = base year, 1 = base + 1, etc.</td><td class="ar">رقم الفترة (0 = سنة الأساس، 1 = اللي بعدها).</td></tr>
+    <tr><td><code>year / period_label</code></td><td class="type">Integer / Char · computed</td><td class="en">Calendar year + label like "Year 1 (2027)".</td><td class="ar">السنة الميلادية والاسم زي «السنة 1 (2027)».</td></tr>
+    <tr><td><code>description</code></td><td class="type">Char</td><td class="en">Free label for the row.</td><td class="ar">وصف للسطر.</td></tr>
+    <tr><td><code>inflow / outflow / net_flow</code></td><td class="type">Monetary</td><td class="en">Inflow + outflow + net (in − out).</td><td class="ar">الداخل، الخارج، والصافي.</td></tr>
+    <tr><td><code>discounted_flow</code></td><td class="type">Monetary · computed</td><td class="en">net_flow discounted to present value.</td><td class="ar">الصافي بعد ما يتخصم للقيمة الحالية.</td></tr>
+  </table></div>
+</section>
+
+<section id="m-scenario">
+  <h3><code>realestate.investment.scenario</code> — Sensitivity scenario / سيناريو حساسية</h3>
+  <div class="card"><table>
+    <tr><th class="tech">Field</th><th class="type">Type</th><th class="en">English</th><th class="ar">مصري</th></tr>
+    <tr><td><code>feasibility_id</code></td><td class="type">M2o · required</td><td class="en">Parent study.</td><td class="ar">الدراسة الأب.</td></tr>
+    <tr><td><code>name</code></td><td class="type">Char · required</td><td class="en">Scenario name.</td><td class="ar">اسم السيناريو.</td></tr>
+    <tr><td><code>scenario_type</code></td><td class="type">Selection</td><td class="en">best / expected / worst / custom.</td><td class="ar">أفضل، متوقع، أسوأ، أو مخصص.</td></tr>
+    <tr><td><code>inflow_factor / outflow_factor</code></td><td class="type">Float</td><td class="en">Multipliers on inflows and outflows for this scenario (1.0 = same).</td><td class="ar">مضاعفات للداخل والخارج في السيناريو ده (1.0 = نفس الأرقام).</td></tr>
+    <tr><td><code>discount_rate_override</code></td><td class="type">Float</td><td class="en">If non-zero, overrides the study's discount rate.</td><td class="ar">معدل خصم بديل (0 = يستخدم نفس معدل الدراسة).</td></tr>
+    <tr><td><code>npv / irr / is_positive</code></td><td class="type">Monetary / Float / Boolean · computed</td><td class="en">Scenario-specific NPV, IRR, positive flag.</td><td class="ar">صافي القيمة الحالية ومعدل العائد ومؤشر الربحية للسيناريو ده.</td></tr>
+    <tr><td><code>sequence</code></td><td class="type">Integer</td><td class="en">Order.</td><td class="ar">ترتيب.</td></tr>
+  </table></div>
+</section>
+
+<section style="margin-top:3rem; padding:1rem; text-align:center; color:var(--muted); font-size:0.85rem;">
+  Generated from manifest + model introspection · ~40 models · bilingual (EN + EG-Arabic)
+</section>
+
+</main>
+
+</body>
+</html>

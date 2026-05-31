@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <record id="seq_handover" model="ir.sequence">
+        <field name="name">Handover</field>
+        <field name="code">realestate.handover</field>
+        <field name="prefix">HND-</field>
+        <field name="padding">5</field>
+    </record>
+    <record id="seq_snagging" model="ir.sequence">
+        <field name="name">Snagging Issue</field>
+        <field name="code">realestate.snagging.issue</field>
+        <field name="prefix">SNG-</field>
+        <field name="padding">5</field>
+    </record>
+    <record id="seq_warranty" model="ir.sequence">
+        <field name="name">Warranty</field>
+        <field name="code">realestate.warranty</field>
+        <field name="prefix">WAR-</field>
+        <field name="padding">5</field>
+    </record>
+</odoo>

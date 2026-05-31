@@ -1,0 +1,74 @@
+.o_rental_dashboard {
+    background: #f0f2f6;
+    min-height: 0;
+
+    .o_rd_toolbar { background: white; }
+
+    .o_rd_body {
+        overflow-y: auto;
+        min-height: 0;
+    }
+
+    /* KPI cards */
+    .o_rd_kpi {
+        background: white; border-radius: 8px; padding: 16px 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        border-left: 4px solid #888;
+        height: 100%;
+    }
+    .o_rd_kpi_label { color: #666; font-size: 11pt; font-weight: 500; }
+    .o_rd_kpi_value { font-size: 28pt; font-weight: bold; color: #222; line-height: 1.1; margin: 4px 0; }
+    .o_rd_kpi_sub { color: #888; font-size: 10pt; }
+    .o_rd_kpi_blue   { border-left-color: #0d6efd; }
+    .o_rd_kpi_green  { border-left-color: #28a745; }
+    .o_rd_kpi_purple { border-left-color: #6a1b9a; }
+    .o_rd_kpi_red    { border-left-color: #dc3545; }
+    .o_rd_kpi_blue   .o_rd_kpi_value { color: #0d6efd; }
+    .o_rd_kpi_green  .o_rd_kpi_value { color: #28a745; }
+    .o_rd_kpi_purple .o_rd_kpi_value { color: #6a1b9a; }
+    .o_rd_kpi_red    .o_rd_kpi_value { color: #dc3545; }
+
+    /* Card panel */
+    .o_rd_card {
+        background: white; border-radius: 8px; padding: 14px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        height: 100%;
+    }
+    .o_rd_card_title {
+        font-size: 12pt; font-weight: 600; color: #333;
+        margin-bottom: 10px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .o_rd_map { height: 400px; width: 100%; border-radius: 6px; }
+    .o_rd_chart   { height: 220px; }
+    .o_rd_chart_lg { height: 240px; }
+
+    .o_rd_legend .o_dot {
+        display: inline-block; width: 10px; height: 10px;
+        border-radius: 50%; margin-right: 4px; vertical-align: middle;
+    }
+
+    /* Hierarchy cards */
+    .o_rd_hierarchy_card {
+        background: #fafafa; padding: 10px; border-radius: 6px;
+        border-left: 3px solid #6a1b9a;
+        cursor: pointer; transition: transform 0.1s;
+    }
+    .o_rd_hierarchy_card:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    /* Lists */
+    .o_rd_list {
+        max-height: 280px; overflow-y: auto;
+    }
+    .o_rd_list_item {
+        padding: 8px 10px; border-bottom: 1px solid #eee;
+        cursor: pointer; transition: background 0.1s;
+    }
+    .o_rd_list_item:hover { background: #f8f9fa; }
+    .o_rd_list_item:last-child { border-bottom: none; }
+}

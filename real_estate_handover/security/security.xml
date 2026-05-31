@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <record id="module_category_handover" model="ir.module.category">
+        <field name="name">Real Estate Handover</field>
+        <field name="sequence">24</field>
+    </record>
+    <record id="group_handover_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="module_category_handover"/>
+    </record>
+    <record id="group_handover_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_category_handover"/>
+        <field name="implied_ids" eval="[(4, ref('group_handover_user'))]"/>
+    </record>
+</odoo>

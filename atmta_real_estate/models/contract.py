@@ -2,7 +2,6 @@ from odoo import models, fields, _, api
 from odoo.exceptions import UserError, ValidationError
 from dateutil.relativedelta import relativedelta
 import datetime
-from hijri.core import Hijriah
 
 
 class RealEstateContract(models.Model):
@@ -50,6 +49,11 @@ class RealEstateContract(models.Model):
     invoice_count = fields.Integer(compute='get_invoice_count', default=0)
     last_generated = fields.Datetime(string="Last Payment Generation", readonly=True)
     contract_payment_ids = fields.One2many('realestate.contract.payment', 'contract_id', string="Payments")
+    sale_order_id = fields.Many2one('sale.order', string='Sale Order', readonly=True, copy=False)
+    invoice_id = fields.Many2one('account.move', string='Rent Invoice', readonly=True, copy=False)
+    payment_term_id = fields.Many2one(
+        'account.payment.term', string='Payment Terms', readonly=True, copy=False,
+        help="Per-contract payment term derived from the rent schedule.")
     attachment_ids = fields.Many2many('ir.attachment', 'contract_attachment_rel', 'contract_id',
                                       'attachment_contract_id', 'Attachments',
                                       help="You may attach files to this template, to be added to all "
@@ -87,7 +91,7 @@ class RealEstateContract(models.Model):
     is_single_property = fields.Boolean(string='Is Single Unit Contract',
                                         default=lambda self: self.env['ir.config_parameter'].sudo().get_param(
                                             'atmta_real_estate.single_property_contract') == 'True')
-    property_id = fields.Many2one('product.product', string="Property", domain="[('is_property', '=', True)]")
+    property_id = fields.Many2one('realestate.property', string="Property")
     property_type_id = fields.Many2one(related='property_id.property_type_id', string='Property Type', store=True)
     price = fields.Float(string="Base Rent")
     payment_plan_ids = fields.Many2many(
@@ -188,21 +192,88 @@ class RealEstateContract(models.Model):
             self.line_ids.write({'state': 'confirmed'})
 
     def action_generate_invoices(self):
+        """One sale order + one invoice for the whole lease, split into the rent
+        schedule via a per-contract payment term (increments preserved)."""
         self.ensure_one()
         if self.state != 'confirmed':
             raise UserError("You must confirm the contract before generating invoices.")
-        self.action_create_invoices()
-        if self.move_ids:
-            self.state = 'invoiced'
-            if self.is_multi_property:
-                self.line_ids.write({'state': 'invoiced'})
+        if self.invoice_id:
+            raise UserError("The rent invoice has already been generated.")
+        payments = self.contract_payment_ids.sorted(lambda p: p.date_due or fields.Date.today())
+        if not payments:
+            raise UserError("Generate the payment schedule first.")
+        total = sum(payments.mapped('amount'))
+        if total <= 0:
+            raise UserError("The scheduled rent total must be positive.")
+        line_vals = self._rent_so_line_vals(total)
+        if not line_vals:
+            raise UserError("The unit has no linked product to invoice.")
+        term = self._build_rent_payment_term(payments, total)
+        order = self.env['sale.order']._create_re_bridge_order(
+            partner=self.partner_id, origin=self.name, source=self, line_vals=line_vals)
+        if not order:
+            return
+        order.payment_term_id = term.id
+        self.sale_order_id = order.id
+        self.payment_term_id = term.id
+        invoices = order._create_invoices()
+        if invoices:
+            invoices.write({'invoice_payment_term_id': term.id, 'contract_id': self.id})
+            self.env['realestate.account.tools'].post_moves(invoices)
+            self.invoice_id = invoices[:1].id
+        self.state = 'invoiced'
+        if self.is_multi_property:
+            self.line_ids.write({'state': 'invoiced'})
+
+    def _build_rent_payment_term(self, payments, total):
+        """Turn the dated rent schedule into a per-contract payment term:
+        one percent line per scheduled payment, at its day offset."""
+        start = self.start_date
+        cmds = []
+        allocated = 0.0
+        for p in payments:
+            pct = round((p.amount / total) * 100.0, 6) if total else 0.0
+            days = (p.date_due - start).days if (p.date_due and start) else 0
+            cmds.append((0, 0, {
+                'value': 'percent', 'value_amount': pct,
+                'delay_type': 'days_after', 'nb_days': max(days, 0),
+            }))
+            allocated += pct
+        if cmds:
+            cmds[-1][2]['value_amount'] = round(cmds[-1][2]['value_amount'] + (100.0 - allocated), 6)
+        return self.env['account.payment.term'].create({
+            'name': _('Rent schedule — %s') % self.name,
+            're_is_realestate': True,
+            'line_ids': cmds,
+        })
+
+    def _rent_so_line_vals(self, total):
+        """SO/invoice lines: one per property (multi) or the unit (single)."""
+        if self.is_multi_property:
+            by_prop = {}
+            for p in self.contract_payment_ids:
+                if p.property_id:
+                    by_prop[p.property_id] = by_prop.get(p.property_id, 0.0) + p.amount
+            return [{
+                'product_id': prop.product_variant_id.id,
+                'name': _('Rent — %s') % prop.display_name,
+                'product_uom_qty': 1, 'price_unit': amt,
+            } for prop, amt in by_prop.items() if prop.product_variant_id]
+        prop = self.property_id
+        if not prop or not prop.product_variant_id:
+            return []
+        return [{
+            'product_id': prop.product_variant_id.id,
+            'name': _('Rent — %s') % prop.display_name,
+            'product_uom_qty': 1, 'price_unit': total,
+        }]
 
     def action_activate(self):
         for contract in self:
             if contract.state != 'invoiced':
                 raise UserError("You must generate invoices before activating the contract.")
             contract.state = 'active'
-            if self.is_multi_property:
+            if contract.is_multi_property:
                 # Auto-activate lines that match contract start date
                 for line in contract.line_ids:
                     if (
@@ -210,21 +281,26 @@ class RealEstateContract(models.Model):
                             and line.start_date == contract.start_date
                     ):
                         line.state = 'active'
+            elif contract.property_id and contract.property_id.state == 'available':
+                # Single-unit contract: flip the property to rented
+                contract.property_id.state = 'rented'
 
     def action_terminate(self):
         for contract in self:
             if contract.state not in ['confirmed', 'invoiced', 'active']:
                 raise UserError("Only confirmed, invoiced, or active contracts can be terminated.")
 
-            # Cancel only draft invoices
-            draft_moves = contract.contract_payment_ids.mapped('move_id').filtered(lambda m: m.state == 'draft')
-            for move in draft_moves:
-                move.button_cancel()
+            # Cancel the rent invoice if it's still a draft.
+            if contract.invoice_id and contract.invoice_id.state == 'draft':
+                contract.invoice_id.button_cancel()
 
             # Update contract and its lines
             contract.state = 'terminated'
-            if self.is_multi_property:
+            if contract.is_multi_property:
                 contract.line_ids.filtered(lambda l: l.state != 'expired').write({'state': 'terminated'})
+            elif contract.property_id and contract.property_id.state == 'rented':
+                # Free the unit
+                contract.property_id.state = 'available'
 
     def check_contract_expiry(self):
         today = fields.Date.today()
@@ -232,37 +308,22 @@ class RealEstateContract(models.Model):
         expired.write({'state': 'expired'})
 
     @api.depends('contract_payment_ids.amount',
-                 'contract_payment_ids.move_id.state')
+                 'invoice_id.amount_total', 'invoice_id.amount_residual',
+                 'invoice_id.payment_state', 'invoice_id.state')
     def _compute_totals(self):
-        if not self:
-            return
-
-        # First get all payment amounts (total scheduled)
-        payment_totals = self.env['realestate.contract.payment'].read_group(
-            [('contract_id', 'in', self.ids)],
-            ['amount', 'contract_id'],
-            ['contract_id']
-        )
-        scheduled_map = {x['contract_id'][0]: x['amount'] for x in payment_totals}
-
-        # Then get only posted payments
-        posted_totals = self.env['realestate.contract.payment'].read_group(
-            [('contract_id', 'in', self.ids),
-             ('move_id.state', '=', 'posted')],
-            ['amount', 'contract_id'],
-            ['contract_id']
-        )
-        paid_map = {x['contract_id'][0]: x['amount'] for x in posted_totals}
-
-        # Compute values
         for contract in self:
-            total = scheduled_map.get(contract.id, 0.0)
-            paid = paid_map.get(contract.id, 0.0)
-            contract.update({
-                'total_scheduled': total,
-                'total_paid': paid,
-                'balance_due': total - paid
-            })
+            inv = contract.invoice_id
+            if inv and inv.state == 'posted':
+                # Once invoiced, track the actual invoice (tax-inclusive) so
+                # scheduled / paid / balance stay on the same basis.
+                contract.total_scheduled = inv.amount_total
+                contract.total_paid = inv.amount_total - inv.amount_residual
+                contract.balance_due = inv.amount_residual
+            else:
+                scheduled = sum(contract.contract_payment_ids.mapped('amount'))
+                contract.total_scheduled = scheduled
+                contract.total_paid = 0.0
+                contract.balance_due = scheduled
 
     @api.depends('contract_payment_ids')
     def get_payment_count(self):
@@ -355,8 +416,11 @@ class RealEstateContract(models.Model):
                     if all(line.write_date <= contract.last_generated for line in contract.line_ids):
                         continue
 
-            # Remove previous non-invoiced payments
-            contract.contract_payment_ids.filtered(lambda p: not p.move_id).unlink()
+            # Remove previous non-invoiced payments, but keep any that carry
+            # manual charges (e.g. maintenance billed to the tenant) so they
+            # aren't silently lost on regeneration.
+            contract.contract_payment_ids.filtered(
+                lambda p: not p.move_id and not p.charge_line_ids).unlink()
 
             payments_to_create = []
 
@@ -448,8 +512,8 @@ class RealEstateContract(models.Model):
 
         # Prepare invoice vals
         for payment in payments:
-            product = payment.contract_line_id.property_id if payment.contract_line_id else payment.contract_id.property_id
-            account_id = product.categ_id.property_account_income_categ_id.id
+            prop = payment.contract_line_id.property_id if payment.contract_line_id else payment.contract_id.property_id
+            account_id = prop.categ_id.property_account_income_categ_id.id
 
             invoices_to_create.append({
                 'move_type': 'out_invoice',
@@ -457,31 +521,23 @@ class RealEstateContract(models.Model):
                 'contract_id': payment.contract_id.id,
                 'invoice_date': payment.date_due,
                 'payment_reference': payment.name,
-                'invoice_line_ids': [(0, 0, {
-                    'name': f'Rent for {product.display_name} on {payment.date_due}',
-                    'product_id': product.id,
-                    'quantity': 1,
-                    'price_unit': payment.amount,
-                    'account_id': account_id,
-                })]
+                'invoice_line_ids': payment._get_invoice_line_commands(prop, account_id),
             })
 
         # Batch create invoices
         invoices = self.env['account.move'].create(invoices_to_create)
 
-        # Link payments to invoices
+        # Link payments to invoices (payment.state is computed from the move)
         invoice_map = {
             inv.payment_reference: inv
             for inv in invoices
         }
-
-        # Update payments in bulk
         for payment in payments:
             if payment.name in invoice_map:
-                payment.write({
-                    'move_id': invoice_map[payment.name].id,
-                    'state': 'invoiced',
-                })
+                payment.move_id = invoice_map[payment.name].id
+
+        # Post the freshly created invoices so they hit the ledger.
+        self.env['realestate.account.tools'].post_moves(invoices)
         return invoices
 
     def action_get_invoices(self):
@@ -491,6 +547,15 @@ class RealEstateContract(models.Model):
             'res_model': 'account.move',
             'view_mode': 'list,form',
             'domain': [('contract_id', '=', self.id)],
+        }
+
+    def action_view_sale_order(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'sale.order',
+            'view_mode': 'form',
+            'res_id': self.sale_order_id.id,
         }
 
     def _sync_contract_history(self):

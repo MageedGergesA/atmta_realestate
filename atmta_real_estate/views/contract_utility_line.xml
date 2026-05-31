@@ -16,6 +16,11 @@
                             string="Reset To Draft"
                             class="btn-primary"
                             />
+                    <button name="action_register_payment_utility"
+                            type="object"
+                            string="Register Payment"
+                            class="btn-secondary"
+                            invisible="state != 'confirmed' or bill_paid"/>
                     <field name="state"
                            widget="statusbar"
                            statusbar_visible="draft,confirmed"/>
@@ -26,6 +31,7 @@
                     <group>
                         <field name="contract_id"/>
                         <field name="name"/>
+                        <field name="vendor_id"/>
                         <field name="date"/>
                         <field name="amount"/>
 <!--                        <field name="state"/>-->
@@ -43,6 +49,7 @@
             <list>
                 <field name="name"/>
                 <field name="contract_id"/>
+                <field name="vendor_id"/>
                 <field name="date"/>
                 <field name="amount"/>
                 <field name="state" widget="badge"/>

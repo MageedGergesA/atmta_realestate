@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_maquette_browser" model="ir.actions.act_window">
+        <field name="name">3D Maquettes</field>
+        <field name="res_model">realestate.project</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('maquette_glb', '!=', False)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No projects with a 3D maquette yet</p>
+            <p>Upload a <code>.glb</code> file on any project to make it visible here.</p>
+        </field>
+    </record>
+
+    <record id="action_maquette_preview_3d" model="ir.actions.client">
+        <field name="name">3D Maquette</field>
+        <field name="tag">real_estate_maquette.preview_3d</field>
+    </record>
+
+    <record id="action_master_plan_2d" model="ir.actions.client">
+        <field name="name">2D Master Plan</field>
+        <field name="tag">real_estate_maquette.master_plan_2d</field>
+    </record>
+
+    <menuitem id="menu_maquette_root"
+              name="Project Plans"
+              web_icon="real_estate_maquette,static/description/icon.png"
+              sequence="29"/>
+
+    <menuitem id="menu_maquette_preview_3d"
+              name="3D Maquette"
+              parent="menu_maquette_root"
+              action="action_maquette_preview_3d"
+              sequence="5"/>
+
+    <menuitem id="menu_master_plan_2d"
+              name="2D Master Plan"
+              parent="menu_maquette_root"
+              action="action_master_plan_2d"
+              sequence="7"/>
+
+    <menuitem id="menu_maquette_browser"
+              name="Browse Projects"
+              parent="menu_maquette_root"
+              action="action_maquette_browser"
+              sequence="10"/>
+
+    <record id="action_building_region" model="ir.actions.act_window">
+        <field name="name">2D Plan Regions</field>
+        <field name="res_model">realestate.building.region</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Admin-only data table for building regions. Hidden by default; the
+         visual editor in "2D Master Plan" is the canonical place to manage
+         these. Re-enable by removing `active="False"` if you need raw access. -->
+    <menuitem id="menu_building_region"
+              name="2D Plan Regions"
+              parent="menu_maquette_root"
+              action="action_building_region"
+              sequence="20"
+              groups="base.group_system"
+              active="False"/>
+</odoo>

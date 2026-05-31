@@ -7,7 +7,7 @@ class RealEstateContractLineHistory(models.Model):
     _order = 'start_date desc'
 
     contract_id = fields.Many2one('realestate.contract', string='Contract', required=True, ondelete='cascade')
-    property_id = fields.Many2one('product.product', string='Property', required=True, ondelete='cascade')
+    property_id = fields.Many2one('realestate.property', string='Property', required=True, ondelete='cascade')
     tenant_id = fields.Many2one(related='contract_id.partner_id', string="Tenant", store=True)
     start_date = fields.Date(string='Start Date')
     end_date = fields.Date(string='End Date')

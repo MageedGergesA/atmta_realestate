@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="real_estate_developer.DeveloperDashboard">
+        <div class="o_action o_dev_dashboard d-flex flex-column h-100">
+
+            <div class="o_dv_toolbar d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
+                <div>
+                    <h3 class="mb-0 d-inline-block me-3"><i class="fa fa-building me-2"/>Developer Dashboard</h3>
+                    <span class="text-muted small">Last update: <t t-esc="state.lastUpdate or '—'"/></span>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <button class="btn btn-sm btn-primary" t-on-click="() => this.refresh()">
+                        <i class="fa fa-refresh me-1"/>Refresh
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary"
+                            t-att-class="{ 'btn-success text-white': state.autoRefresh }"
+                            t-on-click="() => this.toggleAutoRefresh()">
+                        <i class="fa fa-clock-o me-1"/>
+                        <t t-if="state.autoRefresh">Auto ON</t><t t-else="">Auto OFF</t>
+                    </button>
+                </div>
+            </div>
+
+            <div t-if="state.loading" class="text-center p-5">
+                <i class="fa fa-spinner fa-spin fa-3x text-muted"/>
+            </div>
+
+            <div t-if="state.data" class="o_dv_body p-3">
+
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        <div class="o_dv_kpi o_dv_blue">
+                            <div class="o_dv_label">Active Projects</div>
+                            <div class="o_dv_value"><t t-esc="state.data.kpis.active_projects"/></div>
+                            <div class="o_dv_sub"><t t-esc="state.data.kpis.construction_projects"/> in construction</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="o_dv_kpi o_dv_green">
+                            <div class="o_dv_label">Sold Units</div>
+                            <div class="o_dv_value"><t t-esc="state.data.kpis.sold_units"/></div>
+                            <div class="o_dv_sub">of <t t-esc="state.data.kpis.total_units"/> · <t t-esc="state.data.kpis.sales_progress"/>%</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="o_dv_kpi o_dv_orange">
+                            <div class="o_dv_label">Reservations</div>
+                            <div class="o_dv_value"><t t-esc="state.data.kpis.active_reservations"/></div>
+                            <div class="o_dv_sub">held / booked</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="o_dv_kpi o_dv_purple">
+                            <div class="o_dv_label">Active Contracts</div>
+                            <div class="o_dv_value"><t t-esc="state.data.kpis.signed_contracts"/></div>
+                            <div class="o_dv_sub">signed</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="o_dv_kpi o_dv_teal">
+                            <div class="o_dv_label">Revenue MTD</div>
+                            <div class="o_dv_value"><t t-esc="state.data.currency"/> <t t-esc="formatMoney(state.data.kpis.paid_mtd)"/></div>
+                            <div class="o_dv_sub">collected</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="o_dv_kpi o_dv_red">
+                            <div class="o_dv_label">Overdue</div>
+                            <div class="o_dv_value"><t t-esc="state.data.currency"/> <t t-esc="formatMoney(state.data.overdue_amount)"/></div>
+                            <div class="o_dv_sub"><t t-esc="state.data.overdue_count"/> installment(s)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-8">
+                        <div class="o_dv_card">
+                            <div class="o_dv_card_title"><i class="fa fa-map-marker me-2"/>Project Locations</div>
+                            <div t-ref="map" class="o_dv_map"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="o_dv_card mb-3">
+                            <div class="o_dv_card_title">Projects by State</div>
+                            <div class="o_dv_chart"><canvas t-ref="donutProj"/></div>
+                        </div>
+                        <div class="o_dv_card">
+                            <div class="o_dv_card_title">Units by State</div>
+                            <div class="o_dv_chart"><canvas t-ref="donutUnit"/></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="o_dv_card">
+                            <div class="o_dv_card_title">Sales Velocity — 6 months</div>
+                            <div class="o_dv_chart_lg"><canvas t-ref="lineVelocity"/></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="o_dv_card">
+                            <div class="o_dv_card_title">Top Projects by Contracted Value</div>
+                            <div class="o_dv_chart_lg"><canvas t-ref="barProjects"/></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="o_dv_card">
+                            <div class="o_dv_card_title"><i class="fa fa-hourglass-half me-2 text-warning"/>Expiring Reservations</div>
+                            <div class="o_dv_list">
+                                <div t-foreach="state.data.expiring_reservations" t-as="r" t-key="r.id"
+                                     class="o_dv_item" t-on-click="() => this.openReservation(r.id)">
+                                    <div class="d-flex justify-content-between">
+                                        <strong><t t-esc="r.property"/></strong>
+                                        <span class="badge bg-warning text-dark"><t t-esc="r.expiry"/></span>
+                                    </div>
+                                    <div class="small text-muted"><t t-esc="r.partner"/></div>
+                                </div>
+                                <div t-if="!state.data.expiring_reservations.length" class="text-muted text-center p-3">No expiring holds</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="o_dv_card">
+                            <div class="o_dv_card_title"><i class="fa fa-calendar-check-o me-2 text-info"/>Upcoming Installments (30d)</div>
+                            <div class="o_dv_list">
+                                <div t-foreach="state.data.upcoming_installments" t-as="i" t-key="i.id"
+                                     class="o_dv_item" t-on-click="() => this.openInstallment(i.id)">
+                                    <div class="d-flex justify-content-between">
+                                        <strong><t t-esc="i.partner"/></strong>
+                                        <span class="text-success"><t t-esc="state.data.currency"/> <t t-esc="formatMoney(i.amount)"/></span>
+                                    </div>
+                                    <div class="small text-muted"><t t-esc="i.contract"/> · <t t-esc="i.date_due"/> · <t t-esc="i.kind"/></div>
+                                </div>
+                                <div t-if="!state.data.upcoming_installments.length" class="text-muted text-center p-3">No installments due</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="o_dv_card">
+                            <div class="o_dv_card_title"><i class="fa fa-file-text me-2 text-success"/>Recent Contracts</div>
+                            <div class="o_dv_list">
+                                <div t-foreach="state.data.recent_contracts" t-as="c" t-key="c.id"
+                                     class="o_dv_item" t-on-click="() => this.openContract(c.id)">
+                                    <div class="d-flex justify-content-between">
+                                        <strong><t t-esc="c.partner"/></strong>
+                                        <span class="badge bg-secondary"><t t-esc="c.state"/></span>
+                                    </div>
+                                    <div class="small text-muted"><t t-esc="c.property"/></div>
+                                    <div class="small text-success"><t t-esc="state.data.currency"/> <t t-esc="formatMoney(c.sale_price)"/></div>
+                                </div>
+                                <div t-if="!state.data.recent_contracts.length" class="text-muted text-center p-3">No contracts yet</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </t>
+
+</templates>

@@ -1,0 +1,32 @@
+.o_con_dashboard {
+    background: #f4f5f9; min-height: 0;
+    .o_cn_toolbar { background: white; }
+    .o_cn_body { overflow-y: auto; min-height: 0; }
+    .o_cn_kpi {
+        background: white; border-radius: 8px; padding: 14px 16px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        border-left: 4px solid #888; height: 100%;
+    }
+    .o_cn_label { color: #666; font-size: 10pt; font-weight: 500; }
+    .o_cn_value { font-size: 22pt; font-weight: bold; line-height: 1.1; margin: 4px 0; }
+    .o_cn_sub { color: #888; font-size: 9pt; }
+    .o_cn_blue   { border-left-color: #0d6efd; .o_cn_value { color: #0d6efd; } }
+    .o_cn_green  { border-left-color: #28a745; .o_cn_value { color: #28a745; } }
+    .o_cn_orange { border-left-color: #fb8c00; .o_cn_value { color: #fb8c00; } }
+    .o_cn_teal   { border-left-color: #00897b; .o_cn_value { color: #00897b; } }
+    .o_cn_red    { border-left-color: #dc3545; .o_cn_value { color: #dc3545; } }
+    .o_cn_card {
+        background: white; border-radius: 8px; padding: 14px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05); height: 100%;
+    }
+    .o_cn_card_title { font-size: 11pt; font-weight: 600; color: #333; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #eee; }
+    .o_cn_map { height: 380px; width: 100%; border-radius: 6px; }
+    .o_cn_chart { height: 180px; }
+    .o_cn_chart_lg { height: 260px; }
+    .o_cn_list { max-height: 320px; overflow-y: auto; }
+    .o_cn_item {
+        padding: 8px 10px; border-bottom: 1px solid #eee; cursor: pointer;
+        &:hover { background: #f8f9fa; }
+        &:last-child { border-bottom: none; }
+    }
+}

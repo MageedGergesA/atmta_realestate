@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <record id="module_category_investment" model="ir.module.category">
+        <field name="name">Real Estate Investment</field>
+        <field name="sequence">25</field>
+    </record>
+    <record id="group_investment_user" model="res.groups">
+        <field name="name">Analyst</field>
+        <field name="category_id" ref="module_category_investment"/>
+    </record>
+    <record id="group_investment_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_category_investment"/>
+        <field name="implied_ids" eval="[(4, ref('group_investment_user'))]"/>
+    </record>
+</odoo>

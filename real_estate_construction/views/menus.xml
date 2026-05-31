@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_construction_root"
+              name="Construction"
+              web_icon="real_estate_construction,static/description/icon.png"
+              sequence="28"/>
+
+    <menuitem id="menu_construction_milestones"
+              name="Milestones"
+              parent="menu_construction_root"
+              action="action_milestone"
+              sequence="10"/>
+
+    <menuitem id="menu_construction_tasks"
+              name="Tasks"
+              parent="menu_construction_root"
+              action="action_construction_task"
+              sequence="15"/>
+
+    <menuitem id="menu_construction_cost_lines"
+              name="Cost Lines"
+              parent="menu_construction_root"
+              action="action_cost_line"
+              sequence="20"/>
+
+    <menuitem id="menu_construction_payment_certificates"
+              name="Payment Certificates"
+              parent="menu_construction_root"
+              action="action_payment_certificate"
+              sequence="25"/>
+
+    <menuitem id="menu_construction_contractors"
+              name="Contractors"
+              parent="menu_construction_root"
+              action="action_contractor"
+              sequence="30"/>
+
+    <record id="action_construction_subcontract_pos" model="ir.actions.act_window">
+        <field name="name">Subcontract POs</field>
+        <field name="res_model">purchase.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('re_source_model', '=', 'realestate.contractor')]</field>
+    </record>
+
+    <menuitem id="menu_construction_subcontract_pos"
+              name="Subcontract POs"
+              parent="menu_construction_root"
+              action="action_construction_subcontract_pos"
+              sequence="35"/>
+</odoo>

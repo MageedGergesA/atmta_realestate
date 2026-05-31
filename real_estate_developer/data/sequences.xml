@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+
+    <record id="seq_realestate_project" model="ir.sequence">
+        <field name="name">Real Estate Project</field>
+        <field name="code">realestate.project</field>
+        <field name="prefix">PRJ-</field>
+        <field name="padding">4</field>
+    </record>
+
+    <record id="seq_realestate_reservation" model="ir.sequence">
+        <field name="name">Unit Reservation</field>
+        <field name="code">realestate.unit.reservation</field>
+        <field name="prefix">RES-</field>
+        <field name="padding">5</field>
+    </record>
+
+    <record id="seq_realestate_sale_contract" model="ir.sequence">
+        <field name="name">Sale Contract</field>
+        <field name="code">realestate.sale.contract</field>
+        <field name="prefix">SC-</field>
+        <field name="padding">5</field>
+    </record>
+
+</odoo>

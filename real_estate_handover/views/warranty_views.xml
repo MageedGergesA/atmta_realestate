@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_warranty_list" model="ir.ui.view">
+        <field name="name">realestate.warranty.list</field>
+        <field name="model">realestate.warranty</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="property_id"/>
+                <field name="partner_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="period_months"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_warranty_form" model="ir.ui.view">
+        <field name="name">realestate.warranty.form</field>
+        <field name="model">realestate.warranty</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name" readonly="1"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="sale_contract_id" options="{'no_create': True}"/>
+                            <field name="property_id" readonly="1"/>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="state" widget="badge"/>
+                        </group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="period_months"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Coverage"><field name="coverage_notes"/></page>
+                        <page string="Exclusions"><field name="exclusion_notes"/></page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="action_warranty" model="ir.actions.act_window">
+        <field name="name">Warranties</field>
+        <field name="res_model">realestate.warranty</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

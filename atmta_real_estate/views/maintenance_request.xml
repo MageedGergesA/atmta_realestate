@@ -104,6 +104,12 @@
                             string="Reset to Draft"
                             class="btn-light"/>
 
+                    <button name="action_bill_to_tenant"
+                            type="object"
+                            string="Bill to Tenant"
+                            class="btn-primary"
+                            invisible="state != 'done' or charge_to_tenant or not contract_id"/>
+
                     <field name="state"
                            widget="statusbar"
                            statusbar_visible="draft,scheduled,in_progress,done,cancelled"/>
@@ -129,6 +135,14 @@
                             <field name="description"/>
                             <field name="cost"/>
                             <field name="actual_cost"/>
+                        </group>
+
+                        <group string="Tenant Charge" col="2">
+                            <field name="contract_id"/>
+                            <field name="charge_amount"/>
+                            <field name="charge_to_tenant"/>
+                            <field name="payment_line_id" readonly="1"
+                                   invisible="not payment_line_id"/>
                         </group>
 
                     </group>

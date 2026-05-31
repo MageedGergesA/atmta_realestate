@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="1">
+    <!-- Real-estate stock tree, nested under the default warehouse stock so
+         per-project locations are valid internal destinations for material
+         receipts and unit quants. -->
+    <record id="stock_location_re_root" model="stock.location">
+        <field name="name">Real Estate</field>
+        <field name="usage">view</field>
+        <field name="location_id" ref="stock.stock_location_stock"/>
+    </record>
+
+    <!-- Units with no project live here until assigned. Per-project
+         locations are created lazily by the developer module. -->
+    <record id="stock_location_re_unassigned" model="stock.location">
+        <field name="name">Unassigned Units</field>
+        <field name="usage">internal</field>
+        <field name="location_id" ref="stock_location_re_root"/>
+    </record>
+
+    <!-- Lifecycle locations (global). A unit's quant relocates here as its
+         state changes. -->
+    <record id="stock_location_re_reserved" model="stock.location">
+        <field name="name">Reserved Units</field>
+        <field name="usage">internal</field>
+        <field name="location_id" ref="stock_location_re_root"/>
+    </record>
+    <record id="stock_location_re_sold" model="stock.location">
+        <field name="name">Sold Units</field>
+        <field name="usage">customer</field>
+        <field name="location_id" ref="stock_location_re_root"/>
+    </record>
+</odoo>

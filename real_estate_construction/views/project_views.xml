@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_project_form_inherit_construction" model="ir.ui.view">
+        <field name="name">realestate.project.form.construction</field>
+        <field name="model">realestate.project</field>
+        <field name="inherit_id" ref="real_estate_developer.view_project_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Construction" name="construction">
+                    <group>
+                        <group>
+                            <field name="construction_progress" widget="progressbar" readonly="1"/>
+                            <field name="milestone_count" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="actual_cost" readonly="1"/>
+                            <field name="cost_variance" readonly="1"/>
+                        </group>
+                    </group>
+                    <separator string="Milestones"/>
+                    <field name="milestone_ids" context="{'default_project_id': id}">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="name"/>
+                            <field name="category"/>
+                            <field name="contractor_id"/>
+                            <field name="weight"/>
+                            <field name="completion_percentage" widget="progressbar"/>
+                            <field name="state" widget="badge"/>
+                        </list>
+                    </field>
+                    <separator string="Cost Lines"/>
+                    <field name="cost_line_ids" context="{'default_project_id': id}">
+                        <list editable="bottom">
+                            <field name="date"/>
+                            <field name="name"/>
+                            <field name="category"/>
+                            <field name="milestone_id"/>
+                            <field name="contractor_id"/>
+                            <field name="amount" sum="Total"/>
+                            <field name="currency_id" column_invisible="1"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_phase_form_inherit_construction" model="ir.ui.view">
+        <field name="name">realestate.phase.form.construction</field>
+        <field name="model">realestate.phase</field>
+        <field name="inherit_id" ref="real_estate_developer.view_phase_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Construction" name="construction">
+                    <group>
+                        <field name="construction_progress" widget="progressbar" readonly="1"/>
+                    </group>
+                    <field name="milestone_ids" context="{'default_phase_id': id, 'default_project_id': project_id}">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="name"/>
+                            <field name="category"/>
+                            <field name="contractor_id"/>
+                            <field name="weight"/>
+                            <field name="completion_percentage" widget="progressbar"/>
+                            <field name="state" widget="badge"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

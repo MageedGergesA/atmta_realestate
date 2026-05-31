@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_sale_installment_list" model="ir.ui.view">
+        <field name="name">realestate.sale.installment.list</field>
+        <field name="model">realestate.sale.installment</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sale_contract_id"/>
+                <field name="partner_id"/>
+                <field name="property_id"/>
+                <field name="kind"/>
+                <field name="date_due"/>
+                <field name="amount"/>
+                <field name="state" widget="badge"/>
+                <field name="move_id" optional="show"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_sale_installment" model="ir.actions.act_window">
+        <field name="name">All Installments</field>
+        <field name="res_model">realestate.sale.installment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

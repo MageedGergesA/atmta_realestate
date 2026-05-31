@@ -1,0 +1,1472 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!-- ========================================================== -->
+    <!--  CONSTRUCTION — CIVIL                                       -->
+    <!-- ========================================================== -->
+    <record id="prod_cement_portland" model="product.template">
+        <field name="name">Portland Cement (50kg bag)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_civil"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">25.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_cement_white" model="product.template">
+        <field name="name">White Cement (50kg bag)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_civil"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">60.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_sand" model="product.template">
+        <field name="name">Sand</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_civil"/>
+        <field name="uom_id" ref="uom.product_uom_cubic_meter"/>
+        <field name="uom_po_id" ref="uom.product_uom_cubic_meter"/>
+        <field name="standard_price">80.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_aggregate_10" model="product.template">
+        <field name="name">Aggregate 10mm</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_civil"/>
+        <field name="uom_id" ref="uom.product_uom_cubic_meter"/>
+        <field name="uom_po_id" ref="uom.product_uom_cubic_meter"/>
+        <field name="standard_price">90.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_aggregate_20" model="product.template">
+        <field name="name">Aggregate 20mm</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_civil"/>
+        <field name="uom_id" ref="uom.product_uom_cubic_meter"/>
+        <field name="uom_po_id" ref="uom.product_uom_cubic_meter"/>
+        <field name="standard_price">85.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_crushed_stone" model="product.template">
+        <field name="name">Crushed Stone</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_civil"/>
+        <field name="uom_id" ref="uom.product_uom_cubic_meter"/>
+        <field name="uom_po_id" ref="uom.product_uom_cubic_meter"/>
+        <field name="standard_price">75.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_lime_powder" model="product.template">
+        <field name="name">Lime Powder (25kg bag)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_civil"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">18.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_gypsum_powder" model="product.template">
+        <field name="name">Gypsum Powder (25kg bag)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_civil"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">22.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_mortar_premix" model="product.template">
+        <field name="name">Mortar Premix (40kg bag)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_civil"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">28.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_concrete_block_20" model="product.template">
+        <field name="name">Concrete Block 20cm</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_civil"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">3.5</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_concrete_block_15" model="product.template">
+        <field name="name">Concrete Block 15cm</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_civil"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">2.8</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_concrete_block_10" model="product.template">
+        <field name="name">Concrete Block 10cm</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_civil"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">2.2</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_red_brick" model="product.template">
+        <field name="name">Red Brick (standard)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_civil"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">0.9</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_hollow_block" model="product.template">
+        <field name="name">Hollow Block</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_civil"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">2.5</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_lightweight_block" model="product.template">
+        <field name="name">Lightweight AAC Block</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_civil"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">4.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <!-- ========================================================== -->
+    <!--  CONSTRUCTION — STRUCTURAL                                  -->
+    <!-- ========================================================== -->
+    <record id="prod_rebar_08" model="product.template">
+        <field name="name">Rebar 8mm</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_structural"/>
+        <field name="uom_id" ref="uom.product_uom_ton"/>
+        <field name="uom_po_id" ref="uom.product_uom_ton"/>
+        <field name="standard_price">2800.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_rebar_10" model="product.template">
+        <field name="name">Rebar 10mm</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_structural"/>
+        <field name="uom_id" ref="uom.product_uom_ton"/>
+        <field name="uom_po_id" ref="uom.product_uom_ton"/>
+        <field name="standard_price">2750.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_rebar_12" model="product.template">
+        <field name="name">Rebar 12mm</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_structural"/>
+        <field name="uom_id" ref="uom.product_uom_ton"/>
+        <field name="uom_po_id" ref="uom.product_uom_ton"/>
+        <field name="standard_price">2700.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_rebar_16" model="product.template">
+        <field name="name">Rebar 16mm</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_structural"/>
+        <field name="uom_id" ref="uom.product_uom_ton"/>
+        <field name="uom_po_id" ref="uom.product_uom_ton"/>
+        <field name="standard_price">2680.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_rebar_20" model="product.template">
+        <field name="name">Rebar 20mm</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_structural"/>
+        <field name="uom_id" ref="uom.product_uom_ton"/>
+        <field name="uom_po_id" ref="uom.product_uom_ton"/>
+        <field name="standard_price">2670.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_rebar_25" model="product.template">
+        <field name="name">Rebar 25mm</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_structural"/>
+        <field name="uom_id" ref="uom.product_uom_ton"/>
+        <field name="uom_po_id" ref="uom.product_uom_ton"/>
+        <field name="standard_price">2650.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_wire_mesh" model="product.template">
+        <field name="name">Steel Wire Mesh (sheet)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_structural"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">95.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_steel_ibeam" model="product.template">
+        <field name="name">Steel I-Beam</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_structural"/>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="uom_po_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">180.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_steel_angle" model="product.template">
+        <field name="name">Steel Angle</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_structural"/>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="uom_po_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">45.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_steel_plate" model="product.template">
+        <field name="name">Steel Plate</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_structural"/>
+        <field name="uom_id" ref="uom.product_uom_kgm"/>
+        <field name="uom_po_id" ref="uom.product_uom_kgm"/>
+        <field name="standard_price">8.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <!-- ========================================================== -->
+    <!--  CONSTRUCTION — MEP                                         -->
+    <!-- ========================================================== -->
+    <record id="prod_pvc_pipe_12" model="product.template">
+        <field name="name">PVC Pipe 1/2"</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_mep"/>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="uom_po_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">3.5</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_pvc_pipe_34" model="product.template">
+        <field name="name">PVC Pipe 3/4"</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_mep"/>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="uom_po_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">5.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_pvc_pipe_1" model="product.template">
+        <field name="name">PVC Pipe 1"</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_mep"/>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="uom_po_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">7.5</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_pvc_pipe_2" model="product.template">
+        <field name="name">PVC Pipe 2"</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_mep"/>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="uom_po_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">14.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_copper_pipe_12" model="product.template">
+        <field name="name">Copper Pipe 1/2"</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_mep"/>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="uom_po_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">35.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_hdpe_pipe_50" model="product.template">
+        <field name="name">HDPE Pipe 50mm</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_mep"/>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="uom_po_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">22.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_cable_25" model="product.template">
+        <field name="name">Electrical Cable 2.5mm²</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_mep"/>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="uom_po_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">4.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_cable_4" model="product.template">
+        <field name="name">Electrical Cable 4mm²</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_mep"/>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="uom_po_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">6.5</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_cable_6" model="product.template">
+        <field name="name">Electrical Cable 6mm²</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_mep"/>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="uom_po_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">9.5</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_conduit_20" model="product.template">
+        <field name="name">Electrical Conduit 20mm</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_mep"/>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="uom_po_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">3.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_db_12way" model="product.template">
+        <field name="name">Distribution Board (12-way)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_mep"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">220.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_db_24way" model="product.template">
+        <field name="name">Distribution Board (24-way)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_mep"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">380.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_junction_box" model="product.template">
+        <field name="name">Junction Box</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_mep"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">8.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_switch_1g" model="product.template">
+        <field name="name">Wall Switch (1-gang)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_mep"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">12.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_switch_2g" model="product.template">
+        <field name="name">Wall Switch (2-gang)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_mep"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">18.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_socket" model="product.template">
+        <field name="name">Power Socket</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_mep"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">15.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_led_driver" model="product.template">
+        <field name="name">LED Driver</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_mep"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">35.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <!-- ========================================================== -->
+    <!--  CONSTRUCTION — FINISHING                                   -->
+    <!-- ========================================================== -->
+    <record id="prod_tile_ceramic_30" model="product.template">
+        <field name="name">Ceramic Tile 30x30 cm</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_finishing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">25.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_tile_ceramic_60" model="product.template">
+        <field name="name">Ceramic Tile 60x60 cm</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_finishing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">55.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_tile_porcelain_80" model="product.template">
+        <field name="name">Porcelain Tile 80x80 cm</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_finishing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">95.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_marble_slab" model="product.template">
+        <field name="name">Marble Slab</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_finishing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">450.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_granite_slab" model="product.template">
+        <field name="name">Granite Slab</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_finishing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">520.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_paint_wall_4l" model="product.template">
+        <field name="name">Wall Paint (4L)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_finishing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">120.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_paint_wall_20l" model="product.template">
+        <field name="name">Wall Paint (20L)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_finishing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">450.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_primer_20l" model="product.template">
+        <field name="name">Primer (20L)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_finishing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">280.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_wall_putty" model="product.template">
+        <field name="name">Wall Putty (25kg)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_finishing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">95.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_gypsum_board" model="product.template">
+        <field name="name">Gypsum Board (1.2x2.4m)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_finishing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">65.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_cement_board" model="product.template">
+        <field name="name">Cement Board (1.2x2.4m)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_finishing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">110.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_door_interior" model="product.template">
+        <field name="name">Wood Door — Interior</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_finishing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">550.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_door_exterior" model="product.template">
+        <field name="name">Wood Door — Exterior</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_finishing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">1200.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_aluminum_window" model="product.template">
+        <field name="name">Aluminum Window</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_finishing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">850.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_skirting" model="product.template">
+        <field name="name">Skirting</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_finishing"/>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="uom_po_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">22.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <!-- ========================================================== -->
+    <!--  CONSTRUCTION — SITE                                        -->
+    <!-- ========================================================== -->
+    <record id="prod_scaffold" model="product.template">
+        <field name="name">Scaffolding Frame (rental)</field>
+        <field name="type">service</field>
+        <field name="categ_id" ref="cat_construction_site"/>
+        <field name="uom_id" ref="uom.product_uom_day"/>
+        <field name="uom_po_id" ref="uom.product_uom_day"/>
+        <field name="standard_price">25.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_tarpaulin" model="product.template">
+        <field name="name">Tarpaulin</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_site"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">85.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_safety_helmet" model="product.template">
+        <field name="name">Safety Helmet</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_site"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">35.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_safety_vest" model="product.template">
+        <field name="name">Safety Vest</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_site"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">28.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_site_signage" model="product.template">
+        <field name="name">Site Signage</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_site"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">150.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_temp_fencing" model="product.template">
+        <field name="name">Temporary Fencing</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_site"/>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="uom_po_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">45.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_diesel_fuel" model="product.template">
+        <field name="name">Generator Diesel Fuel</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_construction_site"/>
+        <field name="uom_id" ref="uom.product_uom_litre"/>
+        <field name="uom_po_id" ref="uom.product_uom_litre"/>
+        <field name="standard_price">2.5</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_site_office_container" model="product.template">
+        <field name="name">Site Office Container (rental)</field>
+        <field name="type">service</field>
+        <field name="categ_id" ref="cat_construction_site"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">2500.0</field>
+        <field name="is_construction_material">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <!-- ========================================================== -->
+    <!--  FITTINGS — APPLIANCES                                      -->
+    <!-- ========================================================== -->
+    <record id="prod_ac_15ton" model="product.template">
+        <field name="name">Split AC 1.5 Ton</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_appliances"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">1800.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_ac_2ton" model="product.template">
+        <field name="name">Split AC 2 Ton</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_appliances"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">2400.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_ac_3ton" model="product.template">
+        <field name="name">Split AC 3 Ton</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_appliances"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">3200.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_fridge_300l" model="product.template">
+        <field name="name">Refrigerator (300L)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_appliances"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">2200.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_washing_machine" model="product.template">
+        <field name="name">Washing Machine (8kg)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_appliances"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">1900.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_microwave" model="product.template">
+        <field name="name">Microwave Oven</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_appliances"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">650.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_dishwasher" model="product.template">
+        <field name="name">Dishwasher</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_appliances"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">2100.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_built_in_oven" model="product.template">
+        <field name="name">Built-in Oven</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_appliances"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">1750.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <!-- ========================================================== -->
+    <!--  FITTINGS — SANITARY                                        -->
+    <!-- ========================================================== -->
+    <record id="prod_wash_basin" model="product.template">
+        <field name="name">Wash Basin</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_sanitary"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">320.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_toilet_wc" model="product.template">
+        <field name="name">Toilet WC</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_sanitary"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">480.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_bathtub" model="product.template">
+        <field name="name">Bathtub</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_sanitary"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">1100.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_shower_mixer" model="product.template">
+        <field name="name">Shower Mixer</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_sanitary"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">280.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_sink_mixer" model="product.template">
+        <field name="name">Sink Mixer</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_sanitary"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">220.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_bidet_spray" model="product.template">
+        <field name="name">Bidet Spray</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_sanitary"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">75.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_floor_drain" model="product.template">
+        <field name="name">Floor Drain</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_sanitary"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">45.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_water_heater_80l" model="product.template">
+        <field name="name">Water Heater (Electric, 80L)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_sanitary"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">720.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <!-- ========================================================== -->
+    <!--  FITTINGS — HVAC                                            -->
+    <!-- ========================================================== -->
+    <record id="prod_hvac_diffuser" model="product.template">
+        <field name="name">HVAC Diffuser</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_hvac"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">95.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_hvac_grille" model="product.template">
+        <field name="name">HVAC Grille</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_hvac"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">55.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_flexible_duct" model="product.template">
+        <field name="name">Flexible Duct</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_hvac"/>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="uom_po_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">38.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_insulated_duct" model="product.template">
+        <field name="name">Insulated Duct</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_hvac"/>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="uom_po_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">62.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_thermostat" model="product.template">
+        <field name="name">Thermostat</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_hvac"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">180.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <!-- ========================================================== -->
+    <!--  FITTINGS — SMART HOME                                      -->
+    <!-- ========================================================== -->
+    <record id="prod_smart_lock" model="product.template">
+        <field name="name">Smart Door Lock</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_smart_home"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">650.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_smart_doorbell" model="product.template">
+        <field name="name">Smart Doorbell</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_smart_home"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">420.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_smart_thermostat" model="product.template">
+        <field name="name">Smart Thermostat</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_smart_home"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">580.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_smart_switch" model="product.template">
+        <field name="name">Smart Light Switch</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_smart_home"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">95.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_cctv_dome" model="product.template">
+        <field name="name">CCTV Camera (Dome)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_smart_home"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">380.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <!-- ========================================================== -->
+    <!--  FITTINGS — FURNITURE                                       -->
+    <!-- ========================================================== -->
+    <record id="prod_sofa_set" model="product.template">
+        <field name="name">Sofa Set</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_furniture"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">4200.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_bed_king" model="product.template">
+        <field name="name">Bed Frame (King)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_furniture"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">2800.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_dining_table" model="product.template">
+        <field name="name">Dining Table</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_furniture"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">2200.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_wardrobe_3door" model="product.template">
+        <field name="name">Wardrobe (3-door)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_furniture"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">3100.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_tv_stand" model="product.template">
+        <field name="name">TV Stand</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_fittings_furniture"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">1400.0</field>
+        <field name="is_property_fitting">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <!-- ========================================================== -->
+    <!--  MARKETING & SALES                                          -->
+    <!-- ========================================================== -->
+    <record id="prod_yard_sign_sale" model="product.template">
+        <field name="name">Yard For-Sale Sign</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_re_marketing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">120.0</field>
+        <field name="is_marketing_asset">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_yard_sign_rent" model="product.template">
+        <field name="name">Yard For-Rent Sign</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_re_marketing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">120.0</field>
+        <field name="is_marketing_asset">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_lockbox" model="product.template">
+        <field name="name">Lockbox (Combination)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_re_marketing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">85.0</field>
+        <field name="is_marketing_asset">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_brochures_1000" model="product.template">
+        <field name="name">Brochure Print Run (1000)</field>
+        <field name="type">service</field>
+        <field name="categ_id" ref="cat_re_marketing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">650.0</field>
+        <field name="is_marketing_asset">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_business_cards" model="product.template">
+        <field name="name">Business Cards (Box of 500)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_re_marketing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">120.0</field>
+        <field name="is_marketing_asset">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_drone_session" model="product.template">
+        <field name="name">Drone Photo Session</field>
+        <field name="type">service</field>
+        <field name="categ_id" ref="cat_re_marketing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">850.0</field>
+        <field name="is_marketing_asset">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_photo_session" model="product.template">
+        <field name="name">Professional Photo Session</field>
+        <field name="type">service</field>
+        <field name="categ_id" ref="cat_re_marketing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">650.0</field>
+        <field name="is_marketing_asset">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_virtual_tour" model="product.template">
+        <field name="name">3D Virtual Tour</field>
+        <field name="type">service</field>
+        <field name="categ_id" ref="cat_re_marketing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">1200.0</field>
+        <field name="is_marketing_asset">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_floor_plan_render" model="product.template">
+        <field name="name">Floor Plan Render</field>
+        <field name="type">service</field>
+        <field name="categ_id" ref="cat_re_marketing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">450.0</field>
+        <field name="is_marketing_asset">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_listing_boost" model="product.template">
+        <field name="name">Online Listing Boost (monthly)</field>
+        <field name="type">service</field>
+        <field name="categ_id" ref="cat_re_marketing"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">350.0</field>
+        <field name="is_marketing_asset">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <!-- ========================================================== -->
+    <!--  MAINTENANCE CONSUMABLES                                    -->
+    <!-- ========================================================== -->
+    <record id="prod_ac_filter_std" model="product.template">
+        <field name="name">AC Filter (Standard)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_re_maintenance"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">35.0</field>
+        <field name="is_maintenance_consumable">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_ac_filter_hepa" model="product.template">
+        <field name="name">AC Filter (HEPA)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_re_maintenance"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">85.0</field>
+        <field name="is_maintenance_consumable">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_water_filter" model="product.template">
+        <field name="name">Water Filter Cartridge</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_re_maintenance"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">95.0</field>
+        <field name="is_maintenance_consumable">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_led_9w" model="product.template">
+        <field name="name">Light Bulb (LED 9W)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_re_maintenance"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">12.0</field>
+        <field name="is_maintenance_consumable">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_led_15w" model="product.template">
+        <field name="name">Light Bulb (LED 15W)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_re_maintenance"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">18.0</field>
+        <field name="is_maintenance_consumable">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_plumbing_tape" model="product.template">
+        <field name="name">Plumbing Tape</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_re_maintenance"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">8.0</field>
+        <field name="is_maintenance_consumable">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_sealant" model="product.template">
+        <field name="name">Sealant Cartridge</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_re_maintenance"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">22.0</field>
+        <field name="is_maintenance_consumable">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_detergent_5l" model="product.template">
+        <field name="name">Cleaning Detergent (5L)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_re_maintenance"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">42.0</field>
+        <field name="is_maintenance_consumable">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_floor_cleaner_5l" model="product.template">
+        <field name="name">Floor Cleaner (5L)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_re_maintenance"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">38.0</field>
+        <field name="is_maintenance_consumable">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_disinfectant_5l" model="product.template">
+        <field name="name">Disinfectant (5L)</field>
+        <field name="type">consu</field>
+        <field name="categ_id" ref="cat_re_maintenance"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">48.0</field>
+        <field name="is_maintenance_consumable">True</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <!-- ========================================================== -->
+    <!--  SERVICES                                                   -->
+    <!-- ========================================================== -->
+    <record id="prod_svc_subcontract_civil" model="product.template">
+        <field name="name">Subcontract — Civil Works</field>
+        <field name="type">service</field>
+        <field name="categ_id" ref="cat_re_services"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_svc_subcontract_structural" model="product.template">
+        <field name="name">Subcontract — Structural Works</field>
+        <field name="type">service</field>
+        <field name="categ_id" ref="cat_re_services"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_svc_subcontract_mep" model="product.template">
+        <field name="name">Subcontract — MEP Works</field>
+        <field name="type">service</field>
+        <field name="categ_id" ref="cat_re_services"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_svc_subcontract_finishing" model="product.template">
+        <field name="name">Subcontract — Finishing Works</field>
+        <field name="type">service</field>
+        <field name="categ_id" ref="cat_re_services"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_svc_subcontract_general" model="product.template">
+        <field name="name">Subcontract — General Contractor</field>
+        <field name="type">service</field>
+        <field name="categ_id" ref="cat_re_services"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_svc_subcontract_landscape" model="product.template">
+        <field name="name">Subcontract — Landscape</field>
+        <field name="type">service</field>
+        <field name="categ_id" ref="cat_re_services"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_svc_subcontract_facade" model="product.template">
+        <field name="name">Subcontract — Facade Cladding</field>
+        <field name="type">service</field>
+        <field name="categ_id" ref="cat_re_services"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_svc_subcontract_elevator" model="product.template">
+        <field name="name">Subcontract — Elevator Installation</field>
+        <field name="type">service</field>
+        <field name="categ_id" ref="cat_re_services"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_svc_hvac_pm" model="product.template">
+        <field name="name">HVAC Preventive Maintenance (visit)</field>
+        <field name="type">service</field>
+        <field name="categ_id" ref="cat_re_services"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">250.0</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_svc_pest_control" model="product.template">
+        <field name="name">Pest Control (visit)</field>
+        <field name="type">service</field>
+        <field name="categ_id" ref="cat_re_services"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">180.0</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_svc_cleaning" model="product.template">
+        <field name="name">Cleaning Service (visit)</field>
+        <field name="type">service</field>
+        <field name="categ_id" ref="cat_re_services"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">120.0</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_svc_security_month" model="product.template">
+        <field name="name">Security Service (month)</field>
+        <field name="type">service</field>
+        <field name="categ_id" ref="cat_re_services"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">3500.0</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_svc_topo_survey" model="product.template">
+        <field name="name">Topographic Survey</field>
+        <field name="type">service</field>
+        <field name="categ_id" ref="cat_re_services"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">6500.0</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_svc_environmental_study" model="product.template">
+        <field name="name">Environmental Study</field>
+        <field name="type">service</field>
+        <field name="categ_id" ref="cat_re_services"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">12000.0</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+    <record id="prod_svc_legal" model="product.template">
+        <field name="name">Legal Consultation (hour)</field>
+        <field name="type">service</field>
+        <field name="categ_id" ref="cat_re_services"/>
+        <field name="uom_id" ref="uom.product_uom_hour"/>
+        <field name="uom_po_id" ref="uom.product_uom_hour"/>
+        <field name="standard_price">450.0</field>
+        <field name="purchase_ok">True</field>
+        <field name="sale_ok">False</field>
+    </record>
+</odoo>

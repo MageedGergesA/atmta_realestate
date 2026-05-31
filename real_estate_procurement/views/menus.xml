@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_procurement_root"
+              name="Procurement"
+              web_icon="real_estate_procurement,static/description/icon.png"
+              sequence="27"
+              groups="group_procurement_user"/>
+
+    <menuitem id="menu_procurement_operations"
+              name="Operations"
+              parent="menu_procurement_root"
+              sequence="10"/>
+
+    <menuitem id="menu_material_requests"
+              name="Material Requests"
+              parent="menu_procurement_operations"
+              action="action_material_request"
+              sequence="10"/>
+
+    <menuitem id="menu_purchase_orders"
+              name="Purchase Orders"
+              parent="menu_procurement_operations"
+              action="action_realestate_purchase_orders"
+              sequence="20"/>
+
+    <menuitem id="menu_procurement_master_data"
+              name="Master Data"
+              parent="menu_procurement_root"
+              sequence="20"/>
+
+    <menuitem id="menu_vendors"
+              name="Vendors"
+              parent="menu_procurement_master_data"
+              action="action_realestate_vendors"
+              sequence="10"/>
+
+    <menuitem id="menu_catalog"
+              name="Material Catalog"
+              parent="menu_procurement_master_data"
+              action="action_realestate_catalog"
+              sequence="20"/>
+
+    <menuitem id="menu_procurement_config"
+              name="Configuration"
+              parent="menu_procurement_root"
+              sequence="30"
+              groups="group_procurement_manager"/>
+
+    <menuitem id="menu_vendor_tags"
+              name="Vendor Tags"
+              parent="menu_procurement_config"
+              action="action_realestate_vendor_tags"
+              sequence="10"/>
+
+    <menuitem id="menu_product_categories"
+              name="Product Categories"
+              parent="menu_procurement_config"
+              action="action_realestate_product_categories"
+              sequence="20"/>
+</odoo>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Rental-flavored graph view (uses rental fields) -->
+    <record id="view_property_graph_rental" model="ir.ui.view">
+        <field name="name">realestate.property.graph.rental</field>
+        <field name="model">realestate.property</field>
+        <field name="arch" type="xml">
+            <graph string="Property Rent Summary" type="bar">
+                <field name="name" type="row"/>
+                <field name="revenue_collected" type="measure"/>
+                <field name="revenue_expected" type="measure"/>
+                <field name="total_rent_months" type="measure"/>
+                <field name="actual_rent_months" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Add graph view to the property action -->
+    <record id="atmta_real_estate.action_property_view" model="ir.actions.act_window">
+        <field name="view_mode">kanban,list,form,graph,hierarchy</field>
+    </record>
+
+    <!-- Rental badges in the status ribbon -->
+    <record id="view_property_form_inherit_rental_status" model="ir.ui.view">
+        <field name="name">realestate.property.form.rental.status</field>
+        <field name="model">realestate.property</field>
+        <field name="inherit_id" ref="atmta_real_estate.view_property_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='status_ribbon']" position="inside">
+                <field name="rental_status" widget="badge"
+                       decoration-info="rental_status == 'for_rent'"
+                       decoration-success="rental_status == 'rented'"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Rental-specific tabs added to the base property form -->
+    <record id="view_property_form_inherit_rental" model="ir.ui.view">
+        <field name="name">realestate.property.form.rental</field>
+        <field name="model">realestate.property</field>
+        <field name="inherit_id" ref="atmta_real_estate.view_property_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Contract History">
+                    <field name="rental_history_ids" readonly="1">
+                        <list create="0" edit="0">
+                            <field name="contract_id"/>
+                            <field name="property_id"/>
+                            <field name="tenant_id"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="is_multi"/>
+                        </list>
+                    </field>
+                </page>
+                <page string="Rental Stats">
+                    <group col="2">
+                        <group string="Rental History">
+                            <field name="rent_count" readonly="1"/>
+                            <field name="total_rent_months" readonly="1"/>
+                            <field name="actual_rent_months" readonly="1"/>
+                        </group>
+                        <group string="Revenue Summary">
+                            <field name="revenue_collected" readonly="1"/>
+                            <field name="revenue_expected" readonly="1"/>
+                            <field name="total_amount_due" readonly="1"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

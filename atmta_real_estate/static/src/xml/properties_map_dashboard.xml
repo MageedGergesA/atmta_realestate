@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="atmta_real_estate.PropertiesMapDashboard">
+        <div class="o_action o_pmd_dashboard d-flex flex-column h-100">
+
+            <!-- Toolbar -->
+            <div class="o_pmd_toolbar d-flex flex-wrap align-items-center gap-2 px-3 py-2 border-bottom">
+
+                <!-- Country filter -->
+                <div class="o_pmd_filter position-relative">
+                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                            t-on-click="(ev) => this.onToggleDropdown('country', ev)">
+                        <i class="fa fa-globe me-1"/>
+                        <span>Country</span>
+                        <span class="badge bg-primary ms-1" t-if="activeCount('countries')">
+                            <t t-esc="activeCount('countries')"/>
+                        </span>
+                        <i class="fa fa-caret-down ms-1"/>
+                    </button>
+                    <div class="o_pmd_dropdown card shadow"
+                         t-if="state.openDropdown === 'country'">
+                        <div class="d-flex align-items-center justify-content-between px-2 py-1 border-bottom">
+                            <span class="small text-muted">Filter by country</span>
+                            <button type="button" class="btn btn-sm btn-link p-0"
+                                    t-on-click="(ev) => this.onClearCategory('countries', ev)">Clear</button>
+                        </div>
+                        <div class="o_pmd_dropdown_body">
+                            <label class="o_pmd_check d-flex align-items-center gap-2 px-2 py-1"
+                                   t-foreach="state.options.countries" t-as="opt" t-key="opt.id">
+                                <input type="checkbox"
+                                       t-att-checked="isFilterActive('countries', opt.id)"
+                                       t-on-click="(ev) => this.onToggleFilter('countries', opt.id, ev)"/>
+                                <span class="flex-grow-1"><t t-esc="opt.name"/></span>
+                                <span class="text-muted small"><t t-esc="opt.count"/></span>
+                            </label>
+                            <div class="text-muted small px-2 py-1" t-if="!state.options.countries.length">
+                                No countries available.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hierarchy level filter -->
+                <div class="o_pmd_filter position-relative">
+                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                            t-on-click="(ev) => this.onToggleDropdown('level', ev)">
+                        <i class="fa fa-sitemap me-1"/>
+                        <span>Level</span>
+                        <span class="badge bg-primary ms-1" t-if="activeCount('levels')">
+                            <t t-esc="activeCount('levels')"/>
+                        </span>
+                        <i class="fa fa-caret-down ms-1"/>
+                    </button>
+                    <div class="o_pmd_dropdown card shadow"
+                         t-if="state.openDropdown === 'level'">
+                        <div class="d-flex align-items-center justify-content-between px-2 py-1 border-bottom">
+                            <span class="small text-muted">Filter by hierarchy level</span>
+                            <button type="button" class="btn btn-sm btn-link p-0"
+                                    t-on-click="(ev) => this.onClearCategory('levels', ev)">Clear</button>
+                        </div>
+                        <div class="o_pmd_dropdown_body">
+                            <label class="o_pmd_check d-flex align-items-center gap-2 px-2 py-1"
+                                   t-foreach="levelOptions" t-as="opt" t-key="opt.id">
+                                <input type="checkbox"
+                                       t-att-checked="isFilterActive('levels', opt.id)"
+                                       t-on-click="(ev) => this.onToggleFilter('levels', opt.id, ev)"/>
+                                <span><t t-esc="opt.name"/></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- State filter -->
+                <div class="o_pmd_filter position-relative">
+                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                            t-on-click="(ev) => this.onToggleDropdown('state', ev)">
+                        <i class="fa fa-circle me-1"/>
+                        <span>Status</span>
+                        <span class="badge bg-primary ms-1" t-if="activeCount('states')">
+                            <t t-esc="activeCount('states')"/>
+                        </span>
+                        <i class="fa fa-caret-down ms-1"/>
+                    </button>
+                    <div class="o_pmd_dropdown card shadow"
+                         t-if="state.openDropdown === 'state'">
+                        <div class="d-flex align-items-center justify-content-between px-2 py-1 border-bottom">
+                            <span class="small text-muted">Filter by status</span>
+                            <button type="button" class="btn btn-sm btn-link p-0"
+                                    t-on-click="(ev) => this.onClearCategory('states', ev)">Clear</button>
+                        </div>
+                        <div class="o_pmd_dropdown_body">
+                            <label class="o_pmd_check d-flex align-items-center gap-2 px-2 py-1"
+                                   t-foreach="stateOptions" t-as="opt" t-key="opt.id">
+                                <input type="checkbox"
+                                       t-att-checked="isFilterActive('states', opt.id)"
+                                       t-on-click="(ev) => this.onToggleFilter('states', opt.id, ev)"/>
+                                <span class="o_pmd_color_dot" t-att-style="'background:' + opt.color"/>
+                                <span><t t-esc="opt.name"/></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Type filter -->
+                <div class="o_pmd_filter position-relative">
+                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                            t-on-click="(ev) => this.onToggleDropdown('type', ev)">
+                        <i class="fa fa-tags me-1"/>
+                        <span>Type</span>
+                        <span class="badge bg-primary ms-1" t-if="activeCount('types')">
+                            <t t-esc="activeCount('types')"/>
+                        </span>
+                        <i class="fa fa-caret-down ms-1"/>
+                    </button>
+                    <div class="o_pmd_dropdown card shadow"
+                         t-if="state.openDropdown === 'type'">
+                        <div class="d-flex align-items-center justify-content-between px-2 py-1 border-bottom">
+                            <span class="small text-muted">Filter by type</span>
+                            <button type="button" class="btn btn-sm btn-link p-0"
+                                    t-on-click="(ev) => this.onClearCategory('types', ev)">Clear</button>
+                        </div>
+                        <div class="o_pmd_dropdown_body">
+                            <label class="o_pmd_check d-flex align-items-center gap-2 px-2 py-1"
+                                   t-foreach="state.options.types" t-as="opt" t-key="opt.id">
+                                <input type="checkbox"
+                                       t-att-checked="isFilterActive('types', opt.id)"
+                                       t-on-click="(ev) => this.onToggleFilter('types', opt.id, ev)"/>
+                                <span class="flex-grow-1"><t t-esc="opt.name"/></span>
+                                <span class="text-muted small"><t t-esc="opt.count"/></span>
+                            </label>
+                            <div class="text-muted small px-2 py-1" t-if="!state.options.types.length">
+                                No property types available.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vr mx-1"/>
+
+                <button type="button" class="btn btn-sm btn-outline-secondary"
+                        t-on-click="() => this.onResetFilters()">
+                    <i class="fa fa-eraser me-1"/>Reset
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-secondary"
+                        t-on-click="() => this.onFitToData()">
+                    <i class="fa fa-compress me-1"/>Fit to data
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-secondary"
+                        t-on-click="() => this.onResetWorld()">
+                    <i class="fa fa-globe me-1"/>World
+                </button>
+
+                <div class="ms-auto text-muted small">
+                    <span class="fw-bold"><t t-esc="state.shownCount"/></span>
+                    of <t t-esc="state.totalCount"/> shown
+                    <span t-if="state.withoutCoordsCount" class="ms-2 text-warning">
+                        · <t t-esc="state.withoutCoordsCount"/> without coordinates
+                    </span>
+                </div>
+            </div>
+
+            <!-- Map area -->
+            <div class="o_pmd_main flex-grow-1 position-relative">
+                <div t-if="state.loading"
+                     class="position-absolute top-50 start-50 translate-middle text-center">
+                    <i class="fa fa-spinner fa-spin fa-2x text-muted"/>
+                    <div class="text-muted mt-2">Loading properties…</div>
+                </div>
+                <div t-if="state.error"
+                     class="position-absolute top-50 start-50 translate-middle alert alert-danger">
+                    <t t-esc="state.error"/>
+                </div>
+                <div t-ref="map" class="o_pmd_canvas"/>
+
+                <!-- Legend -->
+                <div class="o_pmd_legend card shadow-sm" t-if="!state.loading">
+                    <div class="card-body p-2">
+                        <div class="small fw-bold mb-1">Status</div>
+                        <div class="d-flex flex-column gap-1">
+                            <div class="d-flex align-items-center gap-2"
+                                 t-foreach="legendItems" t-as="item" t-key="item_index">
+                                <span class="o_pmd_color_dot" t-att-style="'background:' + item.color"/>
+                                <span class="small"><t t-esc="item.label"/></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </t>
+
+</templates>

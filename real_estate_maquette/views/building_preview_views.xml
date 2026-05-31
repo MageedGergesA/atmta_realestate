@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_building_preview_form" model="ir.ui.view">
+        <field name="name">realestate.building.preview.form</field>
+        <field name="model">realestate.building.preview</field>
+        <field name="arch" type="xml">
+            <form string="Building Preview" class="o_realestate_building_preview">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                            <span class="text-muted ms-2 small">
+                                (<field name="property_code" readonly="1" class="d-inline"/>)
+                            </span>
+                        </h1>
+                        <div class="text-muted">
+                            <field name="district" readonly="1" class="d-inline"/>
+                            <field name="city" readonly="1" class="d-inline ms-2"/>
+                        </div>
+                    </div>
+
+                    <group>
+                        <group string="Building">
+                            <field name="number_of_floors" readonly="1"/>
+                            <field name="number_of_units" readonly="1"/>
+                            <field name="project_id" readonly="1"/>
+                        </group>
+                        <group string="Units">
+                            <field name="units_total" readonly="1"/>
+                            <field name="units_available" readonly="1"/>
+                            <field name="units_reserved" readonly="1"/>
+                            <field name="units_sold" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Gallery" name="gallery">
+                            <field name="hero_image" widget="image"
+                                   options="{'size': [800, 500]}" nolabel="1"
+                                   invisible="not hero_image"/>
+                            <field name="floor_plan_image" widget="image"
+                                   options="{'size': [600, 400]}" nolabel="1"
+                                   invisible="not floor_plan_image"/>
+                            <separator string="Gallery"
+                                       invisible="not image_ids"/>
+                            <field name="image_ids" nolabel="1" readonly="1"
+                                   invisible="not image_ids">
+                                <kanban>
+                                    <templates>
+                                        <t t-name="card">
+                                            <div class="oe_kanban_global_click text-center">
+                                                <field name="image_1024" widget="image"
+                                                       options="{'img_class': 'img-fluid rounded'}"
+                                                       nolabel="1"/>
+                                                <div class="small mt-1">
+                                                    <field name="name"/>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                            <separator string="Attached Images"
+                                       invisible="not attachment_image_ids"/>
+                            <field name="attachment_image_ids" nolabel="1" readonly="1"
+                                   invisible="not attachment_image_ids">
+                                <kanban>
+                                    <templates>
+                                        <t t-name="card">
+                                            <div class="oe_kanban_global_click text-center">
+                                                <img t-attf-src="/web/image/ir.attachment/#{record.id.raw_value}/datas"
+                                                     alt="" class="img-fluid rounded"/>
+                                                <div class="small mt-1">
+                                                    <field name="name"/>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                            <div class="alert alert-info mt-3"
+                                 invisible="has_any_image">
+                                No images yet. Open the property's form
+                                → <strong>Media &amp; Files ▸ Gallery</strong> and click
+                                <strong>Add Media</strong> to upload here.
+                            </div>
+                        </page>
+                        <page string="Units" name="units">
+                            <field name="unit_ids" nolabel="1" readonly="1">
+                                <list>
+                                    <field name="property_code"/>
+                                    <field name="name"/>
+                                    <field name="area_sqm"/>
+                                    <field name="base_price"/>
+                                    <field name="state" widget="badge"
+                                           decoration-success="state == 'available'"
+                                           decoration-warning="state == 'reserved'"
+                                           decoration-muted="state == 'sold'"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <button name="action_open_building" type="object"
+                            string="Open Building" class="btn-primary"/>
+                    <button name="action_open_maquette" type="object"
+                            string="Open Maquette"/>
+                    <button special="cancel" string="Close"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_building_preview" model="ir.actions.act_window">
+        <field name="name">Building Preview</field>
+        <field name="res_model">realestate.building.preview</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

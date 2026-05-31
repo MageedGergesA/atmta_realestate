@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_handover_list" model="ir.ui.view">
+        <field name="name">realestate.handover.list</field>
+        <field name="model">realestate.handover</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state == 'completed'"
+                  decoration-warning="state in ('inspection','snagging')"
+                  decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="property_id"/>
+                <field name="partner_id"/>
+                <field name="scheduled_date"/>
+                <field name="actual_date" optional="show"/>
+                <field name="checklist_progress" widget="progressbar"/>
+                <field name="open_snagging_count"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_handover_kanban" model="ir.ui.view">
+        <field name="name">realestate.handover.kanban</field>
+        <field name="model">realestate.handover</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" sample="1">
+                <field name="name"/>
+                <field name="property_id"/>
+                <field name="partner_id"/>
+                <field name="scheduled_date"/>
+                <field name="checklist_progress"/>
+                <field name="open_snagging_count"/>
+                <templates>
+                    <t t-name="card" class="oe_kanban_card p-2">
+                        <div class="fw-bold"><field name="property_id"/></div>
+                        <div class="small text-muted"><field name="partner_id"/></div>
+                        <div class="small">Scheduled: <field name="scheduled_date" widget="datetime"/></div>
+                        <field name="checklist_progress" widget="progressbar"/>
+                        <div class="small text-danger" t-if="record.open_snagging_count.raw_value">
+                            <i class="fa fa-exclamation-triangle me-1"/><field name="open_snagging_count"/> open snags
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="view_handover_calendar" model="ir.ui.view">
+        <field name="name">realestate.handover.calendar</field>
+        <field name="model">realestate.handover</field>
+        <field name="arch" type="xml">
+            <calendar date_start="scheduled_date" color="state" mode="month">
+                <field name="property_id"/>
+                <field name="partner_id"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+    <record id="view_handover_form" model="ir.ui.view">
+        <field name="name">realestate.handover.form</field>
+        <field name="model">realestate.handover</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_load_template_items" type="object" string="Load Template Items"
+                            invisible="not template_id or checklist_item_ids"/>
+                    <button name="action_start_inspection" type="object" string="Start Inspection"
+                            class="oe_highlight" invisible="state != 'scheduled'"/>
+                    <button name="action_mark_snagging" type="object" string="Mark Snagging"
+                            invisible="state != 'inspection'"/>
+                    <button name="action_complete" type="object" string="Complete Handover"
+                            class="oe_highlight" invisible="state not in ('inspection','snagging')"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('completed','cancelled')"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="sale_contract_id" options="{'no_create': True}"/>
+                            <field name="property_id" readonly="1"/>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="project_id" readonly="1"/>
+                            <field name="phase_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="scheduled_date"/>
+                            <field name="actual_date" readonly="1"/>
+                            <field name="warranty_period_months"/>
+                            <field name="warranty_id" readonly="1" invisible="not warranty_id"/>
+                            <field name="template_id" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="checklist_progress" widget="progressbar"/>
+                    </group>
+                    <notebook>
+                        <page string="Checklist">
+                            <field name="checklist_item_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="category"/>
+                                    <field name="status" widget="badge"
+                                           decoration-success="status == 'done'"
+                                           decoration-muted="status == 'skipped'"
+                                           decoration-danger="status == 'failed'"/>
+                                    <field name="completed_at" optional="show"/>
+                                    <button name="action_mark_done" type="object" string="Done" icon="fa-check"
+                                            invisible="status == 'done'"/>
+                                    <button name="action_mark_skipped" type="object" string="Skip" icon="fa-forward"
+                                            invisible="status != 'pending'"/>
+                                    <button name="action_mark_failed" type="object" string="Fail" icon="fa-times"
+                                            invisible="status != 'pending'"/>
+                                    <button name="action_reset" type="object" string="Reset" icon="fa-undo"
+                                            invisible="status == 'pending'"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Snagging">
+                            <field name="snagging_issue_ids" context="{'default_handover_id': id}">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="description"/>
+                                    <field name="severity" widget="badge"
+                                           decoration-warning="severity == 'major'"
+                                           decoration-danger="severity == 'critical'"/>
+                                    <field name="contractor_id"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes"><field name="notes"/></page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="action_handover" model="ir.actions.act_window">
+        <field name="name">Handovers</field>
+        <field name="res_model">realestate.handover</field>
+        <field name="view_mode">kanban,list,calendar,form</field>
+    </record>
+</odoo>

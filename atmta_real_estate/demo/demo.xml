@@ -1,30 +1,986 @@
-<odoo>
-    <data>
-<!--
-          <record id="object0" model="atmta_real_estate.atmta_real_estate">
-            <field name="name">Object 0</field>
-            <field name="value">0</field>
-          </record>
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Real Estate Rental — demo data: tenants + plans + rules + 10 draft contracts -->
+<odoo noupdate="1">
+<!-- ===== Base property / type demo (from real_estate_base) ===== -->
 
-          <record id="object1" model="atmta_real_estate.atmta_real_estate">
-            <field name="name">Object 1</field>
-            <field name="value">10</field>
-          </record>
 
-          <record id="object2" model="atmta_real_estate.atmta_real_estate">
-            <field name="name">Object 2</field>
-            <field name="value">20</field>
-          </record>
+    <record id="demo_ptype_apartment" model="property.type">
+        <field name="name">Apartment</field>
+    </record>
 
-          <record id="object3" model="atmta_real_estate.atmta_real_estate">
-            <field name="name">Object 3</field>
-            <field name="value">30</field>
-          </record>
+    <record id="demo_ptype_villa" model="property.type">
+        <field name="name">Villa</field>
+    </record>
 
-          <record id="object4" model="atmta_real_estate.atmta_real_estate">
-            <field name="name">Object 4</field>
-            <field name="value">40</field>
-          </record>
--->
-    </data>
+    <record id="demo_ptype_office" model="property.type">
+        <field name="name">Office</field>
+    </record>
+
+    <record id="demo_ptype_shop" model="property.type">
+        <field name="name">Shop</field>
+    </record>
+
+    <record id="demo_ptype_warehouse" model="property.type">
+        <field name="name">Warehouse</field>
+    </record>
+
+    <record id="demo_prop_1" model="realestate.property">
+    <field name="name">Riyadh Heights — Main Compound</field>
+    <field name="property_code">PROP-00001</field>
+    <field name="hierarchy_level">compound</field>
+    <field name="state">available</field>
+    <field name="city">Riyadh</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Riyadh'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="24.7236"/>
+    <field name="longitude" eval="46.6753"/>
+    <field name="area_sqm" eval="25000.0"/>
+    </record>
+
+    <record id="demo_prop_2" model="realestate.property">
+    <field name="name">RH — Tower A</field>
+    <field name="property_code">PROP-00002</field>
+    <field name="hierarchy_level">building</field>
+    <field name="state">available</field>
+    <field name="city">Riyadh</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_1"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Riyadh'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="24.7246"/>
+    <field name="longitude" eval="46.6763"/>
+    <field name="area_sqm" eval="3000.0"/>
+    </record>
+
+    <record id="demo_prop_4" model="realestate.property">
+    <field name="name">Unit 101</field>
+    <field name="property_code">PROP-00004</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">rented</field>
+    <field name="city">Riyadh</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_2"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Riyadh'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="24.7242831"/>
+    <field name="longitude" eval="46.676096"/>
+    <field name="area_sqm" eval="191.0"/>
+    <field name="bedroom_count" eval="3"/>
+    </record>
+
+    <record id="demo_prop_5" model="realestate.property">
+    <field name="name">Unit 102</field>
+    <field name="property_code">PROP-00005</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">reserved</field>
+    <field name="city">Riyadh</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_2"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Riyadh'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="24.7240542"/>
+    <field name="longitude" eval="46.6760131"/>
+    <field name="area_sqm" eval="186.0"/>
+    <field name="bedroom_count" eval="4"/>
+    </record>
+
+    <record id="demo_prop_6" model="realestate.property">
+    <field name="name">Unit 103</field>
+    <field name="property_code">PROP-00006</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">rented</field>
+    <field name="city">Riyadh</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_2"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Riyadh'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="24.7236913"/>
+    <field name="longitude" eval="46.6752025"/>
+    <field name="area_sqm" eval="109.0"/>
+    <field name="bedroom_count" eval="2"/>
+    </record>
+
+    <record id="demo_prop_7" model="realestate.property">
+    <field name="name">Unit 104</field>
+    <field name="property_code">PROP-00007</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">maintenance</field>
+    <field name="city">Riyadh</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_2"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Riyadh'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="24.7235365"/>
+    <field name="longitude" eval="46.6749481"/>
+    <field name="area_sqm" eval="170.0"/>
+    <field name="bedroom_count" eval="3"/>
+    </record>
+
+    <record id="demo_prop_8" model="realestate.property">
+    <field name="name">Unit 105</field>
+    <field name="property_code">PROP-00008</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">rented</field>
+    <field name="city">Riyadh</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_2"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Riyadh'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="24.7243092"/>
+    <field name="longitude" eval="46.6746421"/>
+    <field name="area_sqm" eval="122.0"/>
+    <field name="bedroom_count" eval="4"/>
+    </record>
+
+    <record id="demo_prop_3" model="realestate.property">
+    <field name="name">RH — Tower B</field>
+    <field name="property_code">PROP-00003</field>
+    <field name="hierarchy_level">building</field>
+    <field name="state">available</field>
+    <field name="city">Riyadh</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_1"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Riyadh'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="24.7246"/>
+    <field name="longitude" eval="46.6743"/>
+    <field name="area_sqm" eval="3000.0"/>
+    </record>
+
+    <record id="demo_prop_10" model="realestate.property">
+    <field name="name">Unit 107</field>
+    <field name="property_code">PROP-00010</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">reserved</field>
+    <field name="city">Riyadh</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_3"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Riyadh'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="24.7246442"/>
+    <field name="longitude" eval="46.6765311"/>
+    <field name="area_sqm" eval="119.0"/>
+    <field name="bedroom_count" eval="4"/>
+    </record>
+
+    <record id="demo_prop_11" model="realestate.property">
+    <field name="name">Unit 108</field>
+    <field name="property_code">PROP-00011</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">reserved</field>
+    <field name="city">Riyadh</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_3"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Riyadh'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="24.7222697"/>
+    <field name="longitude" eval="46.6766905"/>
+    <field name="area_sqm" eval="202.0"/>
+    <field name="bedroom_count" eval="3"/>
+    </record>
+
+    <record id="demo_prop_12" model="realestate.property">
+    <field name="name">Unit 109</field>
+    <field name="property_code">PROP-00012</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">rented</field>
+    <field name="city">Riyadh</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_3"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Riyadh'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="24.7235569"/>
+    <field name="longitude" eval="46.6759225"/>
+    <field name="area_sqm" eval="158.0"/>
+    <field name="bedroom_count" eval="2"/>
+    </record>
+
+    <record id="demo_prop_13" model="realestate.property">
+    <field name="name">Unit 110</field>
+    <field name="property_code">PROP-00013</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">rented</field>
+    <field name="city">Riyadh</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_3"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Riyadh'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="24.7229488"/>
+    <field name="longitude" eval="46.6754153"/>
+    <field name="area_sqm" eval="212.0"/>
+    <field name="bedroom_count" eval="3"/>
+    </record>
+
+    <record id="demo_prop_9" model="realestate.property">
+    <field name="name">Unit 106</field>
+    <field name="property_code">PROP-00009</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">rented</field>
+    <field name="city">Riyadh</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_3"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Riyadh'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="24.7235217"/>
+    <field name="longitude" eval="46.6746926"/>
+    <field name="area_sqm" eval="134.0"/>
+    <field name="bedroom_count" eval="3"/>
+    </record>
+
+    <record id="demo_prop_14" model="realestate.property">
+    <field name="name">JCR — Corniche Compound</field>
+    <field name="property_code">PROP-00014</field>
+    <field name="hierarchy_level">compound</field>
+    <field name="state">available</field>
+    <field name="city">Jeddah</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Jeddah'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="21.5433"/>
+    <field name="longitude" eval="39.1728"/>
+    <field name="area_sqm" eval="18000.0"/>
+    </record>
+
+    <record id="demo_prop_15" model="realestate.property">
+    <field name="name">JCR — Block A</field>
+    <field name="property_code">PROP-00015</field>
+    <field name="hierarchy_level">building</field>
+    <field name="state">available</field>
+    <field name="city">Jeddah</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_14"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Jeddah'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="21.5443"/>
+    <field name="longitude" eval="39.1738"/>
+    <field name="area_sqm" eval="2500.0"/>
+    </record>
+
+    <record id="demo_prop_17" model="realestate.property">
+    <field name="name">JCR Unit 111</field>
+    <field name="property_code">PROP-00017</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">rented</field>
+    <field name="city">Jeddah</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_15"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Jeddah'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="21.543586"/>
+    <field name="longitude" eval="39.1731005"/>
+    <field name="area_sqm" eval="95.0"/>
+    <field name="bedroom_count" eval="3"/>
+    </record>
+
+    <record id="demo_prop_18" model="realestate.property">
+    <field name="name">JCR Unit 112</field>
+    <field name="property_code">PROP-00018</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">rented</field>
+    <field name="city">Jeddah</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_15"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Jeddah'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="21.5429982"/>
+    <field name="longitude" eval="39.1713421"/>
+    <field name="area_sqm" eval="113.0"/>
+    <field name="bedroom_count" eval="2"/>
+    </record>
+
+    <record id="demo_prop_19" model="realestate.property">
+    <field name="name">JCR Unit 113</field>
+    <field name="property_code">PROP-00019</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">rented</field>
+    <field name="city">Jeddah</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_15"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Jeddah'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="21.5430053"/>
+    <field name="longitude" eval="39.1732941"/>
+    <field name="area_sqm" eval="115.0"/>
+    <field name="bedroom_count" eval="2"/>
+    </record>
+
+    <record id="demo_prop_20" model="realestate.property">
+    <field name="name">JCR Unit 114</field>
+    <field name="property_code">PROP-00020</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">rented</field>
+    <field name="city">Jeddah</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_15"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Jeddah'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="21.5431863"/>
+    <field name="longitude" eval="39.1729408"/>
+    <field name="area_sqm" eval="134.0"/>
+    <field name="bedroom_count" eval="1"/>
+    </record>
+
+    <record id="demo_prop_21" model="realestate.property">
+    <field name="name">JCR Unit 115</field>
+    <field name="property_code">PROP-00021</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">reserved</field>
+    <field name="city">Jeddah</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_15"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Jeddah'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="21.5441062"/>
+    <field name="longitude" eval="39.173121"/>
+    <field name="area_sqm" eval="178.0"/>
+    <field name="bedroom_count" eval="3"/>
+    </record>
+
+    <record id="demo_prop_16" model="realestate.property">
+    <field name="name">JCR — Block B</field>
+    <field name="property_code">PROP-00016</field>
+    <field name="hierarchy_level">building</field>
+    <field name="state">available</field>
+    <field name="city">Jeddah</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_14"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Jeddah'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="21.5443"/>
+    <field name="longitude" eval="39.1718"/>
+    <field name="area_sqm" eval="2500.0"/>
+    </record>
+
+    <record id="demo_prop_22" model="realestate.property">
+    <field name="name">JCR Unit 116</field>
+    <field name="property_code">PROP-00022</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">rented</field>
+    <field name="city">Jeddah</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_16"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Jeddah'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="21.5434914"/>
+    <field name="longitude" eval="39.172615"/>
+    <field name="area_sqm" eval="149.0"/>
+    <field name="bedroom_count" eval="3"/>
+    </record>
+
+    <record id="demo_prop_23" model="realestate.property">
+    <field name="name">JCR Unit 117</field>
+    <field name="property_code">PROP-00023</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">rented</field>
+    <field name="city">Jeddah</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_16"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Jeddah'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="21.5422596"/>
+    <field name="longitude" eval="39.1714512"/>
+    <field name="area_sqm" eval="146.0"/>
+    <field name="bedroom_count" eval="2"/>
+    </record>
+
+    <record id="demo_prop_24" model="realestate.property">
+    <field name="name">JCR Unit 118</field>
+    <field name="property_code">PROP-00024</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">reserved</field>
+    <field name="city">Jeddah</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_16"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Jeddah'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="21.5423369"/>
+    <field name="longitude" eval="39.1730861"/>
+    <field name="area_sqm" eval="133.0"/>
+    <field name="bedroom_count" eval="3"/>
+    </record>
+
+    <record id="demo_prop_25" model="realestate.property">
+    <field name="name">JCR Unit 119</field>
+    <field name="property_code">PROP-00025</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">available</field>
+    <field name="city">Jeddah</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_16"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Jeddah'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="21.5429791"/>
+    <field name="longitude" eval="39.171437"/>
+    <field name="area_sqm" eval="138.0"/>
+    <field name="bedroom_count" eval="2"/>
+    </record>
+
+    <record id="demo_prop_26" model="realestate.property">
+    <field name="name">JCR Unit 120</field>
+    <field name="property_code">PROP-00026</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">maintenance</field>
+    <field name="city">Jeddah</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_apartment"/>
+    <field name="parent_id" ref="demo_prop_16"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Jeddah'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="21.5422779"/>
+    <field name="longitude" eval="39.1719132"/>
+    <field name="area_sqm" eval="122.0"/>
+    <field name="bedroom_count" eval="3"/>
+    </record>
+
+    <record id="demo_prop_27" model="realestate.property">
+    <field name="name">Al Yasmin Villa A1</field>
+    <field name="property_code">PROP-00027</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">available</field>
+    <field name="city">Riyadh</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_villa"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Riyadh'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="24.77"/>
+    <field name="longitude" eval="46.65"/>
+    <field name="area_sqm" eval="525.0"/>
+    <field name="bedroom_count" eval="6"/>
+    </record>
+
+    <record id="demo_prop_28" model="realestate.property">
+    <field name="name">Al Yasmin Villa A2</field>
+    <field name="property_code">PROP-00028</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">available</field>
+    <field name="city">Riyadh</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_villa"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Riyadh'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="24.79"/>
+    <field name="longitude" eval="46.62"/>
+    <field name="area_sqm" eval="800.0"/>
+    <field name="bedroom_count" eval="5"/>
+    </record>
+
+    <record id="demo_prop_29" model="realestate.property">
+    <field name="name">Obhur Villa V1</field>
+    <field name="property_code">PROP-00029</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">rented</field>
+    <field name="city">Jeddah</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_villa"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="state_id" search="[('name','=','Jeddah'),('country_id.code','=','SA')]"/>
+    <field name="latitude" eval="21.58"/>
+    <field name="longitude" eval="39.15"/>
+    <field name="area_sqm" eval="700.0"/>
+    <field name="bedroom_count" eval="6"/>
+    </record>
+
+    <record id="demo_prop_30" model="realestate.property">
+    <field name="name">Al Fanateer Villa F1</field>
+    <field name="property_code">PROP-00030</field>
+    <field name="hierarchy_level">unit</field>
+    <field name="state">available</field>
+    <field name="property_type_id" ref="atmta_real_estate.demo_ptype_villa"/>
+    <field name="country_id" ref="base.sa"/>
+    <field name="latitude" eval="26.3927"/>
+    <field name="longitude" eval="49.9777"/>
+    <field name="area_sqm" eval="519.0"/>
+    <field name="bedroom_count" eval="6"/>
+    </record>
+
+
+<!-- ===== Rental demo ===== -->
+
+
+    <record id="demo_tenant_80" model="res.partner">
+    <field name="name">Abdullah Al-Ghamdi</field>
+    <field name="phone">+966501234007</field>
+    <field name="email">abdullah.ghamdi@demo.com</field>
+    <field name="city">Khobar</field>
+    <field name="function">Doctor</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_77" model="res.partner">
+    <field name="name">Aisha Al-Harbi</field>
+    <field name="phone">+966501234004</field>
+    <field name="email">aisha.harbi@demo.com</field>
+    <field name="city">Jeddah</field>
+    <field name="function">Manager</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_95" model="res.partner">
+    <field name="name">Amal Al-Rasheed</field>
+    <field name="phone">+966501234022</field>
+    <field name="email">amal.rasheed@demo.com</field>
+    <field name="city">Dammam</field>
+    <field name="function">Consultant</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_86" model="res.partner">
+    <field name="name">Bandar Al-Zahrani</field>
+    <field name="phone">+966501234013</field>
+    <field name="email">bandar.zahrani@demo.com</field>
+    <field name="city">Dammam</field>
+    <field name="function">Consultant</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_97" model="res.partner">
+    <field name="name">Dalal Al-Sayegh</field>
+    <field name="phone">+966501234024</field>
+    <field name="email">dalal.sayegh@demo.com</field>
+    <field name="city">Riyadh</field>
+    <field name="function">Engineer</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_84" model="res.partner">
+    <field name="name">Faisal Al-Anazi</field>
+    <field name="phone">+966501234011</field>
+    <field name="email">faisal.anazi@demo.com</field>
+    <field name="city">Riyadh</field>
+    <field name="function">Manager</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_75" model="res.partner">
+    <field name="name">Fatima Al-Saud</field>
+    <field name="phone">+966501234002</field>
+    <field name="email">fatima.saud@demo.com</field>
+    <field name="city">Riyadh</field>
+    <field name="function">Engineer</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_83" model="res.partner">
+    <field name="name">Hala Al-Subaie</field>
+    <field name="phone">+966501234010</field>
+    <field name="email">hala.subaie@demo.com</field>
+    <field name="city">Medina</field>
+    <field name="function">Engineer</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_94" model="res.partner">
+    <field name="name">Hassan Al-Khalil</field>
+    <field name="phone">+966501234021</field>
+    <field name="email">hassan.khalil@demo.com</field>
+    <field name="city">Riyadh</field>
+    <field name="function">Doctor</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_74" model="res.partner">
+    <field name="name">Khalid Al-Mansour</field>
+    <field name="phone">+966501234001</field>
+    <field name="email">khalid.mansour@demo.com</field>
+    <field name="city">Riyadh</field>
+    <field name="function">Manager</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_93" model="res.partner">
+    <field name="name">Layla Al-Bakri</field>
+    <field name="phone">+966501234020</field>
+    <field name="email">layla.bakri@demo.com</field>
+    <field name="city">Medina</field>
+    <field name="function">Doctor</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_87" model="res.partner">
+    <field name="name">Lina Al-Hashemi</field>
+    <field name="phone">+966501234014</field>
+    <field name="email">lina.hashemi@demo.com</field>
+    <field name="city">Jeddah</field>
+    <field name="function">Engineer</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_99" model="res.partner">
+    <field name="name">Maha Al-Hakim</field>
+    <field name="phone">+966501234026</field>
+    <field name="email">maha.hakim@demo.com</field>
+    <field name="city">Jeddah</field>
+    <field name="function">Doctor</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_103" model="res.partner">
+    <field name="name">Manar Al-Hadi</field>
+    <field name="phone">+966501234030</field>
+    <field name="email">manar.hadi@demo.com</field>
+    <field name="city">Dammam</field>
+    <field name="function">Consultant</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_79" model="res.partner">
+    <field name="name">Mariam Al-Qahtani</field>
+    <field name="phone">+966501234006</field>
+    <field name="email">mariam.qahtani@demo.com</field>
+    <field name="city">Riyadh</field>
+    <field name="function">Doctor</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_76" model="res.partner">
+    <field name="name">Mohammed Al-Otaibi</field>
+    <field name="phone">+966501234003</field>
+    <field name="email">mohammed.otaibi@demo.com</field>
+    <field name="city">Jeddah</field>
+    <field name="function">Engineer</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_88" model="res.partner">
+    <field name="name">Nasser Al-Ajmi</field>
+    <field name="phone">+966501234015</field>
+    <field name="email">nasser.ajmi@demo.com</field>
+    <field name="city">Riyadh</field>
+    <field name="function">Consultant</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_81" model="res.partner">
+    <field name="name">Noor Al-Mutairi</field>
+    <field name="phone">+966501234008</field>
+    <field name="email">noor.mutairi@demo.com</field>
+    <field name="city">Jeddah</field>
+    <field name="function">Doctor</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_101" model="res.partner">
+    <field name="name">Norah Al-Khattab</field>
+    <field name="phone">+966501234028</field>
+    <field name="email">norah.khattab@demo.com</field>
+    <field name="city">Khobar</field>
+    <field name="function">Manager</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_90" model="res.partner">
+    <field name="name">Omar Al-Khater</field>
+    <field name="phone">+966501234017</field>
+    <field name="email">omar.khater@demo.com</field>
+    <field name="city">Riyadh</field>
+    <field name="function">Engineer</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_89" model="res.partner">
+    <field name="name">Rania Al-Faraj</field>
+    <field name="phone">+966501234016</field>
+    <field name="email">rania.faraj@demo.com</field>
+    <field name="city">Jeddah</field>
+    <field name="function">Teacher</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_85" model="res.partner">
+    <field name="name">Reem Al-Shehri</field>
+    <field name="phone">+966501234012</field>
+    <field name="email">reem.shehri@demo.com</field>
+    <field name="city">Riyadh</field>
+    <field name="function">Manager</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_96" model="res.partner">
+    <field name="name">Sami Al-Tamimi</field>
+    <field name="phone">+966501234023</field>
+    <field name="email">sami.tamimi@demo.com</field>
+    <field name="city">Jeddah</field>
+    <field name="function">Consultant</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_91" model="res.partner">
+    <field name="name">Sarah Al-Mahmoud</field>
+    <field name="phone">+966501234018</field>
+    <field name="email">sarah.mahmoud@demo.com</field>
+    <field name="city">Khobar</field>
+    <field name="function">Engineer</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_82" model="res.partner">
+    <field name="name">Saud Al-Dossari</field>
+    <field name="phone">+966501234009</field>
+    <field name="email">saud.dossari@demo.com</field>
+    <field name="city">Mecca</field>
+    <field name="function">Manager</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_98" model="res.partner">
+    <field name="name">Talal Al-Madani</field>
+    <field name="phone">+966501234025</field>
+    <field name="email">talal.madani@demo.com</field>
+    <field name="city">Medina</field>
+    <field name="function">Consultant</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_92" model="res.partner">
+    <field name="name">Tariq Al-Yousef</field>
+    <field name="phone">+966501234019</field>
+    <field name="email">tariq.yousef@demo.com</field>
+    <field name="city">Mecca</field>
+    <field name="function">Engineer</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_102" model="res.partner">
+    <field name="name">Walid Al-Jarrah</field>
+    <field name="phone">+966501234029</field>
+    <field name="email">walid.jarrah@demo.com</field>
+    <field name="city">Riyadh</field>
+    <field name="function">Manager</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_78" model="res.partner">
+    <field name="name">Yousef Al-Rashid</field>
+    <field name="phone">+966501234005</field>
+    <field name="email">yousef.rashid@demo.com</field>
+    <field name="city">Dammam</field>
+    <field name="function">Investor</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_tenant_100" model="res.partner">
+    <field name="name">Ziyad Al-Sabban</field>
+    <field name="phone">+966501234027</field>
+    <field name="email">ziyad.sabban@demo.com</field>
+    <field name="city">Riyadh</field>
+    <field name="function">Manager</field>
+    <field name="is_company" eval="False"/>
+    <field name="country_id" ref="base.sa"/>
+    </record>
+
+    <record id="demo_plan_1" model="realestate.payment.plan">
+    <field name="start_after" eval="0"/>
+    <field name="start_after_unit">month</field>
+    <field name="interval" eval="1"/>
+    <field name="unit">month</field>
+    </record>
+
+    <record id="demo_plan_2" model="realestate.payment.plan">
+    <field name="start_after" eval="1"/>
+    <field name="start_after_unit">month</field>
+    <field name="interval" eval="3"/>
+    <field name="unit">month</field>
+    </record>
+
+    <record id="demo_plan_3" model="realestate.payment.plan">
+    <field name="start_after" eval="0"/>
+    <field name="start_after_unit">day</field>
+    <field name="interval" eval="1"/>
+    <field name="unit">week</field>
+    </record>
+
+    <record id="demo_plan_4" model="realestate.payment.plan">
+    <field name="start_after" eval="0"/>
+    <field name="start_after_unit">month</field>
+    <field name="interval" eval="6"/>
+    <field name="unit">month</field>
+    </record>
+
+    <record id="demo_plan_5" model="realestate.payment.plan">
+    <field name="start_after" eval="0"/>
+    <field name="start_after_unit">month</field>
+    <field name="interval" eval="1"/>
+    <field name="unit">year</field>
+    </record>
+
+    <record id="demo_rule_4" model="realestate.contract.increment.rule">
+    <field name="start_month" eval="0"/>
+    <field name="increase_type">percent</field>
+    <field name="increase_value" eval="10.0"/>
+    <field name="priority" eval="20"/>
+    <field name="discount" eval="True"/>
+    <field name="duration_months" eval="3"/>
+    </record>
+
+    <record id="demo_rule_3" model="realestate.contract.increment.rule">
+    <field name="start_month" eval="6"/>
+    <field name="increase_type">fixed</field>
+    <field name="increase_value" eval="200.0"/>
+    <field name="priority" eval="5"/>
+    <field name="discount" eval="False"/>
+    <field name="duration_months" eval="6"/>
+    </record>
+
+    <record id="demo_rule_1" model="realestate.contract.increment.rule">
+    <field name="start_month" eval="12"/>
+    <field name="increase_type">percent</field>
+    <field name="increase_value" eval="5.0"/>
+    <field name="priority" eval="10"/>
+    <field name="discount" eval="False"/>
+    <field name="duration_months" eval="0"/>
+    </record>
+
+    <record id="demo_rule_2" model="realestate.contract.increment.rule">
+    <field name="start_month" eval="24"/>
+    <field name="increase_type">percent</field>
+    <field name="increase_value" eval="7.0"/>
+    <field name="priority" eval="10"/>
+    <field name="discount" eval="False"/>
+    <field name="duration_months" eval="0"/>
+    </record>
+
+    <record id="demo_rule_5" model="realestate.contract.increment.rule">
+    <field name="start_month" eval="36"/>
+    <field name="increase_type">fixed</field>
+    <field name="increase_value" eval="500.0"/>
+    <field name="priority" eval="10"/>
+    <field name="discount" eval="False"/>
+    <field name="duration_months" eval="0"/>
+    </record>
+
+    <record id="demo_contract_2" model="realestate.contract">
+    <field name="price" eval="5500.0"/>
+    <field name="start_date">2026-01-13</field>
+    <field name="end_date">2027-01-13</field>
+    <field name="state">draft</field>
+    <field name="partner_id" ref="demo_tenant_74"/>
+    <field name="property_id" ref="atmta_real_estate.demo_prop_4"/>
+    <field name="payment_plan_ids" eval="[(6, 0, [ref(&quot;atmta_real_estate.demo_plan_1&quot;)])]"/>
+    <field name="increment_rule_ids" eval="[(6, 0, [ref(&quot;demo_rule_1&quot;)])]"/>
+    </record>
+
+    <record id="demo_contract_3" model="realestate.contract">
+    <field name="price" eval="7200.0"/>
+    <field name="start_date">2026-01-20</field>
+    <field name="end_date">2028-01-20</field>
+    <field name="state">draft</field>
+    <field name="partner_id" ref="demo_tenant_75"/>
+    <field name="property_id" ref="atmta_real_estate.demo_prop_6"/>
+    <field name="payment_plan_ids" eval="[(6, 0, [ref(&quot;atmta_real_estate.demo_plan_1&quot;)])]"/>
+    <field name="increment_rule_ids" eval="[(6, 0, [ref(&quot;demo_rule_3&quot;),ref(&quot;demo_rule_1&quot;)])]"/>
+    </record>
+
+    <record id="demo_contract_4" model="realestate.contract">
+    <field name="price" eval="18000.0"/>
+    <field name="start_date">2026-01-27</field>
+    <field name="end_date">2029-01-27</field>
+    <field name="state">draft</field>
+    <field name="partner_id" ref="demo_tenant_76"/>
+    <field name="property_id" ref="atmta_real_estate.demo_prop_8"/>
+    <field name="payment_plan_ids" eval="[(6, 0, [ref(&quot;atmta_real_estate.demo_plan_2&quot;)])]"/>
+    <field name="increment_rule_ids" eval="[(6, 0, [ref(&quot;demo_rule_1&quot;),ref(&quot;demo_rule_2&quot;)])]"/>
+    </record>
+
+    <record id="demo_contract_5" model="realestate.contract">
+    <field name="price" eval="4200.0"/>
+    <field name="start_date">2026-02-03</field>
+    <field name="end_date">2027-02-03</field>
+    <field name="state">draft</field>
+    <field name="partner_id" ref="demo_tenant_77"/>
+    <field name="property_id" ref="atmta_real_estate.demo_prop_9"/>
+    <field name="payment_plan_ids" eval="[(6, 0, [ref(&quot;atmta_real_estate.demo_plan_1&quot;)])]"/>
+    <field name="discount_rule_ids" eval="[(6, 0, [ref(&quot;demo_rule_4&quot;)])]"/>
+    </record>
+
+    <record id="demo_contract_6" model="realestate.contract">
+    <field name="price" eval="6800.0"/>
+    <field name="start_date">2026-02-10</field>
+    <field name="end_date">2028-02-10</field>
+    <field name="state">draft</field>
+    <field name="partner_id" ref="demo_tenant_78"/>
+    <field name="property_id" ref="atmta_real_estate.demo_prop_12"/>
+    <field name="payment_plan_ids" eval="[(6, 0, [ref(&quot;atmta_real_estate.demo_plan_1&quot;)])]"/>
+    <field name="increment_rule_ids" eval="[(6, 0, [ref(&quot;demo_rule_1&quot;)])]"/>
+    </record>
+
+    <record id="demo_contract_7" model="realestate.contract">
+    <field name="price" eval="35000.0"/>
+    <field name="start_date">2026-02-17</field>
+    <field name="end_date">2027-02-17</field>
+    <field name="state">draft</field>
+    <field name="partner_id" ref="demo_tenant_79"/>
+    <field name="property_id" ref="atmta_real_estate.demo_prop_13"/>
+    <field name="payment_plan_ids" eval="[(6, 0, [ref(&quot;atmta_real_estate.demo_plan_4&quot;)])]"/>
+    </record>
+
+    <record id="demo_contract_8" model="realestate.contract">
+    <field name="price" eval="1400.0"/>
+    <field name="start_date">2026-02-24</field>
+    <field name="end_date">2027-02-24</field>
+    <field name="state">draft</field>
+    <field name="partner_id" ref="demo_tenant_80"/>
+    <field name="property_id" ref="atmta_real_estate.demo_prop_17"/>
+    <field name="payment_plan_ids" eval="[(6, 0, [ref(&quot;atmta_real_estate.demo_plan_3&quot;)])]"/>
+    </record>
+
+    <record id="demo_contract_9" model="realestate.contract">
+    <field name="price" eval="8500.0"/>
+    <field name="start_date">2026-03-03</field>
+    <field name="end_date">2029-03-03</field>
+    <field name="state">draft</field>
+    <field name="partner_id" ref="demo_tenant_81"/>
+    <field name="property_id" ref="atmta_real_estate.demo_prop_18"/>
+    <field name="payment_plan_ids" eval="[(6, 0, [ref(&quot;atmta_real_estate.demo_plan_1&quot;)])]"/>
+    <field name="increment_rule_ids" eval="[(6, 0, [ref(&quot;demo_rule_1&quot;),ref(&quot;demo_rule_2&quot;),ref(&quot;demo_rule_5&quot;)])]"/>
+    </record>
+
+    <record id="demo_contract_10" model="realestate.contract">
+    <field name="price" eval="5200.0"/>
+    <field name="start_date">2026-03-10</field>
+    <field name="end_date">2028-03-10</field>
+    <field name="state">draft</field>
+    <field name="partner_id" ref="demo_tenant_82"/>
+    <field name="property_id" ref="atmta_real_estate.demo_prop_19"/>
+    <field name="payment_plan_ids" eval="[(6, 0, [ref(&quot;atmta_real_estate.demo_plan_1&quot;)])]"/>
+    <field name="increment_rule_ids" eval="[(6, 0, [ref(&quot;demo_rule_3&quot;)])]"/>
+    <field name="discount_rule_ids" eval="[(6, 0, [ref(&quot;demo_rule_4&quot;)])]"/>
+    </record>
+
+    <record id="demo_contract_11" model="realestate.contract">
+    <field name="price" eval="9800.0"/>
+    <field name="start_date">2026-03-17</field>
+    <field name="end_date">2027-03-17</field>
+    <field name="state">draft</field>
+    <field name="partner_id" ref="demo_tenant_83"/>
+    <field name="property_id" ref="atmta_real_estate.demo_prop_20"/>
+    <field name="payment_plan_ids" eval="[(6, 0, [ref(&quot;atmta_real_estate.demo_plan_1&quot;)])]"/>
+    <field name="increment_rule_ids" eval="[(6, 0, [ref(&quot;demo_rule_1&quot;)])]"/>
+    </record>
+
 </odoo>

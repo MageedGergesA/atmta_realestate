@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="real_estate_maquette.MaquetteField">
+        <div t-if="!isPersisted" class="o_maquette_save_first alert alert-info m-3">
+            Save the project once before uploading or viewing the 3D maquette.
+        </div>
+        <MaquetteViewer
+            t-else=""
+            t-key="projectId"
+            projectId="projectId"
+            focusPropertyId="focusPropertyId"
+            focusMeshName="focusMeshName"
+        />
+    </t>
+
+    <t t-name="real_estate_maquette.MaquettePreview3D">
+        <div class="o_maquette_preview d-flex flex-column">
+            <div class="d-flex align-items-center gap-2 p-2 border-bottom bg-white">
+                <strong>Project:</strong>
+                <select class="form-select" style="max-width:380px;" t-on-change="onSelect">
+                    <option t-foreach="state.projects" t-as="p" t-key="p.id"
+                            t-att-value="p.id" t-att-selected="p.id === state.projectId">
+                        <t t-esc="p.name"/> (<t t-esc="p.code"/>)
+                    </option>
+                </select>
+                <span t-if="!state.projects.length" class="text-muted">
+                    No projects with a 3D maquette yet — upload a <code>.glb</code> on a project first.
+                </span>
+            </div>
+            <div class="o_maquette_preview_holder flex-grow-1">
+                <MaquetteViewer t-if="state.projectId" t-key="state.projectId"
+                                projectId="state.projectId"/>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="real_estate_maquette.MasterPlan2DField">
+        <div class="o_master_plan_2d_field" style="min-height:600px;display:flex;">
+            <MasterPlan2D projectId="projectId"/>
+        </div>
+    </t>
+
+    <t t-name="real_estate_maquette.MasterPlan2D">
+        <div class="o_master_plan_2d d-flex flex-column flex-grow-1"
+             t-att-style="embedded ? 'min-height:600px;' : ''">
+            <div class="d-flex align-items-center gap-2 p-2 border-bottom bg-white flex-wrap">
+                <t t-if="!embedded">
+                    <strong>Project:</strong>
+                    <select class="form-select" style="max-width:380px;" t-on-change="onSelectProject">
+                        <option t-foreach="state.projects" t-as="p" t-key="p.id"
+                                t-att-value="p.id" t-att-selected="p.id === state.projectId">
+                            <t t-esc="p.name"/> (<t t-esc="p.code"/>)
+                        </option>
+                    </select>
+                </t>
+                <span t-if="!state.projects.length" class="text-muted">
+                    No projects with a 2D master plan yet — upload one on a project first.
+                </span>
+                <div t-if="state.projectId and canEditRegions" class="ms-auto d-flex gap-2 align-items-center">
+                    <!-- Drafting toolbar -->
+                    <t t-if="state.editMode and state.drafting">
+                        <span class="text-muted small">
+                            Click to add points • Press <kbd>Esc</kbd> to cancel.
+                        </span>
+                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                t-on-click="undoLastPoint" t-att-disabled="!state.draftPoints.length">
+                            <i class="fa fa-undo me-1"/>Undo
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                t-on-click="cancelDraft">Cancel</button>
+                        <button type="button" class="btn btn-sm btn-primary"
+                                t-on-click="finishDraft" t-att-disabled="state.draftPoints.length &lt; 3">
+                            <i class="fa fa-check me-1"/>Finish
+                        </button>
+                    </t>
+                    <!-- Selected-region toolbar -->
+                    <t t-elif="state.editMode and state.selectedRegionId">
+                        <span class="text-muted small">
+                            Drag vertices to reshape • Right-click a vertex to remove • Click an edge dot to add.
+                        </span>
+                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                t-on-click="editSelectedRegionInfo">
+                            <i class="fa fa-pencil me-1"/>Edit info
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-danger"
+                                t-on-click="deleteSelectedRegion">
+                            <i class="fa fa-trash me-1"/>Delete
+                        </button>
+                        <button type="button" class="btn btn-sm btn-primary"
+                                t-on-click="doneEditingSelected">Done</button>
+                    </t>
+                    <!-- Edit mode idle toolbar -->
+                    <t t-elif="state.editMode">
+                        <span class="text-muted small">
+                            Click a region to edit its shape, or add a new one.
+                        </span>
+                        <button type="button" class="btn btn-sm btn-primary"
+                                t-on-click="startAddRegion">
+                            <i class="fa fa-plus me-1"/>Add region
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                t-on-click="toggleEditMode">
+                            Done editing
+                        </button>
+                    </t>
+                    <!-- View mode -->
+                    <t t-else="">
+                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                t-on-click="toggleEditMode">
+                            <i class="fa fa-pencil me-1"/>Edit regions
+                        </button>
+                    </t>
+                </div>
+            </div>
+            <div class="o_master_plan_2d_holder flex-grow-1 d-flex align-items-center justify-content-center"
+                 style="overflow:hidden; background:#f1f5f9; position:relative;"
+                 t-on-wheel="onWheelZoom">
+                <!-- Zoom toolbar -->
+                <div t-if="state.projectId" class="o_master_plan_2d_zoom_toolbar">
+                    <button type="button" title="Zoom out" t-on-click="zoomOut"
+                            t-att-disabled="state.zoom &lt;= 1">
+                        <i class="fa fa-minus"/>
+                    </button>
+                    <span class="o_zoom_level" t-esc="zoomLevelDisplay"/>
+                    <button type="button" title="Zoom in" t-on-click="zoomIn"
+                            t-att-disabled="state.zoom &gt;= 6">
+                        <i class="fa fa-plus"/>
+                    </button>
+                    <button type="button" title="Reset"
+                            t-on-click="resetZoom"
+                            t-att-disabled="state.zoom === 1 and state.panX === 0 and state.panY === 0">
+                        <i class="fa fa-refresh"/>
+                    </button>
+                </div>
+                <t t-if="state.projectId">
+                    <div t-ref="planCanvas"
+                         t-attf-class="o_master_plan_2d_canvas position-relative #{state.isPanning ? 'is-dragging' : ''}"
+                         t-att-style="'display:inline-block;max-width:100%;max-height:100%;transform:' + canvasTransform"
+                         t-on-mousedown="onCanvasMouseDown">
+                        <img t-att-src="plan2dUrl" alt="Master plan" draggable="false"
+                             style="display:block;max-width:100%;max-height:90vh;height:auto;user-select:none;-webkit-user-drag:none;"/>
+                        <svg t-ref="overlay"
+                             class="o_re_plan_overlay"
+                             viewBox="0 0 100 100" preserveAspectRatio="none"
+                             t-att-style="'position:absolute;inset:0;width:100%;height:100%;' + (state.drafting ? 'cursor:crosshair;' : '')"
+                             t-on-click="onOverlayClick">
+                            <!-- Saved regions -->
+                            <t t-foreach="state.regions" t-as="r" t-key="r.id">
+                                <polygon t-att-points="polygonPoints(r)"
+                                         t-att-fill="r.color"
+                                         t-att-fill-opacity="state.selectedRegionId === r.id ? '0.55' : (state.editMode ? '0.4' : (state.hoveredRegionId === r.id ? '0.55' : '0.2'))"
+                                         t-att-stroke="state.selectedRegionId === r.id ? '#f59e0b' : '#1e293b'"
+                                         t-att-stroke-width="state.selectedRegionId === r.id ? '0.6' : '0.3'"
+                                         vector-effect="non-scaling-stroke"
+                                         style="cursor:pointer;transition:fill-opacity 120ms;"
+                                         t-on-mouseenter="() => this.onRegionEnter(r)"
+                                         t-on-mouseleave="onRegionLeave"
+                                         t-on-click="(ev) => this.onRegionClick(r, ev)"/>
+                                <!-- Drag handles + edge midpoints for selected region -->
+                                <t t-if="state.editMode and state.selectedRegionId === r.id">
+                                    <t t-foreach="edgeMidpoints(r)" t-as="m" t-key="'mid-' + r.id + '-' + m.edgeIdx">
+                                        <circle t-att-cx="m.x" t-att-cy="m.y" r="0.6"
+                                                fill="#fff" stroke="#3b82f6" stroke-width="0.25"
+                                                vector-effect="non-scaling-stroke"
+                                                style="cursor:copy;"
+                                                t-on-click="(ev) => this.onEdgeMidpointClick(r, m.edgeIdx, ev)"/>
+                                    </t>
+                                    <t t-foreach="r.polygon" t-as="p" t-key="'v-' + r.id + '-' + p_index">
+                                        <circle t-att-cx="p[0]" t-att-cy="p[1]" r="0.9"
+                                                fill="#f59e0b" stroke="#fff" stroke-width="0.3"
+                                                vector-effect="non-scaling-stroke"
+                                                style="cursor:grab;"
+                                                t-on-mousedown="(ev) => this.onVertexMouseDown(r, p_index, ev)"
+                                                t-on-contextmenu="(ev) => this.onVertexContextMenu(r, p_index, ev)"/>
+                                    </t>
+                                </t>
+                            </t>
+                            <!-- Draft polygon being drawn -->
+                            <t t-if="state.drafting and state.draftPoints.length">
+                                <polyline t-att-points="draftPathPoints()"
+                                          fill="rgba(245, 158, 11, 0.25)"
+                                          stroke="#f59e0b" stroke-width="0.4"
+                                          stroke-dasharray="1,0.6"
+                                          vector-effect="non-scaling-stroke"
+                                          pointer-events="none"/>
+                                <t t-foreach="state.draftPoints" t-as="p" t-key="'draft-' + p_index">
+                                    <circle t-att-cx="p[0]" t-att-cy="p[1]" r="0.7"
+                                            fill="#f59e0b" stroke="#fff" stroke-width="0.25"
+                                            vector-effect="non-scaling-stroke"
+                                            pointer-events="none"/>
+                                </t>
+                            </t>
+                        </svg>
+                    </div>
+                    <!-- Overlays that should NOT scale with zoom -->
+                    <div t-if="state.hoveredRegionId and !state.drafting"
+                         class="o_re_region_label position-absolute"
+                         style="top:18px;left:18px;background:rgba(15,23,42,0.85);color:#fff;padding:4px 10px;border-radius:4px;font-size:13px;pointer-events:none;z-index:4;">
+                        <t t-foreach="state.regions" t-as="r" t-key="r.id">
+                            <span t-if="r.id === state.hoveredRegionId" t-esc="r.label"/>
+                        </t>
+                    </div>
+                    <!-- Side panel — same shape as the 3D viewer's -->
+                        <div t-if="state.selectedProperty" class="o_maquette_side_panel">
+                            <div class="o_maquette_side_panel_header">
+                                <span class="o_maquette_side_panel_title"
+                                      t-esc="state.selectedProperty.name || state.selectedProperty.property_code"/>
+                                <button class="btn btn-sm btn-link p-0" t-on-click="closeSidePanel">
+                                    <i class="fa fa-times"/>
+                                </button>
+                            </div>
+                            <div class="o_maquette_side_panel_body">
+                                <div class="mb-2">
+                                    <span class="o_maquette_state_badge"
+                                          t-att-style="'background:' + stateColorFor(state.selectedProperty.state)">
+                                        <t t-esc="stateLabelFor(state.selectedProperty.state)"/>
+                                    </span>
+                                </div>
+                                <table class="o_maquette_info_table table table-sm mb-2">
+                                    <tr t-if="state.selectedProperty.property_code">
+                                        <th>Code</th>
+                                        <td t-esc="state.selectedProperty.property_code"/>
+                                    </tr>
+                                    <tr t-if="state.selectedProperty.property_type">
+                                        <th>Type</th>
+                                        <td t-esc="state.selectedProperty.property_type"/>
+                                    </tr>
+                                    <tr t-if="state.selectedProperty.area_sqm">
+                                        <th>Area</th>
+                                        <td><t t-esc="state.selectedProperty.area_sqm"/> m²</td>
+                                    </tr>
+                                    <tr t-if="state.selectedProperty.base_price">
+                                        <th>Base Price</th>
+                                        <td>
+                                            <t t-esc="state.selectedProperty.base_price.toLocaleString()"/>
+                                            <span class="ms-1" t-esc="state.selectedProperty.currency"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div t-if="state.selectedProperty.has_floor_plan" class="o_maquette_floor_plan">
+                                    <img t-att-src="floorPlanUrl(state.selectedProperty.id)" alt="Floor plan"/>
+                                </div>
+                                <div class="o_maquette_actions mt-2 d-flex flex-column gap-1">
+                                    <button class="btn btn-sm btn-secondary" t-on-click="openImages">
+                                        <i class="fa fa-picture-o me-1"/> View Images
+                                    </button>
+                                    <t t-if="!portalMode">
+                                        <button t-if="state.selectedProperty.state === 'available'"
+                                                class="btn btn-sm btn-primary" t-on-click="reserveUnit">
+                                            <i class="fa fa-bookmark me-1"/> Reserve Unit
+                                        </button>
+                                        <button t-if="state.selectedProperty.state === 'available'"
+                                                class="btn btn-sm btn-outline-primary" t-on-click="createListing">
+                                            <i class="fa fa-tag me-1"/> Create Listing
+                                        </button>
+                                        <button class="btn btn-sm btn-secondary" t-on-click="openUnitForm">
+                                            <i class="fa fa-external-link me-1"/> Open Unit Form
+                                        </button>
+                                    </t>
+                                    <t t-else="">
+                                        <button class="btn btn-sm btn-primary" t-on-click="reserveUnit">
+                                            <i class="fa fa-envelope me-1"/> Send EOI
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-primary" t-on-click="createListing">
+                                            <i class="fa fa-calendar me-1"/> Request a Viewing
+                                        </button>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                </t>
+                <div t-else="" class="text-muted p-4">Select a project above.</div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="real_estate_maquette.ImageCarouselField">
+        <button type="button" class="btn btn-secondary" t-on-click="openCarousel"
+                t-att-disabled="!count">
+            <i class="fa fa-picture-o me-1"/> View Images (<t t-esc="count"/>)
+        </button>
+    </t>
+
+    <t t-name="real_estate_maquette.CarouselDialog">
+        <Dialog title="props.title or 'Images'" size="'fs'">
+            <div class="text-center" t-if="props.images.length">
+                <img t-att-src="current.src"
+                     style="width:100%; height:auto; max-height:80vh; object-fit:contain; display:block; margin:0 auto;"/>
+                <div class="mt-2 d-flex justify-content-center align-items-center gap-3"
+                     t-if="props.images.length > 1">
+                    <button class="btn btn-secondary" t-on-click="prev">
+                        <i class="fa fa-chevron-left"/>
+                    </button>
+                    <span><t t-esc="state.index + 1"/> / <t t-esc="props.images.length"/></span>
+                    <button class="btn btn-secondary" t-on-click="next">
+                        <i class="fa fa-chevron-right"/>
+                    </button>
+                </div>
+            </div>
+            <div t-else="" class="text-muted">No images uploaded for this unit.</div>
+        </Dialog>
+    </t>
+
+    <t t-name="real_estate_maquette.GlbViewerField">
+        <div class="o_glb_viewer" style="width:100%;height:440px;position:relative;background:#f1f5f9;border-radius:6px;overflow:hidden;">
+            <canvas t-ref="canvas" style="width:100%;height:100%;display:block;"/>
+        </div>
+    </t>
+
+    <t t-name="real_estate_maquette.MaquetteViewer">
+        <div class="o_maquette_root" t-ref="root">
+            <div t-if="state.loading" class="o_maquette_loader">
+                <div class="o_maquette_loader_inner">
+                    <i class="fa fa-cube fa-3x mb-2" />
+                    <div t-esc="state.loadingMsg"/>
+                </div>
+            </div>
+            <div t-if="state.error" class="o_maquette_error alert alert-danger">
+                <strong>3D viewer failed:</strong>
+                <span t-esc="state.error"/>
+            </div>
+
+            <div class="o_maquette_toolbar">
+                <button class="btn btn-sm btn-secondary me-1" t-on-click="resetView" title="Reset view">
+                    <i class="fa fa-refresh"/> Reset
+                </button>
+                <button t-if="!portalMode" class="btn btn-sm btn-secondary me-1" t-on-click="saveCurrentCamera" title="Save current angle as default view">
+                    <i class="fa fa-camera"/> Save View
+                </button>
+                <button t-if="!portalMode" class="btn btn-sm btn-secondary me-1" t-on-click="autoMatchMeshes" title="Match GLB mesh names to unit property codes">
+                    <i class="fa fa-magic"/> Auto-match
+                </button>
+                <span class="o_maquette_legend ms-3">
+                    <span class="o_maquette_legend_dot" style="background:#22c55e"/> Available
+                    <span class="o_maquette_legend_count ms-1" t-esc="state.stats.available"/>
+                    <span class="o_maquette_legend_dot ms-3" style="background:#eab308"/> Reserved
+                    <span class="o_maquette_legend_count ms-1" t-esc="state.stats.reserved"/>
+                    <span class="o_maquette_legend_dot ms-3" style="background:#6b7280"/> Sold
+                    <span class="o_maquette_legend_count ms-1" t-esc="state.stats.sold"/>
+                    <span class="ms-3 text-muted">
+                        Mapped <t t-esc="state.stats.mapped"/>/<t t-esc="state.stats.total"/>
+                    </span>
+                </span>
+            </div>
+
+            <div class="o_maquette_canvas_wrap">
+                <canvas t-ref="canvas" class="o_maquette_canvas"/>
+
+                <div t-if="state.hovered and !state.selectedUnit" class="o_maquette_hover_tip">
+                    <t t-esc="state.hovered"/>
+                </div>
+
+                <div t-if="state.selectedUnit" class="o_maquette_side_panel">
+                    <div class="o_maquette_side_panel_header">
+                        <span class="o_maquette_side_panel_title" t-esc="state.selectedUnit.name || state.selectedUnit.property_code"/>
+                        <button class="btn btn-sm btn-link p-0" t-on-click="closeSidePanel">
+                            <i class="fa fa-times"/>
+                        </button>
+                    </div>
+                    <div class="o_maquette_side_panel_body">
+                        <div class="mb-2">
+                            <span class="o_maquette_state_badge"
+                                  t-att-style="'background:' + stateColorFor(state.selectedUnit.state)">
+                                <t t-esc="stateLabelFor(state.selectedUnit.state)"/>
+                            </span>
+                        </div>
+                        <table class="o_maquette_info_table table table-sm mb-2">
+                            <tr t-if="state.selectedUnit.property_code">
+                                <th>Code</th>
+                                <td t-esc="state.selectedUnit.property_code"/>
+                            </tr>
+                            <tr t-if="state.selectedUnit.property_type">
+                                <th>Type</th>
+                                <td t-esc="state.selectedUnit.property_type"/>
+                            </tr>
+                            <tr t-if="state.selectedUnit.area_sqm">
+                                <th>Area</th>
+                                <td><t t-esc="state.selectedUnit.area_sqm"/> m²</td>
+                            </tr>
+                            <tr t-if="state.selectedUnit.base_price">
+                                <th>Base Price</th>
+                                <td>
+                                    <t t-esc="state.selectedUnit.base_price.toLocaleString()"/>
+                                    <span class="ms-1" t-esc="state.selectedUnit.currency"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <div t-if="state.selectedUnit.has_floor_plan" class="o_maquette_floor_plan">
+                            <img t-att-src="floorPlanUrl(state.selectedUnit.id)" alt="Floor plan"/>
+                        </div>
+                        <div class="o_maquette_actions mt-2 d-flex flex-column gap-1">
+                            <button class="btn btn-sm btn-secondary" t-on-click="openImages"
+                                    t-if="state.selectedUnit.id">
+                                <i class="fa fa-picture-o me-1"/> View Images
+                            </button>
+                            <t t-if="!portalMode">
+                                <button t-if="state.selectedUnit.state === 'available'"
+                                        class="btn btn-sm btn-primary" t-on-click="reserveUnit">
+                                    <i class="fa fa-bookmark me-1"/> Reserve Unit
+                                </button>
+                                <button t-if="state.selectedUnit.state === 'available'"
+                                        class="btn btn-sm btn-outline-primary" t-on-click="createListing">
+                                    <i class="fa fa-tag me-1"/> Create Listing
+                                </button>
+                                <button class="btn btn-sm btn-secondary" t-on-click="openUnitForm"
+                                        t-if="state.selectedUnit.id">
+                                    <i class="fa fa-external-link me-1"/> Open Unit Form
+                                </button>
+                            </t>
+                            <t t-elif="state.selectedUnit.id">
+                                <button class="btn btn-sm btn-primary" t-on-click="reserveUnit">
+                                    <i class="fa fa-envelope me-1"/> Send EOI
+                                </button>
+                                <button class="btn btn-sm btn-outline-primary" t-on-click="createListing">
+                                    <i class="fa fa-calendar me-1"/> Request a Viewing
+                                </button>
+                            </t>
+                            <div t-if="!state.selectedUnit.id" class="alert alert-warning small mt-2 mb-0">
+                                This mesh <strong t-esc="state.selectedUnit.mesh_name"/> is not mapped to any unit.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

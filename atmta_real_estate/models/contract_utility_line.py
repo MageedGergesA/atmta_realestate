@@ -8,6 +8,9 @@ class RealEstateContractUtilityLine(models.Model):
 
     contract_id = fields.Many2one('realestate.contract', string="Contract", ondelete='cascade', required=True)
     name = fields.Char(string="Utility", required=True)
+    vendor_id = fields.Many2one(
+        'res.partner', string="Utility Provider",
+        help="Vendor billed for this utility. Required to post the vendor bill.")
     amount = fields.Monetary(string="Expected Amount", required=True)
     currency_id = fields.Many2one(related='contract_id.currency_id', store=True)
     date = fields.Date(string='Date')
@@ -25,11 +28,11 @@ class RealEstateContractUtilityLine(models.Model):
         for line in self:
             if line.state != 'draft':
                 continue
-            if not line.contract_id.partner_id:
-                raise UserError("Contract must have a vendor (Partner) to create a bill.")
+            if not line.vendor_id:
+                raise UserError("Set the Utility Provider before creating the vendor bill.")
             move = self.env['account.move'].create({
                 'move_type': 'in_invoice',
-                # 'partner_id': line.contract_id.partner_id.id,
+                'partner_id': line.vendor_id.id,
                 'invoice_date': fields.Date.today(),
                 'invoice_line_ids': [(0, 0, {
                     'name': f'Utility - {line.name}',
@@ -39,8 +42,16 @@ class RealEstateContractUtilityLine(models.Model):
             })
             line.bill_id = move
             line.state = 'confirmed'
+            # Post so the cost actually lands on the ledger.
+            self.env['realestate.account.tools'].post_moves(move)
 
-    @api.depends('bill_id.state')
+    def action_register_payment_utility(self):
+        moves = self.mapped('bill_id').filtered(lambda m: m.state == 'posted')
+        if not moves:
+            raise UserError("There is no posted bill to pay yet.")
+        return self.env['realestate.account.tools'].register_payment(moves)
+
+    @api.depends('bill_id.payment_state')
     def _compute_bill_paid(self):
         for line in self:
-            line.bill_paid = line.bill_id.state == 'posted'
+            line.bill_paid = line.bill_id.payment_state in ('paid', 'in_payment', 'reversed')

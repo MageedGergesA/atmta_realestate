@@ -1,0 +1,27 @@
+// Force full-width on the field wrapper that Odoo puts around our widget.
+// Without this, a <field> outside a <group> renders inside an .o_field_widget
+// with flex defaults that don't span the page.
+.o_form_view .o_field_widget:has(> .o_property_map_widget),
+.o_form_view .o_field_property_map {
+    width: 100%;
+    max-width: 100%;
+    flex: 1 1 100%;
+}
+
+.o_property_map_widget {
+    width: 100%;
+    display: block;
+
+    .o_property_map_canvas {
+        width: 100%;
+        height: 450px;
+        border-radius: 6px;
+        border: 1px solid #dee2e6;
+        z-index: 0;
+    }
+
+    .o_property_map_results {
+        max-height: 220px;
+        overflow-y: auto;
+    }
+}

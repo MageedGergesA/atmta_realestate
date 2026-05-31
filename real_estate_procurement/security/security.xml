@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="module_category_realestate_procurement" model="ir.module.category">
+        <field name="name">Real Estate Procurement</field>
+        <field name="description">Access to the real-estate procurement workflow.</field>
+        <field name="sequence">28</field>
+    </record>
+
+    <record id="group_procurement_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="module_category_realestate_procurement"/>
+        <field name="comment">Create/edit material requests, view purchase orders and vendors.</field>
+    </record>
+
+    <record id="group_procurement_approver" model="res.groups">
+        <field name="name">Approver</field>
+        <field name="category_id" ref="module_category_realestate_procurement"/>
+        <field name="implied_ids" eval="[(4, ref('group_procurement_user'))]"/>
+        <field name="comment">Approve material requests, confirm purchase orders.</field>
+    </record>
+
+    <record id="group_procurement_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_category_realestate_procurement"/>
+        <field name="implied_ids" eval="[(4, ref('group_procurement_approver'))]"/>
+        <field name="comment">Full administrative access including configuration.</field>
+    </record>
+</odoo>

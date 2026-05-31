@@ -1,72 +1,101 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "atmta_real_estate",
+    'name': "Real Estate — Rental (Standalone)",
+    'summary': "Self-contained real estate rental: properties, contracts, payments, dashboard, map.",
+    'description': """
+Real Estate Rental (Standalone)
+================================
+Self-contained module — no dependency on other real-estate modules.
 
-    'summary': "Short (1 phrase/line) summary of the module's purpose",
-
-    'description': """Rental Management""",
-
+* Property catalog with hierarchy (Compound / Building / Floor / Unit / Room)
+* Properties map dashboard (Leaflet)
+* Rental contracts (single-unit + multi-unit)
+* Payment plans + increment / discount rules
+* Auto-generated payment schedules (with Hijri dates)
+* Utility line tracking per contract
+* Rental history audit trail
+* Security deposit lifecycle
+* Auto-invoicing cron
+* Maintenance ticket workflow
+* Real-time rental dashboard (KPIs, charts, tenants)
+""",
     'author': "Atmta",
-    'website': "https://www.yourcompany.com",
-
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/15.0/odoo/addons/base/data/ir_module_category_data.xml
-    # for the full list
-    'category': 'Uncategorized',
-    'version': '0.1',
-
-    # any module necessary for this one to work correctly
-    'depends': ['base', 'product', 'google_maps_viewer_widget', 'mail','sale','web_hierarchy'],
-
-    # always loaded
+    'license': 'LGPL-3',
+    'version': '0.3',
+    'category': 'Real Estate',
+    'depends': [
+        'base',
+        'product',
+        'mail',
+        'sale',
+        'sale_stock',
+        'account',
+        'stock',
+        'web_hierarchy',
+    ],
     'data': [
+        # security (must load first)
         'security/security.xml',
         'security/ir.model.access.csv',
+        # stock locations for the unit-inventory lifecycle
+        'data/stock_locations.xml',
+        # sequences + crons
+        'data/property_sequence.xml',
+        'data/maintenance_request_sequence.xml',
+        'data/contract_sequence.xml',
+        'data/payment_schedule_sequence.xml',
+        'data/schedule_actions.xml',
+        'data/single_multi_contract_param.xml',
+        'data/contract_line_expiry_cron.xml',
+        'data/auto_invoice_cron.xml',
+        # base property + maintenance views
         'views/property_type_views.xml',
-        'views/property_product_views.xml',
-        'views/property_rental_history.xml',
+        'views/property_views.xml',
+        'views/property_image.xml',
+        'views/maintenance_request.xml',
+        'views/properties_map_dashboard.xml',
+        # rental views
         'wizard/realestate_contracts_wiz.xml',
         'views/contract_views.xml',
-        'data/contract_sequence.xml',
-        'data/property_sequence.xml',
-        'data/payment_schedule_sequence.xml',
-        'data/maintenance_request_sequence.xml',
-        'data/schedule_actions.xml',
-        'data/property_status_update.xml',
-        'data/single_multi_contract_param.xml',
+        'views/contract_deposit_views.xml',
         'views/payment_plan_views.xml',
         'views/contract_line_views.xml',
-        'views/property_image.xml',
         'views/contract_payment_views.xml',
         'views/contract_utility_line.xml',
         'views/contract_increment_rule.xml',
-        'views/maintenance_request.xml',
         'views/account_move.xml',
-        # 'views/contract_pivot_report.xml',
-        # 'views/contract_line_pivot.xml',
         'views/res_partner.xml',
+        'views/property_rental_history.xml',
+        'views/rental_property_views.xml',
+        'views/rental_dashboard_views.xml',
+        # menu last
         'views/menus.xml',
-        # 'reports/property_report.xml',
-        # 'reports/contract_report.xml',
-        # 'reports/contract_payments_report.xml',
-        # 'reports/contract_financial_summary.xml',
+        # reports
+        'reports/property_report.xml',
         'reports/real_estate_contract.xml',
     ],
-    "assets":
-        {
-            "web.assets_backend": [
-                '/atmta_real_estate/static/src/js/org_chart.js',
-                '/atmta_real_estate/static/src/xml/org_chart_template.xml',
-                '/atmta_real_estate/static/src/scss/org_template_style.scss',
-            ],
-            "web.assets_frontend": [
-                '/atmta_real_estate/static/src/scss/org_template_style.scss',
-            ]
-        },
-    # only loaded in demonstration mode
+    'assets': {
+        'web.assets_backend': [
+            '/atmta_real_estate/static/src/lib/leaflet/leaflet.css',
+            '/atmta_real_estate/static/src/lib/leaflet/markercluster/MarkerCluster.css',
+            '/atmta_real_estate/static/src/lib/leaflet/markercluster/MarkerCluster.Default.css',
+            '/atmta_real_estate/static/src/lib/leaflet/leaflet.js',
+            '/atmta_real_estate/static/src/lib/leaflet/markercluster/leaflet.markercluster.js',
+            '/atmta_real_estate/static/src/lib/chartjs/chart.umd.js',
+            '/atmta_real_estate/static/src/scss/property_map.scss',
+            '/atmta_real_estate/static/src/scss/properties_map_dashboard.scss',
+            '/atmta_real_estate/static/src/scss/rental_dashboard.scss',
+            '/atmta_real_estate/static/src/js/property_map.js',
+            '/atmta_real_estate/static/src/js/properties_map_dashboard.js',
+            '/atmta_real_estate/static/src/js/rental_dashboard.js',
+            '/atmta_real_estate/static/src/xml/property_map.xml',
+            '/atmta_real_estate/static/src/xml/properties_map_dashboard.xml',
+            '/atmta_real_estate/static/src/xml/rental_dashboard.xml',
+        ],
+    },
     'demo': [
         'demo/demo.xml',
     ],
-    'license': 'LGPL-3',
-
+    'application': True,
+    'post_init_hook': 'post_init_hook',
 }

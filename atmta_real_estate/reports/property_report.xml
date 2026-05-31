@@ -29,7 +29,7 @@
                                 </p>
                             </div>
                             <div class="col-6" style="margin-top:50px; flex-shrink: 0; text-align: right;">
-                                <img t-att-src="'/web/image/product.product/' + str(property.id) + '/image_1920'" style="max-height: 100px; border-radius: 8px;"/>
+                                <img t-att-src="'/web/image/realestate.property/' + str(property.id) + '/image_1920'" style="max-height: 100px; border-radius: 8px;"/>
                             </div>
                         </div>
 
@@ -130,11 +130,11 @@
     </template>
     <record id="action_unit_status_report" model="ir.actions.report">
         <field name="name">Unit Status Report</field>
-        <field name="model">product.product</field>
+        <field name="model">realestate.property</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">atmta_real_estate.report_unit_status_template</field>
         <field name="report_file">atmta_real_estate.report_unit_status_template</field>
-        <field name="binding_model_id" ref="model_product_product"/>
+        <field name="binding_model_id" ref="model_realestate_property"/>
         <field name="binding_type">action</field>
         <field name="print_report_name">'Unit_Status_%s' % object.name</field>
     </record>

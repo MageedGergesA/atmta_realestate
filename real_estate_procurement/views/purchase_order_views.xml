@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Extend the standard PO form to expose RE links -->
+    <record id="view_purchase_order_form_re" model="ir.ui.view">
+        <field name="name">purchase.order.form.realestate</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='other_info']" position="after">
+                <group string="Real Estate" name="re_group">
+                    <field name="re_project_id" options="{'no_create': True}"/>
+                    <field name="re_source_model" readonly="1"/>
+                    <field name="re_source_display" readonly="1"
+                           invisible="not re_source_display"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Filtered list for "real-estate POs only" -->
+    <record id="action_realestate_purchase_orders" model="ir.actions.act_window">
+        <field name="name">Real Estate Purchase Orders</field>
+        <field name="res_model">purchase.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('is_realestate_po', '=', True)]</field>
+        <field name="context">{'search_default_group_by_state': 1}</field>
+    </record>
+</odoo>

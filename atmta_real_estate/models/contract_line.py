@@ -10,7 +10,7 @@ class RealEstateContractLine(models.Model):
 
     contract_id = fields.Many2one('realestate.contract', string="Contract", required=True, ondelete='cascade')
     partner_id = fields.Many2one(related='contract_id.partner_id', string='Tenant/Partner')
-    property_id = fields.Many2one('product.product', string="Property", domain="[('is_property', '=', True)]", required=True)
+    property_id = fields.Many2one('realestate.property', string="Property", required=True)
     property_type_id = fields.Many2one(related='property_id.property_type_id', string='Property Type')
     payment_plan_ids = fields.Many2many(
         'realestate.payment.plan',

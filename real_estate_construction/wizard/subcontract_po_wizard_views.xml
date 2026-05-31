@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_subcontract_po_wizard_form" model="ir.ui.view">
+        <field name="name">realestate.subcontract.po.wizard.form</field>
+        <field name="model">realestate.subcontract.po.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Create Subcontract PO">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="contractor_id" readonly="1"/>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="project_id" options="{'no_create': True}"/>
+                            <field name="service_product_id" options="{'no_create': True}"
+                                   help="Leave blank to auto-create a per-contractor service product."/>
+                        </group>
+                        <group>
+                            <field name="expected_start_date"/>
+                            <field name="total_committed" readonly="1"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                        </group>
+                    </group>
+                    <field name="milestone_ids">
+                        <list>
+                            <field name="name"/>
+                            <field name="project_id"/>
+                            <field name="category"/>
+                            <field name="budget_amount" sum="Total Committed"/>
+                            <field name="state" widget="badge"/>
+                            <field name="currency_id" column_invisible="1"/>
+                        </list>
+                    </field>
+                    <field name="notes" placeholder="Scope notes, start conditions, etc."/>
+                </sheet>
+                <footer>
+                    <button name="action_create_po" type="object" string="Create Purchase Order"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

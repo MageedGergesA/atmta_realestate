@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="atmta_real_estate.PropertyMap">
+        <div class="o_property_map_widget">
+            <div class="o_property_map_toolbar d-flex align-items-center gap-2 mb-2" t-if="!readonly">
+                <div class="input-group input-group-sm flex-grow-1">
+                    <input type="text" class="form-control"
+                           t-model="searchState.query"
+                           t-on-keydown="onSearchKeydown"
+                           placeholder="Search address (powered by OpenStreetMap)"/>
+                    <button type="button" class="btn btn-secondary"
+                            t-on-click="onSearch"
+                            t-att-disabled="searchState.searching">
+                        <i class="fa fa-search" t-if="!searchState.searching"/>
+                        <i class="fa fa-spinner fa-spin" t-else=""/>
+                    </button>
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-secondary"
+                        t-on-click="onClearLocation"
+                        t-att-disabled="!hasCoordinates"
+                        title="Clear location">
+                    <i class="fa fa-times"/>
+                </button>
+            </div>
+
+            <div class="o_property_map_results list-group mb-2"
+                 t-if="searchState.results.length">
+                <button type="button" class="list-group-item list-group-item-action small"
+                        t-foreach="searchState.results" t-as="result" t-key="result_index"
+                        t-on-click="() => this.onSelectResult(result)">
+                    <t t-esc="result.label"/>
+                </button>
+            </div>
+
+            <div class="text-danger small mb-1" t-if="searchState.error">
+                <t t-esc="searchState.error"/>
+            </div>
+
+            <div t-ref="map" class="o_property_map_canvas"/>
+
+            <div class="text-muted small mt-1" t-if="!readonly">
+                Click on the map or drag the pin to set the property location.
+            </div>
+        </div>
+    </t>
+
+</templates>

@@ -1,0 +1,28 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_project_readonly,Project Readonly,model_realestate_project,group_dev_readonly,1,0,0,0
+access_project_agent,Project Agent,model_realestate_project,group_dev_agent,1,1,1,0
+access_project_manager,Project Manager,model_realestate_project,group_dev_manager,1,1,1,1
+
+access_project_boundary_readonly,Project Boundary Readonly,model_realestate_project_boundary_point,group_dev_readonly,1,0,0,0
+access_project_boundary_agent,Project Boundary Agent,model_realestate_project_boundary_point,group_dev_agent,1,1,1,1
+access_project_boundary_manager,Project Boundary Manager,model_realestate_project_boundary_point,group_dev_manager,1,1,1,1
+
+access_phase_readonly,Phase Readonly,model_realestate_phase,group_dev_readonly,1,0,0,0
+access_phase_agent,Phase Agent,model_realestate_phase,group_dev_agent,1,1,1,0
+access_phase_manager,Phase Manager,model_realestate_phase,group_dev_manager,1,1,1,1
+
+access_re_pt_segment_manager,Payment Term Segment Manager,model_realestate_payment_term_segment,account.group_account_manager,1,1,1,1
+access_re_pt_segment_user,Payment Term Segment User,model_realestate_payment_term_segment,base.group_user,1,0,0,0
+
+access_reservation_readonly,Reservation Readonly,model_realestate_unit_reservation,group_dev_readonly,1,0,0,0
+access_reservation_agent,Reservation Agent,model_realestate_unit_reservation,group_dev_agent,1,1,1,0
+access_reservation_manager,Reservation Manager,model_realestate_unit_reservation,group_dev_manager,1,1,1,1
+
+access_sale_contract_readonly,Sale Contract Readonly,model_realestate_sale_contract,group_dev_readonly,1,0,0,0
+access_sale_contract_agent,Sale Contract Agent,model_realestate_sale_contract,group_dev_agent,1,1,1,0
+access_sale_contract_manager,Sale Contract Manager,model_realestate_sale_contract,group_dev_manager,1,1,1,1
+
+access_sale_installment_readonly,Sale Installment Readonly,model_realestate_sale_installment,group_dev_readonly,1,0,0,0
+access_sale_installment_agent,Sale Installment Agent,model_realestate_sale_installment,group_dev_agent,1,1,1,0
+access_sale_installment_manager,Sale Installment Manager,model_realestate_sale_installment,group_dev_manager,1,1,1,1

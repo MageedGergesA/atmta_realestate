@@ -13,7 +13,8 @@
                 <field name="contract_line_id" invisible="not is_multi_property" optional="hide"/>
                 <field name="property_id" optional="show"/>
                 <field name="date_due" optional="show"/>
-                <field name="amount" sum="Total Amount" optional="show"/>
+                <field name="amount" sum="Total Base Amount" optional="show"/>
+                <field name="amount_total" sum="Total Due" optional="show"/>
                 <field name="move_state" optional="show" widget="badge"
                        decoration-success="move_state == 'posted'"
                        decoration-warning="move_state == 'draft'"
@@ -69,6 +70,7 @@
                             <field name="hijri_date_due"/>
                             <field name="hijri_date_due_deadline"/>
                             <field name="amount"/>
+                            <field name="amount_total" readonly="1"/>
                             <field name="move_id" readonly="1"/>
                         </group>
 
@@ -77,6 +79,19 @@
                             <field name="discount_amount" readonly="1" optional="show"/>
                         </group>
                     </group>
+                    <notebook>
+                        <page string="Additional Charges">
+                            <field name="charge_line_ids">
+                                <list editable="bottom">
+                                    <field name="charge_type"/>
+                                    <field name="name"/>
+                                    <field name="product_id" optional="show"/>
+                                    <field name="maintenance_request_id" optional="hide" readonly="1"/>
+                                    <field name="amount" sum="Total Charges"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
@@ -91,6 +106,7 @@
                 <field name="date_due" type="col"/>
                 <field name="state" type="col"/>
                 <field name="amount" type="measure"/>
+                <field name="amount_total" type="measure"/>
                 <field name="increase_amount" type="measure"/>
                 <field name="discount_amount" type="measure"/>
             </pivot>
@@ -105,6 +121,7 @@
                 <field name="name" string="Reference"/>
                 <field name="label" string="Label"/>
                 <field name="amount"/>
+                <field name="amount_total"/>
                 <field name="date_due"/>
                 <field name="contract_id"/>
                 <field name="partner_id"/>

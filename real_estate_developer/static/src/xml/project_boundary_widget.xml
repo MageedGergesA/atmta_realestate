@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="real_estate_developer.BoundaryPickerField">
+        <div class="o_boundary_picker">
+            <div class="o_boundary_toolbar">
+                <button type="button" class="btn btn-sm btn-secondary"
+                        t-on-click="() => this.undoLast()"
+                        t-att-disabled="isUnsaved or state.busy or state.points.length == 0">
+                    <i class="fa fa-undo"/> Undo last
+                </button>
+                <button type="button" class="btn btn-sm btn-secondary"
+                        t-on-click="() => this.fitView()"
+                        t-att-disabled="state.points.length == 0">
+                    <i class="fa fa-search-plus"/> Fit to points
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-danger"
+                        t-on-click="() => this.clearAll()"
+                        t-att-disabled="isUnsaved or state.busy or state.points.length == 0">
+                    <i class="fa fa-trash"/> Clear all
+                </button>
+                <span class="o_boundary_count">
+                    Points: <strong><t t-esc="state.points.length"/></strong>
+                </span>
+                <span class="o_boundary_hint" t-if="!isUnsaved">
+                    Click map = add corner · Drag marker = reposition · Shift+click marker = remove
+                </span>
+                <span class="o_boundary_hint text-warning" t-if="isUnsaved">
+                    <i class="fa fa-exclamation-triangle"/> Save the project first, then click the map to set boundary points
+                </span>
+            </div>
+            <div t-ref="map" class="o_boundary_map"
+                 t-att-class="{'o_boundary_map_disabled': isUnsaved}"/>
+        </div>
+    </t>
+
+</templates>

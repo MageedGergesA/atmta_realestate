@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_handover_root"
+              name="Handover"
+              web_icon="real_estate_handover,static/description/icon.png"
+              sequence="29"/>
+
+    <menuitem id="menu_handovers"
+              name="Handovers"
+              parent="menu_handover_root"
+              action="action_handover"
+              sequence="10"/>
+
+    <menuitem id="menu_snagging"
+              name="Snagging Issues"
+              parent="menu_handover_root"
+              action="action_snagging"
+              sequence="20"/>
+
+    <menuitem id="menu_warranties"
+              name="Warranties"
+              parent="menu_handover_root"
+              action="action_warranty"
+              sequence="30"/>
+
+    <menuitem id="menu_handover_config"
+              name="Configuration"
+              parent="menu_handover_root"
+              sequence="200"/>
+
+    <menuitem id="menu_handover_templates"
+              name="Checklist Templates"
+              parent="menu_handover_config"
+              action="action_template"
+              sequence="10"/>
+</odoo>

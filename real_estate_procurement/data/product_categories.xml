@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!-- Roots -->
+    <record id="cat_re_root" model="product.category">
+        <field name="name">Real Estate</field>
+    </record>
+
+    <record id="cat_re_construction" model="product.category">
+        <field name="name">Construction</field>
+        <field name="parent_id" ref="cat_re_root"/>
+    </record>
+    <record id="cat_re_fittings" model="product.category">
+        <field name="name">Property Fittings</field>
+        <field name="parent_id" ref="cat_re_root"/>
+    </record>
+    <record id="cat_re_marketing" model="product.category">
+        <field name="name">Marketing &amp; Sales</field>
+        <field name="parent_id" ref="cat_re_root"/>
+    </record>
+    <record id="cat_re_maintenance" model="product.category">
+        <field name="name">Maintenance Consumables</field>
+        <field name="parent_id" ref="cat_re_root"/>
+    </record>
+    <record id="cat_re_services" model="product.category">
+        <field name="name">Services</field>
+        <field name="parent_id" ref="cat_re_root"/>
+    </record>
+
+    <!-- Construction sub-categories -->
+    <record id="cat_construction_civil" model="product.category">
+        <field name="name">Civil</field>
+        <field name="parent_id" ref="cat_re_construction"/>
+    </record>
+    <record id="cat_construction_structural" model="product.category">
+        <field name="name">Structural</field>
+        <field name="parent_id" ref="cat_re_construction"/>
+    </record>
+    <record id="cat_construction_mep" model="product.category">
+        <field name="name">MEP</field>
+        <field name="parent_id" ref="cat_re_construction"/>
+    </record>
+    <record id="cat_construction_finishing" model="product.category">
+        <field name="name">Finishing</field>
+        <field name="parent_id" ref="cat_re_construction"/>
+    </record>
+    <record id="cat_construction_site" model="product.category">
+        <field name="name">Site</field>
+        <field name="parent_id" ref="cat_re_construction"/>
+    </record>
+
+    <!-- Fittings sub-categories -->
+    <record id="cat_fittings_appliances" model="product.category">
+        <field name="name">Appliances</field>
+        <field name="parent_id" ref="cat_re_fittings"/>
+    </record>
+    <record id="cat_fittings_sanitary" model="product.category">
+        <field name="name">Sanitary</field>
+        <field name="parent_id" ref="cat_re_fittings"/>
+    </record>
+    <record id="cat_fittings_hvac" model="product.category">
+        <field name="name">HVAC</field>
+        <field name="parent_id" ref="cat_re_fittings"/>
+    </record>
+    <record id="cat_fittings_smart_home" model="product.category">
+        <field name="name">Smart Home</field>
+        <field name="parent_id" ref="cat_re_fittings"/>
+    </record>
+    <record id="cat_fittings_furniture" model="product.category">
+        <field name="name">Furniture</field>
+        <field name="parent_id" ref="cat_re_fittings"/>
+    </record>
+</odoo>

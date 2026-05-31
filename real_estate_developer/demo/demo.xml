@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Real Estate Developer — demo data: 22 projects + 42 phases -->
+<odoo noupdate="1">
+
+    <record id="demo_proj_prj_0019" model="realestate.project">
+    <field name="name">Abu Dhabi Corniche Park</field>
+    <field name="project_type">mixed</field>
+    <field name="state">marketing</field>
+    <field name="city">Abu Dhabi</field>
+    <field name="country_id" ref="base.ae"/>
+    <field name="latitude" eval="24.4751"/>
+    <field name="longitude" eval="54.3537"/>
+    <field name="expected_budget" eval="400000000.0"/>
+    <field name="expected_revenue" eval="530370189.0"/>
+    </record>
+
+    <record id="demo_proj_prj_0021" model="realestate.project">
+    <field name="name">Alexandria Coastline</field>
+    <field name="project_type">residential</field>
+    <field name="state">marketing</field>
+    <field name="city">Alexandria</field>
+    <field name="country_id" ref="base.eg"/>
+    <field name="latitude" eval="31.2156"/>
+    <field name="longitude" eval="29.9553"/>
+    <field name="expected_budget" eval="220000000.0"/>
+    <field name="expected_revenue" eval="345786266.0"/>
+    </record>
+
+    <record id="demo_proj_prj_0008" model="realestate.project">
+    <field name="name">Al Hamra Marina</field>
+    <field name="project_type">mixed</field>
+    <field name="state">planning</field>
+    <field name="city">Jeddah</field>
+    <field name="country_id" ref="base.sa"/>
+    <field name="latitude" eval="21.535"/>
+    <field name="longitude" eval="39.145"/>
+    <field name="expected_budget" eval="440000000.0"/>
+    <field name="expected_revenue" eval="680782396.0"/>
+    </record>
+
+    <record id="demo_proj_prj_0011" model="realestate.project">
+    <field name="name">Al Khobar Sea View</field>
+    <field name="project_type">residential</field>
+    <field name="state">marketing</field>
+    <field name="city">Khobar</field>
+    <field name="country_id" ref="base.sa"/>
+    <field name="latitude" eval="26.2172"/>
+    <field name="longitude" eval="50.1971"/>
+    <field name="expected_budget" eval="220000000.0"/>
+    <field name="expected_revenue" eval="300228872.0"/>
+    </record>
+
+    <record id="demo_proj_prj_0003" model="realestate.project">
+    <field name="name">Al Olaya Towers</field>
+    <field name="project_type">mixed</field>
+    <field name="state">construction</field>
+    <field name="city">Riyadh</field>
+    <field name="country_id" ref="base.sa"/>
+    <field name="latitude" eval="24.6925"/>
+    <field name="longitude" eval="46.6852"/>
+    <field name="expected_budget" eval="300000000.0"/>
+    <field name="expected_revenue" eval="402092332.0"/>
+    </record>
+
+    <record id="demo_proj_prj_0020" model="realestate.project">
+    <field name="name">Cairo Smart Capital</field>
+    <field name="project_type">mixed</field>
+    <field name="state">construction</field>
+    <field name="city">Cairo</field>
+    <field name="country_id" ref="base.eg"/>
+    <field name="latitude" eval="29.9285"/>
+    <field name="longitude" eval="31.65"/>
+    <field name="expected_budget" eval="560000000.0"/>
+    <field name="expected_revenue" eval="774011686.0"/>
+    </record>
+
+    <record id="demo_proj_prj_0010" model="realestate.project">
+    <field name="name">Dammam Business Bay</field>
+    <field name="project_type">commercial</field>
+    <field name="state">marketing</field>
+    <field name="city">Dammam</field>
+    <field name="country_id" ref="base.sa"/>
+    <field name="latitude" eval="26.436"/>
+    <field name="longitude" eval="50.1033"/>
+    <field name="expected_budget" eval="320000000.0"/>
+    <field name="expected_revenue" eval="419234997.0"/>
+    </record>
+
+    <record id="demo_proj_prj_0004" model="realestate.project">
+    <field name="name">Diriyah Gate Residences</field>
+    <field name="project_type">residential</field>
+    <field name="state">marketing</field>
+    <field name="city">Riyadh</field>
+    <field name="country_id" ref="base.sa"/>
+    <field name="latitude" eval="24.732"/>
+    <field name="longitude" eval="46.5675"/>
+    <field name="expected_budget" eval="400000000.0"/>
+    <field name="expected_revenue" eval="532355320.0"/>
+    </record>
+
+    <record id="demo_proj_prj_0022" model="realestate.project">
+    <field name="name">Doha West Bay Tower</field>
+    <field name="project_type">commercial</field>
+    <field name="state">handover</field>
+    <field name="city">Doha</field>
+    <field name="country_id" ref="base.qa"/>
+    <field name="latitude" eval="25.322"/>
+    <field name="longitude" eval="51.531"/>
+    <field name="expected_budget" eval="300000000.0"/>
+    <field name="expected_revenue" eval="415916205.0"/>
+    </record>
+
+    <record id="demo_proj_prj_0018" model="realestate.project">
+    <field name="name">Dubai Marina Heights</field>
+    <field name="project_type">residential</field>
+    <field name="state">marketing</field>
+    <field name="city">Dubai</field>
+    <field name="country_id" ref="base.ae"/>
+    <field name="latitude" eval="25.0772"/>
+    <field name="longitude" eval="55.1393"/>
+    <field name="expected_budget" eval="480000000.0"/>
+    <field name="expected_revenue" eval="683455215.0"/>
+    </record>
+
+    <record id="demo_proj_prj_0012" model="realestate.project">
+    <field name="name">Fanateer Industrial Zone</field>
+    <field name="project_type">industrial</field>
+    <field name="state">planning</field>
+    <field name="city">Jubail</field>
+    <field name="country_id" ref="base.sa"/>
+    <field name="latitude" eval="27.005"/>
+    <field name="longitude" eval="49.658"/>
+    <field name="expected_budget" eval="500000000.0"/>
+    <field name="expected_revenue" eval="682813919.0"/>
+    </record>
+
+    <record id="demo_proj_prj_0002" model="realestate.project">
+    <field name="name">Jeddah Corniche Residences</field>
+    <field name="project_type">mixed</field>
+    <field name="state">marketing</field>
+    <field name="city">Jeddah</field>
+    <field name="country_id" ref="base.sa"/>
+    <field name="latitude" eval="21.5433"/>
+    <field name="longitude" eval="39.1728"/>
+    <field name="expected_budget" eval="500000000.0"/>
+    <field name="expected_revenue" eval="750000000.0"/>
+    </record>
+
+    <record id="demo_proj_prj_0005" model="realestate.project">
+    <field name="name">Kingdom Business Park</field>
+    <field name="project_type">commercial</field>
+    <field name="state">planning</field>
+    <field name="city">Riyadh</field>
+    <field name="country_id" ref="base.sa"/>
+    <field name="latitude" eval="24.71"/>
+    <field name="longitude" eval="46.674"/>
+    <field name="expected_budget" eval="360000000.0"/>
+    <field name="expected_revenue" eval="531448050.0"/>
+    </record>
+
+    <record id="demo_proj_prj_0013" model="realestate.project">
+    <field name="name">Mecca Holy Square Plaza</field>
+    <field name="project_type">commercial</field>
+    <field name="state">marketing</field>
+    <field name="city">Mecca</field>
+    <field name="country_id" ref="base.sa"/>
+    <field name="latitude" eval="21.4225"/>
+    <field name="longitude" eval="39.8262"/>
+    <field name="expected_budget" eval="260000000.0"/>
+    <field name="expected_revenue" eval="340992308.0"/>
+    </record>
+
+    <record id="demo_proj_prj_0014" model="realestate.project">
+    <field name="name">Medina Garden Compound</field>
+    <field name="project_type">residential</field>
+    <field name="state">planning</field>
+    <field name="city">Medina</field>
+    <field name="country_id" ref="base.sa"/>
+    <field name="latitude" eval="24.4709"/>
+    <field name="longitude" eval="39.6112"/>
+    <field name="expected_budget" eval="200000000.0"/>
+    <field name="expected_revenue" eval="261871201.0"/>
+    </record>
+
+    <record id="demo_proj_prj_0017" model="realestate.project">
+    <field name="name">NEOM Pilot District</field>
+    <field name="project_type">mixed</field>
+    <field name="state">planning</field>
+    <field name="city">Tabuk</field>
+    <field name="country_id" ref="base.sa"/>
+    <field name="latitude" eval="27.9648"/>
+    <field name="longitude" eval="35.0697"/>
+    <field name="expected_budget" eval="700000000.0"/>
+    <field name="expected_revenue" eval="1095288196.0"/>
+    </record>
+
+    <record id="demo_proj_prj_0006" model="realestate.project">
+    <field name="name">Northern Plaza Compound</field>
+    <field name="project_type">residential</field>
+    <field name="state">handover</field>
+    <field name="city">Riyadh</field>
+    <field name="country_id" ref="base.sa"/>
+    <field name="latitude" eval="24.812"/>
+    <field name="longitude" eval="46.694"/>
+    <field name="expected_budget" eval="200000000.0"/>
+    <field name="expected_revenue" eval="281524604.0"/>
+    </record>
+
+    <record id="demo_proj_prj_0009" model="realestate.project">
+    <field name="name">Obhur Coastal Villas</field>
+    <field name="project_type">residential</field>
+    <field name="state">marketing</field>
+    <field name="city">Jeddah</field>
+    <field name="country_id" ref="base.sa"/>
+    <field name="latitude" eval="21.7245"/>
+    <field name="longitude" eval="39.085"/>
+    <field name="expected_budget" eval="280000000.0"/>
+    <field name="expected_revenue" eval="415560723.0"/>
+    </record>
+
+    <record id="demo_proj_prj_0007" model="realestate.project">
+    <field name="name">Red Sea Mall Annex</field>
+    <field name="project_type">commercial</field>
+    <field name="state">planning</field>
+    <field name="city">Jeddah</field>
+    <field name="country_id" ref="base.sa"/>
+    <field name="latitude" eval="21.602"/>
+    <field name="longitude" eval="39.1037"/>
+    <field name="expected_budget" eval="180000000.0"/>
+    <field name="expected_revenue" eval="242059579.0"/>
+    </record>
+
+    <record id="demo_proj_prj_0001" model="realestate.project">
+    <field name="name">Riyadh Heights</field>
+    <field name="project_type">residential</field>
+    <field name="state">marketing</field>
+    <field name="city">Riyadh</field>
+    <field name="country_id" ref="base.sa"/>
+    <field name="latitude" eval="24.7236"/>
+    <field name="longitude" eval="46.6753"/>
+    <field name="expected_budget" eval="500000000.0"/>
+    <field name="expected_revenue" eval="750000000.0"/>
+    </record>
+
+    <record id="demo_proj_prj_0016" model="realestate.project">
+    <field name="name">Tabuk Highland Plots</field>
+    <field name="project_type">land</field>
+    <field name="state">marketing</field>
+    <field name="city">Tabuk</field>
+    <field name="country_id" ref="base.sa"/>
+    <field name="latitude" eval="28.3835"/>
+    <field name="longitude" eval="36.5662"/>
+    <field name="expected_budget" eval="120000000.0"/>
+    <field name="expected_revenue" eval="172899548.0"/>
+    </record>
+
+    <record id="demo_proj_prj_0015" model="realestate.project">
+    <field name="name">Yanbu Port Warehouses</field>
+    <field name="project_type">industrial</field>
+    <field name="state">marketing</field>
+    <field name="city">Yanbu</field>
+    <field name="country_id" ref="base.sa"/>
+    <field name="latitude" eval="24.089"/>
+    <field name="longitude" eval="38.0617"/>
+    <field name="expected_budget" eval="340000000.0"/>
+    <field name="expected_revenue" eval="489244128.0"/>
+    </record>
+
+    <record id="demo_phase_35" model="realestate.phase">
+    <field name="name">Phase 1</field>
+    <field name="state">construction</field>
+    <field name="project_id" ref="demo_proj_prj_0019"/>
+    <field name="sequence" eval="10"/>
+    <field name="start_date">2024-02-03</field>
+    <field name="expected_completion_date">2026-01-23</field>
+    <field name="expected_delivery_date">2026-07-22</field>
+    </record>
+
+    <record id="demo_phase_36" model="realestate.phase">
+    <field name="name">Phase 2</field>
+    <field name="state">planning</field>
+    <field name="project_id" ref="demo_proj_prj_0019"/>
+    <field name="sequence" eval="20"/>
+    <field name="start_date">2024-08-01</field>
+    <field name="expected_completion_date">2026-07-22</field>
+    <field name="expected_delivery_date">2027-01-18</field>
+    </record>
+
+    <record id="demo_phase_39" model="realestate.phase">
+    <field name="name">Phase 1</field>
+    <field name="state">construction</field>
+    <field name="project_id" ref="demo_proj_prj_0021"/>
+    <field name="sequence" eval="10"/>
+    <field name="start_date">2025-12-30</field>
+    <field name="expected_completion_date">2027-12-20</field>
+    <field name="expected_delivery_date">2028-06-17</field>
+    </record>
+
+    <record id="demo_phase_40" model="realestate.phase">
+    <field name="name">Phase 2</field>
+    <field name="state">planning</field>
+    <field name="project_id" ref="demo_proj_prj_0021"/>
+    <field name="sequence" eval="20"/>
+    <field name="start_date">2026-06-28</field>
+    <field name="expected_completion_date">2028-06-17</field>
+    <field name="expected_delivery_date">2028-12-14</field>
+    </record>
+
+    <record id="demo_phase_15" model="realestate.phase">
+    <field name="name">Phase 1</field>
+    <field name="state">planning</field>
+    <field name="project_id" ref="demo_proj_prj_0008"/>
+    <field name="sequence" eval="10"/>
+    <field name="start_date">2024-04-05</field>
+    <field name="expected_completion_date">2026-03-26</field>
+    <field name="expected_delivery_date">2026-09-22</field>
+    </record>
+
+    <record id="demo_phase_16" model="realestate.phase">
+    <field name="name">Phase 2</field>
+    <field name="state">planning</field>
+    <field name="project_id" ref="demo_proj_prj_0008"/>
+    <field name="sequence" eval="20"/>
+    <field name="start_date">2024-10-02</field>
+    <field name="expected_completion_date">2026-09-22</field>
+    <field name="expected_delivery_date">2027-03-21</field>
+    </record>
+
+    <record id="demo_phase_21" model="realestate.phase">
+    <field name="name">Phase 1</field>
+    <field name="state">construction</field>
+    <field name="project_id" ref="demo_proj_prj_0011"/>
+    <field name="sequence" eval="10"/>
+    <field name="start_date">2025-06-13</field>
+    <field name="expected_completion_date">2027-06-03</field>
+    <field name="expected_delivery_date">2027-11-30</field>
+    </record>
+
+    <record id="demo_phase_22" model="realestate.phase">
+    <field name="name">Phase 2</field>
+    <field name="state">planning</field>
+    <field name="project_id" ref="demo_proj_prj_0011"/>
+    <field name="sequence" eval="20"/>
+    <field name="start_date">2025-12-10</field>
+    <field name="expected_completion_date">2027-11-30</field>
+    <field name="expected_delivery_date">2028-05-28</field>
+    </record>
+
+    <record id="demo_phase_5" model="realestate.phase">
+    <field name="name">Phase 1</field>
+    <field name="state">construction</field>
+    <field name="project_id" ref="demo_proj_prj_0003"/>
+    <field name="sequence" eval="10"/>
+    <field name="start_date">2024-07-04</field>
+    <field name="expected_completion_date">2026-06-24</field>
+    <field name="expected_delivery_date">2026-12-21</field>
+    </record>
+
+    <record id="demo_phase_6" model="realestate.phase">
+    <field name="name">Phase 2</field>
+    <field name="state">delivered</field>
+    <field name="project_id" ref="demo_proj_prj_0003"/>
+    <field name="sequence" eval="20"/>
+    <field name="start_date">2024-12-31</field>
+    <field name="expected_completion_date">2026-12-21</field>
+    <field name="expected_delivery_date">2027-06-19</field>
+    </record>
+
+    <record id="demo_phase_37" model="realestate.phase">
+    <field name="name">Phase 1</field>
+    <field name="state">construction</field>
+    <field name="project_id" ref="demo_proj_prj_0020"/>
+    <field name="sequence" eval="10"/>
+    <field name="start_date">2026-03-09</field>
+    <field name="expected_completion_date">2028-02-27</field>
+    <field name="expected_delivery_date">2028-08-25</field>
+    </record>
+
+    <record id="demo_phase_38" model="realestate.phase">
+    <field name="name">Phase 2</field>
+    <field name="state">planning</field>
+    <field name="project_id" ref="demo_proj_prj_0020"/>
+    <field name="sequence" eval="20"/>
+    <field name="start_date">2026-09-05</field>
+    <field name="expected_completion_date">2028-08-25</field>
+    <field name="expected_delivery_date">2029-02-21</field>
+    </record>
+
+    <record id="demo_phase_19" model="realestate.phase">
+    <field name="name">Phase 1</field>
+    <field name="state">construction</field>
+    <field name="project_id" ref="demo_proj_prj_0010"/>
+    <field name="sequence" eval="10"/>
+    <field name="start_date">2023-11-25</field>
+    <field name="expected_completion_date">2025-11-14</field>
+    <field name="expected_delivery_date">2026-05-13</field>
+    </record>
+
+    <record id="demo_phase_20" model="realestate.phase">
+    <field name="name">Phase 2</field>
+    <field name="state">planning</field>
+    <field name="project_id" ref="demo_proj_prj_0010"/>
+    <field name="sequence" eval="20"/>
+    <field name="start_date">2024-05-23</field>
+    <field name="expected_completion_date">2026-05-13</field>
+    <field name="expected_delivery_date">2026-11-09</field>
+    </record>
+
+    <record id="demo_phase_1" model="realestate.phase">
+    <field name="name">Phase 1 — Tower A</field>
+    <field name="state">construction</field>
+    <field name="project_id" ref="demo_proj_prj_0004"/>
+    <field name="sequence" eval="10"/>
+    </record>
+
+    <record id="demo_phase_41" model="realestate.phase">
+    <field name="name">Phase 1</field>
+    <field name="state">construction</field>
+    <field name="project_id" ref="demo_proj_prj_0022"/>
+    <field name="sequence" eval="10"/>
+    <field name="start_date">2025-06-11</field>
+    <field name="expected_completion_date">2027-06-01</field>
+    <field name="expected_delivery_date">2027-11-28</field>
+    </record>
+
+    <record id="demo_phase_42" model="realestate.phase">
+    <field name="name">Phase 2</field>
+    <field name="state">planning</field>
+    <field name="project_id" ref="demo_proj_prj_0022"/>
+    <field name="sequence" eval="20"/>
+    <field name="start_date">2025-12-08</field>
+    <field name="expected_completion_date">2027-11-28</field>
+    <field name="expected_delivery_date">2028-05-26</field>
+    </record>
+
+    <record id="demo_phase_33" model="realestate.phase">
+    <field name="name">Phase 1</field>
+    <field name="state">construction</field>
+    <field name="project_id" ref="demo_proj_prj_0018"/>
+    <field name="sequence" eval="10"/>
+    <field name="start_date">2025-06-10</field>
+    <field name="expected_completion_date">2027-05-31</field>
+    <field name="expected_delivery_date">2027-11-27</field>
+    </record>
+
+    <record id="demo_phase_34" model="realestate.phase">
+    <field name="name">Phase 2</field>
+    <field name="state">planning</field>
+    <field name="project_id" ref="demo_proj_prj_0018"/>
+    <field name="sequence" eval="20"/>
+    <field name="start_date">2025-12-07</field>
+    <field name="expected_completion_date">2027-11-27</field>
+    <field name="expected_delivery_date">2028-05-25</field>
+    </record>
+
+    <record id="demo_phase_23" model="realestate.phase">
+    <field name="name">Phase 1</field>
+    <field name="state">planning</field>
+    <field name="project_id" ref="demo_proj_prj_0012"/>
+    <field name="sequence" eval="10"/>
+    <field name="start_date">2024-09-03</field>
+    <field name="expected_completion_date">2026-08-24</field>
+    <field name="expected_delivery_date">2027-02-20</field>
+    </record>
+
+    <record id="demo_phase_24" model="realestate.phase">
+    <field name="name">Phase 2</field>
+    <field name="state">planning</field>
+    <field name="project_id" ref="demo_proj_prj_0012"/>
+    <field name="sequence" eval="20"/>
+    <field name="start_date">2025-03-02</field>
+    <field name="expected_completion_date">2027-02-20</field>
+    <field name="expected_delivery_date">2027-08-19</field>
+    </record>
+
+    <record id="demo_phase_3" model="realestate.phase">
+    <field name="name">North Wing</field>
+    <field name="state">construction</field>
+    <field name="project_id" ref="demo_proj_prj_0002"/>
+    <field name="sequence" eval="10"/>
+    </record>
+
+    <record id="demo_phase_4" model="realestate.phase">
+    <field name="name">South Wing</field>
+    <field name="state">construction</field>
+    <field name="project_id" ref="demo_proj_prj_0002"/>
+    <field name="sequence" eval="10"/>
+    </record>
+
+    <record id="demo_phase_9" model="realestate.phase">
+    <field name="name">Phase 1</field>
+    <field name="state">planning</field>
+    <field name="project_id" ref="demo_proj_prj_0005"/>
+    <field name="sequence" eval="10"/>
+    <field name="start_date">2025-07-16</field>
+    <field name="expected_completion_date">2027-07-06</field>
+    <field name="expected_delivery_date">2028-01-02</field>
+    </record>
+
+    <record id="demo_phase_10" model="realestate.phase">
+    <field name="name">Phase 2</field>
+    <field name="state">planning</field>
+    <field name="project_id" ref="demo_proj_prj_0005"/>
+    <field name="sequence" eval="20"/>
+    <field name="start_date">2026-01-12</field>
+    <field name="expected_completion_date">2028-01-02</field>
+    <field name="expected_delivery_date">2028-06-30</field>
+    </record>
+
+    <record id="demo_phase_25" model="realestate.phase">
+    <field name="name">Phase 1</field>
+    <field name="state">construction</field>
+    <field name="project_id" ref="demo_proj_prj_0013"/>
+    <field name="sequence" eval="10"/>
+    <field name="start_date">2025-11-17</field>
+    <field name="expected_completion_date">2027-11-07</field>
+    <field name="expected_delivery_date">2028-05-05</field>
+    </record>
+
+    <record id="demo_phase_26" model="realestate.phase">
+    <field name="name">Phase 2</field>
+    <field name="state">planning</field>
+    <field name="project_id" ref="demo_proj_prj_0013"/>
+    <field name="sequence" eval="20"/>
+    <field name="start_date">2026-05-16</field>
+    <field name="expected_completion_date">2028-05-05</field>
+    <field name="expected_delivery_date">2028-11-01</field>
+    </record>
+
+    <record id="demo_phase_27" model="realestate.phase">
+    <field name="name">Phase 1</field>
+    <field name="state">planning</field>
+    <field name="project_id" ref="demo_proj_prj_0014"/>
+    <field name="sequence" eval="10"/>
+    <field name="start_date">2025-10-11</field>
+    <field name="expected_completion_date">2027-10-01</field>
+    <field name="expected_delivery_date">2028-03-29</field>
+    </record>
+
+    <record id="demo_phase_28" model="realestate.phase">
+    <field name="name">Phase 2</field>
+    <field name="state">planning</field>
+    <field name="project_id" ref="demo_proj_prj_0014"/>
+    <field name="sequence" eval="20"/>
+    <field name="start_date">2026-04-09</field>
+    <field name="expected_completion_date">2028-03-29</field>
+    <field name="expected_delivery_date">2028-09-25</field>
+    </record>
+
+    <record id="demo_phase_31" model="realestate.phase">
+    <field name="name">Phase 1</field>
+    <field name="state">planning</field>
+    <field name="project_id" ref="demo_proj_prj_0017"/>
+    <field name="sequence" eval="10"/>
+    <field name="start_date">2024-11-25</field>
+    <field name="expected_completion_date">2026-11-15</field>
+    <field name="expected_delivery_date">2027-05-14</field>
+    </record>
+
+    <record id="demo_phase_32" model="realestate.phase">
+    <field name="name">Phase 2</field>
+    <field name="state">planning</field>
+    <field name="project_id" ref="demo_proj_prj_0017"/>
+    <field name="sequence" eval="20"/>
+    <field name="start_date">2025-05-24</field>
+    <field name="expected_completion_date">2027-05-14</field>
+    <field name="expected_delivery_date">2027-11-10</field>
+    </record>
+
+    <record id="demo_phase_11" model="realestate.phase">
+    <field name="name">Phase 1</field>
+    <field name="state">construction</field>
+    <field name="project_id" ref="demo_proj_prj_0006"/>
+    <field name="sequence" eval="10"/>
+    <field name="start_date">2024-05-31</field>
+    <field name="expected_completion_date">2026-05-21</field>
+    <field name="expected_delivery_date">2026-11-17</field>
+    </record>
+
+    <record id="demo_phase_12" model="realestate.phase">
+    <field name="name">Phase 2</field>
+    <field name="state">planning</field>
+    <field name="project_id" ref="demo_proj_prj_0006"/>
+    <field name="sequence" eval="20"/>
+    <field name="start_date">2024-11-27</field>
+    <field name="expected_completion_date">2026-11-17</field>
+    <field name="expected_delivery_date">2027-05-16</field>
+    </record>
+
+    <record id="demo_phase_17" model="realestate.phase">
+    <field name="name">Phase 1</field>
+    <field name="state">construction</field>
+    <field name="project_id" ref="demo_proj_prj_0009"/>
+    <field name="sequence" eval="10"/>
+    <field name="start_date">2025-08-24</field>
+    <field name="expected_completion_date">2027-08-14</field>
+    <field name="expected_delivery_date">2028-02-10</field>
+    </record>
+
+    <record id="demo_phase_18" model="realestate.phase">
+    <field name="name">Phase 2</field>
+    <field name="state">planning</field>
+    <field name="project_id" ref="demo_proj_prj_0009"/>
+    <field name="sequence" eval="20"/>
+    <field name="start_date">2026-02-20</field>
+    <field name="expected_completion_date">2028-02-10</field>
+    <field name="expected_delivery_date">2028-08-08</field>
+    </record>
+
+    <record id="demo_phase_13" model="realestate.phase">
+    <field name="name">Phase 1</field>
+    <field name="state">planning</field>
+    <field name="project_id" ref="demo_proj_prj_0007"/>
+    <field name="sequence" eval="10"/>
+    <field name="start_date">2023-12-17</field>
+    <field name="expected_completion_date">2025-12-06</field>
+    <field name="expected_delivery_date">2026-06-04</field>
+    </record>
+
+    <record id="demo_phase_14" model="realestate.phase">
+    <field name="name">Phase 2</field>
+    <field name="state">planning</field>
+    <field name="project_id" ref="demo_proj_prj_0007"/>
+    <field name="sequence" eval="20"/>
+    <field name="start_date">2024-06-14</field>
+    <field name="expected_completion_date">2026-06-04</field>
+    <field name="expected_delivery_date">2026-12-01</field>
+    </record>
+
+    <record id="demo_phase_2" model="realestate.phase">
+    <field name="name">Phase 2 — Tower B</field>
+    <field name="state">construction</field>
+    <field name="project_id" ref="demo_proj_prj_0001"/>
+    <field name="sequence" eval="10"/>
+    </record>
+
+    <record id="demo_phase_29" model="realestate.phase">
+    <field name="name">Phase 1</field>
+    <field name="state">construction</field>
+    <field name="project_id" ref="demo_proj_prj_0015"/>
+    <field name="sequence" eval="10"/>
+    <field name="start_date">2025-10-08</field>
+    <field name="expected_completion_date">2027-09-28</field>
+    <field name="expected_delivery_date">2028-03-26</field>
+    </record>
+
+    <record id="demo_phase_30" model="realestate.phase">
+    <field name="name">Phase 2</field>
+    <field name="state">planning</field>
+    <field name="project_id" ref="demo_proj_prj_0015"/>
+    <field name="sequence" eval="20"/>
+    <field name="start_date">2026-04-06</field>
+    <field name="expected_completion_date">2028-03-26</field>
+    <field name="expected_delivery_date">2028-09-22</field>
+    </record>
+
+</odoo>

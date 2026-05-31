@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_template_user,Template User,model_realestate_handover_checklist_template,group_handover_user,1,0,0,0
+access_template_manager,Template Manager,model_realestate_handover_checklist_template,group_handover_manager,1,1,1,1
+access_template_item_user,Template Item User,model_realestate_handover_checklist_template_item,group_handover_user,1,0,0,0
+access_template_item_manager,Template Item Manager,model_realestate_handover_checklist_template_item,group_handover_manager,1,1,1,1
+access_handover_user,Handover User,model_realestate_handover,group_handover_user,1,1,1,0
+access_handover_manager,Handover Manager,model_realestate_handover,group_handover_manager,1,1,1,1
+access_checklist_item_user,Checklist Item User,model_realestate_handover_checklist_item,group_handover_user,1,1,1,0
+access_checklist_item_manager,Checklist Item Manager,model_realestate_handover_checklist_item,group_handover_manager,1,1,1,1
+access_snagging_user,Snagging User,model_realestate_snagging_issue,group_handover_user,1,1,1,0
+access_snagging_manager,Snagging Manager,model_realestate_snagging_issue,group_handover_manager,1,1,1,1
+access_warranty_user,Warranty User,model_realestate_warranty,group_handover_user,1,1,1,0
+access_warranty_manager,Warranty Manager,model_realestate_warranty,group_handover_manager,1,1,1,1

@@ -1,28 +1,26 @@
-<odoo>
-    <!-- Security Category -->
-    <record id="group_category_realestate" model="ir.module.category">
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+
+    <record id="module_category_real_estate" model="ir.module.category">
         <field name="name">Real Estate</field>
-        <field name="sequence">10</field>
+        <field name="sequence">20</field>
     </record>
 
-    <!-- Readonly Group -->
     <record id="group_realestate_readonly" model="res.groups">
-        <field name="name">Real Estate - Readonly</field>
-        <field name="category_id" ref="group_category_realestate"/>
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="name">Read-only</field>
+        <field name="category_id" ref="module_category_real_estate"/>
     </record>
 
-    <!-- User Group -->
     <record id="group_realestate_user" model="res.groups">
-        <field name="name">Real Estate - User</field>
-        <field name="category_id" ref="group_category_realestate"/>
-        <field name="implied_ids" eval="[(4, ref('atmta_real_estate.group_realestate_readonly'))]"/>
+        <field name="name">User</field>
+        <field name="category_id" ref="module_category_real_estate"/>
+        <field name="implied_ids" eval="[(4, ref('group_realestate_readonly'))]"/>
     </record>
 
-    <!-- Manager Group -->
     <record id="group_realestate_manager" model="res.groups">
-        <field name="name">Real Estate - Manager</field>
-        <field name="category_id" ref="group_category_realestate"/>
-        <field name="implied_ids" eval="[(4, ref('atmta_real_estate.group_realestate_user'))]"/>
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_category_real_estate"/>
+        <field name="implied_ids" eval="[(4, ref('group_realestate_user'))]"/>
     </record>
+
 </odoo>

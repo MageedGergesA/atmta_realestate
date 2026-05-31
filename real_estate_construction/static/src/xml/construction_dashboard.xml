@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="real_estate_construction.ConstructionDashboard">
+        <div class="o_action o_con_dashboard d-flex flex-column h-100">
+
+            <div class="o_cn_toolbar d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
+                <div>
+                    <h3 class="mb-0 d-inline-block me-3"><i class="fa fa-cogs me-2"/>Construction Dashboard</h3>
+                    <span class="text-muted small">Last update: <t t-esc="state.lastUpdate or '—'"/></span>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-sm btn-primary" t-on-click="() => this.refresh()"><i class="fa fa-refresh"/></button>
+                    <button class="btn btn-sm btn-outline-secondary"
+                            t-att-class="{ 'btn-success text-white': state.autoRefresh }"
+                            t-on-click="() => this.toggleAutoRefresh()">
+                        <i class="fa fa-clock-o me-1"/>
+                        <t t-if="state.autoRefresh">Auto ON</t><t t-else="">Auto OFF</t>
+                    </button>
+                </div>
+            </div>
+
+            <div t-if="state.loading" class="text-center p-5"><i class="fa fa-spinner fa-spin fa-3x text-muted"/></div>
+
+            <div t-if="state.data" class="o_cn_body p-3">
+
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        <div class="o_cn_kpi o_cn_blue">
+                            <div class="o_cn_label">In Progress</div>
+                            <div class="o_cn_value"><t t-esc="state.data.kpis.in_progress"/></div>
+                            <div class="o_cn_sub">of <t t-esc="state.data.kpis.total_milestones"/> milestones</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="o_cn_kpi o_cn_green">
+                            <div class="o_cn_label">Completed</div>
+                            <div class="o_cn_value"><t t-esc="state.data.kpis.completed"/></div>
+                            <div class="o_cn_sub"><t t-esc="state.data.kpis.avg_completion"/>% avg progress</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="o_cn_kpi o_cn_red">
+                            <div class="o_cn_label">Delayed</div>
+                            <div class="o_cn_value"><t t-esc="state.data.kpis.delayed"/></div>
+                            <div class="o_cn_sub"><t t-esc="state.data.kpis.on_schedule_pct"/>% on schedule</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="o_cn_kpi o_cn_teal">
+                            <div class="o_cn_label">Budget</div>
+                            <div class="o_cn_value"><t t-esc="state.data.currency"/> <t t-esc="formatMoney(state.data.kpis.total_budget)"/></div>
+                            <div class="o_cn_sub"><t t-esc="state.data.kpis.budget_used_pct"/>% used</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="o_cn_kpi o_cn_orange">
+                            <div class="o_cn_label">Actual Cost</div>
+                            <div class="o_cn_value"><t t-esc="state.data.currency"/> <t t-esc="formatMoney(state.data.kpis.total_actual)"/></div>
+                            <div class="o_cn_sub">spent</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="o_cn_kpi" t-att-class="state.data.kpis.cost_variance > 0 ? 'o_cn_red' : 'o_cn_green'">
+                            <div class="o_cn_label">Variance</div>
+                            <div class="o_cn_value"><t t-esc="state.data.currency"/> <t t-esc="formatMoney(state.data.kpis.cost_variance)"/></div>
+                            <div class="o_cn_sub"><t t-if="state.data.kpis.cost_variance > 0">over budget</t><t t-else="">under budget</t></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-8">
+                        <div class="o_cn_card">
+                            <div class="o_cn_card_title"><i class="fa fa-map-marker me-2"/>Construction Sites</div>
+                            <div t-ref="map" class="o_cn_map"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="o_cn_card mb-3">
+                            <div class="o_cn_card_title">Milestone Status</div>
+                            <div class="o_cn_chart"><canvas t-ref="donutMs"/></div>
+                        </div>
+                        <div class="o_cn_card">
+                            <div class="o_cn_card_title">Spend Trend (6 mo)</div>
+                            <div class="o_cn_chart"><canvas t-ref="lineSpend"/></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-7">
+                        <div class="o_cn_card">
+                            <div class="o_cn_card_title">Cost vs Budget per Project</div>
+                            <div class="o_cn_chart_lg"><canvas t-ref="barCost"/></div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="o_cn_card">
+                            <div class="o_cn_card_title">Contractor Workload</div>
+                            <div class="o_cn_chart_lg"><canvas t-ref="barContractors"/></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="o_cn_card">
+                            <div class="o_cn_card_title"><i class="fa fa-exclamation-triangle me-2 text-danger"/>Delayed Milestones</div>
+                            <div class="o_cn_list">
+                                <div t-foreach="state.data.delayed_list" t-as="m" t-key="m.id"
+                                     class="o_cn_item" t-on-click="() => this.openMilestone(m.id)">
+                                    <div class="d-flex justify-content-between">
+                                        <strong><t t-esc="m.name"/></strong>
+                                        <span class="badge bg-danger"><t t-esc="m.days_late"/>d late</span>
+                                    </div>
+                                    <div class="small text-muted"><t t-esc="m.project"/> · <t t-esc="m.contractor"/></div>
+                                    <div class="small"><t t-esc="Math.round(m.completion)"/>% complete</div>
+                                </div>
+                                <div t-if="!state.data.delayed_list.length" class="text-muted text-center p-3">No delays. 🎉</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="o_cn_card">
+                            <div class="o_cn_card_title"><i class="fa fa-dollar me-2 text-warning"/>Top Cost Overruns</div>
+                            <div class="o_cn_list">
+                                <div t-foreach="state.data.overruns_list" t-as="o" t-key="o.id"
+                                     class="o_cn_item" t-on-click="() => this.openMilestone(o.id)">
+                                    <div class="d-flex justify-content-between">
+                                        <strong><t t-esc="o.name"/></strong>
+                                        <span class="text-danger">+<t t-esc="state.data.currency"/> <t t-esc="formatMoney(o.variance)"/></span>
+                                    </div>
+                                    <div class="small text-muted"><t t-esc="o.project"/></div>
+                                    <div class="small">Budget <t t-esc="state.data.currency"/> <t t-esc="formatMoney(o.budget)"/> · Actual <t t-esc="state.data.currency"/> <t t-esc="formatMoney(o.actual)"/></div>
+                                </div>
+                                <div t-if="!state.data.overruns_list.length" class="text-muted text-center p-3">No overruns</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="o_cn_card">
+                            <div class="o_cn_card_title"><i class="fa fa-list me-2 text-info"/>Recent Cost Lines</div>
+                            <div class="o_cn_list">
+                                <div t-foreach="state.data.recent_costs" t-as="c" t-key="c.id"
+                                     class="o_cn_item" t-on-click="() => this.openCostLine(c.id)">
+                                    <div class="d-flex justify-content-between">
+                                        <strong><t t-esc="c.name"/></strong>
+                                        <span class="text-success"><t t-esc="state.data.currency"/> <t t-esc="formatMoney(c.amount)"/></span>
+                                    </div>
+                                    <div class="small text-muted"><t t-esc="c.project"/> · <t t-esc="c.category"/></div>
+                                    <div class="small"><t t-esc="c.date"/></div>
+                                </div>
+                                <div t-if="!state.data.recent_costs.length" class="text-muted text-center p-3">No cost lines yet</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </t>
+
+</templates>

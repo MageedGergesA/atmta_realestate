@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_maquette_unit_picker_form" model="ir.ui.view">
+        <field name="name">realestate.maquette.unit.picker.form</field>
+        <field name="model">realestate.maquette.unit.picker</field>
+        <field name="arch" type="xml">
+            <form string="Pick a Unit">
+                <field name="project_id" invisible="1"/>
+                <field name="currency_id" invisible="1"/>
+                <group>
+                    <field name="mesh_name" readonly="1" invisible="not mesh_name"/>
+                    <field name="unit_id" options="{'no_create': True}"
+                           placeholder="Select a unit in this project…"/>
+                </group>
+                <group invisible="not unit_id">
+                    <group>
+                        <field name="unit_state" widget="badge"
+                               decoration-success="unit_state == 'available'"
+                               decoration-warning="unit_state == 'reserved'"
+                               decoration-danger="unit_state == 'sold'"/>
+                        <field name="unit_type_id"/>
+                        <field name="unit_area"/>
+                        <field name="unit_price"/>
+                    </group>
+                    <group>
+                        <field name="floor_plan_image" widget="image"
+                               options="{'size': [400, 300]}" nolabel="1"
+                               invisible="not floor_plan_image"/>
+                        <field name="image_ids" widget="image_carousel" nolabel="1"
+                               invisible="not unit_id"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_save" string="Save" type="object"
+                            class="btn-primary" invisible="not unit_id or not mesh_name"/>
+                    <button name="action_open_unit" string="Open Unit" type="object"
+                            class="btn-secondary" invisible="not unit_id"/>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

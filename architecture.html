@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Atmta Real Estate — Architecture Diagrams</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<style>
+  :root {
+    --bg: #f7f9fc;
+    --card: #ffffff;
+    --border: #e1e7ef;
+    --text: #1f2933;
+    --muted: #6b7785;
+    --accent: #2e5cdc;
+    --accent-soft: #eaf0ff;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); }
+  body { display: grid; grid-template-columns: 250px 1fr; min-height: 100vh; }
+  nav { position: sticky; top: 0; height: 100vh; background: var(--card); border-right: 1px solid var(--border); padding: 1.5rem 1rem; overflow-y: auto; }
+  nav h1 { font-size: 1rem; margin: 0 0 1rem 0; color: var(--accent); }
+  nav ul { list-style: none; padding: 0; margin: 0; }
+  nav li { margin: 0.25rem 0; }
+  nav a { color: var(--text); text-decoration: none; font-size: 0.88rem; display: block; padding: 0.3rem 0.5rem; border-radius: 4px; }
+  nav a:hover { background: var(--accent-soft); color: var(--accent); }
+  nav .sub { padding-left: 0.8rem; font-size: 0.82rem; color: var(--muted); }
+  main { padding: 2rem 3rem; max-width: none; }
+  h2 { color: var(--accent); border-bottom: 2px solid var(--accent-soft); padding-bottom: 0.4rem; margin-top: 2.5rem; }
+  h3 { color: var(--text); margin-top: 1.8rem; }
+  h4 { color: var(--muted); margin-top: 1.2rem; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1rem 0; overflow: hidden; }
+  .diagram-wrap { position: relative; }
+  .zoom-toolbar { display: flex; align-items: center; gap: 0.5rem; justify-content: flex-end; padding: 0.4rem 0.6rem; background: #f1f4f9; border-bottom: 1px solid var(--border); border-radius: 6px 6px 0 0; position: sticky; top: 0; z-index: 10; }
+  .zoom-toolbar button { background: white; border: 1px solid var(--border); border-radius: 4px; padding: 0.3rem 0.7rem; cursor: pointer; font-size: 0.95rem; font-weight: 600; color: var(--text); min-width: 36px; }
+  .zoom-toolbar button:hover { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .zoom-toolbar .zoom-label { font-family: monospace; font-size: 0.9rem; color: var(--muted); min-width: 50px; text-align: center; }
+  .zoom-toolbar .zoom-hint { color: var(--muted); font-size: 0.8rem; margin-right: auto; }
+  .mermaid-scroll { overflow: auto; max-height: 800px; background: white; border-radius: 0 0 6px 6px; }
+  .mermaid { background: white; padding: 1rem; text-align: center; transform-origin: top left; transition: transform 0.15s ease; display: inline-block; min-width: 100%; }
+  .mermaid svg { height: auto !important; max-width: none !important; font-size: 20px !important; }
+  .mermaid .nodeLabel, .mermaid .edgeLabel, .mermaid text { font-size: 20px !important; }
+  .mermaid .er.entityLabel, .mermaid .er.relationshipLabel { font-size: 18px !important; }
+  .desc { color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+  .badge { display: inline-block; background: var(--accent-soft); color: var(--accent); padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600; margin-right: 0.4rem; }
+  .meta { display: flex; gap: 0.6rem; margin: 0.6rem 0 1rem 0; flex-wrap: wrap; }
+  .lead { font-size: 1.05rem; color: var(--text); line-height: 1.6; }
+  code { background: #f1f4f9; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.88em; }
+  table { border-collapse: collapse; width: 100%; margin: 0.5rem 0; font-size: 0.9rem; }
+  th, td { text-align: left; padding: 0.5rem 0.8rem; border-bottom: 1px solid var(--border); }
+  th { background: var(--accent-soft); color: var(--accent); }
+</style>
+</head>
+<body>
+
+<nav>
+  <h1>Atmta Real Estate</h1>
+  <ul>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#deps">Module Dependencies</a></li>
+    <li><a href="#m-base">atmta_real_estate</a>
+      <ul>
+        <li class="sub"><a href="#m-base-er">Model relations</a></li>
+        <li class="sub"><a href="#m-base-wf">Workflows</a></li>
+      </ul>
+    </li>
+    <li><a href="#m-brokerage">real_estate_brokerage</a>
+      <ul>
+        <li class="sub"><a href="#m-brokerage-er">Model relations</a></li>
+        <li class="sub"><a href="#m-brokerage-wf">Workflows</a></li>
+      </ul>
+    </li>
+    <li><a href="#m-developer">real_estate_developer</a>
+      <ul>
+        <li class="sub"><a href="#m-developer-er">Model relations</a></li>
+        <li class="sub"><a href="#m-developer-wf">Workflows</a></li>
+      </ul>
+    </li>
+    <li><a href="#m-construction">real_estate_construction</a>
+      <ul>
+        <li class="sub"><a href="#m-construction-er">Model relations</a></li>
+        <li class="sub"><a href="#m-construction-wf">Workflows</a></li>
+      </ul>
+    </li>
+    <li><a href="#m-handover">real_estate_handover</a>
+      <ul>
+        <li class="sub"><a href="#m-handover-er">Model relations</a></li>
+        <li class="sub"><a href="#m-handover-wf">Workflows</a></li>
+      </ul>
+    </li>
+    <li><a href="#m-investment">real_estate_investment</a>
+      <ul>
+        <li class="sub"><a href="#m-investment-er">Model relations</a></li>
+        <li class="sub"><a href="#m-investment-wf">Workflows</a></li>
+      </ul>
+    </li>
+    <li><a href="#m-portal">real_estate_portal</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<section id="overview">
+  <h2>Overview</h2>
+  <p class="lead">A seven-module Odoo 18 suite covering the full real-estate lifecycle: rental operations, sales brokerage, off-plan development, construction tracking, unit handover, financial feasibility analysis, and a customer-facing portal.</p>
+  <div class="card">
+    <table>
+      <tr><th>Module</th><th>Purpose</th></tr>
+      <tr><td><code>atmta_real_estate</code></td><td>Foundation — rental lifecycle (properties, contracts, payments, deposits)</td></tr>
+      <tr><td><code>real_estate_brokerage</code></td><td>Sales pipeline (listings, leads, viewings, offers, commissions)</td></tr>
+      <tr><td><code>real_estate_developer</code></td><td>Off-plan sales (projects, phases, reservations, installments)</td></tr>
+      <tr><td><code>real_estate_construction</code></td><td>Build tracking (milestones with dependencies, sub-tasks, contractors, cost vs budget, progress billing with retention)</td></tr>
+      <tr><td><code>real_estate_handover</code></td><td>Unit delivery (checklists, snagging, warranties)</td></tr>
+      <tr><td><code>real_estate_investment</code></td><td>Financial appraisal (NPV, IRR, payback, scenarios)</td></tr>
+      <tr><td><code>real_estate_portal</code></td><td>Customer-facing self-service portal (views/controllers only)</td></tr>
+    </table>
+  </div>
+</section>
+
+<section id="deps">
+  <h2>Module Dependency Graph</h2>
+  <p class="desc">Arrows point from a dependent module to the module it requires. <code>atmta_real_estate</code> is the foundation; the rest layer on top.</p>
+  <div class="card">
+    <div class="mermaid">
+flowchart TB
+    base["atmta_real_estate<br/><i>Foundation · Rental</i>"]:::base
+    developer["real_estate_developer<br/><i>Off-plan projects</i>"]:::dev
+    brokerage["real_estate_brokerage<br/><i>Sales pipeline</i>"]:::brok
+    construction["real_estate_construction<br/><i>Build tracking</i>"]:::con
+    handover["real_estate_handover<br/><i>Delivery / snagging</i>"]:::hand
+    investment["real_estate_investment<br/><i>NPV / IRR / payback</i>"]:::inv
+    portal["real_estate_portal<br/><i>Customer portal</i>"]:::por
+
+    developer --> base
+    brokerage --> base
+    brokerage --> developer
+    construction --> developer
+    handover --> developer
+    handover --> construction
+    investment --> developer
+    portal --> developer
+
+    classDef base fill:#eaf0ff,stroke:#2e5cdc,stroke-width:2px,color:#1f2933
+    classDef dev fill:#fff4e6,stroke:#fb8c00,stroke-width:2px,color:#1f2933
+    classDef brok fill:#e8f7ee,stroke:#28a745,stroke-width:2px,color:#1f2933
+    classDef con fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#1f2933
+    classDef hand fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#1f2933
+    classDef inv fill:#fce7f3,stroke:#db2777,stroke-width:2px,color:#1f2933
+    classDef por fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#1f2933
+    </div>
+  </div>
+</section>
+
+<!-- ===================== atmta_real_estate ===================== -->
+<section id="m-base">
+  <h2>atmta_real_estate — Rental Foundation</h2>
+  <div class="meta"><span class="badge">11 models</span><span class="badge">Standalone</span></div>
+  <p class="desc">Defines the base <code>realestate.property</code> hierarchy and the entire rental contract lifecycle: leases, scheduled payments, security deposits, utilities, and price-escalation rules.</p>
+
+  <h3 id="m-base-er">Model Relations</h3>
+  <div class="card">
+    <div class="mermaid">
+erDiagram
+    PROPERTY ||--o{ CONTRACT_LINE : "units leased"
+    PROPERTY ||--o{ RENTAL_HISTORY : "occupancy log"
+    PROPERTY_TYPE ||--o{ PROPERTY : "categorizes"
+    CONTRACT_TYPE ||--o{ CONTRACT : "categorizes"
+    CONTRACT ||--o{ CONTRACT_LINE : "line items"
+    CONTRACT ||--o{ CONTRACT_PAYMENT : "schedule"
+    CONTRACT ||--o{ UTILITY_LINE : "utilities"
+    CONTRACT ||--o{ ACCOUNT_MOVE : "invoices"
+    CONTRACT ||--o| DEPOSIT : "security"
+    CONTRACT }o--o{ PAYMENT_PLAN : "templates"
+    CONTRACT }o--o{ INCREMENT_RULE : "escalations"
+    CONTRACT ||--o{ RENTAL_HISTORY : "tenancy log"
+    RES_PARTNER ||--o{ CONTRACT : "tenant"
+    CONTRACT_LINE ||--o| PROPERTY : "unit"
+    CONTRACT_PAYMENT ||--o| ACCOUNT_MOVE : "invoice"
+    UTILITY_LINE ||--o| ACCOUNT_MOVE : "vendor bill"
+
+    PROPERTY {
+        string name
+        selection state
+        many2one property_type_id
+    }
+    CONTRACT {
+        string name
+        date start_date
+        date end_date
+        selection state
+        monetary total_amount
+    }
+    CONTRACT_LINE {
+        many2one property_id
+        date start_date
+        monetary rent_amount
+    }
+    CONTRACT_PAYMENT {
+        date due_date
+        monetary amount
+        selection state
+    }
+    DEPOSIT {
+        monetary amount_held
+        selection state
+    }
+    </div>
+  </div>
+
+  <h3 id="m-base-wf">Workflows</h3>
+
+  <h4>Property State Lifecycle (cross-channel sale lock)</h4>
+  <p class="desc">A property can be sold through <b>either</b> the developer channel (reservation → contract → handover) or the brokerage channel (listing → offer → transaction). Once sold via one, it locks the other unless explicitly re-opened.</p>
+  <div class="card">
+    <div class="mermaid">
+stateDiagram-v2
+    [*] --> available : created
+    available --> reserved : reservation booked<br/>OR contract signed
+    available --> rented : rental contract active
+    available --> sold : direct brokerage close<br/>(skip reservation)
+    reserved --> sold : handover (developer)<br/>OR transaction.close (brokerage)
+    reserved --> available : reservation cancelled / expired
+    rented --> available : lease ends
+    sold --> available : action_mark_for_resale<br/>(resale_count ++)
+    available --> maintenance
+    available --> inactive
+    maintenance --> available
+    inactive --> available
+    sold --> [*]
+
+    note right of sold : Locks new listings &<br/>new reservations
+    </div>
+  </div>
+
+  <h4>Rental Contract Lifecycle</h4>
+  <div class="card">
+    <div class="mermaid">
+stateDiagram-v2
+    [*] --> draft
+    draft --> ready : line items filled
+    ready --> confirmed : confirm
+    confirmed --> invoiced : invoices generated
+    invoiced --> active : tenancy begins
+    active --> expired : end_date passed
+    active --> terminated : early termination
+    expired --> [*]
+    terminated --> [*]
+    </div>
+  </div>
+
+  <h4>Contract Payment Lifecycle</h4>
+  <div class="card">
+    <div class="mermaid">
+stateDiagram-v2
+    [*] --> draft
+    draft --> invoiced : invoice posted
+    invoiced --> paid : payment registered
+    invoiced --> cancelled : voided
+    paid --> [*]
+    cancelled --> [*]
+    </div>
+  </div>
+
+  <h4>Security Deposit Lifecycle</h4>
+  <div class="card">
+    <div class="mermaid">
+stateDiagram-v2
+    [*] --> held : tenant pays deposit
+    held --> refunded : end of lease (clean)
+    held --> partial_refund : damages assessed
+    held --> forfeited : breach of contract
+    refunded --> [*]
+    partial_refund --> [*]
+    forfeited --> [*]
+    </div>
+  </div>
+</section>
+
+<!-- ===================== real_estate_brokerage ===================== -->
+<section id="m-brokerage">
+  <h2>real_estate_brokerage — Sales Pipeline</h2>
+  <div class="meta"><span class="badge">9 models</span><span class="badge">Depends: base, developer</span></div>
+  <p class="desc">Manages the sales side: marketing listings, capturing buyer leads, scheduling viewings, negotiating offers, closing transactions, and splitting commissions across agents.</p>
+
+  <h3 id="m-brokerage-er">Model Relations</h3>
+  <div class="card">
+    <div class="mermaid">
+erDiagram
+    PROPERTY ||--o{ LISTING : "for-sale"
+    LISTING ||--o{ VIEWING : "scheduled"
+    LISTING ||--o{ OFFER : "received"
+    LISTING ||--o| TRANSACTION : "closed"
+    LISTING }o--o{ MARKETING_CHANNEL : "advertised on"
+    LEAD ||--o{ VIEWING : "attended"
+    LEAD ||--o{ OFFER : "submitted"
+    LEAD }o--o{ LISTING : "matched"
+    LEAD }o--o| LOST_REASON : "if lost"
+    OFFER ||--o| TRANSACTION : "accepted into"
+    TRANSACTION ||--o{ COMMISSION : "splits"
+    RES_PARTNER ||--o{ LEAD : "contact"
+    RES_PARTNER ||--o{ TRANSACTION : "seller/buyer"
+    RES_PARTNER ||--o{ COMMISSION : "recipient"
+    RES_USERS ||--o{ LISTING : "lister agent"
+    RES_USERS ||--o{ LEAD : "assigned agent"
+
+    LISTING {
+        many2one property_id
+        monetary list_price
+        monetary property_base_price
+        float price_vs_base
+        monetary last_sold_price
+        date last_sold_date
+        integer days_on_market
+        selection state
+    }
+    LEAD {
+        many2one partner_id
+        selection state
+        selection priority
+        monetary budget_min
+        monetary budget_max
+    }
+    VIEWING {
+        datetime scheduled_at
+        selection state
+        selection feedback_rating
+    }
+    OFFER {
+        monetary amount
+        monetary listing_list_price
+        monetary listing_base_price
+        float offer_vs_list
+        float offer_vs_base
+        selection state
+    }
+    TRANSACTION {
+        monetary sale_price
+        date closing_date
+        selection transaction_type
+        selection state
+    }
+    COMMISSION {
+        many2one partner_id
+        selection role
+        selection calculation_method
+        monetary amount
+        boolean paid
+    }
+    </div>
+  </div>
+
+  <h3 id="m-brokerage-wf">Workflows</h3>
+
+  <h4>Sales Pipeline — 7 Stages</h4>
+  <p class="desc">The brokerage pipeline moves a property from the seller's hands into the buyer's, through seven well-defined stages. Each stage owns a distinct model (Listing → Lead → Viewing → Offer → Transaction → Commission) and has its own state machine. <strong>Forward arrows mean conversion;</strong> backward / counter arrows are negotiations within a stage.</p>
+  <div class="card">
+    <div class="mermaid">
+flowchart TB
+    subgraph S1["① MARKETING — make property findable"]
+      direction LR
+      L1["Listing<br/>draft"]:::stMarketing --> L2["Listing<br/>active"]:::stMarketing
+      L2 -.->|published on| MC["Marketing channels<br/>portal · website · MLS"]:::stMarketingSoft
+    end
+
+    subgraph S2["② LEAD CAPTURE — buyer enters CRM"]
+      direction LR
+      N1["Lead<br/>new"]:::stCapture -->|agent qualifies| N2["Lead<br/>qualified"]:::stCapture
+    end
+
+    subgraph S3["③ MATCHING — preferences ↔ listings"]
+      direction LR
+      M1["Lead<br/>matched"]:::stMatch
+    end
+
+    subgraph S4["④ ENGAGEMENT — physical inspection"]
+      direction LR
+      V1["Viewing<br/>scheduled"]:::stEngage --> V2["Viewing<br/>completed"]:::stEngage
+    end
+
+    subgraph S5["⑤ NEGOTIATION — price agreement"]
+      direction LR
+      O1["Offer<br/>submitted"]:::stNeg -.->|seller counters| O2["Offer<br/>countered"]:::stNeg
+      O2 -.->|buyer counters back| O1
+      O1 --> O3["Offer<br/>accepted"]:::stNegOk
+      O2 --> O3
+    end
+
+    subgraph S6["⑥ CLOSING — legal completion"]
+      direction LR
+      T1["Transaction<br/>draft"]:::stClose --> T2["Transaction<br/>deposit_received"]:::stClose
+      T2 --> T3["Transaction<br/>contract_signed"]:::stClose
+      T3 --> T4["Transaction<br/>closed"]:::stCloseOk
+    end
+
+    subgraph S7["⑦ PAYOUT — agent compensation"]
+      direction LR
+      C1["Commission<br/>computed"]:::stPay --> C2["Commission<br/>paid"]:::stPayOk
+    end
+
+    S1 ==> S2
+    S2 ==> S3
+    S3 ==> S4
+    S4 ==> S5
+    S5 ==> S6
+    S6 ==> S7
+
+    classDef stMarketing fill:#fff4e6,stroke:#fb8c00,color:#1f2933,stroke-width:2px
+    classDef stMarketingSoft fill:#fef3c7,stroke:#d97706,color:#1f2933,stroke-dasharray:4 3
+    classDef stCapture fill:#fef3c7,stroke:#d97706,color:#1f2933,stroke-width:2px
+    classDef stMatch fill:#eaf0ff,stroke:#2e5cdc,color:#1f2933,stroke-width:2px
+    classDef stEngage fill:#dbeafe,stroke:#1d4ed8,color:#1f2933,stroke-width:2px
+    classDef stNeg fill:#f3e8ff,stroke:#9333ea,color:#1f2933,stroke-width:2px
+    classDef stNegOk fill:#c084fc,stroke:#7e22ce,color:#fff,stroke-width:2px
+    classDef stClose fill:#e8f7ee,stroke:#28a745,color:#1f2933,stroke-width:2px
+    classDef stCloseOk fill:#28a745,stroke:#15803d,color:#fff,stroke-width:2px
+    classDef stPay fill:#fce7f3,stroke:#db2777,color:#1f2933,stroke-width:2px
+    classDef stPayOk fill:#be185d,stroke:#9f1239,color:#fff,stroke-width:2px
+    </div>
+  </div>
+
+  <h4>What happens at each stage</h4>
+  <div class="card" style="overflow-x:auto;">
+    <table>
+      <tr><th>Stage</th><th>Model(s)</th><th>Captured data</th><th>Gate to next stage</th></tr>
+      <tr><td>① Marketing</td><td><code>realestate.listing</code><br/><code>realestate.marketing.channel</code></td><td>Asking price, listing photos, agent assignment, channels (portal/website/MLS), DOM (days on market) clock starts</td><td>Listing reaches <code>active</code> and starts collecting inquiries</td></tr>
+      <tr><td>② Lead Capture</td><td><code>realestate.lead</code></td><td>Buyer contact (<code>res.partner</code>), budget range, preferences (size, area, type), assigned agent, inquiry source</td><td>Agent qualifies — moves <code>new → qualified</code></td></tr>
+      <tr><td>③ Matching</td><td><code>realestate.lead</code> ↔ <code>realestate.listing</code> (M2M)</td><td><code>matched_listing_ids</code> — listings whose criteria fit the lead</td><td>At least one match → <code>qualified → matched</code></td></tr>
+      <tr><td>④ Engagement</td><td><code>realestate.viewing</code></td><td>Scheduled datetime, attendee partner, agent, outcome notes</td><td>Viewing completes → buyer wants to make an offer</td></tr>
+      <tr><td>⑤ Negotiation</td><td><code>realestate.offer</code></td><td>Offer price, conditions, expiry. Counters loop between <code>submitted ↔ countered</code> until agreement</td><td>Offer reaches <code>accepted</code> → triggers transaction</td></tr>
+      <tr><td>⑥ Closing</td><td><code>realestate.transaction</code></td><td>Final price, buyer/seller, deposit milestone, signing milestone, closing date, linked offer</td><td><code>closed</code> reached → listing flips to <code>sold</code></td></tr>
+      <tr><td>⑦ Payout</td><td><code>realestate.commission</code></td><td>Per-agent splits (lister / selling / referrer), %, amount, linked <code>account.move</code> for payout</td><td>All commission rows reach <code>paid</code></td></tr>
+    </table>
+  </div>
+
+  <h4>Pipeline conversion (funnel view)</h4>
+  <p class="desc">Each stage filters out leads that don't progress — only a fraction of inquiries reach closed transactions. This is the funnel shape:</p>
+  <div class="card">
+    <div class="mermaid">
+flowchart TB
+    A["📢 Listings active<br/>(top of funnel)"]:::f1
+    B["📞 Leads captured<br/>inquiries received"]:::f2
+    C["✅ Leads qualified<br/>real intent + budget"]:::f3
+    D["🔎 Matched + viewings<br/>physical interest"]:::f4
+    E["💬 Offers submitted<br/>negotiation begins"]:::f5
+    F["✍️ Offers accepted<br/>price agreed"]:::f6
+    G["🤝 Transactions closed<br/>deal done"]:::f7
+
+    A --> B --> C --> D --> E --> F --> G
+
+    classDef f1 fill:#fff4e6,stroke:#fb8c00,color:#1f2933,stroke-width:2px
+    classDef f2 fill:#fef3c7,stroke:#d97706,color:#1f2933,stroke-width:2px
+    classDef f3 fill:#fde68a,stroke:#b45309,color:#1f2933,stroke-width:2px
+    classDef f4 fill:#dbeafe,stroke:#1d4ed8,color:#1f2933,stroke-width:2px
+    classDef f5 fill:#f3e8ff,stroke:#9333ea,color:#1f2933,stroke-width:2px
+    classDef f6 fill:#c084fc,stroke:#7e22ce,color:#fff,stroke-width:2px
+    classDef f7 fill:#28a745,stroke:#15803d,color:#fff,stroke-width:3px
+    </div>
+  </div>
+
+  <h4>End-to-End Sequence (compact)</h4>
+  <div class="card">
+    <div class="mermaid">
+flowchart LR
+    A[Owner] -->|list| B[Listing active]
+    C[Buyer] -->|inquiry| D[Lead new]
+    D -->|qualify| E[Lead qualified]
+    B -.->|match| F[Lead matched]
+    E --> F
+    F -->|book| G[Viewing]
+    G -->|interested| H[Offer]
+    H -->|accept| I[Transaction]
+    I -->|close| J[Closed deal]
+    J --> K[Commission paid]
+    B -.->|sold| L[Listing sold]
+    J --> L
+    style J fill:#28a745,color:#fff
+    style K fill:#be185d,color:#fff
+    style L fill:#6c757d,color:#fff
+    </div>
+  </div>
+
+  <h4>Listing State Machine</h4>
+  <div class="card">
+    <div class="mermaid">
+stateDiagram-v2
+    [*] --> draft
+    draft --> active : publish
+    active --> under_offer : offer accepted
+    under_offer --> sold : transaction closed
+    under_offer --> active : offer falls through
+    active --> withdrawn : seller pulls
+    active --> expired : listing period ends
+    sold --> [*]
+    withdrawn --> [*]
+    expired --> [*]
+    </div>
+  </div>
+
+  <h4>Lead State Machine</h4>
+  <div class="card">
+    <div class="mermaid">
+stateDiagram-v2
+    [*] --> new
+    new --> qualified : agent qualifies
+    qualified --> matched : matched to listings
+    matched --> viewing_scheduled : viewing booked
+    viewing_scheduled --> offer : buyer offers
+    offer --> converted : transaction signed
+    new --> lost : no response
+    qualified --> lost : disqualified
+    matched --> lost : no interest
+    offer --> lost : rejected/withdrew
+    converted --> [*]
+    lost --> [*]
+    </div>
+  </div>
+
+  <h4>Offer State Machine</h4>
+  <div class="card">
+    <div class="mermaid">
+stateDiagram-v2
+    [*] --> submitted
+    submitted --> countered : seller counter-offers
+    countered --> submitted : buyer counters back
+    submitted --> accepted : seller accepts
+    countered --> accepted : agreement reached
+    submitted --> rejected
+    submitted --> withdrawn : buyer pulls
+    submitted --> expired : timeout
+    accepted --> [*]
+    rejected --> [*]
+    withdrawn --> [*]
+    expired --> [*]
+    </div>
+  </div>
+</section>
+
+<!-- ===================== real_estate_developer ===================== -->
+<section id="m-developer">
+  <h2>real_estate_developer — Off-Plan Projects</h2>
+  <div class="meta"><span class="badge">7 models</span><span class="badge">Depends: base</span></div>
+  <p class="desc">Off-plan sales engine: developers register projects with multiple phases, hold units via reservations, sell via sale contracts, and bill buyers through scheduled installments.</p>
+
+  <h3 id="m-developer-er">Model Relations</h3>
+  <div class="card">
+    <div class="mermaid">
+erDiagram
+    PROJECT ||--o{ PHASE : "split into"
+    PROJECT ||--o{ PROPERTY : "contains units"
+    PROJECT ||--o{ BOUNDARY_POINT : "plot polygon"
+    PHASE ||--o{ PROPERTY : "phase units"
+    PROPERTY ||--o{ RESERVATION : "may hold"
+    PROPERTY ||--o{ SALE_CONTRACT : "sold via"
+    RESERVATION ||--o| SALE_CONTRACT : "converts to"
+    SALE_CONTRACT ||--o{ SALE_INSTALLMENT : "billing schedule"
+    INSTALLMENT_PLAN ||--o{ RESERVATION : "template"
+    INSTALLMENT_PLAN ||--o{ SALE_CONTRACT : "template"
+    RES_PARTNER ||--o{ PROJECT : "developer"
+    RES_PARTNER ||--o{ RESERVATION : "buyer"
+    RES_PARTNER ||--o{ SALE_CONTRACT : "buyer"
+
+    PROJECT {
+        string name
+        string code
+        selection state
+        monetary expected_budget
+        monetary expected_revenue
+        float latitude
+        float longitude
+        integer boundary_point_count
+    }
+    PHASE {
+        string name
+        many2one project_id
+        selection state
+    }
+    BOUNDARY_POINT {
+        many2one project_id
+        integer sequence
+        float latitude
+        float longitude
+        char label
+    }
+    PROPERTY {
+        many2one project_id
+        many2one phase_id
+        monetary base_price
+        selection sale_status
+        selection construction_status
+        boolean is_sold
+    }
+    RESERVATION {
+        many2one property_id
+        many2one partner_id
+        datetime hold_expiry_at
+        monetary booking_fee
+        monetary proposed_price
+        monetary property_base_price
+        float proposed_vs_base
+        selection state
+    }
+    SALE_CONTRACT {
+        many2one property_id
+        many2one partner_id
+        monetary sale_price
+        date signing_date
+        date handover_date
+        monetary paid_amount
+        monetary balance_due
+        float progress
+        selection state
+    }
+    SALE_INSTALLMENT {
+        date date_due
+        monetary amount
+        selection kind
+        selection state
+    }
+    INSTALLMENT_PLAN {
+        selection down_payment_method
+        float down_payment_value
+        integer total_installments
+        integer grace_period_months
+        selection balloon_method
+        float balloon_value
+        boolean balloon_at_handover
+    }
+    </div>
+  </div>
+
+  <h3 id="m-developer-wf">Workflows</h3>
+
+  <h4>Off-Plan Sale: Reservation → Contract → Handover</h4>
+  <div class="card">
+    <div class="mermaid">
+flowchart LR
+    A[Available unit] -->|buyer interest| B[Reservation<br/>hold]
+    B -->|deposit paid| C[Reservation<br/>booked]
+    B -->|hold expires| X[Reservation<br/>expired]
+    C -->|contract signed| D[Sale Contract<br/>signed]
+    D -->|installments billed| E[Installment<br/>invoiced]
+    E -->|paid| F[Installment<br/>paid]
+    D -->|all paid + delivered| G[Sale Contract<br/>handed_over]
+    D -->|cancel| Y[Cancelled<br/>+ refund]
+    style G fill:#28a745,color:#fff
+    style X fill:#dc3545,color:#fff
+    style Y fill:#dc3545,color:#fff
+    </div>
+  </div>
+
+  <h4>Project State Machine</h4>
+  <div class="card">
+    <div class="mermaid">
+stateDiagram-v2
+    [*] --> planning
+    planning --> construction : ground-breaking
+    construction --> marketing : units sellable
+    marketing --> handover : units delivering
+    handover --> completed : all delivered
+    planning --> cancelled
+    construction --> cancelled
+    marketing --> cancelled
+    completed --> [*]
+    cancelled --> [*]
+    </div>
+  </div>
+
+  <h4>Reservation State Machine</h4>
+  <div class="card">
+    <div class="mermaid">
+stateDiagram-v2
+    [*] --> hold : initial reservation
+    hold --> booked : deposit confirmed
+    booked --> confirmed : sale contract signed
+    hold --> expired : hold_expiry_at passed
+    hold --> cancelled : buyer pulls
+    booked --> cancelled : breach
+    confirmed --> [*]
+    expired --> [*]
+    cancelled --> [*]
+    </div>
+  </div>
+
+  <h4>Installment Billing</h4>
+  <div class="card">
+    <div class="mermaid">
+stateDiagram-v2
+    [*] --> pending : schedule created
+    pending --> invoiced : due-date reached
+    invoiced --> paid : payment registered
+    paid --> [*]
+    </div>
+  </div>
+</section>
+
+<!-- ===================== real_estate_construction ===================== -->
+<section id="m-construction">
+  <h2>real_estate_construction — Build Tracking</h2>
+  <div class="meta"><span class="badge">5 models</span><span class="badge">Depends: developer</span><span class="badge">+ tasks · dependencies · billing</span></div>
+  <p class="desc">Tracks the full construction lifecycle: milestones with predecessor dependencies, sub-tasks under each milestone, contractor assignments, cost lines vs budget, and <b>progress billing</b> via payment certificates with retention hold-back.</p>
+
+  <h3 id="m-construction-er">Model Relations</h3>
+  <div class="card">
+    <div class="mermaid">
+erDiagram
+    PROJECT ||--o{ MILESTONE : "build steps"
+    PHASE ||--o{ MILESTONE : "phase milestones"
+    CONTRACTOR ||--o{ MILESTONE : "executes"
+    MILESTONE ||--o{ TASK : "sub-tasks"
+    MILESTONE ||--o{ COST_LINE : "actual costs"
+    MILESTONE }o--o{ MILESTONE : "depends on"
+    PROJECT ||--o{ COST_LINE : "project costs"
+    CONTRACTOR ||--o{ PAYMENT_CERT : "billed via"
+    MILESTONE ||--o{ PAYMENT_CERT : "certifies %"
+    PROJECT ||--o{ PAYMENT_CERT : "project-level"
+    PAYMENT_CERT ||--o| ACCOUNT_MOVE : "vendor bill"
+    RES_PARTNER ||--o| CONTRACTOR : "vendor profile"
+
+    MILESTONE {
+        string name
+        many2one project_id
+        many2one contractor_id
+        float weight_pct
+        float completion_pct
+        monetary budget_amount
+        selection state
+        m2m dependency_ids
+        date earliest_possible_start
+        integer delay_days
+    }
+    TASK {
+        string name
+        many2one milestone_id
+        float weight
+        selection state
+        float completion_pct
+        date expected_end_date
+    }
+    COST_LINE {
+        many2one milestone_id
+        date cost_date
+        monetary amount
+        selection category
+    }
+    PAYMENT_CERT {
+        many2one contractor_id
+        many2one milestone_id
+        float current_certified_pct
+        float cumulative_certified_pct
+        monetary gross_amount
+        float retention_pct
+        monetary retention_amount
+        monetary net_payable
+        selection state
+    }
+    CONTRACTOR {
+        many2one partner_id
+        string specialty
+        float retention_pct
+        monetary total_retention_held
+        boolean retention_released
+    }
+    </div>
+  </div>
+
+  <h3 id="m-construction-wf">Workflows</h3>
+
+  <h4>Milestone Lifecycle</h4>
+  <div class="card">
+    <div class="mermaid">
+stateDiagram-v2
+    [*] --> not_started
+    not_started --> in_progress : action_start<br/>(blocked if predecessor not_started)
+    in_progress --> completed : 100% done
+    in_progress --> delayed : past expected_end
+    delayed --> in_progress : recovery
+    delayed --> completed : finished late
+    not_started --> cancelled
+    in_progress --> cancelled
+    completed --> [*]
+    cancelled --> [*]
+    </div>
+  </div>
+
+  <h4>Task Lifecycle (under a milestone)</h4>
+  <div class="card">
+    <div class="mermaid">
+stateDiagram-v2
+    [*] --> pending
+    pending --> in_progress : action_start
+    in_progress --> done : action_done
+    pending --> skipped : action_skip
+    in_progress --> skipped
+    done --> pending : action_reopen
+    skipped --> pending : action_reopen
+    done --> [*]
+    skipped --> [*]
+
+    note right of done : Pushes weighted completion<br/>up to milestone.completion_percentage
+    </div>
+  </div>
+
+  <h4>Milestone Dependencies &amp; Delay Propagation</h4>
+  <div class="card">
+    <div class="mermaid">
+flowchart LR
+    A[Predecessor<br/>actual_end_date slips] --> B[Dependent's<br/>earliest_possible_start ↑]
+    B --> C{Past dependent's<br/>expected_start_date?}
+    C -->|Yes| D[is_blocked_by_delay = true<br/>delay_days = N]
+    C -->|No| E[OK]
+    D --> F[Warning banner on form<br/>red row in list]
+    D --> G[action_start refuses<br/>if predecessor is not_started]
+    style D fill:#fef3c7,stroke:#d97706
+    style F fill:#fee2e2,stroke:#dc2626
+    </div>
+  </div>
+
+  <h4>Payment Certificate (Progress Billing) Lifecycle</h4>
+  <div class="card">
+    <div class="mermaid">
+stateDiagram-v2
+    [*] --> draft : create certificate
+    draft --> certified : action_certify<br/>(this_period_pct > 0)
+    certified --> invoiced : action_create_vendor_bill<br/>(generates account.move)
+    invoiced --> paid : action_mark_paid
+    draft --> cancelled
+    certified --> cancelled
+    invoiced --> cancelled : only if bill not posted
+    paid --> [*]
+    cancelled --> [*]
+    </div>
+  </div>
+
+  <h4>Money Flow — Gross / Retention / Net</h4>
+  <div class="card">
+    <div class="mermaid">
+flowchart LR
+    A["Milestone<br/>contract_value: 1,000,000"] -->|"This period: 30%"| B["Gross<br/>300,000"]
+    B -->|"× retention_pct (5%)"| C["Retention<br/>15,000<br/><i>(held)</i>"]
+    B -->|"− retention"| D["Net Payable<br/>285,000<br/><i>(vendor bill)</i>"]
+    C --> E["Contractor's<br/>total_retention_held"]
+    D --> F["Vendor bill posted<br/>to account.move"]
+    E -.->|"after handover<br/>action_release_retention"| G["Final retention<br/>vendor bill"]
+    style D fill:#28a745,color:#fff
+    style G fill:#fb8c00,color:#fff
+    </div>
+  </div>
+
+  <h4>Cost Roll-up</h4>
+  <div class="card">
+    <div class="mermaid">
+flowchart LR
+    A[Cost line<br/>entered] --> B[Milestone<br/>actual cost ↑]
+    B --> C[Project<br/>actual budget ↑]
+    B -->|actual > budget| D[Variance flag]
+    C --> E[Dashboard<br/>cost variance KPI]
+    D --> E
+    </div>
+  </div>
+
+  <h4>Milestone Completion Roll-up (when tasks exist)</h4>
+  <div class="card">
+    <div class="mermaid">
+flowchart LR
+    A[Task.state changes] --> B[Task.completion_pct<br/>auto-set: 100/50/0]
+    B --> C[Milestone.completion_from_tasks<br/>= Σ(task.weight × task.completion_pct) ÷ Σ(weights)]
+    C --> D[Milestone.completion_percentage<br/>auto-updated]
+    D --> E[Project.construction_progress<br/>weighted by milestone.weight]
+    style A fill:#eaf0ff
+    style E fill:#28a745,color:#fff
+    </div>
+  </div>
+</section>
+
+<!-- ===================== real_estate_handover ===================== -->
+<section id="m-handover">
+  <h2>real_estate_handover — Delivery &amp; Snagging</h2>
+  <div class="meta"><span class="badge">5 models</span><span class="badge">Depends: developer + construction</span></div>
+  <p class="desc">Handles the unit-delivery process: scheduled handovers tied to sale contracts, configurable inspection checklists, defect (snagging) tracking with contractor assignment, and post-handover warranty periods.</p>
+
+  <h3 id="m-handover-er">Model Relations</h3>
+  <div class="card">
+    <div class="mermaid">
+erDiagram
+    SALE_CONTRACT ||--o{ HANDOVER : "delivery event"
+    HANDOVER ||--o{ CHECKLIST_ITEM : "inspection points"
+    HANDOVER ||--o{ SNAGGING_ISSUE : "defects raised"
+    HANDOVER ||--o| WARRANTY : "starts coverage"
+    HANDOVER }o--o| CHECKLIST_TEMPLATE : "from template"
+    CHECKLIST_TEMPLATE ||--o{ CHECKLIST_ITEM : "template items"
+    SNAGGING_ISSUE }o--o| CONTRACTOR : "fix assigned to"
+    PROPERTY ||--o{ HANDOVER : "delivered unit"
+    PROPERTY ||--o{ WARRANTY : "coverage"
+
+    HANDOVER {
+        many2one sale_contract_id
+        date scheduled_date
+        date actual_date
+        selection state
+    }
+    CHECKLIST_ITEM {
+        string name
+        selection state
+        text notes
+    }
+    SNAGGING_ISSUE {
+        string description
+        selection severity
+        selection state
+        many2one contractor_id
+    }
+    WARRANTY {
+        date start_date
+        date end_date
+        boolean active
+    }
+    </div>
+  </div>
+
+  <h3 id="m-handover-wf">Workflows</h3>
+
+  <h4>Handover Process</h4>
+  <div class="card">
+    <div class="mermaid">
+flowchart LR
+    A[Sale contract<br/>handed_over ready] --> B[Handover<br/>scheduled]
+    B -->|buyer arrives| C[Handover<br/>inspection]
+    C -->|defects found| D[Handover<br/>snagging]
+    C -->|no issues| F[Handover<br/>completed]
+    D -->|all resolved| F
+    F --> G[Warranty<br/>active]
+    G -->|end_date reached| H[Warranty<br/>expired]
+    style F fill:#28a745,color:#fff
+    style H fill:#6c757d,color:#fff
+    </div>
+  </div>
+
+  <h4>Handover State Machine</h4>
+  <div class="card">
+    <div class="mermaid">
+stateDiagram-v2
+    [*] --> scheduled
+    scheduled --> inspection : buyer arrives
+    inspection --> snagging : defects logged
+    inspection --> completed : clean handover
+    snagging --> completed : all resolved
+    scheduled --> cancelled
+    inspection --> cancelled
+    completed --> [*]
+    cancelled --> [*]
+    </div>
+  </div>
+
+  <h4>Snagging Issue Lifecycle</h4>
+  <div class="card">
+    <div class="mermaid">
+stateDiagram-v2
+    [*] --> open : defect reported
+    open --> assigned : contractor assigned
+    assigned --> in_progress : fix started
+    in_progress --> resolved : work done
+    resolved --> verified : inspector approves
+    resolved --> rejected : fix not adequate
+    rejected --> in_progress : rework
+    verified --> [*]
+    </div>
+  </div>
+
+  <h4>Checklist Item Lifecycle</h4>
+  <div class="card">
+    <div class="mermaid">
+stateDiagram-v2
+    [*] --> pending
+    pending --> in_progress : inspector checking
+    in_progress --> done : pass
+    in_progress --> skipped : not applicable
+    done --> [*]
+    skipped --> [*]
+    </div>
+  </div>
+</section>
+
+<!-- ===================== real_estate_investment ===================== -->
+<section id="m-investment">
+  <h2>real_estate_investment — Financial Feasibility</h2>
+  <div class="meta"><span class="badge">3 models</span><span class="badge">Depends: developer</span></div>
+  <p class="desc">Investment-appraisal layer: per-project feasibility studies that compute NPV, IRR, and payback from cash-flow lines, plus best/expected/worst-case sensitivity scenarios.</p>
+
+  <h3 id="m-investment-er">Model Relations</h3>
+  <div class="card">
+    <div class="mermaid">
+erDiagram
+    PROJECT ||--o{ FEASIBILITY : "appraisals"
+    FEASIBILITY ||--o{ CASH_FLOW : "inflows/outflows"
+    FEASIBILITY ||--o{ SCENARIO : "sensitivity"
+
+    FEASIBILITY {
+        many2one project_id
+        float discount_rate
+        monetary npv
+        float irr
+        float payback_years
+        selection state
+    }
+    CASH_FLOW {
+        date period
+        monetary amount
+        selection direction
+        char category
+    }
+    SCENARIO {
+        selection type
+        float revenue_delta
+        float cost_delta
+        monetary npv_scenario
+    }
+    </div>
+  </div>
+
+  <h3 id="m-investment-wf">Workflows</h3>
+
+  <h4>Feasibility Lifecycle</h4>
+  <div class="card">
+    <div class="mermaid">
+stateDiagram-v2
+    [*] --> draft
+    draft --> approved : board sign-off
+    draft --> rejected : NPV negative / bad IRR
+    approved --> archived : project complete
+    rejected --> archived
+    archived --> [*]
+    </div>
+  </div>
+
+  <h4>NPV / IRR Computation Flow</h4>
+  <div class="card">
+    <div class="mermaid">
+flowchart LR
+    A[Cash flow lines<br/>entered] --> B[Net cash flow<br/>per period]
+    B --> C[Discount @<br/>rate r]
+    C --> D[NPV computed]
+    B --> E[Solve for r where<br/>NPV = 0]
+    E --> F[IRR computed]
+    B --> G[Cumulative sum<br/>crosses zero]
+    G --> H[Payback computed]
+    D --> I[Feasibility<br/>verdict]
+    F --> I
+    H --> I
+    I -->|positive| J[Approved]
+    I -->|negative| K[Rejected]
+    style J fill:#28a745,color:#fff
+    style K fill:#dc3545,color:#fff
+    </div>
+  </div>
+</section>
+
+<!-- ===================== real_estate_portal ===================== -->
+<section id="m-portal">
+  <h2>real_estate_portal — Customer Portal</h2>
+  <div class="meta"><span class="badge">0 models</span><span class="badge">Depends: developer</span></div>
+  <p class="desc">Pure view/controller layer — no business models. Renders customer-facing pages for buyers to view their sale contracts, installment schedules, handover status, and snagging issues. Inherits all data from upstream modules.</p>
+
+  <h3>Portal Surfaces</h3>
+  <div class="card">
+    <div class="mermaid">
+flowchart TB
+    A[Buyer logs in] --> B[/my/sale_contracts/]
+    A --> C[/my/installments/]
+    A --> D[/my/handovers/]
+    A --> E[/my/snagging/]
+    B --> B1[Contract detail<br/>+ schedule]
+    C --> C1[Pay online<br/>+ statements]
+    D --> D1[Handover date<br/>+ checklist]
+    E --> E1[Raise issue<br/>+ track fix]
+    </div>
+  </div>
+</section>
+
+<section style="margin-top:3rem; padding:1rem; text-align:center; color:var(--muted); font-size:0.85rem;">
+  Generated from manifest + model introspection across <code>/home/mageed/odoo_work_18/odoo/atmta_realestate/</code>
+</section>
+
+</main>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'default',
+    themeVariables: {
+      fontSize: '20px',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      primaryColor: '#eaf0ff',
+      primaryTextColor: '#1f2933',
+      primaryBorderColor: '#2e5cdc',
+      lineColor: '#4a5568',
+      secondaryColor: '#fff4e6',
+      tertiaryColor: '#fef3c7',
+    },
+    flowchart: { curve: 'basis', useMaxWidth: false, htmlLabels: true, nodeSpacing: 60, rankSpacing: 70, padding: 20 },
+    er: { useMaxWidth: false, entityPadding: 20, fontSize: 18, layoutDirection: 'TB', minEntityWidth: 180, minEntityHeight: 90 },
+    stateDiagram: { useMaxWidth: false, nodeSpacing: 60, rankSpacing: 70 },
+    sequence: { useMaxWidth: false },
+  });
+
+  function attachZoom(mermaidEl) {
+    const card = mermaidEl.closest('.card');
+    if (!card || card.dataset.zoomAttached) return;
+    card.dataset.zoomAttached = '1';
+
+    const wrap = document.createElement('div');
+    wrap.className = 'diagram-wrap';
+
+    const toolbar = document.createElement('div');
+    toolbar.className = 'zoom-toolbar';
+    toolbar.innerHTML = `
+      <span class="zoom-hint">Use buttons to zoom this diagram</span>
+      <button data-act="out" title="Zoom out">−</button>
+      <span class="zoom-label">100%</span>
+      <button data-act="in" title="Zoom in">+</button>
+      <button data-act="reset" title="Reset">⟲</button>
+      <button data-act="fit" title="Fit width">↔</button>
+    `;
+
+    const scroll = document.createElement('div');
+    scroll.className = 'mermaid-scroll';
+
+    card.insertBefore(wrap, mermaidEl);
+    wrap.appendChild(toolbar);
+    wrap.appendChild(scroll);
+    scroll.appendChild(mermaidEl);
+
+    let scale = 1;
+    const label = toolbar.querySelector('.zoom-label');
+    function apply() {
+      mermaidEl.style.transform = `scale(${scale})`;
+      label.textContent = Math.round(scale * 100) + '%';
+    }
+    toolbar.addEventListener('click', (e) => {
+      const act = e.target.dataset.act;
+      if (!act) return;
+      if (act === 'in') scale = Math.min(scale + 0.2, 4);
+      else if (act === 'out') scale = Math.max(scale - 0.2, 0.4);
+      else if (act === 'reset') scale = 1;
+      else if (act === 'fit') {
+        const svg = mermaidEl.querySelector('svg');
+        if (svg) {
+          const natural = svg.getBoundingClientRect().width / scale;
+          scale = Math.max(0.4, Math.min(4, scroll.clientWidth / natural));
+        }
+      }
+      apply();
+    });
+
+    // Ctrl/Cmd + wheel to zoom inside the scroll area
+    scroll.addEventListener('wheel', (e) => {
+      if (!(e.ctrlKey || e.metaKey)) return;
+      e.preventDefault();
+      scale = Math.max(0.4, Math.min(4, scale + (e.deltaY < 0 ? 0.1 : -0.1)));
+      apply();
+    }, { passive: false });
+  }
+
+  (async () => {
+    await mermaid.run({ querySelector: '.mermaid' });
+    document.querySelectorAll('.mermaid').forEach(attachZoom);
+  })();
+</script>
+
+</body>
+</html>

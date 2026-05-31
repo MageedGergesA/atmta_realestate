@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+
+    <record id="ir_config_auto_invoice_lead_days" model="ir.config_parameter">
+        <field name="key">real_estate_rental.auto_invoice_lead_days</field>
+        <field name="value">7</field>
+    </record>
+
+    <record id="cron_auto_invoice_due_payments" model="ir.cron">
+        <field name="name">Rental: Auto-invoice payments due soon</field>
+        <field name="model_id" ref="model_realestate_contract_payment"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_auto_invoice_due_payments()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active">True</field>
+    </record>
+
+</odoo>

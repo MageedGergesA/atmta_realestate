@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_property_form_inherit_sales" model="ir.ui.view">
+        <field name="name">realestate.property.form.sales</field>
+        <field name="model">realestate.property</field>
+        <field name="inherit_id" ref="atmta_real_estate.view_property_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Smart buttons -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_listings" type="object" class="oe_stat_button"
+                        icon="fa-tag"
+                        invisible="listing_count == 0">
+                    <field name="listing_count" widget="statinfo" string="Listings"/>
+                </button>
+                <button name="action_view_transactions" type="object" class="oe_stat_button"
+                        icon="fa-handshake-o"
+                        invisible="transaction_count == 0">
+                    <field name="transaction_count" widget="statinfo" string="Sales"/>
+                </button>
+            </xpath>
+
+            <!-- Sales tab -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Sales" name="sales">
+                    <group>
+                        <group string="For Sale">
+                            <field name="for_sale" readonly="1" widget="boolean_toggle"/>
+                            <field name="active_listing_id" readonly="1"
+                                   invisible="not active_listing_id"/>
+                        </group>
+                        <group string="Last Sale">
+                            <field name="is_sold" readonly="1" widget="boolean_toggle"/>
+                            <field name="last_transaction_id" readonly="1"
+                                   invisible="not last_transaction_id"/>
+                        </group>
+                    </group>
+                    <separator string="Listings"/>
+                    <field name="listing_ids" readonly="1">
+                        <list>
+                            <field name="name"/>
+                            <field name="list_date"/>
+                            <field name="list_price"/>
+                            <field name="lister_agent_id"/>
+                            <field name="state" widget="badge"/>
+                            <field name="currency_id" column_invisible="1"/>
+                        </list>
+                    </field>
+                    <separator string="Transactions"/>
+                    <field name="transaction_ids" readonly="1">
+                        <list>
+                            <field name="name"/>
+                            <field name="buyer_id"/>
+                            <field name="sale_price"/>
+                            <field name="closing_date"/>
+                            <field name="state" widget="badge"/>
+                            <field name="currency_id" column_invisible="1"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_property_list_inherit_sales" model="ir.ui.view">
+        <field name="name">realestate.property.list.sales</field>
+        <field name="model">realestate.property</field>
+        <field name="inherit_id" ref="atmta_real_estate.view_property_list"/>
+        <field name="arch" type="xml">
+            <field name="manager_id" position="after">
+                <field name="for_sale" optional="hide" widget="boolean_toggle"/>
+                <field name="is_sold" optional="hide" widget="boolean_toggle"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
