@@ -60,4 +60,18 @@
               sequence="20"
               groups="base.group_system"
               active="False"/>
+
+    <menuitem id="menu_building_floor"
+              name="Building Floors"
+              parent="menu_maquette_root"
+              action="action_building_floor"
+              sequence="25"
+              groups="base.group_system"/>
+
+    <menuitem id="menu_spec_tag"
+              name="Specification Tags"
+              parent="menu_maquette_root"
+              action="action_spec_tag"
+              sequence="30"
+              groups="base.group_system"/>
 </odoo>

@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
 
             <!-- Smart buttons (unit-level) -->
-            <xpath expr="//div[@name='button_box']" position="inside">
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
                 <button name="action_view_in_maquette" type="object" class="oe_stat_button"
                         icon="fa-cube"
                         invisible="hierarchy_level != 'unit'">
@@ -50,6 +50,41 @@
                     <group string="3D Interior" invisible="not interior_glb">
                         <field name="id" widget="glb_viewer" nolabel="1"/>
                     </group>
+                </page>
+
+                <!-- Elevation & Floors — buildings/blocks only -->
+                <page string="Elevation &amp; Floors" name="elevation"
+                      invisible="hierarchy_level not in ('block','building')">
+                    <group string="Elevation Sheet">
+                        <field name="elevation_sheet"
+                               filename="elevation_sheet_filename"
+                               widget="image"
+                               options="{'size': [800, 600]}" nolabel="1"/>
+                        <field name="elevation_sheet_filename" invisible="1"/>
+                    </group>
+                    <separator string="Floors"/>
+                    <p class="text-muted small mb-2">
+                        Pick any unit on each floor — its
+                        <em>Floor Number</em> and <em>Usage</em> drive the
+                        row, and unit stats roll up automatically. Floor plan
+                        images are set per unit (Plans &amp; 3D ▸ Floor Plan).
+                    </p>
+                    <field name="floor_ids" nolabel="1">
+                        <list editable="bottom">
+                            <field name="unit_id"/>
+                            <field name="floor_number" readonly="1"/>
+                            <field name="property_usage_id" readonly="1"/>
+                            <field name="units_total" readonly="1"/>
+                            <field name="units_available" readonly="1"/>
+                        </list>
+                    </field>
+                    <separator string="Specifications / Finishes"/>
+                    <p class="text-muted small mb-2">
+                        Tags shown on the elevation dialog sidebar (e.g.
+                        marble lobby, double glazing, smart-home).
+                    </p>
+                    <field name="spec_tag_ids" widget="many2many_tags" nolabel="1"
+                           options="{'color_field': 'color', 'no_create_edit': True}"/>
                 </page>
             </xpath>
 

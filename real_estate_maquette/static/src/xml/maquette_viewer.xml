@@ -35,6 +35,201 @@
         </div>
     </t>
 
+    <t t-name="real_estate_maquette.BuildingElevation">
+        <Dialog title="state.building and (state.building.name || state.building.property_code) || 'Building'"
+                size="'fs'" contentClass="'o_re_elevation_dialog'">
+            <div t-if="state.loading" class="p-5 text-center text-muted">
+                <i class="fa fa-spinner fa-spin me-2"/> Loading building…
+            </div>
+            <div t-elif="state.error" class="alert alert-danger m-3">
+                <strong>Could not load:</strong> <t t-esc="state.error"/>
+            </div>
+            <div t-else="" class="o_re_elevation d-flex flex-column" style="height:80vh;">
+                <!-- Header -->
+                <div class="o_re_elevation_header d-flex align-items-baseline gap-3 px-3 py-2 border-bottom">
+                    <h4 class="mb-0 fw-bold" t-esc="state.building.name || state.building.property_code"/>
+                    <span class="text-muted small">
+                        <t t-if="state.building.number_of_floors">
+                            G+<t t-esc="state.building.number_of_floors"/>
+                        </t>
+                        <t t-if="state.building.number_of_units">
+                            · <t t-esc="state.building.number_of_units"/> units
+                        </t>
+                        <t t-if="state.building.area_sqm">
+                            · <t t-esc="state.building.area_sqm"/> m²
+                        </t>
+                    </span>
+                    <span class="text-muted small ms-auto">
+                        <t t-if="state.building.district"><t t-esc="state.building.district"/>, </t>
+                        <t t-esc="state.building.city"/>
+                    </span>
+                </div>
+                <!-- Body: sheet | side -->
+                <div class="d-flex flex-grow-1" style="overflow:hidden;">
+                    <!-- Elevation sheet / floor plan zoom area -->
+                    <div t-ref="sheetWrapper"
+                         class="o_re_elevation_sheet flex-grow-1 position-relative"
+                         style="background:#f1f5f9;overflow:hidden;"
+                         t-on-wheel="onWheelZoom">
+                        <div class="o_re_zoom_chip">
+                            <button type="button" t-on-click="zoomOut" t-att-disabled="state.zoom &lt;= 1">
+                                <i class="fa fa-minus"/>
+                            </button>
+                            <span class="o_zoom_level" t-esc="zoomLabel"/>
+                            <button type="button" t-on-click="zoomIn" t-att-disabled="state.zoom &gt;= 6">
+                                <i class="fa fa-plus"/>
+                            </button>
+                            <button type="button" t-on-click="resetZoom"><i class="fa fa-refresh"/></button>
+                        </div>
+                        <div t-ref="sheetCanvas"
+                             t-attf-class="o_re_elevation_canvas #{state.isPanning ? 'is-dragging' : ''}"
+                             t-att-style="'transform:' + sheetTransform"
+                             t-on-mousedown="onSheetMouseDown">
+                            <img t-if="currentImageUrl"
+                                 t-att-src="currentImageUrl"
+                                 alt="Building drawing" draggable="false"
+                                 style="display:block;max-width:100%;max-height:100%;user-select:none;-webkit-user-drag:none;"/>
+                            <div t-else="" class="p-5 text-center text-muted"
+                                 style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+                                <div>
+                                    <i class="fa fa-image fa-2x mb-2 d-block"/>
+                                    <t t-if="state.displayMode === 'floor'">
+                                        Pick a unit on the right, then upload its
+                                        <strong>Plans &amp; 3D ▸ Floor Plan (Image)</strong> to see it here.
+                                    </t>
+                                    <t t-else="">
+                                        No elevation sheet uploaded for this building yet. Open the building's
+                                        <strong>Elevation &amp; Floors</strong> tab and upload to <strong>Elevation Sheet</strong>.
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Side panel: floors -->
+                    <div class="o_re_elevation_side"
+                         style="width:320px;flex:0 0 320px;border-left:1px solid #e2e8f0;display:flex;flex-direction:column;background:#fff;">
+                        <!-- View toggle: elevation ↔ floor plan -->
+                        <div class="o_re_view_toggle">
+                            <button type="button"
+                                    t-attf-class="#{state.displayMode === 'elevation' ? 'is-active' : ''}"
+                                    t-on-click="showElevation"
+                                    t-att-disabled="!hasElevation">
+                                <i class="fa fa-building me-1"/> Elevation
+                            </button>
+                            <button type="button"
+                                    t-attf-class="#{state.displayMode === 'floor' ? 'is-active' : ''}"
+                                    t-on-click="showFloorPlan"
+                                    t-att-disabled="!hasFloorPlan"
+                                    t-att-title="hasFloorPlan ? '' : 'Pick a floor with a plan image to see it here'">
+                                <i class="fa fa-th-large me-1"/> Floor plan
+                            </button>
+                        </div>
+                        <div class="px-3 py-2 border-bottom small fw-bold text-uppercase text-muted">
+                            Floors
+                        </div>
+                        <div style="overflow-y:auto;flex:1;">
+                            <t t-foreach="state.floors" t-as="f" t-key="f.id">
+                                <div t-attf-class="o_re_floor_row #{state.selectedFloorId === f.id ? 'is-active' : ''}"
+                                     t-on-click="() => this.selectFloor(f.id)">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <div class="fw-semibold">
+                                                Floor <t t-esc="f.floor_number"/>
+                                            </div>
+                                            <div class="text-muted small" t-if="f.property_usage_id">
+                                                <t t-esc="f.property_usage_id[1]"/>
+                                            </div>
+                                        </div>
+                                        <div t-if="f.units_total" class="text-end small"
+                                             t-attf-title="Available: #{f.units_available} · Reserved: #{f.units_reserved} · Sold: #{f.units_sold}">
+                                            <div>
+                                                <t t-esc="f.units_total"/>
+                                                unit<t t-if="f.units_total !== 1">s</t>
+                                            </div>
+                                            <div t-attf-class="small #{f.units_available ? 'text-success' : 'text-muted'}">
+                                                <t t-esc="f.units_available"/> available
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                            <div t-if="!state.floors.length" class="p-3 text-muted small">
+                                No floor schedule defined.
+                            </div>
+                        </div>
+                        <!-- Specs -->
+                        <div t-if="state.specs.length" class="border-top px-3 py-2">
+                            <div class="small fw-bold text-uppercase text-muted mb-1">Specs &amp; Finishes</div>
+                            <div class="d-flex flex-wrap gap-1">
+                                <span t-foreach="state.specs" t-as="s" t-key="s.id"
+                                      class="badge text-bg-light border">
+                                    <i t-if="s.icon" t-attf-class="fa #{s.icon} me-1"/>
+                                    <t t-esc="s.name"/>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Bottom strip: units of the selected floor -->
+                <div t-if="selectedFloor" class="o_re_elevation_units border-top px-3 py-2 d-flex gap-2 flex-wrap"
+                     style="background:#fafafa;max-height:160px;overflow:auto;">
+                    <span class="small text-muted me-2">
+                        <strong>
+                            <t t-esc="selectedFloor.floor_number"/>
+                            <t t-if="selectedFloor.name"> — <t t-esc="selectedFloor.name"/></t>
+                        </strong>
+                        units:
+                    </span>
+                    <t t-foreach="selectedFloor.units || []" t-as="u" t-key="u.id">
+                        <button type="button"
+                                t-attf-class="o_re_unit_chip #{state.selectedUnit and state.selectedUnit.id === u.id ? 'is-active' : ''}"
+                                t-att-style="'border-left-color:' + stateColorFor(u.state)"
+                                t-on-click="() => this.selectUnit(u)">
+                            <div class="fw-semibold small" t-esc="u.property_code || u.name"/>
+                            <div class="text-muted x-small">
+                                <t t-if="u.area_sqm"><t t-esc="u.area_sqm"/> m²</t>
+                                · <t t-esc="stateLabelFor(u.state)"/>
+                            </div>
+                        </button>
+                    </t>
+                    <span t-if="!(selectedFloor.units &amp;&amp; selectedFloor.units.length)" class="text-muted small">
+                        No units on this floor.
+                    </span>
+                </div>
+                <!-- Selected unit action bar -->
+                <div t-if="state.selectedUnit" class="border-top px-3 py-2 d-flex align-items-center gap-2"
+                     style="background:#fff;">
+                    <strong t-esc="state.selectedUnit.property_code || state.selectedUnit.name"/>
+                    <span class="badge"
+                          t-att-style="'background:' + stateColorFor(state.selectedUnit.state) + ';color:#fff;'"
+                          t-esc="stateLabelFor(state.selectedUnit.state)"/>
+                    <span t-if="state.selectedUnit.base_price" class="text-muted small">
+                        <t t-esc="state.selectedUnit.base_price.toLocaleString()"/>
+                    </span>
+                    <div class="ms-auto d-flex gap-2">
+                        <button class="btn btn-sm btn-secondary" t-on-click="openUnitImages">
+                            <i class="fa fa-picture-o me-1"/> Images
+                        </button>
+                        <t t-if="portalMode">
+                            <button class="btn btn-sm btn-primary" t-on-click="reserveOrEOI">
+                                <i class="fa fa-envelope me-1"/> Send EOI
+                            </button>
+                        </t>
+                        <t t-else="">
+                            <button t-if="state.selectedUnit.state === 'available'"
+                                    class="btn btn-sm btn-primary" t-on-click="reserveOrEOI">
+                                <i class="fa fa-bookmark me-1"/> Reserve
+                            </button>
+                            <button class="btn btn-sm btn-secondary" t-on-click="openUnitForm">
+                                <i class="fa fa-external-link me-1"/> Open Form
+                            </button>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </Dialog>
+    </t>
+
     <t t-name="real_estate_maquette.MasterPlan2DField">
         <div class="o_master_plan_2d_field" style="min-height:600px;display:flex;">
             <MasterPlan2D projectId="projectId"/>
@@ -284,21 +479,46 @@
 
     <t t-name="real_estate_maquette.CarouselDialog">
         <Dialog title="props.title or 'Images'" size="'fs'">
-            <div class="text-center" t-if="props.images.length">
+            <div class="text-center" t-if="state.images.length">
                 <img t-att-src="current.src"
                      style="width:100%; height:auto; max-height:80vh; object-fit:contain; display:block; margin:0 auto;"/>
-                <div class="mt-2 d-flex justify-content-center align-items-center gap-3"
-                     t-if="props.images.length > 1">
-                    <button class="btn btn-secondary" t-on-click="prev">
+                <div class="mt-2 d-flex justify-content-center align-items-center gap-3">
+                    <button class="btn btn-secondary"
+                            t-on-click="prev"
+                            t-att-disabled="state.images.length &lt; 2">
                         <i class="fa fa-chevron-left"/>
                     </button>
-                    <span><t t-esc="state.index + 1"/> / <t t-esc="props.images.length"/></span>
-                    <button class="btn btn-secondary" t-on-click="next">
+                    <span><t t-esc="state.index + 1"/> / <t t-esc="state.images.length"/></span>
+                    <button class="btn btn-secondary"
+                            t-on-click="next"
+                            t-att-disabled="state.images.length &lt; 2">
                         <i class="fa fa-chevron-right"/>
+                    </button>
+                    <button t-if="canUpload"
+                            class="btn btn-primary"
+                            t-on-click="triggerUpload"
+                            t-att-disabled="state.uploading">
+                        <i class="fa fa-upload me-1"/>
+                        <t t-if="state.uploading">Uploading…</t>
+                        <t t-else="">Upload</t>
                     </button>
                 </div>
             </div>
-            <div t-else="" class="text-muted">No images uploaded for this unit.</div>
+            <div t-else="" class="text-center text-muted py-5">
+                <i class="fa fa-image fa-3x mb-3 d-block"/>
+                <div>No images uploaded for this unit yet.</div>
+                <button t-if="canUpload"
+                        class="btn btn-primary mt-3"
+                        t-on-click="triggerUpload"
+                        t-att-disabled="state.uploading">
+                    <i class="fa fa-upload me-1"/>
+                    <t t-if="state.uploading">Uploading…</t>
+                    <t t-else="">Upload images</t>
+                </button>
+            </div>
+            <input t-if="canUpload" type="file" accept="image/*" multiple="multiple"
+                   t-ref="fileInput" style="display:none;"
+                   t-on-change="onFilesPicked"/>
         </Dialog>
     </t>
 

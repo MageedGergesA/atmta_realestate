@@ -112,7 +112,7 @@ class MaquetteController(http.Controller):
         type='http', auth='user', methods=['GET'], csrf=False,
     )
     def serve_floor_plan(self, property_id, **kw):
-        """Serve a unit's floor plan image. PDF route is separate."""
+        """Serve a unit's floor plan image."""
         prop = request.env['realestate.property'].browse(property_id)
         try:
             prop.check_access_rights('read')

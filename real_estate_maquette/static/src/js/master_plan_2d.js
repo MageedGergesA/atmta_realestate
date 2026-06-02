@@ -5,6 +5,7 @@ import { Component, onMounted, onWillStart, onWillUnmount, useRef, useState } fr
 import { useService } from "@web/core/utils/hooks";
 import { rpc } from "@web/core/network/rpc";
 import { CarouselDialog } from "./image_carousel_dialog";
+import { BuildingElevation } from "./building_elevation";
 
 /**
  * 2D master plan viewer + editor.
@@ -247,7 +248,34 @@ export class MasterPlan2D extends Component {
         await this._selectProperty(region);
     }
 
+    async _fetchHierarchyLevel(propertyId) {
+        if (this.portalMode) {
+            const res = await fetch(
+                `/projects/${this.state.projectId}/property/${propertyId}.json`);
+            if (!res.ok) return null;
+            const data = await res.json();
+            return data.hierarchy_level || null;
+        }
+        const recs = await this.orm.searchRead(
+            "realestate.property",
+            [["id", "=", propertyId]],
+            ["hierarchy_level"],
+        );
+        return recs.length ? recs[0].hierarchy_level : null;
+    }
+
     async _selectProperty(region) {
+        // Buildings / blocks → open the full elevation drill-down dialog
+        // instead of the simple side panel.
+        const hl = await this._fetchHierarchyLevel(region.building_id);
+        if (hl === "building" || hl === "block") {
+            this.dialog.add(BuildingElevation, {
+                buildingId: region.building_id,
+                mode: this.portalMode ? "portal" : "backend",
+            });
+            return;
+        }
+        // Units / villas → side panel (existing behavior)
         if (this.portalMode) {
             const res = await fetch(
                 `/projects/${this.state.projectId}/property/${region.building_id}.json`);
@@ -354,13 +382,15 @@ export class MasterPlan2D extends Component {
                 images.push({ id: r.id, src: `/web/image/property.image/${r.id}/image_1920` });
             }
         }
-        if (!images.length) {
+        if (!images.length && this.portalMode) {
             this.notification.add("No images for this property yet.", { type: "info" });
             return;
         }
         this.dialog.add(CarouselDialog, {
             images,
             title: p.name || p.property_code || "Property Images",
+            propertyId: p.id,
+            canUpload: !this.portalMode,
         });
     }
 

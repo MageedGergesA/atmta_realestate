@@ -159,3 +159,120 @@
         min-height: 0;
     }
 }
+
+/* --- Building Elevation dialog --- */
+.o_re_elevation_dialog .modal-dialog,
+.o_re_elevation_dialog .modal-content {
+    height: 100vh;
+    margin: 0;
+}
+.o_re_elevation_dialog .modal-body {
+    padding: 0;
+    overflow: hidden;
+}
+.o_re_elevation_canvas {
+    transform-origin: 0 0;
+    transition: transform .12s ease-out;
+    will-change: transform;
+    cursor: grab;
+    display: inline-block;
+    &.is-dragging { cursor: grabbing; transition: none; }
+}
+.o_re_elevation_sheet .o_re_zoom_chip {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(15, 23, 42, .85);
+    color: #fff;
+    border-radius: 8px;
+    padding: 4px 6px;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    z-index: 5;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, .25);
+
+    button {
+        background: transparent;
+        border: 0;
+        color: #fff;
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        &:hover { background: rgba(255, 255, 255, .15); }
+        &:disabled { opacity: .4; cursor: not-allowed; }
+    }
+    .o_zoom_level {
+        font-size: 11px;
+        font-weight: 600;
+        padding: 0 6px;
+        min-width: 34px;
+        text-align: center;
+    }
+}
+.o_re_floor_row {
+    cursor: pointer;
+    padding: 10px 14px;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background .12s ease;
+    &:hover { background: #f8fafc; }
+    &.is-active {
+        background: #eff6ff;
+        border-left: 3px solid #2563eb;
+        padding-left: 11px;
+    }
+}
+.o_re_unit_chip {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #94a3b8;
+    border-radius: 8px;
+    padding: 6px 10px;
+    text-align: left;
+    min-width: 110px;
+    transition: transform .1s, box-shadow .1s;
+    &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 12px rgba(15, 23, 42, .08);
+    }
+    &.is-active {
+        outline: 2px solid #2563eb;
+        outline-offset: 1px;
+    }
+    .x-small { font-size: 11px; }
+}
+
+.o_re_elevation_side .o_re_view_toggle {
+    display: flex;
+    gap: 4px;
+    padding: 10px;
+    border-bottom: 1px solid #e2e8f0;
+    background: #f8fafc;
+    button {
+        flex: 1;
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        color: #475569;
+        padding: 8px 10px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        transition: background .12s ease, border-color .12s ease;
+        &:hover:not(:disabled) {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+        &.is-active {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: #fff;
+        }
+        &:disabled {
+            opacity: .4;
+            cursor: not-allowed;
+        }
+    }
+}

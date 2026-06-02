@@ -32,8 +32,13 @@ export class ImageCarouselField extends Component {
         return this.images.length;
     }
     openCarousel() {
-        if (!this.count) return;
-        this.dialog.add(CarouselDialog, { images: this.images, title: "Unit Images" });
+        // Open even when empty so the upload affordance is reachable.
+        this.dialog.add(CarouselDialog, {
+            images: this.images,
+            title: "Unit Images",
+            propertyId: this.props.record.resId || undefined,
+            canUpload: !!this.props.record.resId,
+        });
     }
 }
 

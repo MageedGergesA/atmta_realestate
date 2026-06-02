@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
 
             <!-- Smart buttons -->
-            <xpath expr="//div[@name='button_box']" position="inside">
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
                 <button name="action_view_reservations" type="object" class="oe_stat_button"
                         icon="fa-bookmark"
                         invisible="reservation_count == 0">
@@ -33,14 +33,21 @@
                        decoration-success="construction_status == 'delivered'"/>
             </xpath>
 
+            <!-- Project / Phase: visible on every hierarchy level (the
+                 Development tab stays unit-only because it lists holds &
+                 contracts). -->
+            <xpath expr="//field[@name='parent_id']" position="after">
+                <field name="project_id" options="{'no_create': True}"/>
+                <field name="phase_id" options="{'no_create': True}"
+                       invisible="not project_id"/>
+            </xpath>
+
             <!-- Development tab -->
             <xpath expr="//notebook" position="inside">
                 <page string="Development" name="development"
                       invisible="hierarchy_level != 'unit'">
                     <group>
-                        <group string="Project">
-                            <field name="project_id" options="{'no_create': True}"/>
-                            <field name="phase_id" options="{'no_create': True}"/>
+                        <group string="Pricing">
                             <field name="base_price"/>
                         </group>
                         <group string="Current Hold">

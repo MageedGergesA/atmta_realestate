@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_spec_tag_list" model="ir.ui.view">
+        <field name="name">realestate.spec.tag.list</field>
+        <field name="model">realestate.spec.tag</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name"/>
+                <field name="icon"/>
+                <field name="notes"/>
+                <field name="color" widget="color_picker" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_spec_tag" model="ir.actions.act_window">
+        <field name="name">Specification Tags</field>
+        <field name="res_model">realestate.spec.tag</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

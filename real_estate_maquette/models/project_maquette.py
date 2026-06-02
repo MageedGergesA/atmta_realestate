@@ -145,7 +145,7 @@ class ProjectMaquette(models.Model):
                 'currency': u.currency_id.symbol if u.currency_id else '',
                 'area_sqm': u.area_sqm or 0.0,
                 'property_type': u.property_type_id.name if u.property_type_id else '',
-                'has_floor_plan': bool(u.floor_plan_image),
+                'has_floor_plan': bool(u.has_floor_plan_effective),
                 'color_override': u.maquette_color_override or '',
             })
         return data

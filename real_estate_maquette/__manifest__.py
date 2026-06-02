@@ -19,7 +19,7 @@ override available.
 """,
     'author': "Atmta",
     'license': 'LGPL-3',
-    'version': '0.2',
+    'version': '0.4',
     'category': 'Real Estate',
     'depends': [
         'atmta_real_estate',
@@ -28,6 +28,8 @@ override available.
     ],
     'data': [
         'security/ir.model.access.csv',
+        'views/spec_tag_views.xml',
+        'views/building_floor_views.xml',
         'views/unit_picker_views.xml',
         'views/project_views.xml',
         'views/property_views.xml',
@@ -43,6 +45,7 @@ override available.
             '/real_estate_maquette/static/src/js/glb_viewer.js',
             '/real_estate_maquette/static/src/js/image_carousel_dialog.js',
             '/real_estate_maquette/static/src/js/image_carousel.js',
+            '/real_estate_maquette/static/src/js/building_elevation.js',
             '/real_estate_maquette/static/src/js/maquette_preview.js',
             '/real_estate_maquette/static/src/js/master_plan_2d.js',
             '/real_estate_maquette/static/src/js/master_plan_2d_field.js',
@@ -55,6 +58,7 @@ override available.
         'web.assets_frontend': [
             '/real_estate_maquette/static/src/scss/maquette_viewer.scss',
             '/real_estate_maquette/static/src/js/image_carousel_dialog.js',
+            '/real_estate_maquette/static/src/js/building_elevation.js',
             '/real_estate_maquette/static/src/js/maquette_viewer.js',
             '/real_estate_maquette/static/src/js/master_plan_2d.js',
             '/real_estate_maquette/static/src/xml/maquette_viewer.xml',

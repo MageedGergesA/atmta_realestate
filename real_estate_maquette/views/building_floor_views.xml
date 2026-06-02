@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_building_floor_list" model="ir.ui.view">
+        <field name="name">realestate.building.floor.list</field>
+        <field name="model">realestate.building.floor</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="building_id"/>
+                <field name="unit_id"/>
+                <field name="floor_number"/>
+                <field name="property_usage_id"/>
+                <field name="units_total" optional="show"/>
+                <field name="units_available" optional="show"/>
+                <field name="units_reserved" optional="show"/>
+                <field name="units_sold" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_building_floor_form" model="ir.ui.view">
+        <field name="name">realestate.building.floor.form</field>
+        <field name="model">realestate.building.floor</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>Floor <field name="floor_number" readonly="1"/></h1>
+                        <field name="building_id"/>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="unit_id"/>
+                            <field name="property_usage_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="units_total" readonly="1"/>
+                            <field name="units_available" readonly="1"/>
+                            <field name="units_reserved" readonly="1"/>
+                            <field name="units_sold" readonly="1"/>
+                        </group>
+                    </group>
+                    <separator string="Units on this floor"/>
+                    <p class="text-muted small">
+                        All units in this building with the same
+                        <em>Floor Number</em> as the picked unit.
+                    </p>
+                    <field name="unit_ids" nolabel="1" readonly="1">
+                        <list>
+                            <field name="property_code"/>
+                            <field name="name"/>
+                            <field name="floor_number"/>
+                            <field name="area_sqm"/>
+                            <field name="base_price"/>
+                            <field name="state" widget="badge"
+                                   decoration-success="state == 'available'"
+                                   decoration-warning="state in ('reserved','maintenance')"
+                                   decoration-muted="state == 'sold'"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_building_floor" model="ir.actions.act_window">
+        <field name="name">Building Floors</field>
+        <field name="res_model">realestate.building.floor</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

@@ -13,8 +13,18 @@ class PropertyMaquette(models.Model):
     floor_plan_image = fields.Binary(
         string='Floor Plan (Image)',
         attachment=True,
-        help='PNG/JPG quick-preview of the unit\'s floor plan — shown in the maquette side panel.',
+        help="PNG/JPG quick-preview of the unit's floor plan — shown in the "
+             "maquette side panel and the Building Elevation dialog.",
     )
+    has_floor_plan_effective = fields.Boolean(
+        compute='_compute_has_floor_plan_effective',
+        help="Alias used by the Building Elevation dialog.",
+    )
+
+    @api.depends('floor_plan_image')
+    def _compute_has_floor_plan_effective(self):
+        for rec in self:
+            rec.has_floor_plan_effective = bool(rec.floor_plan_image)
     floor_plan_image_filename = fields.Char()
     floor_plan_pdf = fields.Binary(
         string='Floor Plan (PDF)',
@@ -33,6 +43,29 @@ class PropertyMaquette(models.Model):
         string='Highlight Color',
         help='Optional hex color (e.g., #FF8800) to override the default state-based color in 3D.',
     )
+
+    # ----- Elevation sheet / multi-floor drill-down -----
+    elevation_sheet = fields.Image(
+        string='Elevation Sheet',
+        help="Architectural elevation sheet (front + side elevations, floor plans, "
+             "site plan, specs). Shown in the Building Elevation dialog when the "
+             "user clicks this building on the 2D master plan.",
+    )
+    elevation_sheet_filename = fields.Char()
+    floor_ids = fields.One2many(
+        'realestate.building.floor', 'building_id', string='Floors',
+    )
+    has_elevation = fields.Boolean(compute='_compute_has_elevation', store=True)
+    spec_tag_ids = fields.Many2many(
+        'realestate.spec.tag', 're_property_spec_tag_rel',
+        'property_id', 'tag_id',
+        string='Specifications / Finishes',
+    )
+
+    @api.depends('elevation_sheet')
+    def _compute_has_elevation(self):
+        for rec in self:
+            rec.has_elevation = bool(rec.elevation_sheet)
 
     def _compute_image_count(self):
         for rec in self:

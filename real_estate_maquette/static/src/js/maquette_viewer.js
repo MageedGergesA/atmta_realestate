@@ -623,13 +623,18 @@ export class MaquetteViewer extends Component {
         for (const r of recs) {
             images.push({ id: r.id, src: `/web/image/property.image/${r.id}/image_1920` });
         }
-        if (!images.length) {
+        // In backend (portalMode is undefined here) we open even with no
+        // images so the user can upload the first one inline.
+        const portal = this.portalMode || this.props.mode === "portal";
+        if (!images.length && portal) {
             this.notification.add("No images for this unit yet.", { type: "info" });
             return;
         }
         this.dialog.add(CarouselDialog, {
             images,
             title: u.name || u.property_code || "Unit Images",
+            propertyId: u.id,
+            canUpload: !portal,
         });
     }
 
