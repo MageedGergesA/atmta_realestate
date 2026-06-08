@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_contract_generate_wizard_form" model="ir.ui.view">
+        <field name="name">realestate.contract.generate.wizard.form</field>
+        <field name="model">realestate.contract.generate.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Generate Contract Document">
+                <sheet>
+                    <group invisible="generated">
+                        <group>
+                            <field name="target_model_name" readonly="1"/>
+                            <field name="record_id" readonly="1"/>
+                            <field name="record_display" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="template_id" required="1"
+                                   options="{'no_create': True, 'no_quick_create': True}"/>
+                            <field name="template_kind" readonly="1" invisible="not template_id"/>
+                            <field name="template_jurisdiction" readonly="1" invisible="not template_id"/>
+                            <field name="template_language" readonly="1" invisible="not template_id"/>
+                            <field name="template_version" readonly="1" invisible="not template_id"/>
+                        </group>
+                    </group>
+                    <group invisible="generated">
+                        <field name="output_format" widget="radio" required="1"/>
+                    </group>
+                    <group invisible="not generated">
+                        <field name="document_id" readonly="1"/>
+                        <field name="output_filename" readonly="1"/>
+                        <field name="output_file" filename="output_filename" readonly="1"/>
+                        <div class="alert alert-success" role="alert">
+                            <p>Document created in <b>Draft</b> state and attached to the source record.
+                               Open it to advance through the review / approval / signature lifecycle.</p>
+                        </div>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_generate" type="object" string="Generate"
+                            class="btn-primary" invisible="generated"/>
+                    <button name="action_open_document" type="object" string="Open Document"
+                            class="btn-primary" invisible="not generated"/>
+                    <button string="Close" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_contract_document_list" model="ir.ui.view">
+        <field name="name">realestate.contract.document.list</field>
+        <field name="model">realestate.contract.document</field>
+        <field name="arch" type="xml">
+            <list string="Generated Documents"
+                  decoration-info="state == 'draft'"
+                  decoration-warning="state == 'under_review'"
+                  decoration-success="state in ('approved','signed','active')"
+                  decoration-muted="state in ('cancelled','expired')">
+                <field name="name"/>
+                <field name="template_kind"/>
+                <field name="template_jurisdiction"/>
+                <field name="template_language"/>
+                <field name="version"/>
+                <field name="output_format"/>
+                <field name="target_display"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-warning="state == 'under_review'"
+                       decoration-success="state in ('approved','signed','active')"
+                       decoration-muted="state in ('cancelled','expired')"/>
+                <field name="create_date"/>
+                <field name="create_uid"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_contract_document_form" model="ir.ui.view">
+        <field name="name">realestate.contract.document.form</field>
+        <field name="model">realestate.contract.document</field>
+        <field name="arch" type="xml">
+            <form string="Generated Document">
+                <header>
+                    <button name="action_submit_for_review" type="object"
+                            string="Submit for Review" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object"
+                            string="Approve" class="btn-primary"
+                            invisible="state != 'under_review'"/>
+                    <button name="action_send_for_signature" type="object"
+                            string="Send for Signature" class="btn-primary"
+                            invisible="state != 'approved'"/>
+                    <button name="action_mark_signed" type="object"
+                            string="Mark Signed" class="btn-primary"
+                            invisible="state not in ('approved','sent_for_signature')"/>
+                    <button name="action_activate" type="object"
+                            string="Activate" class="btn-primary"
+                            invisible="state != 'signed'"/>
+                    <button name="action_mark_expired" type="object"
+                            string="Mark Expired" class="btn-secondary"
+                            invisible="state not in ('active','signed')"/>
+                    <button name="action_cancel" type="object"
+                            string="Cancel" class="btn-secondary"
+                            invisible="state in ('signed','active','expired','cancelled')"/>
+                    <button name="action_reset_to_draft" type="object"
+                            string="Reset to Draft" class="btn-secondary"
+                            invisible="state not in ('under_review','cancelled')"/>
+                    <button name="action_download" type="object"
+                            string="Download" class="btn-secondary"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,under_review,approved,sent_for_signature,signed,active"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_target" type="object"
+                                class="oe_stat_button" icon="fa-external-link">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Source Record</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Template">
+                            <field name="template_id" readonly="1"/>
+                            <field name="template_kind" readonly="1"/>
+                            <field name="template_jurisdiction" readonly="1"/>
+                            <field name="template_language" readonly="1"/>
+                            <field name="template_version" readonly="1"/>
+                            <field name="version" readonly="1"/>
+                        </group>
+                        <group string="Source">
+                            <field name="target_model_id" readonly="1"/>
+                            <field name="target_record_id" readonly="1"/>
+                            <field name="target_display" readonly="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="File">
+                            <field name="output_format" readonly="1"/>
+                            <field name="file_name" readonly="1"/>
+                            <field name="file_data" filename="file_name" readonly="1"/>
+                            <field name="file_size" widget="float" readonly="1"/>
+                        </group>
+                        <group string="Lifecycle">
+                            <field name="reviewer_id"/>
+                            <field name="approver_id" readonly="1"/>
+                            <field name="approved_on" readonly="1"/>
+                            <field name="signed_on" readonly="1"/>
+                            <field name="activated_on" readonly="1"/>
+                            <field name="expiry_date"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_contract_document_search" model="ir.ui.view">
+        <field name="name">realestate.contract.document.search</field>
+        <field name="model">realestate.contract.document</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="template_id"/>
+                <field name="target_display"/>
+                <filter string="Draft" name="f_draft" domain="[('state','=','draft')]"/>
+                <filter string="Under Review" name="f_review" domain="[('state','=','under_review')]"/>
+                <filter string="Approved" name="f_approved" domain="[('state','=','approved')]"/>
+                <filter string="Signed" name="f_signed" domain="[('state','=','signed')]"/>
+                <filter string="Active" name="f_active" domain="[('state','=','active')]"/>
+                <separator/>
+                <filter string="Sale" name="f_sale" domain="[('template_kind','=','sale')]"/>
+                <filter string="Rental" name="f_rental" domain="[('template_kind','=','rental')]"/>
+                <filter string="Brokerage" name="f_brokerage" domain="[('template_kind','=','brokerage')]"/>
+                <filter string="Subcontract" name="f_subcontract" domain="[('template_kind','=','subcontract')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="State" name="g_state" context="{'group_by': 'state'}"/>
+                    <filter string="Kind" name="g_kind" context="{'group_by': 'template_kind'}"/>
+                    <filter string="Jurisdiction" name="g_jur" context="{'group_by': 'template_jurisdiction'}"/>
+                    <filter string="Template" name="g_tpl" context="{'group_by': 'template_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_contract_document" model="ir.actions.act_window">
+        <field name="name">Generated Documents</field>
+        <field name="res_model">realestate.contract.document</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_contract_document_search"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_placeholder_catalog_wizard_form" model="ir.ui.view">
+        <field name="name">realestate.placeholder.catalog.wizard.form</field>
+        <field name="model">realestate.placeholder.catalog.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Available Placeholders">
+                <sheet>
+                    <group>
+                        <field name="template_id" readonly="1" invisible="not template_id"/>
+                        <field name="target_model_id"
+                               options="{'no_create': True, 'no_quick_create': True}"
+                               domain="[('transient', '=', False)]"/>
+                        <field name="target_model_name" readonly="1" invisible="not target_model_id"/>
+                    </group>
+                    <separator string="Copy any placeholder below and paste it into your .docx template."/>
+                    <field name="line_ids" nolabel="1">
+                        <list default_order="group, label">
+                            <field name="group"/>
+                            <field name="label"/>
+                            <field name="jinja"/>
+                            <field name="field_type"/>
+                            <field name="help_text"/>
+                        </list>
+                    </field>
+                </sheet>
+                <footer>
+                    <button string="Close" special="cancel" class="btn-primary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>
