@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="real_estate_plan.PlanEditor">
+        <div class="o_plan_editor d-flex flex-column flex-grow-1" style="min-height:520px;">
+            <div class="d-flex align-items-center gap-2 p-2 border-bottom bg-white flex-wrap">
+                <span t-if="isUnsaved" class="text-warning small">
+                    <i class="fa fa-exclamation-triangle me-1"/>Save the property first to draw regions.
+                </span>
+                <span t-elif="!hasImage" class="text-warning small">
+                    <i class="fa fa-exclamation-triangle me-1"/>Upload a plan image above to start drawing regions.
+                </span>
+                <span t-elif="!state.children.length and state.editMode" class="text-warning small">
+                    <i class="fa fa-exclamation-triangle me-1"/>No child properties yet — create children first so you can link regions to them.
+                </span>
+
+                <div t-if="!isUnsaved and hasImage" class="ms-auto d-flex gap-2 align-items-center">
+                    <!-- Drafting toolbar -->
+                    <t t-if="state.editMode and state.drafting">
+                        <span class="text-muted small">
+                            Click to add points • Press <kbd>Esc</kbd> to cancel.
+                        </span>
+                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                t-on-click="undoLastPoint"
+                                t-att-disabled="!state.draftPoints.length">
+                            <i class="fa fa-undo me-1"/>Undo
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                t-on-click="cancelDraft">Cancel</button>
+                        <button type="button" class="btn btn-sm btn-primary"
+                                t-on-click="finishDraft"
+                                t-att-disabled="state.draftPoints.length &lt; 3">
+                            <i class="fa fa-check me-1"/>Finish
+                        </button>
+                    </t>
+                    <!-- Selected-region toolbar -->
+                    <t t-elif="state.editMode and state.selectedRegionId">
+                        <span class="text-muted small">
+                            Drag vertices to reshape • Right-click vertex to remove • Click edge dot to add.
+                        </span>
+                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                t-on-click="editSelectedRegionInfo">
+                            <i class="fa fa-pencil me-1"/>Edit info
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-danger"
+                                t-on-click="deleteSelectedRegion">
+                            <i class="fa fa-trash me-1"/>Delete
+                        </button>
+                        <button type="button" class="btn btn-sm btn-primary"
+                                t-on-click="doneEditingSelected">Done</button>
+                    </t>
+                    <!-- Edit-mode idle toolbar -->
+                    <t t-elif="state.editMode">
+                        <span class="text-muted small">
+                            Click a region to edit its shape, or add a new one.
+                        </span>
+                        <button type="button" class="btn btn-sm btn-primary"
+                                t-on-click="startAddRegion">
+                            <i class="fa fa-plus me-1"/>Add region
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                t-on-click="toggleEditMode">Done editing</button>
+                    </t>
+                    <!-- View mode -->
+                    <t t-else="">
+                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                t-on-click="toggleEditMode">
+                            <i class="fa fa-pencil me-1"/>Edit regions
+                        </button>
+                    </t>
+                </div>
+            </div>
+
+            <!-- Region list: always visible when there is at least one region. -->
+            <div t-if="!isUnsaved and state.regions.length"
+                 class="border-bottom bg-white p-2">
+                <div class="d-flex align-items-center mb-1">
+                    <strong class="me-auto small">Regions on this plan (<t t-esc="state.regions.length"/>)</strong>
+                    <span class="text-muted small">Click <i class="fa fa-trash"/> to remove a region's coordinates from the image.</span>
+                </div>
+                <div class="d-flex flex-wrap gap-2">
+                    <t t-foreach="state.regions" t-as="rr" t-key="rr.id">
+                        <div class="d-inline-flex align-items-center border rounded px-2 py-1"
+                             t-att-style="state.selectedRegionId === rr.id ? 'background:#fff7ed; border-color:#f59e0b;' : 'background:#f8fafc;'">
+                            <span t-att-style="'display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:6px; background:' + (rr.color || '#3b82f6')"/>
+                            <a href="#" class="me-2 small"
+                               t-on-click.prevent="() => this.selectRegionFromList(rr)">
+                                <t t-esc="rr.label || rr.target_name || ('#' + rr.id)"/>
+                            </a>
+                            <span class="text-muted small me-2"
+                                  t-if="rr.target_hierarchy_level">
+                                (<t t-esc="rr.target_hierarchy_level"/>)
+                            </span>
+                            <button type="button" class="btn btn-sm btn-link p-0 me-1"
+                                    title="Edit region info"
+                                    t-on-click="() => this.editRegionFromList(rr)">
+                                <i class="fa fa-pencil"/>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-link p-0 text-danger"
+                                    title="Delete this region (remove its coordinates from the image)"
+                                    t-on-click="() => this.deleteRegionFromList(rr)">
+                                <i class="fa fa-trash"/>
+                            </button>
+                        </div>
+                    </t>
+                </div>
+            </div>
+
+            <div class="o_plan_editor_holder flex-grow-1 d-flex align-items-center justify-content-center"
+                 style="overflow:hidden; background:#f1f5f9; position:relative; min-height:460px;"
+                 t-on-wheel="onWheelZoom">
+
+                <!-- Zoom toolbar (view mode only) -->
+                <div t-if="!isUnsaved and hasImage and !state.editMode" class="o_plan_editor_zoom_toolbar"
+                     style="position:absolute; top:8px; left:8px; z-index:5; background:#fff; border:1px solid #cbd5e1; border-radius:4px; padding:2px;">
+                    <button type="button" class="btn btn-sm btn-light" title="Zoom out"
+                            t-on-click="zoomOut" t-att-disabled="state.zoom &lt;= 1">
+                        <i class="fa fa-minus"/>
+                    </button>
+                    <span class="px-1 small align-middle" t-esc="zoomLevelDisplay"/>
+                    <button type="button" class="btn btn-sm btn-light" title="Zoom in"
+                            t-on-click="zoomIn" t-att-disabled="state.zoom &gt;= 6">
+                        <i class="fa fa-plus"/>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-light" title="Reset"
+                            t-on-click="resetZoom"
+                            t-att-disabled="state.zoom === 1 and state.panX === 0 and state.panY === 0">
+                        <i class="fa fa-refresh"/>
+                    </button>
+                </div>
+
+                <t t-if="!isUnsaved and hasImage">
+                    <div t-ref="planCanvas"
+                         t-attf-class="o_plan_editor_canvas position-relative #{state.isPanning ? 'is-dragging' : ''}"
+                         t-att-style="'display:inline-block;max-width:100%;max-height:100%;transform:' + canvasTransform"
+                         t-on-mousedown="onCanvasMouseDown">
+                        <img t-att-src="planImageUrl" alt="2D Plan" draggable="false"
+                             style="display:block;max-width:100%;max-height:75vh;height:auto;user-select:none;-webkit-user-drag:none;"/>
+
+                        <svg t-ref="overlay"
+                             class="o_re_plan_overlay"
+                             viewBox="0 0 100 100" preserveAspectRatio="none"
+                             t-att-style="'position:absolute;inset:0;width:100%;height:100%;' + (state.drafting ? 'cursor:crosshair;' : '')"
+                             t-on-click="onOverlayClick">
+
+                            <!-- Saved regions -->
+                            <t t-foreach="state.regions" t-as="r" t-key="r.id">
+                                <polygon t-att-points="polygonPoints(r)"
+                                         t-att-fill="r.color"
+                                         t-att-fill-opacity="regionFillOpacity(r)"
+                                         t-att-stroke="regionStroke(r)"
+                                         t-att-stroke-width="regionStrokeWidth(r)"
+                                         t-att-style="state.editMode ? 'cursor:pointer;' : 'cursor:default;'"
+                                         t-on-mouseenter="() => this.onRegionEnter(r)"
+                                         t-on-mouseleave="() => this.onRegionLeave()"
+                                         t-on-click="(ev) => this.onRegionClick(r, ev)"/>
+                                <!-- Label centered (only when hovered or selected) -->
+                                <text t-if="state.hoveredRegionId === r.id or state.selectedRegionId === r.id"
+                                      t-att-x="(r.polygon.reduce((s, p) => s + p[0], 0) / r.polygon.length)"
+                                      t-att-y="(r.polygon.reduce((s, p) => s + p[1], 0) / r.polygon.length)"
+                                      text-anchor="middle" dominant-baseline="middle"
+                                      style="font-size:2.5px; font-weight:600; fill:#0f172a; paint-order:stroke; stroke:#fff; stroke-width:0.6;"
+                                      t-esc="r.label or r.target_name"/>
+                            </t>
+
+                            <!-- Selected region: vertices + edge midpoints -->
+                            <t t-if="selectedRegion">
+                                <t t-foreach="selectedRegion.polygon" t-as="v" t-key="v_index">
+                                    <circle t-att-cx="v[0]" t-att-cy="v[1]" r="1.2"
+                                            fill="#f59e0b" stroke="#fff" stroke-width="0.3"
+                                            style="cursor:grab;"
+                                            t-on-mousedown="(ev) => this.onVertexMouseDown(selectedRegion, v_index, ev)"
+                                            t-on-contextmenu="(ev) => this.onVertexContextMenu(selectedRegion, v_index, ev)"/>
+                                </t>
+                                <t t-foreach="edgeMidpoints(selectedRegion)" t-as="m" t-key="m.edgeIdx">
+                                    <circle t-att-cx="m.x" t-att-cy="m.y" r="0.8"
+                                            fill="#fff" stroke="#f59e0b" stroke-width="0.3"
+                                            style="cursor:copy;"
+                                            t-on-click="(ev) => this.onEdgeMidpointClick(selectedRegion, m.edgeIdx, ev)"/>
+                                </t>
+                            </t>
+
+                            <!-- Draft polygon being drawn -->
+                            <t t-if="state.drafting">
+                                <polyline t-att-points="draftPathPoints()"
+                                          fill="rgba(239, 68, 68, 0.25)" stroke="#ef4444"
+                                          stroke-width="0.4" stroke-dasharray="1,1"/>
+                                <t t-foreach="state.draftPoints" t-as="dp" t-key="dp_index">
+                                    <circle t-att-cx="dp[0]" t-att-cy="dp[1]" r="0.8"
+                                            fill="#ef4444" stroke="#fff" stroke-width="0.2"/>
+                                </t>
+                            </t>
+                        </svg>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+
+</templates>

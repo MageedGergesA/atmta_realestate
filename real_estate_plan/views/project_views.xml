@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Hide the old maquette "2D Plan" tab — superseded by the new
+         "2D Plan" tab below, which wires the project to an entry property
+         whose own plan + regions are configured. -->
+    <record id="view_project_form_hide_old_plan_2d" model="ir.ui.view">
+        <field name="name">realestate.project.form.hide_old_plan_2d</field>
+        <field name="model">realestate.project</field>
+        <field name="inherit_id" ref="real_estate_maquette.view_project_form_maquette"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='plan_2d']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_project_form_plan_inherit" model="ir.ui.view">
+        <field name="name">realestate.project.form.plan</field>
+        <field name="model">realestate.project</field>
+        <field name="inherit_id" ref="real_estate_developer.view_project_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="2D Plan" name="plan_drill">
+                    <div class="d-flex gap-2 align-items-center mb-3">
+                        <button name="action_open_plan_viewer" type="object"
+                                class="btn btn-primary">
+                            <i class="fa fa-arrows-alt me-1"/>Open 2D Drill-Down Viewer
+                            <span class="ms-1 text-white-50">
+                                (drill into the entry property →)
+                            </span>
+                        </button>
+                    </div>
+                    <group>
+                        <group string="Entry property">
+                            <field name="main_property_id"
+                                   options="{'no_create': True, 'no_create_edit': True}"/>
+                        </group>
+                        <group string="How it works">
+                            <div colspan="2" class="text-muted">
+                                <p>
+                                    Set <b>2D Plan Entry Property</b> to the top-level
+                                    property (typically the compound) whose own 2D plan
+                                    + regions you've already configured.
+                                </p>
+                                <p>
+                                    Click <b>Open 2D Drill-Down Viewer</b>: the viewer
+                                    will jump straight into that property and let you
+                                    drill compound → buildings → floors → units, never
+                                    showing other unrelated properties.
+                                </p>
+                                <p class="mb-0">
+                                    Leave the field empty to see the project-level picker
+                                    (all top-level properties under this project).
+                                </p>
+                            </div>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

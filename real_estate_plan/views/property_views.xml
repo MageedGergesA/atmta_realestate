@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_property_form_plan_inherit" model="ir.ui.view">
+        <field name="name">realestate.property.form.plan</field>
+        <field name="model">realestate.property</field>
+        <field name="inherit_id" ref="atmta_real_estate.view_property_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='media']" position="after">
+                <page string="2D Plan" name="plan">
+                    <div class="d-flex gap-2 align-items-center mb-2">
+                        <button name="action_open_plan_viewer" type="object"
+                                class="btn btn-primary">
+                            <i class="fa fa-arrows-alt me-1"/>Open Plan Viewer
+                            <span class="ms-1 text-white-50">(drill into children →)</span>
+                        </button>
+                        <button name="action_clear_plan_image" type="object"
+                                class="btn btn-outline-danger"
+                                invisible="not has_plan_image"
+                                confirm="Remove the 2D plan image and keep regions?">
+                            <i class="fa fa-trash me-1"/>Remove plan image
+                        </button>
+                    </div>
+                    <group>
+                        <group string="Plan Image">
+                            <field name="plan_image" widget="image"
+                                   filename="plan_image_filename"
+                                   nolabel="1"
+                                   options="{'preview_image': 'plan_image', 'size': [0, 480], 'accepted_file_extensions': 'image/*'}"/>
+                            <field name="plan_image_filename" invisible="1"/>
+                            <field name="has_plan_image" invisible="1"/>
+                            <field name="plan_region_count" readonly="1"/>
+                        </group>
+                        <group string="How it works">
+                            <div colspan="2" class="text-muted">
+                                <p><b>1.</b> Upload the plan image and save the record.</p>
+                                <p><b>2.</b> Hover the image to reveal pencil (upload) and trash (clear) icons, or use <b>Remove plan image</b> above.</p>
+                                <p><b>3.</b> Click <b>Edit regions</b> → <b>+ Add region</b>.</p>
+                                <p><b>4.</b> Click on the image to drop polygon points (3 or more), then click <b>Finish</b>.</p>
+                                <p><b>5.</b> Pick the child property the region links to (form opens).</p>
+                                <p><b>6.</b> Drag vertices to reshape; right-click vertex to remove; or use the <b>Regions</b> list to delete a whole region.</p>
+                            </div>
+                        </group>
+                    </group>
+                    <field name="plan_region_ids" widget="real_estate_plan_editor" nolabel="1"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

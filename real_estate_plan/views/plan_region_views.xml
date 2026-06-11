@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_plan_region_list" model="ir.ui.view">
+        <field name="name">realestate.plan.region.list</field>
+        <field name="model">realestate.plan.region</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle"/>
+                <field name="parent_property_id"/>
+                <field name="target_property_id"/>
+                <field name="label"/>
+                <field name="color" widget="color"/>
+                <field name="target_state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_plan_region_form" model="ir.ui.view">
+        <field name="name">realestate.plan.region.form</field>
+        <field name="model">realestate.plan.region</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_open_target" type="object"
+                            string="Open Target" class="btn-secondary"
+                            invisible="not target_property_id"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="parent_property_id" readonly="1" force_save="1"/>
+                            <field name="target_property_id"
+                                   domain="[('parent_id', '=', parent_property_id)]"
+                                   options="{'no_create': True}"/>
+                            <field name="label"/>
+                            <field name="color" widget="color"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="target_state" readonly="1"/>
+                            <field name="target_hierarchy_level" readonly="1"/>
+                            <field name="polygon" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

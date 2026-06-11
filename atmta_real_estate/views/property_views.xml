@@ -171,14 +171,21 @@
 
                         <page string="Media &amp; Files" name="media">
                             <group string="Gallery">
+                                <!-- convert_to_webp removed: it triggered a heavy
+                                     client-side canvas + create_unique pipeline that
+                                     fired unawaited addNewRecord() calls and mutated
+                                     the attachment object mid-loop. When the user
+                                     searched and picked an image in the media dialog,
+                                     that pipeline could write the wrong attachment's
+                                     data into the new gallery row. Without it, the
+                                     widget falls back to a direct one-to-one copy. -->
                                 <field name="property_Attachment_media_ids"
                                        class="o_website_sale_image_list"
                                        context="{'default_name': name}"
                                        mode="kanban"
                                        add-label="Add Media"
                                        nolabel="1"
-                                       widget="x2_many_media_viewer"
-                                       options="{'convert_to_webp': True}"/>
+                                       widget="x2_many_media_viewer"/>
                             </group>
                             <group string="Attachments">
                                 <field name="attachment_ids" widget="many2many_binary" nolabel="1"/>

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="real_estate_plan.PropertyPlanViewer">
+        <div class="o_property_plan_viewer d-flex flex-column" style="height:100%; min-height:100vh; background:#f1f5f9;">
+
+            <!-- Top bar: breadcrumbs + actions -->
+            <div class="d-flex align-items-center gap-2 p-2 border-bottom bg-white flex-wrap">
+                <button t-if="state.stack.length > 1" type="button"
+                        class="btn btn-sm btn-light" t-on-click="back" title="Back">
+                    <i class="fa fa-arrow-left"/>
+                </button>
+                <nav aria-label="breadcrumb" class="mb-0">
+                    <ol class="breadcrumb mb-0">
+                        <t t-foreach="state.stack" t-as="node" t-key="node.id">
+                            <li t-if="!node_last" class="breadcrumb-item">
+                                <a href="#" t-on-click.prevent="() => this.jumpTo(node_index)">
+                                    <t t-esc="node.property_code || node.name"/>
+                                </a>
+                            </li>
+                            <li t-else="" class="breadcrumb-item active" aria-current="page">
+                                <strong>
+                                    <t t-esc="node.property_code || node.name"/>
+                                </strong>
+                                <span class="text-muted ms-1" t-if="node.hierarchy_level">
+                                    (<t t-esc="node.hierarchy_level"/>)
+                                </span>
+                            </li>
+                        </t>
+                    </ol>
+                </nav>
+                <div class="ms-auto d-flex gap-2">
+                    <button type="button" class="btn btn-sm btn-outline-primary"
+                            t-on-click="viewCurrentImages"
+                            t-if="current and !current.is_project">
+                        <i class="fa fa-picture-o me-1"/>Images
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                            t-on-click="openCurrentForm" t-if="current">
+                        <i class="fa fa-external-link me-1"/>Open form
+                    </button>
+                    <button type="button" class="btn btn-sm btn-danger"
+                            t-on-click="closeViewer" title="Exit viewer">
+                        <i class="fa fa-times me-1"/>Exit
+                    </button>
+                </div>
+            </div>
+
+            <!-- Body: image + overlays + side panel -->
+            <div class="flex-grow-1 d-flex" style="overflow:hidden; position:relative;">
+
+                <div class="flex-grow-1 d-flex align-items-center justify-content-center"
+                     style="overflow:auto; padding:16px;">
+                    <div t-if="state.loading" class="text-muted">
+                        <i class="fa fa-spinner fa-spin me-1"/>Loading…
+                    </div>
+                    <div t-elif="!current" class="text-muted">
+                        No property selected.
+                    </div>
+                    <!-- No plan image on this node, but at least one child has its own plan
+                         → show a card grid so the user can drill into the configured child
+                         (typical case: project has no master_plan_2d but the compound does). -->
+                    <div t-elif="!hasImage and drillableChildren.length"
+                         class="w-100 p-4" style="max-width:1100px;">
+                        <h4 class="text-center text-muted mb-1">
+                            <b><t t-esc="current.name"/></b>
+                        </h4>
+                        <p class="text-center text-muted mb-4">
+                            This <t t-esc="current.hierarchy_level || 'node'"/> has no 2D plan image of its own —
+                            pick a child below to drill into its configured plan.
+                        </p>
+                        <div class="d-flex flex-wrap gap-3 justify-content-center">
+                            <t t-foreach="drillableChildren" t-as="dc" t-key="dc.id">
+                                <div class="card border shadow-sm"
+                                     style="width:240px; cursor:pointer;"
+                                     t-on-click="() => this._navigateTo(dc.id, true)">
+                                    <img t-att-src="childThumbUrl(dc)"
+                                         loading="lazy"
+                                         decoding="async"
+                                         style="height:150px; object-fit:cover; background:#f1f5f9;"
+                                         class="card-img-top" alt="plan thumb"/>
+                                    <div class="card-body p-2">
+                                        <h6 class="card-title text-truncate mb-1"
+                                            t-esc="dc.property_code || dc.name"/>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <small class="text-muted">
+                                                (<t t-esc="dc.hierarchy_level || '—'"/>)
+                                            </small>
+                                            <i class="fa fa-chevron-right text-primary"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        <!-- Non-drillable children, listed below for completeness. -->
+                        <t t-set="leafKids" t-value="allChildren.filter(c => !c.has_plan_image)"/>
+                        <div t-if="leafKids.length" class="mt-4 text-center">
+                            <p class="text-muted small mb-2">Other children (no plan image — open form to configure):</p>
+                            <div class="d-flex flex-wrap gap-2 justify-content-center">
+                                <t t-foreach="leafKids" t-as="lk" t-key="lk.id">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                                            t-on-click="() => this._openTargetPreview(lk.id)">
+                                        <t t-esc="lk.property_code || lk.name"/>
+                                        <span class="text-muted ms-1">(<t t-esc="lk.hierarchy_level || '—'"/>)</span>
+                                    </button>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                    <div t-elif="!hasImage" class="alert alert-info text-center" style="max-width:520px;">
+                        <p><b><t t-esc="current.name"/></b> has no 2D plan image yet.</p>
+                        <p class="mb-0">
+                            Open the form and upload a plan image under the <b>2D Plan</b> tab,
+                            or configure regions on a child property — they'll appear here.
+                        </p>
+                        <div class="mt-3">
+                            <button type="button" class="btn btn-sm btn-outline-secondary"
+                                    t-on-click="openCurrentForm">
+                                <i class="fa fa-external-link me-1"/>Open <t t-esc="current.name"/>
+                            </button>
+                        </div>
+                    </div>
+                    <div t-else="" class="position-relative"
+                         style="display:inline-block; max-width:100%;">
+                        <img t-att-src="current.plan_image_url"
+                             draggable="false"
+                             alt="Plan"
+                             loading="lazy"
+                             decoding="async"
+                             style="display:block; max-width:100%; max-height:80vh; height:auto; user-select:none;"/>
+                        <svg t-ref="overlay"
+                             viewBox="0 0 100 100" preserveAspectRatio="none"
+                             style="position:absolute; inset:0; width:100%; height:100%;">
+                            <t t-foreach="current.regions" t-as="r" t-key="r.id">
+                                <polygon t-att-points="polygonPoints(r)"
+                                         t-att-fill="stateColor(r.target_state)"
+                                         t-att-fill-opacity="regionFillOpacity(r)"
+                                         stroke="#1e293b" stroke-width="0.3"
+                                         style="cursor:pointer; transition: fill-opacity 0.15s ease;"
+                                         t-on-mouseenter="() => this.onRegionEnter(r)"
+                                         t-on-mouseleave="() => this.onRegionLeave()"
+                                         t-on-click="() => this.onRegionClick(r)">
+                                    <title><t t-esc="r.label || r.target_name"/></title>
+                                </polygon>
+                            </t>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Side panel: image preview for the clicked target (leaf nodes) -->
+                <div t-if="state.selectedTarget"
+                     class="o_plan_viewer_sidepanel border-start bg-white"
+                     style="width:360px; max-width:40vw; min-width:280px; overflow-y:auto;">
+                    <div class="d-flex align-items-center p-2 border-bottom">
+                        <strong class="me-auto">
+                            <t t-esc="state.selectedTarget.property_code || state.selectedTarget.display_name"/>
+                        </strong>
+                        <button type="button" class="btn btn-sm btn-light"
+                                t-on-click="closeTargetPreview" title="Close">
+                            <i class="fa fa-times"/>
+                        </button>
+                    </div>
+                    <div class="p-3">
+                        <h6 class="mb-2"><t t-esc="state.selectedTarget.display_name"/></h6>
+                        <div class="text-muted small mb-3">
+                            <span t-if="state.selectedTarget.hierarchy_level"
+                                  class="badge bg-secondary me-1">
+                                <t t-esc="state.selectedTarget.hierarchy_level"/>
+                            </span>
+                            <span class="badge" t-attf-style="background:{{stateColor(state.selectedTarget.state)}}; color:#fff;">
+                                <t t-esc="stateLabel(state.selectedTarget.state)"/>
+                            </span>
+                        </div>
+                        <dl class="row mb-3 small">
+                            <dt class="col-5">Area</dt>
+                            <dd class="col-7" t-esc="(state.selectedTarget.area_sqm || 0) + ' sqm'"/>
+                            <t t-if="state.selectedTarget.bedroom_count">
+                                <dt class="col-5">Bedrooms</dt>
+                                <dd class="col-7" t-esc="state.selectedTarget.bedroom_count"/>
+                            </t>
+                            <t t-if="state.selectedTarget.bathroom_count">
+                                <dt class="col-5">Bathrooms</dt>
+                                <dd class="col-7" t-esc="state.selectedTarget.bathroom_count"/>
+                            </t>
+                            <t t-if="state.selectedTarget.floor_number">
+                                <dt class="col-5">Floor</dt>
+                                <dd class="col-7" t-esc="state.selectedTarget.floor_number"/>
+                            </t>
+                            <t t-if="state.selectedTarget.base_price">
+                                <dt class="col-5">Base price</dt>
+                                <dd class="col-7" t-esc="state.selectedTarget.base_price"/>
+                            </t>
+                        </dl>
+
+                        <div class="d-flex align-items-center mt-3 mb-2">
+                            <h6 class="m-0 me-auto">Images</h6>
+                            <button type="button" class="btn btn-sm btn-primary"
+                                    t-on-click="viewSelectedTargetImages">
+                                <i class="fa fa-play-circle me-1"/>Open Carousel
+                            </button>
+                        </div>
+                        <div t-if="state.selectedTarget.images.length"
+                             class="d-flex flex-wrap gap-2">
+                            <t t-foreach="state.selectedTarget.images" t-as="img" t-key="img.id">
+                                <a href="#" t-on-click.prevent="() => this.viewSelectedTargetImages()"
+                                   class="d-block"
+                                   style="border:1px solid #cbd5e1; border-radius:4px; overflow:hidden;">
+                                    <img t-att-src="img.thumb" alt="image"
+                                         loading="lazy" decoding="async"
+                                         style="width:96px; height:96px; object-fit:cover; display:block;"/>
+                                </a>
+                            </t>
+                        </div>
+                        <div t-else="" class="text-muted small fst-italic">
+                            No images uploaded yet — click <b>Open Carousel</b> to upload some.
+                        </div>
+
+                        <div class="mt-3 d-flex gap-2">
+                            <button type="button" class="btn btn-sm btn-outline-primary"
+                                    t-on-click="openTargetFormFromPreview">
+                                <i class="fa fa-external-link me-1"/>Open form
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom strip: only children that have a region on the current image -->
+            <div t-if="current and assignedChildren.length" class="border-top bg-white p-2"
+                 style="max-height:140px; overflow:auto;">
+                <div class="d-flex flex-wrap gap-2 align-items-center">
+                    <span class="text-muted small me-2">Children on this plan:</span>
+                    <t t-foreach="assignedChildren" t-as="c" t-key="c.id">
+                        <button type="button" class="btn btn-sm"
+                                t-att-class="c.has_plan_image ? 'btn-outline-primary' : 'btn-outline-secondary'"
+                                t-on-click="() => c.has_plan_image ? this._navigateTo(c.id, true) : this._openTargetPreview(c.id)">
+                            <t t-esc="c.property_code || c.name"/>
+                            <span class="text-muted ms-1">(<t t-esc="c.hierarchy_level || '—'"/>)</span>
+                            <i t-if="c.has_plan_image" class="fa fa-chevron-right ms-1"/>
+                            <i t-else="" class="fa fa-image ms-1"/>
+                        </button>
+                    </t>
+                </div>
+            </div>
+
+        </div>
+    </t>
+
+</templates>
