@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!--
+        Chromeless shell pages for the iframe embeds.
+
+        We intentionally don't extend website.layout or web.layout — both
+        load chrome we don't want inside a 3rd-party iframe. We hand-roll
+        a minimal HTML doc.
+
+        ``html_dir`` is passed in by the controller (``ltr`` / ``rtl``)
+        based on theme.lang.
+
+        The JSON bridge config + theme are written into <script
+        type="application/json"> tags so the boot bundle can read them
+        without re-parsing the URL.
+    -->
+
+    <template id="embed_plan_2d" name="Embed: 2D Plan Drill">&lt;!DOCTYPE html&gt;
+        <html t-att-dir="html_dir or 'ltr'">
+            <head>
+                <meta charset="utf-8"/>
+                <meta name="viewport"
+                      content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+                <meta name="robots" content="noindex, nofollow"/>
+                <title>2D Plan</title>
+                <t t-call-assets="real_estate_api.embed_plan_2d" t-js="false"/>
+                <script type="application/json" id="embed-bridge-config"
+                        t-out="bridge_config_json"/>
+                <script type="application/json" id="embed-theme"
+                        t-out="theme_json"/>
+            </head>
+            <body class="o_re_embed o_re_embed_plan_2d">
+                <div id="embed-root"/>
+                <t t-call-assets="real_estate_api.embed_plan_2d" t-css="false"/>
+            </body>
+        </html>
+    </template>
+
+    <template id="embed_maquette_3d" name="Embed: 3D Maquette">&lt;!DOCTYPE html&gt;
+        <html t-att-dir="html_dir or 'ltr'">
+            <head>
+                <meta charset="utf-8"/>
+                <meta name="viewport"
+                      content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+                <meta name="robots" content="noindex, nofollow"/>
+                <title>3D Maquette</title>
+                <t t-call-assets="real_estate_api.embed_maquette_3d" t-js="false"/>
+                <script type="application/json" id="embed-bridge-config"
+                        t-out="bridge_config_json"/>
+                <script type="application/json" id="embed-theme"
+                        t-out="theme_json"/>
+            </head>
+            <body class="o_re_embed o_re_embed_maquette_3d">
+                <div id="embed-root"/>
+                <t t-call-assets="real_estate_api.embed_maquette_3d" t-css="false"/>
+            </body>
+        </html>
+    </template>
+
+</odoo>

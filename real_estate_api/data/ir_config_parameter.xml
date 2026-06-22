@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            Configuration knobs — read at request time, so admins can tune
+            them from Settings → Technical → Parameters without restart.
+        -->
+
+        <record id="param_cors_allowed_origins" model="ir.config_parameter">
+            <field name="key">real_estate_api.cors.allowed_origins</field>
+            <field name="value"></field>
+        </record>
+
+        <record id="param_public_base_url" model="ir.config_parameter">
+            <field name="key">real_estate_api.public.base_url</field>
+            <field name="value"></field>
+        </record>
+
+        <record id="param_rate_limit_public" model="ir.config_parameter">
+            <field name="key">real_estate_api.rate_limit.public.per_minute</field>
+            <field name="value">60</field>
+        </record>
+
+        <record id="param_rate_limit_authed" model="ir.config_parameter">
+            <field name="key">real_estate_api.rate_limit.authed.per_minute</field>
+            <field name="value">300</field>
+        </record>
+
+        <record id="param_rate_limit_interest" model="ir.config_parameter">
+            <field name="key">real_estate_api.rate_limit.interest.per_hour</field>
+            <field name="value">5</field>
+        </record>
+
+    </data>
+</odoo>

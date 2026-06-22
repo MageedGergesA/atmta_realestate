@@ -1,0 +1,143 @@
+"""Chromeless HTML routes the 3rd-party website iframes directly.
+
+Each route looks up the token, validates origin + expiry, then renders
+a tiny shell page that boots the corresponding embed JS bundle. The JS
+fetches everything else via the public ``/api/v1/...`` endpoints — no
+session, no cookie auth, no Odoo chrome.
+
+CSP ``frame-ancestors`` is set from the token's allowed_origins. We
+ALSO strip ``X-Frame-Options`` because Odoo's default ``ir.http`` adds
+``SAMEORIGIN`` which would block embedding from third-party sites.
+"""
+
+import json
+import logging
+
+import werkzeug.exceptions
+from markupsafe import Markup
+
+from odoo import _, http
+from odoo.exceptions import AccessError, MissingError
+from odoo.http import Response, request
+
+
+def _safe_inline_json(value):
+    """Serialise a server-controlled dict for inlining into a
+    ``<script type="application/json">`` block.
+
+    Two HTML quirks force us off the standard ``t-out`` HTML-escaping
+    path here:
+
+    * The HTML parser does NOT decode entities inside a ``<script>``
+      element — its content is raw text. ``t-out``'s ``&#34;``
+      escapes therefore land literally in ``el.textContent``, breaking
+      ``JSON.parse``.
+    * Without escaping, a JSON string containing ``</script>`` would
+      end the block early. We pre-escape ``</`` to ``\\u003c/`` to
+      make that impossible.
+
+    The dict itself is fully server-controlled (only API-key holders
+    can mint embed tokens, and the fields stored on the token are
+    constrained selections / integers / a length-checked origin
+    list) — no user-supplied free text ever lands here.
+    """
+    blob = json.dumps(value)
+    blob = blob.replace('</', '<\\/')
+    return Markup(blob)
+
+
+_logger = logging.getLogger(__name__)
+
+
+def _embed_response(template, **values):
+    """Render an embed template with the right security headers.
+
+    ``allowed_origins`` (comma-joined string) is REQUIRED in ``values`` —
+    we use it to build ``Content-Security-Policy: frame-ancestors``.
+    """
+    allowed = values.pop('allowed_origins', '')
+    response = request.render(template, values)
+    if isinstance(response, Response):
+        # Convert comma list to space-separated for CSP.
+        origins = [o.strip() for o in (allowed or '').split(',') if o.strip()]
+        if '*' in origins:
+            origins = ['*']
+        ancestors = ' '.join(origins) if origins else "'none'"
+        response.headers['Content-Security-Policy'] = (
+            f"frame-ancestors {ancestors}"
+        )
+        # Strip the legacy header — `frame-ancestors` supersedes it but
+        # browsers honour the most restrictive of the two.
+        response.headers.pop('X-Frame-Options', None)
+        response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+        response.headers['Permissions-Policy'] = (
+            "accelerometer=(), camera=(), microphone=(), geolocation=(), "
+            "fullscreen=(self)"
+        )
+        # Embed routes are stateless — never cache the HTML shell longer
+        # than the token expiry, browsers can re-fetch.
+        response.headers['Cache-Control'] = 'private, max-age=60'
+    return response
+
+
+def _consume_or_error(kind, token):
+    """Look up token; map MissingError → 404, AccessError → 403."""
+    try:
+        return request.env['realestate.embed.token'].sudo()._consume(
+            token=token,
+            kind=kind,
+            origin=request.httprequest.headers.get('Origin')
+                   or request.httprequest.headers.get('Referer', '').rstrip('/')
+                   or '',
+            remote_ip=request.httprequest.remote_addr,
+        )
+    except MissingError as exc:
+        raise werkzeug.exceptions.NotFound(str(exc))
+    except AccessError as exc:
+        raise werkzeug.exceptions.Forbidden(str(exc))
+
+
+def _bridge_config(token_record):
+    """JSON-serializable config the embed JS needs to bootstrap."""
+    return {
+        'version': 'v1',
+        'kind': token_record.kind,
+        'resource_model': token_record.resource_model,
+        'resource_id': token_record.resource_id,
+        'api_base': '/api/v1',
+        'allowed_origins': [
+            o.strip() for o in (token_record.allowed_origins or '').split(',')
+            if o.strip()
+        ],
+    }
+
+
+class EmbedV1(http.Controller):
+
+    @http.route('/embed/v1/plan-2d/<string:token>', type='http', auth='public',
+                website=False, csrf=False, save_session=False, sitemap=False,
+                methods=['GET'])
+    def plan_2d(self, token, **kw):
+        record = _consume_or_error('plan-2d', token)
+        theme = record._theme(kw)
+        return _embed_response(
+            'real_estate_api.embed_plan_2d',
+            allowed_origins=record.allowed_origins,
+            bridge_config_json=_safe_inline_json(_bridge_config(record)),
+            theme_json=_safe_inline_json(theme),
+            html_dir='rtl' if (theme.get('lang') == 'ar') else 'ltr',
+        )
+
+    @http.route('/embed/v1/maquette-3d/<string:token>', type='http',
+                auth='public', website=False, csrf=False, save_session=False,
+                sitemap=False, methods=['GET'])
+    def maquette_3d(self, token, **kw):
+        record = _consume_or_error('maquette-3d', token)
+        theme = record._theme(kw)
+        return _embed_response(
+            'real_estate_api.embed_maquette_3d',
+            allowed_origins=record.allowed_origins,
+            bridge_config_json=_safe_inline_json(_bridge_config(record)),
+            theme_json=_safe_inline_json(theme),
+            html_dir='rtl' if (theme.get('lang') == 'ar') else 'ltr',
+        )

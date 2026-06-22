@@ -1,0 +1,137 @@
+/*
+ * Real-Estate iframe embed styles.
+ *
+ * Goal: total visual reset so the iframe contents match the host page,
+ * with a single CSS custom property layer the bridge can override at
+ * runtime from postMessage("setTheme", ...). No Odoo-chrome borrowed.
+ */
+
+:root {
+    --re-primary: #ff5a00;
+    --re-bg: #ffffff;
+    --re-fg: #1f2937;
+    --re-muted: #6b7280;
+    --re-border: #e5e7eb;
+    --re-overlay: rgba(0, 0, 0, 0.55);
+    --re-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif;
+}
+
+[data-mode="dark"] {
+    --re-bg: #0f172a;
+    --re-fg: #f8fafc;
+    --re-muted: #94a3b8;
+    --re-border: #1e293b;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; padding: 0; }
+body {
+    background: var(--re-bg);
+    color: var(--re-fg);
+    font-family: var(--re-font);
+    font-size: 14px;
+    line-height: 1.4;
+    overflow: hidden;
+}
+#embed-root { width: 100vw; height: 100vh; position: relative; }
+
+/* ---- Plan 2D ---------------------------------------------------------- */
+.o_re_embed_plan_2d {
+    .re-stage {
+        position: absolute; inset: 0;
+        background: var(--re-bg);
+        display: flex; flex-direction: column;
+    }
+    .re-breadcrumbs {
+        flex: 0 0 auto;
+        padding: 8px 12px;
+        display: flex; gap: 6px; align-items: center;
+        border-bottom: 1px solid var(--re-border);
+        font-size: 13px;
+        background: var(--re-bg);
+        z-index: 2;
+    }
+    .re-breadcrumbs button {
+        background: transparent; border: 0; cursor: pointer;
+        color: var(--re-fg);
+        padding: 4px 8px; border-radius: 4px;
+    }
+    .re-breadcrumbs button:hover { background: var(--re-border); }
+    .re-breadcrumbs .re-sep { color: var(--re-muted); }
+    .re-canvas {
+        flex: 1 1 auto;
+        position: relative;
+        overflow: hidden;
+        background:
+            repeating-conic-gradient(#f3f4f6 0% 25%, #ffffff 0% 50%)
+            50% / 24px 24px;
+    }
+    .re-canvas img.re-plan-image {
+        display: block;
+        max-width: 100%; max-height: 100%;
+        margin: auto;
+        position: absolute; inset: 0;
+    }
+    .re-region-svg {
+        position: absolute; inset: 0; width: 100%; height: 100%;
+        pointer-events: none;
+    }
+    .re-region {
+        pointer-events: auto;
+        cursor: pointer;
+        fill-opacity: 0.25;
+        stroke-width: 1.2;
+        transition: fill-opacity .15s ease;
+    }
+    .re-region:hover { fill-opacity: 0.5; }
+    .re-region[data-status="sold"] { fill: #6b7280 !important; stroke: #6b7280 !important; }
+    .re-region[data-status="reserved"] { fill: #f59e0b !important; stroke: #f59e0b !important; }
+    .re-status-pill {
+        position: absolute; bottom: 12px; left: 12px;
+        background: var(--re-overlay); color: #fff;
+        padding: 4px 10px; border-radius: 999px;
+        font-size: 12px; pointer-events: none;
+    }
+    .re-loading, .re-error {
+        position: absolute; inset: 0;
+        display: flex; align-items: center; justify-content: center;
+        background: var(--re-bg);
+        color: var(--re-muted);
+    }
+    .re-error { color: #dc2626; }
+}
+
+/* ---- Maquette 3D ------------------------------------------------------ */
+.o_re_embed_maquette_3d {
+    .re-scene { position: absolute; inset: 0; }
+    .re-scene canvas { display: block; width: 100% !important; height: 100% !important; }
+    .re-unit-card {
+        position: absolute; right: 12px; top: 12px;
+        max-width: 280px;
+        background: var(--re-bg);
+        border: 1px solid var(--re-border);
+        border-radius: 8px;
+        padding: 12px;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+        z-index: 2;
+    }
+    .re-unit-card .re-unit-title {
+        margin: 0 0 4px; font-size: 15px; font-weight: 600;
+    }
+    .re-unit-card .re-unit-row {
+        font-size: 12px; color: var(--re-muted); margin-top: 2px;
+    }
+    .re-unit-card .re-cta {
+        display: inline-block; margin-top: 8px;
+        padding: 6px 10px; border-radius: 6px;
+        background: var(--re-primary); color: #fff;
+        border: 0; cursor: pointer; font-size: 13px;
+    }
+    .re-loading, .re-error {
+        position: absolute; inset: 0;
+        display: flex; align-items: center; justify-content: center;
+        color: var(--re-muted);
+    }
+    .re-error { color: #dc2626; }
+}

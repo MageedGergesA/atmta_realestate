@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<!--
+    Real-Estate API · iframe embed demo
+    ────────────────────────────────────
+    Self-contained host page that demonstrates the full embed flow:
+
+      1. Calls the mint endpoint (server-to-server in real life — here we
+         do it from the page itself for demo purposes, which means the
+         API key sits in the page source. Don't ship it like that.).
+      2. Drops the returned URL into an <iframe>.
+      3. Listens for postMessage events from the iframe (resize, drill,
+         unitSelected, interestRequested) and reacts.
+      4. Sends commands back into the iframe ("setTheme", "navigate
+         back", "navigate home").
+
+    To run locally:
+       cd real_estate_api/examples
+       python3 -m http.server 8000
+       open http://localhost:8000/example.html
+
+    The token's allowed_origins must include http://localhost:8000 —
+    the mint call below sets it explicitly.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Real Estate · Embed Demo</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0; padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #1f2937; background: #f8fafc;
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            grid-template-rows: auto 1fr;
+            height: 100vh;
+        }
+        header {
+            grid-column: 1 / -1;
+            padding: 12px 20px;
+            background: #0f172a; color: #f8fafc;
+            display: flex; align-items: center; gap: 16px;
+        }
+        header h1 { margin: 0; font-size: 18px; font-weight: 600; }
+        header .controls { margin-left: auto; display: flex; gap: 8px; }
+        header button {
+            background: #334155; color: #f8fafc; border: 0;
+            padding: 6px 12px; border-radius: 6px; cursor: pointer;
+            font-size: 13px;
+        }
+        header button:hover { background: #475569; }
+        header button.primary { background: #ff5a00; }
+        header select {
+            background: #334155; color: #f8fafc; border: 0;
+            padding: 6px 10px; border-radius: 6px; font-size: 13px;
+        }
+        main {
+            position: relative; background: #fff;
+            border-right: 1px solid #e5e7eb;
+            overflow: hidden;
+        }
+        iframe {
+            width: 100%; height: 100%;
+            border: 0; display: block;
+        }
+        aside {
+            background: #fff; overflow-y: auto;
+            border-left: 1px solid #e5e7eb;
+            padding: 16px;
+        }
+        aside h2 {
+            margin: 0 0 8px; font-size: 14px;
+            text-transform: uppercase; letter-spacing: 0.04em;
+            color: #6b7280;
+        }
+        #events {
+            font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+            font-size: 11px;
+            background: #f1f5f9;
+            border-radius: 6px;
+            padding: 10px;
+            max-height: 220px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            line-height: 1.45;
+        }
+        #unit-card {
+            margin-top: 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 14px;
+            background: #fffaf2;
+            display: none;
+        }
+        #unit-card.show { display: block; }
+        #unit-card h3 { margin: 0 0 4px; font-size: 16px; }
+        #unit-card .row { color: #6b7280; font-size: 13px; margin-top: 2px; }
+        #unit-card button {
+            margin-top: 10px; background: #ff5a00; color: #fff;
+            border: 0; border-radius: 6px; padding: 8px 12px;
+            font-size: 13px; cursor: pointer;
+        }
+        .status {
+            display: inline-block;
+            padding: 2px 8px; border-radius: 999px; font-size: 11px;
+            background: #dcfce7; color: #15803d;
+            text-transform: uppercase; letter-spacing: 0.04em;
+        }
+        .status.reserved { background: #fef3c7; color: #b45309; }
+        .status.sold     { background: #e5e7eb; color: #4b5563; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Real Estate · Embed Demo</h1>
+
+    <select id="kind-picker">
+        <option value="plan-2d">2D Plan</option>
+        <option value="maquette-3d">3D Maquette</option>
+    </select>
+
+    <div class="controls">
+        <button id="back-btn">← Back</button>
+        <button id="home-btn">⌂ Home</button>
+        <button id="dark-btn">🌙 Dark mode</button>
+        <button id="primary-btn" class="primary">Reload token</button>
+    </div>
+</header>
+
+<main>
+    <iframe id="frame" title="Real Estate Plan"></iframe>
+</main>
+
+<aside>
+    <h2>postMessage stream</h2>
+    <div id="events">(waiting for messages…)</div>
+
+    <h2 style="margin-top: 20px;">Last selected unit</h2>
+    <div id="unit-card">
+        <h3 id="unit-name">—</h3>
+        <div class="row" id="unit-status"></div>
+        <div class="row" id="unit-area"></div>
+        <div class="row" id="unit-bedrooms"></div>
+        <div class="row" id="unit-price"></div>
+        <button id="contact-btn">Request a callback</button>
+    </div>
+</aside>
+
+<script>
+// ─────────────────────────────────────────────────────────────────────
+// Config — adjust to your environment.
+// ─────────────────────────────────────────────────────────────────────
+const CFG = {
+    erpBase:      "http://localhost:8069",
+    erpDatabase:  "realestate_all_modules",
+    // SECURITY: in production this key lives on YOUR backend, not in the
+    // browser. The page would call your own /mint-embed endpoint which
+    // proxies the request below. For the demo we put it here.
+    apiKey:       "669fce0819c5110eb9bd7f61443086887797ca6c",
+    projectId:    28,
+    pageOrigin:   window.location.origin,  // must be in allowed_origins
+};
+
+// ─────────────────────────────────────────────────────────────────────
+// DOM refs
+// ─────────────────────────────────────────────────────────────────────
+const $frame    = document.getElementById("frame");
+const $events   = document.getElementById("events");
+const $kind     = document.getElementById("kind-picker");
+const $card     = document.getElementById("unit-card");
+
+function log(line) {
+    const stamp = new Date().toISOString().substring(11, 19);
+    $events.textContent =
+        `[${stamp}] ${line}\n` + $events.textContent.substring(0, 4000);
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// 1. Mint an embed token, drop the URL into the iframe.
+// ─────────────────────────────────────────────────────────────────────
+async function loadEmbed() {
+    log(`minting ${$kind.value} token for project ${CFG.projectId}…`);
+    const body = {
+        kind:            $kind.value,
+        resource_model:  "realestate.project",
+        resource_id:     CFG.projectId,
+        allowed_origins: CFG.pageOrigin,
+        expires_in:      3600,
+        theme:           { primary: "#ff5a00", mode: "light", lang: "en" },
+    };
+    const r = await fetch(`${CFG.erpBase}/api/v1/embed-tokens`, {
+        method: "POST",
+        headers: {
+            "Authorization":   `Bearer ${CFG.apiKey}`,
+            "X-Odoo-Database": CFG.erpDatabase,
+            "Content-Type":    "application/json",
+        },
+        body: JSON.stringify(body),
+    });
+    if (!r.ok) {
+        const err = await r.json().catch(() => ({error: {message: r.statusText}}));
+        log(`✗ mint failed: ${err.error.message}`);
+        return;
+    }
+    const data = await r.json();
+    log(`✓ token expires at ${data.expires_at}`);
+    $frame.src = data.embed_url;
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// 2. Listen for messages from the iframe.
+// ─────────────────────────────────────────────────────────────────────
+window.addEventListener("message", (e) => {
+    // Always check the origin — never trust an unscoped postMessage handler.
+    if (e.origin !== CFG.erpBase) return;
+    const msg = e.data;
+    if (!msg || msg.source !== "re-embed") return;
+
+    log(`← ${msg.type} ${JSON.stringify(msg.payload).slice(0, 200)}`);
+
+    switch (msg.type) {
+        case "ready":
+        case "resize":
+            // Iframe tells us its content height — match it (within reason).
+            // In this demo the iframe fills a fixed pane, so we ignore it.
+            break;
+
+        case "navigated":
+            // Could sync the host URL with the drill path here.
+            break;
+
+        case "unitSelected":
+            showUnitCard(msg.payload);
+            break;
+
+        case "interestRequested":
+            // User clicked "I'm interested" inside the embedded 3D card.
+            // Open your own lead form. For the demo we just log it.
+            log(`→ open lead form for unit ${msg.payload.id}`);
+            break;
+
+        case "error":
+            log(`⚠ embed error: ${msg.payload.code} — ${msg.payload.message}`);
+            break;
+    }
+});
+
+function showUnitCard(unit) {
+    $card.classList.add("show");
+    document.getElementById("unit-name").textContent = unit.name || "(unit)";
+    document.getElementById("unit-status").innerHTML =
+        `<span class="status ${unit.status || ""}">${unit.status || ""}</span>`;
+    document.getElementById("unit-area").textContent =
+        unit.area_sqm ? `${unit.area_sqm.toLocaleString()} m²` : "";
+    document.getElementById("unit-bedrooms").textContent =
+        unit.bedrooms ? `${unit.bedrooms} bedroom${unit.bedrooms > 1 ? "s" : ""}` : "";
+    document.getElementById("unit-price").textContent =
+        unit.price ? `${unit.currency_symbol || ""} ${unit.price.toLocaleString()}` : "";
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// 3. Send commands TO the iframe (postMessage in the other direction).
+// ─────────────────────────────────────────────────────────────────────
+function sendToFrame(type, payload) {
+    if (!$frame.contentWindow) return;
+    $frame.contentWindow.postMessage(
+        { source: "re-embed-host", version: "v1", type, payload: payload || {} },
+        CFG.erpBase,
+    );
+    log(`→ ${type} ${JSON.stringify(payload || {})}`);
+}
+
+document.getElementById("back-btn").onclick = () => sendToFrame("navigate", { to: "back" });
+document.getElementById("home-btn").onclick = () => sendToFrame("navigate", { to: "home" });
+
+let dark = false;
+document.getElementById("dark-btn").onclick = () => {
+    dark = !dark;
+    sendToFrame("setTheme", { mode: dark ? "dark" : "light" });
+};
+
+document.getElementById("primary-btn").onclick = () => loadEmbed();
+$kind.onchange = () => loadEmbed();
+
+document.getElementById("contact-btn").onclick = async () => {
+    // Submit an interest lead via the public API (no key needed).
+    const r = await fetch(`${CFG.erpBase}/api/v1/interests`, {
+        method: "POST",
+        headers: {
+            "X-Odoo-Database": CFG.erpDatabase,
+            "Content-Type":    "application/json",
+            "Idempotency-Key": "demo-" + Date.now(),
+        },
+        body: JSON.stringify({
+            name:    "Demo Visitor",
+            email:   "demo@example.com",
+            project_id: CFG.projectId,
+            message: "Submitted from the demo page",
+        }),
+    });
+    const data = await r.json();
+    log(`→ lead created: id=${data.id} ref=${data.reference}`);
+};
+
+// ─────────────────────────────────────────────────────────────────────
+// Boot
+// ─────────────────────────────────────────────────────────────────────
+loadEmbed();
+</script>
+</body>
+</html>

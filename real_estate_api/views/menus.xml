@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <menuitem id="menu_realestate_api_root"
+              name="Public API"
+              parent="atmta_real_estate.real_estate_menu_root"
+              sequence="90"
+              groups="real_estate_api.group_realestate_api_user"/>
+
+    <menuitem id="menu_realestate_api_embed_tokens"
+              name="Embed Tokens"
+              parent="menu_realestate_api_root"
+              action="action_embed_token"
+              sequence="10"
+              groups="real_estate_api.group_realestate_api_user"/>
+
+</odoo>

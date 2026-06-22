@@ -1,0 +1,456 @@
+{
+  "info": {
+    "_postman_id": "realestate-api-v1",
+    "name": "Real Estate Public API",
+    "description": "Public REST endpoints for the ATMTA real-estate suite plus iframe-embeddable 2D drill plan and 3D maquette.\n\nSetup\n-----\n1. Set `{{base_url}}` to your Odoo host (e.g. `http://localhost:8069`).\n2. Set `{{db_name}}` to the target Odoo database (e.g. `realestate_all_modules`).\n3. Set `{{api_key}}` to an API key generated for an active user with scope `real_estate_api`. Generate via Settings → Users → user → API Keys, or with the snippet in the module's README.\n4. Run requests top-to-bottom. The first call (`Catalog / List Projects`) fills `{{first_project_id}}` so deeper requests work out of the box. Adjust `{{project_with_2d}}` and `{{project_with_3d}}` to a project that has those assets configured.\n\nWire format\n-----------\n* `X-Odoo-Database: {{db_name}}` is injected on every request by a collection-level pre-request script. Do NOT send a `session_id` cookie alongside it — the server returns 403 on collision.\n* Catalog GETs are public — the API key is optional. Mutating calls (`Embed Tokens`, `Interests`) require `Authorization: Bearer {{api_key}}`.\n* Errors come back as `{\"error\": {\"code\": \"...\", \"message\": \"...\"}}` with the correct HTTP status. No silent fallbacks — 404 on missing record, 400 on bad input, 403 on origin mismatch, 429 when rate-limited.\n\nBase URL: {{base_url}}",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:8069" },
+    { "key": "db_name", "value": "realestate_all_modules" },
+    { "key": "api_key", "value": "REPLACE_ME" },
+    { "key": "website_origin", "value": "https://atmta-website.com" },
+    { "key": "first_project_id", "value": "" },
+    { "key": "project_with_2d", "value": "28" },
+    { "key": "project_with_3d", "value": "28" },
+    { "key": "property_with_plan", "value": "100" },
+    { "key": "building_id", "value": "84" },
+    { "key": "developer_id", "value": "" },
+    { "key": "embed_token_2d", "value": "" },
+    { "key": "embed_token_3d", "value": "" },
+    { "key": "lead_id", "value": "" }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Inject the X-Odoo-Database header on every request so a single",
+          "// Odoo instance hosting many databases routes us to the right one.",
+          "const db = pm.collectionVariables.get('db_name') || '';",
+          "if (db) {",
+          "    pm.request.headers.upsert({ key: 'X-Odoo-Database', value: db });",
+          "}"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Tiny universal assertion: every response is JSON (or HTML for embed routes).",
+          "// Stricter per-request tests are inside individual items.",
+          "pm.test('status not 5xx', () => pm.expect(pm.response.code).to.be.below(500));"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Catalog",
+      "item": [
+        {
+          "name": "List developers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/v1/developers?limit=5", "host": ["{{base_url}}"], "path": ["api","v1","developers"], "query": [{"key":"limit","value":"5"}] }
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [
+              "pm.test('200', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('has results array', () => pm.expect(body.results).to.be.an('array'));",
+              "if (body.results.length) pm.collectionVariables.set('developer_id', body.results[0].id);",
+              "pm.test('X-Total-Count present', () => pm.expect(pm.response.headers.get('X-Total-Count')).to.exist);"
+            ] } }
+          ]
+        },
+        {
+          "name": "Get developer detail",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/v1/developers/{{developer_id}}", "host": ["{{base_url}}"], "path": ["api","v1","developers","{{developer_id}}"] }
+          }
+        },
+        {
+          "name": "List projects",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/v1/projects?limit=10", "host": ["{{base_url}}"], "path": ["api","v1","projects"], "query": [{"key":"limit","value":"10"}] }
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [
+              "pm.test('200', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('results is an array', () => pm.expect(body.results).to.be.an('array'));",
+              "if (body.results.length) pm.collectionVariables.set('first_project_id', body.results[0].id);"
+            ] } }
+          ]
+        },
+        {
+          "name": "List projects (filtered)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/v1/projects?city=Cairo&limit=5", "host": ["{{base_url}}"], "path": ["api","v1","projects"], "query": [{"key":"city","value":"Cairo"},{"key":"limit","value":"5"}] }
+          }
+        },
+        {
+          "name": "Get project detail",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/v1/projects/{{first_project_id}}", "host": ["{{base_url}}"], "path": ["api","v1","projects","{{first_project_id}}"] }
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [
+              "pm.test('200', () => pm.response.to.have.status(200));",
+              "pm.test('detail has boundary_polygon key', () => pm.expect(pm.response.json()).to.have.property('boundary_polygon'));"
+            ] } }
+          ]
+        },
+        {
+          "name": "Get project — missing (404)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/v1/projects/999999", "host": ["{{base_url}}"], "path": ["api","v1","projects","999999"] }
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [
+              "pm.test('404', () => pm.response.to.have.status(404));",
+              "pm.test('error contract', () => pm.expect(pm.response.json().error.code).to.eql('not_found'));"
+            ] } }
+          ]
+        },
+        {
+          "name": "List buildings of project",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/v1/projects/{{project_with_2d}}/buildings", "host": ["{{base_url}}"], "path": ["api","v1","projects","{{project_with_2d}}","buildings"] }
+          }
+        },
+        {
+          "name": "List units of building",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/v1/buildings/{{building_id}}/units", "host": ["{{base_url}}"], "path": ["api","v1","buildings","{{building_id}}","units"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2D / 3D Maps",
+      "item": [
+        {
+          "name": "Project plan-2d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/v1/projects/{{project_with_2d}}/plan-2d", "host": ["{{base_url}}"], "path": ["api","v1","projects","{{project_with_2d}}","plan-2d"] }
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [
+              "pm.test('200', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('image_url present', () => pm.expect(body.image_url).to.be.a('string'));",
+              "pm.test('regions array', () => pm.expect(body.regions).to.be.an('array'));"
+            ] } }
+          ]
+        },
+        {
+          "name": "Property plan-2d (drill)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/v1/properties/{{property_with_plan}}/plan-2d", "host": ["{{base_url}}"], "path": ["api","v1","properties","{{property_with_plan}}","plan-2d"] }
+          }
+        },
+        {
+          "name": "Project maquette-3d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/v1/projects/{{project_with_3d}}/maquette-3d", "host": ["{{base_url}}"], "path": ["api","v1","projects","{{project_with_3d}}","maquette-3d"] }
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [
+              "pm.test('200', () => pm.response.to.have.status(200));",
+              "pm.test('glb_url present', () => pm.expect(pm.response.json().glb_url).to.be.a('string'));"
+            ] } }
+          ]
+        },
+        {
+          "name": "Project plan-2d — no plan (404)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/v1/projects/1/plan-2d", "host": ["{{base_url}}"], "path": ["api","v1","projects","1","plan-2d"] }
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [
+              "pm.test('404', () => pm.response.to.have.status(404));"
+            ] } }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Interests (lead capture)",
+      "item": [
+        {
+          "name": "Submit interest (valid)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/v1/interests", "host": ["{{base_url}}"], "path": ["api","v1","interests"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Postman Test\",\n  \"email\": \"postman@example.com\",\n  \"phone\": \"+966501234567\",\n  \"project_id\": {{project_with_2d}},\n  \"message\": \"Submitted from Postman.\"\n}"
+            }
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [
+              "pm.test('200 or 201', () => pm.expect([200,201]).to.include(pm.response.code));",
+              "const body = pm.response.json();",
+              "pm.test('lead id returned', () => pm.expect(body.id).to.be.a('number'));",
+              "pm.collectionVariables.set('lead_id', body.id);"
+            ] } }
+          ]
+        },
+        {
+          "name": "Submit interest — bad (no contact)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/v1/interests", "host": ["{{base_url}}"], "path": ["api","v1","interests"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"name\": \"X\" }"
+            }
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [
+              "pm.test('400', () => pm.response.to.have.status(400));",
+              "pm.test('bad_request code', () => pm.expect(pm.response.json().error.code).to.eql('bad_request'));"
+            ] } }
+          ]
+        },
+        {
+          "name": "Submit interest — invalid email (400)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/api/v1/interests", "host": ["{{base_url}}"], "path": ["api","v1","interests"] },
+            "body": { "mode": "raw", "raw": "{ \"name\": \"Test\", \"email\": \"not-an-email\" }" }
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [
+              "pm.test('400', () => pm.response.to.have.status(400));"
+            ] } }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Embed tokens (mint)",
+      "item": [
+        {
+          "name": "Mint — no auth (401)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/api/v1/embed-tokens", "host": ["{{base_url}}"], "path": ["api","v1","embed-tokens"] },
+            "body": { "mode": "raw", "raw": "{\n  \"kind\": \"plan-2d\",\n  \"resource_model\": \"realestate.project\",\n  \"resource_id\": {{project_with_2d}},\n  \"allowed_origins\": \"{{website_origin}}\"\n}" }
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [
+              "pm.test('401', () => pm.response.to.have.status(401));"
+            ] } }
+          ]
+        },
+        {
+          "name": "Mint — 2D embed token",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{api_key}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/v1/embed-tokens", "host": ["{{base_url}}"], "path": ["api","v1","embed-tokens"] },
+            "body": { "mode": "raw", "raw": "{\n  \"kind\": \"plan-2d\",\n  \"resource_model\": \"realestate.project\",\n  \"resource_id\": {{project_with_2d}},\n  \"allowed_origins\": \"{{website_origin}}\",\n  \"expires_in\": 3600,\n  \"theme\": { \"primary\": \"#ff5a00\", \"mode\": \"light\", \"lang\": \"en\" }\n}" }
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [
+              "pm.test('201', () => pm.response.to.have.status(201));",
+              "const body = pm.response.json();",
+              "pm.test('token returned', () => pm.expect(body.token).to.be.a('string'));",
+              "pm.test('embed_url present', () => pm.expect(body.embed_url).to.include('/embed/v1/plan-2d/'));",
+              "pm.collectionVariables.set('embed_token_2d', body.token);"
+            ] } }
+          ]
+        },
+        {
+          "name": "Mint — 3D embed token",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{api_key}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/v1/embed-tokens", "host": ["{{base_url}}"], "path": ["api","v1","embed-tokens"] },
+            "body": { "mode": "raw", "raw": "{\n  \"kind\": \"maquette-3d\",\n  \"resource_model\": \"realestate.project\",\n  \"resource_id\": {{project_with_3d}},\n  \"allowed_origins\": \"{{website_origin}}\",\n  \"expires_in\": 7200\n}" }
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [
+              "pm.test('201', () => pm.response.to.have.status(201));",
+              "pm.collectionVariables.set('embed_token_3d', pm.response.json().token);"
+            ] } }
+          ]
+        },
+        {
+          "name": "Mint — project without plan (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{api_key}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/api/v1/embed-tokens", "host": ["{{base_url}}"], "path": ["api","v1","embed-tokens"] },
+            "body": { "mode": "raw", "raw": "{\n  \"kind\": \"plan-2d\",\n  \"resource_model\": \"realestate.project\",\n  \"resource_id\": 1,\n  \"allowed_origins\": \"{{website_origin}}\"\n}" }
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [
+              "pm.test('400', () => pm.response.to.have.status(400));"
+            ] } }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Embed routes (HTML)",
+      "item": [
+        {
+          "name": "Plan-2D embed (good origin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Origin", "value": "{{website_origin}}" }
+            ],
+            "url": { "raw": "{{base_url}}/embed/v1/plan-2d/{{embed_token_2d}}", "host": ["{{base_url}}"], "path": ["embed","v1","plan-2d","{{embed_token_2d}}"] }
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [
+              "pm.test('200', () => pm.response.to.have.status(200));",
+              "pm.test('CSP frame-ancestors set', () => {",
+              "    const csp = pm.response.headers.get('Content-Security-Policy') || '';",
+              "    pm.expect(csp).to.include('frame-ancestors');",
+              "});",
+              "pm.test('no X-Frame-Options', () => pm.expect(pm.response.headers.get('X-Frame-Options')).to.be.null);",
+              "pm.test('body contains embed-root', () => pm.expect(pm.response.text()).to.include('id=\"embed-root\"'));"
+            ] } }
+          ]
+        },
+        {
+          "name": "Plan-2D embed (bad origin → 403)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Origin", "value": "https://evil.example.com" }
+            ],
+            "url": { "raw": "{{base_url}}/embed/v1/plan-2d/{{embed_token_2d}}", "host": ["{{base_url}}"], "path": ["embed","v1","plan-2d","{{embed_token_2d}}"] }
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [
+              "pm.test('403', () => pm.response.to.have.status(403));"
+            ] } }
+          ]
+        },
+        {
+          "name": "Plan-2D embed (bad token → 404)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/embed/v1/plan-2d/notarealtoken", "host": ["{{base_url}}"], "path": ["embed","v1","plan-2d","notarealtoken"] }
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [
+              "pm.test('404', () => pm.response.to.have.status(404));"
+            ] } }
+          ]
+        },
+        {
+          "name": "Maquette-3D embed (good origin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Origin", "value": "{{website_origin}}" }
+            ],
+            "url": { "raw": "{{base_url}}/embed/v1/maquette-3d/{{embed_token_3d}}", "host": ["{{base_url}}"], "path": ["embed","v1","maquette-3d","{{embed_token_3d}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "CORS / DB Routing",
+      "item": [
+        {
+          "name": "CORS preflight (allowed origin)",
+          "request": {
+            "method": "OPTIONS",
+            "header": [
+              { "key": "Origin", "value": "{{website_origin}}" },
+              { "key": "Access-Control-Request-Method", "value": "POST" },
+              { "key": "Access-Control-Request-Headers", "value": "Authorization, Content-Type, X-Odoo-Database" }
+            ],
+            "url": { "raw": "{{base_url}}/api/v1/interests", "host": ["{{base_url}}"], "path": ["api","v1","interests"] }
+          },
+          "event": [
+            { "listen": "test", "script": { "exec": [
+              "pm.test('204', () => pm.response.to.have.status(204));",
+              "pm.test('Allow-Origin echoed', () => pm.expect(pm.response.headers.get('Access-Control-Allow-Origin')).to.eql(pm.collectionVariables.get('website_origin')));",
+              "pm.test('Allow-Headers lists Authorization, X-Odoo-Database', () => {",
+              "    const h = pm.response.headers.get('Access-Control-Allow-Headers') || '';",
+              "    pm.expect(h).to.include('Authorization');",
+              "    pm.expect(h).to.include('X-Odoo-Database');",
+              "});"
+            ] } }
+          ]
+        },
+        {
+          "name": "DB selection — wrong db name (no match)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "X-Odoo-Database", "value": "this_db_does_not_exist", "disabled": false }
+            ],
+            "url": { "raw": "{{base_url}}/api/v1/projects?limit=1", "host": ["{{base_url}}"], "path": ["api","v1","projects"], "query":[{"key":"limit","value":"1"}] }
+          },
+          "event": [
+            { "listen": "prerequest", "script": { "exec": [
+              "// Replace the collection-level X-Odoo-Database with our bogus one.",
+              "pm.request.headers.upsert({ key: 'X-Odoo-Database', value: 'this_db_does_not_exist' });"
+            ] } },
+            { "listen": "test", "script": { "exec": [
+              "pm.test('404 or 200 monodb-fallback', () => pm.expect([200, 404]).to.include(pm.response.code));",
+              "// On a single-DB host Odoo's monodb shortcut takes over after",
+              "// our header is rejected by dbfilter, which is acceptable.",
+              "// On a multi-DB host the server should refuse — neither outcome is a silent fallback to a different db."
+            ] } }
+          ]
+        }
+      ]
+    }
+  ]
+}
