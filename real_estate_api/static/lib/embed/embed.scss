@@ -1,9 +1,20 @@
 /*
- * Real-Estate iframe embed styles.
+ * Real-Estate drill viewer styles.
  *
- * Goal: total visual reset so the iframe contents match the host page,
- * with a single CSS custom property layer the bridge can override at
- * runtime from postMessage("setTheme", ...). No Odoo-chrome borrowed.
+ * Two consumers share this stylesheet:
+ *
+ *   - Iframe embeds (body has ``.o_re_embed`` set by the chromeless
+ *     template). Those need a hard reset on html/body + full-viewport
+ *     sizing.
+ *
+ *   - Portal pages (and any other host that embeds the viewer inline).
+ *     Those must NOT have their html/body touched; the viewer just
+ *     fills whatever container the host provides.
+ *
+ * Everything related to the viewer's INTERNALS lives under
+ * ``.o_re_drill_2d`` / ``.o_re_maquette_3d`` — the classes
+ * ``RealEstateDrillViewer.mount()`` sets on the container it owns —
+ * so the same JS works in both contexts.
  */
 
 :root {
@@ -24,20 +35,39 @@
     --re-border: #1e293b;
 }
 
-* { box-sizing: border-box; }
-html, body { height: 100%; margin: 0; padding: 0; }
-body {
+/* ─── Embed-only resets ─────────────────────────────────────────────────
+ * The embed shell template adds ``o_re_embed`` to <body>; those rules
+ * stay scoped to that class so they don't fight a host page's CSS.
+ */
+body.o_re_embed {
+    margin: 0;
+    padding: 0;
+    height: 100%;
     background: var(--re-bg);
     color: var(--re-fg);
     font-family: var(--re-font);
     font-size: 14px;
     line-height: 1.4;
     overflow: hidden;
-}
-#embed-root { width: 100vw; height: 100vh; position: relative; }
 
-/* ---- Plan 2D ---------------------------------------------------------- */
-.o_re_embed_plan_2d {
+    * { box-sizing: border-box; }
+
+    html { height: 100%; }
+    #embed-root { width: 100vw; height: 100vh; position: relative; }
+}
+
+/* ─── 2D drill viewer (works inline OR full-viewport) ──────────────────── */
+.o_re_drill_2d {
+    /* Inline default: fill the host container, no absolute take-over.
+     * Inside the embed shell, the parent #embed-root is 100vw × 100vh
+     * so this still fills the viewport. */
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 480px;
+    color: var(--re-fg);
+    font-family: var(--re-font);
+
     .re-stage {
         position: absolute; inset: 0;
         background: var(--re-bg);
@@ -45,20 +75,107 @@ body {
     }
     .re-breadcrumbs {
         flex: 0 0 auto;
-        padding: 8px 12px;
+        padding: 10px 14px;
         display: flex; gap: 6px; align-items: center;
+        flex-wrap: wrap;
         border-bottom: 1px solid var(--re-border);
         font-size: 13px;
         background: var(--re-bg);
         z-index: 2;
     }
-    .re-breadcrumbs button {
-        background: transparent; border: 0; cursor: pointer;
+    .re-breadcrumbs .re-crumb {
+        background: var(--re-border);
         color: var(--re-fg);
-        padding: 4px 8px; border-radius: 4px;
+        border: 0; cursor: pointer; font: inherit;
+        padding: 4px 10px; border-radius: 999px;
+        line-height: 1.4;
+        transition: background .12s ease, color .12s ease;
     }
-    .re-breadcrumbs button:hover { background: var(--re-border); }
-    .re-breadcrumbs .re-sep { color: var(--re-muted); }
+    .re-breadcrumbs .re-crumb:hover {
+        background: var(--re-primary);
+        color: #fff;
+    }
+    .re-breadcrumbs .re-crumb-current {
+        background: var(--re-primary);
+        color: #fff;
+        font-weight: 600;
+        cursor: default;
+    }
+    .re-breadcrumbs .re-sep {
+        color: var(--re-muted);
+        font-size: 14px;
+        line-height: 1;
+    }
+
+    /* Body row: canvas takes the rest, side strip docks right when it
+     * has content. Hidden side collapses to zero width via the [hidden]
+     * attribute toggled by JS. */
+    .re-body {
+        flex: 1 1 auto;
+        display: flex;
+        min-height: 0;       /* let nested flex children size correctly */
+    }
+    .re-side {
+        flex: 0 0 220px;
+        border-left: 1px solid var(--re-border);
+        background: var(--re-bg);
+        overflow-y: auto;
+        padding: 10px;
+    }
+    .re-side[hidden] { display: none; }
+    .re-side .re-side-title {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--re-muted);
+        margin-bottom: 8px;
+    }
+    .re-side .re-side-strip {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+    }
+    .re-side .re-thumb {
+        padding: 0; margin: 0; border: 1px solid var(--re-border);
+        background: var(--re-bg); cursor: pointer;
+        border-radius: 6px; overflow: hidden;
+        aspect-ratio: 4 / 3;
+        transition: border-color .12s ease, transform .12s ease;
+    }
+    .re-side .re-thumb:hover {
+        border-color: var(--re-primary);
+        transform: translateY(-1px);
+    }
+    .re-side .re-thumb img {
+        width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+
+    /* Lightbox overlay (covers the whole viewer, not the host page). */
+    .re-lightbox {
+        position: absolute; inset: 0;
+        background: rgba(0, 0, 0, 0.82);
+        display: flex; align-items: center; justify-content: center;
+        z-index: 10;
+        cursor: zoom-out;
+    }
+    .re-lightbox[hidden] { display: none; }
+    .re-lightbox-img {
+        max-width: 92%;
+        max-height: 92%;
+        display: block;
+        box-shadow: 0 12px 50px rgba(0, 0, 0, 0.5);
+        cursor: default;
+    }
+    .re-lightbox-close {
+        position: absolute; top: 14px; right: 14px;
+        background: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        border: 0; border-radius: 999px;
+        width: 36px; height: 36px;
+        font-size: 22px; line-height: 1;
+        cursor: pointer;
+    }
+    .re-lightbox-close:hover { background: rgba(0, 0, 0, 0.85); }
     .re-canvas {
         flex: 1 1 auto;
         position: relative;
@@ -66,12 +183,32 @@ body {
         background:
             repeating-conic-gradient(#f3f4f6 0% 25%, #ffffff 0% 50%)
             50% / 24px 24px;
+        /* Center the aspect-ratio-locked wrapper. */
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    .re-canvas img.re-plan-image {
+    /* Wrapper takes the image's natural aspect ratio (set inline by JS
+     * once the image loads). It fits inside the canvas (max-width/height
+     * 100%) while keeping that ratio — so the SVG, which fills the
+     * wrapper, perfectly overlays the image regardless of canvas size. */
+    .re-plan-wrap {
+        position: relative;
+        max-width: 100%;
+        max-height: 100%;
+        /* When the image's aspect-ratio + canvas size mean we're
+         * width-limited, height comes from aspect-ratio. When
+         * height-limited, width does. */
+        width: auto;
+        height: auto;
+        /* Sensible default until the image loads and JS overrides. */
+        aspect-ratio: 16 / 10;
+    }
+    img.re-plan-image {
         display: block;
-        max-width: 100%; max-height: 100%;
-        margin: auto;
-        position: absolute; inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: fill;       /* fills the wrapper exactly; wrapper is the aspect-ratio source of truth */
     }
     .re-region-svg {
         position: absolute; inset: 0; width: 100%; height: 100%;
@@ -85,24 +222,85 @@ body {
         transition: fill-opacity .15s ease;
     }
     .re-region:hover { fill-opacity: 0.5; }
-    .re-region[data-status="sold"] { fill: #6b7280 !important; stroke: #6b7280 !important; }
+    .re-region[data-status="sold"]     { fill: #6b7280 !important; stroke: #6b7280 !important; }
     .re-region[data-status="reserved"] { fill: #f59e0b !important; stroke: #f59e0b !important; }
-    .re-status-pill {
-        position: absolute; bottom: 12px; left: 12px;
-        background: var(--re-overlay); color: #fff;
-        padding: 4px 10px; border-radius: 999px;
-        font-size: 12px; pointer-events: none;
+    .re-region.re-flash { animation: re-flash-pulse .8s ease-in-out; }
+    @keyframes re-flash-pulse {
+        0%   { fill-opacity: 0.25; }
+        50%  { fill-opacity: 0.75; }
+        100% { fill-opacity: 0.25; }
     }
+
     .re-loading, .re-error {
         position: absolute; inset: 0;
         display: flex; align-items: center; justify-content: center;
         background: var(--re-bg);
         color: var(--re-muted);
+        text-align: center;
+        padding: 16px;
     }
     .re-error { color: #dc2626; }
+
+    /* Picker mode (project with no master plan but drillable top-level
+     * properties). Cards are clickable; click drills into that property. */
+    .re-picker {
+        position: absolute; inset: 0;
+        overflow: auto;
+        padding: 20px;
+        background: var(--re-bg);
+    }
+    .re-picker-heading {
+        font-size: 15px; font-weight: 600;
+        color: var(--re-fg);
+        margin-bottom: 14px;
+    }
+    .re-picker-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 14px;
+    }
+    .re-picker-card {
+        background: var(--re-bg);
+        border: 1px solid var(--re-border);
+        border-radius: 8px;
+        padding: 0; margin: 0;
+        cursor: pointer;
+        text-align: left;
+        overflow: hidden;
+        transition: transform .12s ease, box-shadow .12s ease;
+        font: inherit; color: inherit;
+        display: flex; flex-direction: column;
+    }
+    .re-picker-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        border-color: var(--re-primary);
+    }
+    .re-picker-thumb {
+        width: 100%; aspect-ratio: 4 / 3;
+        background: #f3f4f6;
+        overflow: hidden;
+        display: flex; align-items: center; justify-content: center;
+    }
+    .re-picker-thumb img {
+        width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .re-picker-thumb-empty::after {
+        content: "no preview"; color: var(--re-muted); font-size: 12px;
+    }
+    .re-picker-label {
+        padding: 10px 12px 0;
+        font-weight: 600; font-size: 14px;
+        color: var(--re-fg);
+    }
+    .re-picker-sub {
+        padding: 2px 12px 12px;
+        font-size: 12px; color: var(--re-muted);
+        text-transform: capitalize;
+    }
 }
 
-/* ---- Maquette 3D ------------------------------------------------------ */
+/* ─── 3D maquette viewer (still embed-only for now) ────────────────────── */
 .o_re_embed_maquette_3d {
     .re-scene { position: absolute; inset: 0; }
     .re-scene canvas { display: block; width: 100% !important; height: 100% !important; }

@@ -13,13 +13,23 @@
       4. Sends commands back into the iframe ("setTheme", "navigate
          back", "navigate home").
 
+    Default target server:
+       http://egyptairodoodev.isdeg.com:8069  (ISDEG dev host)
+
+    Before opening this file you MUST:
+       1. Edit erpDatabase + apiKey in the CFG block below, OR pass them
+          via the URL query: ?db=YOUR_DB&key=YOUR_KEY
+       2. Ensure the host's `real_estate_api.cors.allowed_origins`
+          config parameter lists whatever origin you serve this file
+          from. Locally that's typically `http://localhost:8000`.
+       3. The first request will mint an embed token whose
+          `allowed_origins` is set to `window.location.origin` — so the
+          page must be served (not opened as file://).
+
     To run locally:
        cd real_estate_api/examples
        python3 -m http.server 8000
-       open http://localhost:8000/example.html
-
-    The token's allowed_origins must include http://localhost:8000 —
-    the mint call below sets it explicitly.
+       open 'http://localhost:8000/example.html?db=YOUR_DB&key=YOUR_KEY'
 -->
 <html lang="en">
 <head>
@@ -114,7 +124,7 @@
 <body>
 
 <header>
-    <h1>Real Estate · Embed Demo</h1>
+    <h1>Real Estate · Embed Demo <span id="proj-tag" style="opacity:0.6;font-weight:400;font-size:14px;"></span></h1>
 
     <select id="kind-picker">
         <option value="plan-2d">2D Plan</option>
@@ -152,15 +162,36 @@
 // ─────────────────────────────────────────────────────────────────────
 // Config — adjust to your environment.
 // ─────────────────────────────────────────────────────────────────────
+// URL params (used for live experimentation without editing this file):
+//   ?project=N  → boot at a project root (picker if no master plan).
+//   ?property=N → boot directly at a property level, skipping the
+//                 project root. Use this to test deep drill states.
+//   Property wins when both are set.
+//
+// Defaults below point at the ISDEG dev host. The first thing a
+// developer wiring this up against another server should do is edit
+// these three values OR pass them via query params (?base= …).
+const PARAMS = new URLSearchParams(window.location.search);
+const URL_PROJECT  = parseInt(PARAMS.get("project")  || "", 10);
+const URL_PROPERTY = parseInt(PARAMS.get("property") || "", 10);
+const URL_BASE     = PARAMS.get("base") || "";
+const URL_DB       = PARAMS.get("db")   || "";
+const URL_KEY      = PARAMS.get("key")  || "";
+
 const CFG = {
-    erpBase:      "http://localhost:8069",
-    erpDatabase:  "realestate_all_modules",
-    // SECURITY: in production this key lives on YOUR backend, not in the
-    // browser. The page would call your own /mint-embed endpoint which
-    // proxies the request below. For the demo we put it here.
-    apiKey:       "669fce0819c5110eb9bd7f61443086887797ca6c",
-    projectId:    28,
-    pageOrigin:   window.location.origin,  // must be in allowed_origins
+    // Public dev host. Override via ?base= for a different one.
+    erpBase:      URL_BASE || "http://egyptairodoodev.isdeg.com:8069",
+    // Set to the database name on that host. Override via ?db=.
+    erpDatabase:  URL_DB   || "YOUR_DB_NAME_HERE",
+    // SECURITY: in production this key lives on YOUR backend, not the
+    // browser. Mint embed tokens from your own /mint endpoint and
+    // forward the embed_url to the page. The browser-side key here is
+    // demo-only convenience. Override via ?key= for quick testing.
+    apiKey:       URL_KEY  || "YOUR_API_KEY_HERE",
+    // resource_* drives the mint payload: either project or property.
+    resourceModel: URL_PROPERTY ? "realestate.property" : "realestate.project",
+    resourceId:    URL_PROPERTY || URL_PROJECT || 1,
+    pageOrigin:    window.location.origin,
 };
 
 // ─────────────────────────────────────────────────────────────────────
@@ -181,11 +212,19 @@ function log(line) {
 // 1. Mint an embed token, drop the URL into the iframe.
 // ─────────────────────────────────────────────────────────────────────
 async function loadEmbed() {
-    log(`minting ${$kind.value} token for project ${CFG.projectId}…`);
+    // 3D embeds only support projects; force project mode when the
+    // 3D Maquette tab is active even if a ?property= override is set.
+    const kind = $kind.value;
+    const resourceModel = (kind === "maquette-3d") ? "realestate.project" : CFG.resourceModel;
+    const resourceId    = (kind === "maquette-3d" && CFG.resourceModel === "realestate.property")
+        ? (URL_PROJECT || 28)
+        : CFG.resourceId;
+
+    log(`minting ${kind} token for ${resourceModel} ${resourceId}…`);
     const body = {
-        kind:            $kind.value,
-        resource_model:  "realestate.project",
-        resource_id:     CFG.projectId,
+        kind:            kind,
+        resource_model:  resourceModel,
+        resource_id:     resourceId,
         allowed_origins: CFG.pageOrigin,
         expires_in:      3600,
         theme:           { primary: "#ff5a00", mode: "light", lang: "en" },
@@ -307,6 +346,8 @@ document.getElementById("contact-btn").onclick = async () => {
 // ─────────────────────────────────────────────────────────────────────
 // Boot
 // ─────────────────────────────────────────────────────────────────────
+document.getElementById("proj-tag").textContent =
+    "· " + CFG.resourceModel.split('.').pop() + " " + CFG.resourceId;
 loadEmbed();
 </script>
 </body>

@@ -123,13 +123,23 @@ class RealEstateProject(models.Model):
     def _to_api_plan_2d_v1(self):
         """JSON tree for the 2D drill viewer.
 
-        Returns the entry node (project's master plan OR ``main_property_id``)
-        with its regions + immediate child stubs. Deeper levels are fetched
-        on demand by the viewer via /properties/<id>/plan-2d.
+        Three shapes, depending on how the project is configured:
+
+        1. ``has_master_plan_2d``: the project's image is the root
+           level; its regions overlay it; drill continues by region click.
+        2. ``main_property_id`` set: delegate straight to that property's
+           own ``_to_api_plan_2d_v1`` — the project becomes a breadcrumb
+           ancestor with no level of its own.
+        3. Neither: return a **picker tree** — no image, but a list of
+           the project's top-level properties so the viewer can render
+           cards for the user to pick where to start drilling.
+
+        Returns ``None`` only when even the picker would be empty (no
+        top-level property has a plan image and no master plan / main
+        property is configured). The controller maps that to a strict
+        404 — no silent fallback.
         """
         self.ensure_one()
-        # If the project has its own master plan, that's the root. Otherwise
-        # we delegate to the configured ``main_property_id``.
         if self.has_master_plan_2d:
             return {
                 'root_kind': 'project',
@@ -138,14 +148,45 @@ class RealEstateProject(models.Model):
                 'image_url': self._api_image_url('master_plan_2d', size='1920x1080'),
                 'regions': [self._building_region_to_api_dict(r)
                             for r in self.region_ids],
+                # Project level has no image gallery; keep the field present
+                # so the viewer's render path doesn't need a conditional.
+                'gallery': [],
                 'breadcrumbs': [{'id': self.id, 'kind': 'project', 'name': self.name}],
             }
         if self.main_property_id:
             return self.main_property_id._to_api_plan_2d_v1(
                 breadcrumbs=[{'id': self.id, 'kind': 'project', 'name': self.name}]
             )
-        # No silent fallback: caller (controller) decides what to do.
-        return None
+
+        # Picker mode: surface any top-level property that has its own
+        # plan image so the user can click one card to enter the drill.
+        Property = self.env['realestate.property'].sudo()
+        top_props = Property.search([
+            ('project_id', '=', self.id),
+            ('parent_id', '=', False),
+            ('has_plan_image', '=', True),
+        ])
+        if not top_props:
+            return None
+        return {
+            'root_kind': 'project',
+            'root_id': self.id,
+            'name': self.name or '',
+            'image_url': None,                              # no image at this level
+            'regions': [],
+            'gallery': [],
+            'drillable_children': [
+                {
+                    'id': p.id,
+                    'name': p.name or '',
+                    'hierarchy_level': p.hierarchy_level or '',
+                    'thumb_url': p._api_image_url('plan_image', size='400x300'),
+                }
+                for p in top_props
+            ],
+            'is_picker': True,
+            'breadcrumbs': [{'id': self.id, 'kind': 'project', 'name': self.name}],
+        }
 
     @api.model
     def _building_region_to_api_dict(self, region):

@@ -31,8 +31,8 @@
                     <div class="row g-4" t-if="projects">
                         <div t-foreach="projects" t-as="p" class="col-12 col-md-6 col-lg-4">
                             <a t-attf-href="/projects/#{p.id}" class="re-project-card">
-                                <div t-if="p.master_plan_2d" class="re-card-image"
-                                     t-attf-style="background-image:url(/web/image/realestate.project/#{p.id}/master_plan_2d);"/>
+                                <div t-if="p.has_master_plan_2d" class="re-card-image"
+                                     t-attf-style="background-image:url(/api/v1/image/realestate.project/#{p.id}/master_plan_2d?w=600&amp;h=400);"/>
                                 <div t-else="" class="re-card-image placeholder"/>
                                 <div class="re-card-body">
                                     <h3 class="re-card-title"><t t-esc="p.name"/></h3>
@@ -61,7 +61,7 @@
         <t t-call="website.layout">
             <div class="o_re_public_root o_re_public_project"
                  t-att-data-project-id="project.id"
-                 t-att-data-has-2d="'1' if project.has_master_plan_2d else '0'"
+                 t-att-data-has-2d="'1' if has_2d_entry else '0'"
                  t-att-data-has-3d="'1' if project.has_maquette else '0'">
 
                 <!-- Hero -->
@@ -115,22 +115,22 @@
                     <!-- Viewer card (full width) -->
                     <div class="re-viewer-card mb-4">
                         <ul class="nav nav-tabs re-viewer-tabs" role="tablist"
-                            t-if="project.has_master_plan_2d or project.has_maquette">
-                            <li class="nav-item" t-if="project.has_master_plan_2d">
+                            t-if="has_2d_entry or project.has_maquette">
+                            <li class="nav-item" t-if="has_2d_entry">
                                 <button class="nav-link active" data-bs-toggle="tab"
                                         data-bs-target="#tab2d" type="button">
-                                    <i class="fa fa-map-o me-1"/> 2D Master Plan
+                                    <i class="fa fa-map-o me-1"/> 2D Plan
                                 </button>
                             </li>
                             <li class="nav-item" t-if="project.has_maquette">
-                                <button t-att-class="'nav-link ' + ('active' if not project.has_master_plan_2d else '')"
+                                <button t-att-class="'nav-link ' + ('active' if not has_2d_entry else '')"
                                         data-bs-toggle="tab" data-bs-target="#tab3d" type="button">
                                     <i class="fa fa-cube me-1"/> 3D Maquette
                                 </button>
                             </li>
                         </ul>
                         <div class="tab-content re-viewer-body">
-                            <div t-if="project.has_master_plan_2d"
+                            <div t-if="has_2d_entry"
                                  class="tab-pane fade show active" id="tab2d" role="tabpanel">
                                 <div class="o_re_portal_2d_mount h-100"
                                      t-att-data-project-id="project.id"
@@ -141,7 +141,7 @@
                                 </div>
                             </div>
                             <div t-if="project.has_maquette"
-                                 t-att-class="'tab-pane fade ' + ('show active' if not project.has_master_plan_2d else '')"
+                                 t-att-class="'tab-pane fade ' + ('show active' if not has_2d_entry else '')"
                                  id="tab3d" role="tabpanel">
                                 <div class="o_re_portal_3d_mount h-100"
                                      t-att-data-project-id="project.id"

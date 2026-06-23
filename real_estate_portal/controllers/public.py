@@ -25,10 +25,14 @@ class PublicRealEstate(http.Controller):
     # Helpers
     # ------------------------------------------------------------------
     def _public_project(self, project_id):
-        """Return the project iff it has a maquette or a 2D plan — those are
-        the projects we expose publicly. Otherwise None (treat as not found)."""
+        """Return the project iff it exists. Visuals (2D plan, entry property,
+        3D maquette) are no longer required — projects without any of those
+        still get a portal page; the viewer tabs simply don't render.
+        Cancelled / never-active projects are still hidden."""
         proj = request.env['realestate.project'].sudo().browse(int(project_id)).exists()
-        if not proj or not (proj.has_master_plan_2d or proj.has_maquette):
+        if not proj:
+            return None
+        if proj.state == 'cancelled':
             return None
         return proj
 
@@ -37,8 +41,10 @@ class PublicRealEstate(http.Controller):
     # ------------------------------------------------------------------
     @http.route(['/projects'], type='http', auth='public', website=True, sitemap=True)
     def projects_index(self, **kw):
+        # List every non-cancelled project. Visuals are optional; cards
+        # without an image fall back to the SCSS placeholder block.
         projects = request.env['realestate.project'].sudo().search([
-            '|', ('has_master_plan_2d', '=', True), ('has_maquette', '=', True),
+            ('state', '!=', 'cancelled'),
         ], order='name')
         return request.render('real_estate_portal.public_projects_index', {
             'projects': projects,
@@ -49,12 +55,27 @@ class PublicRealEstate(http.Controller):
         proj = self._public_project(project_id)
         if not proj:
             return request.not_found()
-        units = request.env['realestate.property'].sudo().search([
+        Property = request.env['realestate.property'].sudo()
+        units = Property.search([
             ('project_id', '=', proj.id),
             ('hierarchy_level', '=', 'unit'),
         ])
+        # The 2D drill can fire when (a) the project has its own master
+        # plan, (b) the configured entry property has a plan image, or
+        # (c) some top-level property under the project has its own plan
+        # image (picker mode — the viewer renders cards to choose from).
+        has_2d_entry = bool(
+            proj.has_master_plan_2d
+            or (proj.main_property_id and proj.main_property_id.has_plan_image)
+            or Property.search_count([
+                ('project_id', '=', proj.id),
+                ('parent_id', '=', False),
+                ('has_plan_image', '=', True),
+            ])
+        )
         return request.render('real_estate_portal.public_project_page', {
             'project': proj,
+            'has_2d_entry': has_2d_entry,
             'units_total': len(units),
             'units_available': len(units.filtered(lambda u: u.state == 'available')),
             'units_reserved': len(units.filtered(lambda u: u.state == 'reserved')),

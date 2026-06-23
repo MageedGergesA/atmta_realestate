@@ -67,10 +67,22 @@ class RealEstateProperty(models.Model):
             })
         return urls
 
+    # Hierarchy levels at which the "sale status" concept is meaningful.
+    # Anything above a unit (compound / building / floor) is a traversal
+    # node, not something a customer buys — exposing a status for those
+    # would just hide them from the drill viewer for no reason.
+    _LEAF_LEVELS_FOR_STATUS = ('unit', 'room')
+
     def _public_sale_status(self):
-        """Return website-facing status, or ``None`` if this unit shouldn't
-        appear at all in public listings."""
+        """Return website-facing status, ``None`` for traversal nodes, or
+        ``None`` if this leaf unit shouldn't appear in public listings.
+
+        Buildings / floors / compounds always return ``None`` — the drill
+        viewer treats that as "render the region, no status badge".
+        """
         self.ensure_one()
+        if self.hierarchy_level not in self._LEAF_LEVELS_FOR_STATUS:
+            return None
         return PUBLIC_SALE_STATUS.get(self.sale_status)
 
     def _to_api_dict_v1(self, depth='summary'):
@@ -134,11 +146,42 @@ class RealEstateProperty(models.Model):
         return data
 
     def _to_api_plan_2d_v1(self, breadcrumbs=None):
-        """JSON tree for the 2D drill viewer, rooted at this property."""
+        """JSON tree for the 2D drill viewer, rooted at this property.
+
+        When the caller passes ``breadcrumbs`` (the project delegated to
+        us via ``main_property_id``), we just append ourselves to it.
+        Otherwise — this is a direct hit on ``/properties/<id>/plan-2d``
+        from the picker or a deep link — we synthesize the chain by
+        walking up ``parent_id`` and prepending the owning project so
+        the viewer can show the full path back to the root.
+        """
         self.ensure_one()
         if not self.has_plan_image:
             return None
-        crumbs = list(breadcrumbs or [])
+        if breadcrumbs is None:
+            crumbs = []
+            if self.project_id:
+                crumbs.append({
+                    'id': self.project_id.id,
+                    'kind': 'project',
+                    'name': self.project_id.name or '',
+                })
+            ancestors = []
+            node = self.parent_id
+            while node:
+                ancestors.append({
+                    'id': node.id,
+                    'kind': 'property',
+                    'name': node.name or '',
+                    'hierarchy_level': node.hierarchy_level or '',
+                })
+                node = node.parent_id
+            # ancestors walks immediate parent → root; reverse to get
+            # root → immediate parent order in the breadcrumb display.
+            ancestors.reverse()
+            crumbs.extend(ancestors)
+        else:
+            crumbs = list(breadcrumbs)
         crumbs.append({
             'id': self.id,
             'kind': 'property',
@@ -163,6 +206,10 @@ class RealEstateProperty(models.Model):
                 }
                 for c in drillable_children
             ],
+            # Gallery for the current level — the viewer renders a side
+            # strip of thumbnails; clicking one opens a lightbox. Empty
+            # list when the property has no attached images.
+            'gallery': self._api_gallery_urls(),
             'breadcrumbs': crumbs,
         }
 

@@ -123,10 +123,23 @@ class EmbedToken(models.Model):
                     ))
             if rec.kind == 'plan-2d':
                 if rec.resource_model == 'realestate.project':
-                    if not (resource.master_plan_2d or resource.main_property_id):
+                    # The plan-2d viewer renders one of three shapes:
+                    # master plan image, delegated main_property_id, or
+                    # picker grid of top-level properties that have
+                    # their own plan_image. Any of the three is a valid
+                    # entry; refuse only when the project has none.
+                    has_picker_entry = bool(rec.env['realestate.property'].sudo().search_count([
+                        ('project_id', '=', resource.id),
+                        ('parent_id', '=', False),
+                        ('has_plan_image', '=', True),
+                    ]))
+                    if not (resource.master_plan_2d
+                            or resource.main_property_id
+                            or has_picker_entry):
                         raise ValidationError(_(
-                            "Project has no master plan and no entry property — "
-                            "cannot mint a 2D embed token."
+                            "Project has no 2D entry — set a master plan, "
+                            "a main entry property, or attach a plan image "
+                            "to at least one top-level property."
                         ))
                 else:
                     if not resource.plan_image:
