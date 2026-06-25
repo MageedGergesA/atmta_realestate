@@ -34,7 +34,7 @@
     }
     const config = readJsonScript('embed-bridge-config', {
         version: 'v1', kind: '', resource_model: '', resource_id: 0,
-        api_base: '/api/v1', allowed_origins: [],
+        api_base: '/api/v1', db: '', allowed_origins: [],
     });
     const initialTheme = readJsonScript('embed-theme', {});
 
@@ -112,8 +112,37 @@
     }
 
     // --- API fetch wrapper -------------------------------------------------
+    // We send no cookies (multi-DB embeds: a third-party origin's cookie
+    // jar wouldn't carry one anyway). The db routed for this request is
+    // baked into the bridge config by the embed shell — append it to
+    // every fetch so the API router picks the right database. Image URLs
+    // returned in JSON bodies (`/api/v1/image/...`) get the same
+    // treatment so <img> tags pointing at them also resolve.
+    function _withDb(relPath) {
+        if (!config.db) return `${config.api_base}${relPath}`;
+        const sep = relPath.includes('?') ? '&' : '?';
+        return `${config.api_base}${relPath}${sep}db=${encodeURIComponent(config.db)}`;
+    }
+    function _absWithDb(absPath) {
+        if (!config.db || typeof absPath !== 'string') return absPath;
+        if (!absPath.startsWith('/api/v1/')) return absPath;
+        const sep = absPath.includes('?') ? '&' : '?';
+        return `${absPath}${sep}db=${encodeURIComponent(config.db)}`;
+    }
+    function _rewriteUrls(node) {
+        if (!node || typeof node !== 'object') return;
+        if (Array.isArray(node)) { node.forEach(_rewriteUrls); return; }
+        for (const k in node) {
+            const v = node[k];
+            if (typeof v === 'string' && v.startsWith('/api/v1/')) {
+                node[k] = _absWithDb(v);
+            } else if (v && typeof v === 'object') {
+                _rewriteUrls(v);
+            }
+        }
+    }
     async function apiGet(path) {
-        const res = await fetch(`${config.api_base}${path}`, {
+        const res = await fetch(_withDb(path), {
             credentials: 'omit',
             headers: { 'Accept': 'application/json' },
         });
@@ -126,7 +155,9 @@
             e.code = err.code; e.status = res.status;
             throw e;
         }
-        return res.json();
+        const data = await res.json();
+        _rewriteUrls(data);
+        return data;
     }
 
     window.ReEmbed = {

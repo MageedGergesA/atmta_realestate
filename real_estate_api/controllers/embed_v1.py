@@ -105,6 +105,11 @@ def _bridge_config(token_record):
         'resource_model': token_record.resource_model,
         'resource_id': token_record.resource_id,
         'api_base': '/api/v1',
+        # Iframe JS sends no cookies (credentials: 'omit'), so each
+        # /api/v1/* call must carry the db forward as ?db=. The mint
+        # endpoint already stamps ?db= on the embed_url; we surface the
+        # same value here so apiGet can append it to every fetch.
+        'db': request.db or '',
         'allowed_origins': [
             o.strip() for o in (token_record.allowed_origins or '').split(',')
             if o.strip()

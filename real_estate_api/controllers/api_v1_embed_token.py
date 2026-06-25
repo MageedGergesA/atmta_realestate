@@ -76,6 +76,12 @@ class EmbedTokenApiV1(http.Controller):
             'real_estate_api.public.base_url') or request.httprequest.host_url.rstrip('/')
         path = f"/embed/v1/{kind}/{token.token}"
         qs = {}
+        # Carry the current database forward into the URL so the browser
+        # (which cannot set X-Odoo-Database on iframe loads) still routes
+        # to the correct db. db_router.py honours ?db= the same way it
+        # honours the header.
+        if request.db:
+            qs['db'] = request.db
         if theme and isinstance(theme, dict):
             if theme.get('lang'):
                 qs['lang'] = theme['lang']
