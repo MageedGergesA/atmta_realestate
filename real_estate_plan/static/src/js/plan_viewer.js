@@ -30,6 +30,7 @@ export class PropertyPlanViewer extends Component {
         className: { type: String, optional: true },
         globalState: { type: Object, optional: true },
         resId: { type: [Number, Boolean], optional: true },
+        updateActionState: { type: Function, optional: true },
     };
 
     setup() {
