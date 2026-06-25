@@ -12,6 +12,7 @@ ALSO strip ``X-Frame-Options`` because Odoo's default ``ir.http`` adds
 
 import json
 import logging
+import re
 
 import werkzeug.exceptions
 from markupsafe import Markup
@@ -19,6 +20,16 @@ from markupsafe import Markup
 from odoo import _, http
 from odoo.exceptions import AccessError, MissingError
 from odoo.http import Response, request
+
+
+# Bundle URLs emitted by ``t-call-assets`` look like
+# ``/web/assets/<hash>/<bundle>.min.<ext>``. On a multi-DB host the
+# browser, lacking the X-Odoo-Database header for iframe-loaded
+# resources, can't route them — we suffix ``?db=<current>`` so the
+# router resolves the same database that served the shell.
+_ASSET_URL_RE = re.compile(
+    rb'(/web/assets/[A-Za-z0-9]+/[^"\'?\s]+\.(?:min\.)?(?:js|css))'
+)
 
 
 def _safe_inline_json(value):
@@ -77,6 +88,15 @@ def _embed_response(template, **values):
         # Embed routes are stateless — never cache the HTML shell longer
         # than the token expiry, browsers can re-fetch.
         response.headers['Cache-Control'] = 'private, max-age=60'
+
+        # Carry the current database forward into every t-call-assets
+        # bundle URL. Browsers can't set X-Odoo-Database on iframe-loaded
+        # subresources, and dbfilter alone is not enough when the host
+        # serves multiple databases — the only place we can inject the
+        # routing hint is the URL itself.
+        if request.db:
+            db_qs = f"?db={request.db}".encode('ascii')
+            response.data = _ASSET_URL_RE.sub(rb'\1' + db_qs, response.data)
     return response
 
 
