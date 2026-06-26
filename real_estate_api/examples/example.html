@@ -229,7 +229,13 @@ async function loadEmbed() {
         expires_in:      3600,
         theme:           { primary: "#ff5a00", mode: "light", lang: "en" },
     };
-    const r = await fetch(`${CFG.erpBase}/api/v1/embed-tokens`, {
+    // ?db= is duplicated in the URL alongside the X-Odoo-Database header
+    // because the browser's CORS preflight (OPTIONS) does NOT carry custom
+    // request headers — without ?db= in the URL the multi-DB Odoo can't
+    // route the preflight and 404s, which makes the browser block the
+    // POST. The header is still sent on the POST itself for symmetry with
+    // the Postman flow.
+    const r = await fetch(`${CFG.erpBase}/api/v1/embed-tokens?db=${encodeURIComponent(CFG.erpDatabase)}`, {
         method: "POST",
         headers: {
             "Authorization":   `Bearer ${CFG.apiKey}`,
@@ -325,7 +331,7 @@ $kind.onchange = () => loadEmbed();
 
 document.getElementById("contact-btn").onclick = async () => {
     // Submit an interest lead via the public API (no key needed).
-    const r = await fetch(`${CFG.erpBase}/api/v1/interests`, {
+    const r = await fetch(`${CFG.erpBase}/api/v1/interests?db=${encodeURIComponent(CFG.erpDatabase)}`, {
         method: "POST",
         headers: {
             "X-Odoo-Database": CFG.erpDatabase,
