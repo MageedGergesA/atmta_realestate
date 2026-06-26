@@ -703,21 +703,100 @@ The 2D drill viewer and the 3D maquette are exposed as **chromeless
 HTML pages** that 3rd-party websites embed via `<iframe>`. Access is
 controlled by a per-resource, time-limited, origin-pinned token.
 
+### What this gives the 3rd-party developer
+
+You drop a single `<iframe>` on your real-estate listing page. Visitors
+get a fully-interactive 2D site plan drill-down (compound → building →
+unit) **or** a 3D maquette of the project, with no Odoo chrome — just
+your branding (colors, language, dark/light mode). Visitors clicking a
+unit emit a `postMessage` your page can listen to (e.g. to pre-fill an
+"I'm interested" form).
+
+You DO NOT need to:
+- Ship any Odoo JS to your site (the iframe brings its own).
+- Store secrets in browser code (the API key stays server-side).
+- Worry about CORS for the viewer itself (the iframe is same-origin
+  with the API — only the token mint is cross-origin).
+
+You DO need:
+- An API key (a 40-char hex string) issued for your integration.
+- A server-side endpoint that mints a fresh token per page-render and
+  hands the URL to the browser.
+
 ### High-level flow
 
 ```
- ┌────────────────┐   1. mint token (server-to-server)   ┌─────────────────┐
- │ Website server │ ───────────────────────────────────▶ │   Real Estate   │
- │                │ ◀──────────  201 + embed_url ─────── │       API       │
- └───────┬────────┘                                       └─────────────────┘
-         │ 2. render <iframe src=embed_url>
-         ▼
- ┌────────────────┐   3. fetch JSON via /api/v1/...     ┌─────────────────┐
- │  Browser /     │ ──────────────────────────────────▶ │   Real Estate   │
- │  iframe        │ ◀────────  JSON ─────────────────── │       API       │
- │                │ ◀── postMessage events ──────────── │                 │
- └────────────────┘                                      └─────────────────┘
+ STEP 1 — Server-to-server: your backend mints a token using the API key.
+ STEP 2 — Page render: your backend injects <iframe src="<embed_url>"> into the HTML.
+ STEP 3 — Browser loads the iframe. The iframe's own JS calls /api/v1/... for data.
+ STEP 4 — Visitor interacts. The iframe posts events to your page; your page can
+           reply with theme/navigation commands.
+
+ ┌────────────────────┐                           ┌────────────────────┐
+ │  Your website      │                           │  Real Estate API   │
+ │  backend           │  (1) POST /embed-tokens   │  egyptairodoodev   │
+ │  (Python/Node/PHP) │ ─── Bearer api_key ─────▶ │  (Odoo server)     │
+ │                    │ ◀── {token, embed_url} ── │                    │
+ └─────────┬──────────┘                           └─────────┬──────────┘
+           │ (2) emits HTML with                            │
+           │     <iframe src=embed_url>                     │
+           ▼                                                │
+ ┌────────────────────┐                                     │
+ │  Visitor's browser │  (3) GET <embed_url>  (iframe)      │
+ │                    │ ──────────────────────────────────▶ │
+ │  ┌──────────────┐  │ ◀── 200 chromeless HTML + JS+CSS ── │
+ │  │ Your page    │  │                                     │
+ │  └──────┬───────┘  │  (3b) JS in iframe: GET /api/v1/... │
+ │         │          │ ──────────────────────────────────▶ │
+ │  ┌──────▼───────┐  │ ◀── JSON (regions, plan image) ──── │
+ │  │  <iframe>    │  │                                     │
+ │  │  drill-down  │  │  (3c) <img src=/api/v1/image/...>   │
+ │  │  viewer      │  │ ──────────────────────────────────▶ │
+ │  └──────┬───────┘  │ ◀── PNG/JPEG ────────────────────── │
+ │         │          │                                     │
+ │  (4) postMessage   │                                     │
+ │     ⇅              │                                     │
+ │  unitSelected,     │                                     │
+ │  navigated, …      │                                     │
+ └────────────────────┘                                     │
 ```
+
+### The full cycle in plain English
+
+1. **Visitor opens your page** → your server (Django/Node/PHP/etc.)
+   knows which project's viewer to show.
+2. **Your server mints a token**. It calls `POST /api/v1/embed-tokens`
+   over HTTPS with your **API key**. The body says which kind (2D or 3D)
+   and which resource (project or property), plus the list of origins
+   allowed to embed it (your website domain). The API returns a `token`
+   and a ready-to-use `embed_url`.
+3. **Your server renders HTML** with `<iframe src="<embed_url>">`. The
+   API key NEVER goes to the browser — only the token.
+4. **The browser loads the iframe**. The first request is the chromeless
+   HTML shell; the shell triggers the JS bundle and CSS, which boot up
+   the viewer.
+5. **The viewer fetches its data** from the public `/api/v1/...` JSON
+   endpoints (no auth needed for read endpoints; same origin so no
+   CORS).
+6. **The visitor interacts** — clicks a polygon, drills into a building,
+   selects a unit. The iframe posts events (`unitSelected`, `navigated`,
+   …) to your parent page. Your page can also send commands back
+   (change theme, jump to a specific property, …).
+7. **The token expires** after `expires_in` seconds (default 1 hour).
+   Past expiry the iframe goes 404. Mint a fresh one for the next page
+   render — they're cheap.
+
+### Why tokens (and not the API key) for the iframe?
+
+The API key authenticates the *server* that's authorized to use the
+service. If you put the key in the browser, anyone viewing source could
+copy it and use it from any site for any resource until you revoke it.
+
+A token authorizes **one resource**, **for a bounded time**, **from a
+specific origin**. Stealing the URL out of the page source gives the
+thief access to that one resource from that one origin, and only
+until the timer runs out. Plus you get a full audit row per token in
+the Odoo backend.
 
 ### 8.1 Mint an embed token
 
@@ -869,6 +948,119 @@ document.querySelector("#dark-toggle").addEventListener("click", () => {
 | `403` | Origin not in the token's `allowed_origins` | Pass the right origin at mint time |
 | `200` but `error` event from postMessage | API JSON fetch failed inside the iframe | Inspect `event.payload.code` |
 
+### 8.6 Worked end-to-end example (no framework)
+
+Here is the simplest possible integration — a server-rendered HTML page
+with a `<form>` that asks the visitor for a project ID and then embeds
+the 2D viewer for it. Use it as a template for any backend stack.
+
+**Server side (Python / Flask — equivalent in any language):**
+
+```python
+import os
+import requests
+from flask import Flask, render_template_string, request
+
+app = Flask(__name__)
+
+ERP_BASE     = "https://erp.atmta.com"
+ERP_DB       = "atmta_prod"
+ERP_API_KEY  = os.environ["ATMTA_API_KEY"]          # NEVER hard-code
+SITE_ORIGIN  = "https://atmta-website.com"
+
+def mint_embed_token(project_id: int) -> str:
+    r = requests.post(
+        f"{ERP_BASE}/api/v1/embed-tokens",
+        headers={
+            "Authorization":   f"Bearer {ERP_API_KEY}",
+            "X-Odoo-Database": ERP_DB,
+            "Content-Type":    "application/json",
+        },
+        json={
+            "kind":            "plan-2d",
+            "resource_model":  "realestate.project",
+            "resource_id":     project_id,
+            "allowed_origins": SITE_ORIGIN,
+            "expires_in":      3600,
+            "theme": {"primary": "#ff5a00", "mode": "light", "lang": "en"},
+        },
+        timeout=10,
+    )
+    r.raise_for_status()
+    return r.json()["embed_url"]                    # ready-to-use URL
+
+PAGE = """
+<!doctype html>
+<html><head><title>Project Viewer</title></head>
+<body>
+  <h1>Project {{ pid }}</h1>
+  <iframe
+      id="re-frame"
+      src="{{ embed_url }}"
+      style="border:0; width:100%; height:600px"
+      allow="fullscreen"
+      loading="lazy"></iframe>
+  <div id="status">Loading…</div>
+  <script>
+    const ERP_ORIGIN = "{{ erp_origin }}";
+    const frame = document.getElementById("re-frame");
+    window.addEventListener("message", (e) => {
+        if (e.origin !== ERP_ORIGIN) return;
+        const m = e.data || {};
+        if (m.source !== "re-embed") return;
+        if (m.type === "ready" || m.type === "resize") {
+            frame.style.height = m.payload.height + "px";
+            document.getElementById("status").textContent = "OK";
+        }
+        if (m.type === "unitSelected") {
+            alert("Visitor picked unit " + m.payload.name);
+        }
+    });
+  </script>
+</body></html>
+"""
+
+@app.route("/projects/<int:pid>")
+def project_page(pid):
+    return render_template_string(
+        PAGE,
+        pid=pid,
+        embed_url=mint_embed_token(pid),
+        erp_origin=ERP_BASE,
+    )
+
+if __name__ == "__main__":
+    app.run(port=5000)
+```
+
+That is the whole integration — about 60 lines of code.
+
+When a visitor opens `https://your-site.com/projects/28`:
+
+| Where | Request | Response |
+|---|---|---|
+| Server | `POST {ERP_BASE}/api/v1/embed-tokens` (Bearer auth) | `201 {token, embed_url}` |
+| Server | Renders HTML containing `<iframe src=embed_url>` | `200 text/html` |
+| Browser | `GET {ERP_BASE}/embed/v1/plan-2d/<token>?db=...` | `200` chromeless HTML |
+| Iframe | `GET {ERP_BASE}/web/assets/<hash>/embed_plan_2d.min.{js,css}?db=...` | `200` |
+| Iframe JS | `GET {ERP_BASE}/api/v1/projects/28/plan-2d?db=...` | `200` JSON (regions, image URL) |
+| Iframe `<img>` | `GET {ERP_BASE}/api/v1/image/realestate.project/28/master_plan_2d?...&db=...` | `200` PNG |
+| Iframe → host | `postMessage { type: "ready", payload: { height } }` | host resizes the iframe |
+| Visitor clicks polygon | `GET {ERP_BASE}/api/v1/properties/<id>/plan-2d?db=...` | `200` JSON for the drill |
+| Visitor reaches a leaf unit | `postMessage { type: "unitSelected", payload: { id, name, price, … } }` | host shows lead form |
+
+### 8.7 Common pitfalls
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| `401 unauthorized` on mint | API key missing/wrong scope | Mint a new key with the `real_estate_api` scope from My Profile → API Keys |
+| `400 validationerror "Project has no 2D entry"` | Trying to mint 2D on a project that has neither `master_plan_2d` nor any top-level property with `plan_image` | Configure one in the backend before minting |
+| `403 forbidden` on the embed URL | Visitor's browser sent an `Origin` not in `allowed_origins` | Pass the exact production origin (scheme + host + port, no trailing slash) at mint time |
+| Iframe stays blank, console shows CORS error on `embed-tokens` | Cross-origin POST from your `<script>` blocked | The mint should be **server-to-server**, not browser-side. The browser only sees the `embed_url`. |
+| Iframe stays blank, no error | DB not routed (multi-DB host) | The `embed_url` returned by mint already contains `?db=...` — use it verbatim, do not strip the query string |
+| Iframe loads but no images | Same as above for image URLs | Use the URL fields as returned by the API verbatim — they include the `?db=` suffix and a cache-busting `unique=` token |
+| Token works for 5 minutes then 404s | Expired | Mint a fresh token per page render (cheap — they're audit rows, not heavy compute) |
+
 ---
 
 ## 9. Error Reference
@@ -950,6 +1142,37 @@ Required collection variables:
 The other variables (`first_project_id`, `embed_token_2d`, …) are
 filled in automatically by request-level test scripts as you run the
 collection top-to-bottom.
+
+### How `{{embed_token_2d}}` gets populated
+
+The "Mint Embed Token (2D Plan)" request has this snippet in its
+**Tests** tab:
+
+```js
+const data = pm.response.json();
+pm.collectionVariables.set("embed_token_2d", data.token);
+pm.collectionVariables.set("embed_url_2d",   data.embed_url);
+```
+
+So after you fire the mint, both `{{embed_token_2d}}` (the raw token
+string) and `{{embed_url_2d}}` (the ready-to-use full URL with
+`?db=...` already baked in) are available to every following request.
+
+The "Render 2D Embed" request then uses:
+
+```
+GET {{base_url}}/embed/v1/plan-2d/{{embed_token_2d}}?db={{db_name}}
+```
+
+— or, equivalently:
+
+```
+GET {{embed_url_2d}}
+```
+
+If you copy a single request out of the collection (rather than running
+the whole thing top-to-bottom), remember to fire the mint first or
+`{{embed_token_2d}}` will be empty and the embed GET returns 404.
 
 ---
 
