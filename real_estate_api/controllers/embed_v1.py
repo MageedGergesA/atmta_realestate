@@ -93,10 +93,16 @@ def _embed_response(template, **values):
         # bundle URL. Browsers can't set X-Odoo-Database on iframe-loaded
         # subresources, and dbfilter alone is not enough when the host
         # serves multiple databases — the only place we can inject the
-        # routing hint is the URL itself. ``get_data()`` materialises the
-        # body (Odoo's render can leave it as a lazy iterator) and
-        # ``set_data()`` recomputes Content-Length.
+        # routing hint is the URL itself.
+        #
+        # ``request.render()`` returns a LAZY response in Odoo 18: the
+        # template is stored on the response and only rendered to bytes
+        # when Odoo's WSGI dispatch calls ``flatten()`` AFTER the
+        # endpoint returns. We have to call it ourselves before reading
+        # the body, or ``get_data()`` returns empty.
         if request.db:
+            if getattr(response, 'template', None):
+                response.flatten()
             body = response.get_data()
             if body:
                 db_qs = f"?db={request.db}".encode('ascii')
