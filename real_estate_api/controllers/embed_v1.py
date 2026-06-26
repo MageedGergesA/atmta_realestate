@@ -93,10 +93,14 @@ def _embed_response(template, **values):
         # bundle URL. Browsers can't set X-Odoo-Database on iframe-loaded
         # subresources, and dbfilter alone is not enough when the host
         # serves multiple databases — the only place we can inject the
-        # routing hint is the URL itself.
+        # routing hint is the URL itself. ``get_data()`` materialises the
+        # body (Odoo's render can leave it as a lazy iterator) and
+        # ``set_data()`` recomputes Content-Length.
         if request.db:
-            db_qs = f"?db={request.db}".encode('ascii')
-            response.data = _ASSET_URL_RE.sub(rb'\1' + db_qs, response.data)
+            body = response.get_data()
+            if body:
+                db_qs = f"?db={request.db}".encode('ascii')
+                response.set_data(_ASSET_URL_RE.sub(rb'\1' + db_qs, body))
     return response
 
 
