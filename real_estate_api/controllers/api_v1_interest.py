@@ -25,6 +25,7 @@ from ._base import (
 
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 PHONE_RE = re.compile(r"^\+?[0-9\s\-()]{6,20}$")
+EXTERNAL_REF_RE = re.compile(r"^[A-Za-z0-9._:\-]{1,128}$")
 MAX_NAME = 120
 MAX_MESSAGE = 2000
 
@@ -43,6 +44,7 @@ class InterestApiV1(http.Controller):
         message = (body.get('message') or '').strip()[:MAX_MESSAGE]
         project_id = body.get('project_id')
         unit_id = body.get('unit_id') or body.get('property_id')
+        partner_external_ref = (body.get('partner_external_ref') or '').strip()
 
         # ---- validation (strict, no defaults that hide bad input)
         if not name:
@@ -55,6 +57,27 @@ class InterestApiV1(http.Controller):
             raise werkzeug.exceptions.BadRequest(_("Invalid email format."))
         if phone and not PHONE_RE.match(phone):
             raise werkzeug.exceptions.BadRequest(_("Invalid phone format."))
+
+        # Optional link to a previously-synced partner. Strict: if the
+        # caller passes a ref it MUST resolve — we won't silently drop
+        # the link or auto-create the partner here (use POST
+        # /api/v1/partners for that, then resend the interest).
+        partner = None
+        if partner_external_ref:
+            if not EXTERNAL_REF_RE.match(partner_external_ref):
+                raise werkzeug.exceptions.BadRequest(_(
+                    "'partner_external_ref' must be 1-128 chars of "
+                    "[A-Za-z0-9._:-]."
+                ))
+            partner = env['res.partner'].sudo().search([
+                ('realestate_api_source', '=', True),
+                ('realestate_api_external_ref', '=', partner_external_ref),
+            ], limit=1)
+            if not partner:
+                raise werkzeug.exceptions.NotFound(_(
+                    "No API-created partner with external_ref=%s. "
+                    "Create it via POST /api/v1/partners first."
+                ) % partner_external_ref)
 
         project = None
         prop = None
@@ -134,6 +157,10 @@ class InterestApiV1(http.Controller):
             'realestate_api_source': True,
             'realestate_api_project_id': project.id if project else False,
             'realestate_api_property_id': prop.id if prop else False,
+            # Attach to the synced partner when provided so sales sees
+            # one row per real person instead of one anonymous lead per
+            # interaction.
+            'partner_id': partner.id if partner else False,
         }
         lead = env['crm.lead'].sudo().create(vals)
 

@@ -21,11 +21,12 @@ the contract for 3rd-party websites and integrations.
 5. [2D Plan Drill API](#5-2d-plan-drill-api)
 6. [3D Maquette API](#6-3d-maquette-api)
 7. [Interests (lead capture)](#7-interests-lead-capture)
-8. [Embed Tokens & Iframe Flow](#8-embed-tokens--iframe-flow)
-9. [Error Reference](#9-error-reference)
-10. [Rate Limits](#10-rate-limits)
-11. [What we never expose](#11-what-we-never-expose)
-12. [Postman Collection](#12-postman-collection)
+8. [Customer Contact Sync](#8-customer-contact-sync)
+9. [Embed Tokens & Iframe Flow](#9-embed-tokens--iframe-flow)
+10. [Error Reference](#10-error-reference)
+11. [Rate Limits](#11-rate-limits)
+12. [What we never expose](#12-what-we-never-expose)
+13. [Postman Collection](#13-postman-collection)
 
 ---
 
@@ -132,7 +133,7 @@ env.cr.commit()" | python3 odoo-bin shell -c odoo.conf -d atmta_prod --no-http
 | `401` | `unauthorized` | API key required but absent |
 | `401` | `unauthorized` | Key present but invalid / wrong scope / inactive user |
 | `403` | `forbidden` | `X-Odoo-Database` header conflicts with a session cookie |
-| `429` | `rate_limited` | Too many requests; see [Rate Limits](#10-rate-limits) |
+| `429` | `rate_limited` | Too many requests; see [Rate Limits](#11-rate-limits) |
 
 ---
 
@@ -644,7 +645,8 @@ Request body:
   "phone": "+966501234567",
   "project_id": 28,
   "unit_id": null,
-  "message": "Interested in a 3BR unit."
+  "message": "Interested in a 3BR unit.",
+  "partner_external_ref": "site:user:1234"
 }
 ```
 
@@ -658,6 +660,7 @@ Field rules:
 | `message` | string | no | Max 2000 chars |
 | `project_id` | int | no | Must reference a publicly-listed project |
 | `unit_id` (alias: `property_id`) | int | no | Must be `available` or `reserved` |
+| `partner_external_ref` | string | no | If present, links the lead to the partner with that ref. Must already exist (mint via [`POST /api/v1/partners`](#8-customer-contact-sync) first) — strict 404 on miss. |
 
 Cross-checks: if both `project_id` and `unit_id` are given and the unit
 belongs to a different project, the request is rejected with `400`.
@@ -697,7 +700,179 @@ A replay returns `200` (not `201`) with an additional
 
 ---
 
-## 8. Embed Tokens & Iframe Flow
+## 8. Customer Contact Sync
+
+When the 3rd-party site has its own user accounts (registration, login,
+profile pages), it can mirror each user as a `res.partner` in Odoo via
+this endpoint. The 3rd-party's own user identifier is stored in
+`realestate_api_external_ref` and is the upsert key, so the same call
+covers both **create on signup** and **update on profile edit**.
+
+### Why mirror users at all?
+
+- A future `POST /api/v1/interests` can be extended to accept
+  `partner_external_ref`, so lead capture attaches to the right Odoo
+  contact instead of creating duplicates.
+- Sales sees one row per real person rather than one lead per
+  interaction.
+- Lays the groundwork for a self-service portal later (visitor logs in
+  on the 3rd-party site, sees their reservations pulled from Odoo).
+
+### `POST /api/v1/partners`
+
+Bearer auth required (this is a mutating, integration-only endpoint).
+
+```bash
+curl -X POST "https://erp.atmta.com/api/v1/partners" \
+  -H "Authorization: Bearer 96ee21de8..." \
+  -H "X-Odoo-Database: atmta_prod" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "external_ref": "site-user-1234",
+    "name":         "Jane Doe",
+    "email":        "jane@example.com",
+    "phone":        "+201001234567",
+    "street":       "12 Tahrir Street",
+    "city":         "Cairo",
+    "country":      "EG"
+  }'
+```
+
+Field rules:
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `external_ref` | string | yes | 1-128 chars, `[A-Za-z0-9._:-]`. The 3rd-party's stable user ID. Same value across update calls. |
+| `name` | string | yes | Max 120 chars |
+| `email` | string | no | RFC-ish format check |
+| `phone` | string | no | 6-20 digits with optional `+`, spaces, `-`, `()` |
+| `street` | string | no | Max 255 chars |
+| `city` | string | no | Max 96 chars |
+| `country` | string | no | ISO-3166 alpha-2 code, e.g. `EG`, `SA`, `US`. Unknown code → 400. |
+
+Responses:
+
+**Create (first time we see `external_ref`)** — HTTP 201:
+
+```json
+{
+  "id": 4587,
+  "external_ref": "site-user-1234",
+  "created": true
+}
+```
+
+**Update (same `external_ref` as a previous call)** — HTTP 200:
+
+```json
+{
+  "id": 4587,
+  "external_ref": "site-user-1234",
+  "created": false
+}
+```
+
+Only the fields you re-send are touched. Omitting `phone` does NOT
+clear the existing phone — only `name` always overwrites (it's
+required on every call).
+
+**Conflict (`external_ref` is already held by a backend-created
+contact)** — HTTP 409:
+
+```json
+{
+  "error": {
+    "code": "conflict",
+    "message": "external_ref site-user-1234 is already held by a non-API contact (id=99). Pick a different ref or have an admin clear it."
+  }
+}
+```
+
+We never silently take over a contact we didn't mint via the API — pick
+a different `external_ref` scheme (e.g. prefix it: `site:1234`) so it
+can't collide with anything sales might create by hand.
+
+#### Concurrency
+
+If two parallel POSTs race past the in-Python upsert check with the
+same `external_ref`, the loser hits the partial unique index and is
+caught by a savepoint. The loser then returns 200 + `created: false`
+with the winner's `id` — i.e. the operation is correct under
+concurrency, just one of the two callers learns it didn't actually
+create the row.
+
+### `GET /api/v1/partners/by-ref/<external_ref>`
+
+Look up a previously-synced partner by its 3rd-party reference.
+Bearer auth required.
+
+```bash
+curl "https://erp.atmta.com/api/v1/partners/by-ref/site-user-1234" \
+  -H "Authorization: Bearer 96ee21de8..." \
+  -H "X-Odoo-Database: atmta_prod"
+```
+
+Response (200):
+
+```json
+{
+  "id": 4587,
+  "external_ref": "site-user-1234",
+  "name":  "Jane Doe",
+  "email": "jane@example.com",
+  "phone": "+201001234567",
+  "street": "",
+  "city": "Cairo",
+  "country": "EG"
+}
+```
+
+Returns **404** if no API-created partner has that ref. Refs held by
+backend-created contacts also read as not-found (we never leak the
+existence of non-API partners through this lookup).
+
+Use this when your site has lost the Odoo `id` (cache wipe, fresh
+deploy, debugging) and needs to recover it from the ref. A 404 means
+"not synced yet" — call `POST /api/v1/partners` to mint it.
+
+### Storage model
+
+API-created partners get two flags:
+
+- `realestate_api_source = true` (filter chip in the backend)
+- `realestate_api_external_ref = "<your-ref>"` (indexed, unique among API rows)
+
+There is no separate "API contacts" model — they're regular
+`res.partner` rows so sales workflows (assigning, merging, converting
+leads to opportunities, …) work unchanged.
+
+### Idempotency
+
+The upsert semantics mean **the operation is naturally idempotent** —
+re-sending the same body produces the same DB state. You don't need
+the `Idempotency-Key` header here (it has no effect on this endpoint).
+
+### Rate limit
+
+Inherits the default authed throttle (300/min per API key). There is
+no extra per-IP throttle like Interests has — the assumption is the
+3rd-party server, not visitor browsers, calls this endpoint.
+
+### Error envelope
+
+```json
+{ "error": { "code": "bad_request", "message": "'country' must be a 2-letter ISO code (e.g. 'EG')." } }
+```
+
+| HTTP | `code` | Cause |
+|---|---|---|
+| `400` | `bad_request` | Missing required field, bad email/phone, malformed `external_ref`, unknown country |
+| `401` | `unauthorized` | API key missing / wrong scope |
+| `409` | `conflict` | `external_ref` already held by a non-API contact |
+
+---
+
+## 9. Embed Tokens & Iframe Flow
 
 The 2D drill viewer and the 3D maquette are exposed as **chromeless
 HTML pages** that 3rd-party websites embed via `<iframe>`. Access is
@@ -798,7 +973,7 @@ thief access to that one resource from that one origin, and only
 until the timer runs out. Plus you get a full audit row per token in
 the Odoo backend.
 
-### 8.1 Mint an embed token
+### 9.1 Mint an embed token
 
 `POST /api/v1/embed-tokens` (Bearer auth required).
 
@@ -850,7 +1025,7 @@ Validation rejections (400):
 - `expires_in` outside 60–2,592,000.
 - `allowed_origins` empty.
 
-### 8.2 Render the iframe
+### 9.2 Render the iframe
 
 ```html
 <iframe
@@ -873,7 +1048,7 @@ Cache-Control: private, max-age=60
 `X-Frame-Options` is NOT set (it would override `frame-ancestors` and
 only supports one origin).
 
-### 8.3 postMessage protocol
+### 9.3 postMessage protocol
 
 The iframe and parent communicate via `window.postMessage`. Every
 message is shaped `{ source, version, type, payload }`.
@@ -899,7 +1074,7 @@ message is shaped `{ source, version, type, payload }`.
 | `highlight` | `{ regionId }` | Flash a polygon |
 | `ping` | `{}` | Liveness check |
 
-### 8.4 Host-side example
+### 9.4 Host-side example
 
 ```html
 <iframe id="re-frame" src="..."></iframe>
@@ -940,7 +1115,7 @@ document.querySelector("#dark-toggle").addEventListener("click", () => {
 });
 ```
 
-### 8.5 Embed errors
+### 9.5 Embed errors
 
 | HTTP | Reason | Recovery |
 |---|---|---|
@@ -948,7 +1123,7 @@ document.querySelector("#dark-toggle").addEventListener("click", () => {
 | `403` | Origin not in the token's `allowed_origins` | Pass the right origin at mint time |
 | `200` but `error` event from postMessage | API JSON fetch failed inside the iframe | Inspect `event.payload.code` |
 
-### 8.6 Worked end-to-end example (no framework)
+### 9.6 Worked end-to-end example (no framework)
 
 Here is the simplest possible integration — a server-rendered HTML page
 with a `<form>` that asks the visitor for a project ID and then embeds
@@ -1049,7 +1224,7 @@ When a visitor opens `https://your-site.com/projects/28`:
 | Visitor clicks polygon | `GET {ERP_BASE}/api/v1/properties/<id>/plan-2d?db=...` | `200` JSON for the drill |
 | Visitor reaches a leaf unit | `postMessage { type: "unitSelected", payload: { id, name, price, … } }` | host shows lead form |
 
-### 8.7 Common pitfalls
+### 9.7 Common pitfalls
 
 | Symptom | Cause | Fix |
 |---|---|---|
@@ -1063,7 +1238,7 @@ When a visitor opens `https://your-site.com/projects/28`:
 
 ---
 
-## 9. Error Reference
+## 10. Error Reference
 
 All API errors share the same envelope:
 
@@ -1080,7 +1255,7 @@ All API errors share the same envelope:
 | `403` | `forbidden` | `X-Odoo-Database` conflicts with session cookie |
 | `404` | `not_found` | Record missing, hidden, or in a non-public state |
 | `405` | `method_not_allowed` | Route only accepts a different HTTP method |
-| `429` | `rate_limited` | Throttle hit (see [Rate Limits](#10-rate-limits)) |
+| `429` | `rate_limited` | Throttle hit (see [Rate Limits](#11-rate-limits)) |
 | `500` | `internal_error` | Bug — the response body never exposes a traceback. The full stack is in `ir.logging`. |
 
 **Never** does the API return a "best-guess" record or an empty list as
@@ -1088,7 +1263,7 @@ a fallback for a 404. Strict.
 
 ---
 
-## 10. Rate Limits
+## 11. Rate Limits
 
 Fixed-window counters in Postgres (sufficient for typical real-estate
 website traffic). Limits are configurable via `ir.config_parameter`:
@@ -1105,7 +1280,7 @@ Counter rows older than 24 hours are pruned hourly by an `ir.cron`.
 
 ---
 
-## 11. What we never expose
+## 12. What we never expose
 
 | Model | Fields hidden from the API |
 |---|---|
@@ -1117,7 +1292,7 @@ Counter rows older than 24 hours are pruned hourly by an `ir.cron`.
 
 ---
 
-## 12. Postman Collection
+## 13. Postman Collection
 
 A ready-to-import collection is shipped with the module:
 
