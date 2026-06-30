@@ -2,23 +2,67 @@
   "info": {
     "_postman_id": "realestate-api-v1",
     "name": "Real Estate Public API",
-    "description": "Public REST endpoints for the ATMTA real-estate suite plus iframe-embeddable 2D drill plan and 3D maquette.\n\nDev server: http://egyptairodoodev.isdeg.com:8069\n\nSetup\n-----\n1. `{{base_url}}` is pre-set to the dev host above. Change for prod when ready.\n2. Set `{{db_name}}` to the target Odoo database on that host — ask the team if you don't know it.\n3. Set `{{api_key}}` to an API key (scope `real_estate_api`) issued for your integration.\n4. Set `{{website_origin}}` to the origin your iframe will load from. Must be in the server's `real_estate_api.cors.allowed_origins` and in each embed token's `allowed_origins`.\n5. Run requests top-to-bottom. The first call (`Catalog / List Projects`) fills `{{first_project_id}}` so deeper requests work out of the box. Adjust `{{project_with_2d}}` and `{{project_with_3d}}` to a project that has those assets configured.\n\nWire format\n-----------\n* `X-Odoo-Database: {{db_name}}` is injected on every request by a collection-level pre-request script. Do NOT send a `session_id` cookie alongside it — the server returns 403 on collision.\n* Catalog GETs are public — the API key is optional. Mutating calls (`Embed Tokens`, `Interests`) require `Authorization: Bearer {{api_key}}`.\n* Errors come back as `{\"error\": {\"code\": \"...\", \"message\": \"...\"}}` with the correct HTTP status. No silent fallbacks — 404 on missing record, 400 on bad input, 403 on origin mismatch, 429 when rate-limited.\n\nBase URL: {{base_url}}",
+    "description": "Public REST endpoints for the ATMTA real-estate suite plus iframe-embeddable 2D drill plan and 3D maquette.\n\nDev server: http://egyptairodoodev.isdeg.com:8069\n\nSetup\n-----\n1. `{{base_url}}` is pre-set to the dev host above. Change for prod when ready.\n2. Set `{{db_name}}` to the target Odoo database on that host \u2014 ask the team if you don't know it.\n3. Set `{{api_key}}` to an API key (scope `real_estate_api`) issued for your integration.\n4. Set `{{website_origin}}` to the origin your iframe will load from. Must be in the server's `real_estate_api.cors.allowed_origins` and in each embed token's `allowed_origins`.\n5. Run requests top-to-bottom. The first call (`Catalog / List Projects`) fills `{{first_project_id}}` so deeper requests work out of the box. Adjust `{{project_with_2d}}` and `{{project_with_3d}}` to a project that has those assets configured.\n\nWire format\n-----------\n* `X-Odoo-Database: {{db_name}}` is injected on every request by a collection-level pre-request script. Do NOT send a `session_id` cookie alongside it \u2014 the server returns 403 on collision.\n* Catalog GETs are public \u2014 the API key is optional. Mutating calls (`Embed Tokens`, `Interests`) require `Authorization: Bearer {{api_key}}`.\n* Errors come back as `{\"error\": {\"code\": \"...\", \"message\": \"...\"}}` with the correct HTTP status. No silent fallbacks \u2014 404 on missing record, 400 on bad input, 403 on origin mismatch, 429 when rate-limited.\n\nBase URL: {{base_url}}",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
-    { "key": "base_url", "value": "http://egyptairodoodev.isdeg.com:8069" },
-    { "key": "db_name", "value": "YOUR_DB_NAME_HERE" },
-    { "key": "api_key", "value": "YOUR_API_KEY_HERE" },
-    { "key": "website_origin", "value": "YOUR_WEBSITE_ORIGIN_HERE" },
-    { "key": "first_project_id", "value": "" },
-    { "key": "project_with_2d", "value": "" },
-    { "key": "project_with_3d", "value": "" },
-    { "key": "property_with_plan", "value": "" },
-    { "key": "building_id", "value": "" },
-    { "key": "developer_id", "value": "" },
-    { "key": "embed_token_2d", "value": "" },
-    { "key": "embed_token_3d", "value": "" },
-    { "key": "lead_id", "value": "" }
+    {
+      "key": "base_url",
+      "value": "http://egyptairodoodev.isdeg.com:8069"
+    },
+    {
+      "key": "db_name",
+      "value": "YOUR_DB_NAME_HERE"
+    },
+    {
+      "key": "api_key",
+      "value": "YOUR_API_KEY_HERE"
+    },
+    {
+      "key": "website_origin",
+      "value": "YOUR_WEBSITE_ORIGIN_HERE"
+    },
+    {
+      "key": "first_project_id",
+      "value": ""
+    },
+    {
+      "key": "project_with_2d",
+      "value": ""
+    },
+    {
+      "key": "project_with_3d",
+      "value": ""
+    },
+    {
+      "key": "property_with_plan",
+      "value": ""
+    },
+    {
+      "key": "building_id",
+      "value": ""
+    },
+    {
+      "key": "developer_id",
+      "value": ""
+    },
+    {
+      "key": "embed_token_2d",
+      "value": ""
+    },
+    {
+      "key": "embed_token_3d",
+      "value": ""
+    },
+    {
+      "key": "lead_id",
+      "value": ""
+    },
+    {
+      "key": "partner_external_ref",
+      "value": "postman:test:user:1",
+      "type": "string"
+    }
   ],
   "event": [
     {
@@ -56,16 +100,37 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{base_url}}/api/v1/developers?limit=5", "host": ["{{base_url}}"], "path": ["api","v1","developers"], "query": [{"key":"limit","value":"5"}] }
+            "url": {
+              "raw": "{{base_url}}/api/v1/developers?limit=5",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "developers"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            }
           },
           "event": [
-            { "listen": "test", "script": { "exec": [
-              "pm.test('200', () => pm.response.to.have.status(200));",
-              "const body = pm.response.json();",
-              "pm.test('has results array', () => pm.expect(body.results).to.be.an('array'));",
-              "if (body.results.length) pm.collectionVariables.set('developer_id', body.results[0].id);",
-              "pm.test('X-Total-Count present', () => pm.expect(pm.response.headers.get('X-Total-Count')).to.exist);"
-            ] } }
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('200', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test('has results array', () => pm.expect(body.results).to.be.an('array'));",
+                  "if (body.results.length) pm.collectionVariables.set('developer_id', body.results[0].id);",
+                  "pm.test('X-Total-Count present', () => pm.expect(pm.response.headers.get('X-Total-Count')).to.exist);"
+                ]
+              }
+            }
           ]
         },
         {
@@ -73,7 +138,18 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{base_url}}/api/v1/developers/{{developer_id}}", "host": ["{{base_url}}"], "path": ["api","v1","developers","{{developer_id}}"] }
+            "url": {
+              "raw": "{{base_url}}/api/v1/developers/{{developer_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "developers",
+                "{{developer_id}}"
+              ]
+            }
           }
         },
         {
@@ -81,15 +157,36 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{base_url}}/api/v1/projects?limit=10", "host": ["{{base_url}}"], "path": ["api","v1","projects"], "query": [{"key":"limit","value":"10"}] }
+            "url": {
+              "raw": "{{base_url}}/api/v1/projects?limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "projects"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
           },
           "event": [
-            { "listen": "test", "script": { "exec": [
-              "pm.test('200', () => pm.response.to.have.status(200));",
-              "const body = pm.response.json();",
-              "pm.test('results is an array', () => pm.expect(body.results).to.be.an('array'));",
-              "if (body.results.length) pm.collectionVariables.set('first_project_id', body.results[0].id);"
-            ] } }
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('200', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test('results is an array', () => pm.expect(body.results).to.be.an('array'));",
+                  "if (body.results.length) pm.collectionVariables.set('first_project_id', body.results[0].id);"
+                ]
+              }
+            }
           ]
         },
         {
@@ -97,7 +194,27 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{base_url}}/api/v1/projects?city=Cairo&limit=5", "host": ["{{base_url}}"], "path": ["api","v1","projects"], "query": [{"key":"city","value":"Cairo"},{"key":"limit","value":"5"}] }
+            "url": {
+              "raw": "{{base_url}}/api/v1/projects?city=Cairo&limit=5",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "projects"
+              ],
+              "query": [
+                {
+                  "key": "city",
+                  "value": "Cairo"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            }
           }
         },
         {
@@ -105,27 +222,59 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{base_url}}/api/v1/projects/{{first_project_id}}", "host": ["{{base_url}}"], "path": ["api","v1","projects","{{first_project_id}}"] }
+            "url": {
+              "raw": "{{base_url}}/api/v1/projects/{{first_project_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "projects",
+                "{{first_project_id}}"
+              ]
+            }
           },
           "event": [
-            { "listen": "test", "script": { "exec": [
-              "pm.test('200', () => pm.response.to.have.status(200));",
-              "pm.test('detail has boundary_polygon key', () => pm.expect(pm.response.json()).to.have.property('boundary_polygon'));"
-            ] } }
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('200', () => pm.response.to.have.status(200));",
+                  "pm.test('detail has boundary_polygon key', () => pm.expect(pm.response.json()).to.have.property('boundary_polygon'));"
+                ]
+              }
+            }
           ]
         },
         {
-          "name": "Get project — missing (404)",
+          "name": "Get project \u2014 missing (404)",
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{base_url}}/api/v1/projects/999999", "host": ["{{base_url}}"], "path": ["api","v1","projects","999999"] }
+            "url": {
+              "raw": "{{base_url}}/api/v1/projects/999999",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "projects",
+                "999999"
+              ]
+            }
           },
           "event": [
-            { "listen": "test", "script": { "exec": [
-              "pm.test('404', () => pm.response.to.have.status(404));",
-              "pm.test('error contract', () => pm.expect(pm.response.json().error.code).to.eql('not_found'));"
-            ] } }
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('404', () => pm.response.to.have.status(404));",
+                  "pm.test('error contract', () => pm.expect(pm.response.json().error.code).to.eql('not_found'));"
+                ]
+              }
+            }
           ]
         },
         {
@@ -133,7 +282,19 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{base_url}}/api/v1/projects/{{project_with_2d}}/buildings", "host": ["{{base_url}}"], "path": ["api","v1","projects","{{project_with_2d}}","buildings"] }
+            "url": {
+              "raw": "{{base_url}}/api/v1/projects/{{project_with_2d}}/buildings",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "projects",
+                "{{project_with_2d}}",
+                "buildings"
+              ]
+            }
           }
         },
         {
@@ -141,7 +302,19 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{base_url}}/api/v1/buildings/{{building_id}}/units", "host": ["{{base_url}}"], "path": ["api","v1","buildings","{{building_id}}","units"] }
+            "url": {
+              "raw": "{{base_url}}/api/v1/buildings/{{building_id}}/units",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "buildings",
+                "{{building_id}}",
+                "units"
+              ]
+            }
           }
         }
       ]
@@ -154,15 +327,32 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{base_url}}/api/v1/projects/{{project_with_2d}}/plan-2d", "host": ["{{base_url}}"], "path": ["api","v1","projects","{{project_with_2d}}","plan-2d"] }
+            "url": {
+              "raw": "{{base_url}}/api/v1/projects/{{project_with_2d}}/plan-2d",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "projects",
+                "{{project_with_2d}}",
+                "plan-2d"
+              ]
+            }
           },
           "event": [
-            { "listen": "test", "script": { "exec": [
-              "pm.test('200', () => pm.response.to.have.status(200));",
-              "const body = pm.response.json();",
-              "pm.test('image_url present', () => pm.expect(body.image_url).to.be.a('string'));",
-              "pm.test('regions array', () => pm.expect(body.regions).to.be.an('array'));"
-            ] } }
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('200', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test('image_url present', () => pm.expect(body.image_url).to.be.a('string'));",
+                  "pm.test('regions array', () => pm.expect(body.regions).to.be.an('array'));"
+                ]
+              }
+            }
           ]
         },
         {
@@ -170,7 +360,19 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{base_url}}/api/v1/properties/{{property_with_plan}}/plan-2d", "host": ["{{base_url}}"], "path": ["api","v1","properties","{{property_with_plan}}","plan-2d"] }
+            "url": {
+              "raw": "{{base_url}}/api/v1/properties/{{property_with_plan}}/plan-2d",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "properties",
+                "{{property_with_plan}}",
+                "plan-2d"
+              ]
+            }
           }
         },
         {
@@ -178,26 +380,60 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{base_url}}/api/v1/projects/{{project_with_3d}}/maquette-3d", "host": ["{{base_url}}"], "path": ["api","v1","projects","{{project_with_3d}}","maquette-3d"] }
+            "url": {
+              "raw": "{{base_url}}/api/v1/projects/{{project_with_3d}}/maquette-3d",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "projects",
+                "{{project_with_3d}}",
+                "maquette-3d"
+              ]
+            }
           },
           "event": [
-            { "listen": "test", "script": { "exec": [
-              "pm.test('200', () => pm.response.to.have.status(200));",
-              "pm.test('glb_url present', () => pm.expect(pm.response.json().glb_url).to.be.a('string'));"
-            ] } }
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('200', () => pm.response.to.have.status(200));",
+                  "pm.test('glb_url present', () => pm.expect(pm.response.json().glb_url).to.be.a('string'));"
+                ]
+              }
+            }
           ]
         },
         {
-          "name": "Project plan-2d — no plan (404)",
+          "name": "Project plan-2d \u2014 no plan (404)",
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{base_url}}/api/v1/projects/1/plan-2d", "host": ["{{base_url}}"], "path": ["api","v1","projects","1","plan-2d"] }
+            "url": {
+              "raw": "{{base_url}}/api/v1/projects/1/plan-2d",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "projects",
+                "1",
+                "plan-2d"
+              ]
+            }
           },
           "event": [
-            { "listen": "test", "script": { "exec": [
-              "pm.test('404', () => pm.response.to.have.status(404));"
-            ] } }
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('404', () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
           ]
         }
       ]
@@ -210,55 +446,555 @@
           "request": {
             "method": "POST",
             "header": [
-              { "key": "Content-Type", "value": "application/json" }
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
             ],
-            "url": { "raw": "{{base_url}}/api/v1/interests", "host": ["{{base_url}}"], "path": ["api","v1","interests"] },
+            "url": {
+              "raw": "{{base_url}}/api/v1/interests",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "interests"
+              ]
+            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"name\": \"Postman Test\",\n  \"email\": \"postman@example.com\",\n  \"phone\": \"+966501234567\",\n  \"project_id\": {{project_with_2d}},\n  \"message\": \"Submitted from Postman.\"\n}"
             }
           },
           "event": [
-            { "listen": "test", "script": { "exec": [
-              "pm.test('200 or 201', () => pm.expect([200,201]).to.include(pm.response.code));",
-              "const body = pm.response.json();",
-              "pm.test('lead id returned', () => pm.expect(body.id).to.be.a('number'));",
-              "pm.collectionVariables.set('lead_id', body.id);"
-            ] } }
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('200 or 201', () => pm.expect([200,201]).to.include(pm.response.code));",
+                  "const body = pm.response.json();",
+                  "pm.test('lead id returned', () => pm.expect(body.id).to.be.a('number'));",
+                  "pm.collectionVariables.set('lead_id', body.id);"
+                ]
+              }
+            }
           ]
         },
         {
-          "name": "Submit interest — bad (no contact)",
+          "name": "Submit interest \u2014 linked to partner",
           "request": {
             "method": "POST",
             "header": [
-              { "key": "Content-Type", "value": "application/json" }
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
             ],
-            "url": { "raw": "{{base_url}}/api/v1/interests", "host": ["{{base_url}}"], "path": ["api","v1","interests"] },
+            "url": {
+              "raw": "{{base_url}}/api/v1/interests",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "interests"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Doe (Linked)\",\n  \"email\": \"jane.linked@example.com\",\n  \"project_id\": {{first_project_id}},\n  \"partner_external_ref\": \"{{partner_external_ref}}\",\n  \"message\": \"Interest from a known visitor.\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('201 created', () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.test('lead id returned', () => pm.expect(body.id).to.be.a('number'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Submit interest \u2014 unknown partner_external_ref (404)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/interests",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "interests"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Orphan\",\n  \"email\": \"orphan@example.com\",\n  \"partner_external_ref\": \"site:user:never-synced\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('404 not_found', () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Submit interest \u2014 bad (no contact)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/interests",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "interests"
+              ]
+            },
             "body": {
               "mode": "raw",
               "raw": "{ \"name\": \"X\" }"
             }
           },
           "event": [
-            { "listen": "test", "script": { "exec": [
-              "pm.test('400', () => pm.response.to.have.status(400));",
-              "pm.test('bad_request code', () => pm.expect(pm.response.json().error.code).to.eql('bad_request'));"
-            ] } }
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('400', () => pm.response.to.have.status(400));",
+                  "pm.test('bad_request code', () => pm.expect(pm.response.json().error.code).to.eql('bad_request'));"
+                ]
+              }
+            }
           ]
         },
         {
-          "name": "Submit interest — invalid email (400)",
+          "name": "Submit interest \u2014 invalid email (400)",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/api/v1/interests", "host": ["{{base_url}}"], "path": ["api","v1","interests"] },
-            "body": { "mode": "raw", "raw": "{ \"name\": \"Test\", \"email\": \"not-an-email\" }" }
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/interests",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "interests"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"name\": \"Test\", \"email\": \"not-an-email\" }"
+            }
           },
           "event": [
-            { "listen": "test", "script": { "exec": [
-              "pm.test('400', () => pm.response.to.have.status(400));"
-            ] } }
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('400', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Partners (Customer Contact Sync)",
+      "description": "3rd-party site mirrors its visitor accounts here. external_ref is the upsert key. Bearer auth required. See API_DOCUMENTATION.md section 8.",
+      "item": [
+        {
+          "name": "Upsert partner \u2014 create (201)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"external_ref\": \"{{partner_external_ref}}\",\n  \"name\": \"Jane Doe (Postman)\",\n  \"email\": \"jane.postman@example.com\",\n  \"phone\": \"+201001234567\",\n  \"street\": \"12 Tahrir Street\",\n  \"city\": \"Cairo\",\n  \"country\": \"EG\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('201 on create OR 200 on replay', () =>",
+                  "    pm.expect([200, 201]).to.include(pm.response.code));",
+                  "const body = pm.response.json();",
+                  "pm.test('id is a number', () => pm.expect(body.id).to.be.a('number'));",
+                  "pm.test('external_ref echoes', () =>",
+                  "    pm.expect(body.external_ref).to.eql(pm.collectionVariables.get('partner_external_ref')));",
+                  "pm.collectionVariables.set('partner_id', body.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Upsert partner \u2014 replay = update (200)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"external_ref\": \"{{partner_external_ref}}\",\n  \"name\": \"Jane Doe (Updated)\",\n  \"email\": \"jane.updated@example.com\",\n  \"phone\": \"+201001234567\",\n  \"city\": \"Alexandria\",\n  \"country\": \"EG\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('200 on update', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test('created flag is false', () => pm.expect(body.created).to.eql(false));",
+                  "pm.test('same id as create', () =>",
+                  "    pm.expect(body.id).to.eql(pm.collectionVariables.get('partner_id')));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Upsert partner \u2014 bad ref format (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"external_ref\": \"has spaces and \\u2731\",\n  \"name\": \"Bad Ref\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('400 bad_request', () => pm.response.to.have.status(400));",
+                  "pm.test('error.code = bad_request', () =>",
+                  "    pm.expect(pm.response.json().error.code).to.eql('bad_request'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Upsert partner \u2014 missing name (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"external_ref\": \"site:user:no-name\",\n  \"email\": \"no-name@example.com\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('400 bad_request', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Upsert partner \u2014 unknown country (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"external_ref\": \"site:user:bad-country\",\n  \"name\": \"Bad Country\",\n  \"country\": \"ZZ\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('400 bad_request', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Upsert partner \u2014 no auth (401)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"external_ref\": \"site:user:no-auth\",\n  \"name\": \"No Auth\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('401 unauthorized', () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Lookup by ref (200)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test('returns partner', () =>",
+                  "    pm.expect(body.external_ref).to.eql(pm.collectionVariables.get('partner_external_ref')));",
+                  "pm.test('id matches create', () =>",
+                  "    pm.expect(body.id).to.eql(pm.collectionVariables.get('partner_id')));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Lookup by ref \u2014 not found (404)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/site:user:does-not-exist",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "site:user:does-not-exist"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('404 not_found', () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Lookup by ref \u2014 no auth (401)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('401 unauthorized', () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
           ]
         }
       ]
@@ -267,73 +1003,168 @@
       "name": "Embed tokens (mint)",
       "item": [
         {
-          "name": "Mint — no auth (401)",
-          "request": {
-            "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/api/v1/embed-tokens", "host": ["{{base_url}}"], "path": ["api","v1","embed-tokens"] },
-            "body": { "mode": "raw", "raw": "{\n  \"kind\": \"plan-2d\",\n  \"resource_model\": \"realestate.project\",\n  \"resource_id\": {{project_with_2d}},\n  \"allowed_origins\": \"{{website_origin}}\"\n}" }
-          },
-          "event": [
-            { "listen": "test", "script": { "exec": [
-              "pm.test('401', () => pm.response.to.have.status(401));"
-            ] } }
-          ]
-        },
-        {
-          "name": "Mint — 2D embed token",
+          "name": "Mint \u2014 no auth (401)",
           "request": {
             "method": "POST",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{api_key}}" },
-              { "key": "Content-Type", "value": "application/json" }
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
             ],
-            "url": { "raw": "{{base_url}}/api/v1/embed-tokens", "host": ["{{base_url}}"], "path": ["api","v1","embed-tokens"] },
-            "body": { "mode": "raw", "raw": "{\n  \"kind\": \"plan-2d\",\n  \"resource_model\": \"realestate.project\",\n  \"resource_id\": {{project_with_2d}},\n  \"allowed_origins\": \"{{website_origin}}\",\n  \"expires_in\": 3600,\n  \"theme\": { \"primary\": \"#ff5a00\", \"mode\": \"light\", \"lang\": \"en\" }\n}" }
+            "url": {
+              "raw": "{{base_url}}/api/v1/embed-tokens",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "embed-tokens"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"kind\": \"plan-2d\",\n  \"resource_model\": \"realestate.project\",\n  \"resource_id\": {{project_with_2d}},\n  \"allowed_origins\": \"{{website_origin}}\"\n}"
+            }
           },
           "event": [
-            { "listen": "test", "script": { "exec": [
-              "pm.test('201', () => pm.response.to.have.status(201));",
-              "const body = pm.response.json();",
-              "pm.test('token returned', () => pm.expect(body.token).to.be.a('string'));",
-              "pm.test('embed_url present', () => pm.expect(body.embed_url).to.include('/embed/v1/plan-2d/'));",
-              "pm.collectionVariables.set('embed_token_2d', body.token);"
-            ] } }
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('401', () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
           ]
         },
         {
-          "name": "Mint — 3D embed token",
+          "name": "Mint \u2014 2D embed token",
           "request": {
             "method": "POST",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{api_key}}" },
-              { "key": "Content-Type", "value": "application/json" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
             ],
-            "url": { "raw": "{{base_url}}/api/v1/embed-tokens", "host": ["{{base_url}}"], "path": ["api","v1","embed-tokens"] },
-            "body": { "mode": "raw", "raw": "{\n  \"kind\": \"maquette-3d\",\n  \"resource_model\": \"realestate.project\",\n  \"resource_id\": {{project_with_3d}},\n  \"allowed_origins\": \"{{website_origin}}\",\n  \"expires_in\": 7200\n}" }
+            "url": {
+              "raw": "{{base_url}}/api/v1/embed-tokens",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "embed-tokens"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"kind\": \"plan-2d\",\n  \"resource_model\": \"realestate.project\",\n  \"resource_id\": {{project_with_2d}},\n  \"allowed_origins\": \"{{website_origin}}\",\n  \"expires_in\": 3600,\n  \"theme\": { \"primary\": \"#ff5a00\", \"mode\": \"light\", \"lang\": \"en\" }\n}"
+            }
           },
           "event": [
-            { "listen": "test", "script": { "exec": [
-              "pm.test('201', () => pm.response.to.have.status(201));",
-              "pm.collectionVariables.set('embed_token_3d', pm.response.json().token);"
-            ] } }
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('201', () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.test('token returned', () => pm.expect(body.token).to.be.a('string'));",
+                  "pm.test('embed_url present', () => pm.expect(body.embed_url).to.include('/embed/v1/plan-2d/'));",
+                  "pm.collectionVariables.set('embed_token_2d', body.token);"
+                ]
+              }
+            }
           ]
         },
         {
-          "name": "Mint — project without plan (400)",
+          "name": "Mint \u2014 3D embed token",
           "request": {
             "method": "POST",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{api_key}}" },
-              { "key": "Content-Type", "value": "application/json" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
             ],
-            "url": { "raw": "{{base_url}}/api/v1/embed-tokens", "host": ["{{base_url}}"], "path": ["api","v1","embed-tokens"] },
-            "body": { "mode": "raw", "raw": "{\n  \"kind\": \"plan-2d\",\n  \"resource_model\": \"realestate.project\",\n  \"resource_id\": 1,\n  \"allowed_origins\": \"{{website_origin}}\"\n}" }
+            "url": {
+              "raw": "{{base_url}}/api/v1/embed-tokens",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "embed-tokens"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"kind\": \"maquette-3d\",\n  \"resource_model\": \"realestate.project\",\n  \"resource_id\": {{project_with_3d}},\n  \"allowed_origins\": \"{{website_origin}}\",\n  \"expires_in\": 7200\n}"
+            }
           },
           "event": [
-            { "listen": "test", "script": { "exec": [
-              "pm.test('400', () => pm.response.to.have.status(400));"
-            ] } }
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('201', () => pm.response.to.have.status(201));",
+                  "pm.collectionVariables.set('embed_token_3d', pm.response.json().token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Mint \u2014 project without plan (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/embed-tokens",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "embed-tokens"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"kind\": \"plan-2d\",\n  \"resource_model\": \"realestate.project\",\n  \"resource_id\": 1,\n  \"allowed_origins\": \"{{website_origin}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('400', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
           ]
         }
       ]
@@ -346,48 +1177,102 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Origin", "value": "{{website_origin}}" }
+              {
+                "key": "Origin",
+                "value": "{{website_origin}}"
+              }
             ],
-            "url": { "raw": "{{base_url}}/embed/v1/plan-2d/{{embed_token_2d}}", "host": ["{{base_url}}"], "path": ["embed","v1","plan-2d","{{embed_token_2d}}"] }
+            "url": {
+              "raw": "{{base_url}}/embed/v1/plan-2d/{{embed_token_2d}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "embed",
+                "v1",
+                "plan-2d",
+                "{{embed_token_2d}}"
+              ]
+            }
           },
           "event": [
-            { "listen": "test", "script": { "exec": [
-              "pm.test('200', () => pm.response.to.have.status(200));",
-              "pm.test('CSP frame-ancestors set', () => {",
-              "    const csp = pm.response.headers.get('Content-Security-Policy') || '';",
-              "    pm.expect(csp).to.include('frame-ancestors');",
-              "});",
-              "pm.test('no X-Frame-Options', () => pm.expect(pm.response.headers.get('X-Frame-Options')).to.be.null);",
-              "pm.test('body contains embed-root', () => pm.expect(pm.response.text()).to.include('id=\"embed-root\"'));"
-            ] } }
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('200', () => pm.response.to.have.status(200));",
+                  "pm.test('CSP frame-ancestors set', () => {",
+                  "    const csp = pm.response.headers.get('Content-Security-Policy') || '';",
+                  "    pm.expect(csp).to.include('frame-ancestors');",
+                  "});",
+                  "pm.test('no X-Frame-Options', () => pm.expect(pm.response.headers.get('X-Frame-Options')).to.be.null);",
+                  "pm.test('body contains embed-root', () => pm.expect(pm.response.text()).to.include('id=\"embed-root\"'));"
+                ]
+              }
+            }
           ]
         },
         {
-          "name": "Plan-2D embed (bad origin → 403)",
+          "name": "Plan-2D embed (bad origin \u2192 403)",
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Origin", "value": "https://evil.example.com" }
+              {
+                "key": "Origin",
+                "value": "https://evil.example.com"
+              }
             ],
-            "url": { "raw": "{{base_url}}/embed/v1/plan-2d/{{embed_token_2d}}", "host": ["{{base_url}}"], "path": ["embed","v1","plan-2d","{{embed_token_2d}}"] }
+            "url": {
+              "raw": "{{base_url}}/embed/v1/plan-2d/{{embed_token_2d}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "embed",
+                "v1",
+                "plan-2d",
+                "{{embed_token_2d}}"
+              ]
+            }
           },
           "event": [
-            { "listen": "test", "script": { "exec": [
-              "pm.test('403', () => pm.response.to.have.status(403));"
-            ] } }
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('403', () => pm.response.to.have.status(403));"
+                ]
+              }
+            }
           ]
         },
         {
-          "name": "Plan-2D embed (bad token → 404)",
+          "name": "Plan-2D embed (bad token \u2192 404)",
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{base_url}}/embed/v1/plan-2d/notarealtoken", "host": ["{{base_url}}"], "path": ["embed","v1","plan-2d","notarealtoken"] }
+            "url": {
+              "raw": "{{base_url}}/embed/v1/plan-2d/notarealtoken",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "embed",
+                "v1",
+                "plan-2d",
+                "notarealtoken"
+              ]
+            }
           },
           "event": [
-            { "listen": "test", "script": { "exec": [
-              "pm.test('404', () => pm.response.to.have.status(404));"
-            ] } }
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('404', () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
           ]
         },
         {
@@ -395,9 +1280,23 @@
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Origin", "value": "{{website_origin}}" }
+              {
+                "key": "Origin",
+                "value": "{{website_origin}}"
+              }
             ],
-            "url": { "raw": "{{base_url}}/embed/v1/maquette-3d/{{embed_token_3d}}", "host": ["{{base_url}}"], "path": ["embed","v1","maquette-3d","{{embed_token_3d}}"] }
+            "url": {
+              "raw": "{{base_url}}/embed/v1/maquette-3d/{{embed_token_3d}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "embed",
+                "v1",
+                "maquette-3d",
+                "{{embed_token_3d}}"
+              ]
+            }
           }
         }
       ]
@@ -410,44 +1309,98 @@
           "request": {
             "method": "OPTIONS",
             "header": [
-              { "key": "Origin", "value": "{{website_origin}}" },
-              { "key": "Access-Control-Request-Method", "value": "POST" },
-              { "key": "Access-Control-Request-Headers", "value": "Authorization, Content-Type, X-Odoo-Database" }
+              {
+                "key": "Origin",
+                "value": "{{website_origin}}"
+              },
+              {
+                "key": "Access-Control-Request-Method",
+                "value": "POST"
+              },
+              {
+                "key": "Access-Control-Request-Headers",
+                "value": "Authorization, Content-Type, X-Odoo-Database"
+              }
             ],
-            "url": { "raw": "{{base_url}}/api/v1/interests", "host": ["{{base_url}}"], "path": ["api","v1","interests"] }
+            "url": {
+              "raw": "{{base_url}}/api/v1/interests",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "interests"
+              ]
+            }
           },
           "event": [
-            { "listen": "test", "script": { "exec": [
-              "pm.test('204', () => pm.response.to.have.status(204));",
-              "pm.test('Allow-Origin echoed', () => pm.expect(pm.response.headers.get('Access-Control-Allow-Origin')).to.eql(pm.collectionVariables.get('website_origin')));",
-              "pm.test('Allow-Headers lists Authorization, X-Odoo-Database', () => {",
-              "    const h = pm.response.headers.get('Access-Control-Allow-Headers') || '';",
-              "    pm.expect(h).to.include('Authorization');",
-              "    pm.expect(h).to.include('X-Odoo-Database');",
-              "});"
-            ] } }
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('204', () => pm.response.to.have.status(204));",
+                  "pm.test('Allow-Origin echoed', () => pm.expect(pm.response.headers.get('Access-Control-Allow-Origin')).to.eql(pm.collectionVariables.get('website_origin')));",
+                  "pm.test('Allow-Headers lists Authorization, X-Odoo-Database', () => {",
+                  "    const h = pm.response.headers.get('Access-Control-Allow-Headers') || '';",
+                  "    pm.expect(h).to.include('Authorization');",
+                  "    pm.expect(h).to.include('X-Odoo-Database');",
+                  "});"
+                ]
+              }
+            }
           ]
         },
         {
-          "name": "DB selection — wrong db name (no match)",
+          "name": "DB selection \u2014 wrong db name (no match)",
           "request": {
             "method": "GET",
             "header": [
-              { "key": "X-Odoo-Database", "value": "this_db_does_not_exist", "disabled": false }
+              {
+                "key": "X-Odoo-Database",
+                "value": "this_db_does_not_exist",
+                "disabled": false
+              }
             ],
-            "url": { "raw": "{{base_url}}/api/v1/projects?limit=1", "host": ["{{base_url}}"], "path": ["api","v1","projects"], "query":[{"key":"limit","value":"1"}] }
+            "url": {
+              "raw": "{{base_url}}/api/v1/projects?limit=1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "projects"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "1"
+                }
+              ]
+            }
           },
           "event": [
-            { "listen": "prerequest", "script": { "exec": [
-              "// Replace the collection-level X-Odoo-Database with our bogus one.",
-              "pm.request.headers.upsert({ key: 'X-Odoo-Database', value: 'this_db_does_not_exist' });"
-            ] } },
-            { "listen": "test", "script": { "exec": [
-              "pm.test('404 or 200 monodb-fallback', () => pm.expect([200, 404]).to.include(pm.response.code));",
-              "// On a single-DB host Odoo's monodb shortcut takes over after",
-              "// our header is rejected by dbfilter, which is acceptable.",
-              "// On a multi-DB host the server should refuse — neither outcome is a silent fallback to a different db."
-            ] } }
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Replace the collection-level X-Odoo-Database with our bogus one.",
+                  "pm.request.headers.upsert({ key: 'X-Odoo-Database', value: 'this_db_does_not_exist' });"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('404 or 200 monodb-fallback', () => pm.expect([200, 404]).to.include(pm.response.code));",
+                  "// On a single-DB host Odoo's monodb shortcut takes over after",
+                  "// our header is rejected by dbfilter, which is acceptable.",
+                  "// On a multi-DB host the server should refuse \u2014 neither outcome is a silent fallback to a different db."
+                ]
+              }
+            }
           ]
         }
       ]
