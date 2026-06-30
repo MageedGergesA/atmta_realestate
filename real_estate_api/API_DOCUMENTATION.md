@@ -19,7 +19,9 @@ the contract for 3rd-party websites and integrations.
    3. [Buildings](#43-buildings)
    4. [Units / Properties](#44-units--properties)
 5. [2D Plan Drill API](#5-2d-plan-drill-api)
+   1. [Build your own 2D viewer](#56-build-your-own-2d-viewer)
 6. [3D Maquette API](#6-3d-maquette-api)
+   1. [Build your own 3D viewer](#65-build-your-own-3d-viewer)
 7. [Interests (lead capture)](#7-interests-lead-capture)
 8. [Customer Contact Sync](#8-customer-contact-sync)
 9. [Embed Tokens & Iframe Flow](#9-embed-tokens--iframe-flow)
@@ -55,7 +57,7 @@ Response:
       "developer_name": "",
       "city": "",
       "country": "",
-      "cover_image_url": "/web/image/realestate.project/28/master_plan_2d/1280x720?unique=20260531114240",
+      "cover_image_url": "/api/v1/image/realestate.project/28/master_plan_2d?unique=20260531114240&w=1280&h=720",
       "has_2d_plan": true,
       "has_3d_maquette": true,
       "unit_count": 38,
@@ -178,7 +180,7 @@ curl -I "https://erp.atmta.com/api/v1/projects?limit=10&offset=20" \
 
 ### Field-level guarantees
 
-- Image URLs are absolute paths under `/web/image/MODEL/ID/FIELD/...`.
+- Image URLs are absolute paths under `/api/v1/image/MODEL/ID/FIELD?...`. The optional `?w=&h=` triggers on-the-fly resize; `?unique=` is a cache-buster derived from the record's `write_date`.
   Append `?unique=YYYYMMDDHHMMSS` is already on the URL — browsers cache
   by URL, and the value rolls when the record is updated.
 - `null` means "no value" (e.g. a missing developer). Empty strings
@@ -238,7 +240,7 @@ curl "https://erp.atmta.com/api/v1/developers?limit=5" \
     {
       "id": 34,
       "name": "Colleen Diaz",
-      "logo_url": "/web/image/res.partner/34/image_256?unique=20260520112514",
+      "logo_url": "/api/v1/image/res.partner/34/image_256?unique=20260520112514",
       "city": "Fremont",
       "country": "United States",
       "project_count": 1
@@ -301,7 +303,7 @@ Returns the **detail** envelope:
   "city": "",
   "district": "",
   "country": "",
-  "cover_image_url": "/web/image/realestate.project/28/master_plan_2d/1280x720?unique=20260531114240",
+  "cover_image_url": "/api/v1/image/realestate.project/28/master_plan_2d?unique=20260531114240&w=1280&h=720",
   "has_2d_plan": true,
   "has_3d_maquette": true,
   "unit_count": 38,
@@ -376,7 +378,7 @@ curl "https://erp.atmta.com/api/v1/projects/28/buildings" \
       "area_sqm": 0.0,
       "floors_count": 10,
       "units_count": 32,
-      "thumb_url": "/web/image/realestate.property/84/plan_image/400x300?unique=...",
+      "thumb_url": "/api/v1/image/realestate.property/84/plan_image?unique=...&w=400&h=300",
       "currency": "USD",
       "currency_symbol": "$"
     }
@@ -431,7 +433,7 @@ Returns the detail envelope for a leaf:
   "project_id": 28,
   "parent_id": 87,
   "status": "available",
-  "cover_image_url": "/web/image/realestate.property/105/image_1920/800x600?unique=...",
+  "cover_image_url": "/api/v1/image/realestate.property/105/image_1920?unique=...&w=800&h=600",
   "has_2d_plan": true,
   "has_3d_interior": true,
   "area_sqm": 210.0,
@@ -453,13 +455,13 @@ Returns the detail envelope for a leaf:
     {
       "id": 12,
       "name": "Living room",
-      "url": "/web/image/property.image/12/image_1024?unique=...",
-      "thumb_url": "/web/image/property.image/12/image_256?unique=...",
+      "url": "/api/v1/image/property.image/12/image_1024?unique=...",
+      "thumb_url": "/api/v1/image/property.image/12/image_256?unique=...",
       "video_url": ""
     }
   ],
-  "plan_image_url": "/web/image/realestate.property/105/plan_image/1920x1080?unique=...",
-  "floor_plan_image_url": "/web/image/realestate.property/105/floor_plan_image/1920x1080?unique=...",
+  "plan_image_url": "/api/v1/image/realestate.property/105/plan_image?unique=...&w=1920&h=1080",
+  "floor_plan_image_url": "/api/v1/image/realestate.property/105/floor_plan_image?unique=...&w=1920&h=1080",
   "spec_tags": ["marble floors", "smart-home wiring"]
 }
 ```
@@ -493,7 +495,7 @@ project simply pre-points at the entry property.
   "root_kind": "project",
   "root_id": 28,
   "name": "Demo Compound",
-  "image_url": "/web/image/realestate.project/28/master_plan_2d/1920x1080?unique=...",
+  "image_url": "/api/v1/image/realestate.project/28/master_plan_2d?unique=20260630104242&w=1920&h=1080",
   "regions": [
     {
       "id": 6,
@@ -507,9 +509,38 @@ project simply pre-points at the entry property.
       "polygon": "[[17.18, 28.64], [40.38, 27.84], [40.21, 42.67], [17.35, 42.56]]"
     }
   ],
+  "drillable_children": [],
+  "gallery": [],
   "breadcrumbs": [
     {"id": 28, "kind": "project", "name": "Demo Compound"}
   ]
+}
+```
+
+If the project has **neither** `master_plan_2d` **nor** a `main_property_id`,
+the endpoint switches to **picker mode**: `image_url` becomes `null`,
+`regions` is empty, and `drillable_children` lists every top-level
+property that has its own `plan_image`. The client renders one card per
+entry; clicking a card calls `/api/v1/properties/<id>/plan-2d`.
+
+```json
+{
+  "root_kind": "project",
+  "root_id": 23,
+  "name": "New Capital Compound",
+  "image_url": null,
+  "regions": [],
+  "gallery": [],
+  "drillable_children": [
+    {
+      "id": 31,
+      "name": "New Capital Compound",
+      "hierarchy_level": "compound",
+      "thumb_url": "/api/v1/image/realestate.property/31/plan_image?unique=...&w=400&h=300"
+    }
+  ],
+  "is_picker": true,
+  "breadcrumbs": [{"id": 23, "kind": "project", "name": "New Capital Compound"}]
 }
 ```
 
@@ -524,7 +555,7 @@ deeper than the project master plan.
   "root_id": 100,
   "name": "Madrid Compound",
   "hierarchy_level": "compound",
-  "image_url": "/web/image/realestate.property/100/plan_image/1920x1080?unique=...",
+  "image_url": "/api/v1/image/realestate.property/100/plan_image?unique=...&w=1920&h=1080",
   "regions": [
     {
       "id": 20,
@@ -543,14 +574,21 @@ deeper than the project master plan.
       "id": 101,
       "name": "Santiago Tower",
       "hierarchy_level": "building",
-      "thumb_url": "/web/image/realestate.property/101/plan_image/240x150?unique=..."
+      "thumb_url": "/api/v1/image/realestate.property/101/plan_image?unique=...&w=240&h=150"
     }
   ],
+  "gallery": [],
   "breadcrumbs": [
+    {"id": 28,  "kind": "project",  "name": "Demo Compound"},
     {"id": 100, "kind": "property", "name": "Madrid Compound", "hierarchy_level": "compound"}
   ]
 }
 ```
+
+`breadcrumbs` is the **absolute** chain from the project down to the
+current node (the server walks `parent_id` and prepends the project
+itself). Render it as a clickable trail; each entry's `id` + `kind`
+tells you which endpoint to call when the user clicks back up.
 
 ### Polygon format
 
@@ -571,6 +609,174 @@ of a JSON response): a list of `[x%, y%]` vertices in the range
 Errors: `404 not_found` if the project has no `master_plan_2d` and no
 `main_property_id`; or if a property has no `plan_image`.
 
+### 5.6 Build your own 2D viewer
+
+If you're rendering the drill in your own UI (no iframe), the JSON
+above is all you need. The viewer is just: load image, overlay SVG,
+listen for polygon clicks, refetch on drill.
+
+#### Minimal HTML/JS — a working drill viewer in ~80 lines
+
+```html
+<div id="re-viewer" style="position:relative; max-width:1100px; margin:0 auto;">
+  <div id="re-breadcrumbs"></div>
+  <div id="re-canvas" style="position:relative; display:inline-block;">
+    <img id="re-plan" style="display:block; max-width:100%; max-height:80vh;
+                              user-select:none; -webkit-user-drag:none;"/>
+    <svg id="re-overlay" viewBox="0 0 100 100" preserveAspectRatio="none"
+         style="position:absolute; inset:0; width:100%; height:100%;
+                pointer-events:none;"></svg>
+  </div>
+  <div id="re-picker" style="display:none;"></div>
+</div>
+
+<script>
+const ERP_BASE = "https://erp.atmta.com";
+const ERP_DB   = "atmta_prod";
+
+const COLOR = {
+  available: null,        // use the region's own color
+  reserved:  "#f59e0b",
+  sold:      "#6b7280",
+};
+
+async function loadPlan(kind, id) {
+  const url = `${ERP_BASE}/api/v1/${kind === "project" ? "projects" : "properties"}/${id}/plan-2d?db=${ERP_DB}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Failed to load ${kind}:${id} — ${res.status}`);
+  return res.json();
+}
+
+function renderBreadcrumbs(crumbs) {
+  const el = document.getElementById("re-breadcrumbs");
+  el.innerHTML = crumbs.map((c, i) => {
+    const cur = i === crumbs.length - 1;
+    return `<button data-kind="${c.kind}" data-id="${c.id}"
+              ${cur ? "disabled" : ""}>${c.name}</button>`;
+  }).join(" › ");
+  el.querySelectorAll("button[data-id]").forEach(btn => {
+    btn.onclick = () => render(btn.dataset.kind, +btn.dataset.id);
+  });
+}
+
+function renderPicker(tree) {
+  document.getElementById("re-canvas").style.display = "none";
+  const p = document.getElementById("re-picker");
+  p.style.display = "block";
+  p.innerHTML = tree.drillable_children.map(c => `
+    <button data-id="${c.id}" style="width:240px; margin:8px; padding:0;
+                                     border:1px solid #ddd; cursor:pointer;">
+      <img src="${ERP_BASE}${c.thumb_url}" style="width:100%; display:block;"/>
+      <div style="padding:8px;">${c.name}<br><small>${c.hierarchy_level}</small></div>
+    </button>
+  `).join("");
+  p.querySelectorAll("button[data-id]").forEach(btn => {
+    btn.onclick = () => render("property", +btn.dataset.id);
+  });
+}
+
+function renderPlan(tree) {
+  document.getElementById("re-canvas").style.display = "inline-block";
+  document.getElementById("re-picker").style.display = "none";
+
+  const img = document.getElementById("re-plan");
+  img.src = ERP_BASE + tree.image_url;
+
+  // Wait for natural dimensions, then set aspect-ratio so the SVG and
+  // image stay locked together. preserveAspectRatio="none" on the SVG +
+  // viewBox 0..100 means polygon coordinates land on the image regardless
+  // of display size.
+  img.onload = () => {
+    document.getElementById("re-canvas").style.aspectRatio =
+      `${img.naturalWidth} / ${img.naturalHeight}`;
+  };
+
+  const svg = document.getElementById("re-overlay");
+  svg.innerHTML = "";
+  for (const r of tree.regions) {
+    if (r.target_status === "hidden") continue;    // strict: never render
+    const pts = JSON.parse(r.polygon);
+    const points = pts.map(([x, y]) => `${x},${y}`).join(" ");
+    const fill = COLOR[r.target_status] ?? r.color;
+    const poly = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+    poly.setAttribute("points", points);
+    poly.setAttribute("fill", fill);
+    poly.setAttribute("fill-opacity", "0.35");
+    poly.setAttribute("stroke", fill);
+    poly.style.cursor = "pointer";
+    poly.style.pointerEvents = "auto";
+    poly.addEventListener("mouseenter", () => poly.setAttribute("fill-opacity", "0.6"));
+    poly.addEventListener("mouseleave", () => poly.setAttribute("fill-opacity", "0.35"));
+    poly.addEventListener("click", () => {
+      if (r.target_has_plan) {
+        render("property", r.target_id);              // drill deeper
+      } else {
+        // Leaf — fetch the unit detail to show price, area, gallery
+        fetch(`${ERP_BASE}/api/v1/units/${r.target_id}?db=${ERP_DB}`)
+          .then(r => r.json())
+          .then(showUnitCard);                        // your own modal
+      }
+    });
+    svg.appendChild(poly);
+  }
+}
+
+async function render(kind, id) {
+  const tree = await loadPlan(kind, id);
+  renderBreadcrumbs(tree.breadcrumbs);
+  if (tree.is_picker) renderPicker(tree);
+  else                renderPlan(tree);
+}
+
+// Entry: start at the project
+render("project", 28);
+</script>
+```
+
+#### Key rendering rules
+
+1. **Always wrap the `<img>` + `<svg>` in a container with `aspect-ratio:
+   <naturalWidth> / <naturalHeight>`** (set inline once the image loads).
+   The SVG fills the container; `viewBox="0 0 100 100"
+   preserveAspectRatio="none"` then makes each polygon `[x, y]` land on
+   the image at exactly `(x%, y%)` regardless of display size.
+
+2. **Decide the polygon fill from `target_status`, NOT from the region's
+   own color**, when the target is a leaf unit — so sold/reserved units
+   appear greyed-out / amber automatically. The region's `color` field
+   is the developer-chosen base; status overrides it.
+
+3. **Branch on `target_has_plan`**: `true` → drill via
+   `/api/v1/properties/<target_id>/plan-2d`; `false` → it's a leaf, fetch
+   `/api/v1/units/<target_id>` and show a side card / modal.
+
+4. **Use the server's `breadcrumbs` array directly** — don't try to
+   re-derive the chain from a click stack. The server walks `parent_id`
+   and prepends the project, so the first crumb is always the project,
+   the last is always the current node, and clicking any crumb is just
+   `render(crumb.kind, crumb.id)`.
+
+5. **`target_status === "hidden"`**: skip rendering that polygon
+   entirely. Strict: never fall back to "show anyway with a warning" — a
+   hidden unit must not appear in any visual surface.
+
+#### Same coordinate system everywhere
+
+Polygon coordinates `[x, y]` are percentages in `[0, 100]`. This is
+deliberately a string field (not a JSON column) so it round-trips
+through every JSON layer untouched. Parse with `JSON.parse(r.polygon)`
+on the client.
+
+#### Image URL specifics
+
+Every image URL the API returns is rooted at `/api/v1/image/<model>/<id>/<field>`
+with optional `?w=&h=` resize and a `?unique=YYYYMMDDHHMMSS` cache-buster
+derived from the source record's `write_date`. The image proxy enforces
+a whitelist + visibility check before streaming bytes, so a URL the API
+gave you will always serve, and a URL crafted from a field name not in
+the whitelist will 404. Pass the URL through verbatim — do not strip
+the query string.
+
 ---
 
 ## 6. 3D Maquette API
@@ -584,7 +790,7 @@ Returns the descriptor needed to load and interact with the project's
 {
   "project_id": 28,
   "name": "Demo Compound",
-  "glb_url": "/web/content/realestate.project/28/maquette_glb?download=false&unique=...",
+  "glb_url": "/api/v1/image/realestate.project/28/maquette_glb?unique=20260630104242",
   "glb_filename": "master_plan_demo.glb",
   "env_hdr_url": null,
   "default_camera": "{\"position\":[50,40,50],\"target\":[0,0,0]}",
@@ -606,16 +812,21 @@ Returns the descriptor needed to load and interact with the project's
 }
 ```
 
-- **`glb_url`** serves a glTF binary (~MB). The browser caches it by
-  URL; the `unique=` parameter rolls when the file is replaced.
+- **`glb_url`** serves a glTF binary (~MB) via the image proxy. The
+  browser caches it by URL; the `unique=` parameter rolls when the file
+  is replaced. Pass it through verbatim — do not strip the query string.
 - **`env_hdr_url`** is optional; when present it's an environment map
-  (`.hdr` / `.exr`) for IBL reflections.
+  (`.hdr` / `.exr`) for image-based lighting.
 - **`default_camera`** is a JSON string the viewer can `JSON.parse` —
-  `{position: [x,y,z], target: [x,y,z]}`.
+  `{position: [x,y,z], target: [x,y,z]}`. Empty string = "no preset,
+  use sensible defaults".
 - **`units[].mesh_name`** is the exact mesh name inside the GLB.
   Click handling = raycast the scene, then look up `mesh.name` in this
   list. Meshes that don't map to any unit do nothing (no silent
   fallback).
+- **`color_override`** is a hex string that overrides the default
+  state-based color for that specific unit. Empty = "no override, use
+  the state color".
 
 Errors: `404 not_found` if `maquette_glb` is not uploaded on the
 project.
@@ -625,6 +836,206 @@ project.
 After a click resolves to a `unit_id`, fetch
 `/api/v1/units/<id>` to render a side card with price, area, gallery,
 floor plan, etc.
+
+### 6.5 Build your own 3D viewer
+
+If you're not using the embed iframe — same idea as the 2D recipe.
+The JSON above is the complete contract: load the GLB, traverse the
+scene to find each unit's `mesh_name`, color by state, attach a click
+handler.
+
+#### Minimal Three.js loader — a working maquette in ~100 lines
+
+```html
+<div id="re-3d" style="position:relative; width:100%; height:80vh;"></div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from "three";
+import { GLTFLoader }    from "three/addons/loaders/GLTFLoader.js";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { RGBELoader }    from "three/addons/loaders/RGBELoader.js";
+
+const ERP_BASE = "https://erp.atmta.com";
+const ERP_DB   = "atmta_prod";
+
+const STATE_COLOR = {
+  available: 0x22c55e,
+  reserved:  0xf59e0b,
+  sold:      0x6b7280,
+};
+
+async function loadMaquette(projectId) {
+  const res = await fetch(
+    `${ERP_BASE}/api/v1/projects/${projectId}/maquette-3d?db=${ERP_DB}`
+  );
+  if (!res.ok) throw new Error(`maquette-3d ${projectId} → ${res.status}`);
+  return res.json();
+}
+
+async function init(projectId) {
+  const desc = await loadMaquette(projectId);
+  const host = document.getElementById("re-3d");
+  const W = host.clientWidth, H = host.clientHeight;
+
+  // Renderer + scene + camera
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(W, H);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  host.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xf3f4f6);
+
+  const camera = new THREE.PerspectiveCamera(45, W / H, 0.1, 2000);
+  // default_camera is a JSON string; safe-parse it.
+  let camPreset = { position: [50, 40, 50], target: [0, 0, 0] };
+  if (desc.default_camera) {
+    try { camPreset = JSON.parse(desc.default_camera) || camPreset; }
+    catch (_) { /* fall through to defaults */ }
+  }
+  camera.position.set(...camPreset.position);
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.target.set(...camPreset.target);
+  controls.update();
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+  const sun = new THREE.DirectionalLight(0xffffff, 0.8);
+  sun.position.set(50, 80, 30); scene.add(sun);
+
+  // Optional IBL — only when env_hdr_url is set.
+  if (desc.env_hdr_url) {
+    new RGBELoader().load(ERP_BASE + desc.env_hdr_url, (hdr) => {
+      hdr.mapping = THREE.EquirectangularReflectionMapping;
+      scene.environment = hdr;
+    });
+  }
+
+  // Load the GLB and index its meshes by name.
+  const gltf = await new GLTFLoader().loadAsync(ERP_BASE + desc.glb_url);
+  scene.add(gltf.scene);
+
+  // Build mesh_name → unit map. units that don't carry a mesh_name are
+  // ignored on purpose (they exist in the catalog but aren't in the
+  // maquette).
+  const unitsByMesh = new Map();
+  for (const u of desc.units) {
+    if (u.mesh_name) unitsByMesh.set(u.mesh_name, u);
+  }
+
+  // Color every mapped mesh by state; leave unmapped meshes alone so the
+  // ground/landscape geometry keeps its original look.
+  gltf.scene.traverse((obj) => {
+    if (!obj.isMesh) return;
+    const unit = unitsByMesh.get(obj.name);
+    if (!unit) return;
+    const color = unit.color_override
+        ? new THREE.Color(unit.color_override)
+        : new THREE.Color(STATE_COLOR[unit.state] ?? 0xcccccc);
+    obj.material = obj.material.clone();      // don't mutate shared mats
+    obj.material.color = color;
+    obj.userData.unit = unit;                  // for click lookup
+  });
+
+  // Click handling — raycast against the scene, then look up userData.
+  const raycaster = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+  renderer.domElement.addEventListener("click", (ev) => {
+    const rect = renderer.domElement.getBoundingClientRect();
+    mouse.x =  ((ev.clientX - rect.left) / rect.width)  * 2 - 1;
+    mouse.y = -((ev.clientY - rect.top)  / rect.height) * 2 + 1;
+    raycaster.setFromCamera(mouse, camera);
+    const hits = raycaster.intersectObject(gltf.scene, true);
+    for (const h of hits) {
+      const u = h.object.userData.unit;
+      if (u) { showUnitCard(u); return; }       // your own modal/side card
+    }
+  });
+
+  // Render loop
+  function tick() {
+    controls.update();
+    renderer.render(scene, camera);
+    requestAnimationFrame(tick);
+  }
+  tick();
+
+  // Resize handling — adjust on host container resize, not just window.
+  new ResizeObserver(() => {
+    const w = host.clientWidth, h = host.clientHeight;
+    renderer.setSize(w, h);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }).observe(host);
+}
+
+function showUnitCard(u) {
+  // For real life: fetch /api/v1/units/<u.id> for full detail (gallery,
+  // floor plan, description). For demo:
+  alert(`${u.name} — ${u.state} — ${u.base_price} ${u.currency}`);
+}
+
+init(28);
+</script>
+```
+
+#### Key rendering rules
+
+1. **Color only meshes you can resolve to a unit.** Iterate
+   `units[*].mesh_name`, look each one up in the loaded scene, set the
+   material color. Leave un-mapped geometry (ground, trees, landscape)
+   untouched.
+
+2. **Use `color_override` when non-empty, otherwise the state color.**
+   This lets sales paint a specific unit a custom shade (e.g. "promo
+   blue") without changing the catalog state.
+
+3. **`userData.unit` is the click bridge.** Stash the unit object on
+   each mesh's `userData` after coloring. On click, raycast → first hit
+   with `userData.unit` is the answer. Meshes without `userData.unit`
+   are inert by design.
+
+4. **Don't trust the GLB to be small.** The current dev maquette is
+   ~780 KB; production ones run 5–50 MB. Show a loader, lazy-load when
+   the section scrolls into view, and let the browser cache it (the
+   `unique=` cache-buster only rolls on real changes).
+
+5. **Resize via `ResizeObserver`, not just `window.resize`.** The
+   maquette is rarely full-screen — it's usually inside a card or panel
+   whose size changes independently of the window.
+
+6. **`default_camera` is optional and may be `""`** (empty). Always
+   wrap `JSON.parse` in `try`/`catch` and fall back to sensible defaults
+   so a bad preset can't break the viewer.
+
+7. **`env_hdr_url` is optional** — only attempt to load it when the
+   field is a non-null URL. Loading a missing HDR throws and dumps the
+   whole scene if you don't guard.
+
+#### Unit detail follow-up
+
+After a click resolves to a `unit_id`, fetch
+`/api/v1/units/<id>` for the full record (gallery, floor plan, interior
+GLB if any, description, price breakdowns). The `units[*]` array in the
+maquette endpoint deliberately holds **only what the maquette needs to
+render** — a side card calls for richer data.
+
+#### Same-domain vs cross-domain
+
+The GLB is served from the Odoo origin. If your viewer page lives on a
+different origin, you'll get a CORS preflight on the fetch. Add your
+origin to `real_estate_api.cors.allowed_origins` (System Parameters);
+no other config is needed — the proxy returns the right
+`Access-Control-Allow-Origin` for whitelisted origins automatically.
 
 ---
 
@@ -1353,19 +1764,28 @@ the whole thing top-to-bottom), remember to fire the mint first or
 
 ## Appendix · Image URL shape
 
-Every image URL the API returns follows the same template:
+Every image URL the API returns follows the same template — the
+`real_estate_api` image proxy, never Odoo's built-in `/web/image/...`:
 
 ```
-/web/image/<MODEL>/<ID>/<FIELD>[/<WIDTH>x<HEIGHT>]?unique=<YYYYMMDDHHMMSS>
+/api/v1/image/<MODEL>/<ID>/<FIELD>?unique=<YYYYMMDDHHMMSS>[&w=W&h=H]
 ```
 
-- `<WIDTH>x<HEIGHT>` triggers Odoo's on-the-fly resize. Common sizes
-  the API emits: `400x300`, `800x600`, `1280x720`, `1920x1080`.
-- `unique=` is a cache-busting token derived from the record's
-  `write_date`. It changes when the image is replaced — and not before.
+- `<MODEL>` / `<FIELD>` are constrained to a whitelist
+  (`master_plan_2d`, `plan_image`, `image_1920`, `maquette_glb`, …).
+  Anything else returns **404** even if the field exists on the model.
+- `w=W&h=H` triggers Odoo's on-the-fly resize. Common sizes the API
+  emits: `400x300`, `800x600`, `1280x720`, `1920x1080`. Omit them for
+  the original.
+- `unique=` is a cache-busting token derived from the source record's
+  `write_date`. It changes when the underlying file is replaced — and
+  not before.
 
-You may safely fetch these URLs from a browser cross-origin: Odoo's
-image handler responds with `Access-Control-Allow-Origin: *`.
+You may safely fetch these URLs from a browser cross-origin, provided
+the origin is in `real_estate_api.cors.allowed_origins`. The proxy
+adds the right `Access-Control-Allow-Origin` for whitelisted origins;
+unlisted origins get the same 2xx/4xx response without CORS headers
+(so the browser blocks them — but the server does not signal failure).
 
 ---
 
