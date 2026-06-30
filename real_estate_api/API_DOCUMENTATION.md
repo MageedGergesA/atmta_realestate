@@ -19,9 +19,11 @@ the contract for 3rd-party websites and integrations.
    3. [Buildings](#43-buildings)
    4. [Units / Properties](#44-units--properties)
 5. [2D Plan Drill API](#5-2d-plan-drill-api)
-   1. [Build your own 2D viewer](#56-build-your-own-2d-viewer)
+   1. [How 2D data is stored](#51-how-2d-data-is-stored)
+   2. [Build your own 2D viewer](#56-build-your-own-2d-viewer)
 6. [3D Maquette API](#6-3d-maquette-api)
-   1. [Build your own 3D viewer](#65-build-your-own-3d-viewer)
+   1. [How 3D data is stored](#61-how-3d-data-is-stored)
+   2. [Build your own 3D viewer](#65-build-your-own-3d-viewer)
 7. [Interests (lead capture)](#7-interests-lead-capture)
 8. [Customer Contact Sync](#8-customer-contact-sync)
 9. [Embed Tokens & Iframe Flow](#9-embed-tokens--iframe-flow)
@@ -483,6 +485,142 @@ fetches `/api/v1/properties/<target_id>/plan-2d` to load the next
 level. When `target_has_plan` is `false`, it's a leaf — the client
 should treat the click as a unit selection.
 
+### 5.1 How 2D data is stored
+
+Before the JSON shape makes sense, here's the backing data model.
+Everything is plain Odoo records — nothing is in flat files except
+the image bytes themselves.
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  realestate.project                                             │
+│  ────────────────                                               │
+│  master_plan_2d           Binary  ← the top-level site map      │
+│  master_plan_2d_filename  Char                                  │
+│  main_property_id         M2O     ← optional: delegate to       │
+│                                     this property's plan        │
+└─────────────────────────────────┬───────────────────────────────┘
+                                  │ project_id (M2O)
+                                  ▼
+┌─────────────────────────────────────────────────────────────────┐
+│  realestate.building.region                                     │
+│  ───────────────────────────                                    │
+│  project_id      M2O  → realestate.project                      │
+│  property_id     M2O  → realestate.property  (any building)     │
+│  polygon         Char (JSON list of [x%, y%])                   │
+│  label, color, sequence                                         │
+│                                                                 │
+│  Polygons drawn ON the project's master plan; each row points   │
+│  at one property (typically a compound/building/villa).         │
+└─────────────────────────────────────────────────────────────────┘
+
+                                  │ then drilling deeper into a
+                                  │ property that has its own
+                                  ▼ plan_image
+
+┌─────────────────────────────────────────────────────────────────┐
+│  realestate.property                                            │
+│  ────────────────────                                           │
+│  plan_image            Binary (Image)  ← this property's own    │
+│                                          plan (compound layout, │
+│                                          building elevation,    │
+│                                          floor plate, …)        │
+│  plan_image_filename   Char                                     │
+│  has_plan_image        Bool (computed; depends on plan_image)   │
+└─────────────────────────────────┬───────────────────────────────┘
+                                  │ parent_property_id (M2O)
+                                  ▼
+┌─────────────────────────────────────────────────────────────────┐
+│  realestate.plan.region                                         │
+│  ───────────────────────                                        │
+│  parent_property_id  M2O  → property whose plan_image carries it│
+│  target_property_id  M2O  → child property the region opens    │
+│  polygon             Char (JSON list of [x%, y%])               │
+│  label, color, sequence                                         │
+│  target_state            related (live: available/reserved/…)   │
+│  target_hierarchy_level  related                                │
+│                                                                 │
+│  CHECK: target_property_id must be a DIRECT CHILD of parent     │
+│  CHECK: polygon ≥ 3 vertices, each value in [0, 100]            │
+│  UNIQUE (parent_property_id, target_property_id)                │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+#### Two region models, one JSON shape
+
+| Layer | Backing model | Pointer FK | Where polygons are drawn |
+|---|---|---|---|
+| Project master plan | `realestate.building.region` | `property_id` | On the project's `master_plan_2d` image |
+| Property internal plan | `realestate.plan.region` | `target_property_id` | On the property's own `plan_image` |
+
+The two endpoints (`/projects/<id>/plan-2d` and
+`/properties/<id>/plan-2d`) merge these into a single response shape so
+the client never needs to know which model the row came from. Every
+field has the same name and same meaning regardless of source.
+
+#### Example row — what a region actually looks like
+
+A property "Tower A" (`id=84`, hierarchy_level=`building`) carries a
+plan image of its elevation. Three polygon regions over that image
+point at its three floors:
+
+```
+realestate_property                 (the host of the plan)
+─────────────────────────────────────────────────────────────────
+ id                  84
+ property_code       BLD-TOWERA
+ hierarchy_level     building
+ parent_id           83             (the compound)
+ project_id          28
+ has_plan_image      true
+ plan_image_filename tower_a_elevation.png
+
+realestate_plan_region              (3 rows; one per floor polygon)
+─────────────────────────────────────────────────────────────────
+ id  parent_property_id  target_property_id  label    polygon
+ ──  ──────────────────  ──────────────────  ───────  ─────────────────────────────────
+ 3   84                  87                  Floor 3  [[10,12],[90,12],[90,30],[10,30]]
+ 4   84                  86                  Floor 2  [[10,32],[90,32],[90,50],[10,50]]
+ 5   84                  85                  Floor 1  [[10,52],[90,52],[90,70],[10,70]]
+```
+
+And `GET /api/v1/properties/84/plan-2d` turns the rows above into the
+JSON shown in §5.3 below.
+
+#### Why polygons are JSON-as-string, not relational
+
+```
+   polygon = '[[10.5, 12.0], [40.2, 12.0], [40.2, 35.8], [10.5, 35.8]]'
+```
+
+- **Percentages**, not pixels — the same coordinates render correctly
+  whether the image is shown 800×600 or 1920×1080.
+- **JSON in one Char column** instead of a child vertex table because
+  polygons are atomic — you always read them whole, parse, draw.
+- **Validation in Python** (`_check_polygon`): valid JSON, ≥3 vertices,
+  every `[x, y]` numeric, every value in `[0, 100]`.
+
+#### Where the image bytes live
+
+`master_plan_2d` and `plan_image` are `fields.Image(attachment=True)`,
+which means Odoo offloads the bytes from the parent table to a row in
+`ir_attachment` (and from there to the filestore on disk when the
+filestore is configured). The API never returns base64 of the binary;
+it always returns a `/api/v1/image/<model>/<id>/<field>` URL, and the
+client fetches the bytes on demand. That URL goes through a whitelist
++ visibility check before streaming (see §12).
+
+#### What the API does NOT expose
+
+| Backend write | Why not exposed |
+|---|---|
+| Create/edit/delete a polygon | Region authoring is a backend-only task by design — there's no `POST /plan-regions` |
+| Upload a plan image | Only via the Odoo form |
+| Reorder regions (sequence) | Backend-only |
+| Reassign `target_property_id` | Backend-only |
+
+The API is **read-only on this layer**. Catalog + drill payloads + image proxy. Nothing else.
+
 ### `GET /api/v1/projects/<id>/plan-2d`
 
 Returns the project's **master plan**. If the project has no
@@ -780,6 +918,125 @@ the query string.
 ---
 
 ## 6. 3D Maquette API
+
+### 6.1 How 3D data is stored
+
+The 3D layer takes the **inverse** approach to 2D: where 2D has a row
+per polygon that *points at* a property via FK, 3D has the property
+*point at* a mesh inside a single GLB file via a string name.
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  realestate.project                                             │
+│  ────────────────                                               │
+│  maquette_glb              Binary  ← the .glb scene             │
+│  maquette_glb_filename     Char                                 │
+│  maquette_env_hdr          Binary  (optional .hdr/.exr for IBL) │
+│  maquette_default_camera   Char    (optional preset)            │
+│  has_maquette              Bool                                 │
+│  maquette_unit_count       Int  (computed: properties whose     │
+│                                  maquette_mesh_name is set)     │
+└─────────────────────────────────┬───────────────────────────────┘
+                                  │ project_id (M2O)
+                                  ▼
+┌─────────────────────────────────────────────────────────────────┐
+│  realestate.property                                            │
+│  ─────────────────────                                          │
+│  maquette_mesh_name        Char  ← THIS is the link to 3D.      │
+│                                    Exact mesh name inside the   │
+│                                    project's GLB. Set by the    │
+│                                    Auto-match wizard or the     │
+│                                    unit picker in the backend.  │
+│  maquette_color_override   Char  (optional hex, beats the       │
+│                                   default state-based color)    │
+│  floor_plan_image          Binary (attachment)                  │
+│  floor_plan_pdf            Binary (attachment)                  │
+│  interior_glb              Binary (optional per-unit interior)  │
+│  elevation_sheet           Binary (elevation drawings)          │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+#### Direction of the link — opposite of 2D
+
+| Layer | What carries the link | What it points at |
+|---|---|---|
+| **2D** | Region row → has FK to property | Region tells you "this polygon is property X" |
+| **3D** | Property row → has Char column `maquette_mesh_name` | Property tells you "I'm the mesh named X inside the GLB" |
+
+Why the asymmetry? In 2D each property can host many regions (one per
+child it links to), so a separate row per region is the natural shape.
+In 3D each property maps to exactly one mesh inside a single GLB, so
+sticking the mesh name on the property itself avoids a whole extra
+table.
+
+#### One GLB per project; one mesh name per property
+
+The GLB file holds *all* the geometry for the project — landscape,
+buildings, individual units — as named meshes. The property row's
+`maquette_mesh_name` is the string the GLB exporter assigned to that
+unit's geometry (e.g. `"Villa_07"`, `"mesh748927950_1"`, or any other
+string). The viewer raycasts a click → reads `mesh.name` →
+looks it up in the `units[*]` array to find which property was clicked.
+
+Properties whose `maquette_mesh_name` is empty are **not in the
+maquette** — they exist in the catalog but the 3D viewer doesn't render
+or react to them. This is intentional: not every unit needs to be
+modeled in 3D, and partial coverage is normal.
+
+#### Example row — what a 3D project actually holds
+
+Project 28 "Demo Compound" has a GLB and 12 of its 38 properties carry
+a mesh name:
+
+```
+realestate_project
+─────────────────────────────────────────────────────────────────
+ id                       28
+ code                     DEMO
+ name                     Demo Compound
+ maquette_glb_filename    master_plan_demo.glb
+ maquette_glb             (Binary, offloaded to ir_attachment row
+                           1178 — file ~780 KB on filestore at
+                           dd/dd4d6b492f5f4a167843ea07a8150818b1de8dd4)
+ maquette_env_hdr         (null — no HDR uploaded)
+ maquette_default_camera  ""
+
+realestate_property        (6 of the 12 mapped units, abridged)
+─────────────────────────────────────────────────────────────────
+ id  property_code  hierarchy   state      maquette_mesh_name    color_override
+ ──  ─────────────  ──────────  ─────────  ────────────────────  ──────────────
+ 54  DEMO-001       unit        reserved   DEMO-004_1            #000
+ 55  DEMO-002       unit        reserved   mesh2001573440        
+ 56  DEMO-003       unit        available  group1334676454       
+ 57  DEMO-004       unit        available  mesh748927950_1       
+ 58  DEMO-005       unit        available  DEMO-004_2            
+ 59  DEMO-006       unit        available  mesh1385259583_1      
+```
+
+`GET /api/v1/projects/28/maquette-3d` turns this into the JSON shape
+shown in §6.2 below — `glb_url` for the file plus a `units[*]` array
+with one entry per mapped property.
+
+#### Where the GLB bytes live
+
+`maquette_glb` is `fields.Binary(attachment=True)`, so the bytes are
+in `ir_attachment.datas` (or on the filestore disk under
+`<db>/filestore/<2-char-prefix>/<sha>` when filestore is configured).
+The API returns `/api/v1/image/realestate.project/<id>/maquette_glb?…`,
+which streams the bytes through the proxy with the same whitelist +
+visibility check as images. Browsers cache by URL; the `unique=` token
+rolls only when the GLB is replaced.
+
+#### What the API does NOT expose
+
+| Backend write | Why not exposed |
+|---|---|
+| Upload / replace the GLB | Only via the Odoo project form |
+| Set/clear `maquette_mesh_name` on a property | Backend-only (the Auto-match wizard and unit picker do this internally) |
+| Set `maquette_color_override` | Backend-only |
+| Upload `env_hdr` or set `default_camera` | Backend-only |
+
+The 3D API is **read-only**: descriptor + GLB URL + unit↔mesh mapping. Nothing else.
 
 ### `GET /api/v1/projects/<id>/maquette-3d`
 
