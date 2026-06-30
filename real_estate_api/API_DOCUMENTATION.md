@@ -18,6 +18,7 @@ the contract for 3rd-party websites and integrations.
    2. [Projects](#42-projects)
    3. [Buildings](#43-buildings)
    4. [Units / Properties](#44-units--properties)
+   5. [Map data (projects + properties on a map)](#45-map-data-projects--properties-on-a-leaflet--google-map)
 5. [2D Plan Drill API](#5-2d-plan-drill-api)
    1. [How 2D data is stored](#51-how-2d-data-is-stored)
    2. [Build your own 2D viewer](#56-build-your-own-2d-viewer)
@@ -473,6 +474,146 @@ Returns the detail envelope for a leaf:
 Generic property detail — works for any node in the hierarchy
 (compounds, buildings, floors, units, rooms) as long as the record is
 publicly visible (`state in available/reserved/sold`).
+
+### 4.5 Map data (projects + properties on a Leaflet / Google map)
+
+Two read-only endpoints feed a map view of the whole catalog. Same
+visibility rules as the rest of §4 (cancelled / draft / inactive
+records are never returned). Records where both `latitude` and
+`longitude` are `0` are treated as **"no coordinates set"** and
+excluded — we never plot a point at the prime meridian as a fallback.
+
+#### `GET /api/v1/map/projects`
+
+```bash
+curl "https://erp.atmta.com/api/v1/map/projects?limit=500" \
+  -H "X-Odoo-Database: atmta_prod"
+```
+
+Query parameters:
+
+| Param | Default | Notes |
+|---|---|---|
+| `limit` | `500` | Hard max `5000` |
+| `offset` | `0` | Standard pagination |
+| `developer_id` | — | Filter to one developer |
+| `bbox` | — | `lat_min,lng_min,lat_max,lng_max` — viewport filter. Malformed → `400` (strict, never silently widened). |
+| `include_boundary` | `false` | When `true`, each entry includes `boundary_points: [{sequence, latitude, longitude, label}, …]` — the polygon outline of the plot. Returns `[]` if no boundary configured. |
+
+Response (200):
+
+```json
+{
+  "results": [
+    {
+      "id": 28,
+      "code": "DEMO",
+      "name": "Demo Compound",
+      "status": "selling",
+      "latitude": 30.0444,
+      "longitude": 31.2357,
+      "city": "Cairo",
+      "country": "Egypt",
+      "country_code": "EG",
+      "developer_id": null,
+      "developer_name": "",
+      "cover_image_url": "/api/v1/image/realestate.project/28/master_plan_2d?unique=...&w=400&h=300",
+      "has_2d_plan": true,
+      "has_3d_maquette": true,
+      "unit_count": 38,
+      "available_unit_count": 22
+    }
+  ],
+  "total_count": 14,
+  "limit": 500,
+  "offset": 0
+}
+```
+
+#### `GET /api/v1/map/properties`
+
+```bash
+curl "https://erp.atmta.com/api/v1/map/properties?project_id=28&limit=1000" \
+  -H "X-Odoo-Database: atmta_prod"
+```
+
+Query parameters:
+
+| Param | Default | Notes |
+|---|---|---|
+| `limit` | `1000` | Hard max `5000` |
+| `offset` | `0` | Standard pagination |
+| `project_id` | — | Filter to one project |
+| `hierarchy_level` | — | `compound \| building \| floor \| unit \| room`. Unknown value → `400`. |
+| `state` | — | `available \| reserved \| sold`. Unknown value → `400`. Omit to include all three. |
+| `bbox` | — | `lat_min,lng_min,lat_max,lng_max` viewport filter |
+
+Response (200):
+
+```json
+{
+  "results": [
+    {
+      "id": 84,
+      "property_code": "BLD-TOWERA",
+      "name": "Tower A",
+      "hierarchy_level": "building",
+      "state": "available",
+      "latitude": 30.0451,
+      "longitude": 31.2364,
+      "city": "Cairo",
+      "district": "",
+      "country": "Egypt",
+      "country_code": "EG",
+      "property_type": "Residential Tower",
+      "project_id": 28,
+      "project_name": "Demo Compound",
+      "base_price": 0.0,
+      "currency": "$",
+      "area_sqm": 3000.0,
+      "cover_image_url": "/api/v1/image/realestate.property/84/image_1920?unique=...&w=400&h=300"
+    }
+  ],
+  "total_count": 38,
+  "missing_coordinates_count": 12,
+  "limit": 1000,
+  "offset": 0
+}
+```
+
+`missing_coordinates_count` tells the client how many properties match
+the same filters (project / hierarchy / state) but have no
+coordinates set — useful for a "12 properties not on the map" hint
+under the viewport, mirroring the in-house dashboard's behaviour.
+
+#### Rendering hints for a self-built map
+
+1. **Centroid + boundary** — `latitude`/`longitude` on a project is its
+   centroid (auto-recomputed from `boundary_points` when those are set).
+   Use the centroid as the marker; only fetch `include_boundary=true`
+   when the user zooms in enough to render the polygon.
+2. **Color by state** — properties: green `#22c55e` available, amber
+   `#f59e0b` reserved, grey `#6b7280` sold. Projects: blue `#0d6efd`
+   selling, teal `#10b981` under_construction, neutral grey otherwise.
+3. **Cluster at low zoom** — Leaflet's `markercluster` plugin handles
+   it. Cluster centroids should not show project info — that needs
+   individual markers.
+4. **Click a marker → unit detail** — for properties, fire
+   `GET /api/v1/units/<id>` for the full record (gallery, floor plan).
+   For projects, drill into `GET /api/v1/projects/<id>` and from there
+   into buildings/units.
+5. **Reload on pan/zoom** — pass the new viewport via `bbox=` so you're
+   only fetching what's visible. The endpoint's hard cap of 5000 means
+   a worldwide zoom-out query won't dump the whole catalog in one
+   response.
+
+#### What the API does NOT expose
+
+| Backend write | Why not exposed |
+|---|---|
+| Edit coordinates of a project/property | Backend-only — geo data is curated, not crowd-sourced |
+| Add/remove boundary points | Backend-only |
+| Cluster radius / styling | Pure client concern |
 
 ---
 

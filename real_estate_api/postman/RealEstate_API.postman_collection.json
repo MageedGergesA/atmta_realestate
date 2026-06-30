@@ -62,6 +62,11 @@
       "key": "partner_external_ref",
       "value": "postman:test:user:1",
       "type": "string"
+    },
+    {
+      "key": "map_first_project_id",
+      "value": "",
+      "type": "string"
     }
   ],
   "event": [
@@ -316,6 +321,331 @@
               ]
             }
           }
+        }
+      ]
+    },
+    {
+      "name": "Map (locations)",
+      "description": "Geolocation feed for a Leaflet/Google map view of the catalog. Public reads, same visibility rules as the rest of /api/v1. See API_DOCUMENTATION.md \u00a74.5.",
+      "item": [
+        {
+          "name": "Projects on the map (default 500)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/map/projects?limit=500",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "map",
+                "projects"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "500"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));",
+                  "const b = pm.response.json();",
+                  "pm.test('has results array', () => pm.expect(b.results).to.be.an('array'));",
+                  "pm.test('every row has coordinates set', () =>",
+                  "    b.results.forEach(r => pm.expect(r.latitude !== 0 || r.longitude !== 0).to.eql(true)));",
+                  "if (b.results.length) pm.collectionVariables.set('map_first_project_id', b.results[0].id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Projects on the map \u2014 with boundary polygon",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/map/projects?include_boundary=true&limit=3",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "map",
+                "projects"
+              ],
+              "query": [
+                {
+                  "key": "include_boundary",
+                  "value": "true"
+                },
+                {
+                  "key": "limit",
+                  "value": "3"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));",
+                  "const b = pm.response.json();",
+                  "pm.test('boundary_points key present', () =>",
+                  "    b.results.forEach(r => pm.expect(r).to.have.property('boundary_points')));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Projects \u2014 viewport (bbox) filter",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/map/projects?bbox=22,25,32,55",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "map",
+                "projects"
+              ],
+              "query": [
+                {
+                  "key": "bbox",
+                  "value": "22,25,32,55"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));",
+                  "const b = pm.response.json();",
+                  "pm.test('all results inside bbox', () =>",
+                  "    b.results.forEach(r => {",
+                  "        pm.expect(r.latitude).to.be.within(22, 32);",
+                  "        pm.expect(r.longitude).to.be.within(25, 55);",
+                  "    }));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Properties on the map (default 1000)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/map/properties?limit=1000",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "map",
+                "properties"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "1000"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));",
+                  "const b = pm.response.json();",
+                  "pm.test('returns missing_coordinates_count', () =>",
+                  "    pm.expect(b).to.have.property('missing_coordinates_count'));",
+                  "pm.test('every row has coordinates set', () =>",
+                  "    b.results.forEach(r => pm.expect(r.latitude !== 0 || r.longitude !== 0).to.eql(true)));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Properties \u2014 one project + buildings only",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/map/properties?project_id={{first_project_id}}&hierarchy_level=building",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "map",
+                "properties"
+              ],
+              "query": [
+                {
+                  "key": "project_id",
+                  "value": "{{first_project_id}}"
+                },
+                {
+                  "key": "hierarchy_level",
+                  "value": "building"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));",
+                  "const b = pm.response.json();",
+                  "pm.test('every row is a building', () =>",
+                  "    b.results.forEach(r => pm.expect(r.hierarchy_level).to.eql('building')));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Properties \u2014 state=available filter",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/map/properties?state=available&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "map",
+                "properties"
+              ],
+              "query": [
+                {
+                  "key": "state",
+                  "value": "available"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));",
+                  "const b = pm.response.json();",
+                  "pm.test('every row state=available', () =>",
+                  "    b.results.forEach(r => pm.expect(r.state).to.eql('available')));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Properties \u2014 malformed bbox (400)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/map/properties?bbox=invalid",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "map",
+                "properties"
+              ],
+              "query": [
+                {
+                  "key": "bbox",
+                  "value": "invalid"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('400 bad_request', () => pm.response.to.have.status(400));",
+                  "pm.test('error code is bad_request', () =>",
+                  "    pm.expect(pm.response.json().error.code).to.eql('bad_request'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Properties \u2014 unknown hierarchy_level (400)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/map/properties?hierarchy_level=garage",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "map",
+                "properties"
+              ],
+              "query": [
+                {
+                  "key": "hierarchy_level",
+                  "value": "garage"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('400 bad_request', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
