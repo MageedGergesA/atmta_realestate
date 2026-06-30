@@ -479,9 +479,24 @@ publicly visible (`state in available/reserved/sold`).
 
 Two read-only endpoints feed a map view of the whole catalog. Same
 visibility rules as the rest of §4 (cancelled / draft / inactive
-records are never returned). Records where both `latitude` and
-`longitude` are `0` are treated as **"no coordinates set"** and
-excluded — we never plot a point at the prime meridian as a fallback.
+records are never returned).
+
+#### Coordinate rule
+
+A record where both `latitude` and `longitude` are `0` is treated as
+**"no coordinates set"** and excluded — we never plot a point at the
+prime meridian / equator as a fallback. To make this visible to the
+client (so it can show "N hidden from map"), both endpoints return a
+`missing_coordinates_count` field alongside the results:
+
+| Endpoint | Counts |
+|---|---|
+| `/api/v1/map/projects` | Publicly-visible projects with no coordinates set (ignores `bbox`; respects `developer_id`) |
+| `/api/v1/map/properties` | Publicly-visible properties matching the same `project_id`/`hierarchy_level`/`state` filters but with no coordinates |
+
+If `missing_coordinates_count > 0` on your dashboard, that's the
+catalog team's signal to fill in those records — the API will never
+guess a fallback location.
 
 #### `GET /api/v1/map/projects`
 
@@ -524,7 +539,8 @@ Response (200):
       "available_unit_count": 22
     }
   ],
-  "total_count": 14,
+  "total_count": 27,
+  "missing_coordinates_count": 4,
   "limit": 500,
   "offset": 0
 }

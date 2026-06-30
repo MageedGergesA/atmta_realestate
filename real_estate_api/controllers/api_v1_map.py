@@ -121,6 +121,17 @@ class MapApiV1(http.Controller):
         total = Project.search_count(domain)
         rows = Project.search(domain, limit=limit, offset=offset, order='id')
 
+        # How many publicly-visible projects exist that DON'T have
+        # coordinates set — useful for a "N hidden from map" hint.
+        # Filtered by the same optional developer_id filter (but NOT
+        # bbox — bbox is a viewport, not a "what could be on the map").
+        missing_domain = Project._api_public_domain() + [
+            ('latitude', '=', 0), ('longitude', '=', 0),
+        ]
+        if dev_id:
+            missing_domain.append(('developer_id', '=', dev_id))
+        missing_count = Project.search_count(missing_domain)
+
         results = []
         for p in rows:
             entry = {
@@ -155,6 +166,7 @@ class MapApiV1(http.Controller):
         resp = json_response({
             'results': results,
             'total_count': total,
+            'missing_coordinates_count': missing_count,
             'limit': limit,
             'offset': offset,
         })
