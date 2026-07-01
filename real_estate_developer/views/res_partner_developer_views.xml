@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Developer list — filtered res.partner (is_realestate_developer = True) -->
+    <record id="view_res_partner_developer_list" model="ir.ui.view">
+        <field name="name">res.partner.developer.list</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <list string="Developers">
+                <field name="name"/>
+                <field name="developer_project_count" string="Projects"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="city"/>
+                <field name="country_id"/>
+                <field name="website" optional="hide"/>
+                <field name="vat" optional="hide"/>
+                <field name="is_realestate_developer" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Kanban -->
+    <record id="view_res_partner_developer_kanban" model="ir.ui.view">
+        <field name="name">res.partner.developer.kanban</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" default_order="developer_project_count desc">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="developer_project_count"/>
+                <field name="city"/>
+                <field name="country_id"/>
+                <field name="email"/>
+                <field name="image_128"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_record_has_image_fill">
+                            <div class="o_kanban_image_fill_left d-none d-md-block"
+                                 t-attf-style="background-image:url('#{kanban_image('res.partner','image_128',record.id.raw_value)}')"/>
+                            <div class="oe_kanban_details">
+                                <strong class="o_kanban_record_title"><field name="name"/></strong>
+                                <div><t t-esc="record.developer_project_count.raw_value"/> project(s)</div>
+                                <div t-if="record.city.raw_value">
+                                    <field name="city"/><t t-if="record.country_id.raw_value">, </t><field name="country_id"/>
+                                </div>
+                                <div t-if="record.email.raw_value"><field name="email"/></div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Form — reuses the base partner form but adds a Projects smart-button
+         and surfaces the developer flag / project count. -->
+    <record id="view_res_partner_developer_form" model="ir.ui.view">
+        <field name="name">res.partner.developer.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" type="object"
+                        name="action_open_developer_projects"
+                        icon="fa-building"
+                        invisible="not is_realestate_developer">
+                    <field name="developer_project_count" widget="statinfo" string="Projects"/>
+                </button>
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <field name="is_realestate_developer" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_res_partner_developer" model="ir.actions.act_window">
+        <field name="name">Developers</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('is_realestate_developer', '=', True)]</field>
+        <field name="context">{
+            'default_is_company': True,
+            'default_company_type': 'company',
+        }</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_res_partner_developer_kanban')}),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('view_res_partner_developer_list')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('view_res_partner_developer_form')}),
+        ]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No developers yet.
+            </p><p>
+                A partner appears here as soon as it is set as the
+                <b>Developer/Company</b> on a project. Create a company
+                contact from here, then attach it to a project via
+                Projects → Developer/Company.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_developer_partners"
+              name="Developers"
+              parent="menu_developer_root"
+              action="action_res_partner_developer"
+              sequence="5"/>
+
+</odoo>

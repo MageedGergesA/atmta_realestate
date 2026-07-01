@@ -1734,6 +1734,356 @@
           ]
         }
       ]
+    },
+    {
+      "name": "Customer Portal (by external_ref)",
+      "description": "Read a synced customer's activity — interests, viewings, contracts (sale + rental), installments, payments. All Bearer-required. Strict 404 on unknown external_ref.",
+      "item": [
+        {
+          "name": "Interests — list",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/interests?limit=20",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "interests"],
+              "query": [
+                { "key": "limit", "value": "20" }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('200', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test('envelope', () => pm.expect(body).to.have.all.keys('external_ref','partner_id','results','total_count','limit','offset'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Interests — no auth (401)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/interests",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "interests"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('401', () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Interests — unknown ref (404)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/postman:does:not:exist/interests",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "partners", "by-ref", "postman:does:not:exist", "interests"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('404', () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Viewings — list",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/viewings?limit=20",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "viewings"],
+              "query": [
+                { "key": "limit", "value": "20" }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('200 or 404 (brokerage optional)', () => pm.expect([200, 404]).to.include(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Viewings — scheduled only",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/viewings?state=scheduled",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "viewings"],
+              "query": [
+                { "key": "state", "value": "scheduled" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Viewings — bad state (400)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/viewings?state=whatever",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "viewings"],
+              "query": [
+                { "key": "state", "value": "whatever" }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('400 or 404', () => pm.expect([400, 404]).to.include(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Contracts — all (sale + rental)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/contracts",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "contracts"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Contracts — sale only",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/contracts?kind=sale",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "contracts"],
+              "query": [
+                { "key": "kind", "value": "sale" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Contracts — rental only",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/contracts?kind=rental",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "contracts"],
+              "query": [
+                { "key": "kind", "value": "rental" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Contracts — bad kind (400)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/contracts?kind=whatever",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "contracts"],
+              "query": [
+                { "key": "kind", "value": "whatever" }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('400', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Installments — list",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/installments?limit=50",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "installments"],
+              "query": [
+                { "key": "limit", "value": "50" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Installments — pending only",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/installments?state=pending",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "installments"],
+              "query": [
+                { "key": "state", "value": "pending" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Installments — date range",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/installments?date_from=2026-01-01&date_to=2026-12-31",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "installments"],
+              "query": [
+                { "key": "date_from", "value": "2026-01-01" },
+                { "key": "date_to", "value": "2026-12-31" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Payments — list",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/payments?limit=50",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "payments"],
+              "query": [
+                { "key": "limit", "value": "50" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Payments — outstanding (draft)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/payments?state=draft",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "payments"],
+              "query": [
+                { "key": "state", "value": "draft" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Payments — malformed date (400)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/payments?date_from=not-a-date",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "payments"],
+              "query": [
+                { "key": "date_from", "value": "not-a-date" }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('400', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -36,6 +36,7 @@ Manages off-plan and finished-property developer sales:
         'views/sale_contract_views.xml',
         'views/sale_installment_views.xml',
         'views/property_developer_views.xml',
+        'views/res_partner_developer_views.xml',
         'views/menus.xml',
         'views/developer_dashboard_views.xml',
     ],

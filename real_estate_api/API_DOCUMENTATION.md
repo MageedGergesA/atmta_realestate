@@ -28,10 +28,17 @@ the contract for 3rd-party websites and integrations.
 7. [Interests (lead capture)](#7-interests-lead-capture)
 8. [Customer Contact Sync](#8-customer-contact-sync)
 9. [Embed Tokens & Iframe Flow](#9-embed-tokens--iframe-flow)
-10. [Error Reference](#10-error-reference)
-11. [Rate Limits](#11-rate-limits)
-12. [What we never expose](#12-what-we-never-expose)
-13. [Postman Collection](#13-postman-collection)
+10. [Customer Portal](#10-customer-portal)
+    1. [Interests](#101-interests-get-interests)
+    2. [Viewings](#102-viewings-get-viewings)
+    3. [Contracts](#103-contracts-get-contracts)
+    4. [Installments](#104-installments-get-installments)
+    5. [Payments](#105-payments-get-payments)
+    6. [Worked example — "My Account" page](#106-worked-example--my-account-page)
+11. [Error Reference](#11-error-reference)
+12. [Rate Limits](#12-rate-limits)
+13. [What we never expose](#13-what-we-never-expose)
+14. [Postman Collection](#14-postman-collection)
 
 ---
 
@@ -2217,7 +2224,228 @@ When a visitor opens `https://your-site.com/projects/28`:
 
 ---
 
-## 10. Error Reference
+## 10. Customer Portal
+
+Once a partner has been synced via [`POST /api/v1/partners`](#8-customer-contact-sync)
+and you have their `external_ref`, you can read that customer's activity
+across the whole real-estate stack. Five endpoints, all rooted at
+`/api/v1/partners/by-ref/<external_ref>/…`:
+
+| Endpoint | Returns |
+|---|---|
+| `GET .../interests` | The `crm.lead` rows they submitted via `/api/v1/interests` |
+| `GET .../viewings` | Property viewings scheduled for them (brokerage module) |
+| `GET .../contracts` | Sale + rental contracts they signed (unified) |
+| `GET .../installments` | Sale-contract installment schedule (developer module) |
+| `GET .../payments` | Rental-contract payment schedule (rental module) |
+
+**Auth.** All five require a Bearer API key with `real_estate_api` scope —
+this is customer PII + financial data, not public catalog.
+
+**Strict lookup.** Unknown `external_ref` → **404**. Malformed ref → **400**.
+No empty-array fallback (per the `no_silent_fallbacks` rule).
+
+**Common response envelope**
+
+```json
+{
+  "external_ref": "site:user:42",
+  "partner_id": 812,
+  "results":     [ ... ],
+  "total_count": 17,
+  "limit":       50,
+  "offset":      0
+}
+```
+
+**Common query params (endpoint-dependent)**
+
+| Param | Where | Notes |
+|---|---|---|
+| `limit` | all | 1–500 (default varies per endpoint) |
+| `offset` | all | ≥0 |
+| `state` | viewings, installments, payments | Filter by workflow state; unknown state → 400 |
+| `kind` | contracts | `sale` \| `rental` (omit for both) |
+| `date_from`, `date_to` | interests, installments, payments | `YYYY-MM-DD`, closed range |
+
+### 10.1 Interests (`GET .../interests`)
+
+Interests the 3rd-party site captured on this customer's behalf. Only
+interests that were submitted with this partner's `external_ref` (or that
+were later linked in the CRM) appear here — interests without a
+`partner_id` are anonymous leads and won't leak in.
+
+```bash
+curl -H "Authorization: Bearer $API_KEY" \
+     "$BASE/api/v1/partners/by-ref/site:user:42/interests?db=$DB&limit=20"
+```
+
+Response:
+
+```json
+{
+  "external_ref": "site:user:42",
+  "partner_id":   812,
+  "results": [
+    {
+      "id":           1024,
+      "name":         "Interest — Villa 14",
+      "contact_name": "Ahmed Youssef",
+      "email":        "ahmed@example.com",
+      "phone":        "+201001234567",
+      "description":  "Called about payment plan options.",
+      "stage":        "New",
+      "type":         "lead",
+      "created_at":   "2026-06-14T09:12:03",
+      "project_id":   23,
+      "project_name": "NEW CAPITAL COMPOUND",
+      "unit_id":      118,
+      "unit_name":    "Villa 14"
+    }
+  ],
+  "total_count": 3, "limit": 20, "offset": 0
+}
+```
+
+### 10.2 Viewings (`GET .../viewings`)
+
+Property viewings booked for this customer. Requires the
+`real_estate_brokerage` module — if uninstalled, this endpoint returns
+**404** (not an empty list).
+
+```bash
+curl -H "Authorization: Bearer $API_KEY" \
+     "$BASE/api/v1/partners/by-ref/site:user:42/viewings?db=$DB&state=scheduled"
+```
+
+Fields: `reference`, `property_id`, `property_name`, `scheduled_at`,
+`end_at`, `duration_hours`, `state`, `feedback_rating`, `feedback`,
+`next_action`, `agent_name`.
+
+`state` values: `scheduled` | `completed` | `cancelled` | `no_show`.
+
+### 10.3 Contracts (`GET .../contracts`)
+
+Sale + rental contracts, unified into one array with a `kind` field so
+the caller can render them together on an "Agreements" page.
+
+```bash
+curl -H "Authorization: Bearer $API_KEY" \
+     "$BASE/api/v1/partners/by-ref/site:user:42/contracts?db=$DB"
+```
+
+Sale contract entry:
+
+```json
+{
+  "kind":                    "sale",
+  "id":                      45,
+  "reference":               "SC-00045",
+  "state":                   "signed",
+  "contract_date":           "2026-03-01",
+  "signing_date":            "2026-03-14",
+  "expected_handover_date":  "2027-09-01",
+  "handover_date":           null,
+  "property_id":             118,
+  "property_name":           "Villa 14 — NEW CAPITAL COMPOUND",
+  "project_id":              23,
+  "project_name":            "NEW CAPITAL COMPOUND",
+  "sale_price":              5250000.0,
+  "currency":                "EGP",
+  "paid_amount":             1050000.0,
+  "balance_due":             4200000.0,
+  "progress_pct":            20.0
+}
+```
+
+Rental contract entry:
+
+```json
+{
+  "kind":              "rental",
+  "id":                77,
+  "reference":         "RC-00077",
+  "state":             "active",
+  "start_date":        "2026-01-01",
+  "end_date":          "2026-12-31",
+  "notes":             "Terms and conditions...",
+  "currency":          "EGP",
+  "contract_no":       "CTR-2026-77",
+  "main_contract_no":  ""
+}
+```
+
+Add `?kind=sale` or `?kind=rental` to narrow to one flavor.
+
+### 10.4 Installments (`GET .../installments`)
+
+The sale-contract installment schedule. Requires `real_estate_developer`;
+uninstalled → **404**.
+
+```bash
+curl -H "Authorization: Bearer $API_KEY" \
+     "$BASE/api/v1/partners/by-ref/site:user:42/installments?db=$DB&state=pending"
+```
+
+Fields: `contract_id`, `contract_ref`, `property_id`, `property_name`,
+`sequence`, `kind` (`down`|`installment`|`balloon`), `amount`, `currency`,
+`date_due`, `state` (`pending`|`invoiced`|`paid`|`cancelled`),
+`invoice_state`, `payment_state`.
+
+### 10.5 Payments (`GET .../payments`)
+
+The rental-contract payment schedule (base rent + any additional charges).
+Requires `atmta_real_estate`; uninstalled → **404**.
+
+```bash
+curl -H "Authorization: Bearer $API_KEY" \
+     "$BASE/api/v1/partners/by-ref/site:user:42/payments?db=$DB&date_from=2026-01-01&date_to=2026-12-31"
+```
+
+Fields: `contract_id`, `contract_ref`, `property_id`, `property_name`,
+`label`, `amount`, `amount_total` (base + charges), `increase_amount`,
+`discount_amount`, `date_due`, `hijri_date_due`, `state`
+(`draft`|`invoiced`|`paid`|`cancelled`), `invoice_state`, `payment_state`.
+
+`amount_total` is the number to display — it already includes any utility
+lines / charges rolled up to that due date.
+
+### 10.6 Worked example — "My Account" page
+
+```javascript
+async function loadCustomerDashboard(externalRef) {
+  const base = `${BASE}/api/v1/partners/by-ref/${externalRef}`;
+  const opts = { headers: { Authorization: `Bearer ${API_KEY}` } };
+  const q    = `?db=${DB}`;
+
+  const [interests, viewings, contracts, installments, payments] =
+    await Promise.all([
+      fetch(`${base}/interests${q}&limit=5`,     opts).then(r => r.json()),
+      fetch(`${base}/viewings${q}&state=scheduled`, opts).then(r => r.json()),
+      fetch(`${base}/contracts${q}`,             opts).then(r => r.json()),
+      fetch(`${base}/installments${q}&state=pending`, opts).then(r => r.json()),
+      fetch(`${base}/payments${q}&state=draft`,  opts).then(r => r.json()),
+    ]);
+
+  renderInterests(interests.results);
+  renderUpcomingViewings(viewings.results);
+  renderContracts(contracts.results);
+  renderOutstanding([...installments.results, ...payments.results]);
+}
+```
+
+### 10.7 Common pitfalls
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| `404 not_found` on every portal endpoint | `external_ref` isn't in Odoo yet | Sync via `POST /api/v1/partners` first, then use the returned `external_ref` |
+| Interests list is empty though the site submitted 5 | Interests weren't linked (submitted without `partner_external_ref`) | Include `partner_external_ref` on every `POST /api/v1/interests` |
+| `404` on `/viewings` even for a synced partner | Brokerage module not installed on this DB | Install `real_estate_brokerage` or don't call this endpoint |
+| Contract shows `paid_amount: 0` but customer paid | Invoice isn't posted yet | The `paid_amount` reflects **posted invoice** state; posting is done by accounting |
+
+---
+
+## 11. Error Reference
 
 All API errors share the same envelope:
 
@@ -2242,7 +2470,7 @@ a fallback for a 404. Strict.
 
 ---
 
-## 11. Rate Limits
+## 12. Rate Limits
 
 Fixed-window counters in Postgres (sufficient for typical real-estate
 website traffic). Limits are configurable via `ir.config_parameter`:
@@ -2259,7 +2487,7 @@ Counter rows older than 24 hours are pruned hourly by an `ir.cron`.
 
 ---
 
-## 12. What we never expose
+## 13. What we never expose
 
 | Model | Fields hidden from the API |
 |---|---|
@@ -2271,7 +2499,7 @@ Counter rows older than 24 hours are pruned hourly by an `ir.cron`.
 
 ---
 
-## 13. Postman Collection
+## 14. Postman Collection
 
 A ready-to-import collection is shipped with the module:
 

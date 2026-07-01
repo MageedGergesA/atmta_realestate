@@ -1,4 +1,5 @@
 from . import account_payment_term
+from . import res_partner
 from . import project
 from . import project_boundary
 from . import phase
