@@ -33,6 +33,9 @@ Self-contained module — no dependency on other real-estate modules.
         'stock',
         'web_hierarchy',
     ],
+    'external_dependencies': {
+        'python': ['hijridate'],
+    },
     'data': [
         # security (must load first)
         'security/security.xml',

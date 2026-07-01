@@ -631,6 +631,160 @@ under the viewport, mirroring the in-house dashboard's behaviour.
 | Add/remove boundary points | Backend-only |
 | Cluster radius / styling | Pure client concern |
 
+#### Two-stage drill — render a full map of every project AND its plots
+
+The recommended interaction for a Leaflet/Google map page is:
+
+```
+ ┌──────────────────────────────────────────────────────────────────┐
+ │ STAGE 1: world view                                              │
+ │ ─────────────────                                                │
+ │ GET /api/v1/map/projects?include_boundary=true                   │
+ │   → one centroid marker per project                              │
+ │   → one polygon per project that has boundary_points set         │
+ │                                                                  │
+ │ User clicks a project marker / polygon                           │
+ └──────────────────────────────┬───────────────────────────────────┘
+                                ▼
+ ┌──────────────────────────────────────────────────────────────────┐
+ │ STAGE 2: project view (zoom in on the selected project)          │
+ │ ───────────────────                                              │
+ │ GET /api/v1/map/properties?project_id=<id>                       │
+ │   → markers for every sub-property with coordinates set          │
+ │     (compounds, buildings, floors, units)                        │
+ │                                                                  │
+ │ User clicks a property marker                                    │
+ └──────────────────────────────┬───────────────────────────────────┘
+                                ▼
+ ┌──────────────────────────────────────────────────────────────────┐
+ │ STAGE 3: detail card                                             │
+ │ ─────────────────                                                │
+ │ GET /api/v1/units/<id>     (or /api/v1/properties/<id>)          │
+ │   → full record: gallery, floor plan, price breakdown, etc.      │
+ └──────────────────────────────────────────────────────────────────┘
+```
+
+#### Worked example — Leaflet, ~80 lines of JS
+
+```html
+<div id="map" style="width:100%; height:80vh;"></div>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+const ERP_BASE = "https://erp.atmta.com";
+const ERP_DB   = "atmta_prod";
+
+const STATE_COLOR = {
+  available: "#22c55e", reserved: "#f59e0b", sold: "#6b7280",
+};
+const PROJECT_COLOR = "#0d6efd";
+
+async function apiGet(path) {
+  const res = await fetch(`${ERP_BASE}${path}${path.includes("?") ? "&" : "?"}db=${ERP_DB}`);
+  if (!res.ok) throw new Error(`${path} → ${res.status}`);
+  return res.json();
+}
+
+const map = L.map("map").setView([24, 32], 4);
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution: "© OpenStreetMap",
+}).addTo(map);
+
+const projectLayer  = L.layerGroup().addTo(map);
+const propertyLayer = L.layerGroup().addTo(map);
+
+// ─── STAGE 1: project markers + polygons ────────────────────────
+async function renderProjects() {
+  projectLayer.clearLayers();
+  propertyLayer.clearLayers();
+  const data = await apiGet("/api/v1/map/projects?include_boundary=true&limit=5000");
+
+  for (const p of data.results) {
+    // Centroid marker
+    const marker = L.circleMarker([p.latitude, p.longitude], {
+      radius: 9, color: PROJECT_COLOR, fillColor: PROJECT_COLOR, fillOpacity: 0.8,
+    }).bindTooltip(`<b>${p.name}</b><br>${p.city} · ${p.status}`)
+      .on("click", () => renderProjectPlots(p));
+    projectLayer.addLayer(marker);
+
+    // Lot boundary polygon (if configured)
+    if (p.boundary_points && p.boundary_points.length >= 3) {
+      const ring = p.boundary_points
+        .sort((a,b) => a.sequence - b.sequence)
+        .map(bp => [bp.latitude, bp.longitude]);
+      L.polygon(ring, { color: PROJECT_COLOR, weight: 1, fillOpacity: 0.15 })
+        .addTo(projectLayer);
+    }
+  }
+  if (data.missing_coordinates_count > 0) {
+    console.info(`${data.missing_coordinates_count} projects have no coordinates set`);
+  }
+}
+
+// ─── STAGE 2: drill into one project, show its sub-properties ───
+async function renderProjectPlots(project) {
+  propertyLayer.clearLayers();
+  const data = await apiGet(`/api/v1/map/properties?project_id=${project.id}&limit=5000`);
+
+  for (const prop of data.results) {
+    const color = STATE_COLOR[prop.state] || "#cccccc";
+    const marker = L.circleMarker([prop.latitude, prop.longitude], {
+      radius: 6, color, fillColor: color, fillOpacity: 0.85,
+    }).bindTooltip(
+      `<b>${prop.property_code}</b> · ${prop.hierarchy_level}<br>` +
+      `${prop.name}<br><i>${prop.state}</i>`
+    ).on("click", () => showDetail(prop));
+    propertyLayer.addLayer(marker);
+  }
+  // Zoom to fit project + its plots
+  const bounds = L.latLngBounds([[project.latitude, project.longitude]]);
+  data.results.forEach(p => bounds.extend([p.latitude, p.longitude]));
+  if (bounds.isValid()) map.fitBounds(bounds.pad(0.2));
+
+  if (data.missing_coordinates_count > 0) {
+    console.info(
+      `${data.missing_coordinates_count} properties in ${project.name} have ` +
+      `no coordinates and are not on the map.`
+    );
+  }
+}
+
+// ─── STAGE 3: full record for the side card ─────────────────────
+async function showDetail(prop) {
+  // Units have richer detail; non-units use the generic /properties/<id>
+  const path = prop.hierarchy_level === "unit"
+      ? `/api/v1/units/${prop.id}`
+      : `/api/v1/properties/${prop.id}`;
+  const full = await apiGet(path);
+  alert(`${full.name}\nstate: ${full.state}\nprice: ${full.base_price} ${full.currency}`);
+  // ↑ replace with your own side card / modal
+}
+
+renderProjects();
+</script>
+```
+
+#### What the user sees
+
+| Action | What the map renders |
+|---|---|
+| Page load | All projects with coords as blue dots; projects with boundaries get a faint blue polygon over their lot |
+| Click a project | Map zooms to that project; plots inside it appear as smaller dots colored by state (green/amber/grey) |
+| Click a plot | Side card / modal with full unit detail |
+| Console (dev tools) | "N projects/properties have no coordinates" — the gap visible to the integrator without surfacing it to end users |
+
+#### Why three calls, not one?
+
+A single "give me everything for the whole catalog" endpoint would pay
+two costs: a 5000+ row payload on every map render, and a viewport
+that can't change semantics (project vs. plot zoom) without a full
+re-fetch. The two-stage approach keeps the first paint small (just
+projects) and pulls per-project plots on demand. With Leaflet
+`markercluster` you can also blend stage 1 and stage 2 into one map —
+clusters at world zoom decompose into individual project markers
+which decompose into per-property markers when zoomed in further.
+
 ---
 
 ## 5. 2D Plan Drill API
