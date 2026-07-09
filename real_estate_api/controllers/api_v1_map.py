@@ -148,7 +148,7 @@ class MapApiV1(http.Controller):
                 'developer_name': p.developer_id.name if p.developer_id else '',
                 'cover_image_url': p._api_image_url(
                     'master_plan_2d', size='400x300'),
-                'has_2d_plan': bool(getattr(p, 'has_master_plan_2d', False)),
+                'has_2d_plan': bool(getattr(p, 'has_drillable_2d', False)),
                 'has_3d_maquette': bool(getattr(p, 'has_maquette', False)),
                 'unit_count': getattr(p, 'unit_count', 0),
                 'available_unit_count': getattr(p, 'available_unit_count', 0),

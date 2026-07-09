@@ -7,7 +7,7 @@ Sensitive fields explicitly NOT exposed:
 * ``state == 'cancelled'`` records are hidden from the public catalog
 """
 
-from odoo import api, models
+from odoo import api, fields, models
 
 
 # Public-facing status mapping. Anything not in this map is hidden from
@@ -23,6 +23,26 @@ PUBLIC_PROJECT_STATUS = {
 
 class RealEstateProject(models.Model):
     _inherit = 'realestate.project'
+
+    # True when the /api/v1/projects/<id>/plan-2d endpoint has anything to
+    # show — including "picker" mode where the project has no master plan
+    # image of its own but has top-level properties with plan images the
+    # user can drill into. Stored so the list endpoint doesn't run one
+    # sub-search per row.
+    has_drillable_2d = fields.Boolean(
+        compute='_compute_has_drillable_2d', store=True, index=True,
+    )
+
+    @api.depends('has_master_plan_2d', 'main_property_id',
+                 'property_ids.has_plan_image', 'property_ids.parent_id')
+    def _compute_has_drillable_2d(self):
+        for proj in self:
+            if proj.has_master_plan_2d or proj.main_property_id:
+                proj.has_drillable_2d = True
+                continue
+            proj.has_drillable_2d = bool(proj.property_ids.filtered(
+                lambda p: not p.parent_id and p.has_plan_image
+            ))
 
     @api.model
     def _api_public_states(self):
@@ -87,7 +107,7 @@ class RealEstateProject(models.Model):
             'district': self.district or '',
             'country': self.country_id.name if self.country_id else '',
             'cover_image_url': self._api_image_url('master_plan_2d', size='1280x720'),
-            'has_2d_plan': bool(self.has_master_plan_2d or self.main_property_id),
+            'has_2d_plan': self.has_drillable_2d,
             'has_3d_maquette': bool(self.has_maquette),
             'unit_count': self.unit_count,
             'available_unit_count': self.available_unit_count,
