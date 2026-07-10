@@ -106,6 +106,10 @@ class RealEstateProperty(models.Model):
             'cover_image_url': self._api_image_url('image_1920', size='800x600'),
             'has_2d_plan': bool(self.has_plan_image),
             'has_3d_interior': bool(self.interior_glb),
+            # Mesh linkage to the project's maquette_glb. Empty string when
+            # this unit isn't wired to a mesh (or not a unit at all). The
+            # 3D viewer raycasts a click → matches mesh.name → this field.
+            'maquette_mesh_name': self.maquette_mesh_name or '',
             'area_sqm': self.area_sqm or 0.0,
             'currency': currency.name or '',
             'currency_symbol': currency.symbol or '',
@@ -142,6 +146,7 @@ class RealEstateProperty(models.Model):
                     'floor_plan_image', size='1920x1080',
                 ),
                 'spec_tags': [t.name for t in self.spec_tag_ids],
+                'maquette_color_override': self.maquette_color_override or '',
             })
         return data
 
@@ -203,6 +208,7 @@ class RealEstateProperty(models.Model):
                     'name': c.name or '',
                     'hierarchy_level': c.hierarchy_level or '',
                     'thumb_url': c._api_image_url('plan_image', size='240x150'),
+                    'maquette_mesh_name': c.maquette_mesh_name or '',
                 }
                 for c in drillable_children
             ],
@@ -227,6 +233,7 @@ class PlanRegion(models.Model):
             'target_kind': target.hierarchy_level if target else '',
             'target_has_plan': bool(target.has_plan_image) if target else False,
             'target_status': target._public_sale_status() if target else None,
+            'target_mesh_name': (target.maquette_mesh_name or '') if target else '',
             'label': self.label or (target.name if target else ''),
             'color': self.color or '#3b82f6',
             'polygon': self.polygon or '[]',  # stays JSON string for the client

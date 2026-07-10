@@ -70,6 +70,9 @@ Response:
       "cover_image_url": "/api/v1/image/realestate.project/28/master_plan_2d?unique=20260531114240&w=1280&h=720",
       "has_2d_plan": true,
       "has_3d_maquette": true,
+      "maquette_status": "partial",
+      "maquette_unit_count": 22,
+      "maquette_total_units": 38,
       "unit_count": 38,
       "available_unit_count": 22,
       "starting_price": 1000000.0,
@@ -316,6 +319,9 @@ Returns the **detail** envelope:
   "cover_image_url": "/api/v1/image/realestate.project/28/master_plan_2d?unique=20260531114240&w=1280&h=720",
   "has_2d_plan": true,
   "has_3d_maquette": true,
+  "maquette_status": "partial",
+  "maquette_unit_count": 22,
+  "maquette_total_units": 38,
   "unit_count": 38,
   "available_unit_count": 22,
   "reserved_unit_count": 8,
@@ -353,6 +359,26 @@ internal state:
 Projects in any other state (`cancelled`, or future internal states) do
 not appear in the catalog at all.
 
+**`has_2d_plan`** flips to `true` whenever the `/api/v1/projects/<id>/plan-2d`
+endpoint has anything to show — including *picker mode* (see §5). Concretely:
+the project has a `master_plan_2d` image, **or** a `main_property_id`, **or**
+at least one top-level property with its own `plan_image`. Gate a "View 2D"
+button on this — it will not lie about drillability.
+
+**3D mesh fields** — these three summarize the state of the 3D model
+without a second round-trip to `/maquette-3d`:
+
+| Field | Meaning |
+|---|---|
+| `maquette_status` | `not_uploaded` (no GLB), `uploaded_no_mapping` (GLB but zero clickable units), `partial` (some units mapped), `mapped` (all units mapped) |
+| `maquette_unit_count` | Units in this project that have a `maquette_mesh_name` set |
+| `maquette_total_units` | Total units (leaf `hierarchy_level='unit'`) in this project |
+
+Use `maquette_status` — not `has_3d_maquette` — when the caller cares
+about interactivity. `has_3d_maquette: true` only guarantees the GLB
+exists; if `maquette_status == 'uploaded_no_mapping'` the scene renders
+but nothing is clickable.
+
 Errors: `404 not_found`.
 
 ---
@@ -385,6 +411,7 @@ curl "https://erp.atmta.com/api/v1/projects/28/buildings" \
       "cover_image_url": null,
       "has_2d_plan": true,
       "has_3d_interior": false,
+      "maquette_mesh_name": "Tower_A",
       "area_sqm": 0.0,
       "floors_count": 10,
       "units_count": 32,
@@ -397,6 +424,11 @@ curl "https://erp.atmta.com/api/v1/projects/28/buildings" \
   "offset": 0
 }
 ```
+
+**`maquette_mesh_name`** — string that names this property's geometry
+inside the project's `maquette_glb`. Empty string when this row isn't
+wired to a mesh, or when the project has no GLB. See §6.1 for the full
+mesh-linkage model.
 
 ---
 
@@ -446,6 +478,7 @@ Returns the detail envelope for a leaf:
   "cover_image_url": "/api/v1/image/realestate.property/105/image_1920?unique=...&w=800&h=600",
   "has_2d_plan": true,
   "has_3d_interior": true,
+  "maquette_mesh_name": "mesh748927950_1",
   "area_sqm": 210.0,
   "bedrooms": 3,
   "bathrooms": 2,
@@ -472,9 +505,17 @@ Returns the detail envelope for a leaf:
   ],
   "plan_image_url": "/api/v1/image/realestate.property/105/plan_image?unique=...&w=1920&h=1080",
   "floor_plan_image_url": "/api/v1/image/realestate.property/105/floor_plan_image?unique=...&w=1920&h=1080",
-  "spec_tags": ["marble floors", "smart-home wiring"]
+  "spec_tags": ["marble floors", "smart-home wiring"],
+  "maquette_color_override": "#22c55e"
 }
 ```
+
+**`maquette_mesh_name`** — see §6.1. Empty when the row isn't linked
+to a mesh in the project's `maquette_glb`.
+
+**`maquette_color_override`** — hex string that beats the default
+state-based color when the 3D viewer paints this unit's mesh. Empty
+means "use the state color".
 
 #### `GET /api/v1/properties/<id>`
 
@@ -960,6 +1001,7 @@ project simply pre-points at the entry property.
       "target_kind": "building",
       "target_has_plan": true,
       "target_status": "available",
+      "target_mesh_name": "Tower_A",
       "label": "Tower A",
       "color": "#3b82f6",
       "polygon": "[[17.18, 28.64], [40.38, 27.84], [40.21, 42.67], [17.35, 42.56]]"
@@ -992,7 +1034,8 @@ entry; clicking a card calls `/api/v1/properties/<id>/plan-2d`.
       "id": 31,
       "name": "New Capital Compound",
       "hierarchy_level": "compound",
-      "thumb_url": "/api/v1/image/realestate.property/31/plan_image?unique=...&w=400&h=300"
+      "thumb_url": "/api/v1/image/realestate.property/31/plan_image?unique=...&w=400&h=300",
+      "maquette_mesh_name": ""
     }
   ],
   "is_picker": true,
@@ -1020,6 +1063,7 @@ deeper than the project master plan.
       "target_kind": "building",
       "target_has_plan": true,
       "target_status": "available",
+      "target_mesh_name": "Santiago_Tower",
       "label": "Santiago",
       "color": "#07dd03",
       "polygon": "[[83.51,28.88],[59.86,28.28],[60.08,41.65],[82.99,42.36]]"
@@ -1030,7 +1074,8 @@ deeper than the project master plan.
       "id": 101,
       "name": "Santiago Tower",
       "hierarchy_level": "building",
-      "thumb_url": "/api/v1/image/realestate.property/101/plan_image?unique=...&w=240&h=150"
+      "thumb_url": "/api/v1/image/realestate.property/101/plan_image?unique=...&w=240&h=150",
+      "maquette_mesh_name": "Santiago_Tower"
     }
   ],
   "gallery": [],
@@ -1062,8 +1107,16 @@ of a JSON response): a list of `[x%, y%]` vertices in the range
 | `hidden` | Not in the public catalog | Don't render the region at all |
 | `null` | The region targets a building/floor (no sale state) | Render clickable, default color |
 
-Errors: `404 not_found` if the project has no `master_plan_2d` and no
-`main_property_id`; or if a property has no `plan_image`.
+**`target_mesh_name`** — the mesh name inside the project's
+`maquette_glb` that visually represents this region's target property.
+Empty string when the target isn't wired to 3D (or the project has no
+GLB). Use this to cross-highlight 2D and 3D: hover the region → look up
+`target_mesh_name` in the 3D scene → paint that mesh red.
+
+Errors: `404 not_found` only when the project has **no** master plan,
+**no** `main_property_id`, and **zero** top-level properties with a
+`plan_image` (picker mode is empty). A property `/plan-2d` route 404s
+when the property has no `plan_image`.
 
 ### 5.6 Build your own 2D viewer
 

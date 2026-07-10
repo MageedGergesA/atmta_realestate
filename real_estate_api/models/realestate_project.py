@@ -109,6 +109,12 @@ class RealEstateProject(models.Model):
             'cover_image_url': self._api_image_url('master_plan_2d', size='1280x720'),
             'has_2d_plan': self.has_drillable_2d,
             'has_3d_maquette': bool(self.has_maquette),
+            # 3D mesh linkage — lets callers distinguish "GLB uploaded but
+            # nothing clickable yet" from "fully interactive scene" without
+            # a second round-trip to /maquette-3d.
+            'maquette_status': self.maquette_status or 'not_uploaded',
+            'maquette_unit_count': self.maquette_unit_count or 0,
+            'maquette_total_units': self.maquette_total_units or 0,
             'unit_count': self.unit_count,
             'available_unit_count': self.available_unit_count,
             'starting_price': price_min,
@@ -201,6 +207,7 @@ class RealEstateProject(models.Model):
                     'name': p.name or '',
                     'hierarchy_level': p.hierarchy_level or '',
                     'thumb_url': p._api_image_url('plan_image', size='400x300'),
+                    'maquette_mesh_name': p.maquette_mesh_name or '',
                 }
                 for p in top_props
             ],
@@ -225,6 +232,7 @@ class RealEstateProject(models.Model):
             'target_kind': target.hierarchy_level if target else '',
             'target_has_plan': bool(target.has_plan_image) if target else False,
             'target_status': target._public_sale_status() if target else None,
+            'target_mesh_name': (target.maquette_mesh_name or '') if target else '',
             'label': region.label or (target.name if target else ''),
             'color': region.color or '#3b82f6',
             'polygon': region.polygon or '[]',

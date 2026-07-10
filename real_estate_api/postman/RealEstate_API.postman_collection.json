@@ -188,7 +188,13 @@
                   "pm.test('200', () => pm.response.to.have.status(200));",
                   "const body = pm.response.json();",
                   "pm.test('results is an array', () => pm.expect(body.results).to.be.an('array'));",
-                  "if (body.results.length) pm.collectionVariables.set('first_project_id', body.results[0].id);"
+                  "if (body.results.length) {",
+                  "  const p = body.results[0];",
+                  "  pm.collectionVariables.set('first_project_id', p.id);",
+                  "  pm.test('summary carries maquette_status', () => pm.expect(p).to.have.property('maquette_status'));",
+                  "  pm.test('summary carries maquette_unit_count', () => pm.expect(p).to.have.property('maquette_unit_count'));",
+                  "  pm.test('summary carries maquette_total_units', () => pm.expect(p).to.have.property('maquette_total_units'));",
+                  "}"
                 ]
               }
             }
@@ -246,7 +252,11 @@
               "script": {
                 "exec": [
                   "pm.test('200', () => pm.response.to.have.status(200));",
-                  "pm.test('detail has boundary_polygon key', () => pm.expect(pm.response.json()).to.have.property('boundary_polygon'));"
+                  "const body = pm.response.json();",
+                  "pm.test('detail has boundary_polygon key', () => pm.expect(body).to.have.property('boundary_polygon'));",
+                  "pm.test('detail carries maquette_status', () => pm.expect(body).to.have.property('maquette_status'));",
+                  "pm.test('detail carries maquette_unit_count', () => pm.expect(body).to.have.property('maquette_unit_count'));",
+                  "pm.test('detail carries maquette_total_units', () => pm.expect(body).to.have.property('maquette_total_units'));"
                 ]
               }
             }
@@ -300,7 +310,22 @@
                 "buildings"
               ]
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('200', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test('results is an array', () => pm.expect(body.results).to.be.an('array'));",
+                  "if (body.results.length) {",
+                  "  pm.test('building carries maquette_mesh_name', () => pm.expect(body.results[0]).to.have.property('maquette_mesh_name'));",
+                  "}"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "List units of building",
@@ -320,7 +345,22 @@
                 "units"
               ]
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('200', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test('results is an array', () => pm.expect(body.results).to.be.an('array'));",
+                  "if (body.results.length) {",
+                  "  pm.test('unit carries maquette_mesh_name', () => pm.expect(body.results[0]).to.have.property('maquette_mesh_name'));",
+                  "}"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -679,7 +719,13 @@
                   "pm.test('200', () => pm.response.to.have.status(200));",
                   "const body = pm.response.json();",
                   "pm.test('image_url present', () => pm.expect(body.image_url).to.be.a('string'));",
-                  "pm.test('regions array', () => pm.expect(body.regions).to.be.an('array'));"
+                  "pm.test('regions array', () => pm.expect(body.regions).to.be.an('array'));",
+                  "if (body.regions.length) {",
+                  "  pm.test('region carries target_mesh_name key', () => pm.expect(body.regions[0]).to.have.property('target_mesh_name'));",
+                  "}",
+                  "if (body.drillable_children && body.drillable_children.length) {",
+                  "  pm.test('drillable child carries maquette_mesh_name key', () => pm.expect(body.drillable_children[0]).to.have.property('maquette_mesh_name'));",
+                  "}"
                 ]
               }
             }
@@ -703,7 +749,24 @@
                 "plan-2d"
               ]
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('200', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "if (body.regions && body.regions.length) {",
+                  "  pm.test('region carries target_mesh_name key', () => pm.expect(body.regions[0]).to.have.property('target_mesh_name'));",
+                  "}",
+                  "if (body.drillable_children && body.drillable_children.length) {",
+                  "  pm.test('drillable child carries maquette_mesh_name key', () => pm.expect(body.drillable_children[0]).to.have.property('maquette_mesh_name'));",
+                  "}"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Project maquette-3d",
@@ -730,7 +793,12 @@
               "script": {
                 "exec": [
                   "pm.test('200', () => pm.response.to.have.status(200));",
-                  "pm.test('glb_url present', () => pm.expect(pm.response.json().glb_url).to.be.a('string'));"
+                  "const body = pm.response.json();",
+                  "pm.test('glb_url present', () => pm.expect(body.glb_url).to.be.a('string'));",
+                  "if (body.units && body.units.length) {",
+                  "  pm.test('unit carries mesh_name key', () => pm.expect(body.units[0]).to.have.property('mesh_name'));",
+                  "  pm.test('unit carries color_override key', () => pm.expect(body.units[0]).to.have.property('color_override'));",
+                  "}"
                 ]
               }
             }
