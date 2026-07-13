@@ -90,11 +90,19 @@ class PublicRealEstate(http.Controller):
         proj = self._public_project(project_id)
         if not proj or not proj.maquette_glb:
             return Response("Not Found", status=404)
+        # Revalidate against write_date so a re-uploaded/deleted GLB isn't served
+        # stale from the visitor's (or a shared proxy's) cache of the old model.
+        etag = '"re-glb-%s-%s"' % (
+            proj.id, int(proj.write_date.timestamp()) if proj.write_date else 0)
+        if request.httprequest.headers.get('If-None-Match') == etag:
+            return Response(status=304, headers=[
+                ('ETag', etag), ('Cache-Control', 'no-cache')])
         binary = base64.b64decode(proj.maquette_glb)
         headers = [
             ('Content-Type', 'model/gltf-binary'),
             ('Content-Length', str(len(binary))),
-            ('Cache-Control', 'public, max-age=3600'),
+            ('Cache-Control', 'no-cache'),
+            ('ETag', etag),
         ]
         return Response(binary, headers=headers)
 
@@ -240,11 +248,19 @@ class PublicRealEstate(http.Controller):
         prop = request.env['realestate.property'].sudo().browse(property_id).exists()
         if not prop or not prop.floor_plan_image:
             return Response("No plan", status=404)
+        # Revalidate against write_date so a re-uploaded floor plan isn't served
+        # stale from the visitor's (or a shared proxy's) cache of the old image.
+        etag = '"re-fp-%s-%s"' % (
+            prop.id, int(prop.write_date.timestamp()) if prop.write_date else 0)
+        if request.httprequest.headers.get('If-None-Match') == etag:
+            return Response(status=304, headers=[
+                ('ETag', etag), ('Cache-Control', 'no-cache')])
         binary = base64.b64decode(prop.floor_plan_image)
         return Response(binary, headers=[
             ('Content-Type', 'image/png'),
             ('Content-Length', str(len(binary))),
-            ('Cache-Control', 'public, max-age=600'),
+            ('Cache-Control', 'no-cache'),
+            ('ETag', etag),
         ])
 
     @http.route(['/projects/portal/property/<int:property_id>/images.json'],

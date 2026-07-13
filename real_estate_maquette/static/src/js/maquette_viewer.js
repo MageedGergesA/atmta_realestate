@@ -91,9 +91,12 @@ export class MaquetteViewer extends Component {
         return this.props.mode === "portal";
     }
     get glbUrl() {
-        return this.portalMode
+        const base = this.portalMode
             ? `/projects/${this.props.projectId}/glb`
             : `/maquette/glb/${this.props.projectId}`;
+        // Append the version token so a re-uploaded/deleted GLB yields a new URL
+        // the browser can't serve from its cache of the previous model.
+        return this._glbVersion ? `${base}?v=${this._glbVersion}` : base;
     }
     get unitsUrl() {
         return this.portalMode
@@ -137,6 +140,7 @@ export class MaquetteViewer extends Component {
         this._highlighted = null;
         this._origMaterials = new Map();
         this._animationId = null;
+        this._glbVersion = 0;   // cache-busting token from the units payload
 
         onMounted(() => this._init());
         onWillUnmount(() => this._teardown());
@@ -164,6 +168,7 @@ export class MaquetteViewer extends Component {
                 }
                 units = meta.units;
                 this._hasGlb = !!meta.has_glb;
+                this._glbVersion = meta.glb_version || 0;
             }
             this._unitData = {};
             for (const u of units) {
@@ -445,7 +450,9 @@ export class MaquetteViewer extends Component {
         const T = this._three;
         try {
             const rgbe = new T.RGBELoader();
-            const url = `/maquette/hdr/${this.props.projectId}`;
+            const url = this._glbVersion
+                ? `/maquette/hdr/${this.props.projectId}?v=${this._glbVersion}`
+                : `/maquette/hdr/${this.props.projectId}`;
             rgbe.load(url, (tex) => {
                 tex.mapping = T.EquirectangularReflectionMapping;
                 this._scene.environment = tex;

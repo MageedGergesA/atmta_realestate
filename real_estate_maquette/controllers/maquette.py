@@ -75,11 +75,19 @@ class MaquetteController(http.Controller):
             return Response("Forbidden", status=403)
         if not prop.exists() or not prop.interior_glb:
             return Response("No interior", status=404)
+        # Revalidate against the record's write_date so a re-uploaded interior
+        # GLB is not served from a stale browser cache of the previous model.
+        etag = '"re-int-%s-%s"' % (
+            prop.id, int(prop.write_date.timestamp()) if prop.write_date else 0)
+        if request.httprequest.headers.get('If-None-Match') == etag:
+            return Response(status=304, headers=[
+                ('ETag', etag), ('Cache-Control', 'no-cache')])
         binary = base64.b64decode(prop.interior_glb)
         headers = [
             ('Content-Type', 'model/gltf-binary'),
             ('Content-Length', str(len(binary))),
-            ('Cache-Control', 'private, max-age=300'),
+            ('Cache-Control', 'no-cache'),
+            ('ETag', etag),
         ]
         return Response(binary, headers=headers)
 
@@ -105,6 +113,10 @@ class MaquetteController(http.Controller):
             'has_glb': bool(project.maquette_glb),
             'has_hdr': bool(project.maquette_env_hdr),
             'mesh_naming_hint': project.maquette_mesh_naming_hint or '',
+            # Cache-busting token: changes whenever the project (and thus its
+            # uploaded GLB/HDR) is written, so the viewer requests a fresh URL
+            # instead of a stale browser-cached model.
+            'glb_version': int(project.write_date.timestamp()) if project.write_date else 0,
         }
 
     @http.route(

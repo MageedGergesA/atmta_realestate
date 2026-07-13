@@ -15,8 +15,10 @@ that keep it from becoming a generic file leak:
     served either — no silent bypass.
 
 Resize parameters mirror ``/web/image``: ``?w=`` and ``?h=`` (zero or
-absent means "natural size"). The ``Content-Type`` header is set by
-Odoo's stream helper; we add a 5-minute browser cache and the same
+absent means "natural size"). The ``Content-Type`` and a content-derived
+``ETag`` are set by Odoo's stream helper; we mark the response
+``Cache-Control: no-cache`` so clients revalidate (cheap 304 when
+unchanged, fresh bytes after a re-upload) and apply the same
 ``Vary: Origin`` discipline the JSON routes use.
 """
 
@@ -111,5 +113,9 @@ class ImageProxyApiV1(http.Controller):
             raise werkzeug.exceptions.NotFound(_("Image not available."))
 
         response = stream.get_response(as_attachment=False)
-        response.headers['Cache-Control'] = 'public, max-age=300'
+        # The stream already carries a content-derived ETag; force revalidation
+        # (no-cache = store but re-check) so a re-uploaded image/GLB is served
+        # fresh instead of stale from a browser or shared proxy cache. A cheap
+        # 304 is returned when the ETag still matches.
+        response.headers['Cache-Control'] = 'no-cache'
         return _apply_cors_headers(env, response)
