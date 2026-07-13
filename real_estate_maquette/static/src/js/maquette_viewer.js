@@ -304,6 +304,17 @@ export class MaquetteViewer extends Component {
             this._onDblClick(ev);
         });
         renderer.domElement.addEventListener("mousemove", (ev) => this._onMouseMove(ev));
+
+        // Belt on top of OrbitControls' own wheel handler. OrbitControls
+        // early-returns from onMouseWheel (and never calls preventDefault)
+        // when its state != STATE.NONE — mid-drag, right after a click, etc.
+        // A leaked wheel event then bubbles up to Odoo's .o_content scroller
+        // and the page scrolls instead of the canvas zooming. That's why
+        // "zoom in" felt broken with DevTools closed (page had room to
+        // scroll up) but fine with DevTools open (viewport too short to
+        // scroll). Cap the event at the wrapper so page-scroll can never win.
+        this._onCanvasWheel = (ev) => { ev.preventDefault(); ev.stopPropagation(); };
+        canvas.parentElement.addEventListener("wheel", this._onCanvasWheel, { passive: false });
     }
 
     async _loadGlb(attempt = 0) {
@@ -601,6 +612,9 @@ export class MaquetteViewer extends Component {
         if (this._clickTimer) { clearTimeout(this._clickTimer); this._clickTimer = null; }
         if (this._onResize) window.removeEventListener("resize", this._onResize);
         if (this._resizeObserver) { this._resizeObserver.disconnect(); this._resizeObserver = null; }
+        if (this._onCanvasWheel && this.canvasRef.el?.parentElement) {
+            this.canvasRef.el.parentElement.removeEventListener("wheel", this._onCanvasWheel);
+        }
         if (this._renderer) {
             this._renderer.dispose();
             this._renderer = null;

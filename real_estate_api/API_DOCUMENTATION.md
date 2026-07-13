@@ -982,6 +982,29 @@ The API is **read-only on this layer**. Catalog + drill payloads + image proxy. 
 
 ### `GET /api/v1/projects/<id>/plan-2d`
 
+> **Consumer migration note — picker mode.** As of this version the
+> endpoint returns three distinct shapes (master-plan, delegate,
+> picker). If your renderer previously did the equivalent of
+> `drawImage(tree.image_url); drawRegions(tree.regions);` it must now
+> add a picker branch at the top:
+>
+> ```js
+> if (tree.is_picker) {
+>     renderPickerCards(tree.drillable_children);   // tree.image_url is null here
+>     return;
+> }
+> // otherwise: existing master-plan / delegate render path
+> drawImage(tree.image_url);
+> drawRegions(tree.regions);
+> ```
+>
+> Same change on the summary side: `has_2d_plan` is now `true` for
+> picker-mode projects too, so any UI gating on it will start to surface
+> "View 2D" buttons for projects that only have drillable children (no
+> master plan of their own). That's the intended fix — the flag no
+> longer under-reports drillability — but the click handler must reach
+> the branch above or the button will feel broken.
+
 Returns the project's **master plan**. If the project has no
 `master_plan_2d` image but has a configured `main_property_id`, the
 endpoint transparently returns that property's plan tree instead — the
