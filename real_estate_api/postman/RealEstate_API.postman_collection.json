@@ -67,6 +67,41 @@
       "key": "map_first_project_id",
       "value": "",
       "type": "string"
+    },
+    {
+      "key": "sale_contract_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "rental_contract_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "installment_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "payment_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "attachment_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "property_id_with_docs",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "brokerage_tx_id",
+      "value": "",
+      "type": "string"
     }
   ],
   "event": [
@@ -721,7 +756,7 @@
                   "pm.test('200', () => pm.response.to.have.status(200));",
                   "const body = pm.response.json();",
                   "pm.test('regions is an array', () => pm.expect(body.regions).to.be.an('array'));",
-                  "// Picker mode vs master-plan / delegate mode — the endpoint returns",
+                  "// Picker mode vs master-plan / delegate mode \u2014 the endpoint returns",
                   "// three distinct shapes. Callers must branch on is_picker.",
                   "if (body.is_picker === true) {",
                   "  pm.test('picker: image_url is null',       () => pm.expect(body.image_url).to.be.null);",
@@ -1816,21 +1851,36 @@
     },
     {
       "name": "Customer Portal (by external_ref)",
-      "description": "Read a synced customer's activity — interests, viewings, contracts (sale + rental), installments, payments. All Bearer-required. Strict 404 on unknown external_ref.",
+      "description": "Read a synced customer's activity \u2014 interests, viewings, contracts (sale + rental), installments, payments. All Bearer-required. Strict 404 on unknown external_ref.",
       "item": [
         {
-          "name": "Interests — list",
+          "name": "Interests \u2014 list",
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
             ],
             "url": {
               "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/interests?limit=20",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "interests"],
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "interests"
+              ],
               "query": [
-                { "key": "limit", "value": "20" }
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
               ]
             }
           },
@@ -1848,14 +1898,23 @@
           ]
         },
         {
-          "name": "Interests — no auth (401)",
+          "name": "Interests \u2014 no auth (401)",
           "request": {
             "method": "GET",
             "header": [],
             "url": {
               "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/interests",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "interests"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "interests"
+              ]
             }
           },
           "event": [
@@ -1870,16 +1929,28 @@
           ]
         },
         {
-          "name": "Interests — unknown ref (404)",
+          "name": "Interests \u2014 unknown ref (404)",
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
             ],
             "url": {
               "raw": "{{base_url}}/api/v1/partners/by-ref/postman:does:not:exist/interests",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "partners", "by-ref", "postman:does:not:exist", "interests"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "postman:does:not:exist",
+                "interests"
+              ]
             }
           },
           "event": [
@@ -1894,18 +1965,33 @@
           ]
         },
         {
-          "name": "Viewings — list",
+          "name": "Viewings \u2014 list",
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
             ],
             "url": {
               "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/viewings?limit=20",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "viewings"],
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "viewings"
+              ],
               "query": [
-                { "key": "limit", "value": "20" }
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
               ]
             }
           },
@@ -1921,35 +2007,65 @@
           ]
         },
         {
-          "name": "Viewings — scheduled only",
+          "name": "Viewings \u2014 scheduled only",
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
             ],
             "url": {
               "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/viewings?state=scheduled",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "viewings"],
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "viewings"
+              ],
               "query": [
-                { "key": "state", "value": "scheduled" }
+                {
+                  "key": "state",
+                  "value": "scheduled"
+                }
               ]
             }
           }
         },
         {
-          "name": "Viewings — bad state (400)",
+          "name": "Viewings \u2014 bad state (400)",
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
             ],
             "url": {
               "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/viewings?state=whatever",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "viewings"],
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "viewings"
+              ],
               "query": [
-                { "key": "state", "value": "whatever" }
+                {
+                  "key": "state",
+                  "value": "whatever"
+                }
               ]
             }
           },
@@ -1965,16 +2081,28 @@
           ]
         },
         {
-          "name": "Contracts — all (sale + rental)",
+          "name": "Contracts \u2014 all (sale + rental)",
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
             ],
             "url": {
               "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/contracts",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "contracts"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "contracts"
+              ]
             }
           },
           "event": [
@@ -1989,52 +2117,97 @@
           ]
         },
         {
-          "name": "Contracts — sale only",
+          "name": "Contracts \u2014 sale only",
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
             ],
             "url": {
               "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/contracts?kind=sale",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "contracts"],
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "contracts"
+              ],
               "query": [
-                { "key": "kind", "value": "sale" }
+                {
+                  "key": "kind",
+                  "value": "sale"
+                }
               ]
             }
           }
         },
         {
-          "name": "Contracts — rental only",
+          "name": "Contracts \u2014 rental only",
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
             ],
             "url": {
               "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/contracts?kind=rental",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "contracts"],
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "contracts"
+              ],
               "query": [
-                { "key": "kind", "value": "rental" }
+                {
+                  "key": "kind",
+                  "value": "rental"
+                }
               ]
             }
           }
         },
         {
-          "name": "Contracts — bad kind (400)",
+          "name": "Contracts \u2014 bad kind (400)",
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
             ],
             "url": {
               "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/contracts?kind=whatever",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "contracts"],
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "contracts"
+              ],
               "query": [
-                { "key": "kind", "value": "whatever" }
+                {
+                  "key": "kind",
+                  "value": "whatever"
+                }
               ]
             }
           },
@@ -2050,104 +2223,197 @@
           ]
         },
         {
-          "name": "Installments — list",
+          "name": "Installments \u2014 list",
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
             ],
             "url": {
               "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/installments?limit=50",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "installments"],
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "installments"
+              ],
               "query": [
-                { "key": "limit", "value": "50" }
+                {
+                  "key": "limit",
+                  "value": "50"
+                }
               ]
             }
           }
         },
         {
-          "name": "Installments — pending only",
+          "name": "Installments \u2014 pending only",
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
             ],
             "url": {
               "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/installments?state=pending",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "installments"],
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "installments"
+              ],
               "query": [
-                { "key": "state", "value": "pending" }
+                {
+                  "key": "state",
+                  "value": "pending"
+                }
               ]
             }
           }
         },
         {
-          "name": "Installments — date range",
+          "name": "Installments \u2014 date range",
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
             ],
             "url": {
               "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/installments?date_from=2026-01-01&date_to=2026-12-31",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "installments"],
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "installments"
+              ],
               "query": [
-                { "key": "date_from", "value": "2026-01-01" },
-                { "key": "date_to", "value": "2026-12-31" }
+                {
+                  "key": "date_from",
+                  "value": "2026-01-01"
+                },
+                {
+                  "key": "date_to",
+                  "value": "2026-12-31"
+                }
               ]
             }
           }
         },
         {
-          "name": "Payments — list",
+          "name": "Payments \u2014 list",
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
             ],
             "url": {
               "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/payments?limit=50",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "payments"],
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "payments"
+              ],
               "query": [
-                { "key": "limit", "value": "50" }
+                {
+                  "key": "limit",
+                  "value": "50"
+                }
               ]
             }
           }
         },
         {
-          "name": "Payments — outstanding (draft)",
+          "name": "Payments \u2014 outstanding (draft)",
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
             ],
             "url": {
               "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/payments?state=draft",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "payments"],
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "payments"
+              ],
               "query": [
-                { "key": "state", "value": "draft" }
+                {
+                  "key": "state",
+                  "value": "draft"
+                }
               ]
             }
           }
         },
         {
-          "name": "Payments — malformed date (400)",
+          "name": "Payments \u2014 malformed date (400)",
           "request": {
             "method": "GET",
             "header": [
-              { "key": "Authorization", "value": "Bearer {{api_key}}" }
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}"
+              }
             ],
             "url": {
               "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/payments?date_from=not-a-date",
-              "host": ["{{base_url}}"],
-              "path": ["api", "v1", "partners", "by-ref", "{{partner_external_ref}}", "payments"],
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "payments"
+              ],
               "query": [
-                { "key": "date_from", "value": "not-a-date" }
+                {
+                  "key": "date_from",
+                  "value": "not-a-date"
+                }
               ]
             }
           },
@@ -2157,6 +2423,1679 @@
               "script": {
                 "exec": [
                   "pm.test('400', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Downloads \u2014 by-ref (per-customer)",
+      "item": [
+        {
+          "name": "Contract PDF (sale)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/contracts/{{sale_contract_id}}/download?kind=sale",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "contracts",
+                "{{sale_contract_id}}",
+                "download"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200', () => pm.response.to.have.status(200));",
+                  "pm.test('content-type PDF', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/pdf'));",
+                  "pm.test('has Content-Disposition attachment', () => pm.expect(pm.response.headers.get('Content-Disposition') || '').to.include('attachment'));",
+                  "pm.test('no-store cache header', () => pm.expect((pm.response.headers.get('Cache-Control') || '').toLowerCase()).to.include('no-store'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Contract PDF (rental)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/contracts/{{rental_contract_id}}/download?kind=rental",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "contracts",
+                "{{rental_contract_id}}",
+                "download"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200', () => pm.response.to.have.status(200));",
+                  "pm.test('content-type PDF', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/pdf'));",
+                  "pm.test('has Content-Disposition attachment', () => pm.expect(pm.response.headers.get('Content-Disposition') || '').to.include('attachment'));",
+                  "pm.test('no-store cache header', () => pm.expect((pm.response.headers.get('Cache-Control') || '').toLowerCase()).to.include('no-store'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Installment invoice",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/installments/{{installment_id}}/invoice",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "installments",
+                "{{installment_id}}",
+                "invoice"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200', () => pm.response.to.have.status(200));",
+                  "pm.test('content-type PDF', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/pdf'));",
+                  "pm.test('has Content-Disposition attachment', () => pm.expect(pm.response.headers.get('Content-Disposition') || '').to.include('attachment'));",
+                  "pm.test('no-store cache header', () => pm.expect((pm.response.headers.get('Cache-Control') || '').toLowerCase()).to.include('no-store'));",
+                  "// If the installment isn't posted yet, expect 404 not_invoiced:",
+                  "if (pm.response.code === 404) {",
+                  "  pm.test('404 code is not_invoiced or not_found',",
+                  "    () => pm.expect(['not_invoiced','not_found']).to.include(pm.response.json().error.code));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Rental payment invoice",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/payments/{{payment_id}}/invoice",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "payments",
+                "{{payment_id}}",
+                "invoice"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200', () => pm.response.to.have.status(200));",
+                  "pm.test('content-type PDF', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/pdf'));",
+                  "pm.test('has Content-Disposition attachment', () => pm.expect(pm.response.headers.get('Content-Disposition') || '').to.include('attachment'));",
+                  "pm.test('no-store cache header', () => pm.expect((pm.response.headers.get('Cache-Control') || '').toLowerCase()).to.include('no-store'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Payment receipt",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/payments/{{payment_id}}/receipt",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "payments",
+                "{{payment_id}}",
+                "receipt"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 or 404 not_paid',",
+                  "  () => pm.expect([200, 404]).to.include(pm.response.code));",
+                  "if (pm.response.code === 200) {",
+                  "  pm.test('content-type PDF',",
+                  "    () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/pdf'));",
+                  "  pm.test('no-store',",
+                  "    () => pm.expect((pm.response.headers.get('Cache-Control') || '').toLowerCase()).to.include('no-store'));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Contract zip",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/contracts/{{sale_contract_id}}/documents.zip?kind=sale",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "contracts",
+                "{{sale_contract_id}}",
+                "documents.zip"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200', () => pm.response.to.have.status(200));",
+                  "pm.test('content-type ZIP', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/zip'));",
+                  "pm.test('no-store', () => pm.expect((pm.response.headers.get('Cache-Control') || '').toLowerCase()).to.include('no-store'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Statement PDF",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/statement.pdf",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "statement.pdf"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200', () => pm.response.to.have.status(200));",
+                  "pm.test('content-type PDF', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/pdf'));",
+                  "pm.test('has Content-Disposition attachment', () => pm.expect(pm.response.headers.get('Content-Disposition') || '').to.include('attachment'));",
+                  "pm.test('no-store cache header', () => pm.expect((pm.response.headers.get('Cache-Control') || '').toLowerCase()).to.include('no-store'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Contract \u2014 bad kind (400)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/contracts/{{sale_contract_id}}/download?kind=whatever",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "contracts",
+                "{{sale_contract_id}}",
+                "download"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('400 bad_request', () => pm.response.to.have.status(400));",
+                  "pm.test('error code bad_request',",
+                  "  () => pm.expect(pm.response.json().error.code).to.eql('bad_request'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Contract \u2014 template=std rejected (400)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/contracts/{{sale_contract_id}}/download?kind=sale&template=std",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "contracts",
+                "{{sale_contract_id}}",
+                "download"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('400 bad_request', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Contract \u2014 no auth (401)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/contracts/{{sale_contract_id}}/download?kind=sale",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "contracts",
+                "{{sale_contract_id}}",
+                "download"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('401 unauthorized', () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Contract \u2014 wrong partner (404)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/other:user:does-not-exist/contracts/{{sale_contract_id}}/download?kind=sale",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "other:user:does-not-exist",
+                "contracts",
+                "{{sale_contract_id}}",
+                "download"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('404 not_found', () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Primary contract invoice (sale)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/contracts/{{sale_contract_id}}/invoice.pdf?kind=sale",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "contracts",
+                "{{sale_contract_id}}",
+                "invoice.pdf"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 PDF, or 404 not_invoiced/not_found, or 500 render_failed',",
+                  "  () => pm.expect([200, 404, 500]).to.include(pm.response.code));",
+                  "if (pm.response.code === 200) {",
+                  "  pm.test('content-type PDF',",
+                  "    () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/pdf'));",
+                  "  pm.test('no-store',",
+                  "    () => pm.expect((pm.response.headers.get('Cache-Control') || '').toLowerCase()).to.include('no-store'));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Primary contract invoice (rental)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/contracts/{{rental_contract_id}}/invoice.pdf?kind=rental",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "contracts",
+                "{{rental_contract_id}}",
+                "invoice.pdf"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 PDF, or 404 not_invoiced/not_found, or 500 render_failed',",
+                  "  () => pm.expect([200, 404, 500]).to.include(pm.response.code));",
+                  "if (pm.response.code === 200) {",
+                  "  pm.test('content-type PDF',",
+                  "    () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/pdf'));",
+                  "  pm.test('no-store',",
+                  "    () => pm.expect((pm.response.headers.get('Cache-Control') || '').toLowerCase()).to.include('no-store'));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Payment schedule (rental)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/contracts/{{rental_contract_id}}/payment-schedule.pdf",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "contracts",
+                "{{rental_contract_id}}",
+                "payment-schedule.pdf"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 PDF, or 404 not_invoiced/not_found, or 500 render_failed',",
+                  "  () => pm.expect([200, 404, 500]).to.include(pm.response.code));",
+                  "if (pm.response.code === 200) {",
+                  "  pm.test('content-type PDF',",
+                  "    () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/pdf'));",
+                  "  pm.test('no-store',",
+                  "    () => pm.expect((pm.response.headers.get('Cache-Control') || '').toLowerCase()).to.include('no-store'));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Financial summary (rental)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/contracts/{{rental_contract_id}}/financial-summary.pdf",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "contracts",
+                "{{rental_contract_id}}",
+                "financial-summary.pdf"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 PDF, or 404 not_invoiced/not_found, or 500 render_failed',",
+                  "  () => pm.expect([200, 404, 500]).to.include(pm.response.code));",
+                  "if (pm.response.code === 200) {",
+                  "  pm.test('content-type PDF',",
+                  "    () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/pdf'));",
+                  "  pm.test('no-store',",
+                  "    () => pm.expect((pm.response.headers.get('Cache-Control') || '').toLowerCase()).to.include('no-store'));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Full contract summary (rental)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/contracts/{{rental_contract_id}}/full-summary.pdf",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "contracts",
+                "{{rental_contract_id}}",
+                "full-summary.pdf"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 PDF, or 404 not_invoiced/not_found, or 500 render_failed',",
+                  "  () => pm.expect([200, 404, 500]).to.include(pm.response.code));",
+                  "if (pm.response.code === 200) {",
+                  "  pm.test('content-type PDF',",
+                  "    () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/pdf'));",
+                  "  pm.test('no-store',",
+                  "    () => pm.expect((pm.response.headers.get('Cache-Control') || '').toLowerCase()).to.include('no-store'));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Contract attachments \u2014 list",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/contracts/{{sale_contract_id}}/attachments?kind=sale",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "contracts",
+                "{{sale_contract_id}}",
+                "attachments"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 JSON', () => pm.response.to.have.status(200));",
+                  "pm.test('has results[]',",
+                  "  () => pm.expect(pm.response.json().results).to.be.an('array'));",
+                  "pm.test('no-store',",
+                  "  () => pm.expect((pm.response.headers.get('Cache-Control') || '').toLowerCase()).to.include('no-store'));",
+                  "// Auto-save the first attachment id for the next request:",
+                  "const arr = pm.response.json().results;",
+                  "if (arr.length) pm.collectionVariables.set('attachment_id', arr[0].id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Contract attachment \u2014 file",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/contracts/{{sale_contract_id}}/attachments/{{attachment_id}}?kind=sale",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "contracts",
+                "{{sale_contract_id}}",
+                "attachments",
+                "{{attachment_id}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 or 404',",
+                  "  () => pm.expect([200, 404]).to.include(pm.response.code));",
+                  "if (pm.response.code === 200) {",
+                  "  pm.test('attachment header',",
+                  "    () => pm.expect(pm.response.headers.get('Content-Disposition') || '').to.include('attachment'));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Property attachments \u2014 list",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/properties/{{property_id_with_docs}}/attachments",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "properties",
+                "{{property_id_with_docs}}",
+                "attachments"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 JSON', () => pm.response.to.have.status(200));",
+                  "pm.test('has results[]',",
+                  "  () => pm.expect(pm.response.json().results).to.be.an('array'));",
+                  "pm.test('no-store',",
+                  "  () => pm.expect((pm.response.headers.get('Cache-Control') || '').toLowerCase()).to.include('no-store'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Property attachment \u2014 file",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/properties/{{property_id_with_docs}}/attachments/{{attachment_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "properties",
+                "{{property_id_with_docs}}",
+                "attachments",
+                "{{attachment_id}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 or 404',",
+                  "  () => pm.expect([200, 404]).to.include(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Brokerage commission invoice",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/brokerage/{{brokerage_tx_id}}/invoice.pdf",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "brokerage",
+                "{{brokerage_tx_id}}",
+                "invoice.pdf"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 PDF, or 404 not_invoiced/not_found, or 500 render_failed',",
+                  "  () => pm.expect([200, 404, 500]).to.include(pm.response.code));",
+                  "if (pm.response.code === 200) {",
+                  "  pm.test('content-type PDF',",
+                  "    () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/pdf'));",
+                  "  pm.test('no-store',",
+                  "    () => pm.expect((pm.response.headers.get('Cache-Control') || '').toLowerCase()).to.include('no-store'));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Downloads \u2014 top-level (manager)",
+      "item": [
+        {
+          "name": "Contract PDF (sale)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/contracts/{{sale_contract_id}}/download?kind=sale",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contracts",
+                "{{sale_contract_id}}",
+                "download"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200', () => pm.response.to.have.status(200));",
+                  "pm.test('content-type PDF', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/pdf'));",
+                  "pm.test('has Content-Disposition attachment', () => pm.expect(pm.response.headers.get('Content-Disposition') || '').to.include('attachment'));",
+                  "pm.test('no-store cache header', () => pm.expect((pm.response.headers.get('Cache-Control') || '').toLowerCase()).to.include('no-store'));",
+                  "// If the API key isn't a Manager, expect 403.",
+                  "if (pm.response.code === 403) {",
+                  "  pm.test('forbidden code',",
+                  "    () => pm.expect(pm.response.json().error.code).to.eql('forbidden'));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Contract PDF (rental)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/contracts/{{rental_contract_id}}/download?kind=rental",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contracts",
+                "{{rental_contract_id}}",
+                "download"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 or 403',",
+                  "  () => pm.expect([200, 403]).to.include(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Installment invoice",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/installments/{{installment_id}}/invoice",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "installments",
+                "{{installment_id}}",
+                "invoice"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 or 403 or 404',",
+                  "  () => pm.expect([200, 403, 404]).to.include(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Rental payment invoice",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/payments/{{payment_id}}/invoice",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "payments",
+                "{{payment_id}}",
+                "invoice"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 or 403 or 404',",
+                  "  () => pm.expect([200, 403, 404]).to.include(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Payment receipt",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/payments/{{payment_id}}/receipt",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "payments",
+                "{{payment_id}}",
+                "receipt"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 or 403 or 404',",
+                  "  () => pm.expect([200, 403, 404]).to.include(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Contract zip",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/contracts/{{sale_contract_id}}/documents.zip?kind=sale",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contracts",
+                "{{sale_contract_id}}",
+                "documents.zip"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 or 403',",
+                  "  () => pm.expect([200, 403]).to.include(pm.response.code));",
+                  "if (pm.response.code === 200) {",
+                  "  pm.test('content-type ZIP',",
+                  "    () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/zip'));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "No auth (401)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/contracts/{{sale_contract_id}}/download?kind=sale",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contracts",
+                "{{sale_contract_id}}",
+                "download"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('401 unauthorized', () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Primary contract invoice (sale)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/contracts/{{sale_contract_id}}/invoice.pdf?kind=sale",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contracts",
+                "{{sale_contract_id}}",
+                "invoice.pdf"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 PDF, or 404 not_invoiced/not_found, or 500 render_failed',",
+                  "  () => pm.expect([200, 404, 500]).to.include(pm.response.code));",
+                  "if (pm.response.code === 200) {",
+                  "  pm.test('content-type PDF',",
+                  "    () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/pdf'));",
+                  "  pm.test('no-store',",
+                  "    () => pm.expect((pm.response.headers.get('Cache-Control') || '').toLowerCase()).to.include('no-store'));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Payment schedule (rental)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/contracts/{{rental_contract_id}}/payment-schedule.pdf",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contracts",
+                "{{rental_contract_id}}",
+                "payment-schedule.pdf"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 PDF, or 404 not_invoiced/not_found, or 500 render_failed',",
+                  "  () => pm.expect([200, 404, 500]).to.include(pm.response.code));",
+                  "if (pm.response.code === 200) {",
+                  "  pm.test('content-type PDF',",
+                  "    () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/pdf'));",
+                  "  pm.test('no-store',",
+                  "    () => pm.expect((pm.response.headers.get('Cache-Control') || '').toLowerCase()).to.include('no-store'));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Financial summary (rental)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/contracts/{{rental_contract_id}}/financial-summary.pdf",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contracts",
+                "{{rental_contract_id}}",
+                "financial-summary.pdf"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 PDF, or 404 not_invoiced/not_found, or 500 render_failed',",
+                  "  () => pm.expect([200, 404, 500]).to.include(pm.response.code));",
+                  "if (pm.response.code === 200) {",
+                  "  pm.test('content-type PDF',",
+                  "    () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/pdf'));",
+                  "  pm.test('no-store',",
+                  "    () => pm.expect((pm.response.headers.get('Cache-Control') || '').toLowerCase()).to.include('no-store'));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Full contract summary (rental)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/contracts/{{rental_contract_id}}/full-summary.pdf",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contracts",
+                "{{rental_contract_id}}",
+                "full-summary.pdf"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 PDF, or 404 not_invoiced/not_found, or 500 render_failed',",
+                  "  () => pm.expect([200, 404, 500]).to.include(pm.response.code));",
+                  "if (pm.response.code === 200) {",
+                  "  pm.test('content-type PDF',",
+                  "    () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/pdf'));",
+                  "  pm.test('no-store',",
+                  "    () => pm.expect((pm.response.headers.get('Cache-Control') || '').toLowerCase()).to.include('no-store'));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Contract attachments \u2014 list",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/contracts/{{sale_contract_id}}/attachments?kind=sale",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contracts",
+                "{{sale_contract_id}}",
+                "attachments"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 JSON', () => pm.response.to.have.status(200));",
+                  "pm.test('has results[]',",
+                  "  () => pm.expect(pm.response.json().results).to.be.an('array'));",
+                  "pm.test('no-store',",
+                  "  () => pm.expect((pm.response.headers.get('Cache-Control') || '').toLowerCase()).to.include('no-store'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Property attachments \u2014 list",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/properties/{{property_id_with_docs}}/attachments",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "properties",
+                "{{property_id_with_docs}}",
+                "attachments"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 JSON', () => pm.response.to.have.status(200));",
+                  "pm.test('has results[]',",
+                  "  () => pm.expect(pm.response.json().results).to.be.an('array'));",
+                  "pm.test('no-store',",
+                  "  () => pm.expect((pm.response.headers.get('Cache-Control') || '').toLowerCase()).to.include('no-store'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Brokerage commission invoice",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/brokerage/{{brokerage_tx_id}}/invoice.pdf",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "brokerage",
+                "{{brokerage_tx_id}}",
+                "invoice.pdf"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 PDF, or 404 not_invoiced/not_found, or 500 render_failed',",
+                  "  () => pm.expect([200, 404, 500]).to.include(pm.response.code));",
+                  "if (pm.response.code === 200) {",
+                  "  pm.test('content-type PDF',",
+                  "    () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/pdf'));",
+                  "  pm.test('no-store',",
+                  "    () => pm.expect((pm.response.headers.get('Cache-Control') || '').toLowerCase()).to.include('no-store'));",
+                  "}"
                 ]
               }
             }

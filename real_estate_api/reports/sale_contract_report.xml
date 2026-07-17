@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!--
+        Minimal sale-contract PDF for the /api/v1/…/contracts/<id>/download
+        endpoint. real_estate_developer ships no PDF for
+        realestate.sale.contract; this template covers the fields consumers
+        actually need — parties, unit, price, payment plan summary — and
+        stays out of house-branded territory so downstream projects can
+        override the layout without rewriting the wrapper.
+
+        The template intentionally uses ``web.external_layout`` (the same
+        wrapper as Odoo's stock reports) so the customer's company header
+        + footer render automatically.
+    -->
+
+    <template id="report_sale_contract_document">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="doc.with_context(lang=(doc.partner_id.lang or 'en_US'))"/>
+            <div class="page">
+                <div class="oe_structure"/>
+
+                <h2 class="mt-4 mb-3">
+                    <span>Sale Contract</span>
+                    <span t-field="doc.name"/>
+                </h2>
+
+                <div class="row mb-4">
+                    <div class="col-6">
+                        <strong>Buyer</strong><br/>
+                        <span t-field="doc.partner_id.name"/><br/>
+                        <span t-if="doc.partner_id.street" t-field="doc.partner_id.street"/><br/>
+                        <span t-if="doc.partner_id.city">
+                            <span t-field="doc.partner_id.city"/>,
+                        </span>
+                        <span t-if="doc.partner_id.country_id"
+                              t-field="doc.partner_id.country_id.name"/>
+                        <br/>
+                        <span t-if="doc.partner_id.email" t-field="doc.partner_id.email"/><br/>
+                        <span t-if="doc.partner_id.phone" t-field="doc.partner_id.phone"/>
+                    </div>
+                    <div class="col-6 text-end">
+                        <strong>Contract Date:</strong>
+                        <span t-field="doc.contract_date"/><br/>
+                        <t t-if="doc.signing_date">
+                            <strong>Signing Date:</strong>
+                            <span t-field="doc.signing_date"/><br/>
+                        </t>
+                        <t t-if="doc.expected_handover_date">
+                            <strong>Expected Handover:</strong>
+                            <span t-field="doc.expected_handover_date"/><br/>
+                        </t>
+                        <strong>Status:</strong>
+                        <span t-field="doc.state"/>
+                    </div>
+                </div>
+
+                <h4>Unit</h4>
+                <table class="table table-sm mb-4">
+                    <tr>
+                        <th style="width: 30%">Property</th>
+                        <td><span t-field="doc.property_id.display_name"/></td>
+                    </tr>
+                    <tr t-if="doc.project_id">
+                        <th>Project</th>
+                        <td><span t-field="doc.project_id.name"/></td>
+                    </tr>
+                    <tr t-if="doc.phase_id">
+                        <th>Phase</th>
+                        <td><span t-field="doc.phase_id.name"/></td>
+                    </tr>
+                    <tr t-if="doc.property_id and doc.property_id.area_sqm">
+                        <th>Area</th>
+                        <td>
+                            <span t-field="doc.property_id.area_sqm"/> m²
+                        </td>
+                    </tr>
+                </table>
+
+                <h4>Financial Terms</h4>
+                <table class="table table-sm mb-4">
+                    <tr>
+                        <th style="width: 30%">Sale Price</th>
+                        <td>
+                            <span t-field="doc.sale_price"
+                                  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                        </td>
+                    </tr>
+                    <tr t-if="doc.payment_term_id">
+                        <th>Payment Terms</th>
+                        <td><span t-field="doc.payment_term_id.name"/></td>
+                    </tr>
+                    <tr>
+                        <th>Invoiced</th>
+                        <td>
+                            <span t-field="doc.invoiced_amount"
+                                  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Paid</th>
+                        <td>
+                            <span t-field="doc.paid_amount"
+                                  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Balance Due</th>
+                        <td>
+                            <strong>
+                                <span t-field="doc.balance_due"
+                                      t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                            </strong>
+                        </td>
+                    </tr>
+                </table>
+
+                <t t-if="doc.installment_ids">
+                    <h4>Payment Plan</h4>
+                    <table class="table table-sm table-bordered mb-4">
+                        <thead>
+                            <tr class="table-active">
+                                <th>#</th>
+                                <th>Kind</th>
+                                <th>Due Date</th>
+                                <th class="text-end">Amount</th>
+                                <th>Invoice Status</th>
+                                <th>Payment Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="doc.installment_ids.sorted('date_due')" t-as="i">
+                                <td><span t-field="i.sequence"/></td>
+                                <td><span t-field="i.kind"/></td>
+                                <td><span t-field="i.date_due"/></td>
+                                <td class="text-end">
+                                    <span t-field="i.amount"
+                                          t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                </td>
+                                <td><span t-field="i.move_state"/></td>
+                                <td><span t-field="i.payment_state"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+
+                <t t-if="doc.notes">
+                    <h4>Notes</h4>
+                    <div t-field="doc.notes"/>
+                </t>
+
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_sale_contract">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="real_estate_api.report_sale_contract_document"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_sale_contract" model="ir.actions.report">
+        <field name="name">Sale Contract</field>
+        <field name="model">realestate.sale.contract</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">real_estate_api.report_sale_contract</field>
+        <field name="report_file">real_estate_api.report_sale_contract</field>
+        <field name="print_report_name">'Contract-%s' % object.name</field>
+        <field name="binding_model_id" ref="real_estate_developer.model_realestate_sale_contract"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

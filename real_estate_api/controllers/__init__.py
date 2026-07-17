@@ -9,4 +9,5 @@ from . import api_v1_partners
 from . import api_v1_portal
 from . import api_v1_embed_token
 from . import api_v1_image
+from . import api_v1_downloads
 from . import embed_v1

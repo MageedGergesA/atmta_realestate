@@ -33,6 +33,8 @@ A versioned REST layer (``/api/v1/``) and an iframe embed surface
         'security/ir.model.access.csv',
         'data/ir_config_parameter.xml',
         'data/cron.xml',
+        'reports/sale_contract_report.xml',
+        'reports/partner_statement_report.xml',
         'views/embed_templates.xml',
         'views/embed_token_views.xml',
         'views/menus.xml',

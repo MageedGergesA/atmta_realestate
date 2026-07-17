@@ -23,5 +23,22 @@
             </field>
         </record>
 
+        <record id="group_realestate_api_downloads" model="res.groups">
+            <field name="name">Real Estate API · Downloads (top-level PDF/ZIP)</field>
+            <field name="category_id" ref="base.module_category_sales"/>
+            <field name="implied_ids" eval="[(4, ref('group_realestate_api_manager'))]"/>
+            <field name="comment">
+                Grants access to the top-level (non-by-ref) download
+                endpoints: /api/v1/contracts/&lt;id&gt;/download,
+                /api/v1/installments/&lt;id&gt;/invoice,
+                /api/v1/payments/&lt;id&gt;/{invoice,receipt},
+                /api/v1/contracts/&lt;id&gt;/documents.zip.
+
+                Per-customer by-ref download endpoints stay ungated
+                (any valid API key can reach them, but each caller only
+                ever sees the partner they resolve by external_ref).
+            </field>
+        </record>
+
     </data>
 </odoo>

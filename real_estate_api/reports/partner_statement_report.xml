@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!--
+        Per-partner statement.pdf served by
+        /api/v1/partners/by-ref/<ref>/statement.pdf.
+
+        Renders one PDF per partner (docs = res.partner recordset) with
+        their sale contracts, rental contracts, and any outstanding
+        installments/payments. The report action's ``model`` is
+        ``res.partner`` so ``env.ref('...').（'_render_qweb_pdf'）([partner_id])``
+        just works.
+
+        Kept intentionally minimal — the goal is a "print my account" PDF,
+        not a full account statement with running balances. Customers can
+        combine this with the invoice PDFs for the reconciled view.
+    -->
+
+    <template id="report_partner_statement_document">
+        <t t-call="web.external_layout">
+            <t t-set="p" t-value="doc"/>
+            <t t-set="sale_contracts" t-value="p.env['realestate.sale.contract'].sudo().search([('partner_id','=',p.id)], order='contract_date desc, id desc') if 'realestate.sale.contract' in p.env.registry else []"/>
+            <t t-set="rental_contracts" t-value="p.env['realestate.contract'].sudo().search([('partner_id','=',p.id)], order='start_date desc, id desc') if 'realestate.contract' in p.env.registry else []"/>
+            <t t-set="installments" t-value="p.env['realestate.sale.installment'].sudo().search([('partner_id','=',p.id)], order='date_due, id') if 'realestate.sale.installment' in p.env.registry else []"/>
+            <t t-set="payments" t-value="p.env['realestate.contract.payment'].sudo().search([('partner_id','=',p.id)], order='date_due, id') if 'realestate.contract.payment' in p.env.registry else []"/>
+
+            <div class="page">
+                <div class="oe_structure"/>
+
+                <h2 class="mt-4 mb-3">Customer Statement</h2>
+
+                <div class="row mb-4">
+                    <div class="col-6">
+                        <strong>Customer</strong><br/>
+                        <span t-field="p.name"/><br/>
+                        <span t-if="p.email" t-field="p.email"/><br/>
+                        <span t-if="p.phone" t-field="p.phone"/>
+                    </div>
+                    <div class="col-6 text-end">
+                        <strong>Issued:</strong>
+                        <span t-out="time.strftime('%Y-%m-%d')"/><br/>
+                        <t t-if="p.realestate_api_external_ref">
+                            <strong>Ref:</strong>
+                            <span t-field="p.realestate_api_external_ref"/>
+                        </t>
+                    </div>
+                </div>
+
+                <t t-if="sale_contracts">
+                    <h4>Sale Contracts</h4>
+                    <table class="table table-sm table-bordered mb-4">
+                        <thead>
+                            <tr class="table-active">
+                                <th>Reference</th>
+                                <th>Property</th>
+                                <th>Contract Date</th>
+                                <th>State</th>
+                                <th class="text-end">Sale Price</th>
+                                <th class="text-end">Balance Due</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="sale_contracts" t-as="c">
+                                <td><span t-field="c.name"/></td>
+                                <td><span t-field="c.property_id.display_name"/></td>
+                                <td><span t-field="c.contract_date"/></td>
+                                <td><span t-field="c.state"/></td>
+                                <td class="text-end">
+                                    <span t-field="c.sale_price"
+                                          t-options='{"widget": "monetary", "display_currency": c.currency_id}'/>
+                                </td>
+                                <td class="text-end">
+                                    <span t-field="c.balance_due"
+                                          t-options='{"widget": "monetary", "display_currency": c.currency_id}'/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+
+                <t t-if="rental_contracts">
+                    <h4>Rental Contracts</h4>
+                    <table class="table table-sm table-bordered mb-4">
+                        <thead>
+                            <tr class="table-active">
+                                <th>Reference</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>State</th>
+                                <th>Contract No.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="rental_contracts" t-as="c">
+                                <td><span t-field="c.name"/></td>
+                                <td><span t-field="c.start_date"/></td>
+                                <td><span t-field="c.end_date"/></td>
+                                <td><span t-field="c.state"/></td>
+                                <td><span t-field="c.contract_no"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+
+                <t t-if="installments">
+                    <h4>Outstanding Installments</h4>
+                    <table class="table table-sm mb-4">
+                        <thead>
+                            <tr class="table-active">
+                                <th>Contract</th>
+                                <th>#</th>
+                                <th>Kind</th>
+                                <th>Due Date</th>
+                                <th class="text-end">Amount</th>
+                                <th>Invoice</th>
+                                <th>Payment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="installments" t-as="i">
+                                <td><span t-field="i.sale_contract_id.name"/></td>
+                                <td><span t-field="i.sequence"/></td>
+                                <td><span t-field="i.kind"/></td>
+                                <td><span t-field="i.date_due"/></td>
+                                <td class="text-end">
+                                    <span t-field="i.amount"
+                                          t-options='{"widget": "monetary", "display_currency": i.currency_id}'/>
+                                </td>
+                                <td><span t-field="i.move_state"/></td>
+                                <td><span t-field="i.payment_state"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+
+                <t t-if="payments">
+                    <h4>Rental Payment Schedule</h4>
+                    <table class="table table-sm mb-4">
+                        <thead>
+                            <tr class="table-active">
+                                <th>Contract</th>
+                                <th>Label</th>
+                                <th>Due Date</th>
+                                <th class="text-end">Amount</th>
+                                <th>Invoice</th>
+                                <th>Payment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="payments" t-as="pay">
+                                <td><span t-field="pay.contract_id.name"/></td>
+                                <td><span t-esc="pay.label if 'label' in pay._fields else ''"/></td>
+                                <td><span t-field="pay.date_due"/></td>
+                                <td class="text-end">
+                                    <span t-field="pay.amount_total"
+                                          t-options='{"widget": "monetary", "display_currency": pay.currency_id}'/>
+                                </td>
+                                <td><span t-field="pay.move_state"/></td>
+                                <td><span t-field="pay.payment_state"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+
+                <t t-if="not sale_contracts and not rental_contracts and not installments and not payments">
+                    <p><em>No contracts or scheduled payments on this account.</em></p>
+                </t>
+
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_partner_statement">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="real_estate_api.report_partner_statement_document"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_partner_statement" model="ir.actions.report">
+        <field name="name">Customer Statement (Real Estate)</field>
+        <field name="model">res.partner</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">real_estate_api.report_partner_statement</field>
+        <field name="report_file">real_estate_api.report_partner_statement</field>
+        <field name="print_report_name">'Statement-%s' % (object.name or 'partner')</field>
+    </record>
+
+</odoo>

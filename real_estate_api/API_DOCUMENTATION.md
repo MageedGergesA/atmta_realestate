@@ -35,10 +35,16 @@ the contract for 3rd-party websites and integrations.
     4. [Installments](#104-installments-get-installments)
     5. [Payments](#105-payments-get-payments)
     6. [Worked example — "My Account" page](#106-worked-example--my-account-page)
-11. [Error Reference](#11-error-reference)
-12. [Rate Limits](#12-rate-limits)
-13. [What we never expose](#13-what-we-never-expose)
-14. [Postman Collection](#14-postman-collection)
+11. [Downloads (PDF / ZIP)](#11-downloads-pdf--zip)
+    1. [By-ref (per-customer)](#111-by-ref-per-customer)
+    2. [Top-level (manager)](#112-top-level-manager)
+    3. [Zip bundle per contract](#113-zip-bundle-per-contract)
+    4. [Statement per partner](#114-statement-per-partner)
+    5. [`?template=` semantics](#115-template-semantics)
+12. [Error Reference](#12-error-reference)
+13. [Rate Limits](#13-rate-limits)
+14. [What we never expose](#14-what-we-never-expose)
+15. [Postman Collection](#15-postman-collection)
 
 ---
 
@@ -2521,7 +2527,235 @@ async function loadCustomerDashboard(externalRef) {
 
 ---
 
-## 11. Error Reference
+## 11. Downloads (PDF / ZIP)
+
+Binary document endpoints for contracts, invoices, payment receipts,
+and bundled downloads. All return **`application/pdf`** (or
+**`application/zip`** for bundles) with
+`Content-Disposition: attachment; filename="…"` and
+`Cache-Control: private, no-store` (financial + PII data must not sit
+in intermediaries or the browser cache).
+
+Errors use the same JSON envelope as every other endpoint —
+`{"error": {"code": "...", "message": "..."}}` — with the appropriate
+HTTP status.
+
+Two scopes:
+
+* **By-ref** — per-customer routes rooted at
+  `/api/v1/partners/by-ref/<external_ref>/…`. Any valid API key with
+  scope `real_estate_api` may call these; the endpoint resolves the
+  partner from the ref, then refuses to serve any record whose
+  `partner_id` doesn't match (never 403 — always 404, so callers can't
+  distinguish "wrong partner" from "record doesn't exist").
+* **Top-level** — record-id addressed routes at
+  `/api/v1/{contracts,installments,payments}/<id>/…`. Restricted to
+  users in **`real_estate_api.group_realestate_api_downloads`**
+  (implied by Manager). A compromised customer-integration key
+  therefore can't walk the full contract / invoice table.
+
+### 11.1 By-ref (per-customer)
+
+**Contracts + reports**
+
+| Endpoint | Returns |
+|---|---|
+| `GET .../contracts/<id>/download?kind=sale\|rental&template=custom` | Contract PDF |
+| `GET .../contracts/<id>/invoice.pdf?kind=sale\|rental&template=std\|custom` | **Primary** invoice on the contract (`contract.invoice_id`) — the single billing move some flows generate instead of / in addition to installments |
+| `GET .../contracts/<id>/payment-schedule.pdf` | Whole-rental-contract payment schedule (uses `atmta_real_estate.action_report_payment_schedule`; **rental only**) |
+| `GET .../contracts/<id>/financial-summary.pdf` | Rental contract financial summary (uses `atmta_real_estate.action_report_financial_summary`) |
+| `GET .../contracts/<id>/full-summary.pdf` | Rental full contract summary (uses `atmta_real_estate.action_report_contract_full`) |
+
+**Per-installment / per-payment**
+
+| Endpoint | Returns |
+|---|---|
+| `GET .../installments/<id>/invoice?template=std\|custom` | Sale-installment invoice PDF |
+| `GET .../payments/<id>/invoice?template=std\|custom` | Rental-payment invoice PDF |
+| `GET .../payments/<id>/receipt` | Payment receipt PDF (once the invoice is paid) |
+
+**Attachments** (signed contracts, IDs, permits, brochures — anything uploaded to the record)
+
+| Endpoint | Returns |
+|---|---|
+| `GET .../contracts/<id>/attachments?kind=sale\|rental` | JSON list `{results: [{id, name, mimetype, size, create_date}]}` |
+| `GET .../contracts/<id>/attachments/<aid>?kind=sale\|rental` | The raw file (whatever `mimetype`) |
+| `GET .../properties/<id>/attachments` | JSON list of attachments on the property (title deed, permits, …). Only visible to a partner who has a contract on that property. |
+| `GET .../properties/<id>/attachments/<aid>` | The raw file |
+
+**Brokerage** (only if `real_estate_brokerage` is installed)
+
+| Endpoint | Returns |
+|---|---|
+| `GET .../brokerage/<txid>/invoice.pdf?template=std\|custom` | Commission invoice for a brokerage transaction where the partner is either `seller_id` or `buyer_id` |
+
+**Bundles**
+
+| Endpoint | Returns |
+|---|---|
+| `GET .../contracts/<id>/documents.zip?kind=sale\|rental` | Contract PDF + primary invoice + every posted per-installment/per-payment invoice + every attachment, zipped |
+| `GET .../statement.pdf` | Per-partner customer statement PDF |
+
+Example — download the PDF of sale contract #45 for customer
+`site:user:42`:
+
+```bash
+curl -H "Authorization: Bearer $API_KEY" \
+     -H "X-Odoo-Database: $DB" \
+     -o contract-45.pdf \
+     "$BASE/api/v1/partners/by-ref/site:user:42/contracts/45/download?kind=sale"
+```
+
+Response headers:
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/pdf
+Content-Length: 37342
+Content-Disposition: attachment; filename="Contract-SC-00045.pdf"
+Cache-Control: private, no-store
+```
+
+If the contract belongs to a different partner, or doesn't exist,
+or `kind` is wrong: **404 `not_found`**. If the caller omits the key:
+**401 `unauthorized`**. If they exceed 300 req/min: **429 `rate_limited`**.
+
+### 11.2 Top-level (manager)
+
+Same document set, addressed by raw record id. All require an API key
+whose user is in `group_realestate_api_downloads` (implied by Manager):
+
+| Endpoint | Returns |
+|---|---|
+| `GET /api/v1/contracts/<id>/download?kind=sale\|rental&template=…` | Contract PDF |
+| `GET /api/v1/contracts/<id>/invoice.pdf?kind=sale\|rental&template=…` | Primary contract invoice |
+| `GET /api/v1/contracts/<id>/payment-schedule.pdf` | Rental payment schedule |
+| `GET /api/v1/contracts/<id>/financial-summary.pdf` | Rental financial summary |
+| `GET /api/v1/contracts/<id>/full-summary.pdf` | Rental full summary |
+| `GET /api/v1/installments/<id>/invoice?template=…` | Sale-installment invoice PDF |
+| `GET /api/v1/payments/<id>/invoice?template=…` | Rental-payment invoice PDF |
+| `GET /api/v1/payments/<id>/receipt` | Payment receipt PDF |
+| `GET /api/v1/contracts/<id>/attachments?kind=sale\|rental` | Attachment list JSON |
+| `GET /api/v1/contracts/<id>/attachments/<aid>?kind=sale\|rental` | Attachment file |
+| `GET /api/v1/properties/<id>/attachments` | Attachment list JSON |
+| `GET /api/v1/properties/<id>/attachments/<aid>` | Attachment file |
+| `GET /api/v1/brokerage/<txid>/invoice.pdf?template=…` | Commission invoice |
+| `GET /api/v1/contracts/<id>/documents.zip?kind=sale\|rental` | Contract bundle ZIP |
+
+A key without the downloads group gets **403 `forbidden`** — even if
+the key is valid.
+
+### 11.3 Zip bundle per contract
+
+The `.../contracts/<id>/documents.zip` variant returns a single zip
+containing (best-effort — individual failures are logged and skipped
+rather than aborting the whole archive):
+
+1. The contract PDF (rendered from the custom template — see §11.5).
+2. The contract's **primary invoice** (`contract.invoice_id`), if any
+   AND `state = 'posted'`.
+3. Every per-installment or per-payment child invoice PDF where the
+   move is posted.
+4. Every downloadable attachment on the contract (signed scan,
+   customer IDs, permits — anything uploaded to `attachment_ids` or
+   the record's chatter).
+
+Zip entry names:
+
+```
+Contract-SC-00045.pdf
+Invoice-Primary-INV_2026_00013.pdf
+Invoice-Installment-INV_2026_00008.pdf
+Invoice-Installment-INV_2026_00019.pdf
+attachment-42-signed-contract.pdf
+attachment-43-buyer-id.jpg
+...
+```
+
+Content type is `application/zip` and filename defaults to
+`Contract-<name>-documents.zip`.
+
+### 11.4 Statement per partner
+
+`.../statement.pdf` returns one PDF summarising the customer's account:
+
+* All sale contracts (reference, property, date, state, price, balance due)
+* All rental contracts (reference, dates, state)
+* Every installment with due date + invoice/payment state
+* Every rental payment schedule row with the same
+
+Rendered from `real_estate_api.action_report_partner_statement` — a
+plain `web.external_layout` template scoped to `res.partner`. The
+target `res.partner` is the one resolved from `external_ref`.
+
+### 11.5 `?template=` semantics
+
+Contract endpoints accept `?template=custom` (default). `std` is
+rejected with **400** — Odoo ships no standard "real estate contract"
+report to fall back to. Custom → the real-estate-specific QWeb
+template:
+
+* Sale contract → `real_estate_api.action_report_sale_contract` (this
+  module — parties, unit, price, payment plan; overridable via view
+  inheritance)
+* Rental contract → `atmta_real_estate.action_realestate_contract_report`
+  (already shipped with `atmta_real_estate`)
+
+Invoice endpoints accept `?template=std|custom`. Both currently
+resolve to Odoo's standard **`account.account_invoices`** — no
+real-estate-specific per-invoice template exists yet. The parameter
+is accepted for forward compatibility so callers who bake it into
+URLs don't break when one is added later.
+
+The payment-receipt endpoint has no template picker — it renders
+Odoo's `account.action_report_payment_receipt` against the
+`account.payment` records reconciled to the invoice (falling back to
+the invoice PDF if no `account.payment` exists — e.g. cash / manual
+reconcile flows).
+
+### 11.6 Error codes specific to downloads
+
+| HTTP | `code` | When |
+|---|---|---|
+| `400` | `bad_request` | Missing/invalid `kind`; `template=std` on a contract endpoint |
+| `401` | `unauthorized` | No key on any download endpoint |
+| `403` | `forbidden` | Top-level endpoint, key user not in the downloads group |
+| `404` | `not_found` | Contract/installment/payment id doesn't exist OR belongs to a different partner (by-ref) |
+| `404` | `not_invoiced` | Installment/payment exists but its `move_state != 'posted'` — no PDF to render yet |
+| `404` | `not_paid` | Payment receipt requested but the invoice is not yet paid |
+| `404` | `report_missing` | Report template's module not installed (e.g. `atmta_real_estate.action_report_contract` when only the API module is installed) |
+| `429` | `rate_limited` | Same 300/min throttle as every other authed endpoint |
+| `500` | `render_failed` | QWeb template compiled but PDF renderer threw. Details in `ir.logging`. |
+
+### 11.7 Worked example — "download all my paperwork" button
+
+```javascript
+async function downloadCustomerBundle(externalRef) {
+  const url = `${BASE}/api/v1/partners/by-ref/${externalRef}/statement.pdf`;
+  const res = await fetch(url, {
+    headers: { Authorization: `Bearer ${API_KEY}`,
+               'X-Odoo-Database': DB },
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const blob = await res.blob();
+  const a = Object.assign(document.createElement('a'), {
+    href: URL.createObjectURL(blob),
+    download: `statement.pdf`,
+  });
+  a.click(); URL.revokeObjectURL(a.href);
+}
+```
+
+For a per-contract zip:
+
+```javascript
+const url = `${BASE}/api/v1/partners/by-ref/${externalRef}/contracts/${contractId}/documents.zip?kind=sale`;
+// ...same fetch/blob dance, save as `contract-${contractId}-docs.zip`
+```
+
+---
+
+## 12. Error Reference
 
 All API errors share the same envelope:
 
@@ -2538,7 +2772,7 @@ All API errors share the same envelope:
 | `403` | `forbidden` | `X-Odoo-Database` conflicts with session cookie |
 | `404` | `not_found` | Record missing, hidden, or in a non-public state |
 | `405` | `method_not_allowed` | Route only accepts a different HTTP method |
-| `429` | `rate_limited` | Throttle hit (see [Rate Limits](#11-rate-limits)) |
+| `429` | `rate_limited` | Throttle hit (see [Rate Limits](#13-rate-limits)) |
 | `500` | `internal_error` | Bug — the response body never exposes a traceback. The full stack is in `ir.logging`. |
 
 **Never** does the API return a "best-guess" record or an empty list as
@@ -2546,7 +2780,7 @@ a fallback for a 404. Strict.
 
 ---
 
-## 12. Rate Limits
+## 13. Rate Limits
 
 Fixed-window counters in Postgres (sufficient for typical real-estate
 website traffic). Limits are configurable via `ir.config_parameter`:
@@ -2563,7 +2797,7 @@ Counter rows older than 24 hours are pruned hourly by an `ir.cron`.
 
 ---
 
-## 13. What we never expose
+## 14. What we never expose
 
 | Model | Fields hidden from the API |
 |---|---|
@@ -2575,7 +2809,7 @@ Counter rows older than 24 hours are pruned hourly by an `ir.cron`.
 
 ---
 
-## 14. Postman Collection
+## 15. Postman Collection
 
 A ready-to-import collection is shipped with the module:
 
