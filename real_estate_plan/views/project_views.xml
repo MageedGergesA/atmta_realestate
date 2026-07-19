@@ -15,6 +15,31 @@
         </field>
     </record>
 
+    <!-- Expose master_plan_2d on the Plot Boundary tab so users can upload
+         the site plan overlay that the Leaflet map georeferences across the
+         polygon. Placed here (not on a separate tab) because this is where
+         the image visibly renders — direct cause-and-effect. -->
+    <record id="view_project_form_boundary_overlay" model="ir.ui.view">
+        <field name="name">realestate.project.form.boundary_overlay</field>
+        <field name="model">realestate.project</field>
+        <field name="inherit_id" ref="real_estate_developer.view_project_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='plot_boundary']/field[@name='boundary_point_ids']" position="before">
+                <group>
+                    <group string="2D Master Plan overlay">
+                        <field name="master_plan_2d" widget="image"
+                               options="{'size': [1920, 1080]}" nolabel="1"/>
+                        <div class="text-muted small" colspan="2" invisible="master_plan_2d">
+                            Upload a top-down site plan (PNG/JPG). It renders
+                            georeferenced across the polygon on the map below
+                            once you have 3+ boundary points.
+                        </div>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
     <record id="view_project_form_plan_inherit" model="ir.ui.view">
         <field name="name">realestate.project.form.plan</field>
         <field name="model">realestate.project</field>
