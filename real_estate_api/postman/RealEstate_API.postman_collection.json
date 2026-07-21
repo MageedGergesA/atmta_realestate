@@ -2530,6 +2530,53 @@
           ]
         },
         {
+          "name": "Contract PDF (auto-detect — no ?kind)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/partners/by-ref/{{partner_external_ref}}/contracts/{{sale_contract_id}}/download",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "partners",
+                "by-ref",
+                "{{partner_external_ref}}",
+                "contracts",
+                "{{sale_contract_id}}",
+                "download"
+              ]
+            },
+            "description": "Same endpoint without ?kind=. The server auto-detects by searching both sale and rental models scoped to this partner. If the id exists in only one model for this partner (the usual case) it returns the PDF; if both models contain the id under the same partner, it returns 400 with a disambiguation hint."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 (auto-detect resolved)', () => pm.response.to.have.status(200));",
+                  "pm.test('content-type PDF', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/pdf'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
           "name": "Installment invoice",
           "request": {
             "method": "GET",
@@ -3546,6 +3593,53 @@
                 "exec": [
                   "pm.test('200 or 403',",
                   "  () => pm.expect([200, 403]).to.include(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Contract PDF (auto-detect — no ?kind, may 400 on id collision)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/pdf",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/contracts/{{sale_contract_id}}/download",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contracts",
+                "{{sale_contract_id}}",
+                "download"
+              ]
+            },
+            "description": "Top-level route without ?kind=. Auto-detects across both models unscoped. Returns 200 + PDF when the id exists in exactly one model, or 400 bad_request when the same id exists in BOTH sale and rental (common with seed data). In that case the response body tells the caller to retry with ?kind=sale or ?kind=rental."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 (unique) or 400 (ambiguous) or 403 (no downloads group)',",
+                  "  () => pm.expect([200, 400, 403]).to.include(pm.response.code));",
+                  "if (pm.response.code === 400) {",
+                  "  pm.test('400 mentions kind=', () => pm.expect(pm.response.text()).to.include('kind='));",
+                  "}"
                 ]
               }
             }

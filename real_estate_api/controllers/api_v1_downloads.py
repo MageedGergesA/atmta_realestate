@@ -164,14 +164,6 @@ def _pick_invoice_report(template):
     return REPORT_INVOICE_STD
 
 
-def _require_kind(kw):
-    kind = (kw.get('kind') or '').strip().lower()
-    if kind not in VALID_KINDS:
-        raise werkzeug.exceptions.BadRequest(_(
-            "'kind' must be 'sale' or 'rental'."))
-    return kind
-
-
 def _model_for_kind(kind):
     return ('realestate.sale.contract' if kind == 'sale'
             else 'realestate.contract')
@@ -190,6 +182,44 @@ def _resolve_contract(env, cid, kind, partner=None):
     if partner is not None and rec.partner_id.id != partner.id:
         raise werkzeug.exceptions.NotFound(_("Contract not found."))
     return rec
+
+
+def _resolve_contract_from_kw(env, cid, kw, partner=None):
+    """Look up a contract using ?kind= from the query string if provided;
+    otherwise auto-detect by searching both models scoped by the optional
+    partner and returning the unique match.
+
+    Returns (contract, kind) — callers that need kind later (report
+    picker, zip builder) don't have to re-derive it.
+
+    - 400 if ?kind= is present but not 'sale'/'rental'
+    - 400 if kind is omitted and cid exists in BOTH models under the scope
+    - 404 on miss / partner mismatch — never leaks existence
+    """
+    raw = (kw.get('kind') or '').strip().lower()
+    if raw:
+        if raw not in VALID_KINDS:
+            raise werkzeug.exceptions.BadRequest(_(
+                "'kind' must be 'sale' or 'rental'."))
+        return _resolve_contract(env, cid, raw, partner=partner), raw
+    candidates = []
+    for k in VALID_KINDS:
+        model = _model_for_kind(k)
+        if model not in env.registry:
+            continue
+        rec = env[model].sudo().browse(cid).exists()
+        if not rec:
+            continue
+        if partner is not None and rec.partner_id.id != partner.id:
+            continue
+        candidates.append((rec, k))
+    if not candidates:
+        raise werkzeug.exceptions.NotFound(_("Contract not found."))
+    if len(candidates) > 1:
+        raise werkzeug.exceptions.BadRequest(_(
+            "Contract id %s exists as both sale and rental — "
+            "add ?kind=sale or ?kind=rental to disambiguate.") % cid)
+    return candidates[0]
 
 
 def _resolve_installment(env, iid, partner=None):
@@ -534,8 +564,7 @@ class DownloadsApiV1(http.Controller):
     def by_ref_contract_pdf(self, external_ref, cid, **kw):
         env = request.env
         partner = _resolve_partner(env, external_ref)
-        kind = _require_kind(kw)
-        contract = _resolve_contract(env, cid, kind, partner=partner)
+        contract, kind = _resolve_contract_from_kw(env, cid, kw, partner=partner)
         report_ref = _pick_contract_report(kind, kw.get('template'))
         pdf = _render_pdf(env, report_ref, [contract.id])
         return _binary_response(
@@ -634,8 +663,7 @@ class DownloadsApiV1(http.Controller):
     def by_ref_contract_zip(self, external_ref, cid, **kw):
         env = request.env
         partner = _resolve_partner(env, external_ref)
-        kind = _require_kind(kw)
-        contract = _resolve_contract(env, cid, kind, partner=partner)
+        contract, kind = _resolve_contract_from_kw(env, cid, kw, partner=partner)
         body, fname = _build_contract_zip(env, contract, kind)
         return _binary_response(body, fname, content_type='application/zip')
 
@@ -664,8 +692,7 @@ class DownloadsApiV1(http.Controller):
     def by_ref_contract_invoice(self, external_ref, cid, **kw):
         env = request.env
         partner = _resolve_partner(env, external_ref)
-        kind = _require_kind(kw)
-        contract = _resolve_contract(env, cid, kind, partner=partner)
+        contract, _kind = _resolve_contract_from_kw(env, cid, kw, partner=partner)
         move = contract.invoice_id if 'invoice_id' in contract._fields else False
         if not move:
             raise werkzeug.exceptions.NotFound(_(
@@ -747,8 +774,7 @@ class DownloadsApiV1(http.Controller):
     def by_ref_contract_attachments_list(self, external_ref, cid, **kw):
         env = request.env
         partner = _resolve_partner(env, external_ref)
-        kind = _require_kind(kw)
-        contract = _resolve_contract(env, cid, kind, partner=partner)
+        contract, _kind = _resolve_contract_from_kw(env, cid, kw, partner=partner)
         return _attachment_list_json(_contract_attachments(env, contract))
 
     @http.route('/api/v1/partners/by-ref/<string:external_ref>/'
@@ -759,8 +785,7 @@ class DownloadsApiV1(http.Controller):
     def by_ref_contract_attachment_file(self, external_ref, cid, aid, **kw):
         env = request.env
         partner = _resolve_partner(env, external_ref)
-        kind = _require_kind(kw)
-        contract = _resolve_contract(env, cid, kind, partner=partner)
+        contract, _kind = _resolve_contract_from_kw(env, cid, kw, partner=partner)
         # Enforce ownership: the attachment id must belong to this contract.
         allowed = _contract_attachments(env, contract).ids
         if aid not in allowed:
@@ -864,8 +889,7 @@ class DownloadsApiV1(http.Controller):
     @pdf_endpoint(require_downloads_group=True)
     def contract_pdf(self, cid, **kw):
         env = request.env
-        kind = _require_kind(kw)
-        contract = _resolve_contract(env, cid, kind)
+        contract, kind = _resolve_contract_from_kw(env, cid, kw)
         report_ref = _pick_contract_report(kind, kw.get('template'))
         pdf = _render_pdf(env, report_ref, [contract.id])
         return _binary_response(
@@ -940,8 +964,7 @@ class DownloadsApiV1(http.Controller):
     @pdf_endpoint(require_downloads_group=True)
     def contract_zip(self, cid, **kw):
         env = request.env
-        kind = _require_kind(kw)
-        contract = _resolve_contract(env, cid, kind)
+        contract, kind = _resolve_contract_from_kw(env, cid, kw)
         body, fname = _build_contract_zip(env, contract, kind)
         return _binary_response(body, fname, content_type='application/zip')
 
@@ -953,8 +976,7 @@ class DownloadsApiV1(http.Controller):
     @pdf_endpoint(require_downloads_group=True)
     def contract_invoice(self, cid, **kw):
         env = request.env
-        kind = _require_kind(kw)
-        contract = _resolve_contract(env, cid, kind)
+        contract, _kind = _resolve_contract_from_kw(env, cid, kw)
         move = contract.invoice_id if 'invoice_id' in contract._fields else False
         if not move:
             raise werkzeug.exceptions.NotFound(_(
@@ -1017,8 +1039,7 @@ class DownloadsApiV1(http.Controller):
     @pdf_endpoint(require_downloads_group=True)
     def contract_attachments_list(self, cid, **kw):
         env = request.env
-        kind = _require_kind(kw)
-        contract = _resolve_contract(env, cid, kind)
+        contract, _kind = _resolve_contract_from_kw(env, cid, kw)
         return _attachment_list_json(_contract_attachments(env, contract))
 
     @http.route('/api/v1/contracts/<int:cid>/attachments/<int:aid>',
@@ -1027,8 +1048,7 @@ class DownloadsApiV1(http.Controller):
     @pdf_endpoint(require_downloads_group=True)
     def contract_attachment_file(self, cid, aid, **kw):
         env = request.env
-        kind = _require_kind(kw)
-        contract = _resolve_contract(env, cid, kind)
+        contract, _kind = _resolve_contract_from_kw(env, cid, kw)
         if aid not in _contract_attachments(env, contract).ids:
             raise werkzeug.exceptions.NotFound(_("Attachment not found."))
         return _attachment_response(env['ir.attachment'].sudo().browse(aid))

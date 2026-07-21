@@ -2554,6 +2554,26 @@ Two scopes:
   (implied by Manager). A compromised customer-integration key
   therefore can't walk the full contract / invoice table.
 
+**`kind` is optional on all contract endpoints.** Contracts live in two
+different models — sale (`realestate.sale.contract`) and rental
+(`realestate.contract`) — with independent id sequences that can collide.
+Behavior:
+
+* **Omit** `?kind=` → the server auto-detects by searching both models
+  scoped by the caller's partner (by-ref) or unscoped (top-level) and
+  returning the unique match.
+* **Pass** `?kind=sale` or `?kind=rental` → forces one model (existing
+  behavior, still supported).
+* **Ambiguous auto-detect** — same id exists in *both* models under the
+  same scope — returns **400 `bad_request`** with a message telling the
+  caller to add `?kind=`. Never a silent guess. This can happen on
+  top-level endpoints; on by-ref it's rare because the partner scope
+  usually eliminates one.
+* **Invalid** `?kind=foo` → **400 `bad_request`**.
+
+The tables below list `?kind=sale\|rental` as the accepted values but the
+parameter itself is not required.
+
 ### 11.1 By-ref (per-customer)
 
 **Contracts + reports**
@@ -2616,8 +2636,10 @@ Content-Disposition: attachment; filename="Contract-SC-00045.pdf"
 Cache-Control: private, no-store
 ```
 
-If the contract belongs to a different partner, or doesn't exist,
-or `kind` is wrong: **404 `not_found`**. If the caller omits the key:
+If the contract belongs to a different partner or doesn't exist:
+**404 `not_found`**. If `?kind=` is present with an invalid value, or
+the id is ambiguous across sale/rental when `?kind=` is omitted:
+**400 `bad_request`**. If the caller omits the key:
 **401 `unauthorized`**. If they exceed 300 req/min: **429 `rate_limited`**.
 
 ### 11.2 Top-level (manager)
