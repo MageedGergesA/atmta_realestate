@@ -153,7 +153,7 @@
                                 <td><span t-field="pay.date_due"/></td>
                                 <td class="text-end">
                                     <span t-field="pay.amount_total"
-                                          t-options='{"widget": "monetary", "display_currency": pay.currency_id}'/>
+                                          t-options='{"widget": "monetary", "display_currency": pay.contract_id.currency_id}'/>
                                 </td>
                                 <td><span t-field="pay.move_state"/></td>
                                 <td><span t-field="pay.payment_state"/></td>

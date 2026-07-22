@@ -318,7 +318,7 @@
                                     Type:
                                 </td>
                                 <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
-                                    <span t-esc="dict(doc.partner_id.fields_get()['id_type']['selection'])[doc.partner_id.id_type]"/>
+                                    <span t-esc="dict(doc.partner_id.fields_get()['id_type']['selection']).get(doc.partner_id.id_type, '')"/>
                                 </td>
                                 <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:نوع
                                     الهوية
@@ -409,7 +409,7 @@
                                         Type:
                                     </td>
                                     <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
-                                        <span t-esc="dict(doc.lessor_rep_id.fields_get()['id_type']['selection'])[doc.lessor_rep_id.id_type]"/>
+                                        <span t-esc="dict(doc.lessor_rep_id.fields_get()['id_type']['selection']).get(doc.lessor_rep_id.id_type, '')"/>
                                     </td>
                                     <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">
                                         :نوع
@@ -737,7 +737,7 @@
                                     Furnishing Status:
                                 </td>
                                 <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
-                                    <span t-esc="dict(doc.property_id.fields_get()['furnished_status']['selection'])[doc.property_id.furnished_status]"/>
+                                    <span t-esc="dict(doc.property_id.fields_get()['furnished_status']['selection']).get(doc.property_id.furnished_status, '')"/>
                                 </td>
                                 <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:حالة
                                     التأثيث
