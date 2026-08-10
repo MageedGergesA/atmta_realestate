@@ -1,0 +1,953 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!--
+      M9T — record rules. Phase 0 found none at all.
+
+      Two families, deliberately kept apart:
+
+      * COMPANY rules are global (no group). Multi-company isolation is not a
+        privilege anybody can be granted past; a manager of company A has no
+        business reading company B's cost sheet either.
+
+      * PROJECT rules are opt-in per project. A project with no members named
+        behaves exactly as it did before this milestone — everyone in the
+        company sees it. Name one member and the project becomes restricted to
+        its team. That way enabling access control is a decision somebody makes
+        per project, not a migration that locks an entire deployment out on
+        upgrade day.
+
+      Managers hold an unrestricted project rule, which ORs with the member
+      rule for anybody in both groups.
+    -->
+    <record id="rule_realestate_boq_company" model="ir.rule">
+        <field name="name">realestate.boq: company</field>
+        <field name="model_id" ref="model_realestate_boq"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_boq_line_company" model="ir.rule">
+        <field name="name">realestate.boq.line: company</field>
+        <field name="model_id" ref="model_realestate_boq_line"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_boq_line_variation_company" model="ir.rule">
+        <field name="name">realestate.boq.line.variation: company</field>
+        <field name="model_id" ref="model_realestate_boq_line_variation"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_advance_company" model="ir.rule">
+        <field name="name">realestate.construction.advance: company</field>
+        <field name="model_id" ref="model_realestate_construction_advance"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_advance_recovery_company" model="ir.rule">
+        <field name="name">realestate.construction.advance.recovery: company</field>
+        <field name="model_id" ref="model_realestate_construction_advance_recovery"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_budget_company" model="ir.rule">
+        <field name="name">realestate.construction.budget: company</field>
+        <field name="model_id" ref="model_realestate_construction_budget"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_budget_change_line_company" model="ir.rule">
+        <field name="name">realestate.construction.budget.change.line: company</field>
+        <field name="model_id" ref="model_realestate_construction_budget_change_line"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_budget_line_company" model="ir.rule">
+        <field name="name">realestate.construction.budget.line: company</field>
+        <field name="model_id" ref="model_realestate_construction_budget_line"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_change_event_company" model="ir.rule">
+        <field name="name">realestate.construction.change.event: company</field>
+        <field name="model_id" ref="model_realestate_construction_change_event"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_change_order_company" model="ir.rule">
+        <field name="name">realestate.construction.change.order: company</field>
+        <field name="model_id" ref="model_realestate_construction_change_order"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_change_order_line_company" model="ir.rule">
+        <field name="name">realestate.construction.change.order.line: company</field>
+        <field name="model_id" ref="model_realestate_construction_change_order_line"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_checklist_template_company" model="ir.rule">
+        <field name="name">realestate.construction.checklist.template: company</field>
+        <field name="model_id" ref="model_realestate_construction_checklist_template"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_claim_company" model="ir.rule">
+        <field name="name">realestate.construction.claim: company</field>
+        <field name="model_id" ref="model_realestate_construction_claim"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_claim_cost_line_company" model="ir.rule">
+        <field name="name">realestate.construction.claim.cost.line: company</field>
+        <field name="model_id" ref="model_realestate_construction_claim_cost_line"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_claim_determination_company" model="ir.rule">
+        <field name="name">realestate.construction.claim.determination: company</field>
+        <field name="model_id" ref="model_realestate_construction_claim_determination"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_claim_evidence_company" model="ir.rule">
+        <field name="name">realestate.construction.claim.evidence: company</field>
+        <field name="model_id" ref="model_realestate_construction_claim_evidence"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_claim_submission_company" model="ir.rule">
+        <field name="name">realestate.construction.claim.submission: company</field>
+        <field name="model_id" ref="model_realestate_construction_claim_submission"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_commitment_change_company" model="ir.rule">
+        <field name="name">realestate.construction.commitment.change: company</field>
+        <field name="model_id" ref="model_realestate_construction_commitment_change"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_contract_package_company" model="ir.rule">
+        <field name="name">realestate.construction.contract.package: company</field>
+        <field name="model_id" ref="model_realestate_construction_contract_package"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_cost_code_company" model="ir.rule">
+        <field name="name">realestate.construction.cost.code: company</field>
+        <field name="model_id" ref="model_realestate_construction_cost_code"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_daily_delay_company" model="ir.rule">
+        <field name="name">realestate.construction.daily.delay: company</field>
+        <field name="model_id" ref="model_realestate_construction_daily_delay"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_daily_delivery_company" model="ir.rule">
+        <field name="name">realestate.construction.daily.delivery: company</field>
+        <field name="model_id" ref="model_realestate_construction_daily_delivery"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_daily_equipment_company" model="ir.rule">
+        <field name="name">realestate.construction.daily.equipment: company</field>
+        <field name="model_id" ref="model_realestate_construction_daily_equipment"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_daily_report_company" model="ir.rule">
+        <field name="name">realestate.construction.daily.report: company</field>
+        <field name="model_id" ref="model_realestate_construction_daily_report"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_daily_work_company" model="ir.rule">
+        <field name="name">realestate.construction.daily.work: company</field>
+        <field name="model_id" ref="model_realestate_construction_daily_work"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_delay_event_company" model="ir.rule">
+        <field name="name">realestate.construction.delay.event: company</field>
+        <field name="model_id" ref="model_realestate_construction_delay_event"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_document_company" model="ir.rule">
+        <field name="name">realestate.construction.document: company</field>
+        <field name="model_id" ref="model_realestate_construction_document"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_document_revision_company" model="ir.rule">
+        <field name="name">realestate.construction.document.revision: company</field>
+        <field name="model_id" ref="model_realestate_construction_document_revision"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_eot_company" model="ir.rule">
+        <field name="name">realestate.construction.eot: company</field>
+        <field name="model_id" ref="model_realestate_construction_eot"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_forecast_company" model="ir.rule">
+        <field name="name">realestate.construction.forecast: company</field>
+        <field name="model_id" ref="model_realestate_construction_forecast"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_forecast_line_company" model="ir.rule">
+        <field name="name">realestate.construction.forecast.line: company</field>
+        <field name="model_id" ref="model_realestate_construction_forecast_line"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_inspection_company" model="ir.rule">
+        <field name="name">realestate.construction.inspection: company</field>
+        <field name="model_id" ref="model_realestate_construction_inspection"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_inspection_line_company" model="ir.rule">
+        <field name="name">realestate.construction.inspection.line: company</field>
+        <field name="model_id" ref="model_realestate_construction_inspection_line"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_inspection_request_company" model="ir.rule">
+        <field name="name">realestate.construction.inspection.request: company</field>
+        <field name="model_id" ref="model_realestate_construction_inspection_request"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_issue_company" model="ir.rule">
+        <field name="name">realestate.construction.issue: company</field>
+        <field name="model_id" ref="model_realestate_construction_issue"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_itp_company" model="ir.rule">
+        <field name="name">realestate.construction.itp: company</field>
+        <field name="model_id" ref="model_realestate_construction_itp"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_itp_item_company" model="ir.rule">
+        <field name="name">realestate.construction.itp.item: company</field>
+        <field name="model_id" ref="model_realestate_construction_itp_item"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_ncr_company" model="ir.rule">
+        <field name="name">realestate.construction.ncr: company</field>
+        <field name="model_id" ref="model_realestate_construction_ncr"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_notice_company" model="ir.rule">
+        <field name="name">realestate.construction.notice: company</field>
+        <field name="model_id" ref="model_realestate_construction_notice"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_payment_certificate_company" model="ir.rule">
+        <field name="name">realestate.construction.payment.certificate: company</field>
+        <field name="model_id" ref="model_realestate_construction_payment_certificate"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_payment_certificate_line_company" model="ir.rule">
+        <field name="name">realestate.construction.payment.certificate.line: company</field>
+        <field name="model_id" ref="model_realestate_construction_payment_certificate_line"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_quality_observation_company" model="ir.rule">
+        <field name="name">realestate.construction.quality.observation: company</field>
+        <field name="model_id" ref="model_realestate_construction_quality_observation"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_retention_company" model="ir.rule">
+        <field name="name">realestate.construction.retention: company</field>
+        <field name="model_id" ref="model_realestate_construction_retention"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_retention_release_company" model="ir.rule">
+        <field name="name">realestate.construction.retention.release: company</field>
+        <field name="model_id" ref="model_realestate_construction_retention_release"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_revenue_change_company" model="ir.rule">
+        <field name="name">realestate.construction.revenue.change: company</field>
+        <field name="model_id" ref="model_realestate_construction_revenue_change"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_rfi_company" model="ir.rule">
+        <field name="name">realestate.construction.rfi: company</field>
+        <field name="model_id" ref="model_realestate_construction_rfi"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_risk_company" model="ir.rule">
+        <field name="name">realestate.construction.risk: company</field>
+        <field name="model_id" ref="model_realestate_construction_risk"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_risk_action_company" model="ir.rule">
+        <field name="name">realestate.construction.risk.action: company</field>
+        <field name="model_id" ref="model_realestate_construction_risk_action"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_submittal_company" model="ir.rule">
+        <field name="name">realestate.construction.submittal: company</field>
+        <field name="model_id" ref="model_realestate_construction_submittal"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_submittal_package_company" model="ir.rule">
+        <field name="name">realestate.construction.submittal.package: company</field>
+        <field name="model_id" ref="model_realestate_construction_submittal_package"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_submittal_revision_company" model="ir.rule">
+        <field name="name">realestate.construction.submittal.revision: company</field>
+        <field name="model_id" ref="model_realestate_construction_submittal_revision"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_transmittal_company" model="ir.rule">
+        <field name="name">realestate.construction.transmittal: company</field>
+        <field name="model_id" ref="model_realestate_construction_transmittal"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_transmittal_line_company" model="ir.rule">
+        <field name="name">realestate.construction.transmittal.line: company</field>
+        <field name="model_id" ref="model_realestate_construction_transmittal_line"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_construction_wbs_company" model="ir.rule">
+        <field name="name">realestate.construction.wbs: company</field>
+        <field name="model_id" ref="model_realestate_construction_wbs"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_owner_progress_billing_company" model="ir.rule">
+        <field name="name">realestate.owner.progress.billing: company</field>
+        <field name="model_id" ref="model_realestate_owner_progress_billing"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_realestate_boq_project_member" model="ir.rule">
+        <field name="name">realestate.boq: project team</field>
+        <field name="model_id" ref="model_realestate_boq"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_boq_manager" model="ir.rule">
+        <field name="name">realestate.boq: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_boq"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_boq_line_project_member" model="ir.rule">
+        <field name="name">realestate.boq.line: project team</field>
+        <field name="model_id" ref="model_realestate_boq_line"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_boq_line_manager" model="ir.rule">
+        <field name="name">realestate.boq.line: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_boq_line"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_advance_project_member" model="ir.rule">
+        <field name="name">realestate.construction.advance: project team</field>
+        <field name="model_id" ref="model_realestate_construction_advance"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_advance_manager" model="ir.rule">
+        <field name="name">realestate.construction.advance: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_advance"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_budget_project_member" model="ir.rule">
+        <field name="name">realestate.construction.budget: project team</field>
+        <field name="model_id" ref="model_realestate_construction_budget"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_budget_manager" model="ir.rule">
+        <field name="name">realestate.construction.budget: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_budget"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_budget_line_project_member" model="ir.rule">
+        <field name="name">realestate.construction.budget.line: project team</field>
+        <field name="model_id" ref="model_realestate_construction_budget_line"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_budget_line_manager" model="ir.rule">
+        <field name="name">realestate.construction.budget.line: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_budget_line"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_change_event_project_member" model="ir.rule">
+        <field name="name">realestate.construction.change.event: project team</field>
+        <field name="model_id" ref="model_realestate_construction_change_event"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_change_event_manager" model="ir.rule">
+        <field name="name">realestate.construction.change.event: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_change_event"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_change_order_project_member" model="ir.rule">
+        <field name="name">realestate.construction.change.order: project team</field>
+        <field name="model_id" ref="model_realestate_construction_change_order"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_change_order_manager" model="ir.rule">
+        <field name="name">realestate.construction.change.order: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_change_order"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_claim_project_member" model="ir.rule">
+        <field name="name">realestate.construction.claim: project team</field>
+        <field name="model_id" ref="model_realestate_construction_claim"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_claim_manager" model="ir.rule">
+        <field name="name">realestate.construction.claim: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_claim"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_contract_package_project_member" model="ir.rule">
+        <field name="name">realestate.construction.contract.package: project team</field>
+        <field name="model_id" ref="model_realestate_construction_contract_package"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_contract_package_manager" model="ir.rule">
+        <field name="name">realestate.construction.contract.package: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_contract_package"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_cost_line_project_member" model="ir.rule">
+        <field name="name">realestate.construction.cost.line: project team</field>
+        <field name="model_id" ref="model_realestate_construction_cost_line"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_cost_line_manager" model="ir.rule">
+        <field name="name">realestate.construction.cost.line: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_cost_line"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_daily_delay_project_member" model="ir.rule">
+        <field name="name">realestate.construction.daily.delay: project team</field>
+        <field name="model_id" ref="model_realestate_construction_daily_delay"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_daily_delay_manager" model="ir.rule">
+        <field name="name">realestate.construction.daily.delay: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_daily_delay"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_daily_report_project_member" model="ir.rule">
+        <field name="name">realestate.construction.daily.report: project team</field>
+        <field name="model_id" ref="model_realestate_construction_daily_report"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_daily_report_manager" model="ir.rule">
+        <field name="name">realestate.construction.daily.report: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_daily_report"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_daily_work_project_member" model="ir.rule">
+        <field name="name">realestate.construction.daily.work: project team</field>
+        <field name="model_id" ref="model_realestate_construction_daily_work"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_daily_work_manager" model="ir.rule">
+        <field name="name">realestate.construction.daily.work: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_daily_work"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_delay_event_project_member" model="ir.rule">
+        <field name="name">realestate.construction.delay.event: project team</field>
+        <field name="model_id" ref="model_realestate_construction_delay_event"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_delay_event_manager" model="ir.rule">
+        <field name="name">realestate.construction.delay.event: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_delay_event"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_document_project_member" model="ir.rule">
+        <field name="name">realestate.construction.document: project team</field>
+        <field name="model_id" ref="model_realestate_construction_document"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_document_manager" model="ir.rule">
+        <field name="name">realestate.construction.document: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_document"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_document_revision_project_member" model="ir.rule">
+        <field name="name">realestate.construction.document.revision: project team</field>
+        <field name="model_id" ref="model_realestate_construction_document_revision"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_document_revision_manager" model="ir.rule">
+        <field name="name">realestate.construction.document.revision: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_document_revision"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_eot_project_member" model="ir.rule">
+        <field name="name">realestate.construction.eot: project team</field>
+        <field name="model_id" ref="model_realestate_construction_eot"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_eot_manager" model="ir.rule">
+        <field name="name">realestate.construction.eot: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_eot"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_forecast_project_member" model="ir.rule">
+        <field name="name">realestate.construction.forecast: project team</field>
+        <field name="model_id" ref="model_realestate_construction_forecast"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_forecast_manager" model="ir.rule">
+        <field name="name">realestate.construction.forecast: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_forecast"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_forecast_line_project_member" model="ir.rule">
+        <field name="name">realestate.construction.forecast.line: project team</field>
+        <field name="model_id" ref="model_realestate_construction_forecast_line"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_forecast_line_manager" model="ir.rule">
+        <field name="name">realestate.construction.forecast.line: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_forecast_line"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_inspection_project_member" model="ir.rule">
+        <field name="name">realestate.construction.inspection: project team</field>
+        <field name="model_id" ref="model_realestate_construction_inspection"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_inspection_manager" model="ir.rule">
+        <field name="name">realestate.construction.inspection: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_inspection"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_inspection_request_project_member" model="ir.rule">
+        <field name="name">realestate.construction.inspection.request: project team</field>
+        <field name="model_id" ref="model_realestate_construction_inspection_request"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_inspection_request_manager" model="ir.rule">
+        <field name="name">realestate.construction.inspection.request: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_inspection_request"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_issue_project_member" model="ir.rule">
+        <field name="name">realestate.construction.issue: project team</field>
+        <field name="model_id" ref="model_realestate_construction_issue"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_issue_manager" model="ir.rule">
+        <field name="name">realestate.construction.issue: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_issue"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_itp_project_member" model="ir.rule">
+        <field name="name">realestate.construction.itp: project team</field>
+        <field name="model_id" ref="model_realestate_construction_itp"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_itp_manager" model="ir.rule">
+        <field name="name">realestate.construction.itp: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_itp"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_labor_log_project_member" model="ir.rule">
+        <field name="name">realestate.construction.labor.log: project team</field>
+        <field name="model_id" ref="model_realestate_construction_labor_log"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_labor_log_manager" model="ir.rule">
+        <field name="name">realestate.construction.labor.log: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_labor_log"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_milestone_project_member" model="ir.rule">
+        <field name="name">realestate.construction.milestone: project team</field>
+        <field name="model_id" ref="model_realestate_construction_milestone"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_milestone_manager" model="ir.rule">
+        <field name="name">realestate.construction.milestone: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_milestone"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_ncr_project_member" model="ir.rule">
+        <field name="name">realestate.construction.ncr: project team</field>
+        <field name="model_id" ref="model_realestate_construction_ncr"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_ncr_manager" model="ir.rule">
+        <field name="name">realestate.construction.ncr: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_ncr"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_notice_project_member" model="ir.rule">
+        <field name="name">realestate.construction.notice: project team</field>
+        <field name="model_id" ref="model_realestate_construction_notice"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_notice_manager" model="ir.rule">
+        <field name="name">realestate.construction.notice: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_notice"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_payment_certificate_project_member" model="ir.rule">
+        <field name="name">realestate.construction.payment.certificate: project team</field>
+        <field name="model_id" ref="model_realestate_construction_payment_certificate"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_payment_certificate_manager" model="ir.rule">
+        <field name="name">realestate.construction.payment.certificate: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_payment_certificate"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_quality_observation_project_member" model="ir.rule">
+        <field name="name">realestate.construction.quality.observation: project team</field>
+        <field name="model_id" ref="model_realestate_construction_quality_observation"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_quality_observation_manager" model="ir.rule">
+        <field name="name">realestate.construction.quality.observation: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_quality_observation"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_retention_project_member" model="ir.rule">
+        <field name="name">realestate.construction.retention: project team</field>
+        <field name="model_id" ref="model_realestate_construction_retention"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_retention_manager" model="ir.rule">
+        <field name="name">realestate.construction.retention: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_retention"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_retention_release_project_member" model="ir.rule">
+        <field name="name">realestate.construction.retention.release: project team</field>
+        <field name="model_id" ref="model_realestate_construction_retention_release"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_retention_release_manager" model="ir.rule">
+        <field name="name">realestate.construction.retention.release: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_retention_release"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_rfi_project_member" model="ir.rule">
+        <field name="name">realestate.construction.rfi: project team</field>
+        <field name="model_id" ref="model_realestate_construction_rfi"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_rfi_manager" model="ir.rule">
+        <field name="name">realestate.construction.rfi: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_rfi"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_risk_project_member" model="ir.rule">
+        <field name="name">realestate.construction.risk: project team</field>
+        <field name="model_id" ref="model_realestate_construction_risk"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_risk_manager" model="ir.rule">
+        <field name="name">realestate.construction.risk: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_risk"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_submittal_project_member" model="ir.rule">
+        <field name="name">realestate.construction.submittal: project team</field>
+        <field name="model_id" ref="model_realestate_construction_submittal"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_submittal_manager" model="ir.rule">
+        <field name="name">realestate.construction.submittal: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_submittal"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_submittal_package_project_member" model="ir.rule">
+        <field name="name">realestate.construction.submittal.package: project team</field>
+        <field name="model_id" ref="model_realestate_construction_submittal_package"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_submittal_package_manager" model="ir.rule">
+        <field name="name">realestate.construction.submittal.package: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_submittal_package"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_task_project_member" model="ir.rule">
+        <field name="name">realestate.construction.task: project team</field>
+        <field name="model_id" ref="model_realestate_construction_task"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_task_manager" model="ir.rule">
+        <field name="name">realestate.construction.task: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_task"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_transmittal_project_member" model="ir.rule">
+        <field name="name">realestate.construction.transmittal: project team</field>
+        <field name="model_id" ref="model_realestate_construction_transmittal"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_transmittal_manager" model="ir.rule">
+        <field name="name">realestate.construction.transmittal: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_transmittal"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_wbs_project_member" model="ir.rule">
+        <field name="name">realestate.construction.wbs: project team</field>
+        <field name="model_id" ref="model_realestate_construction_wbs"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_construction_wbs_manager" model="ir.rule">
+        <field name="name">realestate.construction.wbs: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_construction_wbs"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+    <record id="rule_realestate_owner_progress_billing_project_member" model="ir.rule">
+        <field name="name">realestate.owner.progress.billing: project team</field>
+        <field name="model_id" ref="model_realestate_owner_progress_billing"/>
+        <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+
+    <record id="rule_realestate_owner_progress_billing_manager" model="ir.rule">
+        <field name="name">realestate.owner.progress.billing: manager sees every project</field>
+        <field name="model_id" ref="model_realestate_owner_progress_billing"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
+    </record>
+
+</odoo>

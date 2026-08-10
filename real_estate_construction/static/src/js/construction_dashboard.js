@@ -1,7 +1,8 @@
 /** @odoo-module **/
 
 import { registry } from "@web/core/registry";
-import { Component, onMounted, onWillUnmount, useEffect, useRef, useState } from "@odoo/owl";
+import { Component, onMounted, onWillStart, onWillUnmount, useEffect, useRef, useState } from "@odoo/owl";
+import { loadBundle } from "@web/core/assets";
 import { useService } from "@web/core/utils/hooks";
 
 const MS_COLORS = {
@@ -31,6 +32,13 @@ export class ConstructionDashboard extends Component {
     static props = ["*"];
 
     setup() {
+        // Chart.js is loaded on demand from Odoo's own `web.chartjs_lib`
+        // bundle. This dashboard previously relied on a copy that
+        // atmta_real_estate pushed into web.assets_backend for every page;
+        // that duplicate was removed in atmta_real_estate 0.4, so each
+        // consumer now loads the library itself, as Odoo's graph view does.
+        onWillStart(() => loadBundle("web.chartjs_lib"));
+
         this.orm = useService("orm");
         this.action = useService("action");
         this.mapRef = useRef("map");

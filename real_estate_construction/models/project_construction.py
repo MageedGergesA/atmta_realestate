@@ -1,8 +1,16 @@
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 
 
 class ProjectConstruction(models.Model):
     _inherit = 'realestate.project'
+
+    construction_member_ids = fields.Many2many(
+        'res.users', 'construction_project_member_rel', 'project_id',
+        'user_id', string='Construction Team',
+        help="Who may see this project's construction records. Leave empty "
+             "and the project stays visible to everyone in the company, "
+             "exactly as before — naming anybody is what turns access "
+             "control on, per project, as a deliberate act.")
 
     milestone_ids = fields.One2many('realestate.construction.milestone', 'project_id', string='Milestones')
     cost_line_ids = fields.One2many('realestate.construction.cost.line', 'project_id', string='Cost Lines')
@@ -36,8 +44,19 @@ class ProjectConstruction(models.Model):
 
     @api.depends('cost_line_ids.amount', 'expected_budget')
     def _compute_costs(self):
+        """The legacy cost-line total, kept and renamed in meaning.
+
+        This is **not** the project's actual cost any more — M2 defines that as
+        the posted ledger (`ctrl_actual_cost`). The field survives because
+        views, reports and years of data reference it, but it now sums only
+        the lines that are still allowed to behave like costs: declared
+        accruals. Ledger-backed lines are excluded, because the analytic
+        ledger already carries the same money and adding both is the
+        double-count Phase 0 proved was possible.
+        """
         for rec in self:
-            rec.actual_cost = sum(rec.cost_line_ids.mapped('amount'))
+            accruals = rec.cost_line_ids.filtered('counts_as_actual')
+            rec.actual_cost = sum(accruals.mapped('amount'))
             rec.cost_variance = rec.actual_cost - rec.expected_budget
 
     def _compute_milestone_count(self):
@@ -53,4 +72,37 @@ class ProjectConstruction(models.Model):
             'view_mode': 'list,form,kanban',
             'domain': [('project_id', '=', self.id)],
             'context': {'default_project_id': self.id},
+        }
+
+    def construction_position(self):
+        """The project's control position, from the one authoritative service.
+
+        M9AS: if two surfaces show "Current Commitment" they must be literally
+        the same calculation. This method exists so the project form, the cost
+        sheet and the Control Tower cannot drift into three formulas that
+        happen to agree today.
+        """
+        self.ensure_one()
+        return self.env[
+            'realestate.construction.cost.sheet'].totals_for(self)
+
+    def action_open_control_tower(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'construction_control_tower',
+            'name': _('Control Tower — %s') % self.display_name,
+            'params': {'project_id': self.id},
+            'context': {'active_id': self.id,
+                        'default_project_id': self.id},
+        }
+
+    def action_open_cost_sheet(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'construction_control_tower',
+            'name': _('Cost Sheet — %s') % self.display_name,
+            'params': {'project_id': self.id, 'focus': 'cost_sheet'},
+            'context': {'active_id': self.id},
         }

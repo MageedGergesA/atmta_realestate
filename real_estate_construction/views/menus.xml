@@ -47,4 +47,96 @@
               parent="menu_construction_root"
               action="action_construction_subcontract_pos"
               sequence="35"/>
+
+    <menuitem id="menu_construction_boq_root" name="BOQ"
+              parent="menu_construction_root" sequence="40"/>
+    <menuitem id="menu_construction_boq_list" name="Bills of Quantities"
+              parent="menu_construction_boq_root" action="action_boq" sequence="10"/>
+    <menuitem id="menu_construction_work_items" name="Work Items"
+              parent="menu_construction_boq_root" action="action_work_item" sequence="20"/>
+    <menuitem id="menu_construction_work_item_cats" name="Work Item Categories"
+              parent="menu_construction_boq_root" action="action_work_item_category" sequence="30"/>
+    <!-- M1 — project controls structure -->
+    <menuitem id="menu_construction_structure_root" name="Cost Structure"
+              parent="menu_construction_root" sequence="15"/>
+    <menuitem id="menu_construction_wbs" name="WBS"
+              parent="menu_construction_structure_root"
+              action="action_construction_wbs" sequence="10"/>
+    <menuitem id="menu_construction_cost_codes" name="Cost Codes"
+              parent="menu_construction_structure_root"
+              action="action_construction_cost_code" sequence="20"/>
+    <menuitem id="menu_construction_budgets" name="Budgets"
+              parent="menu_construction_structure_root"
+              action="action_construction_budget" sequence="5"/>
+    <menuitem id="menu_construction_packages" name="Contract Packages"
+              parent="menu_construction_root"
+              action="action_construction_package" sequence="18"/>
+    <menuitem id="menu_construction_forecasts" name="Forecasts"
+              parent="menu_construction_structure_root"
+              action="action_construction_forecast" sequence="7"/>
+    <menuitem id="menu_construction_change_root" name="Change Management"
+              parent="menu_construction_root" sequence="17"/>
+    <menuitem id="menu_construction_change_events" name="Change Events"
+              parent="menu_construction_change_root"
+              action="action_change_event" sequence="10"/>
+    <menuitem id="menu_construction_change_orders" name="Change Orders"
+              parent="menu_construction_change_root"
+              action="action_change_order" sequence="20"/>
+    <menuitem id="menu_construction_information_root" name="Information Control"
+              parent="menu_construction_root" sequence="19"/>
+    <menuitem id="menu_construction_rfi" name="RFIs"
+              parent="menu_construction_information_root"
+              action="action_rfi" sequence="10"/>
+    <menuitem id="menu_construction_submittals" name="Submittals"
+              parent="menu_construction_information_root"
+              action="action_submittal" sequence="20"/>
+    <menuitem id="menu_construction_documents" name="Document Register"
+              parent="menu_construction_information_root"
+              action="action_document" sequence="30"/>
+    <menuitem id="menu_construction_revisions" name="Revision Register"
+              parent="menu_construction_information_root"
+              action="action_document_revision" sequence="40"/>
+    <menuitem id="menu_construction_transmittals" name="Transmittals"
+              parent="menu_construction_information_root"
+              action="action_transmittal" sequence="50"/>
+    <menuitem id="menu_construction_quality_root" name="Quality &amp; Site"
+              parent="menu_construction_root" sequence="21"/>
+    <menuitem id="menu_construction_itp" name="Inspection &amp; Test Plans"
+              parent="menu_construction_quality_root" action="action_itp" sequence="10"/>
+    <menuitem id="menu_construction_inspection_requests" name="Inspection Requests"
+              parent="menu_construction_quality_root" action="action_inspection_request" sequence="20"/>
+    <menuitem id="menu_construction_inspections" name="Inspections"
+              parent="menu_construction_quality_root" action="action_inspection" sequence="30"/>
+    <menuitem id="menu_construction_observations" name="Observations"
+              parent="menu_construction_quality_root" action="action_observation" sequence="40"/>
+    <menuitem id="menu_construction_ncrs" name="Non-Conformance Reports"
+              parent="menu_construction_quality_root" action="action_ncr" sequence="50"/>
+    <menuitem id="menu_construction_daily_reports" name="Daily Site Reports"
+              parent="menu_construction_quality_root" action="action_daily_report" sequence="60"/>
+    <menuitem id="menu_construction_checklist_templates" name="Checklist Templates"
+              parent="menu_construction_quality_root" action="action_checklist_template" sequence="70"/>
+    <menuitem id="menu_construction_certification_root" name="Certification"
+              parent="menu_construction_root" sequence="18"/>
+    <menuitem id="menu_construction_advances" name="Advances"
+              parent="menu_construction_certification_root" action="action_advance" sequence="20"/>
+    <menuitem id="menu_construction_retention_register" name="Retention Register"
+              parent="menu_construction_certification_root" action="action_retention" sequence="30"/>
+    <menuitem id="menu_construction_retention_releases" name="Retention Releases"
+              parent="menu_construction_certification_root" action="action_retention_release" sequence="40"/>
+    <menuitem id="menu_construction_claims_root" name="Claims &amp; Risk"
+              parent="menu_construction_root" sequence="24"/>
+    <menuitem id="menu_construction_delay_events" name="Delay Register"
+              parent="menu_construction_claims_root" action="action_delay_event" sequence="10"/>
+    <menuitem id="menu_construction_notices" name="Notices"
+              parent="menu_construction_claims_root" action="action_notice" sequence="20"/>
+    <menuitem id="menu_construction_claims" name="Claim Register"
+              parent="menu_construction_claims_root" action="action_claim" sequence="30"
+              groups="real_estate_construction.group_construction_commercial"/>
+    <menuitem id="menu_construction_eot" name="EOT Register"
+              parent="menu_construction_claims_root" action="action_eot" sequence="40"
+              groups="real_estate_construction.group_construction_commercial"/>
+    <menuitem id="menu_construction_risks" name="Risk Register"
+              parent="menu_construction_claims_root" action="action_risk" sequence="50"/>
+    <menuitem id="menu_construction_issues" name="Issue Register"
+              parent="menu_construction_claims_root" action="action_issue" sequence="60"/>
 </odoo>

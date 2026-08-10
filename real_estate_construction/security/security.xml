@@ -8,9 +8,28 @@
         <field name="name">User</field>
         <field name="category_id" ref="module_category_construction"/>
     </record>
+    <!-- M8. Claims carry negotiating positions, internal assessments and
+         legal narrative. A site engineer needs the factual events and the
+         evidence; nobody needs the strategy to do site work, and a relation
+         traversal from a delay event must not become a way to read it. -->
+    <record id="group_construction_commercial" model="res.groups">
+        <field name="name">Commercial / Claims</field>
+        <field name="category_id" ref="module_category_construction"/>
+        <field name="implied_ids" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
+    <!-- M9. Cost control is a distinct competence from commercial claims:
+         a QS reads budget, commitment, actual and forecast; a claims manager
+         reads negotiating positions. Neither needs the other's screens. -->
+    <record id="group_construction_cost" model="res.groups">
+        <field name="name">Cost Control / QS</field>
+        <field name="category_id" ref="module_category_construction"/>
+        <field name="implied_ids" eval="[(4, ref('group_construction_user'))]"/>
+    </record>
     <record id="group_construction_manager" model="res.groups">
         <field name="name">Manager</field>
         <field name="category_id" ref="module_category_construction"/>
-        <field name="implied_ids" eval="[(4, ref('group_construction_user'))]"/>
+        <field name="implied_ids" eval="[(4, ref('group_construction_user')),
+                                         (4, ref('group_construction_commercial')),
+                                         (4, ref('group_construction_cost'))]"/>
     </record>
 </odoo>

@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_construction_budget_list" model="ir.ui.view">
+        <field name="name">realestate.construction.budget.list</field>
+        <field name="model">realestate.construction.budget</field>
+        <field name="arch" type="xml">
+            <list string="Budgets" decoration-success="state == 'baselined'"
+                  decoration-muted="state in ('superseded','cancelled')">
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="version"/>
+                <field name="source"/>
+                <field name="original_amount" sum="Original"/>
+                <field name="approved_change_amount" sum="Changes"/>
+                <field name="current_amount" sum="Current"/>
+                <field name="contingency_amount" optional="hide"/>
+                <field name="approved_by_id" optional="hide"/>
+                <field name="baseline_date" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'baselined'"
+                       decoration-info="state == 'approved'"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_construction_budget_form" model="ir.ui.view">
+        <field name="name">realestate.construction.budget.form</field>
+        <field name="model">realestate.construction.budget</field>
+        <field name="arch" type="xml">
+            <form string="Budget">
+                <header>
+                    <button name="action_submit" type="object" string="Submit for Review"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="btn-primary" invisible="state != 'review'"/>
+                    <button name="action_baseline" type="object" string="Baseline"
+                            class="btn-primary" invisible="state != 'approved'"/>
+                    <button name="action_create_revision" type="object"
+                            string="Create Revision" invisible="state != 'baselined'"/>
+                    <button name="action_supersede" type="object"
+                            string="Supersede" invisible="state != 'baselined'"/>
+                    <button name="action_reset_to_draft" type="object"
+                            string="Reset to Draft"
+                            invisible="state not in ('review','approved','cancelled')"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('baselined','superseded','cancelled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,review,approved,baselined"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <div class="alert alert-info" role="status"
+                         invisible="state != 'baselined'">
+                        This is the project's current baseline. Its figures cannot be
+                        edited — create a revision, or record an approved change.
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id"
+                                   readonly="state in ('baselined','superseded')"/>
+                            <field name="version"/>
+                            <field name="source"/>
+                            <field name="source_boq_id" invisible="not source_boq_id"/>
+                        </group>
+                        <group>
+                            <field name="currency_id"
+                                   readonly="state in ('baselined','superseded')"/>
+                            <field name="approved_by_id"/>
+                            <field name="baseline_date"/>
+                            <field name="supersedes_id" invisible="not supersedes_id"/>
+                            <field name="superseded_by_id" invisible="not superseded_by_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Budget Lines">
+                            <field name="line_ids" readonly="state in ('baselined','superseded')">
+                                <list editable="bottom">
+                                    <field name="wbs_id"/>
+                                    <field name="cost_code_id"/>
+                                    <field name="description"/>
+                                    <field name="amount_mode"/>
+                                    <field name="quantity"
+                                           column_invisible="0"/>
+                                    <field name="uom_id" optional="hide"/>
+                                    <field name="unit_rate"/>
+                                    <field name="original_amount" sum="Original"/>
+                                    <field name="approved_change_amount" sum="Changes"/>
+                                    <field name="current_amount" sum="Current"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="project_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="original_amount"/>
+                                <field name="approved_change_amount"/>
+                                <field name="current_amount" class="oe_subtotal_footer_separator"/>
+                                <field name="contingency_amount"/>
+                            </group>
+                        </page>
+                        <page string="Notes"><field name="notes"/></page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_construction_budget" model="ir.actions.act_window">
+        <field name="name">Budgets</field>
+        <field name="res_model">realestate.construction.budget</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ============ Contract packages ============ -->
+    <record id="view_construction_package_list" model="ir.ui.view">
+        <field name="name">realestate.construction.contract.package.list</field>
+        <field name="model">realestate.construction.contract.package</field>
+        <field name="arch" type="xml">
+            <list string="Contract Packages">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="project_id"/>
+                <field name="contractor_id"/>
+                <field name="package_type"/>
+                <field name="original_contract_value" sum="Original"/>
+                <field name="approved_variation_amount" sum="Variations"/>
+                <field name="current_contract_value" sum="Current"/>
+                <field name="committed_amount" sum="Committed"/>
+                <field name="commitment_source" optional="hide"/>
+                <field name="date_start" optional="hide"/>
+                <field name="current_completion_date" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state in ('active','complete')"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_construction_package_form" model="ir.ui.view">
+        <field name="name">realestate.construction.contract.package.form</field>
+        <field name="model">realestate.construction.contract.package</field>
+        <field name="arch" type="xml">
+            <form string="Contract Package">
+                <header>
+                    <button name="action_tender" type="object" string="Go to Tender"
+                            invisible="state != 'draft'"/>
+                    <button name="action_award" type="object" string="Award"
+                            class="btn-primary" invisible="state not in ('draft','tender')"/>
+                    <button name="action_activate" type="object" string="Activate"
+                            class="btn-primary" invisible="state != 'awarded'"/>
+                    <button name="action_substantially_complete" type="object"
+                            string="Substantially Complete" invisible="state != 'active'"/>
+                    <button name="action_complete" type="object" string="Complete"
+                            invisible="state not in ('active','substantially_complete')"/>
+                    <button name="action_close" type="object" string="Close"
+                            invisible="state != 'complete'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('complete','closed','cancelled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,tender,awarded,active,complete"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_purchase_orders" type="object"
+                                class="oe_stat_button" icon="fa-shopping-cart">
+                            <field name="purchase_order_count" widget="statinfo"
+                                   string="Orders"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h2><field name="title" placeholder="Main Civil Works"/></h2>
+                    </div>
+                    <group>
+                        <group string="Commercial">
+                            <field name="project_id"/>
+                            <field name="contractor_id"/>
+                            <field name="package_type"/>
+                            <field name="currency_id"/>
+                            <field name="tender_value" invisible="state not in ('draft','tender')"/>
+                            <field name="original_contract_value"/>
+                            <field name="approved_variation_amount"/>
+                            <field name="current_contract_value"/>
+                        </group>
+                        <group string="Commitment &amp; Terms">
+                            <field name="committed_amount"/>
+                            <field name="commitment_source"/>
+                            <field name="retention_pct"/>
+                            <field name="advance_pct"/>
+                            <field name="advance_amount"/>
+                            <field name="performance_guarantee"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Programme">
+                            <field name="date_start"/>
+                            <field name="original_completion_date"/>
+                            <field name="current_completion_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Scope">
+                            <group>
+                                <field name="wbs_ids" widget="many2many_tags"/>
+                                <field name="cost_code_ids" widget="many2many_tags"/>
+                            </group>
+                            <field name="scope_description"/>
+                        </page>
+                        <page string="Purchase Orders">
+                            <field name="purchase_order_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="partner_id"/>
+                                    <field name="amount_untaxed" sum="Untaxed"/>
+                                    <field name="amount_total" optional="hide"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes"><field name="notes"/></page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_construction_package" model="ir.actions.act_window">
+        <field name="name">Contract Packages</field>
+        <field name="res_model">realestate.construction.contract.package</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ============ Cost report ============ -->
+    <record id="view_construction_cost_report_form" model="ir.ui.view">
+        <field name="name">realestate.construction.cost.report.form</field>
+        <field name="model">realestate.construction.cost.report</field>
+        <field name="arch" type="xml">
+            <form string="Cost Report" create="false" edit="false">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>Cost Report — <field name="project_id" readonly="1"/></h1>
+                    </div>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="not retention_warning">
+                        <field name="retention_warning" readonly="1" nolabel="1"/>
+                    </div>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="not over_committed">
+                        Commitments exceed the current budget on this project.
+                    </div>
+                    <group>
+                        <group string="Budget">
+                            <field name="original_budget"/>
+                            <field name="approved_budget_changes"/>
+                            <field name="current_budget"/>
+                        </group>
+                        <group string="Commitment &amp; Actual">
+                            <field name="current_commitment"/>
+                            <field name="actual_cost"/>
+                            <field name="available_before_commitment"/>
+                            <field name="budget_remaining_vs_actual"/>
+                        </group>
+                    </group>
+                    <field name="line_ids" readonly="1">
+                        <list string="By Cost Code" create="false">
+                            <field name="cost_code_label"/>
+                            <field name="category" optional="hide"/>
+                            <field name="original_budget" sum="Original Budget"/>
+                            <field name="approved_budget_changes" sum="Budget Changes"/>
+                            <field name="current_budget" sum="Current Budget"/>
+                            <field name="original_commitment" sum="Original Commitment"/>
+                            <field name="current_commitment" sum="Current Commitment"/>
+                            <field name="actual_cost" sum="Actual"/>
+                            <field name="available_before_commitment" sum="Available"/>
+                            <field name="budget_remaining_vs_actual" sum="Remaining vs Actual"/>
+                            <field name="etc_amount" optional="hide"/>
+                            <field name="eac_amount" optional="hide"/>
+                            <field name="currency_id" column_invisible="1"/>
+                            <button name="action_drill_budget" type="object"
+                                    icon="fa-search" title="Budget lines"/>
+                            <button name="action_drill_commitment" type="object"
+                                    icon="fa-shopping-cart" title="Commitment detail"/>
+                            <button name="action_drill_actual" type="object"
+                                    icon="fa-book" title="Posted cost"/>
+                        </list>
+                    </field>
+                    <p class="text-muted">
+                        Commitment and Actual are two views of the same money and are
+                        never added together. ETC and EAC are blank until forecasting
+                        exists.
+                    </p>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

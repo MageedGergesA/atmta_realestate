@@ -65,14 +65,15 @@ class ConstructionTask(models.Model):
         for rec in self:
             rec.write({
                 'state': 'in_progress',
-                'actual_start_date': rec.actual_start_date or fields.Date.today(),
+                'actual_start_date': (rec.actual_start_date
+                                      or fields.Date.context_today(rec)),
             })
 
     def action_done(self):
         for rec in self:
             rec.write({
                 'state': 'done',
-                'actual_end_date': fields.Date.today(),
+                'actual_end_date': fields.Date.context_today(rec),
             })
 
     def action_skip(self):

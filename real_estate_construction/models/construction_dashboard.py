@@ -3,8 +3,23 @@ from odoo import api, fields, models
 
 
 class ConstructionDashboard(models.AbstractModel):
+    """DEPRECATED (M10A) — pre-project-control dashboard data.
+
+    This provider predates M1–M9. Three of its properties make it unusable as
+    a financial surface, and none of them are bugs to be fixed here:
+
+    * it aggregates **globally**, across every project and every company;
+    * "total budget" is the sum of milestone `budget_amount`, which is not the
+      baselined budget M2 made authoritative;
+    * "total actual" is the sum of manual construction cost lines, which is
+      not posted ledger cost.
+
+    It is retained for one compatibility release behind technical access.
+    `realestate.construction.control.tower` is the canonical surface, and new
+    code must consume that.
+    """
     _name = 'realestate.construction.dashboard'
-    _description = 'Construction Dashboard data provider'
+    _description = 'Construction Dashboard data provider (deprecated)'
 
     @api.model
     def get_data(self):

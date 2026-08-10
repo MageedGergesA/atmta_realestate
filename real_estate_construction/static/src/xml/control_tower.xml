@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+<t t-name="real_estate_construction.ControlTower">
+    <div class="o_construction_tower o_action" t-att-class="props.className">
+
+        <!-- ============ Header and filters ============ -->
+        <div class="o_tower_header d-flex flex-wrap align-items-center gap-3 p-3 border-bottom">
+            <h2 class="m-0 me-auto">Construction Control Tower</h2>
+            <select class="form-select w-auto" t-on-change="(ev) => this.onProjectChange(ev)"
+                    aria-label="Project">
+                <t t-foreach="state.projects" t-as="project" t-key="project.id">
+                    <option t-att-value="project.id"
+                            t-att-selected="project.id === state.projectId">
+                        <t t-esc="project.display_name"/>
+                    </option>
+                </t>
+            </select>
+            <button class="btn btn-secondary" t-on-click="() => this.refresh()">Refresh</button>
+        </div>
+
+        <!-- ============ Loading — a skeleton, never a zero ============ -->
+        <div t-if="state.loading" class="o_tower_skeleton p-4">
+            <div class="text-muted mb-3">Loading the project position…</div>
+            <div class="d-flex flex-wrap gap-3">
+                <t t-foreach="[1,2,3,4,5,6]" t-as="n" t-key="n">
+                    <div class="o_skeleton_card border rounded p-3" style="width: 12rem; height: 5rem;"/>
+                </t>
+            </div>
+        </div>
+
+        <div t-elif="state.error" class="alert alert-danger m-3" role="alert">
+            <strong>The control payload failed.</strong>
+            <div t-esc="state.error"/>
+        </div>
+
+        <div t-elif="!state.payload" class="alert alert-info m-3" role="status">
+            No project selected.
+        </div>
+
+        <div t-else="" class="o_tower_body p-3">
+
+            <!-- ============ Freshness ============ -->
+            <div t-if="has('header')" class="o_tower_freshness small text-muted mb-3">
+                <span>Data as of <t t-esc="state.payload.header.data_as_of"/></span>
+                <span t-if="state.payload.header.forecast_as_of" class="ms-3">
+                    Forecast as of <t t-esc="state.payload.header.forecast_as_of"/>
+                    (<t t-esc="state.payload.header.forecast_reference"/>)
+                </span>
+                <span t-else="" class="ms-3">No approved forecast.</span>
+            </div>
+
+            <!-- ============ Health ============ -->
+            <div t-if="has('health')" class="o_tower_health card mb-3">
+                <div class="card-body">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <span class="badge"
+                              t-att-class="'o_status_' + state.payload.health.status"
+                              t-esc="statusLabel(state.payload.health.status)"/>
+                        <strong>Project status</strong>
+                    </div>
+                    <!-- The status is only as useful as the sentence under it. -->
+                    <ul class="mb-2 o_tower_reasons">
+                        <t t-foreach="state.payload.health.reasons" t-as="reason" t-key="reason_index">
+                            <li t-esc="reason"/>
+                        </t>
+                    </ul>
+                    <div class="d-flex flex-wrap gap-2">
+                        <t t-foreach="state.payload.health.dimensions" t-as="dim" t-key="dim.key">
+                            <span class="badge text-bg-light border"
+                                  t-att-title="dim.reason">
+                                <t t-esc="dim.key"/>: <t t-esc="statusLabel(dim.status)"/>
+                            </span>
+                        </t>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============ Cost summary ============ -->
+            <div t-if="has('cost')" class="o_tower_cost card mb-3">
+                <div class="card-header">Cost position</div>
+                <div class="card-body d-flex flex-wrap gap-3">
+                    <div class="o_kpi" t-on-click="() => this.drill('original_budget')">
+                        <div class="o_kpi_label">Current Budget</div>
+                        <div class="o_kpi_value" t-esc="money(state.payload.cost.current_budget)"/>
+                        <div class="o_kpi_sub">
+                            Original <t t-esc="money(state.payload.cost.original_budget)"/>
+                            + approved <t t-esc="money(state.payload.cost.approved_budget_changes)"/>
+                        </div>
+                    </div>
+                    <div class="o_kpi" t-on-click="() => this.drill('current_commitment')">
+                        <div class="o_kpi_label">Current Commitment</div>
+                        <div class="o_kpi_value" t-esc="money(state.payload.cost.current_commitment)"/>
+                        <div class="o_kpi_sub">
+                            Original <t t-esc="money(state.payload.cost.original_commitment)"/>
+                            + approved <t t-esc="money(state.payload.cost.approved_commitment_changes)"/>
+                        </div>
+                    </div>
+                    <div class="o_kpi" t-on-click="() => this.drill('actual_cost')">
+                        <div class="o_kpi_label">Actual Cost</div>
+                        <div class="o_kpi_value" t-esc="money(state.payload.cost.actual_cost)"/>
+                        <div class="o_kpi_sub">Posted ledger</div>
+                    </div>
+                    <div class="o_kpi" t-on-click="() => this.drill('etc')">
+                        <div class="o_kpi_label">ETC</div>
+                        <div class="o_kpi_value" t-esc="money(state.payload.cost.etc)"/>
+                        <div class="o_kpi_sub">Approved forecast</div>
+                    </div>
+                    <div class="o_kpi">
+                        <div class="o_kpi_label">EAC</div>
+                        <div class="o_kpi_value" t-esc="money(state.payload.cost.eac)"/>
+                        <div class="o_kpi_sub">Actual + ETC</div>
+                    </div>
+                    <div class="o_kpi">
+                        <div class="o_kpi_label">Forecast Variance</div>
+                        <div class="o_kpi_value" t-esc="money(state.payload.cost.forecast_variance)"/>
+                        <div class="o_kpi_sub">Current Budget − EAC</div>
+                    </div>
+                </div>
+                <div t-if="state.payload.cost.unassigned_commitment or state.payload.cost.unassigned_actual"
+                     class="card-footer small">
+                    Unassigned commitment
+                    <t t-esc="money(state.payload.cost.unassigned_commitment)"/>,
+                    unassigned actual
+                    <t t-esc="money(state.payload.cost.unassigned_actual)"/> —
+                    real money that carries no cost code.
+                </div>
+            </div>
+
+            <!-- ============ Pending, kept apart from authorised ============ -->
+            <div t-if="has('change') or has('claims')" class="o_tower_pending card mb-3">
+                <div class="card-header">Not authorised — reported separately</div>
+                <div class="card-body d-flex flex-wrap gap-3">
+                    <div t-if="has('change')" class="o_kpi o_kpi_pending"
+                         t-on-click="() => this.drill('potential_cost_exposure')">
+                        <div class="o_kpi_label">Potential Change Exposure</div>
+                        <div class="o_kpi_value" t-esc="money(state.payload.change.potential_cost_exposure)"/>
+                        <div class="o_kpi_sub">
+                            <t t-esc="state.payload.change.open_change_events"/> open event(s)
+                        </div>
+                    </div>
+                    <div t-if="has('change')" class="o_kpi o_kpi_pending">
+                        <div class="o_kpi_label">Approved, Not Implemented</div>
+                        <div class="o_kpi_value" t-esc="state.payload.change.approved_unimplemented"/>
+                        <div class="o_kpi_sub">Baseline does not reflect these yet</div>
+                    </div>
+                    <div t-if="has('claims')" class="o_kpi o_kpi_pending">
+                        <div class="o_kpi_label">Claimed</div>
+                        <div class="o_kpi_value" t-esc="money(state.payload.claims.claimed_cost)"/>
+                        <div class="o_kpi_sub">Requested, not granted</div>
+                    </div>
+                    <div t-if="has('claims')" class="o_kpi o_kpi_pending">
+                        <div class="o_kpi_label">Determined</div>
+                        <div class="o_kpi_value" t-esc="money(state.payload.claims.determined_cost)"/>
+                        <div class="o_kpi_sub">
+                            Implemented <t t-esc="money(state.payload.claims.implemented_cost)"/>
+                        </div>
+                    </div>
+                    <div t-if="has('claims')" class="o_kpi o_kpi_pending">
+                        <div class="o_kpi_label">EOT Days</div>
+                        <div class="o_kpi_value">
+                            <t t-esc="state.payload.claims.approved_eot_days"/> approved
+                        </div>
+                        <div class="o_kpi_sub">
+                            <t t-esc="state.payload.claims.claimed_eot_days"/> claimed and not granted
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============ Cost sheet ============ -->
+            <div t-if="has('cost_sheet')" class="o_tower_cost_sheet card mb-3">
+                <div class="card-header">
+                    Cost sheet
+                    <span class="text-muted small ms-2">
+                        <t t-esc="state.payload.cost_sheet.row_count"/> cost code(s)
+                    </span>
+                </div>
+                <div class="table-responsive o_cost_sheet_scroll">
+                    <table class="table table-sm table-hover o_cost_sheet mb-0">
+                        <thead>
+                            <tr>
+                                <th>Cost Code</th>
+                                <th class="text-end">Original Budget</th>
+                                <th class="text-end">Approved Changes</th>
+                                <th class="text-end">Current Budget</th>
+                                <th class="text-end">Current Commitment</th>
+                                <th class="text-end">Certified</th>
+                                <th class="text-end">Actual</th>
+                                <th class="text-end">ETC</th>
+                                <th class="text-end">EAC</th>
+                                <th class="text-end">Variance</th>
+                                <th class="text-end">Potential Change</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="state.payload.cost_sheet.rows" t-as="row" t-key="row.cost_code_id">
+                                <tr t-att-class="row.is_unassigned ? 'table-warning' : ''">
+                                    <td>
+                                        <strong t-esc="row.code"/>
+                                        <div class="small text-muted" t-esc="row.name"/>
+                                    </td>
+                                    <td class="text-end o_drill"
+                                        t-on-click="() => this.drill('original_budget', row.cost_code_id)"
+                                        t-esc="money(row.original_budget)"/>
+                                    <td class="text-end o_drill"
+                                        t-on-click="() => this.drill('approved_budget_changes', row.cost_code_id)"
+                                        t-esc="money(row.approved_budget_changes)"/>
+                                    <td class="text-end" t-esc="money(row.current_budget)"/>
+                                    <td class="text-end o_drill"
+                                        t-on-click="() => this.drill('current_commitment', row.cost_code_id)"
+                                        t-esc="money(row.current_commitment)"/>
+                                    <td class="text-end o_drill"
+                                        t-on-click="() => this.drill('certified_amount', row.cost_code_id)"
+                                        t-esc="money(row.certified_amount)"/>
+                                    <td class="text-end o_drill"
+                                        t-on-click="() => this.drill('actual_cost', row.cost_code_id)"
+                                        t-esc="money(row.actual_cost)"/>
+                                    <td class="text-end o_drill" t-att-title="row.forecast_reason"
+                                        t-on-click="() => this.drill('etc', row.cost_code_id)"
+                                        t-esc="money(row.etc)"/>
+                                    <td class="text-end" t-esc="money(row.eac)"/>
+                                    <td class="text-end" t-esc="money(row.forecast_variance)"/>
+                                    <td class="text-end o_drill"
+                                        t-on-click="() => this.drill('potential_cost_exposure', row.cost_code_id)"
+                                        t-esc="money(row.potential_cost_exposure)"/>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============ Progress — four questions, four answers ============ -->
+            <div t-if="has('progress')" class="o_tower_progress card mb-3">
+                <div class="card-header">Progress</div>
+                <div class="card-body d-flex flex-wrap gap-3">
+                    <div class="o_kpi">
+                        <div class="o_kpi_label">Planned</div>
+                        <div class="o_kpi_value" t-esc="percent(state.payload.progress.planned_pct)"/>
+                        <div class="o_kpi_sub" t-esc="state.payload.progress.planned_reason"/>
+                    </div>
+                    <div class="o_kpi">
+                        <div class="o_kpi_label">Physical</div>
+                        <div class="o_kpi_value" t-esc="percent(state.payload.progress.physical_pct)"/>
+                        <div class="o_kpi_sub" t-esc="state.payload.progress.physical_basis"/>
+                    </div>
+                    <div class="o_kpi">
+                        <div class="o_kpi_label">Certified</div>
+                        <div class="o_kpi_value" t-esc="percent(state.payload.progress.certified_pct)"/>
+                        <div class="o_kpi_sub" t-esc="state.payload.progress.certified_basis"/>
+                    </div>
+                    <div class="o_kpi">
+                        <div class="o_kpi_label">Financial</div>
+                        <div class="o_kpi_value" t-esc="percent(state.payload.progress.financial_pct)"/>
+                        <div class="o_kpi_sub" t-esc="state.payload.progress.financial_basis"/>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============ Operational panels ============ -->
+            <div class="row g-3">
+                <div t-if="has('quality')" class="col-12 col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-header">Quality</div>
+                        <div class="card-body d-flex flex-wrap gap-3">
+                            <div class="o_kpi_small">
+                                <div class="o_kpi_label">Open NCR</div>
+                                <div class="o_kpi_value" t-esc="state.payload.quality.open_ncrs"/>
+                            </div>
+                            <div class="o_kpi_small">
+                                <div class="o_kpi_label">High severity</div>
+                                <div class="o_kpi_value" t-esc="state.payload.quality.high_severity_ncrs"/>
+                            </div>
+                            <div class="o_kpi_small">
+                                <div class="o_kpi_label">Overdue NCR</div>
+                                <div class="o_kpi_value" t-esc="state.payload.quality.overdue_ncrs"/>
+                            </div>
+                            <div class="o_kpi_small">
+                                <div class="o_kpi_label">First-pass yield</div>
+                                <div class="o_kpi_value" t-esc="percent(state.payload.quality.first_pass_yield_pct)"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div t-if="has('information')" class="col-12 col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-header">Information management</div>
+                        <div class="card-body d-flex flex-wrap gap-3">
+                            <div class="o_kpi_small">
+                                <div class="o_kpi_label">Open RFI</div>
+                                <div class="o_kpi_value" t-esc="state.payload.information.open_rfis"/>
+                            </div>
+                            <div class="o_kpi_small">
+                                <div class="o_kpi_label">Overdue RFI</div>
+                                <div class="o_kpi_value" t-esc="state.payload.information.overdue_rfis"/>
+                            </div>
+                            <div class="o_kpi_small">
+                                <div class="o_kpi_label">Pending submittals</div>
+                                <div class="o_kpi_value" t-esc="state.payload.information.pending_submittals"/>
+                            </div>
+                            <div class="o_kpi_small">
+                                <div class="o_kpi_label">Transmittals unacknowledged</div>
+                                <div class="o_kpi_value" t-esc="state.payload.information.transmittals_awaiting_acknowledgement"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div t-if="has('risk')" class="col-12 col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-header">Risk and issues</div>
+                        <div class="card-body d-flex flex-wrap gap-3">
+                            <div class="o_kpi_small">
+                                <div class="o_kpi_label">Open risks</div>
+                                <div class="o_kpi_value" t-esc="state.payload.risk.open_risks"/>
+                            </div>
+                            <div class="o_kpi_small">
+                                <div class="o_kpi_label">High risks</div>
+                                <div class="o_kpi_value" t-esc="state.payload.risk.high_risks"/>
+                            </div>
+                            <div class="o_kpi_small">
+                                <div class="o_kpi_label">Without mitigation</div>
+                                <div class="o_kpi_value" t-esc="state.payload.risk.risks_without_mitigation"/>
+                            </div>
+                            <div class="o_kpi_small">
+                                <div class="o_kpi_label">Overdue issues</div>
+                                <div class="o_kpi_value" t-esc="state.payload.risk.overdue_issues"/>
+                            </div>
+                            <div class="o_kpi_small">
+                                <div class="o_kpi_label">Deduplicated exposure</div>
+                                <div class="o_kpi_value" t-esc="money(state.payload.risk.exposure.potential_commercial)"/>
+                                <div class="o_kpi_sub">Counted once across risk, issue, change and claim</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div t-if="has('certificates')" class="col-12 col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-header">Certification</div>
+                        <div class="card-body d-flex flex-wrap gap-3">
+                            <div class="o_kpi_small">
+                                <div class="o_kpi_label">Certified</div>
+                                <div class="o_kpi_value" t-esc="money(state.payload.certificates.certified_amount)"/>
+                            </div>
+                            <div class="o_kpi_small">
+                                <div class="o_kpi_label">Disallowed</div>
+                                <div class="o_kpi_value" t-esc="money(state.payload.certificates.disallowed_amount)"/>
+                            </div>
+                            <div class="o_kpi_small">
+                                <div class="o_kpi_label">Retention outstanding</div>
+                                <div class="o_kpi_value" t-esc="money(state.payload.certificates.retention_outstanding)"/>
+                            </div>
+                            <div class="o_kpi_small">
+                                <div class="o_kpi_label">Advance outstanding</div>
+                                <div class="o_kpi_value" t-esc="money(state.payload.certificates.advance_outstanding)"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============ Data-control exceptions ============ -->
+            <div t-if="has('exceptions') and state.payload.exceptions.count"
+                 class="o_tower_exceptions card mt-3">
+                <div class="card-header">
+                    Data control — <t t-esc="state.payload.exceptions.count"/> exception(s)
+                </div>
+                <ul class="list-group list-group-flush">
+                    <t t-foreach="state.payload.exceptions.exceptions" t-as="exc" t-key="exc.key">
+                        <li class="list-group-item d-flex align-items-center gap-2 o_drill"
+                            t-on-click="() => this.openAction(exc.action)">
+                            <span class="badge text-bg-light border" t-esc="exc.class"/>
+                            <span t-esc="exc.message"/>
+                        </li>
+                    </t>
+                </ul>
+            </div>
+
+            <!-- ============ Failed panels — named, never silently zero ======= -->
+            <t t-foreach="state.payload.sections" t-as="section" t-key="section">
+                <div t-if="failed(section)" class="alert alert-warning mt-3" role="alert">
+                    The <t t-esc="section"/> panel failed to load:
+                    <t t-esc="state.payload[section].error"/>
+                </div>
+            </t>
+        </div>
+    </div>
+</t>
+
+</templates>

@@ -182,18 +182,51 @@ class Contractor(models.Model):
                  'payment_certificate_ids.gross_amount',
                  'payment_certificate_ids.retention_amount')
     def _compute_retention_totals(self):
+        """Held is what the register says, not a re-derivation.
+
+        The old computation summed retention off the certificates and zeroed
+        it on a boolean, so a partial release could not be represented at all
+        and a released amount kept showing as held until somebody flipped the
+        flag. M7 reads the movements.
+        """
+        Retention = self.env['realestate.construction.retention']
         for rec in self:
             paid_or_billed = rec.payment_certificate_ids.filtered(
                 lambda c: c.state in ('certified', 'invoiced', 'paid')
             )
             rec.total_certified = sum(paid_or_billed.mapped('gross_amount'))
-            if rec.retention_released:
-                rec.total_retention_held = 0.0
-            else:
-                rec.total_retention_held = sum(paid_or_billed.mapped('retention_amount'))
+            groups = Retention._read_group(
+                [('contractor_id', '=', rec.id), ('side', '=', 'contractor')],
+                aggregates=['signed_amount:sum'])
+            registered = (groups[0][0] if groups else 0.0) or 0.0
+            legacy = sum(paid_or_billed.filtered(
+                lambda c: not c.retention_posted_correctly).mapped(
+                    'retention_amount'))
+            rec.total_retention_held = registered + (
+                0.0 if rec.retention_released else legacy)
 
     def action_release_retention(self):
-        """Create a final vendor bill for the accumulated retention."""
+        """Open a retention release for this contractor.
+
+        Releasing used to post a bill for everything held everywhere and flip
+        a boolean. Retention is held per project and released in stages, so
+        the button now opens the document that says which stage, on which
+        project, for how much — and that document checks the register.
+        """
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Retention Release'),
+            'res_model': 'realestate.construction.retention.release',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'default_contractor_id': self.id,
+                        'default_side': 'contractor'},
+        }
+
+    def _action_release_retention_legacy(self):
+        """The pre-M7 blanket release. Kept only so the migration can
+        describe what it replaced; nothing calls it."""
         for rec in self:
             if rec.retention_released:
                 raise UserError(_("Retention has already been released for '%s'.") % rec.name)
@@ -202,7 +235,7 @@ class Contractor(models.Model):
             bill = self.env['account.move'].create({
                 'move_type': 'in_invoice',
                 'partner_id': rec.partner_id.id,
-                'invoice_date': fields.Date.today(),
+                'invoice_date': fields.Date.context_today(rec),
                 'ref': _('Retention release — %s') % rec.name,
                 'invoice_line_ids': [(0, 0, {
                     'name': _('Retention release for %s (across %d certificates)') % (

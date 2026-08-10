@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_construction_forecast_list" model="ir.ui.view">
+        <field name="name">realestate.construction.forecast.list</field>
+        <field name="model">realestate.construction.forecast</field>
+        <field name="arch" type="xml">
+            <list string="Forecasts" decoration-success="state == 'approved'"
+                  decoration-warning="not eac_is_complete">
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="as_of_date"/>
+                <field name="period_label"/>
+                <field name="total_current_budget" sum="Current Budget"/>
+                <field name="total_actual" sum="Actual"/>
+                <field name="total_etc" sum="ETC"/>
+                <field name="total_eac" sum="EAC"/>
+                <field name="total_forecast_variance" sum="Variance"
+                       decoration-danger="total_forecast_variance &lt; 0"/>
+                <field name="previous_eac" optional="hide"/>
+                <field name="eac_movement" optional="show"
+                       decoration-danger="eac_movement &gt; 0"/>
+                <field name="forecast_coverage" widget="percentage"
+                       optional="show"/>
+                <field name="eac_is_complete" optional="hide"/>
+                <field name="approved_by_id" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'approved'"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_construction_forecast_form" model="ir.ui.view">
+        <field name="name">realestate.construction.forecast.form</field>
+        <field name="model">realestate.construction.forecast</field>
+        <field name="arch" type="xml">
+            <form string="Forecast">
+                <header>
+                    <button name="action_refresh" type="object"
+                            string="Refresh Actuals &amp; Commitments"
+                            invisible="state not in ('draft','review')"/>
+                    <button name="action_submit" type="object" string="Submit"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="btn-primary" invisible="state != 'review'"/>
+                    <button name="action_reset_to_draft" type="object"
+                            string="Reset to Draft" invisible="state != 'review'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('approved','cancelled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,review,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h2><field name="period_label" readonly="1"/></h2>
+                    </div>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="eac_is_complete">
+                        This forecast does not cover every cost code. The total EAC
+                        below is partial and must not be quoted as the project's
+                        expected cost.
+                    </div>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="not retention_warning">
+                        <field name="retention_warning" readonly="1" nolabel="1"/>
+                    </div>
+                    <div class="alert alert-info" role="status"
+                         invisible="state != 'approved'">
+                        Approved on <field name="approved_on" readonly="1" nolabel="1"/>.
+                        These figures are frozen — later accounting does not change them.
+                    </div>
+                    <group>
+                        <group string="Scope">
+                            <field name="project_id" readonly="state != 'draft'"/>
+                            <field name="as_of_date" readonly="state != 'draft'"/>
+                            <field name="currency_id" readonly="state != 'draft'"/>
+                            <field name="previous_forecast_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Outturn">
+                            <field name="total_current_budget"/>
+                            <field name="total_actual"/>
+                            <field name="total_etc"/>
+                            <field name="total_eac"/>
+                            <field name="total_forecast_variance"/>
+                            <field name="previous_eac"/>
+                            <field name="eac_movement"/>
+                        </group>
+                        <group string="Quality">
+                            <field name="forecast_coverage" widget="percentage"/>
+                            <field name="eac_is_complete"/>
+                            <field name="line_count_forecasted"/>
+                            <field name="line_count_missing"/>
+                            <field name="line_count_insufficient"/>
+                        </group>
+                        <group string="Governance">
+                            <field name="prepared_by_id"/>
+                            <field name="reviewed_by_id"/>
+                            <field name="approved_by_id"/>
+                            <field name="approved_on"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Forecast Lines">
+                            <field name="line_ids" readonly="state == 'approved'">
+                                <list editable="bottom"
+                                      decoration-warning="forecast_status == 'missing'"
+                                      decoration-danger="forecast_status == 'insufficient_data'">
+                                    <field name="cost_code_id" readonly="1"/>
+                                    <field name="wbs_id" optional="hide"/>
+                                    <field name="package_id" optional="hide"/>
+                                    <field name="current_budget" sum="Budget"/>
+                                    <field name="commitment_amount" sum="Commitment"/>
+                                    <field name="actual_amount" sum="Actual"/>
+                                    <field name="committed_remaining" optional="hide"/>
+                                    <field name="method"/>
+                                    <field name="manual_etc" optional="hide"/>
+                                    <field name="manual_reason" optional="hide"/>
+                                    <field name="progress_pct" optional="hide"/>
+                                    <field name="calculated_etc" optional="hide"/>
+                                    <field name="override_etc" optional="hide"/>
+                                    <field name="override_reason" optional="hide"/>
+                                    <field name="adjustment_total" optional="hide"/>
+                                    <field name="etc_amount" sum="ETC"/>
+                                    <field name="eac_amount" sum="EAC"/>
+                                    <field name="forecast_variance" sum="Variance"/>
+                                    <field name="uncommitted_etc" optional="hide"/>
+                                    <field name="forecast_status" widget="badge"
+                                           decoration-success="forecast_status == 'forecasted'"
+                                           decoration-warning="forecast_status == 'missing'"
+                                           decoration-danger="forecast_status == 'insufficient_data'"/>
+                                    <field name="status_reason" optional="hide"/>
+                                    <field name="has_etc" column_invisible="1"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <button name="action_drill_actual" type="object"
+                                            icon="fa-book" title="Posted cost"/>
+                                    <button name="action_drill_commitment" type="object"
+                                            icon="fa-shopping-cart" title="Commitment"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes"><field name="notes"/></page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_construction_forecast" model="ir.actions.act_window">
+        <field name="name">Forecasts</field>
+        <field name="res_model">realestate.construction.forecast</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

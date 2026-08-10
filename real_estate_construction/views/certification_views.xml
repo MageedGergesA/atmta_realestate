@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- ============ Settings ============ -->
+    <record id="view_construction_config_settings" model="ir.ui.view">
+        <field name="name">res.config.settings.construction</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='default_accounts']" position="after">
+                <block title="Construction Control Accounts" id="construction_control_accounts">
+                    <setting string="Contractor Retention"
+                             help="Liability holding retention withheld from payment certificates. Certificates refuse to post retention without it.">
+                        <field name="construction_retention_account_id"/>
+                    </setting>
+                    <setting string="Contractor Advances"
+                             help="Asset holding advances paid to contractors until they are recovered.">
+                        <field name="construction_advance_account_id"/>
+                    </setting>
+                    <setting string="Owner Retention Receivable"
+                             help="Asset holding retention the owner withholds from our progress billing.">
+                        <field name="construction_owner_retention_account_id"/>
+                    </setting>
+                    <setting string="Owner Advances Received"
+                             help="Liability holding advances received from the owner until recovered.">
+                        <field name="construction_owner_advance_account_id"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ============ Retention register ============ -->
+    <record id="view_retention_list" model="ir.ui.view">
+        <field name="name">realestate.construction.retention.list</field>
+        <field name="model">realestate.construction.retention</field>
+        <field name="arch" type="xml">
+            <list string="Retention Movements" create="0" edit="0"
+                  decoration-success="movement_type == 'release'">
+                <field name="date"/>
+                <field name="project_id"/>
+                <field name="side" widget="badge"/>
+                <field name="contractor_id"/>
+                <field name="partner_id" optional="hide"/>
+                <field name="package_id" optional="hide"/>
+                <field name="movement_type" widget="badge"/>
+                <field name="amount"/>
+                <field name="signed_amount" sum="Held"/>
+                <field name="certificate_id" optional="show"/>
+                <field name="release_id" optional="show"/>
+                <field name="move_id"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_retention" model="ir.actions.act_window">
+        <field name="name">Retention Register</field>
+        <field name="res_model">realestate.construction.retention</field>
+        <field name="view_mode">list</field>
+        <field name="context">{'search_default_group_contractor': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No retention has moved yet.</p>
+            <p>Retention appears here when a payment certificate withholds it,
+               and disappears when a release pays it back. The balance is the
+               sum of the movements — nothing recomputes it from percentages.</p>
+        </field>
+    </record>
+
+    <!-- ============ Retention release ============ -->
+    <record id="view_retention_release_list" model="ir.ui.view">
+        <field name="name">realestate.construction.retention.release.list</field>
+        <field name="model">realestate.construction.retention.release</field>
+        <field name="arch" type="xml">
+            <list string="Retention Releases">
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="side" widget="badge" optional="hide"/>
+                <field name="contractor_id"/>
+                <field name="partner_id" optional="hide"/>
+                <field name="stage"/>
+                <field name="release_date"/>
+                <field name="amount" sum="Released"/>
+                <field name="vendor_bill_id" optional="show"/>
+                <field name="state" widget="badge"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_retention_release_form" model="ir.ui.view">
+        <field name="name">realestate.construction.retention.release.form</field>
+        <field name="model">realestate.construction.retention.release</field>
+        <field name="arch" type="xml">
+            <form string="Retention Release">
+                <header>
+                    <button name="action_confirm" type="object"
+                            string="Release &amp; Bill" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state != 'draft'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirmed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name" readonly="1"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="project_id"/>
+                            <field name="side"/>
+                            <field name="contractor_id"
+                                   invisible="side != 'contractor'"
+                                   required="side == 'contractor'"/>
+                            <field name="partner_id"
+                                   invisible="side != 'owner'"
+                                   required="side == 'owner'"/>
+                            <field name="package_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="stage"/>
+                            <field name="release_date"/>
+                            <field name="held_amount"/>
+                            <field name="amount"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="vendor_bill_id" invisible="not vendor_bill_id"/>
+                            <field name="movement_id" invisible="not movement_id"/>
+                            <field name="approved_by_id" invisible="not approved_by_id"/>
+                        </group>
+                    </group>
+                    <field name="reason" placeholder="Why it is due now."/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_retention_release" model="ir.actions.act_window">
+        <field name="name">Retention Releases</field>
+        <field name="res_model">realestate.construction.retention.release</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ============ Advances ============ -->
+    <record id="view_advance_list" model="ir.ui.view">
+        <field name="name">realestate.construction.advance.list</field>
+        <field name="model">realestate.construction.advance</field>
+        <field name="arch" type="xml">
+            <list string="Advances" decoration-muted="is_fully_recovered">
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="side" widget="badge"/>
+                <field name="contractor_id"/>
+                <field name="partner_id" optional="hide"/>
+                <field name="advance_type"/>
+                <field name="advance_date"/>
+                <field name="amount" sum="Advanced"/>
+                <field name="recovered_amount" sum="Recovered"/>
+                <field name="outstanding_amount" sum="Outstanding"/>
+                <field name="recovery_pct" optional="hide"/>
+                <field name="guarantee_expiry" optional="show"/>
+                <field name="state" widget="badge"/>
+                <field name="is_fully_recovered" column_invisible="1"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_advance_form" model="ir.ui.view">
+        <field name="name">realestate.construction.advance.form</field>
+        <field name="model">realestate.construction.advance</field>
+        <field name="arch" type="xml">
+            <form string="Advance">
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_create_vendor_bill" type="object"
+                            string="Create Bill" class="btn-primary"
+                            invisible="state != 'confirmed'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('paid','recovered','cancelled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirmed,paid,recovered"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-info" role="status"
+                         invisible="state not in ('paid','confirmed')">
+                        An advance is an asset until it is recovered. It is not
+                        project cost and does not appear in the cost report.
+                    </div>
+                    <div class="oe_title"><h1><field name="name" readonly="1"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="project_id"/>
+                            <field name="side"/>
+                            <field name="contractor_id"
+                                   invisible="side != 'contractor'"
+                                   required="side == 'contractor'"/>
+                            <field name="partner_id"
+                                   invisible="side != 'owner'"
+                                   required="side == 'owner'"/>
+                            <field name="package_id"/>
+                            <field name="advance_type"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="advance_date"/>
+                            <field name="amount"/>
+                            <field name="recovery_pct"/>
+                            <field name="recovered_amount"/>
+                            <field name="outstanding_amount"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="vendor_bill_id" invisible="not vendor_bill_id"/>
+                        </group>
+                        <group string="Guarantee">
+                            <field name="guarantee_reference"/>
+                            <field name="guarantee_expiry"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Recovery">
+                            <field name="recovery_ids" readonly="1">
+                                <list>
+                                    <field name="certificate_id"/>
+                                    <field name="amount" sum="Recovered"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes"><field name="notes"/></page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_advance" model="ir.actions.act_window">
+        <field name="name">Advances</field>
+        <field name="res_model">realestate.construction.advance</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- ===================== RFI ===================== -->
+    <record id="view_rfi_list" model="ir.ui.view">
+        <field name="name">realestate.construction.rfi.list</field>
+        <field name="model">realestate.construction.rfi</field>
+        <field name="arch" type="xml">
+            <list string="RFIs" decoration-danger="is_overdue"
+                  decoration-muted="state in ('closed','void')">
+                <field name="name"/>
+                <field name="subject"/>
+                <field name="project_id"/>
+                <field name="package_id" optional="hide"/>
+                <field name="discipline" optional="show"/>
+                <field name="ball_in_court" widget="badge"/>
+                <field name="assigned_to_id" optional="show"/>
+                <field name="created_date" optional="hide"/>
+                <field name="required_response_date"/>
+                <field name="actual_response_date" optional="show"/>
+                <field name="overdue_days" optional="show"/>
+                <field name="response_time_days" optional="hide"/>
+                <field name="cost_impact" widget="badge"
+                       decoration-warning="cost_impact == 'potential'"/>
+                <field name="schedule_impact" optional="hide"/>
+                <field name="change_event_id" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'closed'"
+                       decoration-info="state == 'answered'"/>
+                <field name="is_overdue" column_invisible="1"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_rfi_form" model="ir.ui.view">
+        <field name="name">realestate.construction.rfi.form</field>
+        <field name="model">realestate.construction.rfi</field>
+        <field name="arch" type="xml">
+            <form string="RFI">
+                <header>
+                    <button name="action_open" type="object" string="Open"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_review" type="object" string="Under Review"
+                            invisible="state not in ('open','reopened')"/>
+                    <button name="action_answer" type="object" string="Record Answer"
+                            class="btn-primary"
+                            invisible="state not in ('open','under_review','reopened')"/>
+                    <button name="action_close" type="object" string="Close"
+                            invisible="state in ('draft','closed','void')"/>
+                    <button name="action_reopen" type="object" string="Reopen"
+                            invisible="state not in ('answered','closed')"/>
+                    <button name="action_create_change_event" type="object"
+                            string="Create Change Event" class="btn-secondary"
+                            invisible="change_event_id or state == 'draft'"/>
+                    <button name="action_void" type="object" string="Void"
+                            invisible="state in ('answered','closed','void')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,open,under_review,answered,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h2><field name="subject" placeholder="Slab thickness at grid C4"/></h2>
+                    </div>
+                    <div class="alert alert-info" role="status"
+                         invisible="cost_impact != 'potential'">
+                        A potential cost impact is an indication. It changes no budget,
+                        commitment or actual — use <strong>Create Change Event</strong>
+                        to start the commercial process.
+                    </div>
+                    <group>
+                        <group string="Where">
+                            <field name="project_id"/>
+                            <field name="package_id"/>
+                            <field name="wbs_id"/>
+                            <field name="cost_code_id"/>
+                            <field name="location"/>
+                            <field name="discipline"/>
+                            <field name="specification_reference"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Who and When">
+                            <field name="raised_by_id"/>
+                            <field name="originating_partner_id"/>
+                            <field name="contractor_id"/>
+                            <field name="assigned_to_id"/>
+                            <field name="reviewer_partner_id"/>
+                            <field name="ball_in_court"/>
+                            <field name="priority" widget="priority"/>
+                            <field name="created_date"/>
+                            <field name="submitted_date"/>
+                            <field name="required_response_date"/>
+                            <field name="actual_response_date"/>
+                            <field name="overdue_days"/>
+                        </group>
+                        <group string="Impact">
+                            <field name="cost_impact"/>
+                            <field name="estimated_cost_impact"/>
+                            <field name="schedule_impact"/>
+                            <field name="estimated_schedule_days"/>
+                            <field name="change_event_id"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Question"><field name="question"/></page>
+                        <page string="Official Response">
+                            <field name="official_response"
+                                   placeholder="The contractual answer. Comments belong in the chatter."/>
+                            <group>
+                                <field name="response_author_id"/>
+                                <field name="response_approved_by_id"/>
+                                <field name="closure_reason"
+                                       placeholder="Required only when closing without an answer"/>
+                            </group>
+                        </page>
+                        <page string="Referenced Revisions">
+                            <field name="document_revision_ids" readonly="1">
+                                <list>
+                                    <field name="document_number"/>
+                                    <field name="revision_code"/>
+                                    <field name="state"/>
+                                    <field name="purpose_of_issue"/>
+                                    <field name="revision_date"/>
+                                </list>
+                            </field>
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                        </page>
+                        <page string="Response History">
+                            <field name="response_history_ids" readonly="1">
+                                <list>
+                                    <field name="response_date"/>
+                                    <field name="author_id"/>
+                                    <field name="response"/>
+                                    <field name="revision_reason"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_rfi" model="ir.actions.act_window">
+        <field name="name">RFIs</field>
+        <field name="res_model">realestate.construction.rfi</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ===================== Documents ===================== -->
+    <record id="view_document_list" model="ir.ui.view">
+        <field name="name">realestate.construction.document.list</field>
+        <field name="model">realestate.construction.document</field>
+        <field name="arch" type="xml">
+            <list string="Document Register">
+                <field name="document_number"/>
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="document_type"/>
+                <field name="discipline"/>
+                <field name="package_id" optional="hide"/>
+                <field name="current_revision_code"/>
+                <field name="current_state" widget="badge"/>
+                <field name="current_approved_revision_id" optional="show"/>
+                <field name="current_issued_revision_id" optional="show"/>
+                <field name="revision_count" optional="hide"/>
+                <field name="owner_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_document_form" model="ir.ui.view">
+        <field name="name">realestate.construction.document.form</field>
+        <field name="model">realestate.construction.document</field>
+        <field name="arch" type="xml">
+            <form string="Controlled Document">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_revisions" type="object"
+                                class="oe_stat_button" icon="fa-history">
+                            <field name="revision_count" widget="statinfo"
+                                   string="Revisions"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="document_number" placeholder="A-ARC-DRG-1001"/></h1>
+                        <h2><field name="name" placeholder="Ground Floor Plan"/></h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id"/>
+                            <field name="package_id"/>
+                            <field name="wbs_id"/>
+                            <field name="document_type"/>
+                            <field name="discipline"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="originator"/>
+                            <field name="author_id"/>
+                            <field name="owner_id"/>
+                            <field name="contractor_id"/>
+                            <field name="confidentiality"/>
+                            <field name="active"/>
+                        </group>
+                        <group string="Current">
+                            <field name="current_revision_id"/>
+                            <field name="current_approved_revision_id"/>
+                            <field name="current_issued_revision_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Revisions">
+                            <field name="revision_ids">
+                                <list decoration-muted="state == 'superseded'"
+                                      decoration-success="state in ('approved','approved_with_comments')">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="revision_code"/>
+                                    <field name="name"/>
+                                    <field name="revision_date"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="purpose_of_issue"/>
+                                    <field name="file_version" optional="hide"/>
+                                    <field name="attachment_id" widget="many2one_binary"/>
+                                    <field name="approved_on" optional="hide"/>
+                                    <field name="superseded_by_id" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes"><field name="notes"/></page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_document" model="ir.actions.act_window">
+        <field name="name">Document Register</field>
+        <field name="res_model">realestate.construction.document</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_document_revision_list" model="ir.ui.view">
+        <field name="name">realestate.construction.document.revision.list</field>
+        <field name="model">realestate.construction.document.revision</field>
+        <field name="arch" type="xml">
+            <list string="Revision Register" create="false">
+                <field name="document_number"/>
+                <field name="document_id"/>
+                <field name="revision_code"/>
+                <field name="revision_date"/>
+                <field name="state" widget="badge"/>
+                <field name="purpose_of_issue"/>
+                <field name="file_version" optional="hide"/>
+                <field name="approved_on" optional="hide"/>
+                <field name="superseded_on" optional="hide"/>
+                <field name="uploaded_by_id" optional="hide"/>
+                <field name="project_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_document_revision" model="ir.actions.act_window">
+        <field name="name">Revision Register</field>
+        <field name="res_model">realestate.construction.document.revision</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ===================== Submittals ===================== -->
+    <record id="view_submittal_list" model="ir.ui.view">
+        <field name="name">realestate.construction.submittal.list</field>
+        <field name="model">realestate.construction.submittal</field>
+        <field name="arch" type="xml">
+            <list string="Submittals" decoration-danger="is_overdue"
+                  decoration-muted="state in ('closed','void')">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="project_id"/>
+                <field name="submittal_type"/>
+                <field name="package_id" optional="hide"/>
+                <field name="contractor_id"/>
+                <field name="specification_section" optional="hide"/>
+                <field name="current_revision_code"/>
+                <field name="required_submission_date" optional="show"/>
+                <field name="submitted_date" optional="show"/>
+                <field name="required_approval_date" optional="hide"/>
+                <field name="final_response_date" optional="hide"/>
+                <field name="review_overdue_days" optional="hide"/>
+                <field name="final_response" widget="badge"
+                       decoration-success="final_response in ('approved','approved_as_noted')"
+                       decoration-warning="final_response == 'revise_resubmit'"
+                       decoration-danger="final_response == 'rejected'"/>
+                <field name="state" widget="badge"/>
+                <field name="is_overdue" column_invisible="1"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_submittal_form" model="ir.ui.view">
+        <field name="name">realestate.construction.submittal.form</field>
+        <field name="model">realestate.construction.submittal</field>
+        <field name="arch" type="xml">
+            <form string="Submittal">
+                <header>
+                    <button name="action_require" type="object" string="Mark Required"
+                            invisible="state != 'draft'"/>
+                    <button name="action_submit" type="object" string="Submit"
+                            class="btn-primary"
+                            invisible="state not in ('draft','required','responded')"/>
+                    <button name="action_review" type="object" string="Under Review"
+                            invisible="state != 'submitted'"/>
+                    <button name="action_create_revision" type="object"
+                            string="Create Revision"
+                            invisible="state != 'responded'"/>
+                    <button name="action_close" type="object" string="Close"
+                            invisible="state != 'responded'"/>
+                    <button name="action_create_change_event" type="object"
+                            string="Create Change Event"
+                            invisible="change_event_id"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,required,submitted,under_review,responded,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h2><field name="title"/></h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id"/>
+                            <field name="package_id"/>
+                            <field name="submittal_package_id"/>
+                            <field name="wbs_id"/>
+                            <field name="submittal_type"/>
+                            <field name="discipline"/>
+                            <field name="specification_section"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="contractor_id"/>
+                            <field name="contractor_partner_id"/>
+                            <field name="manager_id"/>
+                            <field name="required_submission_date"/>
+                            <field name="submitted_date"/>
+                            <field name="required_approval_date"/>
+                            <field name="final_response_date"/>
+                            <field name="final_response"/>
+                            <field name="change_event_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Revisions">
+                            <field name="revision_ids" readonly="1">
+                                <list decoration-muted="not is_current">
+                                    <field name="revision_code"/>
+                                    <field name="state"/>
+                                    <field name="document_revision_id"/>
+                                    <field name="submitted_date"/>
+                                    <field name="response" widget="badge"/>
+                                    <field name="response_date"/>
+                                    <field name="responded_by_id"/>
+                                    <field name="response_comments"/>
+                                    <field name="reviews_responded" optional="hide"/>
+                                    <field name="reviews_required" optional="hide"/>
+                                    <field name="is_current" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Description"><field name="description"/></page>
+                        <page string="Distribution">
+                            <field name="distribution_partner_ids" widget="many2many_tags"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_submittal" model="ir.actions.act_window">
+        <field name="name">Submittals</field>
+        <field name="res_model">realestate.construction.submittal</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ===================== Transmittals ===================== -->
+    <record id="view_transmittal_list" model="ir.ui.view">
+        <field name="name">realestate.construction.transmittal.list</field>
+        <field name="model">realestate.construction.transmittal</field>
+        <field name="arch" type="xml">
+            <list string="Transmittals" decoration-danger="is_acknowledgement_overdue">
+                <field name="name"/>
+                <field name="subject"/>
+                <field name="project_id"/>
+                <field name="sender_id"/>
+                <field name="recipient_partner_ids" widget="many2many_tags"/>
+                <field name="purpose"/>
+                <field name="sent_date"/>
+                <field name="document_count"/>
+                <field name="response_due_date" optional="hide"/>
+                <field name="acknowledged_date" optional="show"/>
+                <field name="acknowledgement_overdue_days" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state in ('acknowledged','closed')"/>
+                <field name="is_acknowledgement_overdue" column_invisible="1"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_transmittal_form" model="ir.ui.view">
+        <field name="name">realestate.construction.transmittal.form</field>
+        <field name="model">realestate.construction.transmittal</field>
+        <field name="arch" type="xml">
+            <form string="Transmittal">
+                <header>
+                    <button name="action_ready" type="object" string="Ready"
+                            invisible="state != 'draft'"/>
+                    <button name="action_send" type="object" string="Send"
+                            class="btn-primary" invisible="state not in ('draft','ready')"/>
+                    <button name="action_acknowledge" type="object"
+                            string="Record Acknowledgement" invisible="state != 'sent'"/>
+                    <button name="action_close" type="object" string="Close"
+                            invisible="state not in ('sent','acknowledged')"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('sent','acknowledged','closed','cancelled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,ready,sent,acknowledged,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h2><field name="subject"/></h2>
+                    </div>
+                    <div class="alert alert-info" role="status" invisible="state != 'sent'">
+                        This transmittal records exactly what was sent. Its lines are
+                        frozen — issue another transmittal for a later revision.
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id"/>
+                            <field name="package_id"/>
+                            <field name="sender_id"/>
+                            <field name="sender_partner_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="recipient_partner_ids" widget="many2many_tags"/>
+                            <field name="copy_partner_ids" widget="many2many_tags"/>
+                            <field name="purpose"/>
+                            <field name="sent_date"/>
+                            <field name="response_requested"/>
+                            <field name="response_due_date"/>
+                            <field name="acknowledgement_required"/>
+                            <field name="acknowledged_date"/>
+                            <field name="acknowledged_by_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Documents">
+                            <field name="line_ids" readonly="state in ('sent','acknowledged','closed')">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="document_revision_id"/>
+                                    <field name="document_number" readonly="1"/>
+                                    <field name="document_title" readonly="1"/>
+                                    <field name="revision_code" readonly="1"/>
+                                    <field name="revision_status" readonly="1" optional="hide"/>
+                                    <field name="purpose_of_issue" readonly="1" optional="hide"/>
+                                    <field name="copies"/>
+                                    <field name="notes"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Remarks"><field name="message"/></page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_transmittal" model="ir.actions.act_window">
+        <field name="name">Transmittals</field>
+        <field name="res_model">realestate.construction.transmittal</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

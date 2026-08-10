@@ -46,7 +46,17 @@ class Milestone(models.Model):
         ('completed', 'Completed'),
         ('delayed', 'Delayed'),
         ('cancelled', 'Cancelled'),
-    ], default='not_started', tracking=True, required=True, compute='_compute_state', store=True, readonly=False)
+    ],
+        # KNOWN BEHAVIOUR, deliberately unchanged at freeze. `default=` on an
+        # editable computed field means every create() supplies a value, so
+        # `_compute_state` does not run at creation: a milestone created
+        # already past its expected end date reads 'Not Started' until a
+        # dependency is next written. Removing the default makes the column
+        # NULL on records created before any dependency exists, which is a
+        # behavioural change too large to take during a freeze. Recorded in
+        # IMPLEMENTATION_REPORT.md under Known deferred defects.
+        default='not_started', tracking=True, required=True,
+        compute='_compute_state', store=True, readonly=False)
 
     contractor_id = fields.Many2one('realestate.contractor', string='Contractor', tracking=True)
     budget_amount = fields.Monetary(string='Budgeted Cost', tracking=True)
@@ -102,8 +112,15 @@ class Milestone(models.Model):
 
     @api.depends('completion_percentage', 'expected_end_date', 'actual_end_date')
     def _compute_state(self):
-        today = fields.Date.today()
+        # `context_today`, not `today`. Every deployment this runs in is ahead
+        # of UTC, so for the last hours of each local day the two disagree —
+        # and a milestone due yesterday was not being marked delayed until UTC
+        # caught up. The stored value therefore reflects the timezone of
+        # whoever triggers the recompute, which for a site milestone is the
+        # right answer and is why the comparison lives here rather than in a
+        # nightly job.
         for rec in self:
+            today = fields.Date.context_today(rec)
             # Only re-compute if not manually overridden via cancelled
             if rec.state == 'cancelled':
                 continue
@@ -214,7 +231,7 @@ class Milestone(models.Model):
                     "Cannot start '%s' — these predecessors are not yet started: %s"
                 ) % (rec.name, ', '.join(unfinished.mapped('name'))))
             rec.write({
-                'actual_start_date': fields.Date.today(),
+                'actual_start_date': fields.Date.context_today(rec),
                 'completion_percentage': max(rec.completion_percentage, 1.0),
             })
 
@@ -222,7 +239,7 @@ class Milestone(models.Model):
         for rec in self:
             rec.write({
                 'completion_percentage': 100.0,
-                'actual_end_date': fields.Date.today(),
+                'actual_end_date': fields.Date.context_today(rec),
             })
 
     def action_cancel(self):

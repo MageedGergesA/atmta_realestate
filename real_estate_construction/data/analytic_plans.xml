@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!--
+      Two plans, referenced rather than searched.
+
+      The module previously took `Plan.search([], limit=1)` — whichever plan
+      sorted first, which on a database with a "Departments" plan filed every
+      project cost centre under Departments. A plan the code can name by xml id
+      cannot be picked wrongly.
+
+      `noupdate` so that renaming them in production is a local decision and a
+      module upgrade does not undo it.
+    -->
+    <record id="analytic_plan_re_projects" model="account.analytic.plan">
+        <field name="name">Real Estate Projects</field>
+    </record>
+
+    <record id="analytic_plan_cost_codes" model="account.analytic.plan">
+        <field name="name">Construction Cost Codes</field>
+    </record>
+</odoo>

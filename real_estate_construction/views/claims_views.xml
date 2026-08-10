@@ -1,0 +1,905 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- ================= Delay events ================= -->
+    <record id="view_delay_event_list" model="ir.ui.view">
+        <field name="name">realestate.construction.delay.event.list</field>
+        <field name="model">realestate.construction.delay.event</field>
+        <field name="arch" type="xml">
+            <list string="Delay Register" decoration-warning="is_ongoing"
+                  decoration-muted="state in ('closed','void')">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="project_id"/>
+                <field name="package_id" optional="show"/>
+                <field name="contractor_id" optional="hide"/>
+                <field name="event_type"/>
+                <field name="cause_category" widget="badge"
+                       decoration-muted="cause_category == 'undetermined'"/>
+                <field name="start_date"/>
+                <field name="end_date" optional="show"/>
+                <field name="is_ongoing"/>
+                <field name="estimated_delay_days" sum="Estimated days"/>
+                <field name="daily_record_count" optional="show"/>
+                <field name="claim_count" optional="show"/>
+                <field name="state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_delay_event_form" model="ir.ui.view">
+        <field name="name">realestate.construction.delay.event.form</field>
+        <field name="model">realestate.construction.delay.event</field>
+        <field name="arch" type="xml">
+            <form string="Delay Event">
+                <header>
+                    <button name="action_open" type="object" string="Open"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_monitor" type="object" string="Monitor"
+                            invisible="state != 'open'"/>
+                    <button name="action_end" type="object" string="Mark Ended"
+                            invisible="state not in ('open','monitoring')"/>
+                    <button name="action_assess" type="object" string="Assess"
+                            invisible="state not in ('open','monitoring','ended')"/>
+                    <button name="action_create_notice" type="object"
+                            string="Raise Notice"
+                            invisible="state in ('draft','void')"/>
+                    <button name="action_create_claim" type="object"
+                            string="Raise Claim"
+                            groups="real_estate_construction.group_construction_commercial"
+                            invisible="state in ('draft','void')"/>
+                    <button name="action_close" type="object" string="Close"
+                            invisible="state in ('draft','closed','void')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,open,monitoring,ended,assessed,closed"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-info" role="status">
+                        A delay event is a record of what happened. It grants no
+                        extension and admits no liability — the event type says
+                        what occurred, not who is responsible for it.
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h2><field name="title"/></h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id"/>
+                            <field name="package_id"/>
+                            <field name="contractor_id"/>
+                            <field name="wbs_id"/>
+                            <field name="location"/>
+                            <field name="affected_work"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="event_type"/>
+                            <field name="cause_category"/>
+                            <field name="responsible_party"/>
+                            <field name="start_date"/>
+                            <field name="is_ongoing"/>
+                            <field name="end_date" invisible="is_ongoing"/>
+                            <field name="duration_days" readonly="1"/>
+                        </group>
+                        <group string="Notice and discovery">
+                            <field name="discovered_on"/>
+                            <field name="notified_on"/>
+                            <field name="raised_by_id"/>
+                            <field name="assigned_to_id"/>
+                        </group>
+                        <group string="Impact (estimated)">
+                            <field name="estimated_delay_days"/>
+                            <field name="estimated_cost_impact"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="schedule_activity_ref"/>
+                            <field name="schedule_reference"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description"><field name="description"/></page>
+                        <page string="Evidence">
+                            <field name="daily_delay_ids" readonly="1">
+                                <list>
+                                    <field name="report_id"/>
+                                    <field name="category"/>
+                                    <field name="description"/>
+                                    <field name="estimated_days"/>
+                                </list>
+                            </field>
+                            <group>
+                                <field name="rfi_ids" widget="many2many_tags"/>
+                                <field name="ncr_ids" widget="many2many_tags"/>
+                                <field name="change_event_ids" widget="many2many_tags"/>
+                            </group>
+                        </page>
+                        <page string="Notices">
+                            <field name="notice_ids" readonly="1"/>
+                        </page>
+                        <page string="Notes"><field name="notes"/></page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_delay_event_graph" model="ir.ui.view">
+        <field name="name">realestate.construction.delay.event.graph</field>
+        <field name="model">realestate.construction.delay.event</field>
+        <field name="arch" type="xml">
+            <graph string="Delay Events" type="bar">
+                <field name="event_type"/>
+                <field name="estimated_delay_days" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_delay_event" model="ir.actions.act_window">
+        <field name="name">Delay Register</field>
+        <field name="res_model">realestate.construction.delay.event</field>
+        <field name="view_mode">list,form,graph</field>
+    </record>
+
+    <!-- ================= Notices ================= -->
+    <record id="view_notice_list" model="ir.ui.view">
+        <field name="name">realestate.construction.notice.list</field>
+        <field name="model">realestate.construction.notice</field>
+        <field name="arch" type="xml">
+            <list string="Notices" decoration-danger="status in ('late','overdue')"
+                  decoration-warning="status == 'due_soon'">
+                <field name="name"/>
+                <field name="notice_type"/>
+                <field name="project_id"/>
+                <field name="package_id" optional="show"/>
+                <field name="delay_event_id" optional="show"/>
+                <field name="clause_reference" optional="hide"/>
+                <field name="awareness_date"/>
+                <field name="deadline_date"/>
+                <field name="notice_date"/>
+                <field name="days_taken" optional="hide"/>
+                <field name="status" widget="badge"/>
+                <field name="transmittal_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_notice_form" model="ir.ui.view">
+        <field name="name">realestate.construction.notice.form</field>
+        <field name="model">realestate.construction.notice</field>
+        <field name="arch" type="xml">
+            <form string="Notice">
+                <header>
+                    <button name="action_issue" type="object" string="Mark Issued"
+                            class="btn-primary" invisible="notice_date"/>
+                    <button name="action_acknowledge" type="object"
+                            string="Acknowledged"
+                            invisible="not notice_date or acknowledged"/>
+                    <button name="action_dispute" type="object" string="Disputed"
+                            invisible="not notice_date or disputed"/>
+                    <field name="status" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-warning" role="status"
+                         invisible="not deadline_warning">
+                        <field name="deadline_warning" readonly="1" nolabel="1"/>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h2><field name="title" placeholder="Subject"/></h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id"/>
+                            <field name="package_id"/>
+                            <field name="notice_type"/>
+                            <field name="clause_reference"/>
+                            <field name="delay_event_id"/>
+                            <field name="claim_id"
+                                   groups="real_estate_construction.group_construction_commercial"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="trigger_date"/>
+                            <field name="awareness_date"/>
+                            <field name="has_deadline" invisible="1"/>
+                            <field name="deadline_date" readonly="1"/>
+                            <field name="notice_date"/>
+                            <field name="days_taken" readonly="1"
+                                   invisible="not notice_date"/>
+                            <field name="is_late" readonly="1"/>
+                        </group>
+                        <group string="Issue">
+                            <field name="issued_by_id"/>
+                            <field name="issued_to_partner_id"/>
+                            <field name="method"/>
+                            <field name="transmittal_id"/>
+                            <field name="document_revision_id"/>
+                        </group>
+                        <group string="Response">
+                            <field name="acknowledged"/>
+                            <field name="acknowledged_on"/>
+                            <field name="acknowledgement_reference"/>
+                            <field name="disputed"/>
+                            <field name="dispute_reason" invisible="not disputed"/>
+                        </group>
+                    </group>
+                    <field name="comments"/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_notice" model="ir.actions.act_window">
+        <field name="name">Notices</field>
+        <field name="res_model">realestate.construction.notice</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ================= Claims ================= -->
+    <record id="view_claim_list" model="ir.ui.view">
+        <field name="name">realestate.construction.claim.list</field>
+        <field name="model">realestate.construction.claim</field>
+        <field name="arch" type="xml">
+            <list string="Claim Register" decoration-danger="has_late_notice"
+                  decoration-muted="state in ('closed','withdrawn','cancelled')">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="side" widget="badge"/>
+                <field name="claim_type"/>
+                <field name="project_id"/>
+                <field name="package_id" optional="show"/>
+                <field name="contractor_id" optional="hide"/>
+                <field name="notice_status" optional="show"/>
+                <field name="revision" optional="show"/>
+                <field name="claimed_cost" sum="Claimed"/>
+                <field name="assessed_cost" sum="Assessed"
+                       groups="real_estate_construction.group_construction_commercial"/>
+                <field name="determined_cost" sum="Determined"/>
+                <field name="settled_cost" sum="Settled" optional="hide"/>
+                <field name="claimed_days" sum="Claimed days"/>
+                <field name="determined_days" sum="Determined days"/>
+                <field name="age_days" optional="show"/>
+                <field name="reviewer_id" optional="show"/>
+                <field name="state" widget="badge"/>
+                <field name="has_late_notice" column_invisible="1"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_claim_form" model="ir.ui.view">
+        <field name="name">realestate.construction.claim.form</field>
+        <field name="model">realestate.construction.claim</field>
+        <field name="arch" type="xml">
+            <form string="Claim">
+                <header>
+                    <button name="action_prepare" type="object" string="Prepare"
+                            invisible="state not in ('draft','notice')"/>
+                    <button name="action_submit" type="object" string="Submit"
+                            class="btn-primary"
+                            invisible="state in ('submitted','under_review','assessed','determination_pending','determined','settlement','closed','rejected','withdrawn','cancelled')"/>
+                    <button name="action_review" type="object" string="Review"
+                            invisible="state != 'submitted'"/>
+                    <button name="action_assess" type="object" string="Assess"
+                            invisible="state not in ('submitted','under_review')"/>
+                    <button name="action_request_determination" type="object"
+                            string="Request Determination"
+                            invisible="state != 'assessed'"/>
+                    <button name="action_create_eot" type="object"
+                            string="Raise EOT"
+                            invisible="not package_id or state in ('draft','closed')"/>
+                    <button name="action_create_change_order" type="object"
+                            string="Create Change Order"
+                            invisible="change_order_id or state not in ('determined','settlement')"/>
+                    <button name="action_settle" type="object" string="Settle"
+                            invisible="state not in ('determined','disputed')"/>
+                    <button name="action_dispute" type="object" string="Dispute"
+                            invisible="state not in ('determined','settlement','rejected')"/>
+                    <button name="action_reject" type="object" string="Reject"
+                            invisible="state in ('closed','cancelled','rejected')"/>
+                    <button name="action_close" type="object" string="Close"
+                            invisible="state not in ('determined','settlement','rejected','withdrawn','disputed')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,submitted,under_review,assessed,determined,settlement,closed"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-warning" role="status"
+                         invisible="not has_late_notice">
+                        A notice on this claim was issued after the deadline
+                        configured on its contract. That is a fact about a date.
+                        Whether it affects entitlement is for the contract, the
+                        governing law and the determination.
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h2><field name="title"/></h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id"/>
+                            <field name="package_id"/>
+                            <field name="contractor_id"/>
+                            <field name="side"/>
+                            <field name="claim_type"/>
+                            <field name="clause_reference"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="claimant_partner_id"/>
+                            <field name="respondent_partner_id"/>
+                            <field name="event_date"/>
+                            <field name="first_notice_date" readonly="1"/>
+                            <field name="submission_date"/>
+                            <field name="response_due_date"/>
+                            <field name="reviewer_id"/>
+                            <field name="determination_authority_id"/>
+                        </group>
+                        <group string="Money — every stage kept">
+                            <field name="estimated_exposure"/>
+                            <field name="cost_claimed_known"/>
+                            <field name="claimed_cost"/>
+                            <field name="assessed_cost"
+                                   groups="real_estate_construction.group_construction_commercial"/>
+                            <field name="determined_cost" readonly="1"/>
+                            <field name="settled_cost" readonly="1"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group string="Time — every stage kept">
+                            <field name="claimed_days"/>
+                            <field name="assessed_days"
+                                   groups="real_estate_construction.group_construction_commercial"/>
+                            <field name="determined_days" readonly="1"/>
+                            <field name="settled_days" readonly="1"/>
+                            <field name="change_order_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Cause">
+                            <field name="description"/>
+                            <group>
+                                <field name="delay_event_ids" widget="many2many_tags"/>
+                                <field name="change_event_ids" widget="many2many_tags"/>
+                                <field name="rfi_ids" widget="many2many_tags"/>
+                                <field name="ncr_ids" widget="many2many_tags"/>
+                            </group>
+                        </page>
+                        <page string="Submissions">
+                            <field name="submission_ids">
+                                <list editable="bottom" decoration-muted="state == 'superseded'">
+                                    <field name="revision" readonly="1"/>
+                                    <field name="submission_date"/>
+                                    <field name="claimed_cost"/>
+                                    <field name="claimed_days"/>
+                                    <field name="is_final"/>
+                                    <field name="document_revision_id"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <button name="action_issue" type="object"
+                                            string="Issue" icon="fa-paper-plane"
+                                            invisible="state != 'draft'"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Quantum">
+                            <field name="cost_line_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="category"/>
+                                    <field name="description"/>
+                                    <field name="wbs_id" optional="hide"/>
+                                    <field name="cost_code_id"/>
+                                    <field name="period_start" optional="hide"/>
+                                    <field name="period_end" optional="hide"/>
+                                    <field name="quantity"/>
+                                    <field name="uom_id" optional="hide"/>
+                                    <field name="rate"/>
+                                    <field name="amount" sum="Amount"/>
+                                    <field name="claimed_amount" sum="Claimed"/>
+                                    <field name="assessed_amount" sum="Assessed"
+                                           groups="real_estate_construction.group_construction_commercial"/>
+                                    <field name="determined_amount" sum="Determined"/>
+                                    <field name="uses_actual_cost"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                            <p class="text-muted">
+                                Tax-exclusive, like every control figure here.
+                                Citing posted actual cost is evidence of spend —
+                                somebody still has to decide it is recoverable.
+                            </p>
+                        </page>
+                        <page string="Evidence">
+                            <field name="evidence_ids">
+                                <list editable="bottom">
+                                    <field name="category"/>
+                                    <field name="record_ref"/>
+                                    <field name="reference" readonly="1"/>
+                                    <field name="revision_label" readonly="1"/>
+                                    <field name="record_date"/>
+                                    <field name="relevance"/>
+                                </list>
+                            </field>
+                            <p class="text-muted">
+                                Records are referenced, never copied, and the
+                                revision cited is pinned at the moment of citing.
+                            </p>
+                        </page>
+                        <page string="Chronology">
+                            <field name="chronology_html" readonly="1" nolabel="1"/>
+                        </page>
+                        <page string="Notices">
+                            <field name="notice_ids"/>
+                        </page>
+                        <page string="Determination">
+                            <field name="determination_ids">
+                                <list decoration-muted="state == 'superseded'">
+                                    <field name="name"/>
+                                    <field name="determination_date"/>
+                                    <field name="authority_id"/>
+                                    <field name="authority_role"/>
+                                    <field name="determined_cost"/>
+                                    <field name="determined_days"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <button name="action_issue" type="object"
+                                            string="Issue" icon="fa-gavel"
+                                            invisible="state != 'draft'"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Time Impact">
+                            <group>
+                                <field name="schedule_method"/>
+                                <field name="schedule_analyst"/>
+                                <field name="schedule_reference"/>
+                                <field name="analysis_document_revision_id"/>
+                            </group>
+                            <field name="schedule_conclusion"/>
+                            <field name="eot_ids" readonly="1"/>
+                            <p class="text-muted">
+                                ATMTA stores the method and the analyst's
+                                conclusion. It does not run delay analysis and
+                                does not schedule.
+                            </p>
+                        </page>
+                        <page string="Narrative">
+                            <field name="cause_and_effect" placeholder="Cause and effect"/>
+                            <field name="mitigation_narrative" placeholder="Mitigation"/>
+                            <field name="relief_sought" placeholder="Relief sought"/>
+                        </page>
+                        <page string="Commercial (restricted)"
+                              groups="real_estate_construction.group_construction_commercial">
+                            <field name="contractual_basis" placeholder="Contractual basis"/>
+                            <field name="internal_position"
+                                   placeholder="Internal position and strategy"/>
+                        </page>
+                        <page string="Dispute" invisible="not dispute_reason">
+                            <group>
+                                <field name="disputed_cost" readonly="1"/>
+                                <field name="disputed_days" readonly="1"/>
+                                <field name="dispute_document_revision_id"/>
+                                <field name="next_action"/>
+                            </group>
+                            <field name="dispute_reason"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_claim_pivot" model="ir.ui.view">
+        <field name="name">realestate.construction.claim.pivot</field>
+        <field name="model">realestate.construction.claim</field>
+        <field name="arch" type="xml">
+            <pivot string="Claims">
+                <field name="claim_type" type="row"/>
+                <field name="state" type="col"/>
+                <field name="claimed_cost" type="measure"/>
+                <field name="determined_cost" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_claim_graph" model="ir.ui.view">
+        <field name="name">realestate.construction.claim.graph</field>
+        <field name="model">realestate.construction.claim</field>
+        <field name="arch" type="xml">
+            <graph string="Claims" type="bar">
+                <field name="claim_type"/>
+                <field name="claimed_cost" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_claim" model="ir.actions.act_window">
+        <field name="name">Claim Register</field>
+        <field name="res_model">realestate.construction.claim</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <!-- ================= EOT ================= -->
+    <record id="view_eot_list" model="ir.ui.view">
+        <field name="name">realestate.construction.eot.list</field>
+        <field name="model">realestate.construction.eot</field>
+        <field name="arch" type="xml">
+            <list string="EOT Register"
+                  decoration-success="state == 'implemented'"
+                  decoration-muted="state in ('rejected','withdrawn','superseded')">
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="package_id"/>
+                <field name="claim_id"/>
+                <field name="claimed_days" sum="Claimed"/>
+                <field name="assessed_days" sum="Assessed"
+                       groups="real_estate_construction.group_construction_commercial"/>
+                <field name="determined_days" sum="Determined"/>
+                <field name="original_completion_date" optional="show"/>
+                <field name="completion_date_before" optional="hide"/>
+                <field name="completion_date_after" optional="show"/>
+                <field name="determination_date"/>
+                <field name="is_correction" optional="hide"/>
+                <field name="state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_eot_form" model="ir.ui.view">
+        <field name="name">realestate.construction.eot.form</field>
+        <field name="model">realestate.construction.eot</field>
+        <field name="arch" type="xml">
+            <form string="Extension of Time">
+                <header>
+                    <button name="action_assess" type="object" string="Assess"
+                            invisible="state != 'draft'"/>
+                    <button name="action_determine" type="object"
+                            string="Determine" class="btn-primary"
+                            invisible="state not in ('draft','assessed')"/>
+                    <button name="action_implement" type="object"
+                            string="Implement" class="btn-primary"
+                            invisible="state != 'determined'"/>
+                    <button name="action_reject" type="object" string="Reject"
+                            invisible="state in ('implemented','rejected')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,assessed,determined,implemented"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-info" role="status"
+                         invisible="state == 'implemented'">
+                        Determined days do not move the contract date. Implementing
+                        does, and only the current date — the original completion
+                        date is what the parties agreed and never changes.
+                    </div>
+                    <div class="oe_title"><h1><field name="name" readonly="1"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="project_id"/>
+                            <field name="package_id"/>
+                            <field name="claim_id"/>
+                            <field name="delay_event_ids" widget="many2many_tags"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="claimed_days"/>
+                            <field name="assessed_days"
+                                   groups="real_estate_construction.group_construction_commercial"/>
+                            <field name="determined_days"/>
+                            <field name="determination_date"/>
+                            <field name="effective_date"/>
+                            <field name="authority_id"/>
+                            <field name="is_correction" readonly="1"/>
+                        </group>
+                        <group string="Contract dates">
+                            <field name="original_completion_date" readonly="1"/>
+                            <field name="completion_date_before" readonly="1"/>
+                            <field name="completion_date_after" readonly="1"/>
+                        </group>
+                        <group string="Analysis">
+                            <field name="analysis_method"/>
+                            <field name="schedule_reference"/>
+                            <field name="analysis_document_revision_id"/>
+                            <field name="document_revision_id"/>
+                            <field name="transmittal_id"/>
+                        </group>
+                    </group>
+                    <field name="reason" placeholder="Reasons for the determination"/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_eot" model="ir.actions.act_window">
+        <field name="name">EOT Register</field>
+        <field name="res_model">realestate.construction.eot</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ================= Risk ================= -->
+    <record id="view_risk_list" model="ir.ui.view">
+        <field name="name">realestate.construction.risk.list</field>
+        <field name="model">realestate.construction.risk</field>
+        <field name="arch" type="xml">
+            <list string="Risk Register"
+                  decoration-danger="severity == 'critical'"
+                  decoration-warning="severity == 'high'"
+                  decoration-muted="state in ('closed','materialised')">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="project_id"/>
+                <field name="category"/>
+                <field name="owner_id"/>
+                <field name="probability"/>
+                <field name="overall_impact"/>
+                <field name="inherent_score"/>
+                <field name="severity" widget="badge"/>
+                <field name="has_mitigation"/>
+                <field name="residual_score" optional="show"/>
+                <field name="mitigation_due_date" optional="show"/>
+                <field name="overdue_action_count" optional="show"/>
+                <field name="cost_exposure_likely" sum="Identified exposure"/>
+                <field name="include_in_forecast"/>
+                <field name="issue_id" optional="show"/>
+                <field name="state" widget="badge"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_risk_form" model="ir.ui.view">
+        <field name="name">realestate.construction.risk.form</field>
+        <field name="model">realestate.construction.risk</field>
+        <field name="arch" type="xml">
+            <form string="Risk">
+                <header>
+                    <button name="action_assess" type="object" string="Assess"
+                            invisible="state != 'identified'"/>
+                    <button name="action_plan_response" type="object"
+                            string="Plan Response"
+                            invisible="state not in ('identified','assessed')"/>
+                    <button name="action_monitor" type="object" string="Monitor"
+                            invisible="state not in ('assessed','response_planned')"/>
+                    <button name="action_materialise" type="object"
+                            string="Materialise into Issue" class="btn-primary"
+                            invisible="state in ('materialised','closed')"/>
+                    <button name="action_include_in_forecast" type="object"
+                            string="Include in Forecast"
+                            invisible="include_in_forecast or state == 'closed'"/>
+                    <button name="action_close" type="object" string="Close"
+                            invisible="state in ('closed','materialised')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="identified,assessed,response_planned,monitoring,closed"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-info" role="status"
+                         invisible="state != 'materialised'">
+                        This risk came true and is kept as the record that it was
+                        foreseen. Close the issue it became, not the risk.
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h2><field name="title"/></h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id"/>
+                            <field name="package_id"/>
+                            <field name="wbs_id"/>
+                            <field name="cost_code_id"/>
+                            <field name="category"/>
+                            <field name="owner_id"/>
+                            <field name="identified_on"/>
+                            <field name="identified_by_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Assessment">
+                            <field name="probability"/>
+                            <field name="cost_impact_score"/>
+                            <field name="schedule_impact_score"/>
+                            <field name="quality_impact_score"/>
+                            <field name="overall_impact" readonly="1"/>
+                            <field name="inherent_score" readonly="1"/>
+                            <field name="management_rating"/>
+                            <field name="severity" readonly="1" widget="badge"/>
+                        </group>
+                        <group string="Exposure">
+                            <field name="cost_exposure_min"/>
+                            <field name="cost_exposure_likely"/>
+                            <field name="cost_exposure_max"/>
+                            <field name="schedule_exposure_days"/>
+                            <field name="include_in_forecast" readonly="1"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group string="Residual">
+                            <field name="response_strategy"/>
+                            <field name="residual_probability"/>
+                            <field name="residual_impact"/>
+                            <field name="residual_score" readonly="1"/>
+                            <field name="trigger"/>
+                            <field name="review_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                            <group>
+                                <field name="cause"/>
+                                <field name="consequence"/>
+                            </group>
+                        </page>
+                        <page string="Mitigation">
+                            <field name="mitigation_plan"/>
+                            <group>
+                                <field name="mitigation_owner_id"/>
+                                <field name="mitigation_due_date"/>
+                            </group>
+                            <field name="action_ids">
+                                <list editable="bottom" decoration-danger="is_overdue">
+                                    <field name="name"/>
+                                    <field name="owner_id"/>
+                                    <field name="due_date"/>
+                                    <field name="state"/>
+                                    <field name="effectiveness"/>
+                                    <field name="completed_on" readonly="1"/>
+                                    <field name="is_overdue" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Materialisation" invisible="state != 'materialised'">
+                            <group>
+                                <field name="issue_id" readonly="1"/>
+                                <field name="materialised_on" readonly="1"/>
+                            </group>
+                            <field name="materialised_snapshot" readonly="1"/>
+                            <field name="change_event_ids" widget="many2many_tags"
+                                   readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_risk_pivot" model="ir.ui.view">
+        <field name="name">realestate.construction.risk.pivot</field>
+        <field name="model">realestate.construction.risk</field>
+        <field name="arch" type="xml">
+            <pivot string="Risk Heat">
+                <field name="probability" type="row"/>
+                <field name="overall_impact" type="col"/>
+                <field name="cost_exposure_likely" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_risk" model="ir.actions.act_window">
+        <field name="name">Risk Register</field>
+        <field name="res_model">realestate.construction.risk</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+
+    <!-- ================= Issues ================= -->
+    <record id="view_issue_list" model="ir.ui.view">
+        <field name="name">realestate.construction.issue.list</field>
+        <field name="model">realestate.construction.issue</field>
+        <field name="arch" type="xml">
+            <list string="Issue Register" decoration-danger="is_overdue"
+                  decoration-muted="state in ('closed','cancelled')">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="project_id"/>
+                <field name="category"/>
+                <field name="owner_id"/>
+                <field name="priority" widget="badge"
+                       decoration-danger="priority == 'critical'"/>
+                <field name="opened_on"/>
+                <field name="due_date"/>
+                <field name="age_days"/>
+                <field name="source_risk_id" optional="show"/>
+                <field name="change_event_id" optional="show"/>
+                <field name="claim_id" optional="hide"
+                       groups="real_estate_construction.group_construction_commercial"/>
+                <field name="escalation_level" optional="hide"/>
+                <field name="state" widget="badge"/>
+                <field name="is_overdue" column_invisible="1"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_issue_form" model="ir.ui.view">
+        <field name="name">realestate.construction.issue.form</field>
+        <field name="model">realestate.construction.issue</field>
+        <field name="arch" type="xml">
+            <form string="Issue">
+                <header>
+                    <button name="action_start" type="object" string="Start"
+                            class="btn-primary" invisible="state != 'open'"/>
+                    <button name="action_block" type="object" string="Blocked"
+                            invisible="state not in ('open','actioning')"/>
+                    <button name="action_ready_to_close" type="object"
+                            string="Ready to Close"
+                            invisible="state not in ('actioning','blocked')"/>
+                    <button name="action_close" type="object" string="Close"
+                            invisible="state in ('closed','cancelled')"/>
+                    <button name="action_escalate" type="object" string="Escalate"
+                            invisible="state in ('closed','cancelled')"/>
+                    <button name="action_create_change_event" type="object"
+                            string="Create Change Event"
+                            invisible="change_event_id"/>
+                    <button name="action_create_delay_event" type="object"
+                            string="Create Delay Event"
+                            invisible="delay_event_id"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="open,actioning,ready_to_close,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h2><field name="title"/></h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id"/>
+                            <field name="package_id"/>
+                            <field name="wbs_id"/>
+                            <field name="category"/>
+                            <field name="owner_id"/>
+                            <field name="responsible_party"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="opened_on"/>
+                            <field name="priority"/>
+                            <field name="due_date"/>
+                            <field name="age_days" readonly="1"/>
+                            <field name="escalation_level"/>
+                            <field name="escalated_on" readonly="1"/>
+                            <field name="estimated_cost_impact"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group string="Origin">
+                            <field name="source_risk_id" readonly="1"/>
+                            <field name="source_rfi_id"/>
+                            <field name="source_ncr_id"/>
+                            <field name="source_delay_event_id"/>
+                        </group>
+                        <group string="Outcome">
+                            <field name="change_event_id" readonly="1"/>
+                            <field name="delay_event_id" readonly="1"/>
+                            <field name="claim_id"
+                                   groups="real_estate_construction.group_construction_commercial"/>
+                            <field name="resolved_on" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                            <field name="impact"/>
+                        </page>
+                        <page string="Resolution">
+                            <field name="resolution"
+                                   placeholder="What actually resolved it."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_issue" model="ir.actions.act_window">
+        <field name="name">Issue Register</field>
+        <field name="res_model">realestate.construction.issue</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

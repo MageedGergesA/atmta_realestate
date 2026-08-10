@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_owner_billing_list" model="ir.ui.view">
+        <field name="name">realestate.owner.progress.billing.list</field>
+        <field name="model">realestate.owner.progress.billing</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state=='paid'" decoration-info="state=='invoiced'" decoration-muted="state=='cancelled'">
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="sale_contract_id" optional="show"/>
+                <field name="partner_id"/>
+                <field name="period_end"/>
+                <field name="current_certified_pct"/>
+                <field name="cumulative_certified_pct"/>
+                <field name="gross_amount" sum="Gross"/>
+                <field name="deduction_total" sum="Deducted"/>
+                <field name="net_invoiced" sum="Net"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_owner_billing_form" model="ir.ui.view">
+        <field name="name">realestate.owner.progress.billing.form</field>
+        <field name="model">realestate.owner.progress.billing</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_certify" type="object" string="Certify"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_create_customer_invoice" type="object"
+                            string="Create Customer Invoice"
+                            class="oe_highlight" invisible="state != 'certified'"/>
+                    <button name="action_mark_paid" type="object" string="Mark Paid"
+                            invisible="state != 'invoiced'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('paid','cancelled')"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id"/>
+                            <field name="sale_contract_id"/>
+                            <field name="partner_id"/>
+                            <field name="contract_value"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                            <field name="analytic_account_id"/>
+                        </group>
+                        <group>
+                            <field name="period_start"/>
+                            <field name="period_end"/>
+                            <field name="previous_certified_pct"/>
+                            <field name="current_certified_pct"/>
+                            <field name="cumulative_certified_pct" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Amounts">
+                        <group>
+                            <field name="gross_amount" readonly="1"/>
+                            <field name="deduction_total" readonly="1"/>
+                            <field name="net_invoiced" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="customer_invoice_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Deductions">
+                            <field name="deduction_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="kind"/>
+                                    <field name="description"/>
+                                    <field name="amount" sum="Total"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_owner_billing" model="ir.actions.act_window">
+        <field name="name">Owner Progress Billing</field>
+        <field name="res_model">realestate.owner.progress.billing</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_construction_owner_billing" name="Owner Progress Billing"
+              parent="menu_construction_root" action="action_owner_billing"
+              sequence="27"/>
+</odoo>

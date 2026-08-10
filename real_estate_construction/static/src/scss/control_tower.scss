@@ -1,0 +1,47 @@
+// Control Tower — dense, not decorative.
+//
+// Logical properties throughout, so RTL flips once, in rtlcss, and never
+// twice. No hand-flipped left/right anywhere in this file.
+.o_construction_tower {
+    .o_kpi, .o_kpi_small {
+        border: 1px solid var(--border-color, #dee2e6);
+        border-radius: .25rem;
+        padding-block: .5rem;
+        padding-inline: .75rem;
+        min-inline-size: 11rem;
+    }
+    .o_kpi_small { min-inline-size: 8rem; }
+
+    .o_kpi_label {
+        font-size: .75rem;
+        text-transform: uppercase;
+        letter-spacing: .03em;
+        color: var(--text-muted, #6c757d);
+    }
+    .o_kpi_value { font-size: 1.25rem; font-weight: 600; }
+    .o_kpi_sub { font-size: .75rem; color: var(--text-muted, #6c757d); }
+
+    // Anything not yet authorised reads differently from a baseline figure.
+    .o_kpi_pending { border-style: dashed; }
+
+    .o_drill { cursor: pointer; }
+    .o_drill:hover { text-decoration: underline; }
+
+    // Wide financial tables scroll inside their own region rather than
+    // pushing the page sideways, and no monetary column is truncated away.
+    .o_cost_sheet_scroll { overflow-x: auto; }
+    .o_cost_sheet th, .o_cost_sheet td { white-space: nowrap; }
+
+    .o_skeleton_card {
+        background: linear-gradient(90deg, #f1f3f5 25%, #e9ecef 37%, #f1f3f5 63%);
+        background-size: 400% 100%;
+    }
+
+    .badge.o_status_on_track { background-color: #198754; }
+    .badge.o_status_attention { background-color: #fd7e14; }
+    .badge.o_status_at_risk { background-color: #dc3545; }
+    .badge.o_status_critical { background-color: #842029; }
+    .badge.o_status_no_data { background-color: #6c757d; }
+
+    .o_tower_reasons { padding-inline-start: 1.25rem; }
+}

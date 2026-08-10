@@ -30,8 +30,13 @@
         <field name="arch" type="xml">
             <form>
                 <header>
+                    <button name="action_submit" type="object"
+                            string="Apply For" invisible="state != 'draft'"/>
                     <button name="action_certify" type="object" string="Certify"
-                            class="oe_highlight" invisible="state != 'draft'"/>
+                            class="oe_highlight"
+                            invisible="state not in ('draft','submitted')"/>
+                    <button name="action_reject" type="object" string="Reject"
+                            invisible="state not in ('draft','submitted')"/>
                     <button name="action_create_vendor_bill" type="object" string="Create Vendor Bill"
                             class="oe_highlight" invisible="state != 'certified'"/>
                     <button name="action_mark_paid" type="object" string="Mark Paid"
@@ -50,7 +55,14 @@
                             <field name="milestone_id" options="{'no_create': True}"/>
                             <field name="contractor_id" options="{'no_create': True}"/>
                             <field name="contractor_partner_id" invisible="1"/>
-                            <field name="contract_value"/>
+                            <field name="package_id" options="{'no_create': True}"/>
+                            <field name="wbs_id" options="{'no_create': True}"/>
+                            <field name="cost_code_id" options="{'no_create': True}"/>
+                            <field name="contract_value"
+                                   invisible="package_id"/>
+                            <field name="authorised_amount" readonly="1"/>
+                            <field name="has_authorised_base" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
                             <field name="currency_id" groups="base.group_multi_currency"/>
                         </group>
                         <group>
@@ -59,6 +71,12 @@
                             <field name="previous_certified_pct"/>
                             <field name="current_certified_pct"/>
                             <field name="cumulative_certified_pct" readonly="1"/>
+                            <field name="previous_certified_amount" readonly="1"/>
+                            <field name="cumulative_certified_amount" readonly="1"/>
+                            <field name="certified_by_id" readonly="1"
+                                   invisible="not certified_by_id"/>
+                            <field name="certified_on" readonly="1"
+                                   invisible="not certified_on"/>
                         </group>
                     </group>
                     <group string="Source PO">
@@ -72,16 +90,71 @@
                         </group>
                     </group>
                     <group string="Amounts">
-                        <group>
+                        <group string="Claim and certificate">
+                            <field name="applied_amount"
+                                   readonly="state not in ('draft','submitted')"/>
+                            <field name="certified_amount"
+                                   readonly="state not in ('draft','submitted')"/>
+                            <field name="disallowed_amount" readonly="1"/>
+                            <field name="disallowance_reason"
+                                   invisible="not disallowed_amount"
+                                   required="disallowed_amount > 0"
+                                   readonly="state not in ('draft','submitted')"/>
+                        </group>
+                        <group string="Payment">
                             <field name="gross_amount" readonly="1"/>
                             <field name="retention_pct"/>
                             <field name="retention_amount" readonly="1"/>
+                            <field name="recovery_total" readonly="1"/>
                             <field name="net_payable" readonly="1"/>
-                        </group>
-                        <group>
                             <field name="vendor_bill_id" readonly="1"/>
+                            <field name="retention_movement_id" readonly="1"
+                                   invisible="not retention_movement_id"/>
+                            <field name="lines_gross_amount" readonly="1"
+                                   invisible="not line_ids"/>
                         </group>
                     </group>
+                    <notebook>
+                        <page string="Advance Recovery">
+                            <field name="recovery_line_ids"
+                                   readonly="state not in ('draft','submitted')">
+                                <list editable="bottom">
+                                    <field name="advance_id"
+                                           options="{'no_create': True}"
+                                           domain="[('project_id', '=', parent.project_id),
+                                                    ('contractor_id', '=', parent.contractor_id),
+                                                    ('state', 'in', ('confirmed','paid'))]"/>
+                                    <field name="amount"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                            <p class="text-muted">
+                                Recovery reduces what is paid, never what the work
+                                cost. It cannot exceed what was advanced.
+                            </p>
+                        </page>
+                        <page string="BOQ Line Detail (optional)">
+                            <p class="text-muted">
+                                Populate to certify by quantity (Σ qty × rate) instead of
+                                percentage. Leave empty to use % of Contract Value.
+                            </p>
+                            <field name="line_ids" readonly="state != 'draft'">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="boq_line_id"
+                                           options="{'no_create': True}"
+                                           domain="[('project_id', '=', parent.project_id)]"/>
+                                    <field name="work_item_id" readonly="1" optional="show"/>
+                                    <field name="description"/>
+                                    <field name="qty"/>
+                                    <field name="remaining_qty" optional="show"/>
+                                    <field name="unit_rate"/>
+                                    <field name="amount" sum="Certified"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
                     <field name="notes" placeholder="Inspector notes / supporting docs reference..."/>
                 </sheet>
                 <chatter/>

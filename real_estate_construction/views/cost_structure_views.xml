@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- ================= WBS ================= -->
+    <record id="view_construction_wbs_list" model="ir.ui.view">
+        <field name="name">realestate.construction.wbs.list</field>
+        <field name="model">realestate.construction.wbs</field>
+        <field name="arch" type="xml">
+            <list string="WBS">
+                <field name="complete_code"/>
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="phase_id" optional="hide"/>
+                <field name="level" optional="hide"/>
+                <field name="is_leaf" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_construction_wbs_form" model="ir.ui.view">
+        <field name="name">realestate.construction.wbs.form</field>
+        <field name="model">realestate.construction.wbs</field>
+        <field name="arch" type="xml">
+            <form string="WBS Node">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="complete_code" readonly="1"/></h1>
+                        <h2><field name="name" placeholder="Ground Floor Slabs"/></h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code" placeholder="02"/>
+                            <field name="project_id"/>
+                            <field name="phase_id"/>
+                        </group>
+                        <group>
+                            <field name="parent_id"/>
+                            <field name="sequence"/>
+                            <field name="active"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Sub-nodes">
+                            <field name="child_ids">
+                                <list editable="bottom">
+                                    <field name="code"/>
+                                    <field name="name"/>
+                                    <field name="project_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes"><field name="notes"/></page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_construction_wbs" model="ir.actions.act_window">
+        <field name="name">WBS</field>
+        <field name="res_model">realestate.construction.wbs</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ================= Cost codes ================= -->
+    <record id="view_construction_cost_code_list" model="ir.ui.view">
+        <field name="name">realestate.construction.cost.code.list</field>
+        <field name="model">realestate.construction.cost.code</field>
+        <field name="arch" type="xml">
+            <list string="Cost Codes">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="category"/>
+                <field name="is_contingency" optional="hide"/>
+                <field name="project_id" optional="hide"/>
+                <field name="analytic_account_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_construction_cost_code_form" model="ir.ui.view">
+        <field name="name">realestate.construction.cost.code.form</field>
+        <field name="model">realestate.construction.cost.code</field>
+        <field name="arch" type="xml">
+            <form string="Cost Code">
+                <header>
+                    <button name="action_generate_analytic_account" type="object"
+                            string="Create Analytic Account" class="btn-secondary"
+                            invisible="analytic_account_id"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="code" placeholder="SUB-CIV"/></h1>
+                        <h2><field name="name" placeholder="Civil Subcontract"/></h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="category"/>
+                            <field name="is_contingency"/>
+                            <field name="parent_id"/>
+                        </group>
+                        <group>
+                            <field name="project_id"
+                                   help="Leave empty for a catalogue code every project may use."/>
+                            <field name="analytic_account_id" readonly="1"/>
+                            <field name="active"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <field name="description" placeholder="What belongs in this code, and what does not."/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_construction_cost_code" model="ir.actions.act_window">
+        <field name="name">Cost Codes</field>
+        <field name="res_model">realestate.construction.cost.code</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

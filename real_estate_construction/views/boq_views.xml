@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_work_item_category_list" model="ir.ui.view">
+        <field name="name">realestate.work.item.category.list</field>
+        <field name="model">realestate.work.item.category</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="parent_id"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_work_item_category_form" model="ir.ui.view">
+        <field name="name">realestate.work.item.category.form</field>
+        <field name="model">realestate.work.item.category</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="parent_id"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_work_item_category" model="ir.actions.act_window">
+        <field name="name">Work Item Categories</field>
+        <field name="res_model">realestate.work.item.category</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_work_item_list" model="ir.ui.view">
+        <field name="name">realestate.work.item.list</field>
+        <field name="model">realestate.work.item</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="uom_id"/>
+                <field name="default_rate"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_work_item_form" model="ir.ui.view">
+        <field name="name">realestate.work.item.form</field>
+        <field name="model">realestate.work.item</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="category_id"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="uom_id"/>
+                            <field name="default_rate"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                        </group>
+                    </group>
+                    <field name="description"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_work_item" model="ir.actions.act_window">
+        <field name="name">Work Items</field>
+        <field name="res_model">realestate.work.item</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_boq_list" model="ir.ui.view">
+        <field name="name">realestate.boq.list</field>
+        <field name="model">realestate.boq</field>
+        <field name="arch" type="xml">
+            <list decoration-info="state=='approved'" decoration-muted="state in ('cancelled','locked')">
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="phase_id" optional="hide"/>
+                <field name="milestone_id" optional="show"/>
+                <field name="contractor_id" optional="show"/>
+                <field name="revision"/>
+                <field name="line_count"/>
+                <field name="total_amount" sum="Total"/>
+                <field name="total_certified" sum="Certified"/>
+                <field name="certified_pct" widget="progressbar"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_boq_form" model="ir.ui.view">
+        <field name="name">realestate.boq.form</field>
+        <field name="model">realestate.boq</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_approve" type="object" string="Approve"
+                            invisible="state != 'draft'" class="oe_highlight"/>
+                    <button name="action_lock" type="object" string="Lock"
+                            invisible="state != 'approved'"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset to Draft"
+                            invisible="state != 'approved'"/>
+                    <button name="action_create_revision" type="object"
+                            string="Create Revision"
+                            invisible="state not in ('approved','locked')"/>
+                    <button name="action_create_material_request" type="object"
+                            string="Create Material Request"
+                            invisible="state == 'draft'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('cancelled','locked')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,approved,locked"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id"/>
+                            <field name="phase_id"/>
+                            <field name="milestone_id"/>
+                            <field name="contractor_id"/>
+                            <field name="revision"/>
+                        </group>
+                        <group>
+                            <field name="line_count"/>
+                            <field name="total_amount"/>
+                            <field name="total_certified"/>
+                            <field name="certified_pct" widget="progressbar"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lines">
+                            <field name="line_ids"
+                                   readonly="state in ('locked','cancelled')">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="work_item_id"/>
+                                    <field name="description"/>
+                                    <field name="product_id" optional="show"/>
+                                    <field name="quantity"/>
+                                    <field name="uom_id"/>
+                                    <field name="unit_rate"/>
+                                    <field name="line_amount" sum="Total"/>
+                                    <field name="certified_qty" optional="show"/>
+                                    <field name="authorised_quantity" optional="show"/>
+                                    <field name="is_over_certified" optional="hide"/>
+                                    <field name="remaining_qty" optional="show"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Variations">
+                            <p class="text-muted">
+                                Approved change orders move the authorised
+                                quantity. The original quantity stays as the
+                                contract recorded it.
+                            </p>
+                            <field name="line_ids" readonly="1" nolabel="1">
+                                <list>
+                                    <field name="work_item_id"/>
+                                    <field name="quantity" string="Original"/>
+                                    <field name="variation_quantity" string="Variations"/>
+                                    <field name="authorised_quantity"/>
+                                    <field name="certified_qty"/>
+                                    <field name="remaining_qty"/>
+                                    <field name="is_over_certified" widget="boolean_toggle"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="action_boq" model="ir.actions.act_window">
+        <field name="name">Bills of Quantities</field>
+        <field name="res_model">realestate.boq</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

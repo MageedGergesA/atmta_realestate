@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
+    <!--
+      DEPRECATED (M10A). This dashboard predates project control. It searches
+      globally across every project and company, derives "budget" from
+      milestone amounts and "actual" from manual cost lines, and therefore
+      contradicts the authoritative M2 definitions. It is kept for one
+      compatibility release and restricted to technical access so that nobody
+      can mistake it for current financial truth.
+
+      The Construction Control Tower is the canonical management surface.
+    -->
     <record id="action_construction_dashboard" model="ir.actions.client">
-        <field name="name">Construction Dashboard</field>
+        <field name="name">Construction Dashboard (deprecated)</field>
         <field name="tag">realestate.construction_dashboard</field>
     </record>
 
     <menuitem id="menu_construction_dashboard"
-              name="Dashboard"
+              name="Legacy Dashboard (deprecated)"
               parent="menu_construction_root"
               action="action_construction_dashboard"
-              sequence="1"/>
+              groups="base.group_no_one"
+              sequence="99"/>
 
+    <record id="action_control_tower" model="ir.actions.client">
+        <field name="name">Control Tower</field>
+        <field name="tag">construction_control_tower</field>
+    </record>
+
+    <menuitem id="menu_construction_control_tower"
+              name="Control Tower"
+              parent="menu_construction_root"
+              action="action_control_tower"
+              sequence="1"/>
 </odoo>

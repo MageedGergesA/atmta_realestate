@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- ================= Change events ================= -->
+    <record id="view_change_event_list" model="ir.ui.view">
+        <field name="name">realestate.construction.change.event.list</field>
+        <field name="model">realestate.construction.change.event</field>
+        <field name="arch" type="xml">
+            <list string="Change Events" decoration-muted="not is_potential">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="project_id"/>
+                <field name="package_id" optional="hide"/>
+                <field name="source"/>
+                <field name="source_reference" optional="hide"/>
+                <field name="discovered_date"/>
+                <field name="age_days" optional="show"/>
+                <field name="estimated_cost_impact" sum="Potential Cost"/>
+                <field name="estimated_revenue_impact" sum="Potential Revenue"/>
+                <field name="estimated_schedule_days" optional="hide"/>
+                <field name="approved_cost_change" optional="hide"/>
+                <field name="change_order_count" optional="hide"/>
+                <field name="responsible_id" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-info="state in ('identified','under_review','pricing')"
+                       decoration-warning="state == 'change_required'"
+                       decoration-muted="state in ('no_change','rejected','cancelled','duplicate')"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="is_potential" column_invisible="1"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_change_event_form" model="ir.ui.view">
+        <field name="name">realestate.construction.change.event.form</field>
+        <field name="model">realestate.construction.change.event</field>
+        <field name="arch" type="xml">
+            <form string="Change Event">
+                <header>
+                    <button name="action_identify" type="object" string="Identify"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_review" type="object" string="Review"
+                            invisible="state != 'identified'"/>
+                    <button name="action_price" type="object" string="Send for Pricing"
+                            invisible="state not in ('identified','under_review')"/>
+                    <button name="action_assess" type="object" string="Assess"
+                            invisible="state not in ('under_review','pricing')"/>
+                    <button name="action_change_required" type="object"
+                            string="Change Required" class="btn-primary"
+                            invisible="state not in ('assessed','pricing','under_review')"/>
+                    <button name="action_create_change_order" type="object"
+                            string="Create Change Order" class="btn-primary"
+                            invisible="state not in ('assessed','change_required')"/>
+                    <button name="action_no_change" type="object" string="Close — No Change"
+                            invisible="state in ('no_change','rejected','cancelled','closed','duplicate')"/>
+                    <button name="action_reject" type="object" string="Reject"
+                            invisible="state in ('no_change','rejected','cancelled','closed')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,identified,under_review,pricing,assessed,change_required"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_change_orders" type="object"
+                                class="oe_stat_button" icon="fa-exchange">
+                            <field name="change_order_count" widget="statinfo"
+                                   string="Change Orders"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h2><field name="title" placeholder="Façade detail revision"/></h2>
+                    </div>
+                    <div class="alert alert-info" role="status">
+                        The amounts below are <strong>estimates</strong>. They do not
+                        change the budget, the commitment or the actual cost — only an
+                        approved and implemented Change Order does that.
+                    </div>
+                    <group>
+                        <group string="Where">
+                            <field name="project_id"/>
+                            <field name="package_id"/>
+                            <field name="contractor_id"/>
+                            <field name="wbs_id"/>
+                            <field name="cost_code_id"/>
+                            <field name="location"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Origin">
+                            <field name="source"/>
+                            <field name="source_reference"/>
+                            <field name="discovered_date"/>
+                            <field name="event_date"/>
+                            <field name="raised_by_id"/>
+                            <field name="responsible_id"/>
+                            <field name="responsible_party"/>
+                            <field name="priority" widget="priority"/>
+                        </group>
+                        <group string="Estimated Impact">
+                            <field name="estimated_cost_impact"/>
+                            <field name="estimated_revenue_impact"/>
+                            <field name="estimated_schedule_days"/>
+                            <field name="estimated_contingency_impact"/>
+                            <field name="probability"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group string="Approved So Far">
+                            <field name="approved_cost_change"/>
+                            <field name="approved_revenue_change"/>
+                            <field name="age_days"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description"><field name="description"/></page>
+                        <page string="Assessment"><field name="assessment_notes"/></page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_change_event" model="ir.actions.act_window">
+        <field name="name">Change Events</field>
+        <field name="res_model">realestate.construction.change.event</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ================= Change orders ================= -->
+    <record id="view_change_order_list" model="ir.ui.view">
+        <field name="name">realestate.construction.change.order.list</field>
+        <field name="model">realestate.construction.change.order</field>
+        <field name="arch" type="xml">
+            <list string="Change Orders"
+                  decoration-success="state in ('implemented','closed')"
+                  decoration-muted="state in ('rejected','withdrawn','cancelled')">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="project_id"/>
+                <field name="order_type"/>
+                <field name="package_id" optional="hide"/>
+                <field name="contractor_id" optional="show"/>
+                <field name="estimated_amount" optional="hide" sum="Estimated"/>
+                <field name="submitted_amount" optional="show" sum="Submitted"/>
+                <field name="negotiated_amount" optional="hide" sum="Negotiated"/>
+                <field name="approved_amount" sum="Approved"/>
+                <field name="approved_cost_amount" optional="hide" sum="Cost"/>
+                <field name="approved_revenue_amount" optional="hide" sum="Revenue"/>
+                <field name="change_margin" optional="hide" sum="Margin"/>
+                <field name="approved_days" optional="hide"/>
+                <field name="age_days" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state in ('implemented','closed')"
+                       decoration-info="state == 'approved'"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_change_order_form" model="ir.ui.view">
+        <field name="name">realestate.construction.change.order.form</field>
+        <field name="model">realestate.construction.change.order</field>
+        <field name="arch" type="xml">
+            <form string="Change Order">
+                <header>
+                    <button name="action_price" type="object" string="Send for Pricing"
+                            invisible="state != 'draft'"/>
+                    <button name="action_submit" type="object" string="Submit"
+                            class="btn-primary"
+                            invisible="state not in ('draft','pricing','negotiation')"/>
+                    <button name="action_review" type="object" string="Review"
+                            invisible="state != 'submitted'"/>
+                    <button name="action_negotiate" type="object" string="Negotiate"
+                            invisible="state not in ('submitted','under_review')"/>
+                    <button name="action_request_approval" type="object"
+                            string="Request Approval" class="btn-primary"
+                            invisible="state not in ('submitted','under_review','negotiation')"/>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="btn-primary" invisible="state != 'pending_approval'"/>
+                    <button name="action_implement" type="object" string="Implement"
+                            class="btn-primary" invisible="state != 'approved'"/>
+                    <button name="action_close" type="object" string="Close"
+                            invisible="state != 'implemented'"/>
+                    <button name="action_reject" type="object" string="Reject"
+                            invisible="state not in ('submitted','under_review','negotiation','pending_approval')"/>
+                    <button name="action_withdraw" type="object" string="Withdraw"
+                            invisible="state in ('implemented','closed','withdrawn','cancelled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,submitted,pending_approval,approved,implemented"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h2><field name="title"/></h2>
+                    </div>
+                    <div class="alert alert-success" role="status"
+                         invisible="state not in ('implemented','closed')">
+                        Implemented on <field name="implementation_date" readonly="1" nolabel="1"/>.
+                        Budget and commitment changes have been recorded and are immutable.
+                    </div>
+                    <div class="alert alert-info" role="status"
+                         invisible="state != 'approved'">
+                        Approved but not yet implemented — no baseline has moved.
+                    </div>
+                    <group>
+                        <group string="Commercial">
+                            <field name="project_id"/>
+                            <field name="order_type"/>
+                            <field name="package_id"/>
+                            <field name="contractor_id"/>
+                            <field name="partner_id"
+                                   invisible="order_type != 'owner_variation'"/>
+                            <field name="change_event_id"/>
+                            <field name="related_event_ids" widget="many2many_tags"/>
+                            <field name="currency_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Amounts">
+                            <field name="estimated_amount"/>
+                            <field name="contractor_quote_amount"/>
+                            <field name="submitted_amount"/>
+                            <field name="assessed_amount"/>
+                            <field name="negotiated_amount"/>
+                            <field name="approved_amount"/>
+                            <field name="markup_total"/>
+                            <field name="gross_impact"/>
+                        </group>
+                        <group string="Impact By Side">
+                            <field name="approved_cost_amount"/>
+                            <field name="approved_budget_amount"/>
+                            <field name="approved_revenue_amount"/>
+                            <field name="approved_contingency_amount"/>
+                            <field name="change_margin"/>
+                        </group>
+                        <group string="Dates &amp; Schedule">
+                            <field name="initiated_date"/>
+                            <field name="quote_date"/>
+                            <field name="submitted_date"/>
+                            <field name="decision_date"/>
+                            <field name="effective_date"/>
+                            <field name="estimated_days"/>
+                            <field name="submitted_days"/>
+                            <field name="approved_days"/>
+                            <field name="requires_approval_by"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Impact Lines">
+                            <field name="line_ids"
+                                   readonly="state in ('implemented','closed')">
+                                <list editable="bottom">
+                                    <field name="impact_side"/>
+                                    <field name="cost_code_id"/>
+                                    <field name="wbs_id" optional="hide"/>
+                                    <field name="description"/>
+                                    <field name="estimated_amount" sum="Estimated"/>
+                                    <field name="submitted_amount" sum="Submitted"/>
+                                    <field name="assessed_amount" optional="hide"/>
+                                    <field name="negotiated_amount" sum="Negotiated"/>
+                                    <field name="approved_amount" sum="Approved"/>
+                                    <field name="schedule_days" optional="hide"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="project_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Markups">
+                            <field name="markup_ids"
+                                   readonly="state in ('implemented','closed')">
+                                <list editable="bottom">
+                                    <field name="markup_type"/>
+                                    <field name="description"/>
+                                    <field name="computation"/>
+                                    <field name="percentage"/>
+                                    <field name="amount"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Submission History">
+                            <field name="revision_ids" readonly="1">
+                                <list>
+                                    <field name="revision"/>
+                                    <field name="submitted_amount"/>
+                                    <field name="submitted_days"/>
+                                    <field name="quotation_reference"/>
+                                    <field name="submitted_on"/>
+                                    <field name="submitted_by_id"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Approvals">
+                            <field name="approval_ids" readonly="1">
+                                <list>
+                                    <field name="user_id"/>
+                                    <field name="decision"/>
+                                    <field name="amount_at_decision"/>
+                                    <field name="decided_on"/>
+                                    <field name="comment"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Applied Impact" invisible="not is_implemented">
+                            <field name="budget_change_ids" readonly="1">
+                                <list string="Budget Changes">
+                                    <field name="cost_code_id"/>
+                                    <field name="change_type"/>
+                                    <field name="amount" sum="Budget"/>
+                                    <field name="effective_date"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                            <field name="commitment_change_ids" readonly="1">
+                                <list string="Commitment Changes">
+                                    <field name="cost_code_id"/>
+                                    <field name="package_id"/>
+                                    <field name="amount" sum="Commitment"/>
+                                    <field name="reflected_in_purchase_order"/>
+                                    <field name="effective_date"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Reason"><field name="reason"/></page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_change_order" model="ir.actions.act_window">
+        <field name="name">Change Orders</field>
+        <field name="res_model">realestate.construction.change.order</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>
