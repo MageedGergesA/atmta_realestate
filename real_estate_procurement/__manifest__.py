@@ -16,6 +16,10 @@ Cross-module supply-chain foundation used by Construction, Handover, Rental and 
   governance (optional / controlled / required), per company with a project override
 * Approval matrix with snapshotted authority, maker/checker, rejection with reasons
 * Approval and reservation registers, and an exception register for every override
+* Vendor governance — qualification per company, trade and project, with templates,
+  evidence, conditions, expiry, reassessment and dated suspensions
+* One eligibility service answering "may this vendor take part, and why not" as of a
+  given date, consumed by the sourcing pool and by purchase-order confirmation
 * Vendor tags (contractor, material supplier, service vendor, marketing, consultant, utility, landowner)
 * Real-estate product flags (construction material, property fitting, marketing asset, maintenance consumable)
 * Filtered procurement menus (POs, vendors, catalog) scoped to real-estate activity
@@ -23,7 +27,7 @@ Cross-module supply-chain foundation used by Construction, Handover, Rental and 
 """,
     'author': "Atmta",
     'license': 'LGPL-3',
-    'version': '18.0.3.0.0',
+    'version': '18.0.4.0.0',
     'category': 'Real Estate',
     'depends': [
         'atmta_real_estate',
@@ -40,11 +44,18 @@ Cross-module supply-chain foundation used by Construction, Handover, Rental and 
         'security/security.xml',
         'security/ir.model.access.csv',
         'data/sequences.xml',
+        'data/cron.xml',
         'data/partner_categories.xml',
         'data/product_categories.xml',
+        'data/qualification_areas.xml',
         'data/products_seed.xml',
         'views/approval_views.xml',
         'views/procurement_control_views.xml',
+        # Wizard actions first: the governance views put them on buttons, and
+        # an action referenced before it exists is a load-order error, not a
+        # runtime one.
+        'wizard/vendor_governance_wizard_views.xml',
+        'views/vendor_governance_views.xml',
         'views/procurement_plan_views.xml',
         'wizard/procurement_wizard_views.xml',
         'views/material_request_views.xml',

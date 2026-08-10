@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!--
+        Dates that pass overnight, moved overnight.
+
+        None of these jobs is load-bearing: the eligibility service and the
+        control position both work off the dates on the records, so a server
+        whose scheduler was stopped for a week still gives the right answer
+        to every question. What the jobs do is keep the *states* honest, so
+        the registers and the worklists say expired when something is.
+    -->
+
+    <record id="cron_expire_qualifications" model="ir.cron">
+        <field name="name">Procurement: expire lapsed vendor qualifications</field>
+        <field name="model_id" ref="model_realestate_procurement_vendor_qualification"/>
+        <field name="state">code</field>
+        <field name="code">model.expire_due_qualifications()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="cron_expire_restrictions" model="ir.cron">
+        <field name="name">Procurement: close lapsed vendor restrictions</field>
+        <field name="model_id" ref="model_realestate_procurement_vendor_restriction"/>
+        <field name="state">code</field>
+        <field name="code">model.expire_due_restrictions()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="cron_classify_vendors" model="ir.cron">
+        <field name="name">Procurement: reclassify vendor population</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="state">code</field>
+        <field name="code">model._classify_procurement_vendors()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">weeks</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <!--
+        M3's reservation expiry had no scheduler behind it, so a company that
+        configured `procurement_reservation_expiry_days` got a control that
+        never fired. Registered here rather than left as a gap: a setting
+        that silently does nothing is worse than not offering it. The default
+        remains zero — never expire — so this job releases nothing until
+        somebody chooses a number.
+    -->
+    <record id="cron_expire_reservations" model="ir.cron">
+        <field name="name">Procurement: expire unsourced reservations</field>
+        <field name="model_id" ref="model_realestate_procurement_reservation"/>
+        <field name="state">code</field>
+        <field name="code">model.expire_due_reservations()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

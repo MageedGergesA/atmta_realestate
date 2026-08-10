@@ -51,6 +51,21 @@ PO_GOVERNANCE = [
     ('required', 'Required — approved requisition only'),
 ]
 
+#: M4K — how hard vendor qualification is enforced, and at which moment.
+#:
+#: The ladder is short on purpose. A fifth level ("required for PO") was
+#: considered and left out: with no Award document in the system until M7 it
+#: would enforce at exactly the same moment as `required_for_award` and be a
+#: setting that changed nothing, which is worse than a gap somebody can see.
+#: When M7 introduces a formal award, that check moves earlier and purchase
+#: confirmation keeps this one as the backstop.
+VENDOR_POLICY = [
+    ('optional', 'Optional — qualification available, never required'),
+    ('warn', 'Warn — record the gap and continue'),
+    ('required_for_sourcing', 'Required to be invited'),
+    ('required_for_award', 'Required to receive the order'),
+]
+
 INHERIT = [('company', 'Company Default')]
 
 
@@ -96,6 +111,32 @@ class ResCompany(models.Model):
         help="The ceiling on self-approval, in company currency. Zero with "
              "self-approval enabled means nothing qualifies.")
 
+    # -- M4K ------------------------------------------------------------
+    procurement_vendor_policy = fields.Selection(
+        VENDOR_POLICY, default='optional', required=True,
+        string='Vendor Qualification Control',
+        help="Whether a vendor has to be qualified before this company will "
+             "deal with them. Optional by default: an upgrade must not stop "
+             "an existing supply chain that was legal the day before.")
+    procurement_qualification_warn_days = fields.Integer(
+        string='Expiring Soon (days)', default=30,
+        help="How far ahead the register flags an expiring qualification. "
+             "Thirty days is a starting point, not a rule — a supplier whose "
+             "ISO renewal takes a quarter needs more.")
+    procurement_qualification_allow_self_approval = fields.Boolean(
+        string='Allow Qualification Self-Approval', default=False,
+        help="Off by default. Assessing a vendor and approving that "
+             "assessment are two jobs; this is deliberately separate from "
+             "the spend self-approval switch because a company may "
+             "reasonably allow one and not the other.")
+
+    @api.constrains('procurement_qualification_warn_days')
+    def _check_warn_days(self):
+        for company in self:
+            if company.procurement_qualification_warn_days < 0:
+                raise ValidationError(_(
+                    "A warning period cannot run backwards."))
+
     @api.constrains('procurement_amount_tolerance_pct')
     def _check_tolerance(self):
         for company in self:
@@ -120,3 +161,15 @@ class ProjectProcurementPolicy(models.Model):
         string='Project Purchase Governance',
         help="Override the company's purchase-governance policy for this "
              "project.")
+    procurement_vendor_policy = fields.Selection(
+        INHERIT + VENDOR_POLICY, default='company', required=True,
+        string='Vendor Qualification Control',
+        help="Override the company's vendor-qualification policy. A "
+             "landmark tower with a client-approved vendor list and a small "
+             "refurbishment do not need the same answer.")
+    procurement_vendor_endorsement_required = fields.Boolean(
+        string='Requires Project Endorsement',
+        help="On for developments where a generally qualified vendor still "
+             "needs this project's own sign-off — usually because the client "
+             "or the lender insists. Off everywhere else, so the general "
+             "qualification is enough.")

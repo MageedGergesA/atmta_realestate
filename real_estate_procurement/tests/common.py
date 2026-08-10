@@ -44,9 +44,14 @@ class ProcurementCommon(TransactionCase):
         # M3's own maker/checker rule, lifted for the same reason and in the
         # same place. `test_m3_approval.py` turns it back off and asserts the
         # refusal, so the rule is never only theoretical.
+        # M4's qualification maker/checker, lifted here for the same reason
+        # and turned back on by `test_m4_approval.py`, which asserts the
+        # refusal. Kept as a separate switch from the spend one because the
+        # product keeps them separate.
         cls.company.write({
             'procurement_allow_self_approval': True,
             'procurement_self_approval_limit': 1_000_000_000.0,
+            'procurement_qualification_allow_self_approval': True,
         })
         approver = cls.env.ref(
             'real_estate_procurement.group_procurement_manager',
@@ -307,3 +312,123 @@ class M3Common(ProcurementCommon):
     def _reservation(self, request):
         return request.reservation_ids.filtered(
             lambda r: r.state == 'reserved')
+
+
+class M4Common(ProcurementCommon):
+    """Two trades, a template and a way to reach an approved qualification.
+
+    Construction is deliberately **not** required here. Vendor governance
+    decides who may be asked to quote; it reads no budget and moves no money,
+    so a test that needed a baselined Construction budget to say anything
+    about it would be testing the fixture. `TestM4FinancialIsolation` is the
+    one place that needs both, and it builds on `M3Common` instead.
+    """
+
+    def setUp(self):
+        super().setUp()
+        self.project = self._project()
+        self.Category = self.env['realestate.procurement.vendor.category']
+        self.Template = self.env[
+            'realestate.procurement.qualification.template']
+        self.Qualification = self.env[
+            'realestate.procurement.vendor.qualification']
+        self.Restriction = self.env[
+            'realestate.procurement.vendor.restriction']
+        self.Eligibility = self.env[
+            'realestate.procurement.vendor.eligibility']
+        self.trade_concrete = self._trade('Concrete & Ready-Mix')
+        self.trade_electrical = self._trade('Electrical & LV')
+        self.template = self._template('Standard Supplier')
+
+    # ------------------------------------------------------------------
+    def _trade(self, name, **kwargs):
+        seq = self._next()
+        vals = {'name': name, 'code': 'TRD%03d' % seq}
+        vals.update(kwargs)
+        return self.Category.create(vals)
+
+    def _template(self, name='Standard Supplier', requirements=(), **kwargs):
+        """`requirements` is a list of dicts of requirement values."""
+        seq = self._next()
+        vals = {
+            'name': name,
+            'code': 'TPL%03d' % seq,
+            'company_id': self.company.id,
+            'requirement_ids': [(0, 0, dict(
+                {'name': 'Requirement %d' % index}, **req))
+                for index, req in enumerate(requirements, start=1)],
+        }
+        vals.update(kwargs)
+        return self.Template.create(vals)
+
+    def _set_vendor_policy(self, policy, project=None):
+        if project is not None:
+            project.procurement_vendor_policy = policy
+        else:
+            self.company.procurement_vendor_policy = policy
+
+    def _qualify(self, vendor, category=None, template=None, project=None,
+                 effective=None, expiry=None, approve=True, approved_on=None,
+                 responses=None, conditions=(), **kwargs):
+        """A qualification driven all the way through its workflow.
+
+        `approved_on` backdates the approval so historical-eligibility tests
+        can ask about a date the decision genuinely predates. Nothing in the
+        product writes that field — only the assessor's clock does — which is
+        why it is a fixture argument and not an action parameter.
+        """
+        vals = {
+            'partner_id': vendor.id,
+            'company_id': self.company.id,
+            'category_id': (category or self.trade_concrete).id,
+            'project_id': project.id if project else False,
+            'template_id': (template or self.template).id,
+            'effective_date': effective or self.today,
+            'expiry_date': expiry or False,
+        }
+        vals.update(kwargs)
+        qualification = self.Qualification.create(vals)
+        if responses:
+            for response, values in responses.items():
+                qualification.response_ids.filtered(
+                    lambda r, code=response: r.requirement_code == code
+                ).write(values)
+        for condition in conditions:
+            self.env['realestate.procurement.qualification.condition'].create(
+                dict({'qualification_id': qualification.id}, **condition))
+        qualification.action_submit()
+        qualification.action_start_review()
+        qualification.action_assess()
+        if approve:
+            qualification.action_request_approval()
+            qualification.action_approve()
+            if approved_on:
+                # Written directly and only here: see the docstring.
+                qualification._write_engine({'approved_date': approved_on})
+        return qualification
+
+    def _restrict(self, vendor, restriction_type='sourcing_suspension',
+                  reason='Test restriction', project=None, category=None,
+                  effective_from=None, effective_to=None, activate=True,
+                  **kwargs):
+        vals = {
+            'partner_id': vendor.id,
+            'company_id': self.company.id,
+            'restriction_type': restriction_type,
+            'reason': reason,
+            'project_id': project.id if project else False,
+            'category_id': category.id if category else False,
+            'effective_from': effective_from or self.today,
+            'effective_to': effective_to or False,
+        }
+        vals.update(kwargs)
+        restriction = self.Restriction.create(vals)
+        if activate:
+            restriction.action_activate()
+        return restriction
+
+    def _eligibility(self, vendor, category=None, project=None, date=None,
+                     purpose='sourcing', company=None):
+        return self.Eligibility.check_vendor_eligibility(
+            vendor, company=company or self.company, category=category,
+            project=project, date=date, purpose=purpose)

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_qualification_reject_form" model="ir.ui.view">
+        <field name="name">procurement.qualification.reject.form</field>
+        <field name="model">realestate.procurement.qualification.reject</field>
+        <field name="arch" type="xml">
+            <form string="Reject Qualification">
+                <field name="qualification_id" invisible="1"/>
+                <group>
+                    <field name="reason" nolabel="1"
+                           placeholder="What was missing or unacceptable, and what would have to change."/>
+                </group>
+                <div class="text-muted">
+                    The assessment and its evidence are kept. Rejecting records a decision; it does
+                    not send the file back to draft with nothing to show for it.
+                </div>
+                <footer>
+                    <button name="action_reject" type="object" string="Reject"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_qualification_reject" model="ir.actions.act_window">
+        <field name="name">Reject Qualification</field>
+        <field name="res_model">realestate.procurement.qualification.reject</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="view_restriction_lift_form" model="ir.ui.view">
+        <field name="name">procurement.restriction.lift.form</field>
+        <field name="model">realestate.procurement.restriction.lift</field>
+        <field name="arch" type="xml">
+            <form string="Lift Restriction">
+                <field name="restriction_id" invisible="1"/>
+                <group>
+                    <field name="reason" nolabel="1"
+                           placeholder="What changed."/>
+                </group>
+                <div class="text-muted">
+                    The restriction stays on file as lifted, with both reasons on it. A question
+                    about last March still gets last March's answer.
+                </div>
+                <footer>
+                    <button name="action_lift" type="object" string="Lift"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_restriction_lift" model="ir.actions.act_window">
+        <field name="name">Lift Restriction</field>
+        <field name="res_model">realestate.procurement.restriction.lift</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- ==========================================================
+         M4I — the Approved Vendor List, asked rather than stored
+         ========================================================== -->
+
+    <record id="view_avl_report_form" model="ir.ui.view">
+        <field name="name">procurement.avl.report.form</field>
+        <field name="model">realestate.procurement.avl.report</field>
+        <field name="arch" type="xml">
+            <form string="Approved Vendor List">
+                <group>
+                    <group>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="category_id"/>
+                        <field name="project_id"/>
+                    </group>
+                    <group>
+                        <field name="as_of_date"/>
+                        <field name="purpose"/>
+                        <field name="include_ineligible"/>
+                    </group>
+                </group>
+                <button name="action_compute" type="object" string="Show Vendors"
+                        class="btn-primary"/>
+                <group invisible="not line_ids">
+                    <group>
+                        <field name="eligible_count" string="Eligible"/>
+                        <field name="excluded_count" string="Excluded"/>
+                    </group>
+                </group>
+                <field name="line_ids" invisible="not line_ids" readonly="1">
+                    <list decoration-success="eligible" decoration-muted="not eligible">
+                        <field name="partner_id"/>
+                        <field name="category_id" optional="show"/>
+                        <field name="status_label" string="Status"/>
+                        <field name="qualification_id"/>
+                        <field name="valid_from" optional="hide"/>
+                        <field name="valid_to"/>
+                        <field name="conditions"/>
+                        <field name="reason" string="Why"/>
+                        <field name="eligible" widget="boolean_toggle" readonly="1"/>
+                        <field name="qualified" widget="boolean_toggle" readonly="1"
+                               optional="show"/>
+                        <field name="status" column_invisible="True"/>
+                    </list>
+                </field>
+                <div class="text-muted mt-2" invisible="not line_ids">
+                    This answers who may be invited. It does not rank anybody and it does not
+                    choose: qualified is not cheapest, and comparing quotations is M6's job.
+                </div>
+                <footer>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_avl_report" model="ir.actions.act_window">
+        <field name="name">Approved Vendor List</field>
+        <field name="res_model">realestate.procurement.avl.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- ==========================================================
+         M4AE — data quality
+         ========================================================== -->
+
+    <record id="view_vendor_audit_form" model="ir.ui.view">
+        <field name="name">procurement.vendor.audit.form</field>
+        <field name="model">realestate.procurement.vendor.audit</field>
+        <field name="arch" type="xml">
+            <form string="Vendor Governance Audit">
+                <group>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="finding_count" invisible="not line_ids"/>
+                </group>
+                <button name="action_scan" type="object" string="Scan" class="btn-primary"/>
+                <field name="line_ids" invisible="not line_ids" readonly="1">
+                    <list>
+                        <field name="kind"/>
+                        <field name="record_ref"/>
+                        <field name="detail"/>
+                        <field name="model_name" column_invisible="True"/>
+                        <field name="record_id" column_invisible="True"/>
+                        <button name="action_open_record" type="object" icon="fa-external-link"
+                                title="Open"/>
+                    </list>
+                </field>
+                <div class="text-muted mt-2">
+                    Findings, not repairs. Every one of these could be corrected automatically and
+                    none of them is: an assessment approved with nobody named on it is evidence
+                    that something happened, and silently filling in a name destroys it.
+                </div>
+                <footer>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_vendor_audit" model="ir.actions.act_window">
+        <field name="name">Vendor Data Audit</field>
+        <field name="res_model">realestate.procurement.vendor.audit</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

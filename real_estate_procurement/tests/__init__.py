@@ -11,3 +11,7 @@ from . import test_m3_governance
 from . import test_m3_concurrency
 from . import test_m3_migration
 from . import test_m3_security
+from . import test_m4_invariants
+from . import test_m4_qualification
+from . import test_m4_eligibility
+from . import test_m4_security

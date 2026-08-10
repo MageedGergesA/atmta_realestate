@@ -1345,6 +1345,8 @@ class MaterialRequest(models.Model):
                               'partner_id.display_name')))))
                 if self.line_ids.product_id.seller_ids else ''))
 
+        self._check_vendors_may_be_invited(vendors)
+
         created = self.env['purchase.order']
         for vendor in vendors:
             created |= self._create_rfq_for_vendor(vendor)
@@ -1360,6 +1362,73 @@ class MaterialRequest(models.Model):
             count=len(created),
             vendors=', '.join(created.mapped('partner_id.display_name'))))
         return created
+
+    def _check_vendors_may_be_invited(self, vendors):
+        """M4K at the invitation moment — the earliest point worth gating.
+
+        An RFQ commits nothing, so this is not about money. It is about not
+        starting a conversation the company has decided it will not finish:
+        under REQUIRED TO BE INVITED, asking an unqualified vendor to price
+        the work creates an expectation somebody then has to withdraw.
+
+        Under OPTIONAL and WARN nothing is refused. Under WARN the gap is
+        posted to the requisition, because a warning nobody can find later is
+        not a warning.
+        """
+        self.ensure_one()
+        Eligibility = self.env['realestate.procurement.vendor.eligibility']
+        trades = list(self.line_ids.mapped('vendor_category_id'))
+        # Counted rather than tested for truthiness: `mapped()` on a
+        # many2one silently drops the empty ones, so `all(...)` over the
+        # result is true whenever *any* line carries a trade and would never
+        # notice the mixed case this exists for.
+        if len(self.line_ids.filtered('vendor_category_id')) < len(
+                self.line_ids):
+            # A requisition mixing classified and unclassified lines is asked
+            # both questions. Checking only the trades that happen to be
+            # named would let a vendor through for the scope nobody classified.
+            trades.append(None)
+        if not trades:
+            trades = [None]
+        date = fields.Date.context_today(self)
+        refusals, warnings = [], []
+        for vendor in vendors:
+            for trade in trades:
+                outcome = Eligibility.check_vendor_eligibility(
+                    vendor, company=self.company_id, category=trade,
+                    project=self.project_id, date=date, purpose='sourcing')
+                if not outcome['eligible']:
+                    refusals += outcome['blocking_reasons']
+                elif outcome['blocking_reasons'] or outcome['status'] not in (
+                        'eligible', 'eligible_with_conditions'):
+                    warnings.append('%s — %s' % (
+                        vendor.display_name,
+                        '; '.join(outcome['warnings']) or outcome['status']))
+        if refusals:
+            raise UserError(_(
+                "These vendors cannot be invited to quote:\n\n%(reasons)s\n\n"
+                "Qualify them, lift the restriction, or change the vendor "
+                "policy on %(scope)s.",
+                reasons='\n'.join('• %s' % reason
+                                  for reason in dict.fromkeys(refusals)),
+                scope=self.project_id.display_name
+                or self.company_id.display_name))
+        if warnings:
+            Eligibility.post_governance_note(self, _(
+                "Invited with governance gaps recorded:\n%s")
+                % '\n'.join('• %s' % warning
+                            for warning in dict.fromkeys(warnings)))
+
+    def _sourcing_pool(self, date=None, purpose='sourcing'):
+        """Every suggested vendor across the requisition, with its status."""
+        self.ensure_one()
+        pool = {}
+        for line in self.line_ids:
+            for outcome in line._sourcing_pool(date=date, purpose=purpose):
+                key = (outcome['partner_id'], outcome['category_id'])
+                pool.setdefault(key, outcome)
+        return sorted(pool.values(),
+                      key=lambda r: (not r['eligible'], r['partner_name']))
 
     def _create_rfq_for_vendor(self, vendor):
         """One draft purchase order, fully coded, for one vendor."""

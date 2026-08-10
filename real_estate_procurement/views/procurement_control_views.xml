@@ -358,6 +358,21 @@
                                invisible="not procurement_allow_self_approval"/>
                     </group>
                 </group>
+                <group string="Vendor Governance" name="procurement_vendor_governance">
+                    <group>
+                        <field name="procurement_vendor_policy"/>
+                        <field name="procurement_qualification_warn_days"/>
+                    </group>
+                    <group>
+                        <field name="procurement_qualification_allow_self_approval"/>
+                    </group>
+                    <div colspan="2" class="text-muted">
+                        Optional is the shipped default and stays that way through an upgrade.
+                        Turning control on is a policy decision with a rollout worklist behind it —
+                        <em>Vendor Governance → Vendors Not Assessed</em> — not a side effect of
+                        installing a new version.
+                    </div>
+                </group>
             </xpath>
         </field>
     </record>
@@ -372,6 +387,8 @@
                        groups="real_estate_procurement.group_procurement_manager">
                     <field name="procurement_budget_policy"/>
                     <field name="procurement_po_governance"/>
+                    <field name="procurement_vendor_policy"/>
+                    <field name="procurement_vendor_endorsement_required"/>
                 </group>
             </xpath>
         </field>

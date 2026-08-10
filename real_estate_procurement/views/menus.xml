@@ -63,6 +63,66 @@
               action="action_control_exception"
               sequence="30"/>
 
+    <!-- M4 — vendor governance. Separate from Budget Control on purpose:
+         one answers "can this project afford it", the other "may we buy it
+         from them", and they are different controls owned by different
+         people. -->
+
+    <menuitem id="menu_vendor_governance"
+              name="Vendor Governance"
+              parent="menu_procurement_root"
+              sequence="17"/>
+
+    <menuitem id="menu_vendor_profiles"
+              name="Vendor Governance"
+              parent="menu_vendor_governance"
+              action="action_vendor_profile"
+              sequence="10"/>
+
+    <menuitem id="menu_qualification_register"
+              name="Qualification Register"
+              parent="menu_vendor_governance"
+              action="action_vendor_qualification"
+              sequence="20"/>
+
+    <menuitem id="menu_avl"
+              name="Approved Vendor List"
+              parent="menu_vendor_governance"
+              action="action_avl_report"
+              sequence="30"/>
+
+    <menuitem id="menu_qualification_pending"
+              name="Pending Assessment"
+              parent="menu_vendor_governance"
+              action="action_qualification_pending"
+              sequence="40"/>
+
+    <menuitem id="menu_qualification_expiring"
+              name="Expiring &amp; Expired"
+              parent="menu_vendor_governance"
+              action="action_qualification_expiring"
+              sequence="50"/>
+
+    <menuitem id="menu_vendors_unassessed"
+              name="Vendors Not Assessed"
+              parent="menu_vendor_governance"
+              action="action_vendors_unassessed"
+              sequence="60"/>
+
+    <menuitem id="menu_vendor_restrictions"
+              name="Restrictions"
+              parent="menu_vendor_governance"
+              action="action_vendor_restriction"
+              sequence="70"
+              groups="group_procurement_qualification_assessor"/>
+
+    <menuitem id="menu_vendor_audit"
+              name="Data Audit"
+              parent="menu_vendor_governance"
+              action="action_vendor_audit"
+              sequence="80"
+              groups="group_procurement_qualification_assessor"/>
+
     <menuitem id="menu_procurement_master_data"
               name="Master Data"
               parent="menu_procurement_root"
@@ -103,4 +163,22 @@
               parent="menu_procurement_config"
               action="action_approval_rule"
               sequence="30"/>
+
+    <menuitem id="menu_vendor_trades"
+              name="Vendor Trades"
+              parent="menu_procurement_config"
+              action="action_vendor_category"
+              sequence="40"/>
+
+    <menuitem id="menu_qualification_areas"
+              name="Qualification Areas"
+              parent="menu_procurement_config"
+              action="action_qualification_area"
+              sequence="50"/>
+
+    <menuitem id="menu_qualification_templates"
+              name="Qualification Templates"
+              parent="menu_procurement_config"
+              action="action_qualification_template"
+              sequence="60"/>
 </odoo>

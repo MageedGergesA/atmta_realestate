@@ -48,7 +48,7 @@ against each: **F** = fixed in M2, **M3/M5/M7** = owned by that milestone, **–
 | A2 | Requester may approve their own request | **Fixed in M3** — §17 |
 | A3 | Rules matched against `self.env.company`, not the request's company | **Fixed in M3** — §25 |
 | A4 | No approval on the award or the purchase order | Purchase-order side **governed in M3** (§19–§20); award approval is M5/M7 |
-| A5 | Amount basis is the flawed estimate | Partly fixed — M2 made the flaw visible (`estimate_is_known`), M3 converts the basis to company currency, and an unknown estimate still brackets as zero (§33) |
+| A5 | Amount basis is the flawed estimate | Partly fixed — M2 made the flaw visible (`estimate_is_known`), M3 converts the basis to company currency, and an unknown estimate still brackets as zero (§57) |
 | A6 | Step group resolved through `get_external_id()` | – |
 | A7 | Re-submission unlinks unapproved steps | Partly **F** — a revision snapshots the basis first |
 
@@ -817,7 +817,7 @@ procurement manager decides, with a reason on it.
 Phase 0 direct-PO bypass is closed *by configuration*, not by default. The
 alternative — shipping `controlled` — would refuse confirmation on every
 project purchase order path an existing installation depends on, including the
-ones Construction's own suite exercises, on the day of an upgrade. §33 states
+ones Construction's own suite exercises, on the day of an upgrade. §57 states
 the consequence plainly and §27 says which switch to throw.
 
 ---
@@ -1190,7 +1190,7 @@ unaltered, because what they record is still true:
   would claim a control the default configuration does not have; `test_j`
   proves the same scenario is refused once governance is switched on.
 * `test_defect_a_buyer_coding_a_line_hits_an_access_error` — a purchase user
-  with no Construction read still cannot code a purchase line (§33).
+  with no Construction read still cannot code a purchase line (§57).
 
 ### The M3 matrix
 
@@ -1316,45 +1316,1047 @@ record and no test. The frozen suite is unchanged in count and green.
 
 ---
 
-## 33. Remaining gaps, stated plainly
+## 33. Vendor master boundary — why `res.partner` stays authoritative
 
-M3 guarantees one thing about a confirmed purchase order:
+M4 creates no `realestate.vendor`. Every qualification, restriction and
+governance profile points at `res.partner`, and the partner keeps the name,
+the address, the tax identity, the bank details and the commercial
+relationship exactly as Accounting, Sales and Purchase already use them.
+
+What the governance layer owns is a decision *about* that partner:
+
+```
+    res.partner                  who they are            (shared, one record)
+    vendor.profile               where they stand with   (per company)
+                                 Procurement
+    vendor.qualification         what they may be         (per company, trade,
+                                 sourced for              project and date)
+    vendor.restriction           what they may not be     (dated, approved,
+                                                          reversible)
+```
+
+`test_01_the_vendor_master_is_not_duplicated` asserts both halves: the
+qualification's `partner_id` is a `res.partner`, and the profile carries none
+of `street`, `phone`, `email`, `vat`, `bank_ids` or `country_id`. The two
+additions to `res.partner` are pointers, not governance —
+`procurement_profile_id` (computed, unstored, because the profile is per
+company and a stored field on a shared partner would show one company's
+answer to another) and `procurement_vendor_class` (what the migration made of
+this supplier, never an approval).
+
+Odoo's own vendor commercial data — `product.supplierinfo` prices, minimum
+quantities, lead times, vendor references — is untouched and unduplicated.
+Those answer *what will it cost*. M4 answers *may we buy at all*.
+`test_a_price_data_still_exists_and_is_untouched` checks that answering the
+second question does not disturb the first.
+
+---
+
+## 34. Contractor vs vendor — the audit, and the decision
+
+`realestate.contractor` already existed in the frozen Construction module and
+the brief asked six questions about it before any code was written.
+
+| Question | Answer |
+|---|---|
+| Is it backed by `res.partner`? | **Yes.** `partner_id` is required with `ondelete='restrict'`, and `contact_email` / `contact_phone` are `related` fields on it. It is not a second identity master |
+| Does it represent construction commercial identity only? | **Yes.** Subcontract PO, payment certificates, retention held and released, milestones, an auto-created service product, and the committed/billed/paid rollups |
+| Does it hold qualification information already? | **Fragments, not decisions.** `specialization` (nine hard-coded values), `license_number` (free text) and `rating` (A/B/C). No dates, no evidence, no company scope, no per-trade scope, no approval and no history. That is a label on a card, not a qualification |
+| Can one supplier be both? | **Yes**, and nothing prevents it. A contractor's `partner_id` is an ordinary supplier partner who may also appear on material purchase orders |
+| Could vendor governance safely link to it? | **It already does, through the partner.** A qualification keyed on `res.partner` covers the contractor's partner automatically |
+| Would merging break frozen Construction? | **Yes.** `realestate.contractor` carries 563 tests, `ondelete='restrict'` foreign keys from contract packages, payment certificates and retention, and a stored `related` chain through `partner_id` |
+
+**Decision: leave Construction's contractor architecture entirely alone.** No
+merge, no deletion, no field added to it, no foreign key pointing at it. This
+is also forced by the dependency direction that M2 and M3 were careful to
+preserve — `real_estate_construction` **depends on** `real_estate_procurement`,
+so Procurement cannot reference `realestate.contractor` without inverting it.
+
+The integration is therefore the partner itself, and
+`test_01_contractor_and_vendor_stay_separate` pins it: a contractor and a
+qualification share `partner_id`, neither model references the other, and the
+qualification model has no `contractor_id`.
+
+**M4 required no Construction change at all.** `git diff` against the M3
+commit shows zero lines changed in `real_estate_construction`, and its frozen
+suite is unchanged at 563.
+
+---
+
+## 35. Governance profile
+
+`realestate.procurement.vendor.profile`, one per **partner and company**,
+unique-constrained on the pair. Per company because a vendor active in one
+company and never assessed in another is two different governance situations
+about one supplier, and a single record could only hold one of them.
+
+Status is deliberately separate from qualification:
+
+```
+    DRAFT → UNDER_REVIEW → ACTIVE → RESTRICTED → SUSPENDED → INACTIVE
+```
+
+`ACTIVE` means onboarded and not suspended. It says nothing whatever about
+which trades the vendor may be sourced for — that is per-trade, dated and
+evidenced. The form makes this hard to misread: the "Qualified For" list is
+computed from approved qualifications valid today and is read-only, because a
+tick-box trade list beside an ACTIVE status is exactly how "approved" starts
+meaning "approved for everything".
+
+**Prospective / sourcing-eligible / award-eligible** are answered per question
+by the eligibility service's `purpose` argument rather than stored as a third
+status field. The distinction is real — a vendor mid-assessment may be
+considered but not invited; a vendor qualified with a pre-award condition may
+be invited but not ordered from — and a stored field would be a fourth number
+that is wrong for as long as it takes something to recompute it.
+
+Profiles are created **one at a time**, when somebody starts governing a
+vendor (`action_open_vendor_governance`, or raising a qualification or
+restriction). The migration makes none: a database with 4,000 legacy suppliers
+would gain 4,000 empty records saying nothing.
+`test_19_a_profile_is_created_when_somebody_starts_governing` checks that
+pressing the button twice still yields one.
+
+M4T's conflict metadata is present and deliberately small —
+`potential_related_party`, `conflict_review_required`,
+`conflict_review_complete` and a note. No workflow: M26 owns that, and this is
+the dimension an award approval will later read.
+
+M4S duplicate detection is a computed warning on exact `vat` or `email`
+matches. No fuzzy matching, no automatic merge, and the form says so on its
+face — merging partners belongs to whoever owns the contact master.
+
+M4R is respected: no bank or payment verification exists here, and no bank
+field is exposed to procurement users. Finance owns payment master controls.
+
+---
+
+## 36. Qualification areas
+
+`realestate.procurement.qualification.area` — configurable headings, shipped
+with fourteen generic ones (Legal & Registration, Financial Capacity,
+Technical Capability, Experience, References, Quality, HSE, Insurance,
+Certifications, Delivery & Logistics, Commercial, Sustainability, Information
+Security, Other).
+
+No country's paperwork is baked in. "Legal & Registration" is true everywhere;
+"commercial registration certificate issued by GAFI" is true in one place and
+meaningless in the next, so the specific documents live on template
+requirements that a company writes for itself.
+
+`company_id` is left empty on the shipped areas so every company may use the
+vocabulary. Sharing a heading shares nothing about any vendor — decisions are
+company-scoped and the record rules keep them so.
+
+Two ship **confidential**: Financial Capacity and References. Those are the
+evidence people most often regret having made readable to the whole
+procurement team.
+
+---
+
+## 37. Qualification requirements
+
+`realestate.procurement.qualification.requirement`, as template lines.
+
+Seven answer types — yes/no, document, date/expiry, numeric, selection, score,
+text evidence — and three obligations that are genuinely different powers:
+
+```
+    MANDATORY       must be answered and passed
+    SCORED          contributes to the total
+    INFORMATIONAL   evidence and nothing else
+```
+
+**`blocking` is a fourth field, not a synonym for mandatory.** Mandatory says
+the question must be answered; blocking says failing it ends the matter
+regardless of the score. Conflating them is how an 85 %-scoring vendor with no
+valid insurance gets approved — which is test 5, and it passes.
+
+Document requirements track attachment, issue date, expiry date, issuer,
+document number, `verified_by`, `verified_on` and a verification result. Odoo
+attachments are used; there is no second document store.
+
+`expiry_sensitive` is opt-in per requirement (M4V). Only requirements marked
+there are re-checked at eligibility time. Making every attachment
+expiry-sensitive would render the register unusable within a month, and a
+company-profile PDF does not go stale the way an insurance certificate does.
+
+A requirement that was not met can be **waived** — with a reason and a named
+person, both required, and never by the assessor themselves unless the company
+has explicitly allowed self-approval. `test_05_a_waiver_needs_a_reason_and_a_person`
+covers all three.
+
+---
+
+## 38. Templates and versioning
+
+`realestate.procurement.qualification.template`, applicable by company, trade
+and vendor type (using the partner tags this suite already had).
+
+A qualification is an assertion about a moment: *given these questions, this
+vendor passed*. If the questions can be edited afterwards, the assertion
+quietly changes meaning — a vendor approved under a template that never asked
+for insurance appears a year later to have been approved with insurance on
+file.
+
+So **a template used by anything past draft is frozen**, and
+`action_new_version()` copies it forward, marks the old one obsolete and links
+the two. The guard is enforced in two places, because guarding only the
+template left the obvious way round it open: `QualificationTemplate.write()`
+refuses changes to what it asks, and `QualificationRequirement.write/unlink`
+refuse too. Renaming and retiring stay possible — they change no meaning.
+Deleting a template with assessments behind it is refused outright.
+
+Belt and braces: **every requirement is additionally snapshotted onto the
+response** (§39), so even the frozen template is not load-bearing for reading
+history. `test_responses_snapshot_the_requirement` deletes the source
+requirement and reads the response back intact.
+
+---
+
+## 39. Assessment workflow
+
+`realestate.procurement.vendor.qualification` — one decision for one
+vendor + company + trade + optional project, with an assessment date, an
+effective date, an expiry date and an approval date.
+
+```
+    DRAFT → SUBMITTED → UNDER_REVIEW → ASSESSED → PENDING_APPROVAL → APPROVED
+                                                       ↓
+                        REJECTED   CANCELLED   EXPIRED   SUPERSEDED
+```
+
+Every transition is a server-side action. There is no way to type a status.
+
+**State and result are two fields**, because they answer different questions.
+`state = approved, result = qualified_with_conditions` is an ordinary outcome:
+the review is finished and the answer is "yes, but". One field would force
+that to be recorded as an approval plus a note, and notes cannot be filtered,
+counted or enforced.
+
+Results: `qualified`, `qualified_with_conditions`, `not_qualified`,
+`pending_information`. A `not_qualified` result may be approved and become
+current — approving means "this conclusion stands", and a recorded, findable
+"no" is more useful than an abandoned draft.
+
+**Responses are snapshots.** At creation the template's requirements are
+copied onto `realestate.procurement.qualification.response` with their name,
+type, obligation, blocking flag, expiry sensitivity, confidentiality, weight,
+maximum score, threshold and area. After that, reading the assessment never
+consults the template again.
+
+### Suspension is deliberately not a qualification state
+
+The brief lists SUSPENDED among the possible states and this implementation
+does not have it, on purpose. Suspending is a management act taken later,
+usually for reasons that have nothing to do with the assessment. If it
+rewrote the assessment's state, the record of what the assessor concluded
+would be gone — and M4P separately requires that the qualification remain
+stored as a valid historical assessment. So suspension is its own dated,
+approved, reversible record (§44) and the eligibility service lets it outrank
+a valid qualification without touching it. Test C asserts exactly this: after
+suspension the qualification is still `approved`, still `qualified`, still
+current, and still named in the eligibility answer beside the reason it does
+not help.
+
+### Reassessment
+
+`action_reassess()` creates a new assessment on the latest active template
+version, links it to the previous one, and carries evidence references
+forward. **Verification is not carried forward for anything expiry-sensitive.**
+An insurance certificate verified two years ago is not verified now, and
+copying the tick would be the single most dangerous convenience in this
+module. `test_08_reassessment_does_not_carry_forward_expiring_verification`
+checks that the document number comes across and the verification does not.
+
+The old assessment is immutable: `_DECIDED_FIELDS` (vendor, company, trade,
+project, template, dates, result, score, approver) cannot be written once the
+record is approved, expired or superseded, its responses cannot be edited, and
+it cannot be deleted.
+
+---
+
+## 40. Scoring
+
+Opt-in per template. Off means pass/fail — mandatory requirements decide and
+no percentage is computed, because not every supplier needs a number.
+
+When on, the arithmetic is written down in full on the record:
+
+```
+    weighted     = Σ (score × weight)      over scored requirements
+    weighted_max = Σ (max_score × weight)
+    score        = weighted / weighted_max × 100
+```
+
+`score_explanation` lists every contributing line with its numbers, the total,
+the minimum required, and the reason for the result. There is no opaque risk
+score anywhere in M4 and no model produces one.
+
+The rules are applied in this order, and stated in that order in the
+explanation:
+
+1. a **blocking** requirement that failed → `not_qualified`, whatever the
+   total says;
+2. a **mandatory** requirement with no answer → `pending_information`, because
+   nobody has decided anything yet;
+3. a mandatory requirement that failed **without** being blocking → downgrade
+   to `qualified_with_conditions`, with a structured condition naming it;
+4. a scored template below its minimum → `not_qualified`.
+
+Test 5 is rule 1: 90 % score, insurance failed, blocking → **Not Qualified**.
+
+---
+
+## 41. Conditional qualification
+
+`realestate.procurement.qualification.condition`, in fields rather than prose:
+
+```
+    max_award_value    a value ceiling, in company currency
+    project_limited    valid only on named projects
+    category_limited   valid only for named trades
+    date_limited       a narrower validity window
+    pre_award_action   what must happen before an order
+    warning            everything else, including auto-generated ones
+```
+
+A condition nobody can query is a condition nobody will honour. The
+eligibility service returns them in its answer, so a buyer sees the 5,000,000
+ceiling before inviting anybody, and M7's award check will read the same
+field rather than parsing a sentence. Test 6 asserts the amount comes back
+through the service; enforcing it at award is explicitly M7's and is not
+claimed here.
+
+A `max_award_value` of zero is refused by constraint — that is "not qualified"
+said badly.
+
+---
+
+## 42. Approved Vendor List
+
+**Derived, not stored.** There is no `is_approved_vendor` boolean anywhere and
+no manually maintained membership table.
+
+The AVL is a question with four parameters — company, trade, project, date —
+and the honest way to answer a question with four parameters is to ask it.
+`realestate.procurement.avl.report` takes all four plus a purpose, calls the
+eligibility service, and returns one row per vendor naming **the qualification
+that authorises it**. A row with no qualification behind it is visibly a row
+with nothing behind it.
+
+Excluded vendors are shown by default with the reason, because a list that
+silently drops the suspended vendor cannot answer *why wasn't Vendor X
+invited* — which is the question the screen exists for.
+
+It ranks nobody. Qualified is not cheapest, and comparing quotations is M6's.
+
+---
+
+## 43. Eligibility service
+
+One service, `realestate.procurement.vendor.eligibility`, and every screen and
+gate asks it:
+
+```python
+check_vendor_eligibility(vendor, company, category, project, date, purpose)
+    → { eligible, qualified, status, qualification_id, qualification_ref,
+        result, score, valid_from, valid_to, conditions, blocking_reasons,
+        warnings, restriction_ids, endorsement_id, policy, enforcing, ... }
+```
+
+### Eligible is not qualified
+
+Two separate keys, and the distinction is the whole of UNKNOWN IS NOT
+ELIGIBLE:
+
+```
+    qualified   a current, valid, approved assessment says so
+    eligible    company policy allows them to take part today
+```
+
+Under OPTIONAL an unassessed vendor comes back `eligible=True,
+qualified=False, status='no_qualification'`. Nobody has decided they are good;
+the company has decided not to require the decision yet. One flag would turn
+"we allow it for now" into "the system says they're approved".
+
+### As-of date
+
+Never implicitly today. Invitation, award and confirmation happen on different
+days and the answer legitimately differs between them, so the date is an
+argument; `date=None` means today, and that is a default rather than an
+assumption baked into the arithmetic.
+
+### Precedence
+
+```
+    1  governance status      inactive vendor                  → blocks
+    2  restrictions in force  scoped by trade and project      → blocks
+    3  general qualification  company + trade                  → policy decides
+    4  project endorsement    where the project demands one    → policy decides
+    5  document expiry        mandatory, expiry-sensitive      → policy decides
+```
+
+A project endorsement can never rescue a vendor from a company suspension: 1
+and 2 return before 3 is reached, and
+`test_04_an_endorsement_cannot_rescue_a_suspended_vendor` proves it.
+
+### M5's hook
+
+`get_eligible_vendors(...)` is the bulk form and `eligibility_snapshot(...)`
+produces the flat, immutable dict M5 will store on a tender invitation —
+partner, qualification reference, validity, conditions, status and reasons,
+all primitives. M4 stores none of these because there is nothing yet to store
+them on; it produces them in the shape that will be kept, so a tender opened
+today can still print *this vendor was eligible at invitation, under
+qualification QUAL/2026/00007, valid to 2027-03-01* after every one of those
+facts has changed.
+`test_15_a_snapshot_survives_everything_changing_afterwards` debars the vendor
+and rewrites the approval date afterwards, and reads the snapshot back
+unchanged.
+
+---
+
+## 44. Suspension and restriction
+
+`realestate.procurement.vendor.restriction` — dated, reasoned, approved,
+liftable, and never deleted once it has been in force.
+
+Seven types, and they do not all do the same thing:
+
+| Type | Blocks invitation | Blocks the order |
+|---|---|---|
+| Sourcing suspension | ✔ | ✔ |
+| Award suspension | — | ✔ |
+| Trade restriction (within its trade) | ✔ | ✔ |
+| Project restriction (within its project) | ✔ | ✔ |
+| Temporary hold | ✔ | ✔ |
+| Debarment | ✔ | ✔ |
+| Probation | — | — |
+
+Probation blocks nothing by design: it is a recorded warning that travels with
+the vendor, and a restriction that silently stopped sourcing while being
+called "probation" would be worse than not having the type.
+
+**A suspension blocks even under OPTIONAL policy.** Absence of qualification is
+tolerated there because nobody has decided yet; a suspension is a decision.
+`test_c_suspension_blocks_even_under_a_permissive_policy`.
+
+**It touches nothing else.** No purchase order is cancelled, no bill reversed,
+no qualification altered, no history rewritten. The affected open orders are
+surfaced as a worklist on the restriction so somebody can decide about them —
+deciding is a management act with money attached and is not this module's.
+`test_09_a_suspension_does_not_touch_the_orders`.
+
+Whether a restriction applies is answered **from its dates**, not from its
+state flag, so a question about March gets March's answer whether or not the
+nightly job has run — and a *lifted* restriction still applies to dates before
+it was lifted. Lifting requires a reason; deleting one that has been in force
+is refused.
+
+---
+
+## 45. Qualification policy
+
+Company default, project override — the same chain M3 uses.
+
+```
+    OPTIONAL                qualification available, never required
+    WARN                    record the gap and continue
+    REQUIRED_FOR_SOURCING   must be eligible to be invited
+    REQUIRED_FOR_AWARD      must be eligible to receive the order
+```
+
+### Why there is no fifth level
+
+The brief offered REQUIRED_FOR_PO as a possibility. It is not shipped, because
+with no Award document in the system until M7 it would enforce at exactly the
+same moment as REQUIRED_FOR_AWARD — a setting that changed nothing, which is
+worse than a gap somebody can see. REQUIRED_FOR_AWARD is enforced today at
+purchase-order confirmation, the only award-like act that exists. When M7
+introduces a formal award the check moves earlier and confirmation keeps this
+one as the backstop.
+
+### Default
+
+**OPTIONAL**, and the migration confirms rather than assumes it (§49). An
+upgrade must not start refusing purchases that were legal the day before.
+`test_11_optional_is_the_shipped_default` and
+`test_11_optional_policy_changes_nothing_for_a_legacy_vendor` hold the line.
+
+### Where it bites
+
+| Moment | Level that refuses | Method |
+|---|---|---|
+| Creating RFQs from a requisition | REQUIRED_FOR_SOURCING | `MaterialRequest._check_vendors_may_be_invited()` |
+| Confirming a purchase order | REQUIRED_FOR_SOURCING, REQUIRED_FOR_AWARD | `PurchaseOrder._check_vendor_eligibility()` |
+
+Both are server-side, before anything is created or committed. The
+confirmation gate sits inside `button_confirm()` alongside M3's, so RPC,
+imports, scheduled actions and other modules hit it too —
+`test_the_gate_is_server_side_not_a_hidden_button` confirms through three
+different entry points, including one carrying a `force_confirm` context that
+does nothing.
+
+**Scope is `is_realestate_po` and nothing wider.** Office stationery, IT
+subscriptions and everything else this suite has no opinion about confirm
+exactly as standard Odoo confirms them, under the strictest policy available —
+`test_an_office_purchase_is_not_policed`.
+
+A warning is never the reason something fails. This was found in testing: under
+WARN the gate posts a note, Odoo refuses to post on behalf of a user with no
+email address, and the note's failure was cancelling the confirmation it was
+only commenting on. `post_governance_note()` now falls back to the system
+partner and names the acting user in the text;
+`test_a_warning_never_blocks_the_thing_it_warns_about` is the regression.
+
+---
+
+## 46. Trade taxonomy
+
+Four classifications already existed and none of them was the one eligibility
+needs:
+
+| Existing | What it classifies | Why it does not fit |
+|---|---|---|
+| `product.category` | goods | A vendor qualified for *HVAC installation* is neither narrower nor wider than the *MEP* product category. Keying approval on the product tree means a vendor approved to supply ducting is approved to install it |
+| `res.partner.category` | party type | Seven global tags, no hierarchy, no company, no dates. Useful as vendor type, not as trade eligibility |
+| `realestate.contractor.specialization` | one Construction label | Construction-owned, single-valued, per contractor record, no company. Procurement cannot reference it without inverting the dependency |
+| `contract.package.package_type` | subcontract scope | Same owner, same problem |
+
+So `realestate.procurement.vendor.category`: a hierarchical trade tree with an
+optional company, used only as the axis qualification is keyed on. It carries
+an explicit `product_category_ids` mapping used **only to suggest** a trade on
+a requisition line — and the suggestion is refused when two trades claim the
+same product category, because picking the lower id would answer a
+configuration question silently
+(`test_an_ambiguous_product_mapping_suggests_nothing`). A buyer's choice is
+never recomputed away.
+
+A vendor may be qualified for concrete, qualified for steel and not qualified
+for electrical, and each is a separate decision — tests B and
+`test_b_the_concrete_decision_is_not_widened_by_a_second_trade`.
+
+---
+
+## 47. Company, trade and project scope
+
+**Company.** `company_id` is required on qualifications and restrictions, and
+global record rules scope every governance model. A vendor qualified in
+Company A is not qualified in Company B — `test_03_qualification_does_not_cross_companies`.
+
+**Group recognition** is stated, never implied. `is_group_wide` plus an
+explicit `shared_company_ids`, with a constraint refusing the first without the
+second: leaving `company_id` empty to get the same effect would expose the
+decision everywhere by accident.
+`test_03_group_recognition_has_to_be_stated`.
+
+**Project.** A qualification with no project is the general company/trade
+decision. One with a project is an *endorsement* — the extra sign-off some
+developments need, usually because a client or lender insists. It is requested
+only where `procurement_vendor_endorsement_required` is set on the project, it
+narrows and never widens, and the general questionnaire is not duplicated for
+it. Test 4 covers both directions.
+
+Restrictions scope the same way: a project restriction leaves other projects
+alone (`test_04_a_project_restriction_leaves_other_projects_alone`) and says
+nothing about sourcing that names no project.
+
+---
+
+## 48. Validity, expiry and reassessment
+
+`effective_date`, `expiry_date` and `approved_date` are all real and all
+consulted.
+
+`approved_date` exists because of Rule 6's converse: a qualification approved
+in June never made anybody eligible in March, however early its effective date
+is typed. `test_d_eligibility_never_predates_the_approval`.
+
+Expiry is a **date boundary**, not a flag — valid on the last day, not on the
+next (`test_d_expiry_is_a_date_boundary_not_a_flag`), and the eligibility
+service accepts `expired` and `superseded` records inside their own validity
+window, which is how historical sourcing stays explainable.
+
+`expiring_soon` uses `procurement_qualification_warn_days`, configurable per
+company and defaulting to 30 — a starting point, not a rule, and
+`test_07_expiring_soon_uses_the_configured_window` changes it and watches the
+status move.
+
+The nightly job moves state and nothing else: the record keeps its result, its
+evidence and its dates, and it is idempotent
+(`test_07_the_expiry_job_is_idempotent`). Nothing depends on the job having
+run — the service works from the dates — so a stopped scheduler produces stale
+labels, never wrong answers.
+
+**A cron for M3's reservation expiry was added at the same time.** M3 shipped
+`expire_due_reservations()` with no scheduler behind it, so a company that
+configured `procurement_reservation_expiry_days` got a control that never
+fired. The default is still zero — never expire — so this releases nothing
+until somebody chooses a number. Recorded here rather than left as a gap: a
+setting that silently does nothing is worse than not offering it.
+
+---
+
+## 49. Migration
+
+`migrations/18.0.4.0.0/post-migrate.py`.
+
+The one dishonest thing this script could do is decide that a vendor with
+eight years of purchase orders must be qualified. Prior commercial activity is
+evidence that somebody once decided to buy; it has no assessor, no date, no
+evidence and no expiry, and writing it into the qualification register would
+create exactly the fiction the register exists to prevent.
+
+So it:
+
+1. **confirms the permissive policy** rather than assuming it, and logs a
+   warning naming any company already configured to require qualification —
+   which the upgrade did not do;
+2. **creates nothing**: no qualification, no profile, no AVL entry, no
+   restriction, and it alters no purchase order, vendor bill or requisition;
+3. **classifies the supplier population** so a manager can see the size of the
+   job before deciding to start it.
+
+| Classification | Meaning |
+|---|---|
+| `assessed` | A current, valid, approved qualification exists |
+| `needs_qualification` | The company requires qualification and this supplier is actually in use |
+| `has_active_purchase_history` | Confirmed orders exist. **Evidence, not a decision** |
+| `has_current_vendor_pricelist` | Commercial data exists, nothing ordered |
+| `legacy_active_vendor` | An active supplier with neither |
+| `existing_vendor_unassessed` | Everything else |
+
+Classification is a written field rather than a stored compute: the inputs are
+confirmed purchase orders and price lists across the whole database, and a
+compute would either re-read all of that on every partner write or go stale.
+It is rerun by hand, by a weekly cron, or by the migration, and rerunning is
+idempotent because every branch is decided from current data —
+`test_19_classification_is_idempotent` also checks it creates no governance
+records as a side effect.
+
+Test 19 is the headline: a vendor with years of confirmed orders comes out
+`has_active_purchase_history`, has zero qualifications, is not `qualified`
+under a strict policy, and its purchase order is still `purchase`.
+
+**Rollout runbook.** Vendor Governance → *Vendors Not Assessed* lists the
+work; assess the vendors that matter; then move the company or the individual
+projects from OPTIONAL to WARN, to REQUIRED_FOR_SOURCING, to
+REQUIRED_FOR_AWARD. Nothing about the upgrade forces any of those steps.
+
+---
+
+## 50. Suggested suppliers
+
+`_suggested_suppliers()` is unchanged: it still returns every catalogue vendor
+and decides nothing. M4 did **not** put back the filter M2 removed —
+`test_22_suggested_suppliers_still_lists_everybody`.
+
+Alongside it, `_sourcing_pool()` returns the same vendors each with its
+governance answer:
+
+```
+    Vendor A   eligible
+    Vendor B   qualification expires before the required date
+    Vendor C   no qualification for this trade
+    Vendor D   suspended
+```
+
+Four rows, not one. Ineligible vendors are shown with the reason, never
+dropped — `test_22_the_pool_shows_every_vendor_with_its_status`. It ranks
+nobody, prices nothing and creates no order
+(`test_22_the_pool_confirms_nothing`).
+
+Test 14 states the converse and matters as much: a qualified vendor with no
+catalogue entry is eligible, and Procurement does not invent a price to fill
+the gap.
+
+Test 21 pins the boundary: a draft RFQ stays a draft RFQ while qualifications
+are approved, restrictions imposed and expiry run. M5 owns invitations.
+
+---
+
+## 51. Security and confidential evidence
+
+Two new groups, deliberately beside the spend ladder rather than inside it:
+
+```
+    Qualification Assessor    run assessments, record and verify evidence,
+                              see confidential documents. Cannot approve
+    Qualification Approver    approve or reject qualifications, impose and
+                              lift restrictions. No spend authority at all
+```
+
+Approving a supplier is not approving a purchase, and a company may reasonably
+grant one and not the other. Nothing here implies or is implied by Accounting,
+Inventory or Construction — a Construction Manager does not become a vendor
+approver by being a Construction Manager.
+
+### Confidential evidence
+
+A requirement (or its whole area) may be marked confidential. Two record rules
+on the response model, which Odoo ORs: buyers see the non-confidential
+responses, assessors see all of them. Written as a group restriction rather
+than a global rule, because a global `confidential = False` would hide the
+financial assessment from the person doing the financial assessment.
+
+Requesters have no access to responses at all, and still read the partner —
+Rule 1 working.
+
+### Attachments
+
+The classic hole is a `many2many` of `ir.attachment` created through the web
+widget: the attachment is left unattached, `res_model` empty, and an
+unattached attachment is readable by anybody who can read attachments at all.
+A vendor's audited accounts would be one `/web/content/` away from every
+requester in the company.
+
+`_bind_attachments()` stamps `res_model` and `res_id` onto every document, so
+Odoo's own attachment check asks whether the reader may read *this response* —
+which the record rules above already answer. There is no separate attachment
+ACL to keep in step and **no `sudo()` in the read path**.
+`test_17_a_confidential_document_is_not_a_loose_attachment` uploads one, reads
+it as an assessor and is refused as a buyer.
+
+`test_17_a_buyer_still_sees_the_eligibility_answer` closes the loop:
+confidentiality must not make the service useless to a buyer. They cannot read
+the financial evidence and can still be told whether the vendor may be
+invited, which is the point of returning a decision rather than a file.
+
+### The two documented elevations
+
+Both are narrow, both are at the field/record level, and both are commented in
+place:
+
+| Where | Why |
+|---|---|
+| `VendorCategory.suggest_for_product()` and `PurchaseOrder._order_vendor_categories()` | Whoever confirms an order may hold nothing but Odoo's Purchase Manager. Which control question the gate asks about them cannot depend on their being allowed to browse the trade list. A trade is a word; nothing about any vendor is exposed |
+| The eligibility service's internal searches over profiles, restrictions and qualifications | It returns a *decision*, not the evidence. A buyer is entitled to be told a vendor is suspended without being entitled to read the investigation |
+
+### Maker / checker
+
+`_check_not_self_approval()` derives the deciding user from `env.user` and
+nothing else. `test_16_the_rule_is_derived_from_env_user_not_from_the_client`
+passes `approved_by` and `default_approver_id` in the context and is still
+refused. Rejection requires a reason and keeps every response
+(`test_16_a_rejection_needs_a_reason_and_keeps_the_evidence`).
+
+The switch is separate from M3's spend self-approval, because the product
+keeps the two authorities separate.
+
+---
+
+## 52. Multi-company
+
+Covered in §47. Concretely: `company_id` required and indexed on every
+governance model, global record rules on all nine, `check_company` semantics
+enforced by constraint between qualification, project and template, and group
+recognition available only when stated explicitly.
+
+---
+
+## 53. Concurrency
+
+M4AF requires exactly one authoritative current qualification per vendor,
+company, trade and project scope.
+
+**A partial unique index**, `proc_qualification_one_current`, on
+`(company_id, partner_id, category_id, COALESCE(project_id, 0)) WHERE
+is_current`. Partial because uniqueness applies to the *current* record — a
+vendor with five years of history has five rows and should. `COALESCE`
+because NULLs do not collide in a unique index, and two current general
+qualifications for one trade is exactly the collision this exists to prevent.
+
+**A transaction-level advisory lock** taken in `action_approve()` before the
+previous current record is read, scoped to that one vendor/company/trade/
+project.
+
+**An explicit flush** between superseding the old record and setting the new
+one current. Found in testing: the ORM buffers writes and was sending both
+UPDATEs together in an order the index rejected — a crash rather than a wrong
+answer, but still not an answer.
+
+### What the tests can and cannot prove
+
+Stated as plainly as §13 states it for reservations. Odoo's harness runs each
+test inside one transaction on one connection, so a genuine two-process race
+cannot be staged. What is tested is the thing that would decide such a race:
+the index exists (`test_18_the_database_enforces_one_current_per_scope`), a
+second approval supersedes rather than duplicating, a forced duplicate written
+straight past the workflow is refused by the database, and project
+endorsements do not collide with the general qualification.
+
+---
+
+## 54. Performance
+
+Assumed: thousands of vendors, many trades, years of history.
+
+| Measure | Where |
+|---|---|
+| Composite index `(partner_id, company_id, category_id, state, effective_date, expiry_date)` on the qualification table — the eligibility service's exact lookup | `VendorQualification.init()` |
+| The partial unique index doubles as the `is_current` lookup index | same |
+| `_read_group` rather than Python summation in the classification pass and the partner counts | `res_partner.py` |
+| Classification batched, with an explicit `batch_size` | `_classify_procurement_vendors()` |
+| Bulk eligibility accepts an explicit `partners` recordset; the unbounded branch is documented as the one to avoid | `_candidate_partners()` |
+| Restrictions filtered by an indexed `(partner_id, company_id, state, effective_from)` domain before any Python work | `_restrictions()` |
+
+The eligibility service performs a bounded number of queries per vendor and
+does not load history into Python to filter it.
+
+---
+
+## 55. Tests
+
+**Procurement: 240 tests, 0 failed, 0 errors** — 147 at M3, +93 for M4.
+
+| File | Tests | Covers |
+|---|---|---|
+| `test_m4_invariants.py` | 11 | The five invariants A–E, written before any model |
+| `test_m4_qualification.py` | 31 | Tests 1, 3–10: scope, templates, scoring, conditions, expiry, reassessment, restrictions |
+| `test_m4_eligibility.py` | 28 | Tests 11–15 and 20–22: policy, price, history, the purchase gate, financial isolation |
+| `test_m4_security.py` | 23 | Tests 16–19: maker/checker, confidential evidence, concurrency, migration, registers |
+
+Every M1–M3 test was kept. **No test was converted, deleted or weakened for
+M4** — none needed to be, because M4 added a control that defaults to
+refusing nothing.
+
+### The brief's 22, mapped
+
+| # | Requirement | Test |
+|---|---|---|
+| 1 | Vendor master not duplicated | `test_01_the_vendor_master_is_not_duplicated`, `test_01_contractor_and_vendor_stay_separate` |
+| 2 | Category-specific | `test_b_qualification_is_category_specific` |
+| 3 | Company-specific | `test_03_qualification_does_not_cross_companies` |
+| 4 | Project-specific | `test_04_project_endorsement_narrows_and_never_widens` |
+| 5 | Mandatory/blocking failure | `test_05_a_blocking_failure_outranks_a_high_score` |
+| 6 | Conditional, 5M cap exposed | `test_06_a_value_cap_is_exposed_not_enforced_yet` |
+| 7 | Expiry | `test_d_expiry_ends_eligibility_without_ending_history`, `test_07_*` |
+| 8 | Reassessment | `test_08_reassessment_supersedes_without_rewriting` |
+| 9 | Suspension | `test_c_suspension_overrides_a_valid_qualification`, `test_09_*` |
+| 10 | Suspension expiry | `test_10_a_lapsed_suspension_stops_biting` |
+| 11 | Optional policy | `test_11_optional_policy_changes_nothing_for_a_legacy_vendor` |
+| 12 | Required policy | `test_12_required_for_sourcing_refuses_an_invitation` |
+| 13 | Price ≠ qualification | `test_13_a_price_list_is_not_a_qualification` |
+| 14 | Qualification ≠ price | `test_14_a_qualification_is_not_a_price` |
+| 15 | Current vs historical | `test_15_the_answer_depends_on_the_date_it_is_asked_about` |
+| 16 | Approval | `test_16_the_assessor_cannot_approve_their_own_assessment` |
+| 17 | Attachment security | `test_17_a_confidential_document_is_not_a_loose_attachment` |
+| 18 | Concurrency | `TestM4Concurrency` (4 tests) |
+| 19 | Migration | `test_19_purchase_history_does_not_become_a_qualification` |
+| 20 | M3 financial isolation | `test_e_governing_a_vendor_moves_no_money`, `test_20_*` |
+| 21 | RFQ current state | `test_21_a_draft_rfq_stays_a_draft_rfq` |
+| 22 | Suggestion | `test_22_the_pool_shows_every_vendor_with_its_status` |
+
+### Three defects the tests found in M4 itself
+
+Recorded because each one would have shipped as a plausible-looking feature
+that failed at the worst moment, and each now has a regression test:
+
+| Defect | Symptom | Fix |
+|---|---|---|
+| **A warning cancelled the thing it was warning about.** Under WARN the gate posts a note; Odoo refuses to post on behalf of a user with no email; the exception propagated out of `button_confirm()` | A user with no email address could not confirm any project purchase order under WARN | `post_governance_note()` falls back to the system partner and names the acting user in the text. `test_a_warning_never_blocks_the_thing_it_warns_about` |
+| **A governance refusal arrived as an access error.** The refusal message re-read the qualification and the restriction as the confirming user, who may hold nothing but Purchase Manager | "You are not allowed to access Vendor Restriction" instead of "cannot be confirmed: suspended since 3 August — site safety incident" | The service returns the *decision* elevated and the evidence not. `test_a_bare_purchase_manager_gets_the_refusal_not_an_access_error` |
+| **A frozen template could be edited through its rows.** The freeze guarded `template.write()` and nothing guarded the requirement records | Editing or deleting a requirement directly changed what a used questionnaire had asked | The guard moved onto `QualificationRequirement.write/unlink` as well. `test_a_used_template_refuses_to_change_what_it_asks` |
+
+The ORM write-ordering collision on the current-qualification index (§53) was
+found the same way and is fixed by an explicit flush.
+
+---
+
+## 56. M4 gate results
+
+Every figure below is from a run that completed. Interrupted and
+port-conflicted runs are not reported: three had to be repeated — twice
+because running two Odoo instances concurrently starved both, once because a
+second process was still holding port 8099. Their output is discarded, not
+averaged in.
+
+The figures are from the final run, taken after the last code change rather
+than from the first run that happened to be green.
+
+| # | Gate | Result |
+|---|---|---|
+| 1 | Procurement M1–M4 | **240 tests, 0 failed, 0 errors** |
+| 2 | Construction frozen suite | **563 tests, 0 failed, 0 errors** — exact |
+| — | Both together, one database | **803 tests, 0 failed, 0 errors** |
+| 3 | Vendor / partner integration | Included above (`TestM4Qualification`, `test_01_*`) |
+| 4 | Purchase integration | Included above (`TestM4PurchaseGate`, 6 tests) |
+| 5 | Security | Included above (`TestM4Approval`, `TestM4ConfidentialEvidence`) |
+| 6 | Attachment confidentiality | `test_17_*`, 5 tests |
+| 7 | Multi-company | `test_03_*`, `test_04_*` |
+| 8 | Concurrency | `TestM4Concurrency`, 4 tests |
+| 9 | Fresh 14-module install | Installed clean, exit 0, no parse or critical error. Test run: **802 tests, 1 failed** — see below |
+| 10 | Full 14-module upgrade | Upgraded clean, exit 0, no parse or critical error |
+| 11 | Legacy Procurement migration | Upgraded 18.0.3.0.0 → 18.0.4.0.0 on `atmta_m3mig`, exit 0, no error — see below |
+| 12 | Migration retry / idempotency | Same upgrade rerun, exit 0, identical outcome, nothing duplicated |
+
+### The one failure, and why it is not being fixed here
+
+`real_estate_construction`'s
+`TestMultiCompanyIsolation.test_both_companies_active_still_scopes_each_project`
+failed on the fresh 14-module database and passed everywhere else, including
+the 803-test combined run on `atmta_p4`. It is not an M4 regression, and it is
+worth being precise about why rather than asserting it.
+
+The assertion is:
+
+```python
+    self.assertNotIn(str(self.project_b.id), str(payload_a['cost']))
+```
+
+— the *string* of project B's id, searched inside the *string* of project A's
+cost payload. That payload contains no id of any kind. Its keys are
+`original_budget`, `current_budget`, `original_commitment`,
+`current_commitment`, `actual_cost`, `certified_amount`, `etc`, `eac`,
+`forecast_variance`, `has_forecast`, `available_before_commitment`,
+`budget_remaining_vs_actual`, `over_committed`, `unassigned_commitment`,
+`unassigned_actual` and `budget_state` — sixteen numbers and flags, not one
+reference. So the check cannot detect the leak it is named after, and can only
+ever fire on a coincidence between an id and a figure.
+
+On this run it did: `project_b.id` came out 60 and company A's commitment was
+`60000000.0`, which contains `60`.
+
+What made the ids land differently is that M4 ships fourteen qualification-area
+records, so everything created afterwards is numbered higher. M4 *exposed* the
+coincidence; it did not create the defect, and `git log` confirms the test file
+has not been touched since the freeze commit.
+
+**It has been left alone.** M4AI says to stop and prove a contract defect
+before editing Construction, and this is not a contract defect — it is a test
+that cannot do its job. The isolation it means to check is covered by its own
+neighbouring assertions (`payload_a` reports 100,000,000 and `payload_b`
+reports 50,000,000, both passing) and by the other tests in the same class,
+which all pass. Rewriting a frozen module's test to make a gate green is
+exactly the move the freeze exists to prevent, so it is reported instead.
+
+**Construction was not modified by M4.** `git diff` against the M3 commit
+(`f7873a2`) reports zero changed lines in `real_estate_construction`, so the
+563 is not a coincidence of the suite passing — there was nothing to break.
+M4AI's escape hatch ("if M4 unexpectedly requires Construction edits, stop and
+prove a contract defect first") was never needed: the dependency direction
+that M2 and M3 preserved meant vendor governance could be keyed on
+`res.partner` and `realestate.project`, both of which Procurement already
+depends on.
+
+### Migration classifications
+
+Run on a copy of `atmta_m3mig` — the database M3's own migration was proved
+against, so this is a genuine 18.0.3.0.0 → 18.0.4.0.0 step over data that
+predates vendor governance entirely. (Copied with the filestore, not just the
+rows: `createdb -T` does not carry it, which cost M3 half a day of phantom
+browser failures.)
+
+The upgrade log, in full:
+
+```
+    M4: 2 company(ies) on the permissive default, 0 configured to require
+        qualification, 0 had no value and were set to optional.
+    M4 vendor classification — has_active_purchase_history: 1
+    M4 complete: 1 supplier(s) classified. 0 qualifications created,
+        0 governance profiles created, 0 approved-vendor-list entries created,
+        0 restrictions created. No purchase order, vendor bill or requisition
+        was altered.
+```
+
+Rerun immediately afterwards: exit 0, same output, nothing duplicated. The
+post-state check confirmed 0 qualifications, 0 profiles, 0 restrictions, both
+companies on `optional`, **4 confirmed purchase orders still confirmed and 0
+cancelled**, and M3's reservation figures untouched.
+
+That database only had one supplier in it, which proves the migration is safe
+but says little about what the classification *reports*. So the same entry
+point the migration calls — `_classify_procurement_vendors()` — was then run
+over a seeded population of nine legacy vendors on the migrated database:
+
+| Classification | Count |
+|---|---|
+| `has_active_purchase_history` | 4 |
+| `has_current_vendor_pricelist` | 2 |
+| `legacy_active_vendor` | 4 |
+| `assessed` | 0 |
+| `needs_qualification` | 0 (no company requires qualification) |
+
+Run twice, byte-identical both times. Records created by the classification:
+**0 qualifications, 0 profiles, 0 restrictions.**
+
+And the test that matters most, on the migrated database rather than in a
+fixture — a supplier with confirmed purchase orders, asked under
+`required_for_sourcing`:
+
+```
+    eligible = False    qualified = False    status = no_qualification
+```
+
+Years of trading did not become a governance decision.
+
+---
+
+## 57. Remaining gaps, stated plainly
+
+After M3, a confirmed purchase order carried one guarantee:
 
 ```
     IF A PO IS CONFIRMED, IT WAS FINANCIALLY AUTHORISED.
 ```
 
-It does **not** guarantee:
+M4 adds a second, and only where the policy has been switched on:
+
+```
+    IF A PO IS CONFIRMED, THE VENDOR WAS ALLOWED TO RECEIVE IT.
+```
+
+Neither is, and together they are still not:
 
 ```
     THE BEST VENDOR WAS SELECTED.
 ```
 
-That distinction is the whole of the difference between M3 and M4–M7, and
-nothing in this module should be read as claiming the second.
+**M4 does not determine the winning vendor.** It answers *eligible /
+ineligible / eligible with conditions*, and nothing in this module should be
+read as claiming more. Who was invited, what they quoted, how the bids
+compared technically and commercially, and who should win are M5–M7.
 
-### Not built in M3, and not stubbed
+### Not built in M4, and not stubbed
 
 | Missing | Owner |
 |---|---|
-| Vendor prequalification and approved-vendor list | M4 |
-| Competitive tender, alternative-RFQ orchestration | M5 |
-| Technical evaluation, commercial evaluation, bid levelling, BAFO | M6 |
+| Competitive tender, alternative-RFQ orchestration, bid submission | M5 |
+| Technical evaluation, commercial evaluation, bid levelling, negotiation, BAFO | M6 |
 | Formal award recommendation and split-award interface | M7 |
-| Expediting, material inspection, vendor scorecards, procurement dashboard | M8+ |
+| Vendor portal, supplier self-registration, external registration URLs | M8+ |
+| Vendor performance and scorecards, expediting, material inspection, QA/QC | M8+ |
+| Procurement dashboard | M9 |
+| Full conflict-of-interest workflow (M4 ships the metadata only) | M26 |
+| AI supplier risk, sanctions screening, credit-bureau integration | not planned |
 | Full emergency-procurement workflow (M3 only removed the urgency bypass) | M24 |
 
-### Known limitations of what *was* built
+### Known limitations of what *was* built in M4
+
+| Limitation | Why it stands |
+|---|---|
+| **Vendor qualification defaults to `optional`.** Out of the box no vendor is refused anything | Shipping a required level would refuse existing suppliers on upgrade day across every company. The rollout worklist and runbook are §49; the register, the AVL and every eligibility answer are live from the first minute |
+| **A `max_award_value` condition is exposed and not enforced.** M4 tells a buyer the ceiling; nothing stops an order above it | There is no award document to enforce at until M7. The condition is structured precisely so M7 reads a field rather than parsing a note. Stated here rather than implied to work |
+| **`REQUIRED_FOR_AWARD` is enforced at purchase-order confirmation**, not at an award decision | The award decision does not exist yet. When M7 introduces one the check moves earlier and confirmation keeps this as the backstop. `REQUIRED_FOR_PO` was deliberately not shipped as a fifth level because today it would be indistinguishable |
+| **Governance applies only to `is_realestate_po` orders.** An office purchase confirms under any policy | Policing the whole purchase journal would break ordinary buying that this suite has no opinion about. A company that wants it there should say so, and no such switch exists yet |
+| **The trade taxonomy starts empty.** Until trades exist, eligibility is asked without one | A shipped trade tree would be one company's vocabulary imposed on everyone. Qualification areas ship because headings are generic; trades do not because they are not |
+| **A genuine two-process race is not exercised.** §53 states exactly what is proved instead | Odoo's harness shares one connection. The index, the lock and the flush are each tested directly |
+| **Duplicate detection is exact-match only**, on tax number and email | Fuzzy company matching is a product of its own, and auto-merging partners is explicitly out of scope. The warning is a prompt for a human |
+| **Vendor bank and payment data is untouched** | M4R. Finance owns payment master controls, and widening procurement's view of bank details to "verify" them would be a worse outcome than the gap |
+| **Restriction has no approval workflow of its own** — imposing one is a single act by a Qualification Approver | A two-step suspension would delay the case where speed is the point. Every restriction records who imposed it, who approved it, when, why, and who lifted it |
+
+### Known limitations carried forward from M3
 
 | Limitation | Why it stands |
 |---|---|
 | **Purchase governance defaults to `optional`.** Out of the box the direct-PO bypass is closed by configuration, not by default | Shipping `controlled` would refuse confirmation on every existing project purchase-order path on upgrade day, including the ones Construction's own suite exercises. The runbook says which switch to throw |
 | **Budget policy defaults to `warn`** — nothing is refused until a company chooses | Same reason. Reservations, positions and exception evidence are all live from the first minute |
-| **A genuine two-process race is not exercised by the suite** | Odoo's test harness shares one connection; §13 states exactly what is proved instead |
+| **A genuine two-process race is not exercised by the suite** *(budget reservations)* | Odoo's test harness shares one connection; §13 states exactly what is proved instead. §53 says the same about qualifications |
 | **A purchase user with no Construction read still cannot code a PO line** — `test_defect_a_buyer_coding_a_line_hits_an_access_error` remains a defect test | Fixing it means widening Construction's cost-code read, which the frozen-module rule and the M2 brief both forbid. The practical answer is that anybody coding to a cost code has Construction User |
 | **An unknown estimate still brackets as zero** in the approval matrix. `estimate_is_known` and the data-quality warning surface it; the matrix does not refuse it | Refusing every requisition with an unpriced line would stop legitimate early demand. Naming the unknown is the honest half that exists today |
 | **No cost-code-level policy override** | Cost codes are Construction's; a precedence level that only existed when another module was installed would be worse than not having it |
-| **Reservation expiry is off by default** | An expiry nobody chose would release real demand on a date nobody knew about |
+| **Reservation expiry is off by default** | An expiry nobody chose would release real demand on a date nobody knew about. M4 did fix the half of this that was a defect rather than a choice: `expire_due_reservations()` had no scheduler behind it, so a configured expiry never fired at all. See §48 |
 | **PO confirmation still writes to `realestate.project`** via lazy stock-location creation | M7 PO Confirmation Integration Gate, unchanged from M2 |
 | **Line-level ACL still grants `unlink` to plain users** | The active-reservation guard now refuses deletion of demand that holds capacity; the ACL row itself is untouched |
 | **Requisition-level material-inspection link** unused | M8 |

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!--
+        Starter headings, deliberately generic.
+
+        No country's paperwork is baked in here: "Legal & Registration" is
+        true everywhere, "commercial registration certificate issued by the
+        GAFI" is true in one place and meaningless in the next. The specific
+        documents belong on template requirements, which a company writes for
+        itself.
+
+        `company_id` is left empty so every company may use the vocabulary.
+        Sharing a heading shares nothing about any vendor — the decisions are
+        company-scoped and the record rules keep them that way.
+
+        Two are marked confidential out of the box, because financial
+        statements and reference checks are the evidence people most often
+        regret having made readable to the whole procurement team.
+    -->
+
+    <record id="qual_area_legal" model="realestate.procurement.qualification.area">
+        <field name="name">Legal &amp; Registration</field>
+        <field name="code">LEGAL</field>
+        <field name="sequence">10</field>
+    </record>
+    <record id="qual_area_financial" model="realestate.procurement.qualification.area">
+        <field name="name">Financial Capacity</field>
+        <field name="code">FIN</field>
+        <field name="sequence">20</field>
+        <field name="confidential" eval="True"/>
+    </record>
+    <record id="qual_area_technical" model="realestate.procurement.qualification.area">
+        <field name="name">Technical Capability</field>
+        <field name="code">TECH</field>
+        <field name="sequence">30</field>
+    </record>
+    <record id="qual_area_experience" model="realestate.procurement.qualification.area">
+        <field name="name">Experience &amp; Track Record</field>
+        <field name="code">EXP</field>
+        <field name="sequence">40</field>
+    </record>
+    <record id="qual_area_references" model="realestate.procurement.qualification.area">
+        <field name="name">References</field>
+        <field name="code">REF</field>
+        <field name="sequence">50</field>
+        <field name="confidential" eval="True"/>
+    </record>
+    <record id="qual_area_quality" model="realestate.procurement.qualification.area">
+        <field name="name">Quality</field>
+        <field name="code">QA</field>
+        <field name="sequence">60</field>
+    </record>
+    <record id="qual_area_hse" model="realestate.procurement.qualification.area">
+        <field name="name">Health, Safety &amp; Environment</field>
+        <field name="code">HSE</field>
+        <field name="sequence">70</field>
+    </record>
+    <record id="qual_area_insurance" model="realestate.procurement.qualification.area">
+        <field name="name">Insurance</field>
+        <field name="code">INS</field>
+        <field name="sequence">80</field>
+    </record>
+    <record id="qual_area_certifications" model="realestate.procurement.qualification.area">
+        <field name="name">Certifications</field>
+        <field name="code">CERT</field>
+        <field name="sequence">90</field>
+    </record>
+    <record id="qual_area_delivery" model="realestate.procurement.qualification.area">
+        <field name="name">Delivery &amp; Logistics</field>
+        <field name="code">LOG</field>
+        <field name="sequence">100</field>
+    </record>
+    <record id="qual_area_commercial" model="realestate.procurement.qualification.area">
+        <field name="name">Commercial Terms</field>
+        <field name="code">COMM</field>
+        <field name="sequence">110</field>
+    </record>
+    <record id="qual_area_sustainability" model="realestate.procurement.qualification.area">
+        <field name="name">Sustainability</field>
+        <field name="code">ESG</field>
+        <field name="sequence">120</field>
+    </record>
+    <record id="qual_area_infosec" model="realestate.procurement.qualification.area">
+        <field name="name">Information Security</field>
+        <field name="code">INFOSEC</field>
+        <field name="sequence">130</field>
+    </record>
+    <record id="qual_area_other" model="realestate.procurement.qualification.area">
+        <field name="name">Other</field>
+        <field name="code">OTHER</field>
+        <field name="sequence">200</field>
+    </record>
+</odoo>

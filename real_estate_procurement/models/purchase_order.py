@@ -109,6 +109,7 @@ class PurchaseOrder(models.Model):
         gated = self.filtered(lambda order: order.state in ('draft', 'sent'))
         for order in gated:
             order._check_procurement_governance()
+            order._check_vendor_eligibility()
             order._revalidate_against_approved_basis()
         res = super().button_confirm()
         # After, not before: commitment exists once Odoo says the order is
@@ -206,6 +207,88 @@ class PurchaseOrder(models.Model):
 
         self._check_coding_completeness()
         return True
+
+    def _check_vendor_eligibility(self):
+        """M4K at the award moment — the last line, and today the only one.
+
+        Confirming is where a vendor stops being a candidate and starts being
+        the supplier, so it is where REQUIRED TO RECEIVE THE ORDER bites.
+        When M7 introduces a formal award the check moves to that decision
+        and this one stays here as the backstop, because RPC, imports and
+        other modules all reach `button_confirm()` and none of them passes
+        through an award screen.
+
+        Scope is `is_realestate_po` and nothing wider. Office stationery, IT
+        subscriptions and every other purchase this suite has no opinion
+        about confirm exactly as standard Odoo confirms them — M4 is not a
+        licence to police the whole purchase journal.
+        """
+        self.ensure_one()
+        if not self.is_realestate_po:
+            return True
+        Eligibility = self.env['realestate.procurement.vendor.eligibility']
+        date = fields.Date.context_today(self)
+        trades = self._order_vendor_categories()
+        refusals, warnings = [], []
+        for trade in trades:
+            outcome = Eligibility.check_vendor_eligibility(
+                self.partner_id, company=self.company_id, category=trade,
+                project=self.re_project_id, date=date, purpose='award')
+            if not outcome['eligible']:
+                refusals += outcome['blocking_reasons']
+            elif outcome['warnings']:
+                warnings += outcome['warnings']
+        if refusals:
+            raise UserError(_(
+                "%(order)s cannot be confirmed:\n\n%(reasons)s\n\nThe vendor "
+                "policy in force is %(policy)s. Qualify the vendor, lift the "
+                "restriction, or change the policy — nothing here is "
+                "overridden by confirming again.",
+                order=self.name,
+                reasons='\n'.join('• %s' % reason
+                                  for reason in dict.fromkeys(refusals)),
+                policy=Eligibility.vendor_policy_for(
+                    self.re_project_id, self.company_id)))
+        if warnings:
+            Eligibility.post_governance_note(self, _(
+                "Confirmed with vendor governance gaps recorded:\n%s")
+                % '\n'.join('• %s' % warning
+                            for warning in dict.fromkeys(warnings)))
+        return True
+
+    def _order_vendor_categories(self):
+        """The trades this order buys.
+
+        From the requisition lines where there are any — the buyer said what
+        they were sourcing. From the product categories otherwise. An order
+        that maps to no trade at all is checked once with no trade, which
+        asks "is this vendor qualified for anything here", and that is the
+        right question for a lump-sum service line.
+        """
+        self.ensure_one()
+        Category = self.env['realestate.procurement.vendor.category'].sudo()
+        trades = self.order_line.re_material_request_line_id.mapped(
+            'vendor_category_id')
+        if not trades:
+            suggested = set()
+            for line in self.order_line:
+                suggested |= set(
+                    Category.suggest_for_product(line.product_id).ids)
+            trades = Category.browse(sorted(suggested))
+        # Elevated for the same reason `suggest_for_product` is: the person
+        # confirming may hold nothing but Odoo's Purchase Manager, and which
+        # question the gate asks about them cannot depend on their being
+        # allowed to read the trade list.
+        questions = list(trades.sudo())
+        sourced = self.order_line.filtered(lambda l: not l.display_type)
+        if not questions or len(
+                sourced.re_material_request_line_id.filtered(
+                    'vendor_category_id')) < len(sourced):
+            # Mixed or unclassified scope is also asked the trade-less
+            # question, so a vendor cannot arrive through the lines nobody
+            # classified.
+            questions.append(None)
+        return questions
 
     def _check_coding_completeness(self):
         """A governed commitment that cannot be classified is not governed.
