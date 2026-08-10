@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_procurement_plan_list" model="ir.ui.view">
+        <field name="name">realestate.procurement.plan.list</field>
+        <field name="model">realestate.procurement.plan</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state in ('superseded','closed')"
+                  decoration-info="state == 'approved'"
+                  decoration-success="state == 'active'">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="project_id"/>
+                <field name="revision"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="line_count"/>
+                <field name="long_lead_count" string="Long Lead"/>
+                <field name="estimated_total" sum="Planned"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'approved'"
+                       decoration-success="state == 'active'"
+                       decoration-muted="state in ('superseded','closed')"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_procurement_plan_form" model="ir.ui.view">
+        <field name="name">realestate.procurement.plan.form</field>
+        <field name="model">realestate.procurement.plan</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_review" type="object" string="Submit for Review"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="oe_highlight" invisible="state != 'review'"/>
+                    <button name="action_activate" type="object" string="Activate"
+                            class="oe_highlight" invisible="state != 'approved'"/>
+                    <button name="action_create_revision" type="object" string="New Revision"
+                            invisible="state not in ('approved','active')"/>
+                    <button name="action_close" type="object" string="Close"
+                            invisible="state in ('draft','superseded','closed')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,review,approved,active"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-info" role="alert"
+                         invisible="state not in ('approved','active','superseded')">
+                        A plan is what the project expects to procure. It reserves
+                        nothing, commits nothing and appears in no cost report — and
+                        once approved it is revised rather than rewritten, so the
+                        dates the schedule was built from survive.
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h2><field name="title" placeholder="Plan title"/></h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id" options="{'no_create': True}"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                        <group>
+                            <field name="revision" readonly="1"/>
+                            <field name="supersedes_id" readonly="1"
+                                   invisible="not supersedes_id"/>
+                            <field name="superseded_by_id" readonly="1"
+                                   invisible="not superseded_by_id"/>
+                            <field name="prepared_by_id" widget="many2one_avatar_user"/>
+                            <field name="reviewed_by_id" widget="many2one_avatar_user"
+                                   invisible="not reviewed_by_id" readonly="1"/>
+                            <field name="approved_by_id" widget="many2one_avatar_user"
+                                   invisible="not approved_by_id" readonly="1"/>
+                            <field name="approved_on" invisible="not approved_on" readonly="1"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Planned Items" name="lines">
+                            <field name="line_ids">
+                                <list editable="bottom"
+                                      decoration-warning="is_long_lead">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="description"/>
+                                    <field name="procurement_type"/>
+                                    <field name="product_id" optional="show"
+                                           options="{'no_create': True}"/>
+                                    <field name="category_id" optional="hide"/>
+                                    <field name="quantity"/>
+                                    <field name="uom_id" groups="uom.group_uom"/>
+                                    <field name="estimated_unit_cost"/>
+                                    <field name="estimated_amount" sum="Planned"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="required_on_site_date"/>
+                                    <field name="lead_time_days" optional="show"/>
+                                    <field name="has_lead_time" optional="hide"/>
+                                    <field name="target_award_date" optional="show" readonly="1"/>
+                                    <field name="target_rfq_date" optional="hide" readonly="1"/>
+                                    <field name="is_long_lead" optional="show"/>
+                                    <field name="strategy" optional="show"/>
+                                    <field name="buyer_id" optional="hide"
+                                           widget="many2one_avatar_user"/>
+                                    <field name="state" widget="badge" optional="show"/>
+                                    <field name="request_count" optional="hide"/>
+                                    <button name="action_create_requisition" type="object"
+                                            string="Raise Requisition" icon="fa-file-text-o"
+                                            invisible="state != 'planned'"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="estimated_total" widget="monetary"/>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_procurement_plan_search" model="ir.ui.view">
+        <field name="name">realestate.procurement.plan.search</field>
+        <field name="model">realestate.procurement.plan</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="title"/>
+                <field name="project_id"/>
+                <filter string="Current" name="current" domain="[('is_current', '=', True)]"/>
+                <separator/>
+                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Under Review" name="review" domain="[('state', '=', 'review')]"/>
+                <filter string="Approved" name="approved" domain="[('state', '=', 'approved')]"/>
+                <filter string="Active" name="active" domain="[('state', '=', 'active')]"/>
+                <filter string="Superseded" name="superseded" domain="[('state', '=', 'superseded')]"/>
+                <separator/>
+                <filter string="Has Long-Lead Items" name="long_lead"
+                        domain="[('long_lead_count', '>', 0)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Project" name="group_project" context="{'group_by': 'project_id'}"/>
+                    <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_procurement_plan_line_list" model="ir.ui.view">
+        <field name="name">realestate.procurement.plan.line.list</field>
+        <field name="model">realestate.procurement.plan.line</field>
+        <field name="arch" type="xml">
+            <list decoration-warning="is_long_lead" create="false">
+                <field name="plan_id"/>
+                <field name="project_id"/>
+                <field name="description"/>
+                <field name="procurement_type"/>
+                <field name="quantity"/>
+                <field name="uom_id" groups="uom.group_uom"/>
+                <field name="estimated_amount" sum="Planned"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="required_on_site_date"/>
+                <field name="target_award_date"/>
+                <field name="is_long_lead"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_procurement_plan_line_search" model="ir.ui.view">
+        <field name="name">realestate.procurement.plan.line.search</field>
+        <field name="model">realestate.procurement.plan.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="description"/>
+                <field name="plan_id"/>
+                <field name="project_id"/>
+                <filter string="Long Lead" name="long_lead" domain="[('is_long_lead', '=', True)]"/>
+                <filter string="Not Yet Requested" name="planned" domain="[('state', '=', 'planned')]"/>
+                <filter string="No Lead Time Known" name="no_lead_time"
+                        domain="[('has_lead_time', '=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Project" name="group_project" context="{'group_by': 'project_id'}"/>
+                    <filter string="Plan" name="group_plan" context="{'group_by': 'plan_id'}"/>
+                    <filter string="Type" name="group_type" context="{'group_by': 'procurement_type'}"/>
+                    <filter string="Strategy" name="group_strategy" context="{'group_by': 'strategy'}"/>
+                    <filter string="Required On Site" name="group_required"
+                            context="{'group_by': 'required_on_site_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_procurement_plan_line_pivot" model="ir.ui.view">
+        <field name="name">realestate.procurement.plan.line.pivot</field>
+        <field name="model">realestate.procurement.plan.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Planned Procurement">
+                <field name="project_id" type="row"/>
+                <field name="procurement_type" type="col"/>
+                <field name="estimated_amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_procurement_plan" model="ir.actions.act_window">
+        <field name="name">Procurement Plans</field>
+        <field name="res_model">realestate.procurement.plan</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_procurement_plan_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Plan what the project will buy</p>
+            <p>A procurement plan answers the questions a requisition is far too late
+            to answer: what has to be ordered this quarter, and what has a nine-month
+            lead time and therefore needed sourcing to start last month.</p>
+        </field>
+    </record>
+
+    <record id="action_procurement_plan_line" model="ir.actions.act_window">
+        <field name="name">Planned Items</field>
+        <field name="res_model">realestate.procurement.plan.line</field>
+        <field name="view_mode">list,pivot</field>
+        <field name="search_view_id" ref="view_procurement_plan_line_search"/>
+        <field name="context">{'search_default_planned': 1}</field>
+    </record>
+
+</odoo>

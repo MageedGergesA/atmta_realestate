@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<odoo>
+<odoo noupdate="1">
     <record id="seq_material_request" model="ir.sequence">
         <field name="name">Real Estate Material Request</field>
         <field name="code">realestate.material.request</field>
@@ -7,5 +7,23 @@
         <field name="padding">5</field>
         <field name="number_next">1</field>
         <field name="number_increment">1</field>
+    </record>
+    <record id="seq_procurement_reservation" model="ir.sequence">
+        <field name="name">Procurement Reservation</field>
+        <field name="code">realestate.procurement.reservation</field>
+        <field name="prefix">RES/%(year)s/</field>
+        <field name="padding">5</field>
+    </record>
+    <record id="seq_procurement_control_exception" model="ir.sequence">
+        <field name="name">Procurement Control Exception</field>
+        <field name="code">realestate.procurement.control.exception</field>
+        <field name="prefix">EXC/%(year)s/</field>
+        <field name="padding">4</field>
+    </record>
+    <record id="seq_procurement_plan" model="ir.sequence">
+        <field name="name">Procurement Plan</field>
+        <field name="code">realestate.procurement.plan</field>
+        <field name="prefix">PLAN/%(year)s/</field>
+        <field name="padding">4</field>
     </record>
 </odoo>

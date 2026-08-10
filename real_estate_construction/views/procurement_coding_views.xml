@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- ================================================================
+         Additive only. Every record here is a new inherited view that adds
+         Construction's two coding fields to documents Procurement owns.
+         Nothing existing is modified, no Construction behaviour changes, and
+         no Construction record is touched.
+
+         Why it lives in Construction: the fields themselves are declared in
+         `models/procurement_requisition.py`, on this side of the dependency,
+         because Construction depends on Procurement and not the reverse. A
+         view in Procurement referencing `cost_code_id` would fail validation
+         on a Procurement-only install, where the field genuinely does not
+         exist.
+
+         Why it matters for M3: reservation is per cost code. A requisition
+         line nobody can code from the interface is a control position that
+         reads as unknown for ever.
+         ================================================================ -->
+
+    <record id="view_material_request_form_coding" model="ir.ui.view">
+        <field name="name">realestate.material.request.form.construction.coding</field>
+        <field name="model">realestate.material.request</field>
+        <field name="inherit_id"
+               ref="real_estate_procurement.view_material_request_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='line_ids']/list/field[@name='qty']"
+                   position="before">
+                <field name="wbs_id" optional="show"
+                       options="{'no_create': True}"/>
+                <field name="cost_code_id" optional="show"
+                       options="{'no_create': True}"/>
+            </xpath>
+            <xpath expr="//field[@name='procurement_type']" position="after">
+                <field name="default_wbs_id" options="{'no_create': True}"
+                       invisible="not project_id"/>
+                <field name="default_cost_code_id" options="{'no_create': True}"
+                       invisible="not project_id"/>
+                <field name="change_order_id" options="{'no_create': True}"
+                       invisible="not project_id"/>
+                <field name="boq_line_id" options="{'no_create': True}"
+                       invisible="not project_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_procurement_plan_form_coding" model="ir.ui.view">
+        <field name="name">realestate.procurement.plan.form.construction.coding</field>
+        <field name="model">realestate.procurement.plan</field>
+        <field name="inherit_id"
+               ref="real_estate_procurement.view_procurement_plan_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='line_ids']/list/field[@name='quantity']"
+                   position="before">
+                <field name="wbs_id" optional="show"
+                       options="{'no_create': True}"/>
+                <field name="cost_code_id" optional="show"
+                       options="{'no_create': True}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_procurement_reservation_list_coding" model="ir.ui.view">
+        <field name="name">realestate.procurement.reservation.list.coding</field>
+        <field name="model">realestate.procurement.reservation</field>
+        <field name="inherit_id"
+               ref="real_estate_procurement.view_procurement_reservation_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='project_id']" position="after">
+                <field name="wbs_id" optional="hide"/>
+                <field name="cost_code_id" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_procurement_reservation_form_coding" model="ir.ui.view">
+        <field name="name">realestate.procurement.reservation.form.coding</field>
+        <field name="model">realestate.procurement.reservation</field>
+        <field name="inherit_id"
+               ref="real_estate_procurement.view_procurement_reservation_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='project_id']" position="after">
+                <field name="wbs_id"/>
+                <field name="cost_code_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_procurement_reservation_search_coding" model="ir.ui.view">
+        <field name="name">realestate.procurement.reservation.search.coding</field>
+        <field name="model">realestate.procurement.reservation</field>
+        <field name="inherit_id"
+               ref="real_estate_procurement.view_procurement_reservation_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='group_project']" position="after">
+                <filter string="Cost Code" name="group_cost_code"
+                        context="{'group_by': 'cost_code_id'}"/>
+            </xpath>
+            <xpath expr="//filter[@name='unknown']" position="after">
+                <filter string="Uncoded" name="uncoded"
+                        domain="[('cost_code_id', '=', False)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_control_exception_form_coding" model="ir.ui.view">
+        <field name="name">realestate.procurement.control.exception.form.coding</field>
+        <field name="model">realestate.procurement.control.exception</field>
+        <field name="inherit_id"
+               ref="real_estate_procurement.view_control_exception_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='project_id']" position="after">
+                <field name="cost_code_id" options="{'no_create': True}"
+                       readonly="state != 'requested'"/>
+                <field name="change_order_id" options="{'no_create': True}"
+                       readonly="state != 'requested'"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

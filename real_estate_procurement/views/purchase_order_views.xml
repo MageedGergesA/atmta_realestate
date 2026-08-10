@@ -12,7 +12,22 @@
                     <field name="re_source_model" readonly="1"/>
                     <field name="re_source_display" readonly="1"
                            invisible="not re_source_display"/>
+                    <field name="re_governance" readonly="1"
+                           invisible="not re_project_id"/>
+                    <field name="re_requisition_ids" widget="many2many_tags"
+                           readonly="1" invisible="not re_requisition_ids"/>
+                    <field name="re_exception_id" readonly="1"
+                           invisible="not re_exception_id"/>
                 </group>
+            </xpath>
+            <xpath expr="//button[@name='button_confirm'][1]" position="before">
+                <button name="action_request_direct_purchase_exception"
+                        type="object" string="Request Purchase Exception"
+                        invisible="state not in ('draft', 'sent')
+                                   or re_governance == 'optional'
+                                   or not re_project_id
+                                   or re_requisition_ids"
+                        groups="real_estate_procurement.group_procurement_user"/>
             </xpath>
         </field>
     </record>

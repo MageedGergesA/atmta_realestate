@@ -11,8 +11,20 @@
               parent="menu_procurement_root"
               sequence="10"/>
 
+    <menuitem id="menu_procurement_plans"
+              name="Procurement Plans"
+              parent="menu_procurement_operations"
+              action="action_procurement_plan"
+              sequence="5"/>
+
+    <menuitem id="menu_procurement_plan_lines"
+              name="Planned Items"
+              parent="menu_procurement_operations"
+              action="action_procurement_plan_line"
+              sequence="7"/>
+
     <menuitem id="menu_material_requests"
-              name="Material Requests"
+              name="Requisitions"
               parent="menu_procurement_operations"
               action="action_material_request"
               sequence="10"/>
@@ -22,6 +34,34 @@
               parent="menu_procurement_operations"
               action="action_realestate_purchase_orders"
               sequence="20"/>
+
+    <!-- M3S/M3T — the two registers. Menus are navigation, never security:
+         every action behind them is protected by model access rights and
+         record rules, because a menu somebody cannot see is still a model
+         they can reach by RPC. -->
+
+    <menuitem id="menu_procurement_control"
+              name="Budget Control"
+              parent="menu_procurement_root"
+              sequence="15"/>
+
+    <menuitem id="menu_approval_register"
+              name="Approval Register"
+              parent="menu_procurement_control"
+              action="action_approval_register"
+              sequence="10"/>
+
+    <menuitem id="menu_procurement_reservations"
+              name="Reservations"
+              parent="menu_procurement_control"
+              action="action_procurement_reservation"
+              sequence="20"/>
+
+    <menuitem id="menu_control_exceptions"
+              name="Control Exceptions"
+              parent="menu_procurement_control"
+              action="action_control_exception"
+              sequence="30"/>
 
     <menuitem id="menu_procurement_master_data"
               name="Master Data"
@@ -57,4 +97,10 @@
               parent="menu_procurement_config"
               action="action_realestate_product_categories"
               sequence="20"/>
+
+    <menuitem id="menu_approval_rules"
+              name="Approval Rules"
+              parent="menu_procurement_config"
+              action="action_approval_rule"
+              sequence="30"/>
 </odoo>

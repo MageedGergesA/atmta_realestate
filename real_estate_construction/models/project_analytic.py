@@ -29,6 +29,18 @@ class ProjectAnalytic(models.Model):
         Accounts that already exist are left exactly where they are. Moving a
         cost centre would move history with it, and history is not ours to
         rewrite — the fix governs the next account created, not the last one.
+
+        The back-link is written as a system write, for the reason Procurement
+        M2 proved on the cost code first: a buyer coding a purchase line has
+        read-only project access by design, and storing the link raised
+
+            AccessError: You are not allowed to modify 'Real Estate
+            Development Project' records
+
+        the first time anybody costed anything against the project. Creating
+        the account was already a system act; recording which account was
+        created is the other half of the same act, and nothing here lets the
+        user change anything else about the project.
         """
         self.ensure_one()
         if self.analytic_account_id:
@@ -40,7 +52,7 @@ class ProjectAnalytic(models.Model):
             'plan_id': plan.id,
             'company_id': (self.company_id or self.env.company).id,
         })
-        self.analytic_account_id = account
+        self.sudo().write({'analytic_account_id': account.id})
         return account
 
     def action_generate_analytic_account(self):

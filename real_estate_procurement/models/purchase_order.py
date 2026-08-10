@@ -1,4 +1,10 @@
 from odoo import _, api, fields, models
+from odoo.exceptions import UserError
+
+#: Purchase states in which an order is a commitment as far as Construction is
+#: concerned. Kept here so the gate and the conversion agree about when money
+#: starts being owed.
+COMMITTED_STATES = ('purchase', 'done')
 
 
 class PurchaseOrder(models.Model):
@@ -14,42 +20,376 @@ class PurchaseOrder(models.Model):
         ('realestate.listing', 'Listing'),
         ('realestate.project', 'Project (Direct)'),
     ], string='RE Source Type')
-    re_source_id = fields.Integer(string='RE Source ID', help='Polymorphic ID into the source record.')
+    re_source_id = fields.Integer(string='RE Source ID', index=True, help='Polymorphic ID into the source record.')
     re_source_display = fields.Char(string='RE Source', compute='_compute_re_source_display')
     is_realestate_po = fields.Boolean(
         compute='_compute_is_realestate_po', store=True,
         help='True when the PO is linked to any real-estate project or source.',
     )
 
+    # -- M3K governance ------------------------------------------------
+    re_requisition_ids = fields.Many2many(
+        'realestate.material.request', string='Requisitions',
+        compute='_compute_re_requisitions',
+        help="Every requisition this order sources. Many, because one order "
+             "may consolidate several requests — which is exactly why the "
+             "authorisation check is per line and not per order.")
+    re_governance = fields.Selection([
+        ('optional', 'Optional'),
+        ('controlled', 'Controlled'),
+        ('required', 'Required'),
+    ], compute='_compute_re_governance',
+        string='Procurement Governance',
+        help="The policy this order will be judged against when somebody "
+             "confirms it — the project's, or the company's where the project "
+             "does not override it.")
+    re_exception_id = fields.Many2one(
+        'realestate.procurement.control.exception',
+        string='Purchase Exception', copy=False, ondelete='set null',
+        help="The authorised reason this order may commit without a "
+             "requisition behind it.")
+
+    re_governance_status = fields.Selection([
+        ('linked', 'From Requisition'),
+        ('direct', 'Direct Purchase'),
+        ('not_project', 'Not Project Coded'),
+    ], compute='_compute_re_governance_status', store=True, index=True,
+        string='Procurement Source',
+        help="M3AA's LEGACY_DIRECT_PO classification, kept live rather than "
+             "computed once at migration: a project order raised outside "
+             "Procurement is worth being able to find at any time, not only "
+             "on the day of an upgrade. Existing confirmed orders keep this "
+             "label and nothing else — none of them was cancelled, reversed "
+             "or given a reservation.")
+
+    @api.depends('re_project_id', 'order_line.re_material_request_line_id')
+    def _compute_re_governance_status(self):
+        for rec in self:
+            if not rec._is_project_coded():
+                rec.re_governance_status = 'not_project'
+            elif rec.order_line.re_material_request_line_id:
+                rec.re_governance_status = 'linked'
+            else:
+                rec.re_governance_status = 'direct'
+
     @api.depends('re_project_id', 're_source_model', 're_source_id')
     def _compute_is_realestate_po(self):
         for rec in self:
             rec.is_realestate_po = bool(rec.re_project_id or (rec.re_source_model and rec.re_source_id))
 
+    def _compute_re_requisitions(self):
+        for rec in self:
+            rec.re_requisition_ids = rec.order_line.re_material_request_id
+
+    def _compute_re_governance(self):
+        Control = self.env['realestate.procurement.control']
+        for rec in self:
+            rec.re_governance = Control.po_governance_for(
+                rec.re_project_id, rec.company_id)
+
+    # ------------------------------------------------------------------
+    # The confirmation boundary — M3K
+    # ------------------------------------------------------------------
     def button_confirm(self):
+        """Confirming is what commits. Everything M3 controls happens here.
+
+        This is the only moment in the whole chain where a Construction budget
+        starts being consumed by an obligation, so it is the only place a gate
+        is worth putting. It sits on the server side of the button on purpose:
+        Phase 0's finding was not that the button was visible to the wrong
+        people, it was that RPC, imports, scheduled actions and any other
+        module calling `button_confirm()` all reached commitment without
+        passing anything at all.
+
+        Standard Odoo purchasing is deliberately left intact. Nothing here
+        replaces `purchase.order`, changes how receipts are generated or
+        touches vendor bills — an authorised order confirms exactly as it
+        always did. What is added is the question asked immediately before.
+        """
+        gated = self.filtered(lambda order: order.state in ('draft', 'sent'))
+        for order in gated:
+            order._check_procurement_governance()
+            order._revalidate_against_approved_basis()
         res = super().button_confirm()
-        self._re_route_receipts()
+        # After, not before: commitment exists once Odoo says the order is
+        # confirmed, and the reservation must stop consuming capacity at the
+        # same instant. Both happen in this transaction — if the confirmation
+        # rolls back the conversion goes with it, and if the conversion fails
+        # the confirmation does too. There is no correct half of this.
+        for order in gated:
+            order._convert_reservations()
+        requests = self.order_line.re_material_request_id
+        if requests:
+            requests.invalidate_recordset()
+            requests._refresh_state_after_ordering()
         return res
 
-    def _re_route_receipts(self):
-        """Send incoming receipts of a project-scoped PO into that project's
-        stock location, so material is filed per project."""
-        for po in self:
-            project = po.re_project_id
-            # Project location lives in the developer module; route only when
-            # that capability is present.
-            if not project or not hasattr(project, '_get_stock_location'):
+    def button_cancel(self):
+        """Cancelling releases what confirming committed.
+
+        Construction reads commitment from confirmed orders, so a cancelled
+        order stops being one immediately. Without this the demand would sit
+        in neither control stage: not reserved, not committed, and absent from
+        availability while still needing to be bought.
+        """
+        Reservation = self.env['realestate.procurement.reservation']
+        res = super().button_cancel()
+        for order in self:
+            Reservation._reverse_conversions(
+                order.order_line, _("%s was cancelled.") % order.name)
+        return res
+
+    # ------------------------------------------------------------------
+    def _is_project_coded(self):
+        """Is this a purchase the project-control system is entitled to judge?
+
+        Narrow on purpose. An office laptop bought by the same company through
+        the same Purchase app is nobody's construction commitment, and gating
+        it because the module happens to be installed would make procurement
+        governance something people route around rather than use.
+        """
+        self.ensure_one()
+        if self.re_project_id:
+            return True
+        if self.order_line.re_material_request_line_id:
+            return True
+        if 're_cost_code_id' in self.env['purchase.order.line']._fields:
+            return bool(self.order_line.filtered('re_cost_code_id'))
+        return False
+
+    def _check_procurement_governance(self):
+        """Refuse to commit a governed project purchase nobody authorised."""
+        self.ensure_one()
+        governance = self.re_governance
+        if governance == 'optional' or not self._is_project_coded():
+            return True
+
+        unlinked = self.order_line.filtered(
+            lambda line: not line.re_material_request_line_id
+            and not line.display_type)
+        requests = self.order_line.re_material_request_id
+        unapproved = requests.filtered(
+            lambda req: req.state not in ('approved', 'sourcing',
+                                          'partially_ordered', 'ordered',
+                                          'partial', 'received', 'done'))
+        if unapproved:
+            raise UserError(_(
+                "%(order)s sources %(refs)s, which %(state)s. An order cannot "
+                "commit a project's budget ahead of the approval that "
+                "authorised the demand.",
+                order=self.name, refs=', '.join(unapproved.mapped('name')),
+                state=_("has not been approved") if len(unapproved) == 1
+                else _("have not been approved")))
+
+        if unlinked:
+            exception = self._authorised_purchase_exception()
+            if governance == 'required':
+                raise UserError(_(
+                    "%(order)s is coded to %(project)s, which requires every "
+                    "project purchase to come from an approved requisition. "
+                    "%(count)s line(s) have none.\n\nRaise a requisition, or "
+                    "change the project's purchase governance if direct "
+                    "buying is genuinely the policy here.",
+                    order=self.name,
+                    project=self.re_project_id.display_name or _('a project'),
+                    count=len(unlinked)))
+            if not exception:
+                raise UserError(_(
+                    "%(order)s is coded to %(project)s, which allows direct "
+                    "purchase only with an authorised exception. %(count)s "
+                    "line(s) have no requisition behind them.\n\nRequest a "
+                    "direct-purchase exception; a procurement manager decides "
+                    "it, and the decision stays on the record.",
+                    order=self.name,
+                    project=self.re_project_id.display_name or _('a project'),
+                    count=len(unlinked)))
+
+        self._check_coding_completeness()
+        return True
+
+    def _check_coding_completeness(self):
+        """A governed commitment that cannot be classified is not governed.
+
+        Money committed against a project with no cost code lands under
+        Unassigned on the cost report, where it is real, visible and
+        attributable to nothing. Under a governed policy that is a refusal;
+        under an optional one it stays a warning, because plenty of legitimate
+        historic orders look like that and this is not the milestone that
+        rewrites them.
+        """
+        self.ensure_one()
+        POLine = self.env['purchase.order.line']
+        if 're_cost_code_id' not in POLine._fields:
+            return True
+        uncoded = self.order_line.filtered(
+            lambda line: not line.display_type and not line.re_cost_code_id)
+        if uncoded:
+            raise UserError(_(
+                "%(order)s has %(count)s line(s) with no cost code. A "
+                "governed project purchase has to say what kind of money it "
+                "is, or the commitment reaches the cost report as "
+                "Unassigned.", order=self.name, count=len(uncoded)))
+        return True
+
+    def _authorised_purchase_exception(self):
+        self.ensure_one()
+        if self.re_exception_id.state == 'approved' \
+                and self.re_exception_id.exception_type == 'direct_purchase':
+            return self.re_exception_id
+        return self.env['realestate.procurement.control.exception'].search([
+            ('purchase_order_id', '=', self.id),
+            ('exception_type', '=', 'direct_purchase'),
+            ('state', '=', 'approved'),
+        ], limit=1)
+
+    # ------------------------------------------------------------------
+    # Amount revalidation — M3L / M3M
+    # ------------------------------------------------------------------
+    def _revalidate_against_approved_basis(self):
+        """An approval covers an amount, not a requisition number.
+
+        Reservation 3,000,000 and a purchase order of 3,500,000 is not a
+        rounding difference: the extra 500,000 has been approved by nobody,
+        and letting it through because the requisition it came from was
+        approved would make the approval a formality attached to a document
+        rather than to a sum of money.
+
+        The tolerance is configuration and defaults to zero. There is no
+        hard-coded 5% or 10% anywhere in this file, because whichever number
+        were chosen would be somebody's policy adopted silently.
+        """
+        self.ensure_one()
+        company = self.company_id
+        pct = company.procurement_amount_tolerance_pct or 0.0
+        flat = company.procurement_amount_tolerance_amount or 0.0
+        Control = self.env['realestate.procurement.control']
+
+        for line, amount in self._ordered_amount_by_request_line().items():
+            # The gate has to read control records for a user whose only
+            # right is to confirm a purchase order. Reading them is not the
+            # same as being allowed to edit them, and this is the narrowest
+            # place to say so.
+            reservation = line.sudo().reservation_ids.filtered(
+                lambda r: r.state == 'reserved')[:1]
+            if not reservation:
                 continue
-            if 'picking_ids' not in po._fields:
+            allowance = max(reservation.amount_reserved * pct / 100.0, flat)
+            basis = reservation.amount_active + allowance
+            if amount <= basis + 0.01:
                 continue
-            location = project._get_stock_location()
-            incoming = po.picking_ids.filtered(
-                lambda p: p.picking_type_code == 'incoming' and p.state not in ('done', 'cancel'))
-            for picking in incoming:
-                moves = picking.move_ids.filtered(lambda m: m.state not in ('done', 'cancel'))
-                moves.write({'location_dest_id': location.id})
-                moves.move_line_ids.write({'location_dest_id': location.id})
-                picking.location_dest_id = location.id
+            if self._authorised_delta_exception(amount):
+                continue
+            raise UserError(_(
+                "%(order)s commits %(amount)s against demand approved at "
+                "%(basis)s.%(tolerance)s\n\nRevise and re-approve the "
+                "requisition, or have the difference authorised as an "
+                "exception — the extra has not been approved by anybody yet.",
+                order=self.name,
+                amount=Control.format_control_amount(amount,
+                                                     company.currency_id),
+                basis=Control.format_control_amount(
+                    reservation.amount_active, company.currency_id),
+                tolerance=(_(" The configured tolerance of %s does not cover "
+                             "the difference.")
+                           % Control.format_control_amount(
+                               allowance, company.currency_id))
+                if allowance else ''))
+        return True
+
+    def _authorised_delta_exception(self, amount):
+        self.ensure_one()
+        return self.env['realestate.procurement.control.exception'].search([
+            ('purchase_order_id', '=', self.id),
+            ('exception_type', '=', 'amount_delta'),
+            ('state', '=', 'approved'),
+            ('requested_amount', '>=', amount - 0.01),
+        ], limit=1)
+
+    def _ordered_amount_by_request_line(self):
+        """`{requisition line: control amount on this order}`.
+
+        Grouped rather than per purchase line, because one requisition line
+        can appear twice on the same order and the control question is about
+        the total.
+        """
+        self.ensure_one()
+        amounts = {}
+        for line in self.order_line:
+            request_line = line.re_material_request_line_id
+            if not request_line:
+                continue
+            amounts[request_line] = amounts.get(request_line, 0.0) \
+                + line._re_control_amount()
+        return amounts
+
+    def _convert_reservations(self):
+        """Reservation → commitment, once, for this order's demand.
+
+        Three amounts are in play and they are routinely different:
+
+        ```
+            reserved   what the approval authorised
+            ordered    what this order actually commits
+            remaining  what is left of the demand afterwards
+        ```
+
+        Converting `min(reserved, ordered)` handles the ordinary case and the
+        over-run alike. Where an order comes in **under** the reservation and
+        the demand is fully ordered, the difference is released rather than
+        left holding capacity for something nobody is going to buy — that
+        300,000 belongs back in the project's availability the moment the
+        order is confirmed, not at the next month-end review.
+        """
+        self.ensure_one()
+        for request_line, amount in \
+                self._ordered_amount_by_request_line().items():
+            reservation = request_line.sudo().reservation_ids.filtered(
+                lambda r: r.state == 'reserved')[:1]
+            if not reservation:
+                continue
+            qty = sum(self.order_line.filtered(
+                lambda line: line.re_material_request_line_id == request_line
+            ).mapped('product_qty'))
+            reservation._convert(min(amount, reservation.amount_active),
+                                 self.order_line.filtered(
+                                     lambda line:
+                                     line.re_material_request_line_id
+                                     == request_line)[:1], qty=qty)
+            request_line.invalidate_recordset(['ordered_qty', 'remaining_qty'])
+            if request_line.remaining_qty <= 0 and reservation.amount_active:
+                reservation._release(_(
+                    "%(order)s ordered the whole line at %(amount)s, below "
+                    "the %(reserved)s reserved. The difference is released "
+                    "rather than held against demand that no longer exists.",
+                    order=self.name,
+                    amount=self.env['realestate.procurement.control'
+                                    ].format_control_amount(
+                        amount, self.company_id.currency_id),
+                    reserved=self.env['realestate.procurement.control'
+                                      ].format_control_amount(
+                        reservation.amount_reserved,
+                        self.company_id.currency_id)))
+        return True
+
+    def action_request_direct_purchase_exception(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Direct Purchase Exception'),
+            'res_model': 'realestate.procurement.purchase.exception',
+            'view_mode': 'form',
+            'views': [[False, 'form']],
+            'target': 'new',
+            'context': {'default_order_id': self.id},
+        }
+
+    def _get_re_project_location(self):
+        """Return the project's stock location, or False if none is configured."""
+        self.ensure_one()
+        project = self.re_project_id
+        if not project or not hasattr(project, '_get_stock_location'):
+            return False
+        return project._get_stock_location() or False
 
     def _compute_re_source_display(self):
         for rec in self:
@@ -68,7 +408,7 @@ class PurchaseOrderLine(models.Model):
 
     re_material_request_line_id = fields.Many2one(
         'realestate.material.request.line', string='Material Request Line',
-        ondelete='set null',
+        ondelete='set null', index=True,
         help='Source line in the material request that spawned this PO line.',
     )
     re_material_request_id = fields.Many2one(
@@ -76,9 +416,50 @@ class PurchaseOrderLine(models.Model):
         related='re_material_request_line_id.request_id', store=True, readonly=True,
     )
 
-    def write(self, vals):
-        res = super().write(vals)
-        if 'qty_received' in vals:
-            requests = self.mapped('re_material_request_id')
+    def _re_control_amount(self, date=None):
+        """This line's tax-exclusive amount in company currency.
+
+        `price_subtotal`, so a 15% VAT line contributes 1,000,000 and not
+        1,150,000 — the same tax-exclusive basis Construction's budget and
+        commitment are stated in, and the same one the reservation used.
+        """
+        self.ensure_one()
+        order = self.order_id
+        company = order.company_id or self.env.company
+        source = order.currency_id or company.currency_id
+        amount = self.price_subtotal or 0.0
+        if source == company.currency_id:
+            return amount
+        return source._convert(
+            amount, company.currency_id, company,
+            date or (order.date_order and order.date_order.date())
+            or fields.Date.context_today(self))
+
+    def _prepare_stock_moves(self, picking):
+        """Route project-scoped POs to the project's stock location at
+        move-prepare time (safer than rewriting destinations after confirm)."""
+        vals_list = super()._prepare_stock_moves(picking)
+        location = self.order_id._get_re_project_location()
+        if location:
+            for vals in vals_list:
+                vals['location_dest_id'] = location.id
+        return vals_list
+
+
+class StockPicking(models.Model):
+    _inherit = 'stock.picking'
+
+    def _action_done(self):
+        """Roll receipts up to the requisition when a receipt is validated.
+
+        This used to happen inside a compute on the requisition line, which
+        meant the request's state depended on when the ORM happened to
+        invalidate a cache. Inventory validating a receipt is the actual
+        event, so that is where the rollup is triggered from.
+        """
+        res = super()._action_done()
+        requests = self.move_ids.purchase_line_id.re_material_request_id
+        if requests:
+            requests.invalidate_recordset()
             requests._refresh_state_from_lines()
         return res

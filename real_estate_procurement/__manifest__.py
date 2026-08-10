@@ -7,7 +7,15 @@ Real Estate Procurement
 =======================
 Cross-module supply-chain foundation used by Construction, Handover, Rental and Aftermarket:
 
-* Unified Material Request workflow (any module raises a request, one PO loop consumes it)
+* Procurement Plan (demand, not money) with revisions that keep what was planned
+* Requisition V2 — line-level project/WBS/cost-code coding, controlled edits, revision history
+* Sourcing that prepares draft RFQs for vendors a buyer names, and commits nothing
+* Budget control — approved demand reserves purchasing capacity; confirming an order converts
+  the reservation into Construction commitment, never both at once
+* Configurable budget policy (none / warn / approval required / block) and project purchase
+  governance (optional / controlled / required), per company with a project override
+* Approval matrix with snapshotted authority, maker/checker, rejection with reasons
+* Approval and reservation registers, and an exception register for every override
 * Vendor tags (contractor, material supplier, service vendor, marketing, consultant, utility, landowner)
 * Real-estate product flags (construction material, property fitting, marketing asset, maintenance consumable)
 * Filtered procurement menus (POs, vendors, catalog) scoped to real-estate activity
@@ -15,10 +23,15 @@ Cross-module supply-chain foundation used by Construction, Handover, Rental and 
 """,
     'author': "Atmta",
     'license': 'LGPL-3',
-    'version': '0.1',
+    'version': '18.0.3.0.0',
     'category': 'Real Estate',
     'depends': [
         'atmta_real_estate',
+        # `realestate.project` is defined by real_estate_developer. Every
+        # model here points at it, and M2 recorded the missing declaration as
+        # a finding; M3 adds fields to that model, so the dependency is now
+        # declared rather than relied upon.
+        'real_estate_developer',
         'purchase',
         'product',
         'stock',
@@ -30,6 +43,10 @@ Cross-module supply-chain foundation used by Construction, Handover, Rental and 
         'data/partner_categories.xml',
         'data/product_categories.xml',
         'data/products_seed.xml',
+        'views/approval_views.xml',
+        'views/procurement_control_views.xml',
+        'views/procurement_plan_views.xml',
+        'wizard/procurement_wizard_views.xml',
         'views/material_request_views.xml',
         'views/purchase_order_views.xml',
         'views/product_views.xml',

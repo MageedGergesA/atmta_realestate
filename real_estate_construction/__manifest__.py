@@ -13,7 +13,10 @@ Track construction progress for projects and phases:
 """,
     'author': "Atmta",
     'license': 'LGPL-3',
-    'version': '1.0.0',
+    # 1.0.1 — M3 added one additive view file (procurement_coding_views.xml).
+    # The bump exists so an existing database actually loads it on upgrade; no
+    # Construction model, record, formula or test changes with it.
+    'version': '1.0.1',
     'category': 'Real Estate',
     'depends': ['real_estate_developer', 'account', 'purchase', 'real_estate_procurement', 'stock'],
     'data': [
@@ -42,6 +45,8 @@ Track construction progress for projects and phases:
         'views/owner_progress_billing_views.xml',
         'views/labor_log_views.xml',
         'views/construction_dashboard_views.xml',
+        # Additive: Construction's coding fields on Procurement's documents.
+        'views/procurement_coding_views.xml',
     ],
     'assets': {
         # Browser tours need @web_tour, which lives in the tests bundle.

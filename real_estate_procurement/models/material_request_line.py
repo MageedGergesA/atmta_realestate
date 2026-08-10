@@ -1,5 +1,5 @@
 from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 
 
 class MaterialRequestLine(models.Model):
@@ -11,7 +11,7 @@ class MaterialRequestLine(models.Model):
         'realestate.material.request', required=True, ondelete='cascade',
     )
     product_id = fields.Many2one(
-        'product.product', string='Product', required=True,
+        'product.product', string='Product',
         domain="['|', '|', '|', '|', "
                "('is_construction_material', '=', True), "
                "('is_property_fitting', '=', True), "
@@ -19,12 +19,21 @@ class MaterialRequestLine(models.Model):
                "('is_maintenance_consumable', '=', True), "
                "('type', '=', 'service')]",
     )
-    description = fields.Char(string='Description')
+    description = fields.Char(
+        string='Description',
+        help="Required when no product is given — a service, a subcontract "
+             "scope or a conceptual line has no catalogue entry.")
+    estimated_unit_cost = fields.Monetary(
+        help="The requester's or buyer's estimate, tax-exclusive. Used for "
+             "control comparison and for the approval basis; it is not a "
+             "price anybody has quoted.")
     qty = fields.Float(string='Quantity', required=True, default=1.0)
     uom_id = fields.Many2one(
-        'uom.uom', string='UoM', required=True,
+        'uom.uom', string='UoM',
         compute='_compute_uom', store=True, readonly=False,
-    )
+        help="Required with a product, because Odoo's own quantity semantics "
+             "are. A lump-sum subcontract scope has no unit, and inventing "
+             "one for it would put a fictional quantity on the enquiry.")
     unit_price_hint = fields.Float(
         string='Last Price',
         compute='_compute_price_hint',
@@ -37,12 +46,172 @@ class MaterialRequestLine(models.Model):
         related='request_id.currency_id', store=True, readonly=True,
     )
 
+    # ------------------------------------------------------------------
+    # Construction coding — M2.
+    #
+    # WBS says *where in the works*, cost code says *what kind of money*.
+    # They are separate questions and Construction owns both models; nothing
+    # here re-implements them. The line is authoritative rather than the
+    # header, because one requisition routinely spans several codes and
+    # stamping a header code onto every line is how uncoded money reaches a
+    # cost report wearing somebody else's classification.
+    # ------------------------------------------------------------------
+    project_id = fields.Many2one(
+        related='request_id.project_id', store=True, readonly=True,
+        index=True)
+    company_id = fields.Many2one(
+        related='request_id.company_id', store=True, readonly=True,
+        index=True)
+    # The WBS and cost-code fields themselves are added by
+    # `real_estate_construction`, which owns both models. Construction depends
+    # on Procurement, so the foreign keys cannot point the other way — see
+    # `_prepare_rfq_line()` for the hook that carries them onto the purchase
+    # order line.
+
+    required_on_site_date = fields.Date(
+        help="When the works need it on site. Deliberately not the RFQ "
+             "deadline, not the order date and not the vendor's promised "
+             "arrival — those are different dates and conflating them is how "
+             "a late delivery looks on time.")
+
+    po_line_ids = fields.One2many(
+        'purchase.order.line', 're_material_request_line_id',
+        string='Purchase Lines', readonly=True,
+        help="One requisition line may be enquired from several vendors and "
+             "eventually split across several orders. The relation is "
+             "one-to-many from the outset so that a future split award does "
+             "not need a migration.")
+    po_line_count = fields.Integer(compute='_compute_po_lines', store=True)
+    ordered_qty = fields.Float(compute='_compute_po_lines', store=True,
+                               help="Quantity on confirmed orders.")
+    remaining_qty = fields.Float(compute='_compute_po_lines', store=True,
+                                 help="Requested minus ordered.")
+
     po_line_id = fields.Many2one(
         'purchase.order.line', string='PO Line', readonly=True, copy=False,
+        help="DEPRECATED (M2) — the first purchase line raised from this "
+             "requisition line. Kept so existing records and reports keep "
+             "working; `po_line_ids` is authoritative.",
     )
     received_qty = fields.Float(
         string='Received', compute='_compute_received', store=True,
     )
+
+    # -- Technical detail. A buyer cannot source what nobody described.
+    substitution_allowed = fields.Boolean(
+        string='Substitution Allowed', default=False,
+        help="Whether an equivalent may be offered. False means the vendor "
+             "must quote what is asked for — and a buyer who substitutes "
+             "anyway is making an engineering decision.")
+    preferred_brand = fields.Char(
+        help="A preference, and only that. Naming a brand does not name a "
+             "vendor and does not award anything.")
+    specification_ref = fields.Char(
+        string='Specification',
+        help="The specification clause, drawing or datasheet the line is "
+             "bought against. A reference, not a copy.")
+    notes = fields.Char()
+
+    # ------------------------------------------------------------------
+    # M3 — the control scope of one line.
+    #
+    # Rule 2: reservation is per cost code, because that is the dimension
+    # Construction controls money in. The cost code itself is added to this
+    # model by `real_estate_construction`, so everything here asks whether the
+    # field exists rather than assuming it — a Procurement-only install has no
+    # cost codes and must still be able to run.
+    # ------------------------------------------------------------------
+    reservation_ids = fields.One2many(
+        'realestate.procurement.reservation', 'request_line_id',
+        string='Reservations', readonly=True)
+    reserved_amount = fields.Monetary(
+        compute='_compute_reserved_amount', store=True,
+        help="Capacity this line is holding. Zero once it has been ordered, "
+             "because the confirmed order is then the obligation.")
+
+    @api.depends('reservation_ids.amount_active', 'reservation_ids.state')
+    def _compute_reserved_amount(self):
+        for ln in self:
+            # Same narrow elevation as on the request: read the control
+            # record, do not hand out the right to change it.
+            ln.reserved_amount = sum(ln.sudo().reservation_ids.filtered(
+                lambda r: r.state == 'reserved').mapped('amount_active'))
+
+    def _control_cost_code_id(self):
+        self.ensure_one()
+        return self.cost_code_id.id if 'cost_code_id' in self._fields else False
+
+    def _control_wbs_id(self):
+        self.ensure_one()
+        return self.wbs_id.id if 'wbs_id' in self._fields else False
+
+    def _control_scope_values(self):
+        """Coding to copy onto a reservation, where coding exists at all."""
+        self.ensure_one()
+        Reservation = self.env['realestate.procurement.reservation']
+        values = {}
+        if 'cost_code_id' in Reservation._fields:
+            values['cost_code_id'] = self._control_cost_code_id()
+        if 'wbs_id' in Reservation._fields:
+            values['wbs_id'] = self._control_wbs_id()
+        return values
+
+    def _control_amount(self, date=None):
+        """This line's tax-exclusive amount, in company currency.
+
+        Rule 3, and the reason the estimate rather than a tax-inclusive figure
+        is used: Construction's budget and commitment are both tax-exclusive,
+        so a reservation that included VAT would overstate every position by
+        the tax rate and would do it invisibly.
+
+        Rule V: converted at a documented rate on a documented date, because a
+        USD request measured against an EGP budget is not a measurement.
+        """
+        self.ensure_one()
+        request = self.request_id
+        company = request.company_id or self.env.company
+        source = request.currency_id or company.currency_id
+        amount = self.estimated_cost or 0.0
+        if source == company.currency_id:
+            return amount
+        return source._convert(amount, company.currency_id, company,
+                               date or fields.Date.context_today(self))
+
+    def unlink(self):
+        """A line holding capacity cannot be deleted out from under it.
+
+        Released and converted reservations do not block anything — they are
+        history and they keep their own snapshot of what the line said. An
+        *active* one is a live control position, and deleting its demand would
+        leave the project's availability quietly wrong.
+        """
+        holding = self.filtered(lambda ln: ln.sudo().reservation_ids.filtered(
+            lambda r: r.state == 'reserved'))
+        if holding:
+            raise UserError(_(
+                "%s is reserving purchasing capacity. Revise the requisition "
+                "— that releases the reservation and leaves a record of why.")
+                % ', '.join(holding.mapped(
+                    lambda ln: ln.description or ln.product_id.display_name)))
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    #: Same reasoning as on the request: after submission these describe what
+    #: was approved. `wbs_id` and `cost_code_id` are named here even though
+    #: Construction owns them — a set that only guards the fields this module
+    #: happens to define would guard the wrong half.
+    _APPROVED_BASIS_FIELDS = {
+        'qty', 'uom_id', 'product_id', 'description', 'estimated_unit_cost',
+        'required_on_site_date', 'wbs_id', 'cost_code_id',
+    }
+
+    def write(self, vals):
+        touched = self._APPROVED_BASIS_FIELDS & set(vals)
+        if touched:
+            self.mapped('request_id')._check_basis_is_still_open(
+                {field: vals[field] for field in touched},
+                self._APPROVED_BASIS_FIELDS)
+        return super().write(vals)
 
     @api.depends('product_id')
     def _compute_uom(self):
@@ -59,17 +228,64 @@ class MaterialRequestLine(models.Model):
             seller = ln.product_id.seller_ids[:1]
             ln.unit_price_hint = seller.price if seller else ln.product_id.standard_price
 
-    @api.depends('unit_price_hint', 'qty')
+    @api.depends('unit_price_hint', 'qty', 'estimated_unit_cost')
     def _compute_estimated_cost(self):
-        for ln in self:
-            ln.estimated_cost = (ln.unit_price_hint or 0.0) * (ln.qty or 0.0)
+        """A stated estimate wins over a catalogue hint.
 
-    @api.depends('po_line_id.qty_received')
-    def _compute_received(self):
+        Phase 0 found this silently falling through to `standard_price` and
+        then to zero — and a zero estimate cleared every approval bracket.
+        `estimate_is_known` now says which of those happened.
+        """
         for ln in self:
-            ln.received_qty = ln.po_line_id.qty_received if ln.po_line_id else 0.0
-            if ln.received_qty and ln.request_id:
-                ln.request_id._refresh_state_from_lines()
+            unit = ln.estimated_unit_cost or ln.unit_price_hint or 0.0
+            ln.estimated_cost = unit * (ln.qty or 0.0)
+            ln.estimate_is_known = bool(ln.estimated_unit_cost
+                                        or ln.unit_price_hint)
+
+    estimate_is_known = fields.Boolean(
+        compute='_compute_estimated_cost', store=True,
+        help="False when neither an estimate nor a catalogue price exists. "
+             "The amount is then unknown, not zero — an approval matrix must "
+             "read this rather than trusting a zero.")
+
+    @api.depends('po_line_ids.qty_received')
+    def _compute_received(self):
+        """Read what Inventory says. Nothing is written from here.
+
+        This used to call `request_id._refresh_state_from_lines()` from inside
+        the compute, so the request's state depended on when the cache
+        happened to be invalidated. The rollup now runs from the request's own
+        stored compute instead.
+        """
+        for ln in self:
+            ln.received_qty = sum(ln.po_line_ids.mapped('qty_received'))
+
+    @api.depends('po_line_ids.product_qty', 'po_line_ids.state', 'qty')
+    def _compute_po_lines(self):
+        for ln in self:
+            ln.po_line_count = len(ln.po_line_ids)
+            ordered = ln.po_line_ids.filtered(
+                lambda pol: pol.state in ('purchase', 'done'))
+            ln.ordered_qty = sum(ordered.mapped('product_qty'))
+            ln.remaining_qty = max(0.0, (ln.qty or 0.0) - ln.ordered_qty)
+
+
+
+    @api.constrains('product_id', 'description')
+    def _check_something_is_being_asked_for(self):
+        for ln in self:
+            if not ln.product_id and not ln.description:
+                raise ValidationError(_(
+                    "A requisition line needs either a product or a written "
+                    "scope. A line that says nothing cannot be sourced."))
+
+    @api.constrains('product_id', 'uom_id')
+    def _check_uom_where_a_product_demands_one(self):
+        for ln in self:
+            if ln.product_id and not ln.uom_id:
+                raise ValidationError(_(
+                    "%s is a catalogue product, so the line needs a unit of "
+                    "measure.") % ln.product_id.display_name)
 
     @api.constrains('qty')
     def _check_qty(self):
@@ -77,15 +293,25 @@ class MaterialRequestLine(models.Model):
             if ln.qty <= 0:
                 raise ValidationError(_("Quantity must be greater than zero."))
 
-    def _get_preferred_supplier(self):
-        """Return the partner of the first `seller_ids` row, if any."""
+    def _suggested_suppliers(self):
+        """Vendors worth asking — a suggestion, never a decision.
+
+        This replaces `_get_preferred_supplier()`, which returned
+        `seller_ids[0]` and was used as the awarded vendor. Whichever supplier
+        row sorted first won the order regardless of price, and nothing
+        recorded why. Choosing a vendor is a sourcing decision; M5/M6 own it.
+        """
         self.ensure_one()
-        if self.product_id.seller_ids:
-            return self.product_id.seller_ids[0].partner_id
-        return False
+        return self.product_id.seller_ids.mapped('partner_id')
 
     def _unit_price(self):
-        """Price the PO line should carry — preferred seller price, fallback to standard cost."""
+        """A starting price for an enquiry, not a negotiated one.
+
+        An RFQ carries a price so the vendor has something to respond to. What
+        comes back is the vendor's number, and that is the one that matters.
+        """
         self.ensure_one()
+        if self.estimated_unit_cost:
+            return self.estimated_unit_cost
         seller = self.product_id.seller_ids[:1]
         return seller.price if seller else self.product_id.standard_price

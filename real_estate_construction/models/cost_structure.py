@@ -291,6 +291,21 @@ class ConstructionCostCode(models.Model):
 
         On demand rather than on create: a catalogue of codes that a company
         never books against should not litter the chart of analytic accounts.
+
+        Both writes here are system writes, and the back-link has to be one
+        for the same reason the account already was. Procurement M2 proved it
+        with a real user: a buyer with legitimate purchasing rights and
+        read-only access to the cost-code catalogue coded a purchase line
+        correctly, and storing the back-link raised
+
+            AccessError: You are not allowed to modify 'Construction Cost
+            Code' records
+
+        — so *referencing* an existing code required permission to *edit the
+        catalogue*, and the only way to code a line was to be able to invent
+        the code. Materialising the account is bookkeeping the system does on
+        the record's behalf; it is not the user editing master data, and the
+        ACL that stops them doing that is untouched.
         """
         self.ensure_one()
         if self.analytic_account_id:
@@ -302,7 +317,10 @@ class ConstructionCostCode(models.Model):
             'plan_id': plan.id,
             'company_id': self.company_id.id,
         })
-        self.analytic_account_id = account
+        # Narrow on purpose: this one field, on this one record. Not a sudo
+        # wrapped around the caller, which would hand away every check the
+        # purchase document is subject to.
+        self.sudo().write({'analytic_account_id': account.id})
         return account
 
     def _analytic_accounts(self):
