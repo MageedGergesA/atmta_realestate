@@ -15,3 +15,10 @@ from . import test_m4_invariants
 from . import test_m4_qualification
 from . import test_m4_eligibility
 from . import test_m4_security
+from . import test_m5_tender
+from . import test_m5_execution
+from . import test_m5_security
+from . import test_m5_concurrency
+from . import test_m5_migration
+from . import test_m5_multicompany
+from . import test_m5_browser

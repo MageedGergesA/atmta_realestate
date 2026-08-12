@@ -29,6 +29,23 @@
               action="action_material_request"
               sequence="10"/>
 
+    <!-- M5 — sourcing sits between the requisition and the purchase order,
+         and the menu order says so: demand, then the market, then the
+         order. -->
+    <menuitem id="menu_sourcing_events"
+              name="Sourcing &amp; Tenders"
+              parent="menu_procurement_operations"
+              action="action_sourcing_event"
+              groups="group_procurement_user"
+              sequence="15"/>
+
+    <menuitem id="menu_bid_responses"
+              name="Bids Received"
+              parent="menu_procurement_operations"
+              action="action_bid_response"
+              groups="group_procurement_user"
+              sequence="17"/>
+
     <menuitem id="menu_purchase_orders"
               name="Purchase Orders"
               parent="menu_procurement_operations"

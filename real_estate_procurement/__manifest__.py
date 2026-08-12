@@ -27,7 +27,7 @@ Cross-module supply-chain foundation used by Construction, Handover, Rental and 
 """,
     'author': "Atmta",
     'license': 'LGPL-3',
-    'version': '18.0.4.0.0',
+    'version': '18.0.5.0.0',
     'category': 'Real Estate',
     'depends': [
         'atmta_real_estate',
@@ -37,6 +37,12 @@ Cross-module supply-chain foundation used by Construction, Handover, Rental and 
         # declared rather than relied upon.
         'real_estate_developer',
         'purchase',
+        # M5 — native alternative RFQs live here: `purchase.order.group`,
+        # `alternative_po_ids` and the compare action. Installing it also
+        # brings Odoo's Purchase Agreements (blanket orders and purchase
+        # templates). ATMTA does not govern those and makes no claim about
+        # them; see IMPLEMENTATION_REPORT.md §"purchase_requisition".
+        'purchase_requisition',
         'product',
         'stock',
     ],
@@ -56,6 +62,7 @@ Cross-module supply-chain foundation used by Construction, Handover, Rental and 
         # runtime one.
         'wizard/vendor_governance_wizard_views.xml',
         'views/vendor_governance_views.xml',
+        'views/sourcing_views.xml',
         'views/procurement_plan_views.xml',
         'wizard/procurement_wizard_views.xml',
         'views/material_request_views.xml',
@@ -64,5 +71,16 @@ Cross-module supply-chain foundation used by Construction, Handover, Rental and 
         'views/partner_views.xml',
         'views/menus.xml',
     ],
+    # M5 — the sourcing tour. Declared explicitly because a tour that is not
+    # in a bundle is not discovered and not run: it would sit in the tree
+    # looking like browser coverage while proving nothing. `web.assets_tests`
+    # is where `@web_tour` lives, and it is the only bundle M5 needs — the
+    # module ships no backend JS of its own and depends on no other ATMTA
+    # module publishing one for it.
+    'assets': {
+        'web.assets_tests': [
+            '/real_estate_procurement/static/tests/tours/**/*.js',
+        ],
+    },
     'application': True,
 }

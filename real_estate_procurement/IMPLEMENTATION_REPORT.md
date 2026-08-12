@@ -2362,3 +2362,631 @@ compared technically and commercially, and who should win are M5–M7.
 | **Requisition-level material-inspection link** unused | M8 |
 
 Nothing in this list is disguised as finished.
+
+---
+
+## 58. Frozen test correction — the control experiment
+
+M4's gate reported one failure in frozen Construction:
+`TestMultiCompanyIsolation.test_both_companies_active_still_scopes_each_project`
+(`real_estate_construction/tests/test_m10_multicompany.py`). §56 recorded it as
+a test that cannot do its job. It has now been corrected — in the test only —
+and the correction was put through a control experiment before being accepted,
+because a test-only change that coincides with new browser failures has to be
+proved innocent rather than assumed innocent.
+
+### The defect, precisely
+
+```python
+    self.assertNotIn(str(self.project_b.id), str(payload_a['cost']))
+```
+
+`ConstructionControlTower._cost()` returns a fixed dict of eighteen keys, every
+value a float, a bool, or the `budget_state` string. `project_totals()` does
+return `project_id`; `_cost()` deliberately does not copy it through. **No id of
+any kind can appear in the structure being searched.** The assertion could only
+pass, or fail by digit collision — which is what happened: the fixture confirms
+a Project A order of `60_000_000.0`, Postgres handed out `project_b.id == 60`,
+and `"60"` matched inside `"60000000.0"`. The reverse is worse: a real leak of
+Project B's money into Project A's totals produces a summed float carrying no id
+at all, and the assertion stays green. False positives and false negatives both.
+
+### What replaced it
+
+Project B is first given a contribution of every kind Project A's payload
+aggregates — a baselined budget (already in `setUp`), a confirmed commitment of
+7,000,000 inside company B, and a posted actual of 3,000,000. An isolation test
+whose neighbour contributes nothing has nothing to leak and cannot fail.
+
+Four proofs then run, none of them stringified:
+
+1. **Exact totals.** A's authorised figures: budget 100,000,000, commitment
+   60,000,000, actual 20,000,000. A summing leak makes them 150,000,000,
+   67,000,000 and 23,000,000.
+2. **Row identity.** Every `cost_code_id` on `cost_sheet.rows_for()` compared as
+   an integer: `civil_a` present, `civil_b` absent.
+3. **The records behind the numbers.** `cost_sheet.drilldown()` returns the
+   backend-owned domain for a cell. Both domains are executed **with `sudo()`**
+   — deliberately, because a domain that only looks isolated because a record
+   rule filtered it afterwards is not isolated, it is lucky — and the resulting
+   records are checked field by field: `order_id.re_project_id` and `company_id`
+   are A's, B's order line and B's analytic line are absent, and the sum of the
+   records equals the figure the tower reported.
+4. **B answers as B**, with 50,000,000 / 7,000,000 / 3,000,000, not with A's
+   figures and not with both.
+
+Each of the four was mutation-tested — inverted one at a time and re-run — so
+none is vacuous:
+
+| Mutation | Failure produced |
+|---|---|
+| expect the leaked commitment `67M` | `60000000.0 != 67000000.0` |
+| expect `civil_b` among A's rows | `1009 not found in {1008}` |
+| expect B's order line in A's drilldown | `224 not found in [223]` |
+| expect B's analytic line in A's drilldown | `182 not found in [181]` |
+
+### The control experiment
+
+Five Construction browser/HOOT classes failed in the same gate window. To
+establish whether the correction caused them, two conditions were run
+**interleaved** — A, B, B, A — with the same command, ports, database strategy
+(fresh copy of one template per run), tags, timeouts, browser mode and assets
+mode. The only difference between conditions was that one test file, verified by
+sha256 before every run. Zero Construction production files were involved.
+
+| Run | Condition | Result |
+|---|---|---|
+| C1 | **A** — original frozen test | all five classes FAIL |
+| C2 | **B** — correction | all five classes FAIL |
+| C3 | **B** — correction | all five classes FAIL |
+| C4 | **A** — original frozen test | all five classes FAIL |
+
+Failure families, identical in both conditions: HOOT `Script timeout exceeded`;
+tour `_wait_ready` returning falsy — *the web client never became ready*; and a
+websocket `concurrent.futures._base.TimeoutError` behind several of them. **Not
+one failure is a business assertion.** No tour reached a step; they never
+started. The FAIL/ERROR split moved between identical-source runs (C1: 2 failed
++ 3 errors; C3: 5 failed + 0 errors) while the affected test set stayed the
+same, and in the fresh-install gate the Construction tours passed while three
+unrelated RTL tours in `atmta_real_estate`, `real_estate_brokerage` and
+`real_estate_checks` failed instead.
+
+Host state was recorded at every run: load 1.4–4.4, available memory 3.9–5.3 GB,
+**swap pinned at its 2 GB ceiling throughout**, 36–50 Chrome processes resident,
+and other Odoo servers running.
+
+### Conclusion
+
+```
+    THE TEST CORRECTION IS NOT CAUSAL.
+```
+
+The failures reproduce identically without it. The cause was then found, and it
+was not the environment either — see §59.
+
+### The corrected test
+
+`test(construction): fix multi-company isolation assertion` — commit `47a5a57`,
+one file, +86 −4, **zero Construction production lines**. `b70ca5f` was not
+amended. 20 of 20 completed stability runs, 0 failed, 0 errors, with the project
+id sequence advancing on every run so that ids varied across exactly the axis
+the old assertion was fragile to.
+
+---
+
+## 59. The browser failures — root cause
+
+A first pass classified the browser and HOOT failures as environment
+instability, on the strength of a saturated 2 GB swap and 36–50 resident Chrome
+processes. That was wrong, and the record is corrected here rather than quietly
+amended.
+
+### The hypothesis that was rejected
+
+The programme's accepted M3/M4 gates all ran `-u real_estate_procurement`; the
+new scoped gates omitted it. That suggested the tests needed a module
+install/update lifecycle. It was tested directly — same template, same tags,
+same ports, same timeouts, same assets mode, one variable:
+
+| Condition | Invocation | Result |
+|---|---|---|
+| **N** | no `-i`, no `-u` | 5 fail — 1 JS script timeout, 4 ready timeouts |
+| **U** | `-u real_estate_construction` | 5 fail — identical modes |
+
+```
+    -u MECHANISM REJECTED.
+```
+
+### The actual cause
+
+The gate harness provisioned its databases with `createdb -T`, which clones a
+PostgreSQL database and **not** the Odoo filestore. Asset bundles are
+`ir.attachment` rows whose `store_fname` points into
+`<data_dir>/filestore/<dbname>/`. The clone therefore carried every
+`web.assets_*` attachment record while the bytes stayed behind:
+
+```
+    atmta_gfresh (template, installed directly)   623 files, 75 MB
+    atmta_nu_n   (createdb -T clone)              no filestore at all
+    atmta_gbrw   (createdb -T clone)              0 files
+```
+
+A web client served bundles that resolve to nothing never finishes booting.
+`odoo.isTourReady(...)` stays falsy, the websocket request times out, HOOT hits
+`Script timeout exceeded` — every observed signature, and never once a business
+assertion, because no tour ever reached a step.
+
+### Direct proof
+
+Third condition, same command as **N**, filestore copied alongside the database:
+
+| Condition | DB clone | Filestore | `-u` | Result |
+|---|---|---|---|---|
+| N | yes | **missing** | no | 5 fail |
+| U | yes | **missing** | yes | 5 fail |
+| **FS** | yes | **copied** | no | **0 failed, 0 errors of 6** |
+
+Confirmed twice more from independent clones — U1 and U2, both
+`0 failed, 0 errors of 6`.
+
+This retro-explains every observation without appeal to machine load: the fresh
+install (`-i`) built its own filestore and passed these same five; the accepted
+M3/M4 gates ran against directly installed databases and passed them; the
+20 × multi-company runs and Procurement's 240 are pure Python and were never
+affected. Condition FS passed at load 1.55 with 40 Chrome processes and swap
+still pinned at 2 GB — the resource pressure was real and irrelevant.
+
+```
+    CLASSIFICATION: TEST HARNESS DEFECT, in the gate runner, introduced during
+    this verification work. Not a product defect, not a defective test, not the
+    multi-company correction.
+```
+
+### The corrected harness
+
+The gate runner now clones the filestore with the database, and refuses to hand
+back an incomplete clone:
+
+```bash
+    copy () { ... createdb -T ...; cp -a "$FS/$2" "$FS/$1"; assert_filestore "$1" "$2"; }
+```
+
+`assert_filestore()` aborts the run when a clone holds fewer filestore files
+than its template. Failing loudly there beats spending a day classifying asset
+starvation as a browser flake. Scoped gates also carry the owning module's `-u`,
+matching the accepted M3/M4 commands. No product source, no test source, no
+timeout, no browser flag and no asset mode was changed for this.
+
+---
+
+## 60. Final M4 release gates
+
+Every run below completed on a correctly provisioned database.
+
+| Gate | Invocation | Result |
+|---|---|---|
+| **A — Construction** | `-u real_estate_construction`, tag `atmta_construction` | **563 tests, 0 failed, 0 errors** |
+| **B — Procurement M1–M4** | `-u real_estate_procurement`, tag `atmta_procurement` | **240 tests, 0 failed, 0 errors** |
+| **C — Combined** | `-u` both, both tags | **803 tests, 0 failed, 0 errors** |
+| **D — Browser/HOOT subset** | owning modules `-u` | Construction 6/6 pass; `script_timeouts=0`, `ready_timeouts=0` |
+| **E — Fresh 14-module install** | `-i` all fourteen | install clean, RC=0; suite 2,339 — failures only in unrelated modules (§61) |
+| **F — Full 14-module upgrade** | `-u` all fourteen | upgrade clean, RC=0; suite 2,339 — same unrelated modules (§61) |
+| **G — Legacy migration** | `18.0.0.1 → 18.0.4.0.0` | rc=0, see below |
+| **H — Migration retry** | re-run | rc=0, byte-identical |
+
+Migration, before and after, on a real legacy database:
+
+```
+    qualifications   (table absent) → 0        confirmed POs   5 → 5
+    profiles         (table absent) → 0        cancelled POs   0 → 0
+    restrictions     (table absent) → 0        PO total        778,406.50 → 778,406.50
+    conditions       (table absent) → 0        classification  has_active_purchase_history: 2
+```
+
+Two suppliers with confirmed purchase history were classified as exactly that
+and qualified as nothing. Purchase history did not become a governance decision.
+The retry produced an identical population and an identical classification line:
+
+```
+    IDEMPOTENT = YES
+```
+
+---
+
+## 61. Unrelated failures, stated separately
+
+The fourteen-module suite is **not** clean, and this report will not print
+`0 failed` over a run that failed.
+
+Widening the gate from `atmta_procurement,atmta_construction` to all fourteen
+modules ran, for the first time, test suites that no M4 gate had ever executed.
+Four to five of them fail, in three modules, none owned by this milestone:
+
+| Module | Test | Character |
+|---|---|---|
+| `atmta_real_estate` | `TestDashboardRTL.test_dashboard_rtl` | deterministic, 3/3 |
+| `real_estate_brokerage` | `TestBrowserRTL.test_listings_render_right_to_left` | deterministic, 3/3 |
+| `real_estate_checks` | `TestTreasuryDashboardRTL.test_dashboard_rtl` | deterministic, 3/3 |
+| `real_estate_brokerage` | `TestBrowserTablet`, `TestBrowserCommission*` | intermittent, run-dependent |
+| `real_estate_checks` | `TestTreasuryDashboardRoleUser` | intermittent, passed under its own `-u` |
+
+The three RTL failures are real product assertions, not timeouts:
+
+```
+    Expected an RTL session, computed direction is "ltr".
+    html[dir]=null session.lang=undefined
+```
+
+They reproduce with a correct filestore, correctly loaded assets, and their own
+owning module's `-u`, so §59's root cause does not explain them and they are not
+claimed to be fixed by it.
+
+Every one of these tests — and the model code beside them — lives in
+**uncommitted, untracked working-tree work from other sessions**
+(`atmta_real_estate/tests/`, `real_estate_brokerage/tests/`,
+`real_estate_checks/tests/` are all `??` against the branch, as is a body of new
+model code). They are outside M4's scope, were not touched, and are recorded
+here so nobody reads the fourteen-module number as a clean bill of health for
+those modules.
+
+```
+    M4 SCOPE (Procurement + frozen Construction):  CLEAN
+    WIDENED DIRTY-WORKING-TREE SUITE:              UNRELATED FAILURES PRESENT
+```
+
+---
+
+# M5 — Sourcing and Tender
+
+Module version **18.0.5.0.0**.
+
+```
+    M5 RECORDS THE COMPETITIVE PROCESS.
+    M5 DOES NOT EVALUATE THE WINNER.
+```
+
+M6 owns technical and commercial evaluation, bid levelling, currency
+normalisation and scoring. M7 owns the award, the purchase order that follows
+it, and the Construction commitment that follows that. Nothing in this
+milestone ranks a vendor, and the one native helper that would have made
+ranking easy (`get_tender_best_lines`) is deliberately left unused.
+
+## 62. M5.0 — the native alternative-RFQ audit
+
+Read from installed source before any model was written
+(`addons/purchase_requisition/`), because guessing field names and then
+building around the guess is how a module ends up with a parallel
+implementation of something Odoo already does.
+
+**Alternatives are a group, not a link.**
+
+```python
+    class PurchaseOrderGroup(models.Model):
+        _name = 'purchase.order.group'
+        order_ids = fields.One2many('purchase.order', 'purchase_group_id')
+
+        def write(self, vals):
+            res = super().write(vals)
+            self.filtered(lambda g: len(g.order_ids) <= 1).unlink()   # self-implodes
+            return res
+```
+
+`purchase.order.purchase_group_id` points at it; `alternative_po_ids` is a
+*related* one-to-many through it, domain-limited to draft/sent/to-approve and
+`check_company=True`. The group is created implicitly — context `origin_po_id`
+on create, or writing `alternative_po_ids` — and **deletes itself when it drops
+to one order**.
+
+That last property decided the architecture. A tender whose identity vanished
+because two of three vendors declined would be a tender nobody could answer
+questions about afterwards. The group has no reference, no state, no dates, no
+audit and no lifecycle, so:
+
+```
+    ATMTA Sourcing Event   identity, authority, governance, history
+    purchase.order.group   Odoo's comparison plumbing, used as-is
+```
+
+M5 creates the RFQs through the native context hook so the group is built the
+way the native compare view expects, and never writes to the group model
+directly.
+
+## 63. Native compare is destructive — why bid evidence is sealed
+
+```python
+    def action_choose(self):
+        order_lines = (self.order_id | self.order_id.alternative_po_ids).mapped('order_line')
+        order_lines = order_lines.filtered(lambda l: l.product_qty and ...)
+        return order_lines.action_clear_quantities()      # write({'product_qty': 0})
+```
+
+Choosing a line in Odoo's compare view writes `product_qty = 0` on every
+competing alternative line. Had "what Vendor B submitted" been read back from
+`purchase.order.line`, one buyer comparing offers would have rewritten Vendor B
+into having bid nothing — and the tender file would have said so afterwards,
+with a straight face.
+
+So receipt snapshots into `realestate.procurement.bid.response` and
+`.bid.response.line`. Every column there is a plain stored value: not related,
+not computed, nothing that could follow the RFQ. The regression is pinned by
+`test_d_native_compare_zeroing_cannot_rewrite_the_bid`, which performs the
+native mutation and asserts both that it happened and that the snapshot did not
+move.
+
+## 64. The sealed-bid engine boundary
+
+Received evidence refuses to be written. The first implementation carried the
+bypass on an overridden `sudo()`, and that was a real hole: **every** elevated
+read anywhere in the system — a compute, a report, another module, a generic
+`sudo()` in core — would have silently acquired the right to rewrite submitted
+bids. It was replaced with a named `_engine()`:
+
+```python
+    def _engine(self):
+        return self.sudo().with_context(re_bid_engine=True)
+```
+
+`_record()` also strips the flag from the record it hands back, so a caller
+cannot accidentally receive a handle that ignores its own seal. The test that
+caught this is `test_d_a_received_bid_refuses_to_be_edited`.
+
+## 65. M5.7 — deadlines
+
+Datetime throughout, and six moments kept apart: `issue_datetime`,
+`clarification_deadline`, `original_close_datetime` (never overwritten),
+`close_datetime` (effective), `actual_closed_datetime`, and the
+`effective_close_datetime` carried by each tender version.
+
+**A bid is judged against the version it answers.** `deadline_applied` is
+copied onto the response at receipt from that version, so an addendum that
+extends the close does not retrospectively make an earlier submission early,
+and one that pulls it in does not make an earlier submission late.
+
+The boundary rule, stated once:
+
+```
+    received <= effective close   ON TIME
+    received >  effective close   LATE
+```
+
+Inclusive, because a tender document closing at 12:00 accepts submissions *up
+to* 12:00. Tested at 11:59:59, 12:00:00 and 12:00:01 — at the precision that
+survives storage, not an imaginary finer one. A timezone test asserts the same
+stored UTC instant classifies identically for users in Cairo, UTC and New York;
+no localised string is ever compared.
+
+## 66. M5.8 — late bid governance
+
+| Policy | Recorded | Evaluable | Marked late |
+|---|---|---|---|
+| `reject` | yes — arrival is a fact | **no** | yes |
+| `exception_required` | yes | only after a manager accepts | yes, permanently |
+| `allow_with_warning` | yes | yes | yes, permanently |
+
+The policy in force **at receipt** is stamped on the response, along with the
+deadline applied, the lateness in seconds, whether an exception was required
+and — once granted — who granted it, when and why. Changing company policy
+afterwards cannot rewrite how an old submission was handled; a test asserts
+exactly that.
+
+Self-approval is off by default: the buyer who recorded a late submission
+approving their own exception for it defeats the point of having one.
+`procurement_allow_self_late_exception` exists for companies that decide
+otherwise, and it is a decision they have to make.
+
+**Late is administrative.** No status in this module says technically
+non-compliant, commercially best or recommended, and a test enumerates the
+selection to keep it that way.
+
+## 67. M5.9 — decline, no bid, no response
+
+Three different facts, none of them a price:
+
+```
+    DECLINED      the vendor told us they will not bid
+    NO_BID        the vendor formally returned a no-bid
+    NO_RESPONSE   the deadline passed in silence
+```
+
+None creates a zero-valued bid. Nought is a commercial statement — it says the
+vendor will do the work for nothing — and manufacturing one to make a tender
+look complete puts that statement in their mouth. `no_response` is computed and
+only becomes true once the deadline has actually passed; before that, silence is
+`awaiting`, because a vendor still thinking is not a vendor who declined.
+Reason categories are recorded for the tender file and feed nothing: vendor
+performance is M9.
+
+## 68. M5.10 — withdrawal
+
+Withdrawing removes the offer, never the evidence: header, lines, attachments,
+received timestamp and the whole revision chain stay exactly as they were.
+
+**Withdrawing Rev 1 does not revive Rev 0.** The invitation is left with no
+current response, deliberately. A quotation the vendor has already replaced is
+not an offer they are still making, and silently promoting it would put a price
+back in their mouth that they withdrew. Reinstatement, if a company wants it,
+is a new revision — an explicit act, not a side effect.
+
+Whether the withdrawal landed before or after bidding closed is recorded.
+Closing the tender settles that outright rather than comparing clocks, because
+a withdrawal in the same second as the close is precisely the case somebody
+would later argue about.
+
+## 69. M5.11 — clarifications
+
+Three types (vendor question, buyer clarification, general) and three
+visibilities (`vendor_only`, `all_invited`, `internal`). Requesters have **no
+access row at all** for clarifications, which is a stronger statement than any
+domain: project membership does not grant sight of a competitor's commercial
+question.
+
+A clarification that would change quantity, scope, specification, commercial
+terms, the document basis or the deadline cannot be answered as text. The
+answer action refuses until an addendum carries it, so the issued version stays
+sealed and vendors are told what changed and when — rather than the basis
+moving under the people who already priced it.
+
+## 70. M5.12 — addenda and acknowledgement
+
+Tender versions and bid revisions are different numbers and never mix:
+
+```
+    Tender Rev 0  →  Vendor A Bid Rev 0
+    Addendum      →  Tender Rev 1
+    Vendor resubmits →  Vendor A Bid Rev 1
+```
+
+Publishing Rev 1 marks the invitation `resubmission_required` and leaves the
+existing bid untouched. **No bid revision is fabricated.** Us changing the
+question is not them changing their answer, and a Rev 1 bid nobody submitted
+would be a fabrication sitting in the evidence file.
+
+Acknowledgement is its own record — version, moment, method, and who wrote it
+down — rather than a boolean that could answer none of those a year later.
+Methods include `email_received`, `signed_document`, `buyer_recorded` and
+`future_portal`. There is no vendor portal in M5 and nothing here claims the
+vendor clicked anything; `future_portal` exists so that portal
+acknowledgements stay distinguishable when one arrives.
+
+Policy is `optional` by default and overridable per event. Under
+`required_before_response`, a response against an unacknowledged addendum is
+recorded but not evaluable, and acknowledging it re-assesses the response
+immediately. Two addenda with only the first acknowledged leaves the response
+held — tested.
+
+## 71. M5.13 — administrative completeness
+
+`is_evaluable` answers one question: may M6 look at this at all. Everything
+behind it is procedural — a bid exists, it answers the current basis, it was in
+time or excused, mandatory addenda were acknowledged, required validity and
+documents are present. Nothing inspects the offer, and the completeness note on
+a passing bid says so in words: *this says nothing about the merits of the
+offer.*
+
+## 72. M5.14 — confidentiality
+
+Tested at the ORM, never at the view. A price hidden by `invisible=` in a form
+is not hidden, so every assertion goes through `read`, `search`, `search_read`,
+`search_count` or a relational traversal as the restricted user — the routes an
+export, an RPC client or a browser console actually use.
+
+| Actor | Bid evidence |
+|---|---|
+| Requester | no access row at all — `read`, `search`, `search_read` and `search_count` all raise `AccessError` |
+| Buyer | their own events and the ones they are on the team of |
+| Procurement Manager | everything, because somebody must be able to audit a tender they did not run |
+| Plain Purchase user | native Purchase rights grant **no** ATMTA bid access |
+
+Bid documents are stamped with `res_model`/`res_id` onto the response at
+receipt, so Odoo's own attachment rules put them behind the bid's access rules
+instead of leaving them floating and readable by anyone who can guess an id.
+
+Chatter is checked too: a test asserts no competitor amount appears in the
+event's messages, because followers of a tender are not automatically people
+who may read its prices.
+
+## 73. The tender-RFQ confirmation boundary
+
+Native `button_confirm` returns the alternative-RFQ warning wizard when live
+alternatives exist. That is Purchase UX, not governance: it *asks* a question
+rather than refusing, it only appears while alternatives are live, and it is
+switched off wholesale by `skip_alternative_check` — which the native wizard
+sets itself when it confirms.
+
+ATMTA's control is independent of all of it. `_check_tender_authorisation()`
+runs first in `button_confirm`, refuses any RFQ belonging to a sourcing event,
+and asks `_award_authorisation()` — M7's hook, which returns `False` and is
+written as a lookup rather than a switch so that no configuration can open it
+early. A test confirms the refusal still holds under
+`skip_alternative_check=True`, and that ordinary non-tender project purchases
+confirm exactly as they did.
+
+## 74. Concurrency
+
+Odoo's harness shares one cursor, so a genuine two-process race cannot be run
+and this suite does not pretend otherwise. Each mechanism is tested directly
+instead:
+
+| # | Race | Mechanism | How it is proved |
+|---|---|---|---|
+| C1 | two publishes | row lock + `unique(event_id, revision)` | duplicate Rev 0 insert raises `IntegrityError`; second publish refused |
+| C2 | two addenda | `FOR UPDATE` on the event | the lock statement is asserted in the SQL actually issued |
+| C3 | two bid revisions | `unique(invitation_id, revision)` + invitation row lock | duplicate insert raises; lock statement asserted |
+| C4 | two closes | idempotence | one `actual_closed_datetime`, one audit entry |
+| C5 | receipt near close | stored timestamps | closing after receipt does not make the bid late |
+| C6 | addendum during receipt | version captured inside the lock | response carries one version's lines *and* that version's deadline |
+| C7 | eligibility change during invitation | one service call | the stored payload matches every summary field |
+
+## 75. Migration and the `purchase_requisition` dependency
+
+Native alternative RFQs live in Odoo's Purchase Agreements module, which was
+**uninstalled** in every ATMTA database, so M5 adds it to `depends`. That also
+installs native Purchase Agreements — blanket orders and purchase templates.
+
+```
+    ATMTA DOES NOT GOVERN NATIVE PURCHASE AGREEMENTS.
+```
+
+They are not tenders, M5 makes no claim about them, customises none of them,
+and the migration explicitly does not adopt one. The classification labels them
+`purchase_agreement_native` and stops there.
+
+The migration creates **nothing**: no sourcing event, version, invitation, bid
+response or acknowledgement. A legacy alternative-RFQ group is not a tender —
+it has no issue date, no published version, no deadline, no eligibility
+decision at invitation and no recorded moment of receipt, and the amounts on
+its lines are today's working numbers rather than what anybody submitted. A
+tender file assembled out of guesses is worse than an empty one, because
+somebody will quote it.
+
+What it does instead is describe the population:
+
+```
+    standalone_rfq                  an ordinary legacy RFQ
+    native_alternative_group        alternatives exist, no ATMTA evidence
+    legacy_direct_po                already handled under M3
+    open_approved_demand_with_rfq   a candidate somebody may adopt by hand
+    purchase_agreement_native       native, and not ours
+    atmta_tender                    raised by a sourcing event
+    ambiguous                       cannot be determined
+```
+
+Existing companies are moved to `allow_with_warning` for late bids and
+`optional` for acknowledgement — recording everything, refusing nothing, on the
+same rule as M3 and M4: nothing legal on Friday is refused on Monday because an
+upgrade ran.
+
+## 76. Financial isolation
+
+The M5 invariant, asserted at every lifecycle step by
+`test_a_no_step_of_a_tender_moves_money`:
+
+```
+    Budget 10M · Approved requisition 3M · Reservation 3M
+
+    create tender      →  3M reserved / 0 committed / 0 actual
+    publish            →  3M / 0 / 0
+    invite three       →  3M / 0 / 0
+    bids 2.8M 3.1M 2.9M →  3M / 0 / 0
+    close              →  3M / 0 / 0
+```
+
+A cheap bid does not release authorisation and an expensive one does not expand
+it; the market answering a question is not the company changing its mind. A bid
+above the authorised amount is flagged `above_authorisation` and accommodated
+in no other way. M7 revalidates at award.
+
+## 77. The M5 integrity audit
+
+`realestate.procurement.sourcing.audit` reports and never repairs — fifteen
+checks covering a writable seal, duplicate current bids, duplicate versions, a
+draft version on a published tender, responses against superseded bases,
+unacknowledged mandatory addenda, late bids with no policy recorded, a withdrawn
+bid still current, a confirmed tender RFQ, allocations exceeding authorised
+demand, lost requisition lineage, cross-company events and invitations with no
+eligibility snapshot.
+
+One finding is deliberately informational: an RFQ that no longer matches the
+bid recorded from it is *normal* after a native compare, and is reported as
+`low` with the remediation "no action" — because that divergence is the system
+working, not failing.

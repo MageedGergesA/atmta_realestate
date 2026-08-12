@@ -66,6 +66,28 @@ VENDOR_POLICY = [
     ('required_for_award', 'Required to receive the order'),
 ]
 
+#: M5 — what to do with a submission that arrives after the closing moment.
+#:
+#: Default is `exception_required` rather than `reject`: rejecting outright is
+#: the strictest reading and a company that wants it should say so, while
+#: silently accepting everything makes the deadline decorative. Note that none
+#: of these is a judgement about the offer — a late bid is administratively
+#: late, not technically non-compliant, and conflating the two is how a
+#: procedural slip turns into a quality finding nobody made.
+LATE_BID_POLICY = [
+    ('reject', 'Reject — a late submission is not received'),
+    ('exception_required', 'Manager exception required'),
+    ('allow_with_warning', 'Accept and flag'),
+]
+
+#: M5.12 — whether an addendum has to be acknowledged before a response
+#: counts. Optional by default: requiring it universally would invalidate
+#: perfectly good bids on two-day RFQs where the addendum was a typo fix.
+ADDENDUM_ACK_POLICY = [
+    ('optional', 'Optional'),
+    ('required_before_response', 'Required before a response is valid'),
+]
+
 INHERIT = [('company', 'Company Default')]
 
 
@@ -129,6 +151,26 @@ class ResCompany(models.Model):
              "assessment are two jobs; this is deliberately separate from "
              "the spend self-approval switch because a company may "
              "reasonably allow one and not the other.")
+
+    # -- M5 ------------------------------------------------------------
+    procurement_late_bid_policy = fields.Selection(
+        LATE_BID_POLICY, default='exception_required', required=True,
+        string='Late Bid Handling',
+        help="What happens when a vendor submits after the closing moment. "
+             "Lateness is administrative: none of these options says anything "
+             "about the technical merit of the offer, which M6 judges "
+             "separately.")
+    procurement_allow_self_late_exception = fields.Boolean(
+        string='Allow Self-Approved Late Exception', default=False,
+        help="Off by default. The buyer who recorded a late submission "
+             "approving their own exception for it defeats the point of "
+             "having one.")
+    procurement_addendum_ack_policy = fields.Selection(
+        ADDENDUM_ACK_POLICY, default='optional', required=True,
+        string='Addendum Acknowledgement',
+        help="Whether a vendor must acknowledge an addendum before their "
+             "response is valid. Optional by default, and overridable per "
+             "sourcing event.")
 
     @api.constrains('procurement_qualification_warn_days')
     def _check_warn_days(self):

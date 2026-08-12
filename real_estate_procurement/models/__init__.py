@@ -12,6 +12,13 @@ from . import vendor_profile
 from . import vendor_qualification
 from . import vendor_restriction
 from . import vendor_eligibility
+# M5 — sourcing and tender. The event exists before the invitation that
+# references it, and the invitation before the bid it receives.
+from . import sourcing_event
+from . import sourcing_invitation
+from . import bid_response
+from . import sourcing_clarification
+from . import sourcing_audit
 from . import material_request
 from . import material_request_line
 from . import material_request_revision

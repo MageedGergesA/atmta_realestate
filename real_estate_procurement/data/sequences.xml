@@ -38,4 +38,22 @@
         <field name="prefix">PLAN/%(year)s/</field>
         <field name="padding">4</field>
     </record>
+    <record id="seq_sourcing_event" model="ir.sequence">
+        <field name="name">Procurement Sourcing Event</field>
+        <field name="code">realestate.procurement.sourcing.event</field>
+        <field name="prefix">TND/%(year)s/</field>
+        <field name="padding">4</field>
+    </record>
+    <record id="seq_bid_response" model="ir.sequence">
+        <field name="name">Tender Bid Response</field>
+        <field name="code">realestate.procurement.bid.response</field>
+        <field name="prefix">BID/%(year)s/</field>
+        <field name="padding">5</field>
+    </record>
+    <record id="seq_sourcing_clarification" model="ir.sequence">
+        <field name="name">Tender Clarification</field>
+        <field name="code">realestate.procurement.sourcing.clarification</field>
+        <field name="prefix">CLR/%(year)s/</field>
+        <field name="padding">4</field>
+    </record>
 </odoo>

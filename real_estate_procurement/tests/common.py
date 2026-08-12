@@ -432,3 +432,67 @@ class M4Common(ProcurementCommon):
         return self.Eligibility.check_vendor_eligibility(
             vendor, company=company or self.company, category=category,
             project=project, date=date, purpose=purpose)
+
+
+class M5Common(M3Common, M4Common):
+    """Budgeted demand *and* vendor governance, because M5 needs both.
+
+    A tender starts from authorised demand that holds a reservation (M3) and
+    invites vendors whose eligibility M4 decides. Inheriting both fixture sets
+    rather than copying either keeps one vocabulary across the three
+    milestones: the cooperative `setUp` chain runs M3's, then M4's, then the
+    base.
+    """
+
+    def setUp(self):
+        super().setUp()
+        self.Event = self.env['realestate.procurement.sourcing.event']
+        self.Invitation = self.env[
+            'realestate.procurement.sourcing.invitation']
+        self.Bid = self.env['realestate.procurement.bid.response']
+        self.Version = self.env['realestate.procurement.sourcing.version']
+        self.vendor_a = self._vendor('Tender Vendor A')
+        self.vendor_b = self._vendor('Tender Vendor B')
+        self.vendor_c = self._vendor('Tender Vendor C')
+
+    # ------------------------------------------------------------------
+    def _close_at(self, days=7, hour=12):
+        """A deadline as a real Datetime, never a date coerced to midnight."""
+        day = fields.Date.add(self.today, days=days)
+        return fields.Datetime.to_datetime('%s %02d:00:00' % (day, hour))
+
+    def _event(self, request=None, method='competitive_tender', **kwargs):
+        """A draft sourcing event, allocated against approved demand."""
+        vals = {
+            'title': 'Tender %d' % self._next(),
+            'company_id': self.company.id,
+            'project_id': self.project.id,
+            'sourcing_method': method,
+            'close_datetime': self._close_at(),
+        }
+        vals.update(kwargs)
+        event = self.Event.create(vals)
+        if request is not None:
+            event.action_allocate_request(request)
+        return event
+
+    def _publish(self, event, vendors=()):
+        """Invite, then publish — the order a buyer works in."""
+        for vendor in vendors:
+            event.action_invite_vendor(vendor)
+        event.action_publish()
+        return event
+
+    def _bid(self, invitation, amount, received=None, **kwargs):
+        """Price the vendor's RFQ at `amount` in total, then record it.
+
+        `amount` is the submitted total, not a unit price — the tender line
+        carries thousands of units, and a fixture that quietly meant per-unit
+        would make every assertion in this file wrong by three orders of
+        magnitude.
+        """
+        order = invitation.purchase_order_id
+        line = order.order_line[:1]
+        line.write({'price_unit': amount / (line.product_qty or 1.0)})
+        return invitation.action_record_bid(received_datetime=received,
+                                            **kwargs)

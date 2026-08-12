@@ -21,6 +21,65 @@ class PurchaseOrder(models.Model):
         ('realestate.project', 'Project (Direct)'),
     ], string='RE Source Type')
     re_source_id = fields.Integer(string='RE Source ID', index=True, help='Polymorphic ID into the source record.')
+
+    # -- M5 sourcing ---------------------------------------------------
+    re_sourcing_event_id = fields.Many2one(
+        'realestate.procurement.sourcing.event', string='Sourcing Event',
+        index=True, copy=False, ondelete='set null',
+        help="The tender this RFQ answers. Its presence is what makes the "
+             "confirmation gate apply.")
+    re_sourcing_invitation_id = fields.Many2one(
+        'realestate.procurement.sourcing.invitation', string='Invitation',
+        index=True, copy=False, ondelete='set null')
+    re_sourcing_class = fields.Selection([
+        ('standalone_rfq', 'Standalone RFQ'),
+        ('native_alternative_group', 'Native Alternative Group'),
+        ('legacy_direct_po', 'Legacy Direct Purchase Order'),
+        ('open_approved_demand_with_rfq', 'Open Approved Demand with RFQ'),
+        ('purchase_agreement_native', 'Native Purchase Agreement'),
+        ('atmta_tender', 'ATMTA Sourcing Event'),
+        ('ambiguous', 'Ambiguous'),
+    ], string='Sourcing Classification', index=True, copy=False,
+        help="What M5's migration made of this order. A description of what "
+             "is already there — never a claim that a formal tender process "
+             "happened.")
+
+    @api.model
+    def _classify_sourcing_history(self, orders=None):
+        """M5 migration — describe the purchase history, invent nothing.
+
+        A legacy RFQ is a legacy RFQ. It has no tender, no issued version, no
+        invitation, no eligibility snapshot at invitation, no deadline and no
+        bid receipt time, and writing those into the register so the module
+        looked "adopted" would fabricate a competitive process that never
+        took place. So every branch here only reads.
+        """
+        Order = orders if orders is not None else self.search([])
+        counts = {}
+        alternatives = 'purchase_group_id' in self._fields
+        agreements = 'requisition_id' in self._fields
+        for order in Order:
+            if order.re_sourcing_event_id:
+                label = 'atmta_tender'
+            elif agreements and order.requisition_id:
+                label = 'purchase_agreement_native'
+            elif alternatives and order.purchase_group_id:
+                label = 'native_alternative_group'
+            elif order.state in ('purchase', 'done'):
+                label = 'legacy_direct_po'
+            elif order.state in ('draft', 'sent'):
+                requisitions = order.order_line.re_material_request_id
+                approved = requisitions.filtered(
+                    lambda r: r.state in ('approved', 'sourcing',
+                                          'partially_ordered'))
+                label = ('open_approved_demand_with_rfq' if approved
+                         else 'standalone_rfq')
+            else:
+                label = 'ambiguous'
+            if order.re_sourcing_class != label:
+                order.re_sourcing_class = label
+            counts[label] = counts.get(label, 0) + 1
+        return counts
     re_source_display = fields.Char(string='RE Source', compute='_compute_re_source_display')
     is_realestate_po = fields.Boolean(
         compute='_compute_is_realestate_po', store=True,
@@ -108,6 +167,10 @@ class PurchaseOrder(models.Model):
         """
         gated = self.filtered(lambda order: order.state in ('draft', 'sent'))
         for order in gated:
+            # M5 first: an RFQ that belongs to a live tender has no business
+            # reaching any of the other checks, because the answer is no
+            # whatever they say.
+            order._check_tender_authorisation()
             order._check_procurement_governance()
             order._check_vendor_eligibility()
             order._revalidate_against_approved_basis()
@@ -139,6 +202,59 @@ class PurchaseOrder(models.Model):
             Reservation._reverse_conversions(
                 order.order_line, _("%s was cancelled.") % order.name)
         return res
+
+    # ------------------------------------------------------------------
+    # The tender boundary — M5
+    # ------------------------------------------------------------------
+    def _check_tender_authorisation(self):
+        """A sourcing RFQ cannot become a commitment before an award exists.
+
+        Deliberately independent of Odoo's own alternative-RFQ warning. That
+        warning is Purchase UX: it *asks* whether to cancel the other
+        quotations, it appears only while live alternatives exist, and it is
+        switched off wholesale by `skip_alternative_check` in the context —
+        which the native wizard itself sets when it confirms. A governance
+        control that the same key disabled would be decoration, and a tender
+        with one remaining vendor would have no control at all.
+
+        The award authorisation this looks for is M7's and does not exist yet,
+        so during M5 the answer is always no. The check is written as a lookup
+        rather than a hard refusal so that M7 supplies the authorisation
+        without this method changing shape.
+        """
+        self.ensure_one()
+        invitation = self.re_sourcing_invitation_id
+        event = self.re_sourcing_event_id
+        if not event and not invitation:
+            return True
+        if event.state == 'cancelled':
+            raise UserError(_(
+                "%(order)s belongs to %(event)s, which was cancelled.",
+                order=self.display_name, event=event.name))
+        if self._award_authorisation():
+            return True
+        raise UserError(_(
+            "%(order)s is %(vendor)s's response to %(event)s, and sourcing "
+            "does not commit money.\n\n"
+            "Confirming it would turn a quotation into a Construction "
+            "commitment without anybody having decided who won. The award "
+            "decision is a separate authorised act (M7); until it exists for "
+            "this tender, no tender RFQ confirms — including through the "
+            "native alternative-RFQ warning.",
+            order=self.display_name,
+            vendor=self.partner_id.display_name,
+            event=event.name or ''))
+
+    def _award_authorisation(self):
+        """M7's hook. Nothing grants this in M5, and nothing pretends to.
+
+        Kept as a method with one honest answer rather than a stub that
+        returns something configurable: a switch that let a buyer confirm a
+        tender RFQ today would be the bypass this whole control exists to
+        close.
+        """
+        self.ensure_one()
+        return False
 
     # ------------------------------------------------------------------
     def _is_project_coded(self):
@@ -498,6 +614,12 @@ class PurchaseOrderLine(models.Model):
         'realestate.material.request',
         related='re_material_request_line_id.request_id', store=True, readonly=True,
     )
+    re_sourcing_line_id = fields.Many2one(
+        'realestate.procurement.sourcing.line', string='Tender Line',
+        ondelete='set null', index=True, copy=False,
+        help="The tender scope line this RFQ line was raised from. Used to "
+             "line a bid snapshot up against the ask; the snapshot never "
+             "reads its values from here.")
 
     def _re_control_amount(self, date=None):
         """This line's tax-exclusive amount in company currency.

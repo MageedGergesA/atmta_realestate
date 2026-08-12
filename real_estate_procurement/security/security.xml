@@ -271,4 +271,101 @@
         <field name="groups" eval="[(4, ref('group_procurement_user'))]"/>
     </record>
 
+
+    <!-- ============================================================
+         M5 — SOURCING AND TENDER
+         Company isolation on every sourcing record, plus one rule that is
+         about confidentiality rather than companies: a buyer sees the events
+         they run and the ones they are on the team of, and Managers see all.
+         Commercial bid detail is not readable by Requesters at all — there is
+         no ACL row granting it, which is a stronger statement than a domain.
+         ============================================================ -->
+
+    <record id="rule_sourcing_event_company" model="ir.rule">
+        <field name="name">Sourcing event: company</field>
+        <field name="model_id" ref="model_realestate_procurement_sourcing_event"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_sourcing_version_company" model="ir.rule">
+        <field name="name">Tender version: company</field>
+        <field name="model_id" ref="model_realestate_procurement_sourcing_version"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_sourcing_line_company" model="ir.rule">
+        <field name="name">Tender line: company</field>
+        <field name="model_id" ref="model_realestate_procurement_sourcing_line"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_sourcing_allocation_company" model="ir.rule">
+        <field name="name">Tender allocation: company</field>
+        <field name="model_id" ref="model_realestate_procurement_sourcing_demand_allocation"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_sourcing_invitation_company" model="ir.rule">
+        <field name="name">Invitation: company</field>
+        <field name="model_id" ref="model_realestate_procurement_sourcing_invitation"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_bid_response_company" model="ir.rule">
+        <field name="name">Bid response: company</field>
+        <field name="model_id" ref="model_realestate_procurement_bid_response"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_bid_response_line_company" model="ir.rule">
+        <field name="name">Bid response line: company</field>
+        <field name="model_id" ref="model_realestate_procurement_bid_response_line"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_sourcing_clarification_company" model="ir.rule">
+        <field name="name">Clarification: company</field>
+        <field name="model_id" ref="model_realestate_procurement_sourcing_clarification"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <!-- Confidentiality: a Buyer reads the tenders they are responsible for.
+         Managers are exempt because somebody has to be able to audit a
+         tender they did not run. -->
+    <record id="rule_bid_response_own_event" model="ir.rule">
+        <field name="name">Bid response: own sourcing only</field>
+        <field name="model_id" ref="model_realestate_procurement_bid_response"/>
+        <field name="groups" eval="[(4, ref('group_procurement_user'))]"/>
+        <field name="domain_force">['|', ('event_id.buyer_id', '=', user.id), ('event_id.team_ids', 'in', [user.id])]</field>
+    </record>
+
+    <record id="rule_bid_response_manager" model="ir.rule">
+        <field name="name">Bid response: manager</field>
+        <field name="model_id" ref="model_realestate_procurement_bid_response"/>
+        <field name="groups" eval="[(4, ref('group_procurement_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <record id="rule_bid_response_line_own_event" model="ir.rule">
+        <field name="name">Bid response line: own sourcing only</field>
+        <field name="model_id" ref="model_realestate_procurement_bid_response_line"/>
+        <field name="groups" eval="[(4, ref('group_procurement_user'))]"/>
+        <field name="domain_force">['|', ('response_id.event_id.buyer_id', '=', user.id), ('response_id.event_id.team_ids', 'in', [user.id])]</field>
+    </record>
+
+    <record id="rule_bid_response_line_manager" model="ir.rule">
+        <field name="name">Bid response line: manager</field>
+        <field name="model_id" ref="model_realestate_procurement_bid_response_line"/>
+        <field name="groups" eval="[(4, ref('group_procurement_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
 </odoo>
