@@ -152,6 +152,21 @@ class SourcingEvent(models.Model):
     bid_response_ids = fields.One2many(
         'realestate.procurement.bid.response', 'event_id')
 
+    # -- M6 — what an evaluation would need next, described not performed ---
+    evaluation_readiness = fields.Selection([
+        ('open_not_ready', 'Open — Not Ready to Evaluate'),
+        ('closed_unevaluated', 'Closed — Awaiting Evaluation'),
+        ('evaluation_candidate', 'Evaluation Candidate'),
+        ('legacy_external_evaluation', 'Legacy / Evaluated Outside ATMTA'),
+        ('evaluated', 'Evaluated in ATMTA'),
+        ('ambiguous', 'Ambiguous'),
+    ], readonly=True, copy=False, index=True,
+        help="A description of where this tender stands, written by the M6 "
+             "upgrade. It is not an evaluation and confers no result: a "
+             "closed tender is labelled as awaiting one, never given one.")
+    evaluation_round_ids = fields.One2many(
+        'realestate.procurement.evaluation.round', 'sourcing_event_id')
+
     authorised_amount = fields.Monetary(
         compute='_compute_authorised', store=True, currency_field='currency_id',
         help="Sum of the authorised demand this event consumes. It is a "
@@ -396,6 +411,33 @@ class SourcingEvent(models.Model):
         return True
 
     # ------------------------------------------------------------------
+    def _classify_evaluation_readiness(self):
+        """Describe this tender's evaluation status. Never create one.
+
+        Read-only by construction: every branch looks at records that already
+        exist. Nothing here scores a bid, and a tender that was evaluated
+        outside ATMTA is labelled as exactly that rather than being given a
+        fabricated internal history.
+        """
+        self.ensure_one()
+        if self.evaluation_round_ids.filtered(
+                lambda r: r.state == 'finalised'):
+            return 'evaluated'
+        if self.evaluation_round_ids:
+            return 'evaluation_candidate'
+        if self.state in ('draft', 'review', 'published'):
+            return 'open_not_ready'
+        if self.state == 'cancelled':
+            return 'ambiguous'
+        # Closed. Is there anything an evaluation could work on?
+        evaluable = self.bid_response_ids.filtered(
+            lambda r: r.state == 'received' and r.is_evaluable)
+        if evaluable:
+            return 'closed_unevaluated'
+        if self.bid_response_ids:
+            return 'legacy_external_evaluation'
+        return 'ambiguous'
+
     def addendum_ack_policy_effective(self):
         """Event override, else company default, else optional."""
         self.ensure_one()

@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--
+    M6 — the Bid Evaluation Report.
+
+    This is an EVALUATION RESULT. It is not an award recommendation, it is not
+    an award approval, and it creates nothing. The word "winner" does not
+    appear in it, and a test asserts that.
+
+    Every figure is read from frozen M6 evidence: the snapshotted raw bid, the
+    stored FX rate and rate date, the itemised adjustments, the evaluated cost
+    and the vendor's name as it stood when the candidate set was frozen. It
+    reads no live exchange rate, no current purchase-order price and no live
+    vendor name, so re-rendering it next year prints the same document.
+-->
+
+    <template id="report_evaluation_document">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="doc.with_context(lang=doc.company_id.partner_id.lang)"/>
+            <div class="page">
+
+                <div class="text-center mb-3">
+                    <h2 class="mt-0">Bid Evaluation Report</h2>
+                    <div class="alert alert-warning d-inline-block px-4 py-2" role="alert">
+                        <strong>EVALUATION RESULT ONLY.</strong>
+                        No award is created by this report and no purchase is
+                        authorised by it.
+                    </div>
+                </div>
+
+                <!-- ============================ HEADER =================== -->
+                <h4>1. Evaluation</h4>
+                <table class="table table-sm table-borderless">
+                    <tr>
+                        <td style="width:25%"><strong>Sourcing Event</strong></td>
+                        <td style="width:25%"><span t-field="doc.sourcing_event_id.name"/></td>
+                        <td style="width:25%"><strong>Project</strong></td>
+                        <td style="width:25%"><span t-field="doc.project_id.name"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tender Version</strong></td>
+                        <td><span t-field="doc.sourcing_version_id.display_name"/></td>
+                        <td><strong>Company</strong></td>
+                        <td><span t-field="doc.company_id.name"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Evaluation Round</strong></td>
+                        <td><span t-field="doc.name"/>
+                            (<span t-field="doc.round_type"/>)</td>
+                        <td><strong>Evaluation Plan</strong></td>
+                        <td><span t-field="doc.plan_id.name"/>,
+                            revision <span t-field="doc.plan_id.revision"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Method</strong></td>
+                        <td><span t-field="doc.plan_id.evaluation_method"/></td>
+                        <td><strong>Evaluation Currency</strong></td>
+                        <td><span t-field="doc.plan_id.evaluation_currency_id.name"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Status</strong></td>
+                        <td><span t-field="doc.state"/> /
+                            <span t-field="doc.result_status"/></td>
+                        <td><strong>Finalised</strong></td>
+                        <td><span t-field="doc.finalised_on"/>
+                            <t t-if="doc.finalised_by_id">
+                                by <span t-field="doc.finalised_by_id.name"/>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr t-if="doc.previous_round_id">
+                        <td><strong>Follows</strong></td>
+                        <td colspan="3"><span t-field="doc.previous_round_id.name"/>
+                            — this is a best and final offer round.</td>
+                    </tr>
+                </table>
+
+                <!-- ============================ COMMITTEE ================ -->
+                <h4>2. Evaluation Committee</h4>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Member</th><th>Role</th>
+                            <th>Conflict of Interest</th><th>Declared</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.assignment_ids" t-as="member">
+                            <td><span t-field="member.user_name"/></td>
+                            <td><span t-field="member.role"/></td>
+                            <td><span t-field="member.conflict_status"/>
+                                <t t-if="member.declaration">
+                                    — <span t-field="member.declaration"/>
+                                </t>
+                            </td>
+                            <td><span t-field="member.declared_on"/></td>
+                        </tr>
+                        <tr t-if="not doc.assignment_ids">
+                            <td colspan="4"><em>No committee member was recorded
+                                against this round.</em></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- ============================ CANDIDATE BASIS ========== -->
+                <h4>3. Candidate Basis</h4>
+                <p class="text-muted">
+                    The candidate set as frozen when technical evaluation
+                    opened. Vendor names are those recorded at that moment.
+                </p>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Vendor</th><th>Bid</th>
+                            <th>Administrative Status</th>
+                            <th class="text-center">In Evaluation</th>
+                            <th>Excluded Because</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.candidate_ids" t-as="cand">
+                            <td><span t-field="cand.partner_name"/></td>
+                            <td><span t-field="cand.bid_response_id.name"/></td>
+                            <td><span t-field="cand.administrative_status"/></td>
+                            <td class="text-center">
+                                <t t-if="cand.in_technical">Yes</t>
+                                <t t-else="">No</t>
+                            </td>
+                            <td><span t-field="cand.exclusion_reason"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- ============================ TECHNICAL ================ -->
+                <h4>4. Technical Evaluation</h4>
+                <p>
+                    <strong>Criteria.</strong>
+                    Threshold
+                    <span t-field="doc.plan_id.technical_threshold"/>%.
+                </p>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Criterion</th><th>Type</th>
+                            <th class="text-end">Weight %</th>
+                            <th class="text-end">Max Score</th>
+                            <th class="text-end">Minimum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.plan_id.criterion_ids" t-as="crit">
+                            <td><span t-field="crit.name"/></td>
+                            <td><span t-field="crit.criterion_type"/></td>
+                            <td class="text-end"><span t-field="crit.weight"/></td>
+                            <td class="text-end"><span t-field="crit.max_score"/></td>
+                            <td class="text-end"><span t-field="crit.minimum_score"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p><strong>Committee result.</strong>
+                   Consolidated as
+                   <span t-field="doc.plan_id.committee_mode"/>.</p>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Vendor</th>
+                            <th class="text-end">Technical Score</th>
+                            <th class="text-end">Evaluator Spread</th>
+                            <th>Responsiveness</th>
+                            <th>Reason</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.candidate_ids.filtered('in_technical')" t-as="cand">
+                            <td><span t-field="cand.partner_name"/></td>
+                            <td class="text-end"><span t-field="cand.technical_score"/></td>
+                            <td class="text-end"><span t-field="cand.score_spread"/></td>
+                            <td><span t-field="cand.technical_result"/></td>
+                            <td><span t-field="cand.technical_result_reason"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-sm o_main_table" t-if="doc.sheet_ids">
+                    <thead>
+                        <tr>
+                            <th>Vendor</th><th>Evaluator</th>
+                            <th class="text-end">Weighted Total</th>
+                            <th class="text-center">Knockout Failed</th>
+                            <th>Submitted</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.sheet_ids" t-as="sheet">
+                            <td><span t-field="sheet.candidate_id.partner_name"/></td>
+                            <td><span t-field="sheet.evaluator_name"/></td>
+                            <td class="text-end"><span t-field="sheet.weighted_total"/></td>
+                            <td class="text-center">
+                                <t t-if="sheet.knockout_failed">Yes</t>
+                                <t t-else="">No</t>
+                            </td>
+                            <td><span t-field="sheet.submitted_on"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- ============================ COMMERCIAL =============== -->
+                <div groups="real_estate_procurement.group_procurement_user,real_estate_procurement.group_evaluation_commercial">
+                    <h4>5. Commercial Evaluation</h4>
+                    <p class="text-muted">
+                        Every offer converted on one declared date at the rate
+                        in force on that date, stored with the analysis. A rate
+                        published afterwards changes nothing here.
+                    </p>
+                    <table class="table table-sm o_main_table">
+                        <thead>
+                            <tr>
+                                <th>Vendor</th>
+                                <th class="text-end">Raw Bid (as submitted)</th>
+                                <th>Rate Date</th>
+                                <th class="text-end">Rate</th>
+                                <th class="text-end">Converted</th>
+                                <th class="text-end">Adjustments</th>
+                                <th class="text-end">Evaluated Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="doc.candidate_ids.filtered('in_commercial')" t-as="cand">
+                                <t t-set="an" t-value="cand.analysis_id"/>
+                                <td><span t-field="cand.partner_name"/></td>
+                                <td class="text-end">
+                                    <span t-field="an.raw_amount"
+                                          t-options="{'widget': 'monetary', 'display_currency': an.raw_currency_id}"/>
+                                </td>
+                                <td><span t-field="an.rate_date"/></td>
+                                <td class="text-end"><span t-field="an.rate_used"/></td>
+                                <td class="text-end">
+                                    <span t-field="an.converted_amount"
+                                          t-options="{'widget': 'monetary', 'display_currency': an.evaluation_currency_id}"/>
+                                </td>
+                                <td class="text-end">
+                                    <span t-field="an.adjustment_total"
+                                          t-options="{'widget': 'monetary', 'display_currency': an.evaluation_currency_id}"/>
+                                </td>
+                                <td class="text-end">
+                                    <strong><span t-field="an.evaluated_cost"
+                                          t-options="{'widget': 'monetary', 'display_currency': an.evaluation_currency_id}"/></strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <t t-set="adjustments"
+                       t-value="doc.candidate_ids.filtered('in_commercial').analysis_id.adjustment_ids"/>
+                    <t t-if="adjustments">
+                        <p><strong>Commercial adjustments, itemised.</strong>
+                           The raw bid above is what the vendor submitted and is
+                           unchanged by any of these.</p>
+                        <table class="table table-sm o_main_table">
+                            <thead>
+                                <tr>
+                                    <th>Vendor</th><th>Type</th>
+                                    <th class="text-end">Amount</th>
+                                    <th>Rationale</th><th>Evidence</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="adjustments" t-as="adj">
+                                    <td><span t-field="adj.analysis_id.candidate_id.partner_name"/></td>
+                                    <td><span t-field="adj.adjustment_type"/></td>
+                                    <td class="text-end">
+                                        <span t-field="adj.signed_amount"
+                                              t-options="{'widget': 'monetary', 'display_currency': adj.currency_id}"/>
+                                    </td>
+                                    <td><span t-field="adj.rationale"/></td>
+                                    <td><span t-field="adj.evidence_reference"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </t>
+                </div>
+
+                <!-- ============================ FINAL ==================== -->
+                <div groups="real_estate_procurement.group_procurement_user,real_estate_procurement.group_evaluation_commercial">
+                    <h4>6. Final Evaluation</h4>
+                    <table class="table table-sm o_main_table">
+                        <thead>
+                            <tr>
+                                <th class="text-end">Rank</th><th>Vendor</th>
+                                <th class="text-end">Technical</th>
+                                <th class="text-end">Financial</th>
+                                <th class="text-end">Combined</th>
+                                <th class="text-center">Tied</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="doc.candidate_ids.filtered('in_commercial').sorted('rank')" t-as="cand">
+                                <td class="text-end"><span t-field="cand.rank"/></td>
+                                <td><span t-field="cand.partner_name"/></td>
+                                <td class="text-end"><span t-field="cand.technical_score"/></td>
+                                <td class="text-end"><span t-field="cand.financial_score"/></td>
+                                <td class="text-end"><span t-field="cand.combined_score"/></td>
+                                <td class="text-center">
+                                    <t t-if="cand.is_tied">Yes</t>
+                                    <t t-else="">No</t>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="alert alert-info" role="alert">
+                        <t t-if="doc.result_status == 'tie_requires_decision'">
+                            <strong>This evaluation ties at rank 1.</strong>
+                            A tie is an outcome, not a result: it has been
+                            flagged for a decision rather than broken.
+                        </t>
+                        <t t-elif="doc.result_status == 'no_responsive_bid'">
+                            <strong>No offer was technically responsive.</strong>
+                        </t>
+                        <t t-else="">
+                            <strong>Rank 1 is an evaluation outcome, not an
+                            award.</strong>
+                            It records which offer evaluated best under the
+                            frozen basis above. It authorises no purchase,
+                            creates no commitment and selects no supplier.
+                        </t>
+                    </div>
+                </div>
+
+                <!-- ============================ DEVIATIONS =============== -->
+                <t t-if="doc.deviation_ids">
+                    <h4>7. Deviations</h4>
+                    <table class="table table-sm o_main_table">
+                        <thead>
+                            <tr>
+                                <th>Reference</th><th>Vendor</th><th>Type</th>
+                                <th class="text-center">Material</th>
+                                <th>Description</th><th>Status</th>
+                                <th>Resolution</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="doc.deviation_ids" t-as="dev">
+                                <td><span t-field="dev.name"/></td>
+                                <td><span t-field="dev.candidate_id.partner_name"/></td>
+                                <td><span t-field="dev.deviation_type"/></td>
+                                <td class="text-center">
+                                    <t t-if="dev.is_material">Yes</t>
+                                    <t t-else="">No</t>
+                                </td>
+                                <td><span t-field="dev.description"/></td>
+                                <td><span t-field="dev.state"/></td>
+                                <td><span t-field="dev.resolution"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+
+                <!-- ============================ AUDIT ==================== -->
+                <h4>8. Audit Trail</h4>
+                <table class="table table-sm table-borderless">
+                    <tr>
+                        <td style="width:30%"><strong>Basis frozen</strong></td>
+                        <td><span t-field="doc.plan_id.frozen_on"/>
+                            by <span t-field="doc.plan_id.frozen_by_id.name"/>
+                            (revision <span t-field="doc.plan_id.revision"/>)</td>
+                    </tr>
+                    <tr t-if="doc.plan_id.revision_reason">
+                        <td><strong>Revision reason</strong></td>
+                        <td><span t-field="doc.plan_id.revision_reason"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Technical opened</strong></td>
+                        <td><span t-field="doc.technical_opened_on"/>
+                            by <span t-field="doc.technical_opened_by_id.name"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Technical finalised</strong></td>
+                        <td><span t-field="doc.technical_finalised_on"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Commercial opened</strong></td>
+                        <td><span t-field="doc.commercial_opened_on"/>
+                            by <span t-field="doc.commercial_opened_by_id.name"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Evaluation finalised</strong></td>
+                        <td><span t-field="doc.finalised_on"/>
+                            by <span t-field="doc.finalised_by_id.name"/></td>
+                    </tr>
+                </table>
+
+                <div class="alert alert-warning mt-4" role="alert">
+                    <strong>EVALUATION RESULT ONLY. NO AWARD IS CREATED BY
+                    THIS REPORT.</strong>
+                    Deciding whether to act on this evaluation is a separate,
+                    separately authorised act. Nothing in this document
+                    commits budget, creates a purchase order or selects a
+                    supplier.
+                </div>
+
+            </div>
+        </t>
+    </template>
+
+    <template id="report_evaluation">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="real_estate_procurement.report_evaluation_document"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_evaluation" model="ir.actions.report">
+        <field name="name">Bid Evaluation Report</field>
+        <field name="model">realestate.procurement.evaluation.round</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">real_estate_procurement.report_evaluation</field>
+        <field name="report_file">real_estate_procurement.report_evaluation</field>
+        <field name="binding_model_id" ref="model_realestate_procurement_evaluation_round"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Evaluation Report - %s' % (object.name)</field>
+        <!-- Not for technical evaluators: section 5 and section 6 of this
+             document are the commercial result. -->
+        <field name="groups_id" eval="[(6, 0, [
+            ref('real_estate_procurement.group_procurement_user'),
+            ref('real_estate_procurement.group_evaluation_commercial'),
+            ref('real_estate_procurement.group_evaluation_manager')])]"/>
+    </record>
+
+</odoo>

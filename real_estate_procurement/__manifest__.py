@@ -27,7 +27,7 @@ Cross-module supply-chain foundation used by Construction, Handover, Rental and 
 """,
     'author': "Atmta",
     'license': 'LGPL-3',
-    'version': '18.0.5.0.0',
+    'version': '18.0.6.0.0',
     'category': 'Real Estate',
     'depends': [
         'atmta_real_estate',
@@ -63,6 +63,12 @@ Cross-module supply-chain foundation used by Construction, Handover, Rental and 
         'wizard/vendor_governance_wizard_views.xml',
         'views/vendor_governance_views.xml',
         'views/sourcing_views.xml',
+        'views/evaluation_views.xml',
+        # The evaluation wizard action, and the report action, both before
+        # `views/menus.xml` — the menu references the first and the round form
+        # binds the second.
+        'wizard/evaluation_audit_wizard_views.xml',
+        'report/evaluation_report.xml',
         'views/procurement_plan_views.xml',
         'wizard/procurement_wizard_views.xml',
         'views/material_request_views.xml',

@@ -496,3 +496,197 @@ class M5Common(M3Common, M4Common):
         line.write({'price_unit': amount / (line.product_qty or 1.0)})
         return invitation.action_record_bid(received_datetime=received,
                                             **kwargs)
+
+
+class M6Common(M5Common):
+    """A closed tender with three received bids, ready to be evaluated.
+
+    Everything M6 needs exists before a single evaluation model is touched:
+    authorised demand holding a reservation, a published and closed tender,
+    and three offers whose amounts are far enough apart to make a ranking
+    unambiguous.
+    """
+
+    def setUp(self):
+        super().setUp()
+        self._budget([(self.concrete, 10_000_000.0)])
+        self.request = self._demand(1_000, code=self.concrete, unit=3_000.0)
+        self.event = self._event(self.request)
+        self._publish(self.event, [self.vendor_a, self.vendor_b,
+                                   self.vendor_c])
+        self.Plan = self.env['realestate.procurement.evaluation.plan']
+        self.Round = self.env['realestate.procurement.evaluation.round']
+        self.Sheet = self.env['realestate.procurement.technical.evaluation']
+
+    # ------------------------------------------------------------------
+    def _position(self):
+        return (self._reserved(self.project, self.concrete),
+                self._commitment(self.project),
+                self._actual(self.project))
+
+    def _receive_bids(self, amounts=None, equal=False, foreign_bid=None):
+        """Three offers, then close the tender."""
+        amounts = amounts or (2_800_000.0, 3_100_000.0, 2_900_000.0)
+        if equal:
+            amounts = (2_900_000.0, 3_100_000.0, 2_900_000.0)
+        for invitation, amount in zip(self.event.invitation_ids, amounts):
+            if foreign_bid and invitation.partner_id == foreign_bid[0]:
+                order = invitation.purchase_order_id
+                order.currency_id = foreign_bid[1]
+                line = order.order_line[:1]
+                line.price_unit = foreign_bid[2] / (line.product_qty or 1.0)
+                invitation.action_record_bid()
+                continue
+            self._bid(invitation, amount)
+        if self.event.state == 'published':
+            self.event.action_close()
+        return self.event.bid_response_ids
+
+    def _plan(self, freeze=True, method='pass_fail_lowest',
+              evaluation_currency=None, rate_date=None, **kwargs):
+        values = {
+            'sourcing_event_id': self.event.id,
+            'sourcing_version_id': self.event.current_version_id.id,
+            'evaluation_method': method,
+            'evaluation_currency_id': (evaluation_currency
+                                       or self.company.currency_id).id,
+            'financial_formula': 'lowest_ratio',
+            'criterion_ids': [
+                (0, 0, {'name': 'Valid trade licence',
+                        'criterion_type': 'mandatory',
+                        'evidence_expected': 'Licence copy',
+                        'max_score': 0.0, 'weight': 0.0}),
+                (0, 0, {'name': 'Method statement',
+                        'criterion_type': 'rated',
+                        'max_score': 10.0, 'weight': 60.0}),
+                (0, 0, {'name': 'Programme and resourcing',
+                        'criterion_type': 'rated',
+                        'max_score': 10.0, 'weight': 40.0}),
+            ],
+        }
+        if rate_date:
+            values.update({'rate_date_basis': 'fixed', 'rate_date': rate_date})
+        if method == 'rated_combined':
+            values.setdefault('technical_weight', 70.0)
+            values.setdefault('commercial_weight', 30.0)
+        values.update(kwargs)
+        plan = self.Plan.create(values)
+        if freeze:
+            plan.action_freeze()
+        return plan
+
+    def _round(self, plan, equal_bids=False, foreign_bid=None, open_=True):
+        self._receive_bids(equal=equal_bids, foreign_bid=foreign_bid)
+        round_ = self.Round.create({
+            'sourcing_event_id': self.event.id,
+            'plan_id': plan.id,
+        })
+        if open_:
+            round_.action_open_technical()
+        return round_
+
+    def _candidate(self, round_, vendor):
+        return round_.candidate_ids.filtered(
+            lambda c: c.partner_id == vendor)[:1]
+
+    def _evaluator(self, login, role, round_=None):
+        """A committee member with only that role's rights."""
+        group = {
+            'technical_evaluator':
+                'real_estate_procurement.group_evaluation_technical',
+            'technical_lead':
+                'real_estate_procurement.group_evaluation_technical',
+            'commercial_evaluator':
+                'real_estate_procurement.group_evaluation_commercial',
+            'evaluation_manager':
+                'real_estate_procurement.group_evaluation_manager',
+        }[role]
+        user = self.env['res.users'].create({
+            'name': login, 'login': login,
+            # An email, because posting to the chatter needs an author with
+            # one and several M6 actions log what they did.
+            'email': '%s@example.com' % login,
+            'company_id': self.company.id,
+            'company_ids': [(6, 0, [self.company.id])],
+            'groups_id': [(6, 0, [self.env.ref('base.group_user').id,
+                                  self.env.ref(group).id])],
+        })
+        if round_ is not None:
+            self.env[
+                'realestate.procurement.evaluation.assignment'].create({
+                    'round_id': round_.id, 'user_id': user.id, 'role': role,
+                }).action_declare(conflict=False)
+        return user
+
+    def _sheet(self, round_, candidate, submit=False, rated=None,
+               mandatory='pass', evaluator=None):
+        sheet = self.Sheet.create({
+            'round_id': round_.id,
+            'candidate_id': candidate.id,
+            'evaluator_id': (evaluator or self.env.user).id,
+        })
+        for line in sheet.line_ids:
+            if line.criterion_type == 'mandatory':
+                line.result = mandatory
+                if mandatory == 'fail':
+                    line.rationale = 'No licence submitted.'
+            else:
+                line.score = line.max_score if rated is None else rated
+        if submit:
+            sheet.action_submit()
+        return sheet
+
+    def _score(self, round_, candidate, rated=None, mandatory='pass'):
+        return self._sheet(round_, candidate, submit=True, rated=rated,
+                           mandatory=mandatory)
+
+    def _score_all(self, round_, rated=None):
+        for candidate in round_.candidate_ids.filtered('in_technical'):
+            if not candidate.sheet_ids:
+                self._score(round_, candidate, rated=rated)
+        return True
+
+    def _score_others(self, round_, exclude):
+        for candidate in round_.candidate_ids.filtered('in_technical'):
+            if candidate == exclude or candidate.sheet_ids:
+                continue
+            self._score(round_, candidate)
+        return True
+
+    def _advance_to_commercial(self, round_):
+        """Score everything and drive the round to the commercial stage.
+
+        This used to be `action_open_commercial_after_technical` on the round
+        itself, justified by the browser gate needing the same sequence. It
+        was public, and therefore callable over RPC by anybody the ACL let
+        write on a round — one call would give every bid in a live tender a
+        submitted passing sheet nobody had written. `M6BrowserCommon` inherits
+        this class, so the browser gate still shares one implementation and
+        production no longer ships the shortcut.
+        """
+        round_.ensure_one()
+        if round_.state == 'draft':
+            round_.action_open_technical()
+        if round_.state == 'technical_open':
+            self._autoscore_pass(round_)
+            round_.action_finalise_technical()
+        if round_.state == 'technical_final':
+            round_.action_open_commercial()
+        return round_
+
+    def _autoscore_pass(self, round_):
+        """A passing sheet for every candidate, from the acting user."""
+        for candidate in round_.candidate_ids.filtered('in_technical'):
+            if candidate.sheet_ids:
+                continue
+            self._sheet(round_, candidate, submit=True)
+        return True
+
+    def _rate(self, currency, date, rate):
+        """A published rate, the way the evaluation expects to find one."""
+        return self.env['res.currency.rate'].create({
+            'currency_id': currency.id,
+            'name': date,
+            'rate': rate,
+            'company_id': self.company.id,
+        })

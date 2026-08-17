@@ -2990,3 +2990,871 @@ One finding is deliberately informational: an RFQ that no longer matches the
 bid recorded from it is *normal* after a native compare, and is reported as
 `low` with the remediation "no action" — because that divergence is the system
 working, not failing.
+
+---
+
+# M6 — Technical and Commercial Evaluation
+
+Module version **18.0.6.0.0**.
+
+```
+    M6 EVALUATES THE BIDS.
+    M6 DOES NOT AWARD THE CONTRACT.
+```
+
+M7 owns the award, the purchase order that follows it and the Construction
+commitment that follows that. Nothing in this milestone awards anything, and an
+audit check fails the build if an award interface ever appears on an M6 model.
+
+## 78. M6.0 — the source audit, and two findings that shaped the design
+
+Read from installed source before any model was written.
+
+**`price_total_cc` cannot be evaluation evidence.** It computes
+`price_subtotal / order_id.currency_rate`, and `purchase.order.currency_rate`
+is a stored compute keyed on `date_order`
+(`purchase/models/purchase_order.py:193`). Edit the order date and every
+historical "company currency" figure moves. Convenient, live, and useless for
+an evaluation that must still be reproducible in a dispute two years later.
+
+**Odoo's rate lookup silently returns 1.0.** `res_currency._get_rates` builds:
+
+```sql
+    COALESCE( (rate on or before date), (earliest rate), 1.0 )
+```
+
+A currency with no published rate converts one-for-one and *looks* converted.
+For procurement that is the worst available failure: a USD offer would be
+compared against EGP offers at par and would win the tender on an arithmetic
+accident. M6 therefore verifies a real rate exists for the declared date and
+**refuses to normalise** otherwise, with a message naming both currencies and
+the date. The engine itself is Odoo's — `_convert()`, `_get_conversion_rate()`
+and `currency.round()` are the right tools and are used; what M6 adds is the
+refusal and the frozen record of what was used.
+
+## 79. Evaluation architecture
+
+```
+    EVALUATION PLAN     the basis: method, criteria, weights, currency, rate date
+    EVALUATION ROUND    one staged evaluation of one tender
+    CANDIDATE           one bid inside one round, with its results and rank
+    TECHNICAL SHEET     one evaluator's scores for one bid
+    COMMERCIAL ANALYSIS one bid's evaluated cost, with its frozen FX evidence
+    DEVIATION           where an offer departs from what was asked
+```
+
+Results live on the **candidate**, not on the bid: the same offer evaluated
+under a revised basis is a different judgement and must not overwrite the
+first. M5's bid stays exactly as submitted.
+
+## 80. The plan, and why it freezes
+
+Freezing is the point of the model. A weight moved from 20% to 35% after the
+scores are visible is not a methodology correction — it is choosing the winner
+and writing the rule afterwards.
+
+Once frozen, the method, criteria, weights, thresholds, evaluation currency,
+rate basis, financial formula, committee mode, tie rule and BAFO policy all
+refuse to be written. A genuine change produces a **new revision** with its own
+reason and author while the old one is superseded, and a revision is refused
+outright once a round is under way.
+
+Nothing is silently normalised. Rated criteria that come to 97% are refused at
+freeze rather than scaled, because a criterion nobody meant to weight at 12.5%
+would then decide the tender. Technical and commercial weights must come to
+100%. There is **no shipped 70/30, no default threshold and no default
+financial formula** — those are procurement policy, they differ per company and
+per tender, and shipping one as a default hands every buyer a methodology they
+never chose.
+
+## 81. Mandatory and rated criteria
+
+A mandatory criterion is pass or fail and carries no weight: passing it earns
+nothing and failing it ends the bid. A rated criterion contributes its weighted
+score, may carry a per-criterion minimum, and states its own score bands in the
+plan's words — no band set ships as a default, because *5 = meets requirement*
+is one organisation's convention, not a fact.
+
+A knockout failure is not rescuable by any score. Vendor B scoring 10/10 on
+everything rated and failing one mandatory criterion is `non_responsive`, is
+given no rank, and never reaches commercial evaluation. A failure also requires
+a written reason before the sheet can be submitted.
+
+## 82. Committee, declarations and price blindness
+
+Roles are split from the buying roles: a buyer running a tender is not
+automatically entitled to score it. Committee membership is **recorded**, not
+derived — `user_name` is copied at assignment, so who evaluated survives that
+person later leaving the group.
+
+Scoring requires a conflict-of-interest declaration, and a declared conflict
+blocks scoring until somebody else clears it. Self-clearing is refused.
+
+**Price blindness is structural.** `technical.evaluation` and its lines carry
+no monetary field, no currency field and no commercial name — asserted by a
+test that walks the field definitions by *type*, not by spelling. The
+commercial models carry **no ACL row for the technical role at all**; that
+absence is the control, because a missing access right cannot be widened by
+another group's record rule the way a domain can.
+
+**The honest limit, stated plainly:** M5 keeps commercial data in native Odoo
+purchase structures, so this is **controlled evaluation-role segregation, not
+cryptographic sealed bidding**. A user with sweeping native Purchase
+administration rights can still read a `purchase.order`. What M6 guarantees is
+that nothing it builds hands price to a technical evaluator, and that its own
+commercial records refuse them outright — verified over real RPC, not by
+hiding fields in a view.
+
+## 83. Sheets, consolidation and disagreement
+
+An evaluator's submitted sheet is their opinion on the record and refuses
+ordinary writes — including from an Evaluation Manager. Corrections go through
+a reopen carrying a reason and an author. Criteria are **snapshotted onto the
+sheet** at creation, so a historical score is never restated by today's weight.
+
+Consolidation keeps every individual sheet. Where evaluators disagree the
+spread is published rather than averaged away: 9 and 3 are not a 6, they are a
+disagreement the committee should see. Consensus mode records a separate
+consensus result beside the individual sheets rather than pretending consensus
+is an arithmetic mean.
+
+## 84. Staging, and what commercial opening means
+
+```
+    DRAFT → TECHNICAL_OPEN → TECHNICAL_FINAL → COMMERCIAL_OPEN
+          → COMMERCIAL_FINAL → FINALISED
+```
+
+Forward only. Stepping backwards would let somebody reopen the technical stage
+after seeing prices, which is the single thing staged evaluation exists to
+prevent. Commercial opening is refused until the technical result is final, and
+only technically responsive offers pass through; the excluded ones are named in
+the record rather than quietly dropped.
+
+The candidate set is **frozen at technical opening**, with a reason recorded
+for every exclusion. Asking "which bids are eligible now?" a year later would
+answer with today's data, and a bid withdrawn since would vanish from an
+evaluation it took part in.
+
+## 85. Frozen exchange rates
+
+Every conversion stores the source currency, the target currency, the date the
+plan declared, the rate in force on that date and the converted amount. A rate
+published afterwards changes none of them — proved by a test that finalises an
+evaluation, publishes a new rate, and asserts both the amount and the ranking
+are unmoved.
+
+One rate date for all offers, declared by the plan (tender close, issue date,
+or a fixed date). Converting each bid at the date it happened to arrive would
+rank vendors on the currency market rather than on their offers.
+
+Currency normalisation is evaluation arithmetic and nothing else: no journal
+entry, no vendor bill, no FX gain or loss, no analytic line, no commitment.
+
+## 86. Raw bid, adjustments, evaluated cost
+
+```
+    RAW BID          2,800,000   what the vendor submitted   (M5, immutable)
+    + freight           50,000   itemised, with a rationale  (M6)
+    = EVALUATED COST 2,850,000   what the offer is worth     (M6, frozen)
+```
+
+All three are kept and all three are shown. Adjustments are typed, and an
+adjustment without a rationale is refused — an unexplained figure moving a
+vendor up or down the ranking is the one thing an evaluation file cannot
+survive. Approving one's own adjustment is refused. A discount is entered as a
+positive number and subtracts, so nobody has to remember a minus sign.
+
+Bid leveling normalises line by line on the same frozen basis and preserves the
+source allocation lineage M5 recorded.
+
+## 87. Scoring, ranking and ties
+
+The financial formula is the plan's, not the module's. Lowest-evaluated-cost
+ratio is offered because it is common — not because it is a law of
+procurement — and `lowest_cost_only` is the default so that no score is
+invented where none was asked for.
+
+Ranking uses the frozen method's own number at a stated precision. **Ties are
+reported, never broken.** Two offers that evaluate identically both hold rank 1,
+both are flagged, and the round's result becomes `tie_requires_decision`.
+Breaking a tie by database id, vendor name or creation order would invent a
+winner nobody chose.
+
+A technically non-responsive bid is never ranked, and the audit fails the build
+if one ever is.
+
+## 88. Deviations and BAFO
+
+Deviations are recorded against the bid and the criterion they depart from, so
+a material departure is visible on the report rather than buried in an
+evaluator's note. Recording one never edits the offer.
+
+A best-and-final round is **off by default** (`bafo_policy = not_allowed`) and
+requires a recorded reason and an explicit shortlist; inviting only the current
+cheapest bidder without saying why is a preference with no evidence behind it.
+A vendor who failed technical evaluation cannot be invited to re-offer. The
+BAFO uses M5's bid-revision machinery, so the initial offer survives as Rev 0
+and the new one is Rev 1 — an audit check fails if an initial offer was ever
+overwritten.
+
+## 89. Financial isolation
+
+Asserted at every step by `test_evaluating_and_finalising_moves_no_money`:
+
+```
+    Budget 10M · Reservation 3M · Commitment 0 · Actual 0
+
+    open evaluation      →  3M / 0 / 0
+    finalise technical   →  3M / 0 / 0
+    open commercial      →  3M / 0 / 0
+    normalise + adjust   →  3M / 0 / 0
+    finalise + rank      →  3M / 0 / 0
+```
+
+And finalising authorises nothing: immediately afterwards a tender RFQ still
+refuses `button_confirm()`, including under `skip_alternative_check`, with
+Construction commitment at zero. That is a mandatory regression and it runs in
+both the unit suite and the browser gate.
+
+## 90. Migration
+
+The `18.0.6.0.0` script creates **no plan, no round, no criterion, no
+assignment, no sheet, no score, no analysis and no ranking**. A closed tender
+with three bids looks exactly like something that wants an evaluation, and
+manufacturing one would fabricate the very things an evaluation file exists to
+prove: that criteria were frozen before the offers were seen, that named
+evaluators scored them, and that a technical decision preceded the commercial
+one. None of that happened, and a migration cannot manufacture judgement.
+
+What it does is label each tender — `open_not_ready`, `closed_unevaluated`,
+`evaluation_candidate`, `legacy_external_evaluation`, `evaluated`, `ambiguous`
+— so a buyer can see what is waiting for an evaluation somebody has to
+actually perform. Idempotent, and tested to alter no bid amount and no
+financial position.
+
+## 91. Concurrency
+
+Same harness limit as M4 and M5, stated rather than papered over: one cursor,
+so a genuine two-process race cannot run here. Each mechanism is tested
+directly instead — unique indexes proved by inserting the duplicate (plan
+revision, candidate, evaluator sheet, commercial analysis), and idempotence or
+refusal proved for double freeze, double technical open, double submit, double
+commercial open, double finalise, and normalisation after finalisation.
+
+**A defect this found:** the sheet's unique index
+`(candidate_id, evaluator_id, is_consensus)` never worked. `is_consensus` had
+no default, Odoo stored it as `NULL`, and PostgreSQL does not consider two
+NULLs equal — the index permitted exactly the duplicate sheets it was written
+to prevent. Fixed with an explicit `default=False`, and the field's help text
+now records why that default is load-bearing.
+
+## 92. Integrity audit
+
+`realestate.procurement.evaluation.audit` reports and never repairs.
+**Twenty** checks — seventeen at first release, three added by the hardening
+pass (§96): a submitted sheet edited after submission, a candidate edited after
+its round was finalised, and a structural check that the commercial outcome is
+still restricted, so removing a `groups=` or putting `rank` back into `_order`
+fails the build instead of quietly reopening the leak.
+
+The full set: plan weights that do not reconcile, a criterion
+modified after freeze, scoring against an unfrozen basis, duplicate candidates,
+an evaluator who never declared, a submitted score from an unresolved conflict,
+a knockout failure marked responsive, commercial opened before technical final,
+a non-responsive bid holding a rank, a missing FX snapshot, an adjustment with
+no rationale, an evaluated cost that differs from the bid with nothing to
+explain it, duplicate rank 1, an unsurfaced tie, a BAFO that overwrote an
+initial offer, a cross-company evaluation, and any award interface appearing on
+an M6 model — plus the three named above.
+
+The freeze check is deliberately data-driven — it compares `write_date` against
+`frozen_on` with a one-second tolerance, because `fields.Datetime.now()`
+truncates microseconds while the ORM does not, and an assertion that the guard
+merely *exists* would be a check that cannot fail.
+
+## 93. The browser gate, RTL and tablet
+
+The tour drives a finalised evaluation end to end: the round form, the notice
+that says in plain words this is not an award, the candidate list with a real
+knockout exclusion in it, the committee and its declarations, the technical
+sheets, and the commercial page where the evaluated cost sits beside the raw
+bid. Two guarantees a browser cannot express are asserted in Python around it —
+that a technical evaluator is refused commercial data over real RPC, and that a
+finalised evaluation still authorises no purchase.
+
+The same tour runs three times, under three conditions, and nothing is relaxed
+for the harder two: default desktop, an Arabic (RTL) session, and a 768×1024
+tablet viewport with touch emulation.
+
+**The RTL assertion is not the obvious one, and the obvious one is wrong.**
+Odoo 18 does not set `html[dir="rtl"]` on the backend. Direction is delivered
+by serving a *different stylesheet* — the `.rtl` bundle, produced by running
+the compiled CSS through `rtlcss`. Only report templates use `t-att-dir`. A
+test asserting `dir="rtl"` on the document fails against a perfectly correct
+Odoo, which is precisely how three unrelated failures in this worktree were
+misread before the mechanism was traced. So the gate asserts what actually
+exists: `ar_001` activates with `direction == 'rtl'`, an Arabic session is
+served a `.rtl` stylesheet, and the evaluation screens then complete the full
+tour with no error dialog and no broken value.
+
+**The limit that used to stand here has been closed.** `rtlcss` is a Node tool
+and it was not installed on this host. Where it is absent Odoo logs a warning
+and serves the *unflipped* stylesheet under the `.rtl` name, so the URL
+assertion alone could not tell a working flip from a missing one, and
+`test_the_rtl_bundle_is_actually_flipped` took an early return that recorded
+the shortfall rather than pretending to have checked it.
+
+`rtlcss 4.3.0` is now installed and Odoo's own `find_in_path('rtlcss')`
+resolves it in the environment the tests run in, so that assertion takes its
+real branch: it fetches both bundles and fails if they are byte-identical. It
+passes. The RTL evidence is therefore no longer "the RTL path is selected" — it
+is that the stylesheet served to an Arabic session has genuinely been through
+the transform. §97 records the installation and what it changed.
+
+## 94. Remaining gaps
+
+| Not built in M6 | Owner |
+|---|---|
+| Award recommendation, award approval, split award | M7 |
+| Purchase-order confirmation and reservation conversion | M7 |
+| Construction commitment from an award | M7 |
+| Vendor performance and scorecards | later |
+| Expediting, material inspection | later |
+| Vendor portal and supplier self-service submission | deferred |
+| Cryptographic sealed bidding | not planned — see §82 |
+
+| Known limitation of what *was* built | Why it stands |
+|---|---|
+| **Technical price blindness is role segregation, not sealing.** Native Purchase administration can still read an RFQ | M5 stores commercial data in native structures; claiming more would be claiming a guarantee the architecture does not provide |
+| **Committee consolidation offers average or consensus only.** No weighted-evaluator or moderated-scoring mode | Neither has been asked for, and inventing a third method nobody chose is how a methodology stops meaning anything |
+| **Abnormally-low detection is a manual flag**, not an automatic test | An arithmetic rule that disqualified a vendor would be an accusation the data cannot support |
+| **A genuine two-process race is not exercised** | §91 states exactly what is proved instead |
+| ~~Visual RTL mirroring is unverified on this host~~ | **Closed.** `rtlcss 4.3.0` installed; the flip is asserted on the served bytes and passes — §97 |
+
+## 95. M6 completion report
+
+**M6 evaluates the bids. M6 does not award the contract.** Every gate below was
+run to confirm that, and the structural audit check `award_surface_in_m6` fails
+the build if an award interface ever appears on an M6 model.
+
+### What was added
+
+| | |
+|---|---|
+| New model files | 6 — `evaluation_plan`, `evaluation_round`, `evaluation_candidate`, `commercial_analysis`, `evaluation_deviation`, `evaluation_audit` (2,112 lines) |
+| New models | 12 — plan, criterion, round, assignment, candidate, technical evaluation + line, commercial analysis + adjustment, leveling line, deviation, and the audit (abstract) |
+| New test files | 4 — evaluation, governance, browser, browser RTL/tablet (1,082 lines) |
+| New test methods | 58 |
+| Security | 3 groups (Technical Evaluator, Commercial Evaluator, Evaluation Manager), 35 ACL rows, 11 record rules |
+| Other | 1 view file, 1 tour, 1 migration script, sequences |
+
+### Regression gates — all on filestore-verified clones
+
+| Gate | Result |
+|---|---|
+| Procurement M1–M6 | **386 tests, 0 failed, 0 errors** |
+| Construction frozen suite | **563 tests, 0 failed, 0 errors** — the frozen count, exact |
+| Both together, one database | **949 tests, 0 failed, 0 errors** (386 + 563) |
+
+Procurement went 328 → 386; the 58 added are M6's.
+
+### Release gates
+
+| Gate | Result |
+|---|---|
+| Fresh 14-module install | 2,485 tests, **3 failed** — all three unrelated, see below |
+| Full 14-module upgrade | 2,485 tests, **3 failed** — the same three |
+| M5 → M6 migration, populated legacy database | 5 tenders classified, **0** M6 records created, every M5 figure unchanged |
+| Migration retry | **Idempotent** — second run changed nothing |
+| Browser | The tour completes under three conditions: desktop, Arabic RTL session, 768×1024 tablet with touch |
+
+> **CORRECTION — this paragraph was wrong, and §98 replaces it.**
+>
+> It read that the three failures came from tests asserting `html[dir="rtl"]`,
+> "a mechanism Odoo 18's backend does not use", and that the assertion was
+> therefore looking in the wrong place. A read-only audit of this module went
+> and read those three tours. **None of them asserts `html[dir]`.** All three
+> assert `getComputedStyle(...).direction === "rtl"` — the correct mechanism —
+> and the rental one goes further than anything M6 shipped, checking real
+> mirrored geometry through `getBoundingClientRect()` on `inset-inline-end` and
+> `margin-inline-start`.
+>
+> The string `html[dir]=null` came from the *diagnostic message those tours
+> print when they fail*, alongside `session.lang`, the computed directions and
+> the stylesheet list. It was what the test **reported**, not what it
+> **asserted** — and reading a failure diagnostic as the assertion turned three
+> correct probes into an imagined defect in somebody else's code.
+>
+> The real cause was the one this report disclosed two sections earlier and did
+> not connect: `rtlcss` was absent, so the `.rtl` bundle was served unflipped
+> and `direction` never became `rtl`. One missing build dependency, three red
+> tests, and one M6 assertion quietly waiving itself. §98 records what happened
+> when the tool was installed.
+
+Procurement: 0 failures. Construction: 0 failures. No dependency regression.
+
+### The migration gate, and why it was re-run
+
+The first migration run passed against a database holding **zero** sourcing
+events — it proved only that the script survives an empty table. A genuine
+legacy fixture was therefore built by checking out the M5 commit into a
+separate git worktree, loading *only* M5's `real_estate_procurement` ahead of
+the working tree, and seeding five tenders that reach every branch of
+`_classify_evaluation_readiness`. The migration was then run against that.
+
+| Legacy tender | State | Classified |
+|---|---|---|
+| Open tender | published | `open_not_ready` |
+| Closed, three complete offers | closed | `closed_unevaluated` |
+| Closed, offers received but none administratively evaluable | closed | `legacy_external_evaluation` |
+| Closed, nobody bid | closed | `ambiguous` |
+| Cancelled | cancelled | `ambiguous` |
+
+Every label is the expected one. Created: 0 plans, 0 criteria, 0 rounds, 0
+candidates, 0 assignments, 0 sheets, 0 analyses, 0 deviations. Unchanged to the
+cent: 5 events, 9 invitations, 5 bids totalling 13,800,000.00, 24 purchase
+orders totalling 14,658,641.50, 1 requisition, 5 reservations holding
+7,500,000.00. The retry reproduced all of it exactly.
+
+### Defects M6's own tests caught
+
+Three real, in the module:
+
+1. **`_()` reserves the keyword `source`.** The missing-rate refusal raised
+   `TypeError: get_text_alias() got multiple values for argument 'source'` — the
+   safety net would have crashed the first time it fired instead of explaining
+   itself. Arguments renamed.
+2. **A unique index that never worked.** `is_consensus` defaulted to `NULL`, and
+   PostgreSQL does not consider two NULLs equal, so the index silently permitted
+   the duplicate evaluator sheets it existed to prevent. `default=False`.
+3. **An authority check on the wrong group.** Reopening a submitted sheet
+   demanded the *buying* manager rather than the Evaluation Manager.
+
+Four more in the instrumentation, each fixed at the probe rather than by
+weakening what it checks: a lexical price-blindness ban that flagged
+`weighted_total` (a score, not money) — replaced with a type-based probe; an FX
+assertion comparing recordset *order*, which `_order` includes rank in;
+a tour checkpoint asserting against the list before the form had rendered; and
+a row click that never opened the record. A fifth, in this session: the RTL
+gate's `rtlcss` probe assumed `find_in_path` returns `None` when Odoo's own
+`which` in fact raises.
+
+### Financial isolation
+
+M6 moves no money and holds no position. Reservations, commitments and actuals
+are identical before and after every evaluation in the suite, a finalised
+evaluation still cannot confirm a purchase order (`UserError`, including with
+`skip_alternative_check`), and the technical evaluation model carries no
+monetary field and no `res.currency` relation at all — asserted structurally,
+not by naming convention.
+
+## 96. The hardening pass — what a read-only audit found in a finished milestone
+
+M6 was reported complete. It was then audited from the outside, against the
+repository rather than against the completion message, and the audit found five
+things wrong with it. Four were real defects and one was a wrong diagnosis in
+this report. All five are recorded here rather than quietly corrected, because
+a report that only describes the version of the work that succeeded is not
+evidence of anything.
+
+| # | Found | Severity | Section |
+|---|---|---|---|
+| 1 | The commercial outcome was readable by a Technical Evaluator | **release blocker** | §96.1 |
+| 2 | A public, RPC-callable method auto-scored every candidate as a pass | **release blocker** | §96.2 |
+| 3 | M6 had no menu entry — every screen was unreachable | **release blocker** | §96.3 |
+| 4 | There was no Evaluation Report, and no way to run the integrity audit | **release blocker** | §96.4 |
+| 5 | The three unrelated RTL failures were misdiagnosed in §95 | correction | §98 |
+
+### 96.1 The commercial leak, and the three vectors underneath it
+
+The audit's finding was that `financial_score`, `combined_score` and `rank` on
+the candidate carried no field-level restriction while the ACL grants a
+Technical Evaluator read on the record. Under the `lowest_ratio` formula the
+financial score is a monotonic function of evaluated cost, so those three
+fields disclose the **complete commercial ordering** without ever showing a
+price. Zero during a first technical evaluation; live the moment a BAFO or a
+second round is scored by the same committee, which is a scenario M6 supports.
+
+That was correct, and it was not the whole defect. Closing it properly meant
+finding three more ways to ask the same question:
+
+**The `analysis_id` pointer and `is_tied`.** Both belong to the same set. A tie
+at rank 1 names which vendors evaluated identically, which is a commercial fact
+about specific bidders.
+
+**The domain.** Odoo's expression engine does not consult field groups —
+`osv/expression.py` has no such check. So `search([('rank', '=', 1)])` would
+have answered honestly however the fields were restricted.
+
+**The order, and this is the one that was invisible.** `_order` was
+`'round_id, rank, id'`. A Technical Evaluator calling `search([])` would have
+been handed the vendors already arranged in the order the money put them in,
+having read no restricted field at all. A field restriction cannot see that
+coming, because nothing was read.
+
+The fix is `groups=` on the five fields plus guards on `_search` and
+`_read_group` that refuse a restricted field appearing in a domain, an order,
+a groupby, an aggregate or a `having` clause — and `_order` no longer names
+`rank`.
+
+**And a fourth thing, discovered by the fix rather than by the audit.** Odoo 18
+resolves ORDER BY through `_order_field_to_sql`, which calls
+`check_field_access_rights`; ordering chains through many2ones. With `rank`
+restricted and still named in `_order`, reading an entirely unrelated
+`sheet.line_ids` raised `AccessError` three models away — line → sheet →
+candidate → rank. Restricting the field without taking it out of `_order` would
+have shipped a module that broke technical evaluation for technical evaluators.
+
+The gate is `group_procurement_user`, and it is chosen rather than convenient.
+Every commercially entitled role implies it — Commercial Evaluator directly,
+Evaluation Manager and Procurement Manager transitively — while
+`group_evaluation_technical` implies nothing at all, which is precisely what
+keeps a technical evaluator away from the bid register.
+
+One consequence is stated rather than hidden: **a Technical Evaluator who is
+also a Buyer can see the ranking.** That is correct. A Buyer reads the bid
+register and every price in it natively; hiding a derived score from somebody
+holding the raw numbers would be theatre.
+`test_a_technical_evaluator_who_is_also_a_buyer_may_see_it` asserts it on
+purpose, so nobody later reads it as a hole.
+
+The BAFO shortlist went with them. Under a `selective` policy,
+`invited_partner_ids` and `shortlist_reason` name the vendors the buyer wants a
+better number from and say why — a commercial judgement, restricted on the same
+gate.
+
+### 96.2 The public method audit
+
+Every `action_*` on every M6 model was read against six questions: role,
+company, project, state, plan freeze, and commercial stage. The ACL answers
+"may this account touch the table" and cannot answer "may this person open the
+prices", and M6 had been relying on the first to mean the second.
+
+The worst finding was `action_open_commercial_after_technical`. It was a test
+helper living on the production model, justified by the browser gate needing
+the same sequence — and it was **public, therefore callable over RPC by anybody
+the ACL let write on a round**. One call gave every bid in a live tender a
+submitted passing sheet that no evaluator had written, then drove the round to
+the commercial stage. It has moved to `tests/common.py::M6Common._advance_to_
+commercial`, which the browser classes inherit, so the sequence is still shared
+and production no longer ships it.
+
+| Method | Was | Now |
+|---|---|---|
+| `round.action_open_technical` / `_finalise_technical` / `_open_commercial` / `_finalise` / `_open_bafo` | ACL + state only | + Evaluation Manager or Procurement Manager |
+| `round.action_normalise` | ACL + state only | + those two or Commercial Evaluator |
+| `round.action_cancel` | **no state check, no reason** — a finalised evaluation could be cancelled silently | refuses a finalised round; reason required |
+| `plan.action_freeze` / `action_new_revision` | ACL only | + Evaluation Manager or Procurement Manager |
+| `assignment.action_declare` | anybody with write could declare "no conflict" **for somebody else** | the member themselves, or whoever runs the round |
+| `assignment.action_clear_conflict` | self-clear refused; anyone else allowed | + management authority |
+| `sheet.action_submit` | creation was guarded, submission was not | the sheet's own evaluator, or a manager |
+| `analysis.action_flag_for_review` | no state check | refuses a finalised round |
+| `adjustment.action_approve` | self-approval refused; no state check | + refuses a finalised round |
+| `audit.run` | **no check at all** — an AbstractModel method naming every bid and vendor in the company | Evaluation Manager or Procurement Manager |
+
+### 96.3 Navigation
+
+M6 defined three actions and **zero menu items**. The screens were reachable
+only by typing an action URL, which is exactly how the browser tour had been
+navigating — so the gate passed while the milestone was unreachable.
+
+An Evaluation section now sits under the existing Procurement root, holding
+Evaluations, Evaluation Plans, Technical Evaluations and the Integrity Audit.
+It reuses all three existing actions rather than duplicating them.
+
+One thing had to change to make it work. `menu_procurement_root` was gated on
+`group_procurement_user`, and `group_evaluation_technical` implies nothing — so
+a Technical Evaluator could not see the Procurement menu at all and therefore
+could not reach the screens the role exists to use. The root now admits the
+technical group as well; Odoo prunes entries whose action a user cannot access
+and then prunes the empty parents, so a Technical Evaluator sees the root with
+Evaluation under it and nothing else. Six tests assert exactly who sees what,
+including that a Requester and a generic Odoo Purchase user see no M6 menu.
+
+The tour now walks that hierarchy instead of jumping to an action URL — and
+doing so immediately caught something the direct URL had hidden: at 768×1024
+the section bar collapses into a "More Menu" dropdown, so the tablet run failed
+where desktop passed. The tour opens whichever container this viewport put the
+menu in, and polls rather than sleeping a guessed interval, because a fixed
+delay was long enough for the desktop run and not for the RTL one.
+
+### 96.4 The Evaluation Report, and the audit's user interface
+
+**The report.** M6 produced no document. Everything a tender file needs to
+prove existed in the database and none of it could be printed, signed or filed.
+`report/evaluation_report.xml` renders the frozen basis, the committee and
+their conflict declarations, the frozen candidate set with its exclusions, the
+technical criteria and results, the commercial analysis with its FX snapshot
+and itemised adjustments, the ranking with ties, deviations, and the audit
+trail. It states **EVALUATION RESULT ONLY — NO AWARD IS CREATED BY THIS
+REPORT** at the top and the bottom, and a test fails the build if the words
+*winner*, *awarded*, *award recommendation*, *approved vendor*, *contract
+award* or *selected supplier* ever appear in the rendered output.
+
+Reproducibility was audited field by field rather than assumed, and it turned
+up one genuine gap. Every commercial figure was already snapshotted — raw
+amount, raw currency, rate, rate date, adjustments, evaluated cost — and so
+were the criteria on each sheet and the evaluator names. **The vendor's name
+was not.** `bid_response.partner_id` is a related field all the way back to
+`res.partner`, so a vendor renamed after the event — a merger, a change of
+legal name — would silently restate who the committee had evaluated, on the one
+document whose purpose is to say exactly that. `candidate.partner_name` is now
+snapshotted when the candidate is created, with no fallback to the live partner
+anywhere: a blank must read as blank rather than quietly borrowing today's
+answer. `test_the_report_does_not_drift_when_the_world_moves` renames a vendor
+and publishes a new exchange rate after finalisation, then asserts the two
+renderings are byte-identical.
+
+Two independent guards keep the commercial half of it away from technical
+evaluators, and the test names both. `action_print_evaluation_report` refuses
+to issue it. Rendering the template directly — the path the `/report/…` HTTP
+route takes, which performs no group check of its own — fails as well, because
+the header alone reads the sourcing event and a technical evaluator has no
+access to the tender. Underneath both, `groups=` on the commercial sections
+means QWeb never compiles those figures into the output.
+
+**The audit.** `evaluation.audit.run()` was complete, tested, and callable only
+from Python. A `TransientModel` wizard now runs it and shows the scope, the
+timestamp, the critical/high/medium/low counts and every finding with its
+references and remediation. Deliberately not a dashboard, and deliberately
+without a "fix" button: the audit reports and never repairs, and
+`test_it_repairs_nothing` holds that line. An empty scope says *there was
+nothing to audit* rather than reporting clean, because those are not the same
+statement.
+
+## 97. `rtlcss`, and what installing it changed
+
+`rtlcss` was absent from this host. Odoo 18 does not mark the backend with
+`html[dir="rtl"]`; direction is delivered by serving a different stylesheet —
+the `.rtl` bundle, produced by running the compiled CSS through `rtlcss`. Where
+the tool is missing Odoo logs a warning and serves the **unflipped** stylesheet
+under the `.rtl` name, so the bundle is selected and the pixels are not
+mirrored.
+
+`npm install -g rtlcss` installed 4.3.0. `sudo` was neither required nor
+correct: Node here is nvm-managed and `npm root -g` is
+`~/.nvm/versions/node/v24.19.0/lib/node_modules`, owned by the user — a
+`sudo npm install -g` would have installed into the wrong environment. Odoo's
+own `find_in_path('rtlcss')` resolves it in the environment the tests run in,
+which is the check that matters and is recorded in the evidence directory.
+
+What changed: `test_the_rtl_bundle_is_actually_flipped` no longer takes its
+early return. It fetches the `.rtl` bundle and the LTR bundle and fails if they
+are byte-identical, and it passes. The RTL claim in this report is therefore no
+longer "the RTL path is selected" — it is that the stylesheet served to an
+Arabic session has genuinely been through the transform.
+
+## 98. The three RTL failures — the misdiagnosis, and the truth
+
+§95 said the three failures in `atmta_real_estate`, `real_estate_brokerage` and
+`real_estate_checks` came from tests asserting `html[dir="rtl"]`, "a mechanism
+Odoo 18's backend does not use", and concluded the assertions were looking in
+the wrong place.
+
+That was wrong, and it was wrong in a way worth recording. **None of the three
+asserts `html[dir]`.** All three assert `getComputedStyle(...).direction ===
+"rtl"` — the correct mechanism — and each carries a comment explaining that
+Odoo sets direction on `.o_action_manager` rather than on the root element. The
+rental one goes further than anything M6 shipped: after the direction check it
+asserts real mirrored geometry through `getBoundingClientRect()`, proving that
+`inset-inline-end` resolves to the left edge and `margin-inline-start` became
+`margin-right`.
+
+The string `html[dir]=null` came from the **diagnostic message those tours
+print when they fail** — one of five diagnostics alongside `session.lang`, the
+computed directions and the stylesheet list. Reading a failure diagnostic as
+though it were the assertion turned three correct probes, written by other
+sessions, into an imagined defect in their code. The lesson is narrow and
+practical: when a test reports what it saw, that is not what it demanded.
+
+The actual cause was the one disclosed two sections earlier in this same report
+and never connected to it — `rtlcss` was absent, the `.rtl` bundle was served
+unflipped, `direction` never became `rtl`, and the geometry could not mirror.
+One missing build dependency, three red tests in other modules, and one M6
+assertion quietly waiving itself.
+
+Not one line of those three tests was modified.
+
+## 99. M6 release freeze
+
+**M6 evaluates the bids. M6 does not award the contract.** Every gate below was
+re-run against one identical source hash after the hardening in §96, and every
+log is retained outside the repository — which is the other thing this freeze
+had to fix.
+
+### The evidence problem, and what was done about it
+
+The first M6 completion report quoted `386 / 0 / 0`, `563 / 0 / 0` and
+`949 / 0 / 0`. Those runs happened. Their logs did not survive: the harness and
+every gate log lived in a session scratchpad, and the scratchpad was emptied.
+A later read-only audit could re-derive the *suite sizes* by counting test
+methods, and could re-verify the migration by querying the two databases that
+happened to still exist, but the pass/fail lines themselves were gone.
+
+A number nobody can reproduce is not release evidence, whatever it said. So
+those figures are treated here as historical claims and not as gates, and every
+gate in this section was run again from scratch with its log written to
+
+```
+~/atmta_release_evidence/m6_freeze_<timestamp>/
+```
+
+Each log records the timestamp, the branch, HEAD, a hash of the M6 source it
+tested, the database, the filestore file count, the exact command, the module
+flags, the test tags, the exit code and the result line. `SHA256SUMS.txt` covers
+the directory. The harness itself now lives in
+`~/atmta_release_evidence/bin/` rather than in a scratch directory that gets
+deleted.
+
+### Release gates — every one re-run at source hash `103f5981d7ef3f9b`
+
+| Gate | Result |
+|---|---|
+| A — M6 focused (`atmta_m6`) | **118 tests, 0 failed, 0 errors** |
+| B — Procurement M1–M6 | **446 tests, 0 failed, 0 errors** |
+| C — Construction (frozen suite) | **563 tests, 0 failed, 0 errors** |
+| D — Combined, one database | **1009 tests, 0 failed, 0 errors** |
+| E — Security | **76 tests, 0 failed, 0 errors** |
+| F — Multi-company | **10 tests, 0 failed, 0 errors** |
+| H — Concurrency | **34 tests, 0 failed, 0 errors** |
+| I — Currency / FX normalisation | **4 tests, 0 failed, 0 errors** |
+| K — Browser, desktop, via the real menu | **3 tests, 0 failed, 0 errors** |
+| L — Browser, Arabic RTL | **4 tests, 0 failed, 0 errors** |
+| M — Browser, 768×1024 touch | **1 tests, 0 failed, 0 errors** |
+| N — Evaluation Report | **10 tests, 0 failed, 0 errors** |
+| N — Evaluation Report, real PDF | **1 tests, 0 failed, 0 errors** |
+| O — Integrity audit + wizard | **21 tests, 0 failed, 0 errors** |
+| P — Fresh 14-module install | **2545 tests, 0 failed, 0 errors** |
+| Q — Full 14-module upgrade | **2545 tests, 0 failed, 0 errors** |
+| Phase 9 — the three legacy RTL tests, unchanged | **3 tests, 0 failed, 0 errors** |
+| G — Project isolation | **not applicable** — see below |
+| J — Native purchase boundary | asserted in gates A, B, E: `button_confirm()` refused, commitment 0.00 |
+| R — M5→M6 populated migration | see `18_migration_first.log` |
+| S — Migration retry | see `19_migration_retry.log` |
+
+
+### The M5 → M6 migration, on a populated legacy database
+
+The legacy database was built with the M5 commit's own procurement code
+prepended to the addons path — genuinely M5 at `18.0.5.0.0`, with no evaluation
+models and no `evaluation_readiness` column — while the other thirteen modules
+stayed at working-tree state, which is what a real upgrade looks like. Five
+tenders were seeded through the M5 public API, one per branch of
+`_classify_evaluation_readiness`.
+
+| Legacy tender | State | Classified |
+|---|---|---|
+| Open tender | published | `open_not_ready` |
+| Closed, three complete offers | closed | `closed_unevaluated` |
+| Closed, offers received, none administratively evaluable | closed | `legacy_external_evaluation` |
+| Closed, nobody bid | closed | `ambiguous` |
+| Cancelled | cancelled | `ambiguous` |
+
+Five for five. **Created by the migration: 0 plans, 0 criteria, 0 rounds, 0
+candidates, 0 assignments, 0 sheets, 0 sheet lines, 0 analyses, 0 adjustments,
+0 leveling lines, 0 deviations.**
+
+Unchanged to the cent, before the migration, after it, and after the retry:
+
+| | Before | After | Retry |
+|---|---|---|---|
+| Sourcing events | 5 | 5 | 5 |
+| Invitations | 9 | 9 | 9 |
+| Bid responses | 5 | 5 | 5 |
+| Bid total | 12,899,995.00 | 12,899,995.00 | 12,899,995.00 |
+| Purchase orders | 24 | 24 | 24 |
+| Purchase order total | 13,683,635.75 | 13,683,635.75 | 13,683,635.75 |
+| Requisitions | 5 | 5 | 5 |
+| Reservations | 5 | 5 | 5 |
+| Amount reserved | 8,700,000.00 | 8,700,000.00 | 8,700,000.00 |
+
+The retry rewound `ir_module_module.latest_version` to `18.0.5.0.0` and ran the
+upgrade again, so `post-migrate.py` genuinely executed a second time.
+**IDEMPOTENT = YES**, exit 0, nothing moved.
+
+### The three RTL tests in other modules
+
+Run unchanged after `rtlcss` was installed: `TestDashboardRTL`
+(atmta_real_estate), `TestBrowserRTL` (real_estate_brokerage) and
+`TestTreasuryDashboardRTL` (real_estate_checks) — **3 tests, 0 failed, 0
+errors**. They had been failing for one reason and it was never their own: the
+`.rtl` bundle was served unflipped. Not one line of them was modified, and the
+full 14-module suite is green for the first time in this programme.
+
+### Test inventory
+
+```
+atmta_real_estate                  299
+real_estate_api                    0
+real_estate_brokerage              352
+real_estate_checks                 325
+real_estate_construction           563
+real_estate_contract_template      0
+real_estate_customer_service       0
+real_estate_developer              247
+real_estate_handover               0
+real_estate_investment             0
+real_estate_maquette               291
+real_estate_plan                   15
+real_estate_portal                 7
+real_estate_procurement            446
+-----------------------------------------
+TOTAL (all 14 modules)             2545
+```
+
+Procurement went 386 → 446; the 60 added are the hardening pass. Construction is 563, exact and unchanged.
+
+### What the browser gate proves now
+
+The tour walks the real menu — Procurement → Evaluation → Evaluations — instead
+of jumping to an action URL, and it does that at three viewport and locale
+combinations with nothing relaxed for the harder two. Making it navigate
+properly immediately caught something the direct URL had hidden: at 768×1024
+the section bar collapses into a "More Menu" dropdown, so the tablet run failed
+where desktop passed.
+
+RTL is no longer a partial claim. `rtlcss 4.3.0` is installed,
+`test_the_rtl_bundle_is_actually_flipped` compares the served bytes rather than
+logging a waiver, and it passes.
+
+### Financial isolation, re-proved
+
+Reservation 3,000,000.00 held throughout; Construction commitment 0.00;
+Construction actual 0.00 — asserted at five points across a full evaluation
+(before the plan, after the round opens, after technical finalisation, after
+commercial normalisation, after finalisation) and again after a BAFO round. A
+finalised evaluation still refuses `button_confirm()` on the winning RFQ,
+including with `skip_alternative_check=True`, and the order stays `draft`.
+
+None of that rests on `_check_award_surface` alone. The audit check is
+structural and it is one of four independent guarantees; the other three are
+behavioural assertions against the Construction position service.
+
+### What this freeze does not claim
+
+**Project-level access control does not exist, in M6 or anywhere else in this
+suite.** A release gate asked whether a "Project A-only user" can read Project
+B's evaluation evidence. No such user can be constructed: there is no
+project-membership model and no project-scoped `ir.rule` in M6, and none in M2
+through M5 either. Isolation is drawn at the company, and that is enforced and
+tested — eleven global company rules, and a company-B manager who sees nothing
+of company A across five models including the commercial analysis.
+
+Building project-level access control inside M6 would give evaluation a
+security model no other milestone has, and it would be an architectural change
+smuggled in as hardening. It is recorded as a suite-wide gap that M6 neither
+introduced nor closed. `TestM6ProjectScope` pins what is true today —
+`project_id` stored and indexed on every M6 model, so the rule is cheap to add
+— and fails if anyone adds a project rule without updating this claim.
+
+**Technical price blindness remains role segregation, not sealed bidding.** M5
+keeps commercial data in native Odoo purchase structures, so a user with
+sweeping native Purchase administration can still read an RFQ. What M6
+guarantees is that nothing it builds hands price, or the ordering that implies
+price, to a technical evaluator — now enforced at the field, the domain, the
+sort order, the aggregate, the report and the menu.
+
+**A genuine two-process race is still not exercised.** Odoo's harness shares one
+cursor. §91 states what is proved instead, and the new lifecycle authority
+checks did not change that.

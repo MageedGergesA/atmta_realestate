@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <!-- The root admits the evaluation roles as well as the buying ones.
+         `group_evaluation_technical` implies nothing on purpose — that is what
+         keeps a technical evaluator away from the bid register — but it also
+         meant a technical evaluator could not see this menu at all, and so
+         could not reach the screens they exist to use. Odoo prunes menu
+         entries whose action the user cannot access and then prunes the empty
+         parents, so a technical evaluator sees this root with Evaluation under
+         it and nothing else. -->
     <menuitem id="menu_procurement_root"
               name="Procurement"
               web_icon="real_estate_procurement,static/description/icon.png"
               sequence="27"
-              groups="group_procurement_user"/>
+              groups="group_procurement_user,group_evaluation_technical"/>
 
     <menuitem id="menu_procurement_operations"
               name="Operations"
@@ -89,6 +97,53 @@
               name="Vendor Governance"
               parent="menu_procurement_root"
               sequence="17"/>
+
+    <!-- ==========================================================
+         M6 — EVALUATION
+
+         Kept as its own section rather than folded into Operations:
+         running a tender and judging it are different jobs held by
+         different people, and the menu should not suggest otherwise.
+         ========================================================== -->
+
+    <menuitem id="menu_evaluation"
+              name="Evaluation"
+              parent="menu_procurement_root"
+              sequence="18"
+              groups="group_procurement_user,group_evaluation_technical,group_evaluation_commercial,group_evaluation_manager"/>
+
+    <menuitem id="menu_evaluation_rounds"
+              name="Evaluations"
+              parent="menu_evaluation"
+              action="action_evaluation_round"
+              sequence="10"
+              groups="group_procurement_user,group_evaluation_technical,group_evaluation_commercial,group_evaluation_manager"/>
+
+    <!-- The criteria a bid is scored against are exactly what a technical
+         evaluator needs to see before scoring one. The plan carries the
+         commercial weighting too, but that is declared methodology which was
+         disclosed with the tender — not anybody's price. -->
+    <menuitem id="menu_evaluation_plans"
+              name="Evaluation Plans"
+              parent="menu_evaluation"
+              action="action_evaluation_plan"
+              sequence="20"
+              groups="group_procurement_user,group_evaluation_technical,group_evaluation_commercial,group_evaluation_manager"/>
+
+    <menuitem id="menu_technical_evaluations"
+              name="Technical Evaluations"
+              parent="menu_evaluation"
+              action="action_technical_evaluation"
+              sequence="30"
+              groups="group_evaluation_technical,group_evaluation_manager"/>
+
+    <menuitem id="menu_evaluation_integrity_audit"
+              name="Integrity Audit"
+              parent="menu_evaluation"
+              action="action_evaluation_audit_wizard"
+              sequence="90"
+              groups="group_evaluation_manager,group_procurement_manager"/>
+
 
     <menuitem id="menu_vendor_profiles"
               name="Vendor Governance"

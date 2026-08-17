@@ -22,3 +22,8 @@ from . import test_m5_concurrency
 from . import test_m5_migration
 from . import test_m5_multicompany
 from . import test_m5_browser
+from . import test_m6_evaluation
+from . import test_m6_governance
+from . import test_m6_browser
+from . import test_m6_browser_rtl
+from . import test_m6_hardening
