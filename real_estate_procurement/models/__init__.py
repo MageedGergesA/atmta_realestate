@@ -28,6 +28,8 @@ from . import evaluation_candidate
 from . import commercial_analysis
 from . import evaluation_deviation
 from . import evaluation_audit
+# M7 — the award. It authorises; M3 converts and Construction commits.
+from . import procurement_award
 from . import material_request
 from . import material_request_line
 from . import material_request_revision

@@ -60,12 +60,24 @@ class ProcurementControl(models.AbstractModel):
 
     @api.model
     def po_governance_for(self, project, company=None):
+        """Which purchase-governance policy applies here.
+
+        Read through `sudo()`. Asking *what the policy is* is not the same as
+        being entitled to change it, and this is consulted from
+        `purchase.order._compute_re_governance` — which runs for whoever is
+        touching the order. A buyer with native Purchase rights and no access
+        to `realestate.project` was getting an `AccessError` out of a compute
+        that only ever wanted to read one selection field. Part of the M7 PO
+        Confirmation Integration Gate; see §10 and
+        `TestM7ConfirmationIntegrationGate`.
+        """
+        project = project.sudo() if project else project
         company = company or (project.company_id if project else False) \
             or self.env.company
         policy = project.procurement_po_governance if project else 'company'
         if policy and policy != 'company':
             return policy
-        return company.procurement_po_governance or 'optional'
+        return company.sudo().procurement_po_governance or 'optional'
 
     # ------------------------------------------------------------------
     # Locking — M3D.

@@ -167,6 +167,23 @@ class SourcingEvent(models.Model):
     evaluation_round_ids = fields.One2many(
         'realestate.procurement.evaluation.round', 'sourcing_event_id')
 
+    # -- M7 — where this tender stands on awarding, described not performed --
+    award_readiness = fields.Selection([
+        ('not_evaluated', 'Not Evaluated — Nothing to Award'),
+        ('awaiting_award', 'Evaluated — Awaiting an Award Decision'),
+        ('award_drafted', 'Award Drafted'),
+        ('award_in_review', 'Award Awaiting Approval'),
+        ('award_approved', 'Award Approved — Orders Not Yet Confirmed'),
+        ('awarded', 'Awarded and Issued'),
+        ('committed_without_award', 'Committed Without An Award'),
+        ('cancelled', 'Cancelled'),
+    ], readonly=True, copy=False, index=True,
+        help="A description of where this tender stands on awarding, written "
+             "by the M7 upgrade. It confers nothing: a tender with a finished "
+             "evaluation is labelled as awaiting a decision, never given one.")
+    award_ids = fields.One2many(
+        'realestate.procurement.award', 'sourcing_event_id')
+
     authorised_amount = fields.Monetary(
         compute='_compute_authorised', store=True, currency_field='currency_id',
         help="Sum of the authorised demand this event consumes. It is a "
@@ -437,6 +454,41 @@ class SourcingEvent(models.Model):
         if self.bid_response_ids:
             return 'legacy_external_evaluation'
         return 'ambiguous'
+
+    def _classify_award_readiness(self):
+        """Describe this tender's award status. Never create one.
+
+        Read-only by construction: every branch looks at records that already
+        exist. Nothing here awards anything, and a tender whose orders were
+        confirmed without an award is labelled as exactly that rather than
+        being given a retrospective authorisation — which would be forging the
+        signature the control exists to require.
+        """
+        self.ensure_one()
+        if self.state == 'cancelled':
+            return 'cancelled'
+        awards = self.award_ids.sudo()
+        live = awards.filtered(
+            lambda a: a.state != 'cancelled' and not a.superseded)
+        if live.filtered(lambda a: a.state == 'issued'):
+            return 'awarded'
+        if live.filtered(lambda a: a.state == 'approved'):
+            return 'award_approved'
+        if live.filtered(lambda a: a.state == 'review'):
+            return 'award_in_review'
+        if live.filtered(lambda a: a.state == 'draft'):
+            return 'award_drafted'
+
+        # No live award. Did anything commit anyway?
+        committed = self.invitation_ids.sudo().mapped(
+            'purchase_order_id').filtered(
+                lambda o: o.state in ('purchase', 'done'))
+        if committed:
+            return 'committed_without_award'
+        if self.evaluation_round_ids.sudo().filtered(
+                lambda r: r.state == 'finalised'):
+            return 'awaiting_award'
+        return 'not_evaluated'
 
     def addendum_ack_policy_effective(self):
         """Event override, else company default, else optional."""

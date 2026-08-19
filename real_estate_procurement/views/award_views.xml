@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_procurement_award_form" model="ir.ui.view">
+        <field name="name">procurement.award.form</field>
+        <field name="model">realestate.procurement.award</field>
+        <field name="arch" type="xml">
+            <form string="Procurement Award">
+                <header>
+                    <button name="action_submit" type="object" string="Submit for Approval"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="btn-primary" invisible="state != 'review'"
+                            groups="real_estate_procurement.group_procurement_manager"/>
+                    <button name="action_issue" type="object" string="Issue Award"
+                            class="btn-primary" invisible="state != 'approved'"
+                            groups="real_estate_procurement.group_procurement_manager"
+                            confirm="Issuing confirms the awarded purchase orders. That is what converts the reservation into a Construction commitment — the first irreversible step in this chain."/>
+                    <button name="action_print_award" type="object"
+                            string="Award Document" class="btn-secondary"
+                            invisible="state == 'draft'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,review,approved,issued"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-info" role="alert">
+                        An award is a <strong>decision</strong>, not a
+                        calculation. Approving it authorises the named purchase
+                        orders; <strong>confirming those orders is what
+                        commits the budget</strong>. Construction computes the
+                        commitment from the orders — nothing on this screen
+                        holds a commitment figure of its own.
+                    </div>
+                    <div class="oe_title"><h1><field name="name" readonly="1"/></h1></div>
+                    <group>
+                        <group string="Founded on">
+                            <field name="sourcing_event_id" readonly="1"/>
+                            <field name="round_id" readonly="1"/>
+                            <field name="plan_id" readonly="1"/>
+                            <field name="project_id" readonly="1"/>
+                        </group>
+                        <group string="Decision">
+                            <field name="award_type"/>
+                            <field name="amount_total"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Awarded">
+                            <field name="line_ids" readonly="state in ('approved','issued','cancelled')">
+                                <list editable="bottom">
+                                    <field name="candidate_id"/>
+                                    <field name="partner_name" readonly="1"/>
+                                    <field name="rank_awarded" readonly="1"/>
+                                    <field name="is_top_ranked" widget="boolean_toggle" readonly="1"/>
+                                    <field name="amount" readonly="1"/>
+                                    <field name="purchase_order_id" readonly="1"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <field name="candidate_id"/>
+                                        <field name="partner_name" readonly="1"/>
+                                        <field name="rank_awarded" readonly="1"/>
+                                        <field name="purchase_order_id" readonly="1"/>
+                                        <field name="amount" readonly="1"/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </group>
+                                    <separator string="Awarded scope"/>
+                                    <p class="text-muted">
+                                        Every invited vendor was issued an RFQ
+                                        for the whole tender, because at
+                                        invitation time nobody knew who would
+                                        win what. Trim these quantities to
+                                        split or partially award — the orders
+                                        are rewritten to match before anything
+                                        confirms.
+                                    </p>
+                                    <field name="allocation_ids" nolabel="1">
+                                        <list editable="bottom">
+                                            <field name="sourcing_line_id"/>
+                                            <field name="tender_quantity" readonly="1"/>
+                                            <field name="quantity"/>
+                                            <field name="price_unit" readonly="1"/>
+                                            <field name="amount" readonly="1"/>
+                                            <field name="currency_id" column_invisible="1"/>
+                                        </list>
+                                    </field>
+                                </form>
+                            </field>
+                            <group string="Justification"
+                                   invisible="not line_ids">
+                                <field name="justification" nolabel="1"
+                                       placeholder="Required when the award does not follow the ranking. Awarding away from rank 1 is permitted — the ranking is an evaluation outcome, not an instruction — but the file has to say why."/>
+                            </group>
+                        </page>
+                        <page string="Approval">
+                            <group>
+                                <group string="Maker">
+                                    <field name="submitted_by_id" readonly="1"/>
+                                    <field name="submitted_on" readonly="1"/>
+                                </group>
+                                <group string="Checker">
+                                    <field name="approved_by_id" readonly="1"/>
+                                    <field name="approved_on" readonly="1"/>
+                                </group>
+                                <group string="Issued">
+                                    <field name="issued_by_id" readonly="1"/>
+                                    <field name="issued_on" readonly="1"/>
+                                </group>
+                                <group string="Cancelled" invisible="state != 'cancelled'">
+                                    <field name="cancelled_by_id" readonly="1"/>
+                                    <field name="cancelled_on" readonly="1"/>
+                                    <field name="cancellation_reason" readonly="1"/>
+                                </group>
+                            </group>
+                            <separator string="Revalidated at approval"/>
+                            <field name="revalidation_note" readonly="1" nolabel="1"
+                                   placeholder="An evaluation is a photograph. What was still true when the decision was actually taken is recorded here."/>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_procurement_award_list" model="ir.ui.view">
+        <field name="name">procurement.award.list</field>
+        <field name="model">realestate.procurement.award</field>
+        <field name="arch" type="xml">
+            <list string="Procurement Awards"
+                  decoration-success="state == 'issued'"
+                  decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="sourcing_event_id"/>
+                <field name="project_id"/>
+                <field name="award_type"/>
+                <field name="amount_total"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'issued'"
+                       decoration-info="state == 'approved'"
+                       decoration-warning="state == 'review'"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_procurement_award" model="ir.actions.act_window">
+        <field name="name">Awards</field>
+        <field name="res_model">realestate.procurement.award</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_procurement_awards"
+              name="Awards"
+              parent="menu_evaluation"
+              action="action_procurement_award"
+              sequence="40"
+              groups="group_procurement_user,group_procurement_manager"/>
+
+</odoo>

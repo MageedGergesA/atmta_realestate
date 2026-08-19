@@ -27,3 +27,7 @@ from . import test_m6_governance
 from . import test_m6_browser
 from . import test_m6_browser_rtl
 from . import test_m6_hardening
+from . import test_m7_phase0
+from . import test_m7_award
+from . import test_m7_governance
+from . import test_m7_browser

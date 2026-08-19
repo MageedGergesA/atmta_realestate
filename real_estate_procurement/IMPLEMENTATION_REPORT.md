@@ -3858,3 +3858,256 @@ sort order, the aggregate, the report and the menu.
 **A genuine two-process race is still not exercised.** Odoo's harness shares one
 cursor. §91 states what is proved instead, and the new lifecycle authority
 checks did not change that.
+
+
+---
+
+# M7 — Award, Purchase Order and Commitment
+
+```
+    M6 EVALUATES THE BIDS.
+    M7 AWARDS THE CONTRACT, AND AWARDING IS WHAT COMMITS.
+```
+
+Everything up to M6 was reversible. A plan can be revised, a score reopened, a
+ranking recomputed, a tender cancelled — none of it owes anybody a penny. M7 is
+where that stops.
+
+## 100. M7.0 — the Phase 0 audit, and the gate §10 deferred
+
+M7 opened the way M2 through M6 opened: by reproducing what is actually there.
+
+The seams the earlier milestones left were found intact and are now pinned by
+tests, so M7 fills them rather than rebuilding machinery that already works:
+`purchase.order._award_authorisation()` (M5's hook, answering `False` by
+design), M3's `_convert_reservations` / `_convert` / `_reverse_conversions`, and
+Construction's commitment computation.
+
+**§10's deferred defect reproduced exactly**, and it had two facets where the
+report named one.
+
+`realestate.project._get_stock_location()` creates the location with `.sudo()`
+and then writes the id back **without** it. Confirming a project-coded purchase
+order reaches that through `purchase.order.line._prepare_stock_moves()`, so a
+user Odoo says may confirm a purchase order was being asked for write access to
+a project record and got an `AccessError` out of stock-move preparation. The
+second facet was undocumented and one layer up: `po_governance_for()` read the
+project's policy field as the acting user, which fails for the same person for
+the same reason.
+
+Both fixed **inside `real_estate_procurement`** — `real_estate_developer` owns
+that method and is not M7's to edit. Reading a location stays a lookup;
+provisioning one is now an explicit, logged administrative act rather than a
+silent side effect of purchasing.
+
+It had never fired because every existing test that confirmed a project order
+did so as a procurement manager or through `sudo()`. M7 makes it fire for real:
+an awarded tender order is confirmed by whoever holds the award authority, and
+that is not the same person.
+
+## 101. What M7 does not do
+
+**It does not compute commitment.** Construction does, from confirmed purchase
+orders, and has since M2. `TestM7NoDuplicatedCommitment` fails the build if an
+award ever grows a commitment field of its own, and the browser tour fails if
+the award *screen* ever presents one — a second figure would disagree with the
+first under exactly the conditions nobody tests.
+
+**It does not convert reservations.** M3 built that, including the partial and
+over-run cases, inside the same transaction as `button_confirm()`.
+
+**It does not confirm purchase orders.** It grants the authorisation that lets
+somebody else confirm one.
+
+## 102. The double count, found where Phase 0 predicted it
+
+The most important finding of the milestone, and a test caught it rather than a
+review.
+
+M5's tender RFQ lines carry `re_sourcing_line_id` but **not**
+`re_material_request_line_id`. So an awarded tender order would confirm,
+Construction would read a commitment off it, and `_convert_reservations()` would
+find no demand link to convert. The project would hold 3,000,000 **and** owe
+3,000,000 for one requisition — Phase 0's Q3 (*can one obligation be counted
+twice?*) arriving precisely at the first milestone that spends money.
+
+Fixed at the source: the tender line traces to its requisition through
+`sourcing.demand.allocation`, and that link is now carried onto the RFQ line
+where it resolves to exactly one. Where a tender line aggregates **several**
+requisitions, no single many2one expresses it honestly, so
+`_assert_demand_is_convertible` refuses at issue rather than apportioning —
+a wrong apportionment is invisible.
+
+`_check_demand_reserved_and_committed` detects the condition in data, because a
+guard can be bypassed and this one costs real money when it is.
+
+## 103. Split and partial award
+
+M5 issues **every** invited vendor an RFQ for the whole tender scope, which is
+right at invitation time and dangerous at award time: confirming two of them
+untouched commits twice the demand.
+
+`award.allocation` expresses who gets what, seeded from the vendor's own bid as
+editable rows so a split is made by trimming something visible rather than by
+removing something implied. `_apply_awarded_scope()` writes those quantities
+onto the orders **before** anything confirms — a purchase order line is editable
+while the order is a draft, and M3's conversion reads the quantities off the
+confirmed order, so trimming afterwards would convert against numbers already
+used.
+
+Three guards, at three different scopes:
+
+| Guard | Catches |
+|---|---|
+| per allocation | one vendor given more of a line than was tendered |
+| across vendors | two vendors at 600 each against 1,000 tendered — every individual check passes and 1,200 commits |
+| award type | a partial award that does not say it is partial |
+
+The awarded amount is **derived** from the awarded scope at the vendor's bid
+rate. An award total that reconciled to neither the bid nor the purchase order
+would be a number nobody could defend.
+
+A partial award leaves the unawarded balance **still approved demand and still
+reserved**. It has not been cancelled and it still needs to be bought; the
+report says so on the document.
+
+## 104. Authorisation, and revision
+
+Maker and checker, and the record says which was which — the person who raises
+an award cannot approve it. Approval is a Procurement Manager's act; the
+Evaluation Manager is deliberately **not** an approver, because running the
+evaluation and authorising the spend that follows are the two halves this
+programme keeps apart.
+
+Approval **revalidates** rather than trusting the evaluation. An evaluation is a
+photograph: between the ranking and the award a qualification can expire, a
+bid's validity can lapse, a basis can move and a reservation can be released.
+All four are re-asked, an ineligible vendor blocks the approval outright, and an
+expired offer is surfaced to the approver rather than silently awarded. What was
+found is stored, so the file says what was true *at the moment of the decision*.
+
+An approved award is superseded, never edited — it carries two signatures, and
+editing it would leave a document claiming two people approved something they
+never saw. An **issued** award cannot be revised at all: cancel the orders,
+which is how M3 reverses the commitment, and raise a fresh award.
+
+*(Odoo's `One2many` is `copy = False` by default, so building a revision through
+`copy()` produced a silently empty document. Caught by test; revisions are now
+built explicitly.)*
+
+## 105. Migration
+
+`award_readiness` describes where each tender stands. The migration creates no
+award, no line, no allocation, confirms no order and commits nothing.
+
+One label is worth naming: **`committed_without_award`**. A tender whose orders
+were confirmed with no award behind them is recorded as exactly that, and is
+**not** given a backdated award to tidy the register. Forging the signature
+would defeat the control that found it; the integrity audit reports the same
+condition as critical.
+
+## 106. Integrity — four more checks
+
+24 total. The M7 additions, all critical, all detected from data rather than by
+trusting a guard:
+
+| Check | Catches |
+|---|---|
+| `confirmed_tender_order_without_award` | the bypass — a commitment nobody authorised |
+| `demand_reserved_and_committed` | Phase 0's Q3, the double count |
+| `award_approved_by_its_author` | maker/checker defeated |
+| `award_over_tender` | more committed than the tender authorised |
+
+## 107. Confidentiality — M6 must survive M7
+
+An award states, in one short document, **who won and for how much**. Shipping
+it with a careless ACL would have undone every guard M6 put on the commercial
+ordering — a technical evaluator would simply read the answer off the award.
+
+No award model grants any access to the evaluation groups; a technical
+evaluator cannot read one, cannot probe it by domain, and cannot issue the
+document. `TestM7AwardConfidentiality` also sweeps the award models
+structurally, so a convenience field copying `financial_score` or
+`evaluated_cost` onto the award — where M6's field restrictions do not reach —
+fails the build.
+
+A Commercial Evaluator may see the money and is still not an approver. Seeing
+the number and authorising the spend are different permissions.
+
+## 108. M7 release gates
+
+Every gate below ran against one source hash, on filestore-verified clones,
+with its log retained outside the repository in
+`~/atmta_release_evidence/m7_freeze_<timestamp>/`.
+
+| Gate | Result |
+|---|---|
+| M7 focused (`atmta_m7`) | **88 tests, 0 failed, 0 errors** |
+| Procurement M1–M7 | **534 tests, 0 failed, 0 errors** |
+| Construction (frozen suite) | **563 tests, 0 failed, 0 errors** — exact |
+| Combined, one database | **1,097 tests, 0 failed, 0 errors** |
+| Security and confidentiality | **40 tests, 0 failed, 0 errors** |
+| Multi-company and project scope | **11 tests, 0 failed, 0 errors** |
+| Concurrency | **18 tests, 0 failed, 0 errors** |
+| Browser — desktop, Arabic RTL, 768×1024 touch | **14 tests, 0 failed, 0 errors** |
+| Reports — evaluation and award, HTML and PDF | **17 tests, 0 failed, 0 errors** |
+| Integrity audit | **21 tests, 0 failed, 0 errors** |
+| Money boundary and split/partial award | **25 tests, 0 failed, 0 errors** |
+| Fresh 14-module install | 2,633 tests, **0 failed, 2 non-reproducible errors** |
+| Full 14-module upgrade | **2,633 tests, 0 failed, 0 errors** |
+| M6 → M7 populated migration | 4 tenders classified, **0 awards created**, every M6 figure unchanged |
+| Migration retry | **IDEMPOTENT = YES**, exit 0 |
+
+### The two fresh-install errors, diagnosed rather than dismissed
+
+`TestDashboardTablet1024` and `TestDashboardTablet991`, both in
+`atmta_real_estate`, both `TimeoutError: Network.setCookie(... session_id ...)`
+— a Chrome DevTools Protocol timeout, not an assertion failure, in tests that
+touch no M7 code.
+
+Non-reproducible, and that was established twice rather than assumed: the same
+2,633 tests at the same source hash ran clean on the **upgrade** path, and both
+classes pass **in isolation**. Recorded as environment flakes under memory
+pressure — roughly 1 GB available at the time, and each of these drives a real
+Chrome at a tablet viewport.
+
+The claim made is *2,633 tests, 0 failed, 2 non-reproducible Chrome timeouts*.
+It is **not** "the full suite is green".
+
+### Migration evidence
+
+Legacy database built with the M6 commit's own procurement code
+(`896809f`, version `18.0.6.0.0`, no award models) prepended to the addons
+path, so it is genuinely pre-M7 rather than M7 rolled back.
+
+| Legacy tender | State | Classified |
+|---|---|---|
+| Closed, bids received, never evaluated | closed | `not_evaluated` |
+| Closed, evaluation finalised, no award | closed | `awaiting_award` |
+| Cancelled | cancelled | `cancelled` |
+| Confirmed purchase order, no award | closed | `committed_without_award` |
+
+Four for four. **Created by the migration: 0 awards, 0 award lines, 0
+allocations.** Unchanged before, after and after the retry: 4 events, 8
+invitations, 7 bids totalling 16,550,000.00, 1 evaluation plan, 1 round, 3
+candidates, 23 purchase orders totalling 17,483,641.50, 4 requisitions, 4
+reservations holding 7,000,000.00.
+
+The fourth case is forced at the SQL layer on purpose: M5 blocks a tender RFQ
+from confirming and M6 keeps that block, so a database built by this code
+cannot reach the state honestly — but one predating M5 can, and that is exactly
+the row M7 has to be able to **name** rather than tidy away.
+
+## 109. Current state
+
+| | |
+|---|---|
+| M7 tests | 88 |
+| Procurement | 534 |
+| Construction | 563, unchanged |
+| All 14 modules | 2,633 |
+| Integrity checks | 24 |
+| Module version | `18.0.7.0.0` |
+
+M7 is feature-complete and gated. It is **not committed** and **not frozen**,
+pending review.

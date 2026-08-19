@@ -315,7 +315,7 @@ class SourcingInvitation(models.Model):
         values = []
         for line in self.event_id.line_ids:
             product = line.product_id
-            values.append({
+            line_values = {
                 'product_id': product.id or False,
                 'name': line.name,
                 'product_qty': line.quantity,
@@ -325,7 +325,27 @@ class SourcingInvitation(models.Model):
                 'price_unit': 0.0,
                 'date_planned': fields.Datetime.now(),
                 're_sourcing_line_id': line.id,
-            })
+            }
+            # Carry the demand link through to the RFQ — M7's finding.
+            #
+            # Without it, an awarded tender order confirms, Construction reads
+            # a commitment from it, and `_convert_reservations()` finds no
+            # `re_material_request_line_id` to convert. The reservation goes on
+            # holding capacity for demand that is now also owed as a
+            # commitment, and the project is counted twice for the same money.
+            # That is Phase 0's Q3 arriving exactly where it was predicted.
+            #
+            # Set only where the tender line traces to a single requisition
+            # line. Where it aggregates several, no one2many collapses into
+            # this many2one honestly, and picking the first allocation would
+            # convert one requisition's reservation while silently leaving the
+            # others holding. `_assert_demand_is_convertible` refuses that case
+            # at award time rather than guessing here.
+            allocations = line.allocation_ids.filtered('request_line_id')
+            if len(allocations) == 1:
+                line_values['re_material_request_line_id'] = \
+                    allocations.request_line_id.id
+            values.append(line_values)
         if not values:
             raise UserError(_(
                 "%s has no scope, so there is nothing to ask a vendor to "

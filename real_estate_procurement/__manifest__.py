@@ -27,7 +27,7 @@ Cross-module supply-chain foundation used by Construction, Handover, Rental and 
 """,
     'author': "Atmta",
     'license': 'LGPL-3',
-    'version': '18.0.6.0.0',
+    'version': '18.0.7.0.0',
     'category': 'Real Estate',
     'depends': [
         'atmta_real_estate',
@@ -76,6 +76,10 @@ Cross-module supply-chain foundation used by Construction, Handover, Rental and 
         'views/product_views.xml',
         'views/partner_views.xml',
         'views/menus.xml',
+        # After menus.xml: the award menu hangs off `menu_evaluation`, and a
+        # parent referenced before it exists is a load-order error.
+        'views/award_views.xml',
+        'report/award_report.xml',
     ],
     # M5 — the sourcing tour. Declared explicitly because a tour that is not
     # in a bundle is not discovered and not run: it would sit in the tree

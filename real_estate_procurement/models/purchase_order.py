@@ -1,5 +1,9 @@
+import logging
+
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+
+_logger = logging.getLogger(__name__)
 
 #: Purchase states in which an order is a commitment as far as Construction is
 #: concerned. Kept here so the gate and the conversion agree about when money
@@ -246,15 +250,30 @@ class PurchaseOrder(models.Model):
             event=event.name or ''))
 
     def _award_authorisation(self):
-        """M7's hook. Nothing grants this in M5, and nothing pretends to.
+        """M7 fills the hook M5 cut. One approved award, naming this order.
 
-        Kept as a method with one honest answer rather than a stub that
-        returns something configurable: a switch that let a buyer confirm a
-        tender RFQ today would be the bypass this whole control exists to
-        close.
+        M5 wrote this as a lookup returning `False` so that M7 could supply
+        the authorisation without the confirmation boundary changing shape,
+        and that is exactly what happens here: the method still answers one
+        question and `_check_tender_authorisation` above is untouched.
+
+        What counts is an award **line** that names this order, on an award
+        that has been approved by somebody other than whoever raised it. A
+        draft award authorises nothing, a submitted one authorises nothing,
+        and a cancelled one stops authorising the moment it is cancelled.
+
+        Read through `sudo()` on purpose. Whether a purchase is authorised is
+        a fact about the order, not a privilege of the person confirming it —
+        a buyer with no access to the award register would otherwise get
+        "no award exists" when one does, which is the wrong answer to a
+        question about governance.
         """
         self.ensure_one()
-        return False
+        line = self.env['realestate.procurement.award.line'].sudo().search([
+            ('purchase_order_id', '=', self.id),
+            ('award_id.state', 'in', ('approved', 'issued')),
+        ], limit=1)
+        return bool(line)
 
     # ------------------------------------------------------------------
     def _is_project_coded(self):
@@ -583,12 +602,55 @@ class PurchaseOrder(models.Model):
         }
 
     def _get_re_project_location(self):
-        """Return the project's stock location, or False if none is configured."""
+        """The project's receipt location — resolved without asking the buyer
+        to edit the project.
+
+        This is the **M7 PO Confirmation Integration Gate**, deferred in §10
+        and reproduced by `TestM7ConfirmationIntegrationGate` before it was
+        touched.
+
+        `realestate.project._get_stock_location()` creates the location on
+        first use and then writes the id back onto the project — and that
+        write is not `sudo()`, while the `create` above it is. Confirming a
+        project-coded purchase order reaches it through
+        `purchase.order.line._prepare_stock_moves()`, so a user Odoo says may
+        confirm a purchase order was being asked for write access to a
+        `realestate.project` record, and got an `AccessError` from inside
+        stock-move preparation that had nothing to do with purchasing.
+
+        It never fired before because every test that confirmed a project
+        order did so as a procurement manager or through `sudo()`. M7 makes it
+        fire for real: an awarded tender order is confirmed by whoever holds
+        the award authority, which is not the same person.
+
+        Two things are separated here. Reading the location is a lookup and
+        stays a lookup. Provisioning one is an administrative act on master
+        data, so it runs as the system and says so in the log rather than
+        happening silently inside a confirmation. The fix lives in this module
+        because `real_estate_developer` owns that method and is not M7's to
+        edit.
+        """
         self.ensure_one()
         project = self.re_project_id
         if not project or not hasattr(project, '_get_stock_location'):
             return False
-        return project._get_stock_location() or False
+        # Everything past this point works on the sudo'd project — including
+        # the log line. `display_name` is a read like any other, and reading
+        # it off the user's own recordset was the same AccessError in a
+        # quieter costume.
+        project_sudo = project.sudo()
+        existing = project_sudo.stock_location_id
+        if existing:
+            return existing
+        location = project_sudo._get_stock_location() or False
+        if location:
+            _logger.info(
+                "Provisioned stock location %s for project %s while confirming "
+                "%s. Creating it is an administrative act; it is recorded "
+                "rather than done silently.",
+                location.display_name, project_sudo.display_name,
+                self.sudo().display_name)
+        return location
 
     def _compute_re_source_display(self):
         for rec in self:

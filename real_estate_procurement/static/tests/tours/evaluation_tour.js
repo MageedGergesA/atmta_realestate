@@ -13,48 +13,27 @@
  */
 
 import { registry } from "@web/core/registry";
+import {
+    assertNoBrokenValues,
+    assertNoErrorDialog,
+    clickMenu,
+    requireText,
+} from "@real_estate_procurement/../tests/tours/menu_nav";
 
-function assertNoErrorDialog(label) {
-    const dialog = document.querySelector(".o_error_dialog, .o_dialog_error");
-    if (dialog) {
-        const text = (dialog.innerText || "").split("\n").slice(0, 4).join(" | ");
-        throw new Error(`[${label}] An error dialog is open: ${text}`);
-    }
-}
-
-function assertNoBrokenValues(label) {
-    const el = document.querySelector(".o_content");
-    const text = (el && el.textContent) || "";
-    const broken = text.match(/NaN|Infinity|\[object Object\]/);
-    if (broken) {
-        throw new Error(`[${label}] Rendered a broken value: "${broken[0]}".`);
-    }
-}
-
-function pageText() {
-    const el = document.querySelector(".o_content");
-    return (el && el.textContent) || "";
-}
-
-function requireText(label, needles) {
-    const text = pageText();
-    for (const needle of needles) {
-        if (!text.includes(needle)) {
-            // Include what was actually rendered. A tour that only says what
-            // it wanted makes every failure a second investigation.
-            const seen = text.replace(/\s+/g, " ").slice(0, 300);
-            throw new Error(
-                `[${label}] Expected to find "${needle}". Screen showed: ${seen}`
-            );
-        }
-    }
-}
-
+/**
+ * `trigger` defaults to `.o_content`, which exists on both the list and the
+ * form — so a checkpoint straight after opening a record can run before the
+ * form has rendered. Steps that inspect a form pass `.o_form_view` and wait
+ * for the thing they are about to assert against.
+ */
 /**
  * Evaluation language is allowed to appear in prose that *denies* awarding —
  * the round form carries a notice saying this is not an award. So the ban is
  * scoped to record data, the same lesson the M5 tour learned when its guard
  * flagged its own disclaimer.
+ *
+ * Stays here rather than moving to `menu_nav.js`: it is about what M6 must not
+ * say, not about navigating a menu.
  */
 function forbidInData(label, needles) {
     const scope = document.querySelector(".o_field_x2many_list") ||
@@ -70,12 +49,6 @@ function forbidInData(label, needles) {
     }
 }
 
-/**
- * `trigger` defaults to `.o_content`, which exists on both the list and the
- * form — so a checkpoint straight after opening a record can run before the
- * form has rendered. Steps that inspect a form pass `.o_form_view` and wait
- * for the thing they are about to assert against.
- */
 function checkpoint(label, extra, trigger) {
     return {
         content: `checkpoint: ${label}`,
@@ -107,62 +80,6 @@ function openTab(name) {
  * path now walks the real hierarchy: the Procurement app, the Evaluation
  * section, then Evaluations.
  */
-/**
- * Click a menu entry by its XML id, wherever this viewport has put it.
- *
- * The navbar is responsive: at desktop width the sections sit on the bar, and
- * as it narrows they overflow into a "More Menu" dropdown before finally
- * collapsing into the burger. A tour that only knew the desktop selector
- * passed on desktop and failed at 768px — which is the tablet gate doing its
- * job, and the reason this helper exists rather than a widened selector.
- */
-async function clickMenu(xmlid) {
-    const sel = `[data-menu-xmlid='${xmlid}']`;
-    const pause = (ms) => new Promise((r) => setTimeout(r, ms));
-
-    // The section bar renders asynchronously after the app is opened, and it
-    // renders into different places at different widths. Poll rather than
-    // sleep a guessed amount: a fixed delay was long enough for the desktop
-    // run and not for the RTL one, which is a flake waiting to happen.
-    const deadline = Date.now() + 15000;
-    let item = null;
-    while (Date.now() < deadline) {
-        item = document.querySelector(sel);
-        if (item) {
-            break;
-        }
-        // Narrow viewports push the sections into "More Menu", then into the
-        // burger. Open whichever is present and look again.
-        const more = document.querySelector(
-            ".o_menu_sections_more button, button[title='More Menu']");
-        if (more && !more.closest(".show")) {
-            more.click();
-            await pause(200);
-            continue;
-        }
-        const burger = document.querySelector(
-            ".o_mobile_menu_toggle, .o_burger_menu_toggle");
-        if (burger) {
-            burger.click();
-            await pause(200);
-            continue;
-        }
-        await pause(200);
-    }
-
-    if (!item) {
-        const seen = [...document.querySelectorAll("[data-menu-xmlid]")]
-            .map((el) => el.dataset.menuXmlid);
-        throw new Error(
-            `The menu "${xmlid}" is not reachable at ${window.innerWidth}x` +
-            `${window.innerHeight} after 15s. Menus visible: ` +
-            JSON.stringify(seen)
-        );
-    }
-    item.click();
-    await pause(400);
-}
-
 registry.category("web_tour.tours").add("procurement_evaluation_tour", {
     url: "/odoo",
     steps: () => [
