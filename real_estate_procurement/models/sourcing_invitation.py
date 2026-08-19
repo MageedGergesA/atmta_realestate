@@ -345,12 +345,70 @@ class SourcingInvitation(models.Model):
             if len(allocations) == 1:
                 line_values['re_material_request_line_id'] = \
                     allocations.request_line_id.id
+            line_values.update(self._rfq_line_coding(line))
             values.append(line_values)
         if not values:
             raise UserError(_(
                 "%s has no scope, so there is nothing to ask a vendor to "
                 "quote.") % self.event_id.name)
         return values
+
+    def _rfq_line_coding(self, line):
+        """Carry the cost coding of the demand onto the tender RFQ line — M8.
+
+        Construction overrides `_prepare_rfq_line()` so that a requisition
+        raised against a cost code produces a purchase line carrying it. The
+        tender path had no equivalent, and the consequences were two, both
+        found by M8's Phase 0 and both proved by test:
+
+        1. **An awarded tender order could not be confirmed on a governed
+           project at all.** `_check_coding_completeness()` refuses a line with
+           no cost code, correctly — money that reaches the cost report as
+           Unassigned is what governance exists to prevent. M5 simply gave the
+           buyer no way to satisfy it, so an approved award became an order
+           nobody could issue.
+
+        2. **Commitment could enter and actual cost could never follow.**
+           Construction stamps the analytic distribution from the cost code at
+           `purchase.order.line.create()`. Uncoded, the line got none, so the
+           vendor bill posted no analytic line and the project's actual cost
+           stayed at zero however much was billed. The commitment sat on the
+           report permanently undischarged.
+
+        Setting the code here fixes both, because it puts it in the create
+        values that Construction's own override reads.
+
+        The coding is **derived, never guessed.** A tender line is written
+        against a scope and may aggregate several requisition lines; it is
+        carried only where every one of them agrees. Where they disagree — or
+        where any is uncoded — the line stays uncoded and the governance gate
+        refuses it at confirmation, which is the honest outcome: somebody has
+        to say what kind of money this is, and it is not this method.
+
+        Guarded on field presence throughout, because Construction depends on
+        Procurement and not the other way round; without it installed there is
+        no coding to carry.
+        """
+        self.ensure_one()
+        POLine = self.env['purchase.order.line']
+        request_lines = line.allocation_ids.request_line_id
+        if not request_lines or 're_cost_code_id' not in POLine._fields:
+            return {}
+
+        coding = {}
+        for source, target in (('cost_code_id', 're_cost_code_id'),
+                               ('wbs_id', 're_wbs_id')):
+            if source not in request_lines._fields or target not in POLine._fields:
+                continue
+            if request_lines.filtered(lambda rl: not rl[source]):
+                # One uncoded requisition line is enough to make the answer
+                # unknown. Coding the tender line from the others would put a
+                # cost code on demand that never carried one.
+                continue
+            distinct = request_lines[source]
+            if len(distinct) == 1:
+                coding[target] = distinct.id
+        return coding
 
     # ------------------------------------------------------------------
     def _issue(self, version):

@@ -31,3 +31,9 @@ from . import test_m7_phase0
 from . import test_m7_award
 from . import test_m7_governance
 from . import test_m7_browser
+
+# M8 — receiving, inspection and the commitment-to-cost conversion.
+from . import test_m8_phase0
+from . import test_m8_inspection
+from . import test_m8_match
+from . import test_m8_integrity

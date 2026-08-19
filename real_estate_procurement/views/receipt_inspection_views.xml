@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_receipt_inspection_form" model="ir.ui.view">
+        <field name="name">realestate.procurement.receipt.inspection.form</field>
+        <field name="model">realestate.procurement.receipt.inspection</field>
+        <field name="arch" type="xml">
+            <form string="Material Inspection">
+                <header>
+                    <button name="action_record" type="object" string="Record Result"
+                            class="btn-primary" invisible="state != 'draft'"
+                            groups="real_estate_procurement.group_procurement_inspector"
+                            confirm="Recording an inspection result is final. A re-inspection is a new receipt, not an edit of this one."/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,passed,partial,failed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="picking_id" readonly="1"/>
+                            <field name="purchase_order_id" readonly="1"/>
+                            <field name="partner_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="project_id" readonly="1"/>
+                            <field name="inspector_id" readonly="1"/>
+                            <field name="inspected_on" readonly="1"/>
+                            <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Delivered Items" name="items">
+                            <!-- Accepted is the only editable number. Rejected is
+                                 derived from it, so the two can never be recorded
+                                 as disagreeing with each other. -->
+                            <field name="line_ids" readonly="state != 'draft'">
+                                <list editable="bottom" create="false" delete="false">
+                                    <field name="product_id" readonly="1"/>
+                                    <field name="received_qty" readonly="1"/>
+                                    <field name="accepted_qty"/>
+                                    <field name="rejected_qty" readonly="1"
+                                           decoration-danger="rejected_qty &gt; 0"/>
+                                    <field name="reason"/>
+                                    <field name="company_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="received_qty" readonly="1"/>
+                                <field name="accepted_qty" readonly="1"/>
+                                <field name="rejected_qty" readonly="1"/>
+                            </group>
+                        </page>
+                        <page string="Finding" name="finding">
+                            <field name="conclusion" readonly="state != 'draft'"
+                                   placeholder="What was found. Required when anything is rejected — the vendor is entitled to the reason, and so is whoever settles the dispute."/>
+                        </page>
+                    </notebook>
+                    <div class="alert alert-info" role="status">
+                        What is accepted is what enters stock and what the
+                        requisition counts as received. Rejecting material here
+                        is a statement about this load, not a judgement about
+                        the vendor.
+                    </div>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_receipt_inspection_list" model="ir.ui.view">
+        <field name="name">realestate.procurement.receipt.inspection.list</field>
+        <field name="model">realestate.procurement.receipt.inspection</field>
+        <field name="arch" type="xml">
+            <list string="Material Inspections"
+                  decoration-danger="state == 'failed'"
+                  decoration-warning="state == 'partial'"
+                  decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="picking_id"/>
+                <field name="partner_id"/>
+                <field name="project_id"/>
+                <field name="received_qty" sum="Delivered"/>
+                <field name="accepted_qty" sum="Accepted"/>
+                <field name="rejected_qty" sum="Rejected"/>
+                <field name="inspector_id" optional="show"/>
+                <field name="inspected_on" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'passed'"
+                       decoration-warning="state == 'partial'"
+                       decoration-danger="state == 'failed'"/>
+                <field name="company_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_receipt_inspection_search" model="ir.ui.view">
+        <field name="name">realestate.procurement.receipt.inspection.search</field>
+        <field name="model">realestate.procurement.receipt.inspection</field>
+        <field name="arch" type="xml">
+            <search string="Material Inspections">
+                <field name="name"/>
+                <field name="picking_id"/>
+                <field name="partner_id"/>
+                <field name="project_id"/>
+                <filter name="to_inspect" string="To Inspect"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="rejected" string="Anything Rejected"
+                        domain="[('rejected_qty', '&gt;', 0)]"/>
+                <separator/>
+                <filter name="group_project" string="Project"
+                        context="{'group_by': 'project_id'}"/>
+                <filter name="group_vendor" string="Vendor"
+                        context="{'group_by': 'partner_id'}"/>
+                <filter name="group_state" string="Result"
+                        context="{'group_by': 'state'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_receipt_inspection" model="ir.actions.act_window">
+        <field name="name">Material Inspections</field>
+        <field name="res_model">realestate.procurement.receipt.inspection</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_receipt_inspection_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No material has been inspected yet.</p>
+            <p>An inspection is opened from a receipt. It records what arrived
+               and what of it is fit to use — which is not the same question as
+               whether the delivery turned up.</p>
+        </field>
+    </record>
+
+    <!-- The inspection button on the receipt itself, which is where the
+         storekeeper actually is when the lorry is at the gate. -->
+    <record id="view_picking_form_inspection" model="ir.ui.view">
+        <field name="name">stock.picking.form.re.inspection</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_open_inspection" type="object"
+                        class="oe_stat_button" icon="fa-check-square-o"
+                        invisible="re_inspection_policy == 'off' or picking_type_code != 'incoming'">
+                    <field name="re_inspection_state" widget="statinfo"
+                           string="Inspection"/>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='picking_type_id']" position="after">
+                <field name="re_inspection_policy" invisible="1"/>
+                <field name="re_inspection_id" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem id="menu_receipt_inspections"
+              name="Material Inspections"
+              parent="menu_procurement_operations"
+              action="action_receipt_inspection"
+              sequence="60"
+              groups="group_procurement_inspector,group_procurement_manager"/>
+
+</odoo>

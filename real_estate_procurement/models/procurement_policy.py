@@ -88,6 +88,24 @@ ADDENDUM_ACK_POLICY = [
     ('required_before_response', 'Required before a response is valid'),
 ]
 
+#: M8 — whether material has to be inspected before a receipt is validated.
+#:
+#: Off by default, and deliberately. Switching inspection on universally would
+#: stop every receipt in every warehouse on upgrade day, including the ones
+#: nobody ever intended to inspect — stationery, hire charges, a replacement
+#: part for the site office. A control that blocks the loading bay on the
+#: morning it is installed gets switched off by lunchtime and never switched
+#: back on, which is how a governance feature becomes a dead field.
+#:
+#: `warn` exists for the same reason it exists on the vendor ladder: a site
+#: that wants the record without the refusal is a real position, and forcing
+#: such a site to choose between `off` and `required` pushes it to `off`.
+RECEIPT_INSPECTION_POLICY = [
+    ('off', 'Off — receipts are not inspected'),
+    ('warn', 'Warn — record the missing inspection and continue'),
+    ('required', 'Required — an uninspected receipt cannot be validated'),
+]
+
 INHERIT = [('company', 'Company Default')]
 
 
@@ -140,6 +158,14 @@ class ResCompany(models.Model):
         help="Whether a vendor has to be qualified before this company will "
              "deal with them. Optional by default: an upgrade must not stop "
              "an existing supply chain that was legal the day before.")
+    # -- M8 --------------------------------------------------------------
+    procurement_receipt_inspection = fields.Selection(
+        RECEIPT_INSPECTION_POLICY, default='off', required=True,
+        string='Material Inspection on Receipt',
+        help="Whether material delivered against a project purchase has to be "
+             "inspected before the receipt is validated. Off by default: an "
+             "upgrade must not stop the loading bay on the morning it lands.")
+
     procurement_qualification_warn_days = fields.Integer(
         string='Expiring Soon (days)', default=30,
         help="How far ahead the register flags an expiring qualification. "
@@ -215,3 +241,9 @@ class ProjectProcurementPolicy(models.Model):
              "needs this project's own sign-off — usually because the client "
              "or the lender insists. Off everywhere else, so the general "
              "qualification is enough.")
+    procurement_receipt_inspection = fields.Selection(
+        INHERIT + RECEIPT_INSPECTION_POLICY, default='company', required=True,
+        string='Material Inspection on Receipt',
+        help="Override the company's receipt-inspection policy for this "
+             "project. A structural package and a fit-out snag list do not "
+             "need the same answer.")

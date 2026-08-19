@@ -36,3 +36,5 @@ from . import material_request_revision
 from . import res_partner
 from . import product_template
 from . import purchase_order
+from . import receipt_inspection
+from . import vendor_bill

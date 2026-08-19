@@ -79,6 +79,25 @@ class ProcurementControl(models.AbstractModel):
             return policy
         return company.sudo().procurement_po_governance or 'optional'
 
+    @api.model
+    def receipt_inspection_for(self, project, company=None):
+        """Which receipt-inspection policy applies here — M8.
+
+        Read through `sudo()` for the reason `po_governance_for` learned the
+        hard way: this is consulted from `stock.picking`, and a storekeeper
+        validating a receipt is emphatically not somebody with read access to
+        `realestate.project`. A policy lookup that raised an `AccessError` in
+        the warehouse would be the M7 Confirmation Gate all over again, one
+        model along.
+        """
+        project = project.sudo() if project else project
+        company = company or (project.company_id if project else False) \
+            or self.env.company
+        policy = project.procurement_receipt_inspection if project else 'company'
+        if policy and policy != 'company':
+            return policy
+        return company.sudo().procurement_receipt_inspection or 'off'
+
     # ------------------------------------------------------------------
     # Locking — M3D.
     # ------------------------------------------------------------------

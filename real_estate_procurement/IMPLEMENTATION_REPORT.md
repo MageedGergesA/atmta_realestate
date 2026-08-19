@@ -4109,5 +4109,319 @@ the row M7 has to be able to **name** rather than tidy away.
 | Integrity checks | 24 |
 | Module version | `18.0.7.0.0` |
 
-M7 is feature-complete and gated. It is **not committed** and **not frozen**,
-pending review.
+M7 is feature-complete and gated. **Committed as `d6bcac7` and pushed** on
+2026-08-19, after review, together with the M3–M7 chain that had been sitting
+unpushed behind it.
+## 110. M8.0 — the Phase 0 audit, and the seam it found
+
+```
+    M7 AWARDS THE CONTRACT AND COMMITS THE MONEY.
+    M8 RECEIVES THE GOODS, AND RECEIVING IS WHAT TURNS COMMITMENT INTO COST.
+```
+
+M8 opened the way every milestone since M2 has opened: by reproducing what is
+actually there. It found two defects at the M7/M8 seam, and the second is the
+kind that does not announce itself for a year.
+
+### The finding that mattered
+
+**The entire tender chain, M5 through M7, had only ever been exercised on a
+project whose purchase governance is `optional`.**
+
+Every tender test sets it explicitly — `test_m5_migration.py:32` and, most
+recently, `test_m7_phase0.py:123`. On a `controlled` or `required` project,
+which is the whole point of the governance ladder and the setting any real
+construction company would run, an order awarded by M7 could not be confirmed
+at all:
+
+> *"…has N line(s) with no cost code. A governed project purchase has to say
+> what kind of money it is, or the commitment reaches the cost report as
+> Unassigned."*
+
+The refusal is **correct**. Uncoded money arriving on the cost report as
+Unassigned is exactly what governance exists to prevent, and §M3 wrote that
+gate deliberately. What was wrong is that M5 gave the buyer no way to satisfy
+it. The award was approved, the vendor had been told they won, and the order
+could not be issued.
+
+That is not a gap in test coverage. It is a gap in the product, and the
+coverage is how it stayed invisible — every test that could have found it had
+switched off the policy that reveals it.
+
+### Root cause
+
+Construction overrides `_prepare_rfq_line()` so a requisition raised against a
+cost code produces a purchase line carrying it. That covers the **requisition →
+RFQ** path. The **tender** path is a different method —
+`sourcing_invitation._rfq_line_values()` — and had no equivalent. A tender line
+carried the product, the quantity, the sourcing line and, since M7, the demand
+link. Never a cost code.
+
+### The second defect, which the first was hiding
+
+Construction reads commitment from purchase order lines grouped by cost code,
+and deliberately keeps the uncoded ones under **Unassigned** rather than
+dropping them: money committed against a project is a fact whether or not
+somebody classified it.
+
+It reads **actual** cost from analytic postings, and the analytic distribution
+on a purchase line is stamped by Construction's own
+`_apply_construction_analytic()`, which requires a project **and a cost code**.
+
+A tender order had the first and never the second. So on a project where
+governance was `optional` — where the order *could* confirm — the two halves of
+the same purchase disagreed permanently:
+
+```
+    commitment   lands, under Unassigned
+    actual cost  can never arrive, however much is billed and paid
+```
+
+The commitment sat on the cost report undischarged forever. Proved by posting a
+real vendor bill against a received order and measuring the project: before the
+fix, `_actual(project)` stayed at **0.00** against a commitment of millions.
+
+### The fix
+
+One method, in Procurement, and it closes both. `_rfq_line_coding()` derives
+the coding from the demand behind each tender line and puts it in the create
+values — which is where Construction's own `create()` override reads it, so the
+analytic distribution now follows automatically.
+
+**Derived, never guessed.** A tender line may aggregate several requisition
+lines. The code is carried only where every one of them agrees:
+
+| Demand behind the tender line | Result |
+|---|---|
+| All lines share one cost code | carried |
+| Lines carry different cost codes | left uncoded |
+| Any line is uncoded | left uncoded |
+
+Where it cannot be derived, the line stays uncoded and the governance gate
+refuses it at confirmation. That is the honest outcome: somebody has to say
+what kind of money this is, and it is not this method's place to invent an
+answer. The same shape as M7's `_assert_demand_is_convertible`, and for the
+same reason.
+
+Construction was not touched. The fix is guarded on field presence throughout
+(`'re_cost_code_id' in POLine._fields`), because Construction depends on
+Procurement and not the other way round — the same idiom M7 used for the
+`real_estate_developer` bug.
+
+### Two of the tests were wrong before the code was
+
+Recorded because the corrections are more instructive than the tests:
+
+1. The first version of the governed-tender test set the policy **after**
+   `action_issue()` — and issuing is itself what confirms. It passed while
+   proving nothing.
+2. The first version of the billing test built the bill from
+   `_prepare_account_move_line()`, which bills `qty_to_invoice` — zero until
+   something is received. It posted a bill for nothing and measured an actual
+   of zero that had nothing to do with analytic coding. The test now receives
+   the goods for real through native Inventory before billing them.
+
+A third hit M3's approved-basis guard when the fixture tried to rewrite a cost
+code on approved demand. The guard was right; the test now goes through
+`re_procurement_revision`, which is the path a buyer correcting a wrong code
+would actually take.
+
+### Dead code removed
+
+`_compute_state_from_receipts` on `realestate.material.request` carried an
+`@api.depends` over a body of `pass`, and no field named it as a compute. It
+had never executed. Harmless today and actively misleading tomorrow: the next
+person to touch receipt state would have found it, believed the rollup ran
+there, and edited a method that does nothing. Removed, with a comment where it
+stood pointing at `_refresh_state_from_lines()`, which is triggered by
+`stock.picking._action_done()` — the event that actually happens.
+
+## 111. Material inspection at the point of receipt
+
+```
+    A RECEIPT SAYS THE LORRY ARRIVED.
+    AN INSPECTION SAYS WHAT ON IT IS FIT TO USE.
+```
+
+Everything before M8 treated *delivered* and *accepted* as the same event. They
+are not, and the gap between them is where money is lost: material booked in,
+billed, paid for and then found unusable is a cost the project absorbed before
+anybody wrote it down.
+
+### Rejection is a quantity, not a flag
+
+Half a load can be sound and half cracked. A boolean forces the storekeeper to
+lie in one direction or the other, so the sheet records an accepted quantity per
+delivered item and derives the rejection from it — the two can never be recorded
+as disagreeing, because only one of them is entered.
+
+What is accepted is what enters stock. The rejected quantity therefore never
+reaches `qty_received`, never rolls up to the requisition, and is not billable.
+Those are the assertions in `test_m8_inspection.py`: they are made against
+stock, against `qty_received`, against the requisition rollup and against
+`qty_to_invoice` — **not** against the sheet's own state field, which is the one
+thing in this design that cannot be wrong.
+
+### The policy ladder, and why it ships off
+
+| | |
+|---|---|
+| `off` | receipts are not inspected — **the default** |
+| `warn` | record the missing inspection and continue |
+| `required` | an uninspected receipt cannot be validated |
+
+Switching inspection on universally would stop every receipt in every warehouse
+on upgrade day, including the ones nobody ever intended to inspect: stationery,
+hire charges, a replacement part for the site office. A control that blocks the
+loading bay on the morning it is installed is switched off by lunchtime and
+never switched back on, which is how a governance feature becomes a dead field.
+
+`warn` exists for the same reason it exists on the vendor ladder. A site that
+wants the record without the refusal is a real position, and forcing it to
+choose between `off` and `required` pushes it to `off`.
+
+### Two refusals worth naming
+
+**A wholly rejected load is not validated silently.** Validating would book
+rejected material into stock; refusing to validate at all leaves somebody to
+cancel the receipt or arrange the return. What happens to it is a commercial
+conversation, and inventing a stock move for it would be this module deciding an
+outcome that is not its to decide.
+
+**An inspector is not a buyer.** `group_procurement_inspector` is deliberately
+not implied by the buyer group: the person who chose the vendor should not be
+the person who certifies that the vendor's material is acceptable. A system that
+lets one user do both has recorded a signature rather than a control. Manager
+implies it, so a small site is not locked out of its own loading bay.
+
+### The design error the tests caught
+
+The requirement *a rejection must carry a finding* was first written as an
+`@api.constrains`. But a sheet opens with **nothing** accepted — that is the
+point, so it cannot be signed without being read — which means every line is
+fully rejected the moment it is created, and the constraint refused to open the
+sheet at all.
+
+The requirement belongs at `action_record()`, when the inspector commits to a
+result, not while the sheet is being filled in. Both halves now have their own
+test, so the fix cannot regress into either failure.
+
+## 112. The three-way match
+
+```
+    ORDERED  — what was authorised
+    RECEIVED — what arrived and was accepted
+    BILLED   — what the vendor says is owed
+```
+
+Three numbers about one purchase, and until M8 nothing made them agree. M3
+controls what may be ordered, M7 what may be awarded, M8's inspection what
+counts as received — and a vendor could still bill for more than any of it,
+because posting a bill went through native Accounting, where nothing had been
+told about the project.
+
+The gate sits on `account.move._post()`: the moment money becomes owed. Not on
+create, because a draft bill that overshoots is a normal thing to be working on
+and refusing to save it would send people to a spreadsheet.
+
+**Per line, not per bill.** A bill under on one item and over on another nets to
+something reasonable and is still paying for material that never arrived.
+Netting is precisely how that stops being visible.
+
+**The tolerance is M3's, and only its percentage.** M3 also configures a flat
+`procurement_amount_tolerance_amount`; it is deliberately unused here because it
+is an allowance in *money* and this check is on *quantity*. Converting would
+need a price, the price in question is the one under dispute, and a tolerance
+derived from the disputed number is not a tolerance. No hard-coded percentage
+appears anywhere in the file, for the reason it appears nowhere else in this
+module: whichever number were chosen would be somebody's policy adopted
+silently.
+
+### The bug the first test caught
+
+The first version compared `already_billed + this_bill` against what was
+received. But Odoo's `qty_invoiced` **already counts draft bills**, and the bill
+being posted is still draft while `_post()` runs — so the same invoice was
+counted twice and a perfectly correct bill for exactly what arrived was refused.
+`qty_invoiced` is now the whole comparison, with nothing added to it.
+
+A second test never reached the gate at all: native Purchase refuses to *create*
+a second bill once everything is billed, so `action_create_invoice()` raised
+first. The duplicate bill is now built explicitly, which is how a duplicate
+vendor invoice or a hand-keyed one actually arrives.
+
+## 113. The ITP link, and why M8 does not build it
+
+§63 assigned *material-inspection link to Construction QA/QC* to M8. The
+inspection is built; the link to the Inspection & Test Plan is not, and the
+reason is architectural rather than a matter of effort.
+
+Construction owns `realestate.construction.itp` and its checkpoints. A
+first-class relation to it belongs on the inspection model, and **Procurement
+cannot declare it**: the dependency runs the other way — Construction depends on
+Procurement, which is how `re_cost_code_id` reaches `purchase.order.line` — and
+Construction is frozen at `18.0.1.0.0` with a 563-test baseline that every
+milestone since has been required to leave untouched.
+
+The options were:
+
+| | |
+|---|---|
+| Declare a `Many2oneReference` to a model this module cannot see | works, and puts an unvalidated model name in a field |
+| Build inspection checkpoints in Procurement | a second quality structure disagreeing with the first — the commitment mistake of M7 in another currency |
+| Open a Construction window | correct, and not this milestone's decision to take |
+
+`_quality_reference_values()` is left as the documented extension point,
+returning nothing. The constraint is recorded here rather than worked around,
+because a reference field naming an invisible model would look like the
+integration while providing none of it.
+
+## 114. Integrity — four more checks
+
+A gate refuses the next bad act; an audit finds the ones already in the
+database. Each of these is reachable by a record that predates M8, which is the
+point: switching a control on does not clean up what happened before it.
+
+| Check | Severity | What it finds |
+|---|---|---|
+| `billed_over_accepted` | critical | posted bills exceeding what the site accepted |
+| `rejected_material_received` | critical | an inspection's rejection that never reached the stock ledger |
+| `uninspected_receipt` | low | receipts validated with no inspection where the project now requires one |
+| `tender_order_uncoded` | medium | confirmed tender lines carrying a project and no cost code |
+
+The two sub-critical severities are chosen on purpose. The inspection policy ships `off`, so
+almost everything received before somebody switched it on is legitimately
+uninspected, and most uncoded tender lines predate the M8 fix. Reporting either
+as critical would be an accusation the data does not support, and an audit that
+scolds a site for a policy it never set is an audit people learn to ignore.
+
+The severities are the audit's existing four — `critical`, `high`, `medium`,
+`low`. A first draft of these two checks invented a fifth, `warning`, which the
+wizard's finding model rejected at write time: the audit itself returned the
+findings happily and the **wizard** blew up with a `ValueError` the moment a
+site had one. It was the 14-module upgrade gate that caught it, because that is
+the only gate whose database contains the historical records these checks are
+written to find.
+
+## 115. Migration
+
+The tempting shortcut here is quieter than M7's and would do more damage.
+
+Every historical receipt could be given an inspection, marked fully accepted and
+dated to the day it was validated, so the register arrives complete and the M8
+audit reports nothing. That would state, on the record, that somebody inspected
+material nobody inspected. An inspection is a person saying *I looked at this
+and it was fit to use*; a script cannot say it, and a sheet signed by nobody is
+worse than a gap, because the gap is honest and somebody will rely on the sheet.
+
+The same applies to coding. Walking the confirmed tender orders and coding them
+retrospectively would move real committed money onto codes nobody chose, change
+the cost report for every project overnight, and leave no way to tell afterwards
+which figures were a buyer's decision and which were a script's guess.
+
+So the migration creates **no inspection, no inspection line and no cost code**,
+and writes nothing to a purchase order, a stock move or a bill. It counts three
+things, logs them, and leaves the work for the audit to name and a person to
+fix. It is idempotent by construction, because it only reads —
+`TestM8MigrationCreatesNothing` asserts each of those absences rather than
+trusting this paragraph.

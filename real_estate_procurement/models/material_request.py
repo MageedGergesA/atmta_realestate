@@ -1515,10 +1515,14 @@ class MaterialRequest(models.Model):
         }
 
     # ---------- Receipt rollup ----------
-    @api.depends('line_ids.received_qty', 'line_ids.qty', 'state')
-    def _compute_state_from_receipts(self):
-        """Not exposed as compute — called by line write hooks."""
-        pass
+    #
+    # `_compute_state_from_receipts` used to sit here: an `@api.depends` over a
+    # body of `pass`, named by no field as a compute, and so never once
+    # executed. Removed in M8. It was harmless and actively misleading — the
+    # next person to touch receipt state would have found it, believed the
+    # rollup ran there, and edited a method that does nothing. The rollup runs
+    # from `_refresh_state_from_lines()` below, triggered by
+    # `stock.picking._action_done()`, which is the event that actually happens.
 
     def _refresh_state_after_ordering(self):
         """Somebody confirmed an order against this request.
