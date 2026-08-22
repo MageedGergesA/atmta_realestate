@@ -27,7 +27,7 @@ Cross-module supply-chain foundation used by Construction, Handover, Rental and 
 """,
     'author': "Atmta",
     'license': 'LGPL-3',
-    'version': '18.0.8.0.0',
+    'version': '18.0.9.0.0',
     'category': 'Real Estate',
     'depends': [
         'atmta_real_estate',
@@ -45,6 +45,13 @@ Cross-module supply-chain foundation used by Construction, Handover, Rental and 
         'purchase_requisition',
         'product',
         'stock',
+        # Wave 1 — Vendor Governance was extracted into its own capability
+        # module. This dependency is what guarantees the new module loads
+        # first and in the same transaction, so the model definitions are
+        # never absent and never ambiguously owned. It also keeps the
+        # extraction invisible to every consumer: the models are reached
+        # through the ORM registry exactly as before.
+        'atmta_procurement_vendor',
     ],
     'data': [
         'security/security.xml',

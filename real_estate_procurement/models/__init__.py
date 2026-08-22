@@ -4,14 +4,9 @@ from . import procurement_exception
 from . import procurement_reservation
 from . import procurement_plan
 from . import approval_rule
-# M4 — vendor governance. Ordered so the trade taxonomy and the template
-# exist before the assessment that snapshots them.
-from . import vendor_category
-from . import qualification_template
-from . import vendor_profile
-from . import vendor_qualification
-from . import vendor_restriction
-from . import vendor_eligibility
+# M4 — vendor governance was extracted in Wave 1 and is now defined by
+# atmta_procurement_vendor, which this module depends on. The models are
+# unchanged and are reached through the ORM registry exactly as before.
 # M5 — sourcing and tender. The event exists before the invitation that
 # references it, and the invitation before the bid it receives.
 from . import sourcing_event
@@ -33,7 +28,6 @@ from . import procurement_award
 from . import material_request
 from . import material_request_line
 from . import material_request_revision
-from . import res_partner
 from . import product_template
 from . import purchase_order
 from . import receipt_inspection
