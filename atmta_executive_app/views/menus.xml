@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Target tree: 10_TARGET_MENU_TREE.md §7. Every action is pre-existing. -->
+
+    <menuitem id="menu_root" name="Executive"
+              web_icon="atmta_executive_app,static/description/icon.png"
+              sequence="32" groups="atmta_v2_pilot.group_atmta_v2_pilot"/>
+
+    <menuitem id="menu_overview" name="Suite Overview" parent="menu_root" sequence="1"
+              action="real_estate_investment.action_investment_dashboard"
+              groups="real_estate_investment.group_investment_user"/>
+
+    <!-- ========================= PORTFOLIO ========================= -->
+    <menuitem id="menu_portfolio" name="Portfolio" parent="menu_root" sequence="10"
+              groups="real_estate_investment.group_investment_user,real_estate_construction.group_construction_user,real_estate_developer.group_dev_readonly"/>
+    <menuitem id="menu_projects" name="Projects" parent="menu_portfolio" sequence="10"
+              action="real_estate_developer.action_realestate_project"
+              groups="real_estate_developer.group_dev_readonly"/>
+    <menuitem id="menu_control_tower" name="Construction Control Tower" parent="menu_portfolio" sequence="20"
+              action="real_estate_construction.action_control_tower"
+              groups="real_estate_construction.group_construction_user"/>
+
+    <!-- ===================== FINANCIAL POSITION =====================
+         Existing reports only. No aggregation is performed here. -->
+    <menuitem id="menu_financial" name="Financial Position" parent="menu_root" sequence="20"
+              groups="real_estate_investment.group_investment_user,real_estate_construction.group_construction_user,real_estate_developer.group_dev_readonly"/>
+    <menuitem id="menu_receivables" name="Receivables Schedule" parent="menu_financial" sequence="10"
+              action="real_estate_developer.action_receivables_schedule"
+              groups="real_estate_developer.group_dev_readonly"/>
+    <menuitem id="menu_pdc_coverage" name="PDC Coverage" parent="menu_financial" sequence="20"
+              action="real_estate_checks.action_report_check_coverage"
+              groups="real_estate_checks.group_checks_user"/>
+
+    <!-- ========================== PLANNING ========================== -->
+    <menuitem id="menu_planning" name="Planning" parent="menu_root" sequence="30"
+              groups="real_estate_investment.group_investment_user"/>
+    <menuitem id="menu_feasibility" name="Feasibility Studies" parent="menu_planning" sequence="10"
+              action="real_estate_investment.action_feasibility"/>
+    <menuitem id="menu_scenarios" name="Scenarios" parent="menu_planning" sequence="20"
+              action="real_estate_investment.action_scenario"/>
+</odoo>

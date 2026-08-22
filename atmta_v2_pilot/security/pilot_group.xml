@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+      A category of its own, so the flag is visible on the user form as what it
+      is — a navigation switch — and is never mistaken for a role tier.
+    -->
+    <record id="module_category_atmta_v2" model="ir.module.category">
+        <field name="name">ATMTA V2 Migration</field>
+        <field name="description">Transitional flags for the ATMTA V2 programme. Not a role.</field>
+        <field name="sequence">900</field>
+    </record>
+
+    <!--
+      NO implied_ids.  NO ir.model.access.  NO ir.rule.
+      Adding a user here must change zero effective permissions; Wave 0 asserts
+      that explicitly rather than trusting the absence of the lines below.
+    -->
+    <record id="group_atmta_v2_pilot" model="res.groups">
+        <field name="name">ATMTA V2 Navigation Pilot</field>
+        <field name="category_id" ref="module_category_atmta_v2"/>
+        <field name="comment">Shows the seven ATMTA V2 application roots. Grants no data access whatsoever.</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+      The ONE action this module creates. `atmta_real_estate.action_maintenance_requests`
+      lists every request; a workspace needs the personal queue, and no existing
+      action carries that domain. Model, views and access rules are the existing
+      ones; the domain names `assigned_to` and the model's own `state` values
+      (new/assigned/in_progress/waiting/resolved/closed/cancelled are the ticket
+      model's; maintenance uses its own, so only the open-ended exclusion of the
+      closed states is asserted here).
+    -->
+    <record id="action_v2_my_maintenance" model="ir.actions.act_window">
+        <field name="name">My Maintenance Requests</field>
+        <field name="res_model">realestate.maintenance.request</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('assigned_to', '=', uid)]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nothing is assigned to you.</p>
+            <p>Maintenance requests assigned to you appear here.</p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Target tree: 10_TARGET_MENU_TREE.md §1. Every action is pre-existing. -->
+
+    <menuitem id="menu_root"
+              name="Development &amp; Sales"
+              web_icon="atmta_development_app,static/description/icon.png"
+              sequence="26"
+              groups="atmta_v2_pilot.group_atmta_v2_pilot"/>
+
+    <menuitem id="menu_overview"
+              name="Overview" parent="menu_root" sequence="1"
+              action="real_estate_developer.action_developer_dashboard"
+              groups="real_estate_developer.group_dev_readonly"/>
+
+    <!-- =================== PROJECTS &amp; INVENTORY =================== -->
+    <menuitem id="menu_projects_sec" name="Projects &amp; Inventory" parent="menu_root" sequence="10"
+              groups="real_estate_developer.group_dev_readonly"/>
+    <menuitem id="menu_projects" name="Projects" parent="menu_projects_sec" sequence="10"
+              action="real_estate_developer.action_realestate_project"/>
+    <menuitem id="menu_phases" name="Phases" parent="menu_projects_sec" sequence="20"
+              action="real_estate_developer.action_realestate_phase"/>
+    <menuitem id="menu_unit_releases" name="Unit Releases" parent="menu_projects_sec" sequence="30"
+              action="real_estate_developer.action_unit_release_batch"/>
+    <menuitem id="menu_unit_blocks" name="Commercial Blocks" parent="menu_projects_sec" sequence="40"
+              action="real_estate_developer.action_unit_block"/>
+
+    <!-- ========================== PRICING ========================== -->
+    <menuitem id="menu_pricing" name="Pricing" parent="menu_root" sequence="20"
+              groups="real_estate_developer.group_dev_sales_manager"/>
+    <menuitem id="menu_price_books" name="Price Books" parent="menu_pricing" sequence="10"
+              action="real_estate_developer.action_price_book"/>
+    <menuitem id="menu_promotions" name="Promotions" parent="menu_pricing" sequence="20"
+              action="real_estate_developer.action_promotion"/>
+    <!--
+      Payment Plans is NOT exposed in the V2 tree.
+
+      `realestate.payment.plan` is declared with `_name` by two modules that do
+      not inherit each other. `real_estate_developer`'s class wins the registry
+      (52 live fields); `atmta_real_estate`'s four fields — start_after,
+      start_after_unit, unit, interval — survive only as orphaned
+      ir_model_fields rows and SQL columns. Both modules also ship a list and a
+      form view at the same priority, and Odoo resolves BOTH actions to
+      `atmta_real_estate`'s, which reference the fields that no longer exist.
+
+      Result, verified in the browser on this database:
+          Developer   > Pricing      > Payment Plans  -> Odoo Client Error
+          Real Estate > Configuration> Payment Plans  -> Odoo Client Error
+          "realestate.payment.plan"."start_after" field is undefined.
+
+      This is a live defect that predates Wave 0 and is broken from every menu
+      in the system today. Wave 0 does not fix legacy and will not ship a
+      destination it knows is broken. Restore this menu in the wave that
+      resolves the ownership question in 17_RISKS_AND_OPEN_DECISIONS.md §1.
+    -->
+    <menuitem id="menu_price_history" name="Price History" parent="menu_pricing" sequence="40"
+              action="real_estate_developer.action_price_history"/>
+    <menuitem id="menu_price_bulk" name="Bulk Price Update" parent="menu_pricing" sequence="50"
+              action="real_estate_developer.action_price_bulk_update"/>
+
+    <!-- =========================== SALES =========================== -->
+    <menuitem id="menu_sales" name="Sales" parent="menu_root" sequence="30"
+              groups="real_estate_developer.group_dev_readonly"/>
+    <menuitem id="menu_reservations" name="Reservations" parent="menu_sales" sequence="10"
+              action="real_estate_developer.action_unit_reservation"/>
+    <menuitem id="menu_sale_contracts" name="Sale Contracts" parent="menu_sales" sequence="20"
+              action="real_estate_developer.action_sale_contract"/>
+    <menuitem id="menu_amendments" name="Contract Amendments" parent="menu_sales" sequence="30"
+              action="real_estate_developer.action_contract_amendment"/>
+    <menuitem id="menu_approval_requests" name="Approval Requests" parent="menu_sales" sequence="40"
+              action="real_estate_developer.action_approval_request"/>
+
+    <!-- ======================== RECEIVABLES ======================== -->
+    <menuitem id="menu_receivables" name="Receivables" parent="menu_root" sequence="40"
+              groups="real_estate_developer.group_dev_readonly"/>
+    <menuitem id="menu_installments" name="Instalments" parent="menu_receivables" sequence="10"
+              action="real_estate_developer.action_sale_installment"/>
+    <menuitem id="menu_receivables_schedule" name="Receivables Schedule" parent="menu_receivables" sequence="20"
+              action="real_estate_developer.action_receivables_schedule"/>
+
+    <!-- ======================= SALES GALLERY =======================
+         The legacy "Project Plans" root becomes a section here: Visual is
+         contextual to a project, not an application of its own. -->
+    <menuitem id="menu_gallery" name="Sales Gallery" parent="menu_root" sequence="50"
+              groups="real_estate_developer.group_dev_readonly"/>
+    <menuitem id="menu_maquette_3d" name="3D Maquette" parent="menu_gallery" sequence="10"
+              action="real_estate_maquette.action_maquette_preview_3d"/>
+    <menuitem id="menu_master_plan" name="2D Master Plan" parent="menu_gallery" sequence="20"
+              action="real_estate_maquette.action_master_plan_2d"/>
+    <menuitem id="menu_visual_gallery" name="Gallery" parent="menu_gallery" sequence="30"
+              action="real_estate_maquette.action_visual_gallery"
+              groups="real_estate_maquette.group_visual_viewer"/>
+
+    <!-- ========================= REPORTING ========================= -->
+    <menuitem id="menu_reporting" name="Reporting" parent="menu_root" sequence="70"
+              groups="real_estate_developer.group_dev_readonly"/>
+    <menuitem id="menu_rep_availability" name="Unit Availability" parent="menu_reporting" sequence="10"
+              action="real_estate_developer.action_report_unit_availability"/>
+    <menuitem id="menu_rep_price_list" name="Price List" parent="menu_reporting" sequence="20"
+              action="real_estate_developer.action_report_price_list"/>
+    <menuitem id="menu_rep_contract_register" name="Contract Register" parent="menu_reporting" sequence="30"
+              action="real_estate_developer.action_report_contract_register"/>
+    <menuitem id="menu_rep_installments" name="Instalment Schedule" parent="menu_reporting" sequence="40"
+              action="real_estate_developer.action_report_installment_schedule"/>
+    <menuitem id="menu_rep_cancellations" name="Cancellation Register" parent="menu_reporting" sequence="50"
+              action="real_estate_developer.action_report_cancellations"/>
+    <menuitem id="menu_rep_discounts" name="Discount Approvals" parent="menu_reporting" sequence="60"
+              action="real_estate_developer.action_report_discount_approvals"/>
+
+    <!-- ======================= CONFIGURATION ======================= -->
+    <menuitem id="menu_config" name="Configuration" parent="menu_root" sequence="90"
+              groups="real_estate_developer.group_dev_manager"/>
+    <menuitem id="menu_cfg_developers" name="Developers" parent="menu_config" sequence="10"
+              action="real_estate_developer.action_res_partner_developer"/>
+    <menuitem id="menu_cfg_approval_authority" name="Approval Authority" parent="menu_config" sequence="20"
+              action="real_estate_developer.action_approval_rule"/>
+    <menuitem id="menu_cfg_contract_templates" name="Contract Templates" parent="menu_config" sequence="30"
+              action="real_estate_contract_template.action_contract_template"/>
+    <menuitem id="menu_cfg_generated_docs" name="Generated Documents" parent="menu_config" sequence="40"
+              action="real_estate_contract_template.action_contract_document"/>
+    <menuitem id="menu_cfg_building_floors" name="Building Floors" parent="menu_config" sequence="50"
+              action="real_estate_maquette.action_building_floor"/>
+    <menuitem id="menu_cfg_plan_regions" name="2D Plan Regions" parent="menu_config" sequence="60"
+              action="real_estate_maquette.action_building_region"/>
+    <menuitem id="menu_cfg_spec_tags" name="Specification Tags" parent="menu_config" sequence="70"
+              action="real_estate_maquette.action_spec_tag"/>
+    <menuitem id="menu_cfg_layouts" name="Layouts" parent="menu_config" sequence="80"
+              action="real_estate_maquette.action_visual_unit_type"
+              groups="real_estate_maquette.group_visual_author"/>
+    <menuitem id="menu_cfg_floor_templates" name="Floor Templates" parent="menu_config" sequence="90"
+              action="real_estate_maquette.action_visual_floor_template"
+              groups="real_estate_maquette.group_visual_author"/>
+
+</odoo>

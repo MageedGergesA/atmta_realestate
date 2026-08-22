@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+      Target tree: 10_TARGET_MENU_TREE.md §4.
+      Group gating mirrors the legacy menus for the same actions, using the
+      EXISTING real_estate_procurement groups. No group is created here and none
+      is implied; hiding a menu never widens what a role may read.
+    -->
+
+    <!-- ============================ ROOT ============================ -->
+    <menuitem id="menu_root"
+              name="Procurement"
+              web_icon="atmta_procurement_app,static/description/icon.png"
+              sequence="27"
+              groups="atmta_v2_pilot.group_atmta_v2_pilot"/>
+
+    <!-- =========================== MY WORK =========================== -->
+    <menuitem id="menu_my_work"
+              name="My Work"
+              parent="menu_root"
+              action="action_v2_my_approvals"
+              sequence="5"
+              groups="real_estate_procurement.group_procurement_requester,real_estate_procurement.group_evaluation_technical"/>
+
+    <!-- ==================== PLANNING &amp; REQUESTS ==================== -->
+    <menuitem id="menu_planning" name="Planning &amp; Requests" parent="menu_root" sequence="10"
+              groups="real_estate_procurement.group_procurement_requester,real_estate_procurement.group_evaluation_technical"/>
+    <menuitem id="menu_plans"
+              name="Procurement Plans" parent="menu_planning" sequence="10"
+              action="real_estate_procurement.action_procurement_plan"/>
+    <menuitem id="menu_requisitions"
+              name="Requisitions" parent="menu_planning" sequence="20"
+              action="real_estate_procurement.action_material_request"/>
+    <menuitem id="menu_plan_lines"
+              name="Planned Items" parent="menu_planning" sequence="30"
+              action="real_estate_procurement.action_procurement_plan_line"/>
+
+    <!-- ========================== SOURCING ========================== -->
+    <menuitem id="menu_sourcing" name="Sourcing" parent="menu_root" sequence="20"
+              groups="real_estate_procurement.group_procurement_user"/>
+    <menuitem id="menu_tenders"
+              name="Tenders" parent="menu_sourcing" sequence="10"
+              action="real_estate_procurement.action_sourcing_event"/>
+    <menuitem id="menu_bids"
+              name="Bids" parent="menu_sourcing" sequence="20"
+              action="real_estate_procurement.action_bid_response"/>
+
+    <!-- ===================== EVALUATION &amp; AWARD ===================== -->
+    <menuitem id="menu_evaluation" name="Evaluation &amp; Award" parent="menu_root" sequence="30"
+              groups="real_estate_procurement.group_procurement_user,real_estate_procurement.group_evaluation_technical,real_estate_procurement.group_evaluation_commercial,real_estate_procurement.group_evaluation_manager"/>
+    <menuitem id="menu_evaluations"
+              name="Evaluations" parent="menu_evaluation" sequence="10"
+              action="real_estate_procurement.action_evaluation_round"/>
+    <menuitem id="menu_evaluation_plans"
+              name="Evaluation Plans" parent="menu_evaluation" sequence="12"
+              action="real_estate_procurement.action_evaluation_plan"/>
+    <menuitem id="menu_technical_evaluations"
+              name="Technical Evaluations" parent="menu_evaluation" sequence="14"
+              action="real_estate_procurement.action_technical_evaluation"
+              groups="real_estate_procurement.group_evaluation_technical,real_estate_procurement.group_evaluation_manager"/>
+    <menuitem id="menu_awards"
+              name="Awards" parent="menu_evaluation" sequence="20"
+              action="real_estate_procurement.action_procurement_award"
+              groups="real_estate_procurement.group_procurement_user,real_estate_procurement.group_procurement_manager"/>
+
+    <!-- ==================== PURCHASE &amp; DELIVERY ==================== -->
+    <menuitem id="menu_purchase" name="Purchase &amp; Delivery" parent="menu_root" sequence="40"
+              groups="real_estate_procurement.group_procurement_requester,real_estate_procurement.group_evaluation_technical"/>
+    <menuitem id="menu_purchase_orders"
+              name="Purchase Orders" parent="menu_purchase" sequence="10"
+              action="real_estate_procurement.action_realestate_purchase_orders"/>
+    <menuitem id="menu_inspections"
+              name="Material Inspections" parent="menu_purchase" sequence="20"
+              action="real_estate_procurement.action_receipt_inspection"
+              groups="real_estate_procurement.group_procurement_inspector,real_estate_procurement.group_procurement_manager"/>
+
+    <!-- ========================== VENDORS ==========================
+         Eight legacy destinations over three models collapse to one workspace.
+         The seven filtered registers (Qualification Register, Approved Vendor
+         List, Pending Assessment, Expiring & Expired, Vendors Not Assessed,
+         Restrictions, Data Audit) remain reachable from the legacy menu and
+         from this list's own filters; they are not permanent destinations. -->
+    <menuitem id="menu_vendors" name="Vendors" parent="menu_root" sequence="50"
+              groups="real_estate_procurement.group_procurement_requester,real_estate_procurement.group_evaluation_technical"/>
+    <menuitem id="menu_vendor_workspace"
+              name="Vendor Workspace" parent="menu_vendors" sequence="10"
+              action="real_estate_procurement.action_vendor_profile"/>
+    <menuitem id="menu_qualification_register"
+              name="Qualification Register" parent="menu_vendors" sequence="20"
+              action="real_estate_procurement.action_vendor_qualification"/>
+    <menuitem id="menu_vendor_restrictions"
+              name="Restrictions" parent="menu_vendors" sequence="30"
+              action="real_estate_procurement.action_vendor_restriction"
+              groups="real_estate_procurement.group_procurement_qualification_assessor"/>
+    <menuitem id="menu_vendor_audit"
+              name="Data Audit" parent="menu_vendors" sequence="40"
+              action="real_estate_procurement.action_vendor_audit"
+              groups="real_estate_procurement.group_procurement_qualification_assessor"/>
+
+    <!-- ========================== CONTROLS ========================== -->
+    <menuitem id="menu_controls" name="Controls" parent="menu_root" sequence="60"
+              groups="real_estate_procurement.group_procurement_requester,real_estate_procurement.group_evaluation_technical"/>
+    <menuitem id="menu_reservations"
+              name="Reservations" parent="menu_controls" sequence="10"
+              action="real_estate_procurement.action_procurement_reservation"/>
+    <menuitem id="menu_exceptions"
+              name="Exceptions" parent="menu_controls" sequence="20"
+              action="real_estate_procurement.action_control_exception"/>
+    <menuitem id="menu_approval_register"
+              name="Approval Register" parent="menu_controls" sequence="30"
+              action="real_estate_procurement.action_approval_register"
+              groups="real_estate_procurement.group_procurement_approver,real_estate_procurement.group_procurement_manager"/>
+
+    <!-- ========================= REPORTING ========================= -->
+    <menuitem id="menu_reporting" name="Reporting" parent="menu_root" sequence="70"
+              groups="real_estate_procurement.group_procurement_requester,real_estate_procurement.group_evaluation_technical"/>
+    <menuitem id="menu_avl"
+              name="Approved Vendor List" parent="menu_reporting" sequence="10"
+              action="real_estate_procurement.action_avl_report"/>
+    <menuitem id="menu_integrity_audit"
+              name="Integrity Audit" parent="menu_reporting" sequence="20"
+              action="real_estate_procurement.action_evaluation_audit_wizard"
+              groups="real_estate_procurement.group_evaluation_manager,real_estate_procurement.group_procurement_manager"/>
+
+    <!-- ======================= CONFIGURATION ======================= -->
+    <menuitem id="menu_config" name="Configuration" parent="menu_root" sequence="90"
+              groups="real_estate_procurement.group_procurement_manager"/>
+    <menuitem id="menu_cfg_vendors"
+              name="Vendors" parent="menu_config" sequence="10"
+              action="real_estate_procurement.action_realestate_vendors"/>
+    <menuitem id="menu_cfg_catalog"
+              name="Material Catalog" parent="menu_config" sequence="20"
+              action="real_estate_procurement.action_realestate_catalog"/>
+    <menuitem id="menu_cfg_approval_rules"
+              name="Approval Rules" parent="menu_config" sequence="30"
+              action="real_estate_procurement.action_approval_rule"/>
+    <menuitem id="menu_cfg_vendor_trades"
+              name="Vendor Trades" parent="menu_config" sequence="40"
+              action="real_estate_procurement.action_vendor_category"/>
+    <menuitem id="menu_cfg_qual_areas"
+              name="Qualification Areas" parent="menu_config" sequence="50"
+              action="real_estate_procurement.action_qualification_area"/>
+    <menuitem id="menu_cfg_qual_templates"
+              name="Qualification Templates" parent="menu_config" sequence="60"
+              action="real_estate_procurement.action_qualification_template"/>
+    <menuitem id="menu_cfg_vendor_tags"
+              name="Vendor Tags" parent="menu_config" sequence="70"
+              action="real_estate_procurement.action_realestate_vendor_tags"/>
+    <menuitem id="menu_cfg_product_categories"
+              name="Product Categories" parent="menu_config" sequence="80"
+              action="real_estate_procurement.action_realestate_product_categories"/>
+
+</odoo>

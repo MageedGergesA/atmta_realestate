@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Target tree: 10_TARGET_MENU_TREE.md §5. Every action is pre-existing. -->
+
+    <menuitem id="menu_root" name="Brokerage"
+              web_icon="atmta_brokerage_app,static/description/icon.png"
+              sequence="25" groups="atmta_v2_pilot.group_atmta_v2_pilot"/>
+
+    <menuitem id="menu_dashboard" name="Dashboard" parent="menu_root" sequence="1"
+              action="real_estate_brokerage.action_brokerage_dashboard"
+              groups="real_estate_brokerage.group_realestate_sales_readonly"/>
+    <menuitem id="menu_pipeline" name="Pipeline" parent="menu_root" sequence="5"
+              action="real_estate_brokerage.action_realestate_listing_pipeline"
+              groups="real_estate_brokerage.group_realestate_sales_readonly"/>
+    <menuitem id="menu_listings" name="Listings" parent="menu_root" sequence="10"
+              action="real_estate_brokerage.action_realestate_listing"
+              groups="real_estate_brokerage.group_realestate_sales_readonly"/>
+    <menuitem id="menu_opportunities" name="Opportunities" parent="menu_root" sequence="20"
+              action="real_estate_brokerage.action_crm_lead_realestate"
+              groups="real_estate_brokerage.group_realestate_sales_readonly"/>
+    <menuitem id="menu_viewings" name="Viewings" parent="menu_root" sequence="30"
+              action="real_estate_brokerage.action_realestate_viewing"
+              groups="real_estate_brokerage.group_realestate_sales_readonly"/>
+    <menuitem id="menu_matches" name="Matches &amp; Shortlists" parent="menu_root" sequence="35"
+              action="real_estate_brokerage.action_property_match"
+              groups="real_estate_brokerage.group_realestate_sales_readonly"/>
+    <menuitem id="menu_offers" name="Offers" parent="menu_root" sequence="40"
+              action="real_estate_brokerage.action_realestate_offer"
+              groups="real_estate_brokerage.group_realestate_sales_readonly"/>
+    <menuitem id="menu_transactions" name="Transactions" parent="menu_root" sequence="50"
+              action="real_estate_brokerage.action_realestate_transaction"
+              groups="real_estate_brokerage.group_realestate_sales_readonly"/>
+    <menuitem id="menu_mandates" name="Owner Mandates" parent="menu_root" sequence="60"
+              action="real_estate_brokerage.action_mandate"
+              groups="real_estate_brokerage.group_realestate_sales_readonly"/>
+
+    <menuitem id="menu_channels" name="Channel Partners" parent="menu_root" sequence="70"
+              groups="real_estate_brokerage.group_realestate_sales_readonly"/>
+    <menuitem id="menu_brokers" name="Brokers" parent="menu_channels" sequence="10"
+              action="real_estate_brokerage.action_broker_partner"/>
+    <menuitem id="menu_agreements" name="Agreements" parent="menu_channels" sequence="20"
+              action="real_estate_brokerage.action_broker_agreement"/>
+    <menuitem id="menu_registrations" name="Lead Registrations" parent="menu_channels" sequence="30"
+              action="real_estate_brokerage.action_lead_registration"/>
+
+    <menuitem id="menu_reporting" name="Reporting" parent="menu_root" sequence="80"
+              groups="real_estate_brokerage.group_realestate_sales_readonly"/>
+    <menuitem id="menu_source_performance" name="Source Performance" parent="menu_reporting" sequence="10"
+              action="real_estate_brokerage.action_source_performance"/>
+    <menuitem id="menu_agents_review" name="Agents Needing Review" parent="menu_reporting" sequence="20"
+              action="real_estate_brokerage.action_users_commission_review"
+              groups="real_estate_brokerage.group_realestate_sales_manager"/>
+
+    <menuitem id="menu_config" name="Configuration" parent="menu_root" sequence="90"
+              groups="real_estate_brokerage.group_realestate_sales_manager"/>
+    <menuitem id="menu_cfg_channels" name="Marketing Channels" parent="menu_config" sequence="10"
+              action="real_estate_brokerage.action_marketing_channel"/>
+    <menuitem id="menu_cfg_lost_reasons" name="Lead Lost Reasons" parent="menu_config" sequence="20"
+              action="real_estate_brokerage.action_lost_reason"/>
+</odoo>

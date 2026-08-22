@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Target tree: 10_TARGET_MENU_TREE.md §3. -->
+
+    <menuitem id="menu_root"
+              name="Construction"
+              web_icon="atmta_construction_app,static/description/icon.png"
+              sequence="28"
+              groups="atmta_v2_pilot.group_atmta_v2_pilot"/>
+
+    <!-- ======================== WORKSPACE ======================== -->
+    <menuitem id="menu_control_tower"
+              name="Control Tower" parent="menu_root" sequence="1"
+              action="real_estate_construction.action_control_tower"
+              groups="real_estate_construction.group_construction_user"/>
+    <menuitem id="menu_my_work"
+              name="My Work" parent="menu_root" sequence="5"
+              action="action_v2_my_rfis"
+              groups="real_estate_construction.group_construction_user"/>
+
+    <!-- =========================== COST ===========================
+         Addressed to Cost Control / QS. group_construction_manager implies
+         group_construction_cost, so managers keep full sight. -->
+    <menuitem id="menu_cost" name="Cost" parent="menu_root" sequence="10"
+              groups="real_estate_construction.group_construction_cost"/>
+    <menuitem id="menu_budgets"
+              name="Budgets" parent="menu_cost" sequence="10"
+              action="real_estate_construction.action_construction_budget"/>
+    <menuitem id="menu_forecasts"
+              name="Forecasts" parent="menu_cost" sequence="20"
+              action="real_estate_construction.action_construction_forecast"/>
+    <menuitem id="menu_cost_lines"
+              name="Cost Lines" parent="menu_cost" sequence="30"
+              action="real_estate_construction.action_cost_line"/>
+    <menuitem id="menu_wbs"
+              name="WBS" parent="menu_cost" sequence="40"
+              action="real_estate_construction.action_construction_wbs"/>
+    <menuitem id="menu_cost_codes"
+              name="Cost Codes" parent="menu_cost" sequence="50"
+              action="real_estate_construction.action_construction_cost_code"/>
+
+    <!-- ============================ BOQ ============================ -->
+    <menuitem id="menu_boq_sec" name="BOQ" parent="menu_root" sequence="20"
+              groups="real_estate_construction.group_construction_cost"/>
+    <menuitem id="menu_boq"
+              name="Bills of Quantities" parent="menu_boq_sec" sequence="10"
+              action="real_estate_construction.action_boq"/>
+    <menuitem id="menu_work_items"
+              name="Work Items" parent="menu_boq_sec" sequence="20"
+              action="real_estate_construction.action_work_item"/>
+
+    <!-- ========================= COMMERCIAL ========================= -->
+    <menuitem id="menu_commercial" name="Commercial" parent="menu_root" sequence="30"
+              groups="real_estate_construction.group_construction_commercial"/>
+    <menuitem id="menu_packages"
+              name="Contract Packages" parent="menu_commercial" sequence="10"
+              action="real_estate_construction.action_construction_package"/>
+    <menuitem id="menu_change_events"
+              name="Change Events" parent="menu_commercial" sequence="20"
+              action="real_estate_construction.action_change_event"/>
+    <menuitem id="menu_change_orders"
+              name="Change Orders" parent="menu_commercial" sequence="30"
+              action="real_estate_construction.action_change_order"/>
+    <menuitem id="menu_payment_certificates"
+              name="Payment Certificates" parent="menu_commercial" sequence="40"
+              action="real_estate_construction.action_payment_certificate"/>
+    <menuitem id="menu_owner_billing"
+              name="Owner Progress Billing" parent="menu_commercial" sequence="50"
+              action="real_estate_construction.action_owner_billing"/>
+    <menuitem id="menu_retention"
+              name="Retention Register" parent="menu_commercial" sequence="60"
+              action="real_estate_construction.action_retention"/>
+    <menuitem id="menu_retention_releases"
+              name="Retention Releases" parent="menu_commercial" sequence="65"
+              action="real_estate_construction.action_retention_release"/>
+    <menuitem id="menu_advances"
+              name="Advances" parent="menu_commercial" sequence="70"
+              action="real_estate_construction.action_advance"/>
+    <menuitem id="menu_subcontract_pos"
+              name="Subcontract POs" parent="menu_commercial" sequence="80"
+              action="real_estate_construction.action_construction_subcontract_pos"/>
+
+    <!-- ============================ SITE ============================ -->
+    <menuitem id="menu_site" name="Site" parent="menu_root" sequence="40"
+              groups="real_estate_construction.group_construction_user"/>
+    <menuitem id="menu_milestones"
+              name="Milestones" parent="menu_site" sequence="10"
+              action="real_estate_construction.action_milestone"/>
+    <menuitem id="menu_tasks"
+              name="Tasks" parent="menu_site" sequence="20"
+              action="real_estate_construction.action_construction_task"/>
+    <menuitem id="menu_daily_reports"
+              name="Daily Site Reports" parent="menu_site" sequence="30"
+              action="real_estate_construction.action_daily_report"/>
+    <menuitem id="menu_labour"
+              name="Daily Labour" parent="menu_site" sequence="40"
+              action="real_estate_construction.action_labor_log"/>
+
+    <!-- ========================== QUALITY ========================== -->
+    <menuitem id="menu_quality" name="Quality" parent="menu_root" sequence="50"
+              groups="real_estate_construction.group_construction_user"/>
+    <menuitem id="menu_itp"
+              name="Inspection &amp; Test Plans" parent="menu_quality" sequence="10"
+              action="real_estate_construction.action_itp"/>
+    <menuitem id="menu_inspection_requests"
+              name="Inspection Requests" parent="menu_quality" sequence="20"
+              action="real_estate_construction.action_inspection_request"/>
+    <menuitem id="menu_inspections"
+              name="Inspections" parent="menu_quality" sequence="25"
+              action="real_estate_construction.action_inspection"/>
+    <menuitem id="menu_ncr"
+              name="Non-Conformance Reports" parent="menu_quality" sequence="30"
+              action="real_estate_construction.action_ncr"/>
+    <menuitem id="menu_observations"
+              name="Observations" parent="menu_quality" sequence="40"
+              action="real_estate_construction.action_observation"/>
+
+    <!-- ======================== INFORMATION ======================== -->
+    <menuitem id="menu_information" name="Information" parent="menu_root" sequence="60"
+              groups="real_estate_construction.group_construction_user"/>
+    <menuitem id="menu_rfis"
+              name="RFIs" parent="menu_information" sequence="10"
+              action="real_estate_construction.action_rfi"/>
+    <menuitem id="menu_submittals"
+              name="Submittals" parent="menu_information" sequence="20"
+              action="real_estate_construction.action_submittal"/>
+    <menuitem id="menu_documents"
+              name="Document Register" parent="menu_information" sequence="30"
+              action="real_estate_construction.action_document"/>
+    <menuitem id="menu_doc_revisions"
+              name="Revision Register" parent="menu_information" sequence="35"
+              action="real_estate_construction.action_document_revision"/>
+    <menuitem id="menu_transmittals"
+              name="Transmittals" parent="menu_information" sequence="40"
+              action="real_estate_construction.action_transmittal"/>
+
+    <!-- ======================= CLAIMS &amp; RISK ======================= -->
+    <menuitem id="menu_claims" name="Claims &amp; Risk" parent="menu_root" sequence="70"
+              groups="real_estate_construction.group_construction_user"/>
+    <menuitem id="menu_delays"
+              name="Delay Register" parent="menu_claims" sequence="10"
+              action="real_estate_construction.action_delay_event"/>
+    <menuitem id="menu_notices"
+              name="Notices" parent="menu_claims" sequence="20"
+              action="real_estate_construction.action_notice"/>
+    <menuitem id="menu_claim_register"
+              name="Claim Register" parent="menu_claims" sequence="30"
+              action="real_estate_construction.action_claim"
+              groups="real_estate_construction.group_construction_commercial"/>
+    <menuitem id="menu_eot"
+              name="EOT Register" parent="menu_claims" sequence="40"
+              action="real_estate_construction.action_eot"
+              groups="real_estate_construction.group_construction_commercial"/>
+    <menuitem id="menu_risk"
+              name="Risk Register" parent="menu_claims" sequence="50"
+              action="real_estate_construction.action_risk"/>
+    <menuitem id="menu_issues"
+              name="Issue Register" parent="menu_claims" sequence="60"
+              action="real_estate_construction.action_issue"/>
+
+    <!-- ========================= CONTRACTORS ========================= -->
+    <menuitem id="menu_contractors"
+              name="Contractors" parent="menu_root" sequence="80"
+              action="real_estate_construction.action_contractor"
+              groups="real_estate_construction.group_construction_user"/>
+
+    <!-- ======================= CONFIGURATION ======================= -->
+    <menuitem id="menu_config" name="Configuration" parent="menu_root" sequence="90"
+              groups="real_estate_construction.group_construction_manager"/>
+    <menuitem id="menu_cfg_checklists"
+              name="Checklist Templates" parent="menu_config" sequence="10"
+              action="real_estate_construction.action_checklist_template"/>
+    <menuitem id="menu_cfg_work_item_categories"
+              name="Work Item Categories" parent="menu_config" sequence="20"
+              action="real_estate_construction.action_work_item_category"/>
+
+</odoo>

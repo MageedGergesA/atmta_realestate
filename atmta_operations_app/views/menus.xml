@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Target tree: 10_TARGET_MENU_TREE.md §2. -->
+
+    <menuitem id="menu_root"
+              name="Property Operations"
+              web_icon="atmta_operations_app,static/description/icon.png"
+              sequence="10"
+              groups="atmta_v2_pilot.group_atmta_v2_pilot"/>
+
+    <menuitem id="menu_overview" name="Overview" parent="menu_root" sequence="1"
+              action="atmta_real_estate.action_rental_dashboard"
+              groups="atmta_real_estate.group_realestate_readonly"/>
+    <menuitem id="menu_map" name="Properties Map" parent="menu_root" sequence="2"
+              action="atmta_real_estate.action_properties_map_dashboard"
+              groups="atmta_real_estate.group_realestate_readonly"/>
+    <menuitem id="menu_my_work" name="My Work" parent="menu_root" sequence="5"
+              action="action_v2_my_maintenance"
+              groups="atmta_real_estate.group_realestate_readonly"/>
+
+    <!-- ========================= PROPERTIES ========================= -->
+    <menuitem id="menu_properties_sec" name="Properties" parent="menu_root" sequence="10"
+              groups="atmta_real_estate.group_realestate_readonly"/>
+    <menuitem id="menu_properties" name="All Properties" parent="menu_properties_sec" sequence="10"
+              action="atmta_real_estate.action_property_view"/>
+    <menuitem id="menu_rental_history" name="Rental History" parent="menu_properties_sec" sequence="20"
+              action="atmta_real_estate.action_property_rental_history"/>
+
+    <!-- ========================== LEASING ========================== -->
+    <menuitem id="menu_leasing" name="Leasing" parent="menu_root" sequence="20"
+              groups="atmta_real_estate.group_realestate_readonly"/>
+    <menuitem id="menu_contracts" name="Lease Contracts" parent="menu_leasing" sequence="10"
+              action="atmta_real_estate.action_realestate_contract"/>
+    <menuitem id="menu_expiry_board" name="Expiry &amp; Renewal Board" parent="menu_leasing" sequence="20"
+              action="atmta_real_estate.action_lease_expiry_board"
+              groups="atmta_real_estate.group_rental_user"/>
+    <menuitem id="menu_renewals" name="Renewals" parent="menu_leasing" sequence="30"
+              action="atmta_real_estate.action_renewals"
+              groups="atmta_real_estate.group_rental_user"/>
+    <menuitem id="menu_lease_amendments" name="Amendments" parent="menu_leasing" sequence="40"
+              action="atmta_real_estate.action_amendments"
+              groups="atmta_real_estate.group_rental_user"/>
+    <menuitem id="menu_contract_lines" name="Contract Units" parent="menu_leasing" sequence="15"
+              action="atmta_real_estate.action_contract_line"/>
+    <menuitem id="menu_terminations" name="Terminations" parent="menu_leasing" sequence="50"
+              action="atmta_real_estate.action_terminations"
+              groups="atmta_real_estate.group_rental_user"/>
+
+    <!-- ========================== BILLING ========================== -->
+    <menuitem id="menu_billing" name="Billing" parent="menu_root" sequence="30"
+              groups="atmta_real_estate.group_rental_user"/>
+    <menuitem id="menu_billing_obligations" name="Billing Obligations" parent="menu_billing" sequence="10"
+              action="atmta_real_estate.action_billing_obligations"/>
+    <menuitem id="menu_deposits" name="Security Deposits" parent="menu_billing" sequence="20"
+              action="atmta_real_estate.action_deposits"/>
+
+    <!-- ========================= OCCUPANCY ========================= -->
+    <menuitem id="menu_occupancy" name="Occupancy" parent="menu_root" sequence="40"
+              groups="atmta_real_estate.group_rental_user"/>
+    <menuitem id="menu_move_ins" name="Move-Ins" parent="menu_occupancy" sequence="10"
+              action="atmta_real_estate.action_move_ins"/>
+    <menuitem id="menu_move_outs" name="Move-Outs" parent="menu_occupancy" sequence="20"
+              action="atmta_real_estate.action_move_outs"/>
+    <menuitem id="menu_unit_turns" name="Unit Turns" parent="menu_occupancy" sequence="30"
+              action="atmta_real_estate.action_unit_turns"/>
+    <menuitem id="menu_meters" name="Utility Meters" parent="menu_occupancy" sequence="40"
+              action="atmta_real_estate.action_property_meters"/>
+    <menuitem id="menu_meter_readings" name="Meter Readings" parent="menu_occupancy" sequence="50"
+              action="atmta_real_estate.action_meter_readings"/>
+    <menuitem id="menu_utility_lines" name="Utility Lines" parent="menu_occupancy" sequence="60"
+              action="atmta_real_estate.action_utility_lines"/>
+
+    <!-- ========================== HANDOVER ==========================
+         Was a root application of its own; folded in per the architecture. -->
+    <menuitem id="menu_handover_sec" name="Handover" parent="menu_root" sequence="50"
+              groups="real_estate_handover.group_handover_user"/>
+    <menuitem id="menu_handover_dashboard" name="Handover Dashboard" parent="menu_handover_sec" sequence="5"
+              action="real_estate_handover.action_handover_dashboard"/>
+    <menuitem id="menu_handovers" name="Handovers" parent="menu_handover_sec" sequence="10"
+              action="real_estate_handover.action_handover"/>
+    <menuitem id="menu_snagging" name="Snagging Issues" parent="menu_handover_sec" sequence="20"
+              action="real_estate_handover.action_snagging"/>
+    <menuitem id="menu_warranties" name="Warranties" parent="menu_handover_sec" sequence="30"
+              action="real_estate_handover.action_warranty"/>
+
+    <!-- ========================== SERVICE ========================== -->
+    <menuitem id="menu_service" name="Service" parent="menu_root" sequence="60"
+              groups="atmta_real_estate.group_realestate_readonly"/>
+    <menuitem id="menu_tickets" name="Tickets" parent="menu_service" sequence="10"
+              action="real_estate_customer_service.action_customer_ticket"
+              groups="real_estate_customer_service.group_service_user"/>
+    <menuitem id="menu_maintenance" name="Maintenance Requests" parent="menu_service" sequence="20"
+              action="atmta_real_estate.action_maintenance_requests"/>
+
+    <!-- ========================= REPORTING ========================= -->
+    <menuitem id="menu_reporting" name="Reporting" parent="menu_root" sequence="70"
+              groups="atmta_real_estate.group_rental_user"/>
+    <menuitem id="menu_rent_roll" name="Rent Roll" parent="menu_reporting" sequence="10"
+              action="atmta_real_estate.action_rent_roll"/>
+
+    <!-- ======================= CONFIGURATION ======================= -->
+    <menuitem id="menu_config" name="Configuration" parent="menu_root" sequence="90"
+              groups="atmta_real_estate.group_realestate_manager"/>
+    <menuitem id="menu_cfg_property_types" name="Property Types" parent="menu_config" sequence="10"
+              action="atmta_real_estate.action_property_type"/>
+    <menuitem id="menu_cfg_increment_rules" name="Price Increment Rules" parent="menu_config" sequence="20"
+              action="atmta_real_estate.action_contract_increment_rule"/>
+    <menuitem id="menu_cfg_handover_templates" name="Handover Checklist Templates" parent="menu_config" sequence="30"
+              action="real_estate_handover.action_template"
+              groups="real_estate_handover.group_handover_manager"/>
+    <menuitem id="menu_cfg_ticket_categories" name="Ticket Categories" parent="menu_config" sequence="40"
+              action="real_estate_customer_service.action_category"
+              groups="real_estate_customer_service.group_service_manager"/>
+    <menuitem id="menu_cfg_embed_tokens" name="Embed Tokens" parent="menu_config" sequence="50"
+              action="real_estate_api.action_embed_token"
+              groups="real_estate_api.group_realestate_api_user"/>
+
+</odoo>
