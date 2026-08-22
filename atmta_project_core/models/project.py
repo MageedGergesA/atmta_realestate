@@ -22,6 +22,27 @@ class Project(models.Model):
         default=lambda self: _('New'),
     )
     project_type = fields.Selection(PROJECT_TYPES, default='residential', required=True, tracking=True)
+
+    # ------------------------------------------------------------------
+    # Company — core, not Development
+    # ------------------------------------------------------------------
+    # Which company owns a project is part of its identity, not of the sales
+    # application that happens to trade its units. Every consumer of this model
+    # already derives its own company from `project_id.company_id`
+    # (Construction cost structures, change impacts and cost reports; Maquette
+    # regions, validations and migrations; Procurement plans, sourcing events
+    # and material requests), and the global isolation rule this module ships
+    # filters on it. Declaring it in a module above this one would mean Project
+    # Core could not be installed multi-company-correct on its own.
+    #
+    # Semantics are carried over unchanged from the Development extension that
+    # used to declare it: required, indexed, defaulting to the active company.
+    company_id = fields.Many2one(
+        'res.company', string='Company', required=True, index=True,
+        default=lambda self: self.env.company,
+        help="Owning company. Inventory, pricing and deals never cross "
+             "companies.",
+    )
     state = fields.Selection([
         ('planning', 'Planning'),
         ('construction', 'Under Construction'),
@@ -118,23 +139,18 @@ class Project(models.Model):
 
     # Relations
     phase_ids = fields.One2many('realestate.phase', 'project_id', string='Phases')
-    property_ids = fields.One2many('realestate.property', 'project_id', string='Units / Properties')
+    # Unit counters are NOT declared here. They are computed from
+    # ``realestate.property``, which is owned by a module that sits *above* this
+    # one -- ``atmta_property_core`` depends on Project Core, not the reverse.
+    # Naming that model here would invert the dependency and make this module
+    # uninstallable on its own. The unit counters live with the module that owns
+    # the units; see ``real_estate_developer/models/project_units.py``.
+    phase_count = fields.Integer(compute='_compute_phase_count')
 
-    # Computed inventory counters
-    phase_count = fields.Integer(compute='_compute_counters')
-    unit_count = fields.Integer(compute='_compute_counters')
-    available_unit_count = fields.Integer(compute='_compute_counters')
-    reserved_unit_count = fields.Integer(compute='_compute_counters')
-    sold_unit_count = fields.Integer(compute='_compute_counters')
-
-    @api.depends('phase_ids', 'property_ids', 'property_ids.state')
-    def _compute_counters(self):
+    @api.depends('phase_ids')
+    def _compute_phase_count(self):
         for rec in self:
             rec.phase_count = len(rec.phase_ids)
-            rec.unit_count = len(rec.property_ids)
-            rec.available_unit_count = len(rec.property_ids.filtered(lambda p: p.state == 'available'))
-            rec.reserved_unit_count = len(rec.property_ids.filtered(lambda p: p.state == 'reserved'))
-            rec.sold_unit_count = len(rec.property_ids.filtered(lambda p: p.is_sold))
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -150,17 +166,6 @@ class Project(models.Model):
             'name': _('Phases'),
             'res_model': 'realestate.phase',
             'view_mode': 'list,form',
-            'domain': [('project_id', '=', self.id)],
-            'context': {'default_project_id': self.id},
-        }
-
-    def action_view_units(self):
-        self.ensure_one()
-        return {
-            'type': 'ir.actions.act_window',
-            'name': _('Units'),
-            'res_model': 'realestate.property',
-            'view_mode': 'kanban,list,form',
             'domain': [('project_id', '=', self.id)],
             'context': {'default_project_id': self.id},
         }

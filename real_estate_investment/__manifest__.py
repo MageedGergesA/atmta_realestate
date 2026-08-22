@@ -15,7 +15,12 @@ Real Estate Investment Analysis
     'license': 'LGPL-3',
     'version': '0.1',
     'category': 'Real Estate',
-    'depends': ['real_estate_developer'],
+    # Investment appraises a project; it does not sell units. Wave 2 gave
+    # `realestate.project` its own module, and this addon referenced
+    # nothing else from the Development application -- no model, no group,
+    # no view, no menu parent, no XML ID -- so the dependency now points at
+    # the core it actually needs.
+    'depends': ['atmta_project_core'],
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',

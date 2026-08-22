@@ -16,9 +16,15 @@ Manages off-plan and finished-property developer sales:
 """,
     'author': "Atmta",
     'license': 'LGPL-3',
-    'version': '0.2',
+    'version': '0.4',
     'category': 'Real Estate',
     'depends': [
+        # Declares realestate.project / realestate.phase /
+        # realestate.project.boundary.point. Listed first because this
+        # module extends all three, and because the dependency is what
+        # guarantees Project Core is loaded before the migration below
+        # hands the model identifiers over to it.
+        'atmta_project_core',
         'atmta_real_estate',
         'mail',
         'account',

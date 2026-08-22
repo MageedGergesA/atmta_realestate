@@ -38,10 +38,17 @@ committed Wave 0 navigation keeps working untouched.
 Transitional dependency
 -----------------------
 
-`real_estate_developer` is depended on for exactly one field —
-`realestate.procurement.vendor.restriction.project_id`, a many2one to
-`realestate.project`. When Wave 2 extracts `atmta_project_core` this dependency
-re-points there and the developer dependency disappears.
+This module needs `realestate.project` and nothing else from outside its own
+domain: `realestate.procurement.vendor.restriction.project_id`,
+`realestate.procurement.vendor.qualification.project_id` and its condition
+many2many, plus the wizard field that feeds them. Wave 1 had to reach that model
+through `real_estate_developer`, which meant Vendor Governance dragged in the
+entire Development/Sales application to store a project reference.
+
+Wave 2 gave `realestate.project` its own module, so the dependency now points at
+`atmta_project_core` and the Development dependency is gone. Verified rather
+than assumed: the module carries no data files, references no Development
+group and no Development XML ID.
 
 It must never depend on Sourcing, Evaluation, Award or Receipt: Vendor
 Governance is consumed by those capabilities, not the other way round.
@@ -55,7 +62,7 @@ Governance is consumed by those capabilities, not the other way round.
         'mail',
         'product',
         'purchase',
-        'real_estate_developer',
+        'atmta_project_core',
     ],
     'data': [],
     'installable': True,

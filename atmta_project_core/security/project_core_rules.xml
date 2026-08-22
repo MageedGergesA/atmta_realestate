@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+
+    <!--
+        Company isolation for the neutral Project aggregate.
+
+        These rules live here, and not in the Development application, because
+        a module that owns the definition of a project has to be able to say
+        which company owns it without asking a sales addon. Project Core is the
+        floor of the ATMTA architecture: Construction, Procurement, Investment,
+        Visual and the API all sit on it, and several of them derive their own
+        company from `project_id.company_id`. If isolation only existed once
+        `real_estate_developer` was installed, every one of those would inherit
+        a hole rather than a boundary.
+
+        All three are GLOBAL rules (`global=True`, no `groups`). That is
+        deliberate and it is the whole point. Odoo ANDs global rules together
+        and ORs group rules within a group; a rule attached to a group can
+        therefore be widened by giving a user another group that carries a more
+        permissive rule on the same model. Company isolation must not be
+        defeatable by handing somebody an extra business role, so it is stated
+        once, globally, and every group is subject to it.
+
+        The domains deliberately do NOT admit `company_id = False`. A record
+        with no company would otherwise be visible to everybody, which is the
+        leak these exist to close. `realestate.project.company_id` is required
+        and `realestate.phase.company_id` is a stored related of it, so there
+        are no company-less rows to strand.
+
+        This matches the pattern already proven in frozen Module 1 and used by
+        the Development rules that remain in `real_estate_developer`; those
+        stay there because they gate Development business models, which are
+        that application's concern and not this one's.
+    -->
+
+    <record id="rule_project_company" model="ir.rule">
+        <field name="name">Project: multi-company</field>
+        <field name="model_id" ref="model_realestate_project"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_phase_company" model="ir.rule">
+        <field name="name">Phase: multi-company</field>
+        <field name="model_id" ref="model_realestate_phase"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <!--
+        Boundary points carry no company column, and should not: a plot corner
+        belongs to whichever company owns the project, and duplicating that
+        truth into a second table would create somewhere for the two answers to
+        disagree. So the rule reaches through `project_id` instead.
+
+        Without this rule the model was not isolated at all. Measured on the
+        Wave 2 fixture before it existed: a user restricted to company A could
+        read every one of company B's boundary points, latitude and longitude
+        included — the surveyed outline of another company's land. Project and
+        Phase were correctly isolated; this model had simply never been given a
+        rule, and having no company column of its own meant nothing flagged it.
+    -->
+    <record id="rule_project_boundary_point_company" model="ir.rule">
+        <field name="name">Project Boundary Point: multi-company</field>
+        <field name="model_id" ref="model_realestate_project_boundary_point"/>
+        <field name="domain_force">[('project_id.company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+</odoo>

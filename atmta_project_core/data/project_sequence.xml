@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+
+    <!--
+        The project code sequence.
+
+        `realestate.project.create` pulls the project code from this sequence by
+        code string, so a Project Core installed without the Development
+        application would otherwise hand every new project the literal code
+        "New" and rely on nobody noticing. `realestate_project` carries
+        UNIQUE (company_id, code), so the second such project in a company
+        would not save at all.
+
+        On an existing database the record created here is discarded by the
+        Wave 2 migration in favour of the original, which keeps its id, its
+        backing Postgres sequence and its counter. Only the identifier changes
+        owner.
+    -->
+    <record id="seq_realestate_project" model="ir.sequence">
+        <field name="name">Real Estate Project</field>
+        <field name="code">realestate.project</field>
+        <field name="prefix">PRJ-</field>
+        <field name="padding">4</field>
+    </record>
+
+</odoo>

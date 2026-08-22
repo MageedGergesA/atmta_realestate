@@ -1,16 +1,16 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 
-access_project_readonly,Project Readonly,model_realestate_project,group_dev_readonly,1,0,0,0
-access_project_agent,Project Agent,model_realestate_project,group_dev_agent,1,1,1,0
-access_project_manager,Project Manager,model_realestate_project,group_dev_manager,1,1,1,1
+access_project_readonly,Project Readonly,atmta_project_core.model_realestate_project,group_dev_readonly,1,0,0,0
+access_project_agent,Project Agent,atmta_project_core.model_realestate_project,group_dev_agent,1,1,1,0
+access_project_manager,Project Manager,atmta_project_core.model_realestate_project,group_dev_manager,1,1,1,1
 
-access_project_boundary_readonly,Project Boundary Readonly,model_realestate_project_boundary_point,group_dev_readonly,1,0,0,0
-access_project_boundary_agent,Project Boundary Agent,model_realestate_project_boundary_point,group_dev_agent,1,1,1,1
-access_project_boundary_manager,Project Boundary Manager,model_realestate_project_boundary_point,group_dev_manager,1,1,1,1
+access_project_boundary_readonly,Project Boundary Readonly,atmta_project_core.model_realestate_project_boundary_point,group_dev_readonly,1,0,0,0
+access_project_boundary_agent,Project Boundary Agent,atmta_project_core.model_realestate_project_boundary_point,group_dev_agent,1,1,1,1
+access_project_boundary_manager,Project Boundary Manager,atmta_project_core.model_realestate_project_boundary_point,group_dev_manager,1,1,1,1
 
-access_phase_readonly,Phase Readonly,model_realestate_phase,group_dev_readonly,1,0,0,0
-access_phase_agent,Phase Agent,model_realestate_phase,group_dev_agent,1,1,1,0
-access_phase_manager,Phase Manager,model_realestate_phase,group_dev_manager,1,1,1,1
+access_phase_readonly,Phase Readonly,atmta_project_core.model_realestate_phase,group_dev_readonly,1,0,0,0
+access_phase_agent,Phase Agent,atmta_project_core.model_realestate_phase,group_dev_agent,1,1,1,0
+access_phase_manager,Phase Manager,atmta_project_core.model_realestate_phase,group_dev_manager,1,1,1,1
 
 access_re_pt_segment_manager,Payment Term Segment Manager,model_realestate_payment_term_segment,account.group_account_manager,1,1,1,1
 access_re_pt_segment_user,Payment Term Segment User,model_realestate_payment_term_segment,base.group_user,1,0,0,0
