@@ -164,8 +164,6 @@ class SourcingEvent(models.Model):
         help="A description of where this tender stands, written by the M6 "
              "upgrade. It is not an evaluation and confers no result: a "
              "closed tender is labelled as awaiting one, never given one.")
-    evaluation_round_ids = fields.One2many(
-        'realestate.procurement.evaluation.round', 'sourcing_event_id')
 
     # -- M7 — where this tender stands on awarding, described not performed --
     award_readiness = fields.Selection([
@@ -181,8 +179,6 @@ class SourcingEvent(models.Model):
         help="A description of where this tender stands on awarding, written "
              "by the M7 upgrade. It confers nothing: a tender with a finished "
              "evaluation is labelled as awaiting a decision, never given one.")
-    award_ids = fields.One2many(
-        'realestate.procurement.award', 'sourcing_event_id')
 
     authorised_amount = fields.Monetary(
         compute='_compute_authorised', store=True, currency_field='currency_id',
@@ -426,69 +422,6 @@ class SourcingEvent(models.Model):
             event.bid_response_ids.filtered(
                 lambda r: r.state == 'received')._assess_administrative()
         return True
-
-    # ------------------------------------------------------------------
-    def _classify_evaluation_readiness(self):
-        """Describe this tender's evaluation status. Never create one.
-
-        Read-only by construction: every branch looks at records that already
-        exist. Nothing here scores a bid, and a tender that was evaluated
-        outside ATMTA is labelled as exactly that rather than being given a
-        fabricated internal history.
-        """
-        self.ensure_one()
-        if self.evaluation_round_ids.filtered(
-                lambda r: r.state == 'finalised'):
-            return 'evaluated'
-        if self.evaluation_round_ids:
-            return 'evaluation_candidate'
-        if self.state in ('draft', 'review', 'published'):
-            return 'open_not_ready'
-        if self.state == 'cancelled':
-            return 'ambiguous'
-        # Closed. Is there anything an evaluation could work on?
-        evaluable = self.bid_response_ids.filtered(
-            lambda r: r.state == 'received' and r.is_evaluable)
-        if evaluable:
-            return 'closed_unevaluated'
-        if self.bid_response_ids:
-            return 'legacy_external_evaluation'
-        return 'ambiguous'
-
-    def _classify_award_readiness(self):
-        """Describe this tender's award status. Never create one.
-
-        Read-only by construction: every branch looks at records that already
-        exist. Nothing here awards anything, and a tender whose orders were
-        confirmed without an award is labelled as exactly that rather than
-        being given a retrospective authorisation — which would be forging the
-        signature the control exists to require.
-        """
-        self.ensure_one()
-        if self.state == 'cancelled':
-            return 'cancelled'
-        awards = self.award_ids.sudo()
-        live = awards.filtered(
-            lambda a: a.state != 'cancelled' and not a.superseded)
-        if live.filtered(lambda a: a.state == 'issued'):
-            return 'awarded'
-        if live.filtered(lambda a: a.state == 'approved'):
-            return 'award_approved'
-        if live.filtered(lambda a: a.state == 'review'):
-            return 'award_in_review'
-        if live.filtered(lambda a: a.state == 'draft'):
-            return 'award_drafted'
-
-        # No live award. Did anything commit anyway?
-        committed = self.invitation_ids.sudo().mapped(
-            'purchase_order_id').filtered(
-                lambda o: o.state in ('purchase', 'done'))
-        if committed:
-            return 'committed_without_award'
-        if self.evaluation_round_ids.sudo().filtered(
-                lambda r: r.state == 'finalised'):
-            return 'awaiting_award'
-        return 'not_evaluated'
 
     def addendum_ack_policy_effective(self):
         """Event override, else company default, else optional."""

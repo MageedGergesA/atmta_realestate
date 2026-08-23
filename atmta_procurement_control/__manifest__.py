@@ -25,6 +25,7 @@ acyclic. Wave 6 / AD-008.
     'license': 'LGPL-3',
     'depends': [
         'atmta_procurement_request',
+        'atmta_procurement_core',
     ],
     'data': [
         'security/ir.model.access.csv',

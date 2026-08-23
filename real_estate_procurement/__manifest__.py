@@ -27,7 +27,7 @@ Cross-module supply-chain foundation used by Construction, Handover, Rental and 
 """,
     'author': "Atmta",
     'license': 'LGPL-3',
-    'version': '18.0.11.0.0',
+    'version': '18.0.12.0.0',
     'category': 'Real Estate',
     'depends': [
         'atmta_real_estate',
@@ -57,6 +57,7 @@ Cross-module supply-chain foundation used by Construction, Handover, Rental and 
         'atmta_procurement_core',
         'atmta_procurement_request',
         'atmta_procurement_control',
+        'atmta_procurement_sourcing',
     ],
     'data': [
         'security/security.xml',

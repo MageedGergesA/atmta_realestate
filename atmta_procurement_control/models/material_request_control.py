@@ -597,6 +597,18 @@ class MaterialRequestControl(models.Model):
             rec._generate_approval_steps()
         return True
 
+    # Wave 7 — when a reservation lapses is a control decision, and the
+    # policy it reads (`procurement_reservation_expiry_days`) belongs to the
+    # procurement floor. The helper lived on the requisition and was only ever
+    # called from here, so it moves to the module that calls it.
+
+    def _reservation_expiry_date(self):
+        self.ensure_one()
+        days = self.company_id.procurement_reservation_expiry_days
+        if not days:
+            return False
+        return fields.Date.context_today(self) + timedelta(days=days)
+
     def _has_approval_snapshot(self):
         self.ensure_one()
         return bool(self.approval_step_ids)

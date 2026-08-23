@@ -26,7 +26,6 @@ to control. Wave 6 / AD-008.
         'atmta_roles',
         'atmta_project_core',
         'atmta_property_core',
-        'atmta_procurement_vendor',
         'purchase',
         'analytic',
         'mail',

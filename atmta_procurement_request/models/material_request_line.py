@@ -47,25 +47,6 @@ class MaterialRequestLine(models.Model):
         related='request_id.currency_id', store=True, readonly=True,
     )
 
-    # -- M4L — which trade this line is sourced from -------------------
-    vendor_category_id = fields.Many2one(
-        'realestate.procurement.vendor.category', string='Vendor Trade',
-        compute='_compute_vendor_category', store=True, readonly=False,
-        index=True, ondelete='restrict',
-        help="The trade a vendor has to be qualified for to quote this line. "
-             "Proposed from the product's category where exactly one trade "
-             "claims it, and freely editable — the product tree describes "
-             "what the item is, not what a supplier is capable of.")
-
-    @api.depends('product_id')
-    def _compute_vendor_category(self):
-        Category = self.env['realestate.procurement.vendor.category']
-        for line in self:
-            if line.vendor_category_id:
-                continue          # a buyer's choice is not overwritten
-            line.vendor_category_id = Category.suggest_for_product(
-                line.product_id)
-
     # ------------------------------------------------------------------
     # Construction coding — M2.
     #
@@ -267,48 +248,6 @@ class MaterialRequestLine(models.Model):
         for ln in self:
             if ln.qty <= 0:
                 raise ValidationError(_("Quantity must be greater than zero."))
-
-    def _suggested_suppliers(self):
-        """Vendors worth asking — a suggestion, never a decision.
-
-        This replaces `_get_preferred_supplier()`, which returned
-        `seller_ids[0]` and was used as the awarded vendor. Whichever supplier
-        row sorted first won the order regardless of price, and nothing
-        recorded why. Choosing a vendor is a sourcing decision; M5/M6 own it.
-
-        M4 leaves the *membership* of this list exactly as it was — it is the
-        catalogue's answer, and filtering ineligible vendors out here would
-        make "why wasn't Vendor X suggested?" unanswerable. Eligibility is
-        added alongside it by `_sourcing_pool()`.
-        """
-        self.ensure_one()
-        return self.product_id.seller_ids.mapped('partner_id')
-
-    def _sourcing_pool(self, date=None, purpose='sourcing'):
-        """M4W — the same suggestions, each with its governance answer.
-
-        ```
-            Vendor A   eligible
-            Vendor B   qualification expires before the required date
-            Vendor C   no qualification for this trade
-            Vendor D   suspended
-        ```
-
-        Four rows, not one. A screen that showed only Vendor A would be
-        making the sourcing decision, which is the exact defect M2 removed
-        from this line and M4 is not putting back. Ranking is absent for the
-        same reason: qualified is not cheapest, and M6 owns comparison.
-        """
-        self.ensure_one()
-        Eligibility = self.env['realestate.procurement.vendor.eligibility']
-        return Eligibility.get_eligible_vendors(
-            company=self.company_id or self.env.company,
-            category=self.vendor_category_id,
-            project=self.request_id.project_id,
-            date=date or self.required_on_site_date,
-            purpose=purpose,
-            partners=self._suggested_suppliers(),
-        )
 
     def _unit_price(self):
         """A starting price for an enquiry, not a negotiated one.
