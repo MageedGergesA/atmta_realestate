@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+
+    <!--
+        The suite module category anchor.
+
+        Odoo groups security roles in the Users form by `ir.module.category`.
+        Today the ATMTA groups sit in thirteen unrelated categories inherited
+        from whichever module happened to define them first, which is why two
+        different "Manager" groups can appear side by side with no way to tell
+        them apart.
+
+        This is the parent the V2 role categories hang from. It carries no
+        sequence weight and no application flag: it organises, it does not grant.
+    -->
+    <record id="module_category_atmta" model="ir.module.category">
+        <field name="name">ATMTA</field>
+        <field name="description">Real-estate suite roles and capabilities.</field>
+        <field name="sequence">90</field>
+    </record>
+
+</odoo>
