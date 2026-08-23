@@ -43,6 +43,26 @@ class RealEstateProperty(models.Model):
     property_ref = fields.Char(string="Property Reference", tracking=True)
     property_number = fields.Char(string="Property Number", tracking=True)
     property_type_id = fields.Many2one('property.type', string="Property Type", tracking=True)
+
+    # ------------------------------------------------------------------
+    # Company — core, not leasing
+    # ------------------------------------------------------------------
+    # A property belongs to a company before it is ever leased or sold, and the
+    # global isolation rule this module ships filters on it. Declaring it in a
+    # module above this one would mean Property Core could not be installed
+    # multi-company-correct on its own.
+    #
+    # Materialised from the delegated product template so it can carry a
+    # database index and scope the uniqueness constraints. Writing it writes the
+    # product template.
+    company_id = fields.Many2one(
+        'res.company', string='Company',
+        related='product_tmpl_id.company_id', store=True, readonly=False,
+        index=True, precompute=True,
+        help="Materialised from the delegated product template so it can carry "
+             "a database index and scope the uniqueness constraints. Writing "
+             "it writes the product template.",
+    )
     area_sqm = fields.Float(string="Area (sqm)", tracking=True)
     floor_number = fields.Integer(string="Floor Number", tracking=True)
     bedroom_count = fields.Integer(string="Bedrooms", tracking=True)
@@ -281,7 +301,7 @@ class RealEstateProperty(models.Model):
             if not candidate:
                 raise ValidationError(_(
                     "Sequence 'realestate.property.code' is missing. "
-                    "Upgrade the 'atmta_real_estate' module to install it, "
+                    "Upgrade the 'atmta_property_core' module to install it, "
                     "or create it manually under Settings → Technical → Sequences."
                 ))
             self.env.cr.execute(
@@ -312,7 +332,7 @@ class RealEstateProperty(models.Model):
             if m:
                 max_num = max(max_num, int(m.group(1)))
         seq = self.env.ref(
-            'atmta_real_estate.seq_realestate_property_code',
+            'atmta_property_core.seq_realestate_property_code',
             raise_if_not_found=False,
         )
         if seq and max_num >= seq.number_next:

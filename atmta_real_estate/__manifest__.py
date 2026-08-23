@@ -21,9 +21,14 @@ Self-contained module — no dependency on other real-estate modules.
 """,
     'author': "Atmta",
     'license': 'LGPL-3',
-    'version': '0.3',
+    'version': '0.5',
     'category': 'Real Estate',
     'depends': [
+        # Declares realestate.property, property.type, property.usage and
+        # property.image. Listed first because this module extends all of
+        # them, and because the dependency is what guarantees Property Core
+        # is loaded before the migration hands the identifiers over to it.
+        'atmta_property_core',
         'base',
         'product',
         'mail',
@@ -43,7 +48,6 @@ Self-contained module — no dependency on other real-estate modules.
         # stock locations for the unit-inventory lifecycle
         'data/stock_locations.xml',
         # sequences + crons
-        'data/property_sequence.xml',
         'data/maintenance_request_sequence.xml',
         'data/contract_sequence.xml',
         'data/payment_schedule_sequence.xml',

@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # Base entities (formerly in real_estate_base — now self-contained)
-from . import _base_property
 from . import property_stock
-from . import property_type
-from . import property_image
 from . import maintenance_request
 
 # Rental-specific extensions and entities

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+
+    <!--
+        Company isolation for the physical asset.
+
+        This rule lives here, and not in the leasing application, because a
+        module that owns the definition of a property has to be able to say
+        which company owns it without asking a lease addon. Brokerage, Visual,
+        Handover, Operations, the public API and Customer Service all sit on
+        this model; if isolation only existed once `atmta_real_estate` was
+        installed, every one of them would inherit a hole rather than a
+        boundary.
+
+        Global (`global=True`, no `groups`) and deliberately so. Odoo ANDs
+        global rules together but ORs the rules belonging to the groups a user
+        holds, so a company rule attached to a group can be widened by granting
+        that user a second group carrying a more permissive rule on the same
+        model. Company isolation is not a permission level, so it is stated once
+        and every group is subject to it.
+
+        The domain admits `company_id = False`, and that is carried over
+        deliberately rather than tightened. Property company is a stored related
+        of the delegated `product.template`, and a template with no company is
+        the normal Odoo way of saying "shared across companies" — 44 of the 51
+        properties in the release fixture are company-less. Excluding them, as
+        the Project and Phase rules do, would hide most of the estate from
+        everybody. The Project rules can be strict because
+        `realestate.project.company_id` is required; this one cannot, because
+        this one is not.
+    -->
+
+    <record id="rule_property_company" model="ir.rule">
+        <field name="name">Property: multi-company</field>
+        <field name="model_id" ref="model_realestate_property"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+</odoo>
