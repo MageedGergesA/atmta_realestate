@@ -1,4 +1,7 @@
-from . import procurement_policy
+# Wave 5 — procurement policy and product classification moved to
+# atmta_procurement_core, the domain floor this module now depends on. The
+# fields are unchanged and are reached through the ORM registry exactly as
+# before.
 from . import procurement_control
 from . import procurement_exception
 from . import procurement_reservation
@@ -28,7 +31,6 @@ from . import procurement_award
 from . import material_request
 from . import material_request_line
 from . import material_request_revision
-from . import product_template
 from . import purchase_order
 from . import receipt_inspection
 from . import vendor_bill

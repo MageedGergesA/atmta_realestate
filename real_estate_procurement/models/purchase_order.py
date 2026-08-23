@@ -2,7 +2,9 @@ import logging
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
-from .procurement_policy import RECEIPT_INSPECTION_POLICY
+from odoo.addons.atmta_procurement_core.models.procurement_policy import (
+    RECEIPT_INSPECTION_POLICY,
+)
 
 _logger = logging.getLogger(__name__)
 

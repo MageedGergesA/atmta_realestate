@@ -27,7 +27,7 @@ Cross-module supply-chain foundation used by Construction, Handover, Rental and 
 """,
     'author': "Atmta",
     'license': 'LGPL-3',
-    'version': '18.0.9.0.0',
+    'version': '18.0.10.0.0',
     'category': 'Real Estate',
     'depends': [
         'atmta_real_estate',
@@ -52,6 +52,9 @@ Cross-module supply-chain foundation used by Construction, Handover, Rental and 
         # extraction invisible to every consumer: the models are reached
         # through the ORM registry exactly as before.
         'atmta_procurement_vendor',
+        # Wave 5 — the procurement domain floor. Listed so it loads before this
+        # module, which is what lets the field metadata change owner cleanly.
+        'atmta_procurement_core',
     ],
     'data': [
         'security/security.xml',
