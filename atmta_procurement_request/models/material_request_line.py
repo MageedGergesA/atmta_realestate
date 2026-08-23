@@ -2,6 +2,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
 
+
 class MaterialRequestLine(models.Model):
     _name = 'realestate.material.request.line'
     _description = 'Real Estate Material Request Line'
@@ -131,31 +132,6 @@ class MaterialRequestLine(models.Model):
              "bought against. A reference, not a copy.")
     notes = fields.Char()
 
-    # ------------------------------------------------------------------
-    # M3 — the control scope of one line.
-    #
-    # Rule 2: reservation is per cost code, because that is the dimension
-    # Construction controls money in. The cost code itself is added to this
-    # model by `real_estate_construction`, so everything here asks whether the
-    # field exists rather than assuming it — a Procurement-only install has no
-    # cost codes and must still be able to run.
-    # ------------------------------------------------------------------
-    reservation_ids = fields.One2many(
-        'realestate.procurement.reservation', 'request_line_id',
-        string='Reservations', readonly=True)
-    reserved_amount = fields.Monetary(
-        compute='_compute_reserved_amount', store=True,
-        help="Capacity this line is holding. Zero once it has been ordered, "
-             "because the confirmed order is then the obligation.")
-
-    @api.depends('reservation_ids.amount_active', 'reservation_ids.state')
-    def _compute_reserved_amount(self):
-        for ln in self:
-            # Same narrow elevation as on the request: read the control
-            # record, do not hand out the right to change it.
-            ln.reserved_amount = sum(ln.sudo().reservation_ids.filtered(
-                lambda r: r.state == 'reserved').mapped('amount_active'))
-
     def _control_cost_code_id(self):
         self.ensure_one()
         return self.cost_code_id.id if 'cost_code_id' in self._fields else False
@@ -163,17 +139,6 @@ class MaterialRequestLine(models.Model):
     def _control_wbs_id(self):
         self.ensure_one()
         return self.wbs_id.id if 'wbs_id' in self._fields else False
-
-    def _control_scope_values(self):
-        """Coding to copy onto a reservation, where coding exists at all."""
-        self.ensure_one()
-        Reservation = self.env['realestate.procurement.reservation']
-        values = {}
-        if 'cost_code_id' in Reservation._fields:
-            values['cost_code_id'] = self._control_cost_code_id()
-        if 'wbs_id' in Reservation._fields:
-            values['wbs_id'] = self._control_wbs_id()
-        return values
 
     def _control_amount(self, date=None):
         """This line's tax-exclusive amount, in company currency.
@@ -197,21 +162,12 @@ class MaterialRequestLine(models.Model):
                                date or fields.Date.context_today(self))
 
     def unlink(self):
-        """A line holding capacity cannot be deleted out from under it.
+        """Demand that is holding capacity cannot be deleted out from under it.
 
-        Released and converted reservations do not block anything — they are
-        history and they keep their own snapshot of what the line said. An
-        *active* one is a live control position, and deleting its demand would
-        leave the project's availability quietly wrong.
+        Whether anything is held is a control question, so the check is a
+        seam. With no control installed nothing is held and nothing blocks.
         """
-        holding = self.filtered(lambda ln: ln.sudo().reservation_ids.filtered(
-            lambda r: r.state == 'reserved'))
-        if holding:
-            raise UserError(_(
-                "%s is reserving purchasing capacity. Revise the requisition "
-                "— that releases the reservation and leaves a record of why.")
-                % ', '.join(holding.mapped(
-                    lambda ln: ln.description or ln.product_id.display_name)))
+        self._check_unlink_allowed()
         return super().unlink()
 
     # ------------------------------------------------------------------
@@ -365,3 +321,14 @@ class MaterialRequestLine(models.Model):
             return self.estimated_unit_cost
         seller = self.product_id.seller_ids[:1]
         return seller.price if seller else self.product_id.standard_price
+
+    # ------------------------------------------------------------------
+    # Control seam — Wave 6 / AD-008
+    # ------------------------------------------------------------------
+    def _check_unlink_allowed(self):
+        """Refuse deletion of demand that is holding capacity.
+
+        Nothing holds capacity without `atmta_procurement_control`, so the
+        Request-only answer is that every line may go.
+        """
+        return True

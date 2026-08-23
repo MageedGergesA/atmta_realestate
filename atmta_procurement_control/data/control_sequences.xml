@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="seq_procurement_reservation" model="ir.sequence">
+        <field name="name">Procurement Reservation</field>
+        <field name="code">realestate.procurement.reservation</field>
+        <field name="prefix">RES/%(year)s/</field>
+        <field name="padding">5</field>
+    </record>
+    <record id="seq_procurement_control_exception" model="ir.sequence">
+        <field name="name">Procurement Control Exception</field>
+        <field name="code">realestate.procurement.control.exception</field>
+        <field name="prefix">EXC/%(year)s/</field>
+        <field name="padding">4</field>
+    </record>
+</odoo>

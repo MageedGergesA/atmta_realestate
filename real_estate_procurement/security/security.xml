@@ -92,80 +92,20 @@
          second rule rather than narrowed by the first.
          ============================================================ -->
 
-    <record id="rule_material_request_company" model="ir.rule">
-        <field name="name">Requisition: company</field>
-        <field name="model_id" ref="model_realestate_material_request"/>
-        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
 
-    <record id="rule_material_request_line_company" model="ir.rule">
-        <field name="name">Requisition line: company</field>
-        <field name="model_id" ref="model_realestate_material_request_line"/>
-        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
 
-    <record id="rule_request_revision_company" model="ir.rule">
-        <field name="name">Requisition revision: company</field>
-        <field name="model_id" ref="model_realestate_material_request_revision"/>
-        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
 
-    <record id="rule_procurement_plan_company" model="ir.rule">
-        <field name="name">Procurement plan: company</field>
-        <field name="model_id" ref="model_realestate_procurement_plan"/>
-        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
 
-    <record id="rule_procurement_plan_line_company" model="ir.rule">
-        <field name="name">Procurement plan line: company</field>
-        <field name="model_id" ref="model_realestate_procurement_plan_line"/>
-        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
 
     <!-- M3W — control records are company-scoped for the same reason the
          documents are: an approval, a reservation and a budget belong to one
          set of books, and an exception approved in one company has never
          authorised anything in another. -->
 
-    <record id="rule_reservation_company" model="ir.rule">
-        <field name="name">Reservation: company</field>
-        <field name="model_id" ref="model_realestate_procurement_reservation"/>
-        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
 
-    <record id="rule_reservation_conversion_company" model="ir.rule">
-        <field name="name">Reservation conversion: company</field>
-        <field name="model_id" ref="model_realestate_procurement_reservation_conversion"/>
-        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
 
-    <record id="rule_control_exception_company" model="ir.rule">
-        <field name="name">Control exception: company</field>
-        <field name="model_id" ref="model_realestate_procurement_control_exception"/>
-        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
 
-    <record id="rule_approval_step_company" model="ir.rule">
-        <field name="name">Approval step: company</field>
-        <field name="model_id" ref="model_realestate_procurement_approval_step"/>
-        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
 
-    <record id="rule_approval_rule_company" model="ir.rule">
-        <field name="name">Approval rule: company</field>
-        <field name="model_id" ref="model_realestate_procurement_approval_rule"/>
-        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
 
     <!-- ============================================================
          M4AA — vendor governance is company-scoped.
@@ -270,19 +210,7 @@
         <field name="groups" eval="[(4, ref('group_procurement_qualification_assessor'))]"/>
     </record>
 
-    <record id="rule_material_request_own" model="ir.rule">
-        <field name="name">Requisition: my own requests</field>
-        <field name="model_id" ref="model_realestate_material_request"/>
-        <field name="domain_force">['|', ('requested_by_id', '=', user.id), ('create_uid', '=', user.id)]</field>
-        <field name="groups" eval="[(4, ref('group_procurement_requester'))]"/>
-    </record>
 
-    <record id="rule_material_request_buyer" model="ir.rule">
-        <field name="name">Requisition: the sourcing queue</field>
-        <field name="model_id" ref="model_realestate_material_request"/>
-        <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('group_procurement_user'))]"/>
-    </record>
 
 
     <!-- ============================================================

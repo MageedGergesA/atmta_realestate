@@ -48,13 +48,4 @@
         remains zero — never expire — so this job releases nothing until
         somebody chooses a number.
     -->
-    <record id="cron_expire_reservations" model="ir.cron">
-        <field name="name">Procurement: expire unsourced reservations</field>
-        <field name="model_id" ref="model_realestate_procurement_reservation"/>
-        <field name="state">code</field>
-        <field name="code">model.expire_due_reservations()</field>
-        <field name="interval_number">1</field>
-        <field name="interval_type">days</field>
-        <field name="active" eval="True"/>
-    </record>
 </odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- A reservation that nobody sourced stops consuming capacity on its own.
+         The job is owned here because the record it acts on is owned here;
+         moving it with the model is what keeps one expiry, not two. -->
+    <record id="cron_expire_reservations" model="ir.cron">
+        <field name="name">Procurement: expire unsourced reservations</field>
+        <field name="model_id" ref="model_realestate_procurement_reservation"/>
+        <field name="state">code</field>
+        <field name="code">model.expire_due_reservations()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

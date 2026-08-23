@@ -670,15 +670,9 @@ class PurchaseOrder(models.Model):
 class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
 
-    re_material_request_line_id = fields.Many2one(
-        'realestate.material.request.line', string='Material Request Line',
-        ondelete='set null', index=True,
-        help='Source line in the material request that spawned this PO line.',
-    )
-    re_material_request_id = fields.Many2one(
-        'realestate.material.request',
-        related='re_material_request_line_id.request_id', store=True, readonly=True,
-    )
+    # Wave 6 — `re_material_request_line_id` and `re_material_request_id` are
+    # demand linkage, so they are declared by atmta_procurement_request and
+    # reached here through the registry exactly as before.
     re_sourcing_line_id = fields.Many2one(
         'realestate.procurement.sourcing.line', string='Tender Line',
         ondelete='set null', index=True, copy=False,

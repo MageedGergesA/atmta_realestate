@@ -37,3 +37,4 @@ from . import test_m8_phase0
 from . import test_m8_inspection
 from . import test_m8_match
 from . import test_m8_integrity
+from . import test_w6_screens

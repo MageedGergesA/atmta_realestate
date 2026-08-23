@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="rule_reservation_company" model="ir.rule">
+            <field name="name">Reservation: company</field>
+            <field name="model_id" ref="model_realestate_procurement_reservation"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_reservation_conversion_company" model="ir.rule">
+            <field name="name">Reservation conversion: company</field>
+            <field name="model_id" ref="model_realestate_procurement_reservation_conversion"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_control_exception_company" model="ir.rule">
+            <field name="name">Control exception: company</field>
+            <field name="model_id" ref="model_realestate_procurement_control_exception"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_approval_step_company" model="ir.rule">
+            <field name="name">Approval step: company</field>
+            <field name="model_id" ref="model_realestate_procurement_approval_step"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <!-- A rule with no company is configuration every company shares, so
+             it must stay visible rather than disappear behind the isolation. -->
+        <record id="rule_approval_rule_company" model="ir.rule">
+            <field name="name">Approval rule: company</field>
+            <field name="model_id" ref="model_realestate_procurement_approval_rule"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!--
+            Wave 6 — the bridge from this module's legacy procurement groups to
+            the canonical ATMTA roles created in Wave 4.
+
+            Request and Control now own their own access rules, and those rules
+            name canonical roles. They have to: a capability module cannot
+            depend on this one merely to borrow a group XML ID, because that is
+            the dependency Wave 6 exists to remove.
+
+            Each legacy group is given its canonical twin. Because the legacy
+            groups keep their own hierarchy — manager implies approver implies
+            buyer implies requester — every existing user reaches exactly the
+            canonical roles their legacy position already implied, and so does
+            anyone granted a legacy group tomorrow. Nobody gains a permission
+            and nobody loses one; the same people are described in a second
+            vocabulary.
+
+            The canonical roles themselves are left flat, as Wave 4 defined
+            them. The hierarchy lives here, in the legacy layer that already
+            had it.
+        -->
+
+        <record id="group_procurement_requester" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('atmta_roles.group_procurement_requester'))]"/>
+        </record>
+
+        <record id="group_procurement_user" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('atmta_roles.group_procurement_buyer'))]"/>
+        </record>
+
+        <record id="group_procurement_approver" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('atmta_roles.group_procurement_approver'))]"/>
+        </record>
+
+        <record id="group_procurement_manager" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('atmta_roles.group_procurement_manager'))]"/>
+        </record>
+
+        <record id="group_procurement_qualification_assessor" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('atmta_roles.group_procurement_qualification_assessor'))]"/>
+        </record>
+
+        <record id="group_procurement_qualification_approver" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('atmta_roles.group_procurement_qualification_approver'))]"/>
+        </record>
+
+        <record id="group_procurement_inspector" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('atmta_roles.group_procurement_material_inspector'))]"/>
+        </record>
+
+        <record id="group_evaluation_technical" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('atmta_roles.group_procurement_technical_evaluator'))]"/>
+        </record>
+
+        <record id="group_evaluation_commercial" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('atmta_roles.group_procurement_commercial_evaluator'))]"/>
+        </record>
+
+        <record id="group_evaluation_manager" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('atmta_roles.group_procurement_evaluation_manager'))]"/>
+        </record>
+
+    </data>
+</odoo>
