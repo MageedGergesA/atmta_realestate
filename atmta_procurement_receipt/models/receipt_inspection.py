@@ -34,8 +34,8 @@ from odoo.exceptions import UserError, ValidationError
 #: inspection, and a system that lets one user do both has recorded a signature
 #: rather than a control.
 INSPECTION_GROUPS = (
-    'real_estate_procurement.group_procurement_inspector,'
-    'real_estate_procurement.group_procurement_manager'
+    'atmta_roles.group_procurement_material_inspector,'
+    'atmta_roles.group_procurement_manager'
 )
 
 
