@@ -142,7 +142,7 @@ class ProcurementControlException(models.Model):
                 raise UserError(_(
                     "%s is not awaiting a decision.") % rec.name)
             if not self.env.user.has_group(
-                    'real_estate_procurement.group_procurement_manager'):
+                    'atmta_roles.group_procurement_manager'):
                 raise UserError(_(
                     "Passing a budget control is a manager's decision."))
             rec._check_not_self_approval()

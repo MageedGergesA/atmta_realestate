@@ -421,7 +421,7 @@ class ProcurementReservation(models.Model):
         # reservation moves real purchasing capacity, and a check that lives
         # in a view is absent from every other way this method can be called.
         if not self.env.user.has_group(
-                'real_estate_procurement.group_procurement_manager'):
+                'atmta_roles.group_procurement_manager'):
             raise UserError(_(
                 "Activating a reservation consumes a project's purchasing "
                 "capacity. That is a procurement manager's decision."))

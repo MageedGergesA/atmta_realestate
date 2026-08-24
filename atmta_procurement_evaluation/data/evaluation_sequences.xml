@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="seq_evaluation_plan" model="ir.sequence">
+        <field name="name">Evaluation Plan</field>
+        <field name="code">realestate.procurement.evaluation.plan</field>
+        <field name="prefix">EVP/%(year)s/</field>
+        <field name="padding">4</field>
+    </record>
+    <record id="seq_evaluation_round" model="ir.sequence">
+        <field name="name">Evaluation Round</field>
+        <field name="code">realestate.procurement.evaluation.round</field>
+        <field name="prefix">EVR/%(year)s/</field>
+        <field name="padding">4</field>
+    </record>
+    <record id="seq_evaluation_deviation" model="ir.sequence">
+        <field name="name">Evaluation Deviation</field>
+        <field name="code">realestate.procurement.evaluation.deviation</field>
+        <field name="prefix">DEV/%(year)s/</field>
+        <field name="padding">4</field>
+    </record>
+</odoo>

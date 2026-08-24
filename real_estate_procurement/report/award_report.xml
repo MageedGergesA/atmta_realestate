@@ -242,7 +242,7 @@
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">real_estate_procurement.report_award</field>
         <field name="report_file">real_estate_procurement.report_award</field>
-        <field name="binding_model_id" ref="model_realestate_procurement_award"/>
+        <field name="binding_model_id" ref="atmta_procurement_award.model_realestate_procurement_award"/>
         <field name="binding_type">report</field>
         <field name="print_report_name">'Award - %s' % (object.name)</field>
         <field name="groups_id" eval="[(6, 0, [

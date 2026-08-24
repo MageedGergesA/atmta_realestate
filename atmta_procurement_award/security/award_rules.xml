@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="rule_procurement_award_company" model="ir.rule">
+                <field name="name">Procurement award: company</field>
+                <field name="model_id" ref="model_realestate_procurement_award"/>
+                <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+
+        <record id="rule_procurement_award_line_company" model="ir.rule">
+                <field name="name">Procurement award line: company</field>
+                <field name="model_id" ref="model_realestate_procurement_award_line"/>
+                <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+
+        <record id="rule_procurement_award_allocation_company" model="ir.rule">
+                <field name="name">Procurement award allocation: company</field>
+                <field name="model_id" ref="model_realestate_procurement_award_allocation"/>
+                <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+
+    </data>
+</odoo>

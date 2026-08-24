@@ -38,8 +38,8 @@ SETTLED_STATES = ('frozen', 'in_use', 'superseded')
 #: ACL lets a Buyer write on a plan so they can draft one; committing that
 #: draft as *the* methodology is the Evaluation Manager's act.
 LIFECYCLE_GROUPS = (
-    'real_estate_procurement.group_evaluation_manager',
-    'real_estate_procurement.group_procurement_manager',
+    'atmta_roles.group_procurement_evaluation_manager',
+    'atmta_roles.group_procurement_manager',
 )
 
 #: Fields that *are* the methodology. Writing any of them after freeze is what

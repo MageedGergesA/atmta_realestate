@@ -39,7 +39,7 @@ class MaterialRequestSourcing(models.Model):
         """
         self.ensure_one()
         if not self.env.user.has_group(
-                'real_estate_procurement.group_procurement_user'):
+                'atmta_roles.group_procurement_buyer'):
             raise AccessError(_(
                 "Sourcing is a buyer's job. Raising the requisition and "
                 "choosing who is asked to quote for it are deliberately not "

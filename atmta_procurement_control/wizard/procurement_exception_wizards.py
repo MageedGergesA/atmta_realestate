@@ -178,7 +178,7 @@ class ReservationReleaseWizard(models.TransientModel):
     def action_release(self):
         self.ensure_one()
         if not self.env.user.has_group(
-                'real_estate_procurement.group_procurement_manager'):
+                'atmta_roles.group_procurement_manager'):
             raise UserError(_(
                 "Releasing a reservation returns capacity to the project "
                 "without anything having been bought. A manager decides "

@@ -516,7 +516,7 @@ class MaterialRequestControl(models.Model):
         error the whole milestone is built to prevent.
         """
         if not self.env.user.has_group(
-                'real_estate_procurement.group_procurement_manager'):
+                'atmta_roles.group_procurement_manager'):
             raise UserError(_(
                 "Switching budget control on for existing demand is a "
                 "procurement manager's decision, not a side effect of an "
@@ -556,7 +556,7 @@ class MaterialRequestControl(models.Model):
                     step.action_approve()
                 continue
             if not self.env.user.has_group(
-                    'real_estate_procurement.group_procurement_approver'):
+                    'atmta_roles.group_procurement_approver'):
                 raise UserError(_(
                     "You do not have permission to approve material requests."
                 ))

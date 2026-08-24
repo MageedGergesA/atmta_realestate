@@ -62,12 +62,12 @@ SETTLED_STATES = ('approved', 'issued')
 #: deliberately **not** here: running the evaluation and authorising the spend
 #: that follows it are the two halves this programme keeps apart.
 APPROVAL_GROUPS = (
-    'real_estate_procurement.group_procurement_manager',
+    'atmta_roles.group_procurement_manager',
 )
 
 #: Who may raise one.
 DRAFTING_GROUPS = APPROVAL_GROUPS + (
-    'real_estate_procurement.group_procurement_user',
+    'atmta_roles.group_procurement_buyer',
 )
 
 

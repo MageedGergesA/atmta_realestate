@@ -415,7 +415,7 @@ class BidResponse(models.Model):
             if not response.is_late:
                 raise UserError(_("%s was not late.") % response.display_name)
             if not self.env.user.has_group(
-                    'real_estate_procurement.group_procurement_manager'):
+                    'atmta_roles.group_procurement_manager'):
                 raise UserError(_(
                     "Accepting a late bid is a Procurement Manager's "
                     "decision."))

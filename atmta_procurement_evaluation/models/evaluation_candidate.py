@@ -63,11 +63,14 @@ COMMERCIAL_FIELDS = frozenset({
     'analysis_id', 'financial_score', 'combined_score', 'rank', 'is_tied',
 })
 
-#: Groups entitled to the commercial outcome. OR semantics, and redundant only
-#: for as long as `group_evaluation_commercial` keeps implying the first.
+#: Groups entitled to the commercial outcome. OR semantics, and since Wave 8
+#: rebound these to the canonical roles — which are flat by design — neither
+#: entry is redundant any more: each one carries its own holders. A technical
+#: evaluator holds neither and sees none of the fields below, which is the
+#: whole point.
 COMMERCIAL_GROUPS = (
-    'real_estate_procurement.group_procurement_user,'
-    'real_estate_procurement.group_evaluation_commercial'
+    'atmta_roles.group_procurement_buyer,'
+    'atmta_roles.group_procurement_commercial_evaluator'
 )
 
 #: The order served to everybody else. `_order` sorts by `rank`, which *is* the
@@ -421,9 +424,9 @@ class TechnicalEvaluation(models.Model):
                 and a.role == 'evaluation_manager')
             if not manager and not (
                     self.env.user.has_group(
-                        'real_estate_procurement.group_evaluation_manager')
+                        'atmta_roles.group_procurement_evaluation_manager')
                     or self.env.user.has_group(
-                        'real_estate_procurement.group_procurement_manager')):
+                        'atmta_roles.group_procurement_manager')):
                 raise UserError(_(
                     "%s is not on the evaluation committee for this round.")
                     % self.evaluator_id.display_name)
@@ -521,9 +524,9 @@ class TechnicalEvaluation(models.Model):
         """
         self.ensure_one()
         return (self.env.user.has_group(
-            'real_estate_procurement.group_evaluation_manager')
+            'atmta_roles.group_procurement_evaluation_manager')
             or self.env.user.has_group(
-                'real_estate_procurement.group_procurement_manager'))
+                'atmta_roles.group_procurement_manager'))
 
     def write(self, vals):
         if not self.env.context.get('re_evaluation_engine'):

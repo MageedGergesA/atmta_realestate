@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="rule_evaluation_plan_company" model="ir.rule">
+                <field name="name">Evaluation plan: company</field>
+                <field name="model_id" ref="model_realestate_procurement_evaluation_plan"/>
+                <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+
+        <record id="rule_evaluation_criterion_company" model="ir.rule">
+                <field name="name">Evaluation criterion: company</field>
+                <field name="model_id" ref="model_realestate_procurement_evaluation_criterion"/>
+                <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+
+        <record id="rule_evaluation_round_company" model="ir.rule">
+                <field name="name">Evaluation round: company</field>
+                <field name="model_id" ref="model_realestate_procurement_evaluation_round"/>
+                <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+
+        <record id="rule_evaluation_candidate_company" model="ir.rule">
+                <field name="name">Evaluation candidate: company</field>
+                <field name="model_id" ref="model_realestate_procurement_evaluation_candidate"/>
+                <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+
+        <record id="rule_evaluation_assignment_company" model="ir.rule">
+                <field name="name">Evaluation assignment: company</field>
+                <field name="model_id" ref="model_realestate_procurement_evaluation_assignment"/>
+                <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+
+        <record id="rule_technical_evaluation_company" model="ir.rule">
+                <field name="name">Technical sheet: company</field>
+                <field name="model_id" ref="model_realestate_procurement_technical_evaluation"/>
+                <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+
+        <record id="rule_technical_evaluation_line_company" model="ir.rule">
+                <field name="name">Technical sheet line: company</field>
+                <field name="model_id" ref="model_realestate_procurement_technical_evaluation_line"/>
+                <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+
+        <record id="rule_commercial_analysis_company" model="ir.rule">
+                <field name="name">Commercial analysis: company</field>
+                <field name="model_id" ref="model_realestate_procurement_commercial_analysis"/>
+                <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+
+        <record id="rule_commercial_adjustment_company" model="ir.rule">
+                <field name="name">Commercial adjustment: company</field>
+                <field name="model_id" ref="model_realestate_procurement_commercial_adjustment"/>
+                <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+
+        <record id="rule_leveling_line_company" model="ir.rule">
+                <field name="name">Leveling line: company</field>
+                <field name="model_id" ref="model_realestate_procurement_leveling_line"/>
+                <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+
+        <record id="rule_evaluation_deviation_company" model="ir.rule">
+                <field name="name">Evaluation deviation: company</field>
+                <field name="model_id" ref="model_realestate_procurement_evaluation_deviation"/>
+                <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+
+    </data>
+</odoo>

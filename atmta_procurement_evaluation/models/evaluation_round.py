@@ -45,14 +45,14 @@ ROUND_STATES = ['draft', 'technical_open', 'technical_final',
 #: staging or closing it are different acts, and the person running the tender
 #: should not be able to decide when prices are opened.
 LIFECYCLE_GROUPS = (
-    'real_estate_procurement.group_evaluation_manager',
-    'real_estate_procurement.group_procurement_manager',
+    'atmta_roles.group_procurement_evaluation_manager',
+    'atmta_roles.group_procurement_manager',
 )
 
 #: Normalisation is mechanical application of a frozen basis, so the people who
 #: analyse the money may do it as well as the people who run the round.
 COMMERCIAL_WORK_GROUPS = LIFECYCLE_GROUPS + (
-    'real_estate_procurement.group_evaluation_commercial',
+    'atmta_roles.group_procurement_commercial_evaluator',
 )
 
 #: Committee roles. Split deliberately: a buyer running the tender is not
