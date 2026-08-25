@@ -117,68 +117,14 @@
          all.
          ============================================================ -->
 
-    <record id="rule_vendor_profile_company" model="ir.rule">
-        <field name="name">Vendor profile: company</field>
-        <field name="model_id" ref="atmta_procurement_vendor.model_realestate_procurement_vendor_profile"/>
-        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
 
-    <record id="rule_vendor_qualification_company" model="ir.rule">
-        <field name="name">Qualification: company</field>
-        <field name="model_id" ref="atmta_procurement_vendor.model_realestate_procurement_vendor_qualification"/>
-        <field name="domain_force">['|', ('company_id', 'in', company_ids), '&amp;', ('is_group_wide', '=', True), ('shared_company_ids', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
 
-    <record id="rule_qualification_response_company" model="ir.rule">
-        <field name="name">Qualification response: company</field>
-        <field name="model_id" ref="atmta_procurement_vendor.model_realestate_procurement_qualification_response"/>
-        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
 
-    <record id="rule_qualification_condition_company" model="ir.rule">
-        <field name="name">Qualification condition: company</field>
-        <field name="model_id" ref="atmta_procurement_vendor.model_realestate_procurement_qualification_condition"/>
-        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
 
-    <record id="rule_vendor_restriction_company" model="ir.rule">
-        <field name="name">Vendor restriction: company</field>
-        <field name="model_id" ref="atmta_procurement_vendor.model_realestate_procurement_vendor_restriction"/>
-        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
 
-    <record id="rule_qualification_template_company" model="ir.rule">
-        <field name="name">Qualification template: company</field>
-        <field name="model_id" ref="atmta_procurement_vendor.model_realestate_procurement_qualification_template"/>
-        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
 
-    <record id="rule_qualification_requirement_company" model="ir.rule">
-        <field name="name">Qualification requirement: company</field>
-        <field name="model_id" ref="atmta_procurement_vendor.model_realestate_procurement_qualification_requirement"/>
-        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
 
-    <record id="rule_qualification_area_company" model="ir.rule">
-        <field name="name">Qualification area: company or shared</field>
-        <field name="model_id" ref="atmta_procurement_vendor.model_realestate_procurement_qualification_area"/>
-        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
 
-    <record id="rule_vendor_category_company" model="ir.rule">
-        <field name="name">Vendor trade: company or shared</field>
-        <field name="model_id" ref="atmta_procurement_vendor.model_realestate_procurement_vendor_category"/>
-        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
 
     <!-- ============================================================
          Confidential evidence.
@@ -196,19 +142,7 @@
          attachment ACL to keep in step, and no `sudo()` in the read path.
          ============================================================ -->
 
-    <record id="rule_qualification_response_not_confidential" model="ir.rule">
-        <field name="name">Qualification response: non-confidential only</field>
-        <field name="model_id" ref="atmta_procurement_vendor.model_realestate_procurement_qualification_response"/>
-        <field name="domain_force">[('confidential', '=', False)]</field>
-        <field name="groups" eval="[(4, ref('group_procurement_user'))]"/>
-    </record>
 
-    <record id="rule_qualification_response_assessor" model="ir.rule">
-        <field name="name">Qualification response: assessors see the evidence</field>
-        <field name="model_id" ref="atmta_procurement_vendor.model_realestate_procurement_qualification_response"/>
-        <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('group_procurement_qualification_assessor'))]"/>
-    </record>
 
 
 

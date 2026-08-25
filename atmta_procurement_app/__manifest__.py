@@ -26,12 +26,9 @@ at `atmta_procurement_award` and `atmta_procurement_receipt` per
 """,
     'author': "Atmta",
     'license': 'LGPL-3',
-    'version': '18.0.0.1.0',
+    'version': '18.0.0.2.0',
     'category': 'Real Estate',
-    'depends': [
-        'real_estate_procurement',
-        'atmta_v2_pilot',
-    ],
+    'depends': ['real_estate_procurement', 'atmta_v2_pilot', 'atmta_roles'],
     'data': [
         'data/workspace_actions.xml',
         'views/menus.xml',

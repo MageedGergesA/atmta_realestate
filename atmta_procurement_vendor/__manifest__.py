@@ -55,7 +55,7 @@ Governance is consumed by those capabilities, not the other way round.
 """,
     'author': "Atmta",
     'license': 'LGPL-3',
-    'version': '18.0.1.0.0',
+    'version': '18.0.2.0.0',
     'category': 'Real Estate',
     'depends': [
         'base',
@@ -63,9 +63,14 @@ Governance is consumed by those capabilities, not the other way round.
         'product',
         'purchase',
         'atmta_project_core',
+        'atmta_roles',
     ],
-    'data': [],
+    'data': [
+        'security/ir.model.access.csv',
+        'security/vendor_rules.xml',
+    ],
     'installable': True,
+    'pre_init_hook': 'pre_init_hook',
     'application': False,
     'auto_install': False,
 }

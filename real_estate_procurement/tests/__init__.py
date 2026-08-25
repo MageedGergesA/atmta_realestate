@@ -38,3 +38,4 @@ from . import test_m8_inspection
 from . import test_m8_match
 from . import test_m8_integrity
 from . import test_w6_screens
+from . import test_w10_surface
