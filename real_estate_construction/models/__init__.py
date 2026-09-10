@@ -15,10 +15,6 @@ from . import forecast
 from . import change_event
 from . import change_order
 from . import change_impact
-from . import document_control
-from . import rfi
-from . import submittal
-from . import transmittal
 from . import quality
 from . import daily_report
 from . import quality_wizard
@@ -55,3 +51,9 @@ from . import procurement_requisition
 # and the commitment precedence rule.
 from . import contractor_construction
 from . import contract_package_construction
+
+# Wave 14 — documents, submittals, transmittals and RFIs moved to
+# `atmta_construction_documents`. This file adds back the one thing that could
+# not go with them: the link from a submittal or an RFI to the change event it
+# raises, which this module declares.
+from . import information_change_event

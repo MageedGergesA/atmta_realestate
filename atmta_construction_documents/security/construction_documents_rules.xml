@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+        <!--
+            Wave 14 — the company rules for the document models.
+
+            Only the company and global rules moved. The six project-team rules
+            stayed in `real_estate_construction`: their domains read
+            `project_id.construction_member_ids`, a field that module declares
+            on the project. A rule may be declared above the model it guards;
+            it may not be declared below a field it reads.
+        -->
+        <record id="rule_realestate_construction_document_company" model="ir.rule">
+                <field name="name">realestate.construction.document: company</field>
+                <field name="model_id" ref="model_realestate_construction_document"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_document_revision_company" model="ir.rule">
+                <field name="name">realestate.construction.document.revision: company</field>
+                <field name="model_id" ref="model_realestate_construction_document_revision"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_rfi_company" model="ir.rule">
+                <field name="name">realestate.construction.rfi: company</field>
+                <field name="model_id" ref="model_realestate_construction_rfi"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_submittal_company" model="ir.rule">
+                <field name="name">realestate.construction.submittal: company</field>
+                <field name="model_id" ref="model_realestate_construction_submittal"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_submittal_package_company" model="ir.rule">
+                <field name="name">realestate.construction.submittal.package: company</field>
+                <field name="model_id" ref="model_realestate_construction_submittal_package"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_submittal_revision_company" model="ir.rule">
+                <field name="name">realestate.construction.submittal.revision: company</field>
+                <field name="model_id" ref="model_realestate_construction_submittal_revision"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_transmittal_company" model="ir.rule">
+                <field name="name">realestate.construction.transmittal: company</field>
+                <field name="model_id" ref="model_realestate_construction_transmittal"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_transmittal_line_company" model="ir.rule">
+                <field name="name">realestate.construction.transmittal.line: company</field>
+                <field name="model_id" ref="model_realestate_construction_transmittal_line"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_document_manager" model="ir.rule">
+                <field name="name">realestate.construction.document: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_construction_document"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+        <record id="rule_realestate_construction_document_revision_manager" model="ir.rule">
+                <field name="name">realestate.construction.document.revision: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_construction_document_revision"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+        <record id="rule_realestate_construction_rfi_manager" model="ir.rule">
+                <field name="name">realestate.construction.rfi: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_construction_rfi"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+        <record id="rule_realestate_construction_submittal_manager" model="ir.rule">
+                <field name="name">realestate.construction.submittal: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_construction_submittal"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+        <record id="rule_realestate_construction_submittal_package_manager" model="ir.rule">
+                <field name="name">realestate.construction.submittal.package: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_construction_submittal_package"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+        <record id="rule_realestate_construction_transmittal_manager" model="ir.rule">
+                <field name="name">realestate.construction.transmittal: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_construction_transmittal"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+    </data>
+</odoo>

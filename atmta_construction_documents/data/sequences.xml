@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!--
+      Wave 14 — the sequences for the three numbered document types.
+
+      `noupdate` as they were, so renaming a prefix in production stays a local
+      decision. That is also why the hand-over names them explicitly:
+      `_process_end` skips `noupdate` records when it cleans up, and Wave 6
+      lost four sequences to exactly that.
+    -->
+    <record id="seq_construction_rfi" model="ir.sequence">
+        <field name="name">Construction RFI</field>
+        <field name="code">realestate.construction.rfi</field>
+        <field name="prefix">RFI/%(year)s/</field>
+        <field name="padding">4</field>
+    </record>
+
+    <record id="seq_construction_submittal" model="ir.sequence">
+        <field name="name">Construction Submittal</field>
+        <field name="code">realestate.construction.submittal</field>
+        <field name="prefix">SUB/%(year)s/</field>
+        <field name="padding">5</field>
+    </record>
+
+    <record id="seq_construction_transmittal" model="ir.sequence">
+        <field name="name">Construction Transmittal</field>
+        <field name="code">realestate.construction.transmittal</field>
+        <field name="prefix">TRN/%(year)s/</field>
+        <field name="padding">4</field>
+    </record>
+</odoo>

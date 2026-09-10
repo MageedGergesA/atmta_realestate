@@ -27,6 +27,8 @@ Track construction progress for projects and phases:
         # Wave 13 — contractors and contract packages moved down to the
         # commercial floor so the capabilities above could point at them.
         'atmta_construction_contract',
+        # Wave 14 — documents, submittals, transmittals and RFIs moved down.
+        'atmta_construction_documents',
         # Named for the bridge below, which gives each legacy construction
         # group its canonical twin.
         'atmta_roles',
@@ -45,6 +47,9 @@ Track construction progress for projects and phases:
         'views/budget_views.xml',
         'views/forecast_views.xml',
         'views/change_views.xml',
+        # Wave 14 — the models moved to `atmta_construction_documents`; these
+        # screens did not, because they render `change_event_id` and the
+        # action that raises it, which this module declares.
         'views/information_views.xml',
         'views/quality_views.xml',
         'views/certification_views.xml',

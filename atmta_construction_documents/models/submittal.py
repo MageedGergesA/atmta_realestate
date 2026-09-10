@@ -61,7 +61,6 @@ RESPONSE_CODES = [
 #: Responses that let work proceed.
 ACCEPTING_RESPONSES = ('approved', 'approved_as_noted')
 
-
 class ConstructionSubmittal(models.Model):
     _name = 'realestate.construction.submittal'
     _description = 'Construction Submittal'
@@ -137,8 +136,6 @@ class ConstructionSubmittal(models.Model):
         related='current_revision_id.revision_code', store=True,
         readonly=True)
 
-    change_event_id = fields.Many2one(
-        'realestate.construction.change.event', readonly=True, copy=False)
     distribution_partner_ids = fields.Many2many(
         'res.partner', 'construction_submittal_distribution_rel',
         'submittal_id', 'partner_id', string='Distribution')
@@ -281,27 +278,6 @@ class ConstructionSubmittal(models.Model):
             rec.state = 'void'
         return True
 
-    def action_create_change_event(self):
-        """A review outcome may have commercial consequences. Somebody decides."""
-        self.ensure_one()
-        if self.change_event_id:
-            raise UserError(_("%s already has a change event.") % self.name)
-        event = self.env['realestate.construction.change.event'].create({
-            'title': _("Submittal %(number)s — %(title)s",
-                       number=self.name, title=self.title),
-            'project_id': self.project_id.id,
-            'company_id': self.company_id.id,
-            'package_id': self.package_id.id or False,
-            'contractor_id': self.contractor_id.id or False,
-            'wbs_id': self.wbs_id.id or False,
-            'source': 'specification_change',
-            'source_reference': self.name,
-            'source_model': self._name,
-            'source_id': self.id,
-        })
-        self.change_event_id = event
-        return event
-
     @api.constrains('project_id', 'company_id')
     def _check_company(self):
         for rec in self:
@@ -312,7 +288,6 @@ class ConstructionSubmittal(models.Model):
                     "in %(other)s.", name=rec.name,
                     company=rec.company_id.display_name,
                     other=rec.project_id.company_id.display_name))
-
 
 class ConstructionSubmittalRevision(models.Model):
     """One submission of one revision, and what the reviewers said about it."""
@@ -431,7 +406,6 @@ class ConstructionSubmittalRevision(models.Model):
                     % responded[0].revision_code)
         return super().write(vals)
 
-
 class ConstructionSubmittalReview(models.Model):
     """One reviewer's step on one revision."""
     _name = 'realestate.construction.submittal.review'
@@ -477,7 +451,6 @@ class ConstructionSubmittalReview(models.Model):
                 'state': 'responded',
             })
         return True
-
 
 class ConstructionSubmittalPackage(models.Model):
     """A grouping of submittals reviewed together. Optional by design."""

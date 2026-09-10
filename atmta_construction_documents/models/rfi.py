@@ -57,7 +57,6 @@ IMPACT_CLASSIFICATION = [
     ('confirmed', 'Confirmed via Change Management'),
 ]
 
-
 class ConstructionRFI(models.Model):
     _name = 'realestate.construction.rfi'
     _description = 'Request for Information'
@@ -149,10 +148,6 @@ class ConstructionRFI(models.Model):
     currency_id = fields.Many2one(
         'res.currency', required=True,
         default=lambda self: self.env.company.currency_id)
-
-    change_event_id = fields.Many2one(
-        'realestate.construction.change.event', readonly=True, copy=False,
-        help="Created deliberately, never automatically.")
 
     document_revision_ids = fields.Many2many(
         'realestate.construction.document.revision',
@@ -307,40 +302,6 @@ class ConstructionRFI(models.Model):
         })
 
     # ------------------------------------------------------------------
-    def action_create_change_event(self):
-        """Hand the commercial question to M4, which owns it from here.
-
-        Deliberately an action somebody takes. An RFI that created change
-        events by itself would turn every "might this cost more?" into a
-        commercial record nobody decided to raise.
-        """
-        self.ensure_one()
-        if self.change_event_id:
-            raise UserError(_(
-                "%(rfi)s already has change event %(event)s.",
-                rfi=self.name, event=self.change_event_id.name))
-        event = self.env['realestate.construction.change.event'].create({
-            'title': _("RFI %(number)s — %(subject)s",
-                       number=self.name, subject=self.subject),
-            'project_id': self.project_id.id,
-            'company_id': self.company_id.id,
-            'currency_id': self.currency_id.id,
-            'package_id': self.package_id.id or False,
-            'contractor_id': self.contractor_id.id or False,
-            'wbs_id': self.wbs_id.id or False,
-            'cost_code_id': self.cost_code_id.id or False,
-            'source': 'rfi',
-            'source_reference': self.name,
-            'source_model': self._name,
-            'source_id': self.id,
-            'estimated_cost_impact': self.estimated_cost_impact,
-            'estimated_schedule_days': self.estimated_schedule_days,
-            'description': self.official_response or self.question,
-        })
-        self.change_event_id = event
-        if self.cost_impact == 'potential':
-            self.cost_impact = 'confirmed'
-        return event
 
     @api.constrains('project_id', 'company_id')
     def _check_company(self):
@@ -352,7 +313,6 @@ class ConstructionRFI(models.Model):
                     "%(other)s.", name=rec.name,
                     company=rec.company_id.display_name,
                     other=rec.project_id.company_id.display_name))
-
 
 class ConstructionRFIResponse(models.Model):
     """A response that was once official. Kept when a newer one replaces it."""
