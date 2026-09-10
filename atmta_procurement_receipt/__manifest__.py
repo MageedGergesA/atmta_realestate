@@ -1,6 +1,6 @@
 {
     'name': 'ATMTA Procurement — Receipt',
-    'version': '18.0.1.0.0',
+    'version': '18.0.2.0.0',
     'category': 'Real Estate/Procurement',
     'summary': 'Receipt inspection and the three-way match on vendor bills.',
     'description': """
@@ -38,6 +38,8 @@ purchase order is confirmed, and stays derived from confirmed orders.
         'security/ir.model.access.csv',
         'security/receipt_rules.xml',
         'data/receipt_sequences.xml',
+        # Wave 11 — receipt inspection screens moved from the emptied shell.
+        'views/receipt_inspection_views.xml',
     ],
     'pre_init_hook': 'pre_init_hook',
     'application': False,

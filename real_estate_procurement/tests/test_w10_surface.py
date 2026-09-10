@@ -18,12 +18,12 @@ from .common import M6Common
 
 #: The procurement chain, end to end, as a user actually reaches it.
 CHAIN = [
-    ('real_estate_procurement.action_material_request', 'requisition'),
-    ('real_estate_procurement.action_procurement_reservation', 'reservation'),
-    ('real_estate_procurement.action_sourcing_event', 'tender'),
-    ('real_estate_procurement.action_evaluation_round', 'evaluation'),
-    ('real_estate_procurement.action_procurement_award', 'award'),
-    ('real_estate_procurement.action_receipt_inspection', 'inspection'),
+    ('atmta_procurement_control.action_material_request', 'requisition'),
+    ('atmta_procurement_control.action_procurement_reservation', 'reservation'),
+    ('atmta_procurement_sourcing.action_sourcing_event', 'tender'),
+    ('atmta_procurement_evaluation.action_evaluation_round', 'evaluation'),
+    ('atmta_procurement_award.action_procurement_award', 'award'),
+    ('atmta_procurement_receipt.action_receipt_inspection', 'inspection'),
 ]
 
 

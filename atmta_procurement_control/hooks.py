@@ -29,7 +29,6 @@ MODELS = [
     'realestate.procurement.reservation',
     'realestate.procurement.reservation.conversion',
     'realestate.procurement.reservation.release',
-    'realestate.procurement.restriction.lift',
 ]
 # The control half of the requisition. The requisition itself belongs to
 # atmta_procurement_request; these columns on it belong here.
@@ -55,7 +54,7 @@ XMLIDS = [
     'access_control_exception_requester', 'access_control_exception_user',
     'access_control_exception_approver', 'access_control_exception_manager',
     'access_wizard_budget_exception', 'access_wizard_purchase_exception',
-    'access_wizard_reservation_release', 'access_restriction_lift_approver',
+    'access_wizard_reservation_release',
     # record rules
     'rule_reservation_company', 'rule_reservation_conversion_company',
     'rule_control_exception_company', 'rule_approval_step_company',

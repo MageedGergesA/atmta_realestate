@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'ATMTA — Procurement Core',
-    'version': '18.0.1.0.0',
+    'version': '18.0.2.0.0',
     'category': 'Real Estate/Procurement',
     'summary': 'Common procurement identity: policy and product classification.',
     'description': """
@@ -25,13 +25,14 @@ read six of the policy fields.
 
 What it deliberately does **not** carry:
 
-* the `purchase.order` / `purchase.order.line` / `stock.picking` bridge, which
-  references sourcing, award and receipt models that are not extracted yet;
+* the `purchase.order` / `purchase.order.line` bridge, which references
+  sourcing, award, control, request and vendor models. Wave 11 gave it its own
+  module, `atmta_procurement_purchase`, which sits above every capability;
 * `account.move` three-way matching, which is receipt work and would drag
-  `account` under the whole procurement domain.
+  `account` under the whole procurement domain. It belongs to
+  `atmta_procurement_receipt`.
 
-Both stay in `real_estate_procurement` until the capability that owns them is
-extracted. A floor that reaches upward is not a floor.
+A floor that reaches upward is not a floor.
 """,
     'author': 'ATMTA',
     'license': 'LGPL-3',
@@ -42,7 +43,14 @@ extracted. A floor that reaches upward is not a floor.
         # stock module declares. Found by test, not by reading the catalog.
         'stock',
     ],
-    'data': [],
+    'data': [
+        # Wave 11 — the real-estate product classification and its starter catalog,
+        # moved from the emptied `real_estate_procurement` shell.
+        'data/product_categories.xml',
+        'data/products_seed.xml',
+        'views/product_views.xml',
+        'views/product_categories_views.xml',
+    ],
     'application': False,
     'installable': True,
     'auto_install': False,

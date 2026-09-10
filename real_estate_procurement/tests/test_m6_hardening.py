@@ -570,7 +570,7 @@ class TestM6Navigation(M6HardeningCommon):
 @tagged('post_install', '-at_install', 'atmta_procurement', 'atmta_m6')
 class TestM6EvaluationReport(M6HardeningCommon):
 
-    REPORT = 'real_estate_procurement.report_evaluation'
+    REPORT = 'atmta_procurement_evaluation.report_evaluation'
 
     def _html(self, round_, user=None):
         Report = self.env['ir.actions.report']
@@ -686,7 +686,7 @@ class TestM6EvaluationReport(M6HardeningCommon):
             self._html(round_, user=tech)
 
         template = self.env.ref(
-            'real_estate_procurement.report_evaluation_document').arch
+            'atmta_procurement_evaluation.report_evaluation_document').arch
         self.assertIn('group_evaluation_commercial', template,
                       "The commercial sections carry no groups= guard.")
 
@@ -705,7 +705,7 @@ class TestM6EvaluationReport(M6HardeningCommon):
 
         self.assertEqual(action['type'], 'ir.actions.report')
         self.assertEqual(action['report_name'],
-                         'real_estate_procurement.report_evaluation')
+                         'atmta_procurement_evaluation.report_evaluation')
 
     def test_the_report_creates_nothing_and_moves_no_money(self):
         round_ = self._populated_round()
@@ -964,7 +964,7 @@ class TestM6EvaluationReportPdf(M6HardeningCommon, HttpCase):
 
         pdf, kind = self.env['ir.actions.report'].with_context(
             force_report_rendering=True)._render_qweb_pdf(
-                'real_estate_procurement.report_evaluation', round_.ids)
+                'atmta_procurement_evaluation.report_evaluation', round_.ids)
 
         self.assertEqual(kind, 'pdf', "The report fell back to HTML.")
         self.assertTrue(pdf.startswith(b'%PDF'),

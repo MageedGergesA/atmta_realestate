@@ -1,0 +1,786 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ==========================================================
+         Trades
+         ========================================================== -->
+
+    <record id="view_vendor_category_list" model="ir.ui.view">
+        <field name="name">procurement.vendor.category.list</field>
+        <field name="model">realestate.procurement.vendor.category</field>
+        <field name="arch" type="xml">
+            <list string="Vendor Trades">
+                <field name="complete_name"/>
+                <field name="code"/>
+                <field name="parent_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="product_category_ids" widget="many2many_tags" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_vendor_category_form" model="ir.ui.view">
+        <field name="name">procurement.vendor.category.form</field>
+        <field name="model">realestate.procurement.vendor.category</field>
+        <field name="arch" type="xml">
+            <form string="Vendor Trade">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="HVAC Installation"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="parent_id"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                    <group string="Suggestion Mapping">
+                        <field name="product_category_ids" widget="many2many_tags" nolabel="1"/>
+                        <div class="text-muted">
+                            A requisition line for a product in these categories proposes this trade.
+                            The buyer may change it — the product tree says what the item is, not
+                            what a supplier is capable of.
+                        </div>
+                    </group>
+                    <field name="note" placeholder="What this trade covers, and what it does not."/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_vendor_category" model="ir.actions.act_window">
+        <field name="name">Vendor Trades</field>
+        <field name="res_model">realestate.procurement.vendor.category</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ==========================================================
+         Qualification areas and templates
+         ========================================================== -->
+
+    <record id="view_qualification_area_list" model="ir.ui.view">
+        <field name="name">procurement.qualification.area.list</field>
+        <field name="model">realestate.procurement.qualification.area</field>
+        <field name="arch" type="xml">
+            <list string="Qualification Areas" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="confidential" widget="boolean_toggle"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_qualification_area" model="ir.actions.act_window">
+        <field name="name">Qualification Areas</field>
+        <field name="res_model">realestate.procurement.qualification.area</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_qualification_template_form" model="ir.ui.view">
+        <field name="name">procurement.qualification.template.form</field>
+        <field name="model">realestate.procurement.qualification.template</field>
+        <field name="arch" type="xml">
+            <form string="Qualification Template">
+                <header>
+                    <button name="action_activate" type="object" string="Activate"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_new_version" type="object" string="New Version"
+                            invisible="state == 'draft'"
+                            help="Copies the questionnaire forward. Existing assessments keep
+                                  pointing at this version, so what they meant does not change."/>
+                    <button name="action_obsolete" type="object" string="Retire"
+                            invisible="state != 'active'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Elevator Supplier Qualification"/></h1>
+                        <h3>
+                            <field name="code" class="oe_inline" placeholder="ELEV"/>
+                            <span class="oe_inline"> — version </span>
+                            <field name="version" class="oe_inline"/>
+                        </h3>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="category_ids" widget="many2many_tags"/>
+                            <field name="partner_category_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="scoring_enabled"/>
+                            <field name="min_score" invisible="not scoring_enabled"/>
+                            <field name="validity_months"/>
+                            <field name="previous_version_id" invisible="not previous_version_id"/>
+                            <field name="next_version_id" invisible="not next_version_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Requirements" name="requirements">
+                            <field name="requirement_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="area_id"/>
+                                    <field name="name"/>
+                                    <field name="code" optional="hide"/>
+                                    <field name="requirement_type"/>
+                                    <field name="selection_options" optional="hide"/>
+                                    <field name="obligation"/>
+                                    <field name="blocking" widget="boolean_toggle"/>
+                                    <field name="expiry_sensitive" widget="boolean_toggle"/>
+                                    <field name="confidential" widget="boolean_toggle"/>
+                                    <field name="threshold" optional="hide"/>
+                                    <field name="weight" optional="hide"/>
+                                    <field name="max_score" optional="hide"/>
+                                </list>
+                            </field>
+                            <div class="text-muted mt-2">
+                                <strong>Mandatory</strong> must be answered and passed.
+                                <strong>Blocking</strong> ends the assessment as Not Qualified
+                                whatever the score says — insurance and manufacturer authorisation
+                                are the usual cases.
+                            </div>
+                        </page>
+                        <page string="Assessments" name="assessments">
+                            <field name="qualification_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="partner_id"/>
+                                    <field name="category_id"/>
+                                    <field name="state"/>
+                                    <field name="result"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Description" name="description">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_qualification_template_list" model="ir.ui.view">
+        <field name="name">procurement.qualification.template.list</field>
+        <field name="model">realestate.procurement.qualification.template</field>
+        <field name="arch" type="xml">
+            <list string="Qualification Templates">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="version"/>
+                <field name="category_ids" widget="many2many_tags" optional="show"/>
+                <field name="requirement_count" string="Requirements"/>
+                <field name="qualification_count" string="Assessments"/>
+                <field name="scoring_enabled" widget="boolean_toggle"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-muted="state == 'obsolete'"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_qualification_template" model="ir.actions.act_window">
+        <field name="name">Qualification Templates</field>
+        <field name="res_model">realestate.procurement.qualification.template</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ==========================================================
+         Vendor governance profile
+         ========================================================== -->
+
+    <record id="view_vendor_profile_form" model="ir.ui.view">
+        <field name="name">procurement.vendor.profile.form</field>
+        <field name="model">realestate.procurement.vendor.profile</field>
+        <field name="arch" type="xml">
+            <form string="Vendor Governance">
+                <header>
+                    <button name="action_start_review" type="object" string="Start Review"
+                            invisible="governance_status != 'draft'"/>
+                    <button name="action_activate" type="object" string="Activate"
+                            class="btn-primary"
+                            invisible="governance_status in ('active', 'suspended', 'restricted')"/>
+                    <button name="action_deactivate" type="object" string="Deactivate"
+                            invisible="governance_status == 'inactive'"/>
+                    <field name="governance_status" widget="statusbar"
+                           statusbar_visible="draft,under_review,active"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" icon="fa-certificate"
+                                name="action_view_qualifications">
+                            <field name="qualification_count" widget="statinfo" string="Assessments"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Suspended" bg_color="text-bg-danger"
+                            invisible="governance_status != 'suspended'"/>
+                    <div class="oe_title">
+                        <h1><field name="partner_id" options="{'no_create': True}"/></h1>
+                    </div>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="not duplicate_warning">
+                        <field name="duplicate_warning" readonly="1" nolabel="1"/>
+                        <div class="small">
+                            Reported, never merged. Merging partners belongs to whoever owns the
+                            contact master.
+                        </div>
+                    </div>
+                    <group>
+                        <group string="Governance">
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="vendor_ref"/>
+                            <field name="responsible_id"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                        <group string="Dates">
+                            <field name="registration_date"/>
+                            <field name="first_approved_date"/>
+                            <field name="last_reviewed_date"/>
+                            <field name="next_review_date"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Qualified For">
+                            <field name="qualified_category_ids" widget="many2many_tags"
+                                   nolabel="1" colspan="2"/>
+                            <div class="text-muted" colspan="2">
+                                Derived from approved assessments valid today. Active here is a
+                                statement about onboarding, never about a trade.
+                            </div>
+                        </group>
+                        <group string="Restrictions">
+                            <field name="is_restricted"/>
+                            <field name="restriction_summary" invisible="not is_restricted"/>
+                        </group>
+                    </group>
+                    <group string="Conflict Of Interest" name="conflict">
+                        <group>
+                            <field name="potential_related_party"/>
+                            <field name="conflict_review_required"/>
+                            <field name="conflict_review_complete"/>
+                        </group>
+                        <group>
+                            <field name="conflict_review_note" nolabel="1"
+                                   placeholder="What was looked at, and by whom."/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Assessments" name="qualifications">
+                            <field name="qualification_ids" readonly="1">
+                                <list decoration-success="state == 'approved'"
+                                      decoration-muted="state in ('superseded', 'expired', 'cancelled')"
+                                      decoration-danger="state == 'rejected'">
+                                    <field name="name"/>
+                                    <field name="category_id"/>
+                                    <field name="project_id" optional="show"/>
+                                    <field name="state"/>
+                                    <field name="result"/>
+                                    <field name="effective_date"/>
+                                    <field name="expiry_date"/>
+                                    <field name="is_current"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Restrictions" name="restrictions">
+                            <field name="restriction_ids" readonly="1">
+                                <list decoration-danger="state == 'active'">
+                                    <field name="name"/>
+                                    <field name="restriction_type"/>
+                                    <field name="category_id" optional="show"/>
+                                    <field name="project_id" optional="show"/>
+                                    <field name="effective_from"/>
+                                    <field name="effective_to"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_vendor_profile_list" model="ir.ui.view">
+        <field name="name">procurement.vendor.profile.list</field>
+        <field name="model">realestate.procurement.vendor.profile</field>
+        <field name="arch" type="xml">
+            <list string="Vendor Governance">
+                <field name="partner_id"/>
+                <field name="vendor_ref" optional="hide"/>
+                <field name="governance_status" widget="badge"
+                       decoration-success="governance_status == 'active'"
+                       decoration-danger="governance_status == 'suspended'"
+                       decoration-warning="governance_status == 'restricted'"/>
+                <field name="qualified_category_ids" widget="many2many_tags"/>
+                <field name="qualification_count"/>
+                <field name="is_restricted" optional="show"/>
+                <field name="next_review_date" optional="show"/>
+                <field name="responsible_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_vendor_profile_search" model="ir.ui.view">
+        <field name="name">procurement.vendor.profile.search</field>
+        <field name="model">realestate.procurement.vendor.profile</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id"/>
+                <field name="vendor_ref"/>
+                <field name="qualified_category_ids" string="Qualified Trade"/>
+                <filter name="active_vendors" string="Active"
+                        domain="[('governance_status', '=', 'active')]"/>
+                <filter name="restricted" string="Restricted or Suspended"
+                        domain="[('governance_status', 'in', ('restricted', 'suspended'))]"/>
+                <filter name="unassessed" string="Never Assessed"
+                        domain="[('qualification_ids', '=', False)]"/>
+                <separator/>
+                <filter name="review_due" string="Review Due"
+                        domain="[('next_review_date', '&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_status" string="Governance Status"
+                            context="{'group_by': 'governance_status'}"/>
+                    <filter name="group_responsible" string="Responsible"
+                            context="{'group_by': 'responsible_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_vendor_profile" model="ir.actions.act_window">
+        <field name="name">Vendor Governance</field>
+        <field name="res_model">realestate.procurement.vendor.profile</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ==========================================================
+         Qualification — M4AD register
+         ========================================================== -->
+
+    <record id="view_vendor_qualification_form" model="ir.ui.view">
+        <field name="name">procurement.vendor.qualification.form</field>
+        <field name="model">realestate.procurement.vendor.qualification</field>
+        <field name="arch" type="xml">
+            <form string="Vendor Qualification">
+                <header>
+                    <button name="action_submit" type="object" string="Submit"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_start_review" type="object" string="Start Review"
+                            class="btn-primary" invisible="state != 'submitted'"/>
+                    <button name="action_assess" type="object" string="Assess"
+                            class="btn-primary" invisible="state not in ('under_review', 'assessed')"/>
+                    <button name="action_request_approval" type="object"
+                            string="Request Approval" class="btn-primary"
+                            invisible="state != 'assessed'"/>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="btn-primary" invisible="state != 'pending_approval'"
+                            groups="group_procurement_qualification_approver"/>
+                    <button name="%(action_qualification_reject)d" type="action"
+                            string="Reject"
+                            invisible="state not in ('submitted', 'under_review', 'assessed', 'pending_approval')"
+                            groups="group_procurement_qualification_approver"/>
+                    <button name="action_reassess" type="object" string="Reassess"
+                            invisible="state not in ('approved', 'expired', 'superseded')"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('approved', 'expired', 'superseded', 'rejected', 'cancelled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,submitted,under_review,assessed,pending_approval,approved"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Current" bg_color="text-bg-success"
+                            invisible="not is_current"/>
+                    <widget name="web_ribbon" title="Superseded" bg_color="text-bg-secondary"
+                            invisible="state != 'superseded'"/>
+                    <widget name="web_ribbon" title="Expired" bg_color="text-bg-warning"
+                            invisible="state != 'expired'"/>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Scope">
+                            <field name="partner_id"/>
+                            <field name="category_id"/>
+                            <field name="project_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="is_endorsement" invisible="not project_id"/>
+                        </group>
+                        <group string="Assessment">
+                            <field name="template_id"
+                                   readonly="state != 'draft'"/>
+                            <field name="template_version"/>
+                            <field name="assessor_id"/>
+                            <field name="reviewer_id"/>
+                            <field name="approver_id" invisible="not approver_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Validity">
+                            <field name="assessment_date"/>
+                            <field name="effective_date"/>
+                            <field name="expiry_date"/>
+                            <field name="approved_date" invisible="not approved_date"/>
+                            <field name="expiry_status"/>
+                            <field name="days_to_expiry"
+                                   invisible="expiry_status == 'none'"/>
+                        </group>
+                        <group string="Outcome">
+                            <field name="result"/>
+                            <field name="score" invisible="not scoring_enabled"/>
+                            <field name="min_score" invisible="not scoring_enabled"/>
+                            <field name="is_current"/>
+                            <field name="previous_id" invisible="not previous_id"/>
+                            <field name="superseded_by_id" invisible="not superseded_by_id"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-danger" role="alert" invisible="not rejection_reason">
+                        <field name="rejection_reason" nolabel="1" readonly="1"/>
+                    </div>
+                    <notebook>
+                        <page string="Responses" name="responses">
+                            <field name="response_ids">
+                                <list editable="bottom"
+                                      decoration-danger="obligation == 'mandatory' and not passed"
+                                      decoration-muted="obligation == 'informational'">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="area_name" readonly="1"/>
+                                    <field name="requirement_name" readonly="1"/>
+                                    <field name="requirement_type" readonly="1"/>
+                                    <field name="obligation" readonly="1"/>
+                                    <field name="blocking" readonly="1" optional="show"/>
+                                    <field name="confidential" readonly="1" optional="hide"/>
+                                    <field name="value_bool"/>
+                                    <field name="value_number" optional="show"/>
+                                    <field name="value_selection" optional="hide"/>
+                                    <field name="value_date" optional="hide"/>
+                                    <field name="value_text" optional="hide"/>
+                                    <field name="attachment_ids" widget="many2many_binary"
+                                           optional="show"/>
+                                    <field name="document_number" optional="hide"/>
+                                    <field name="document_expiry_date" optional="show"/>
+                                    <field name="score" optional="show"/>
+                                    <field name="max_score" readonly="1" optional="hide"/>
+                                    <field name="verification"/>
+                                    <field name="passed" readonly="1"/>
+                                    <field name="assessor_comment" optional="hide"/>
+                                    <button name="action_verify" type="object" icon="fa-check"
+                                            title="Verify"/>
+                                    <button name="action_fail_verification" type="object"
+                                            icon="fa-times" title="Fail verification"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Conditions" name="conditions">
+                            <field name="condition_ids">
+                                <list editable="bottom">
+                                    <field name="condition_type"/>
+                                    <field name="name"/>
+                                    <field name="amount"/>
+                                    <field name="currency_id" column_invisible="True"/>
+                                    <field name="project_ids" widget="many2many_tags" optional="show"/>
+                                    <field name="category_ids" widget="many2many_tags" optional="hide"/>
+                                    <field name="date_from" optional="hide"/>
+                                    <field name="date_to" optional="hide"/>
+                                    <field name="action_required" optional="show"/>
+                                    <field name="auto_generated" readonly="1" optional="show"/>
+                                </list>
+                            </field>
+                            <div class="text-muted mt-2">
+                                Conditions are structured so they can be enforced later. A maximum
+                                award value recorded here is what M7's award check will read; a
+                                sentence in the notes is not.
+                            </div>
+                        </page>
+                        <page string="Scoring" name="scoring" invisible="not score_explanation">
+                            <field name="score_explanation" readonly="1" nolabel="1"/>
+                        </page>
+                        <page string="Group Recognition" name="group"
+                              groups="base.group_multi_company">
+                            <group>
+                                <field name="is_group_wide"/>
+                                <field name="shared_company_ids" widget="many2many_tags"
+                                       invisible="not is_group_wide"
+                                       required="is_group_wide"/>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_vendor_qualification_list" model="ir.ui.view">
+        <field name="name">procurement.vendor.qualification.list</field>
+        <field name="model">realestate.procurement.vendor.qualification</field>
+        <field name="arch" type="xml">
+            <list string="Vendor Qualification Register"
+                  decoration-success="state == 'approved' and result == 'qualified'"
+                  decoration-warning="result == 'qualified_with_conditions' or expiry_status == 'expiring'"
+                  decoration-danger="result == 'not_qualified' or expiry_status == 'expired'"
+                  decoration-muted="state in ('superseded', 'cancelled')">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="category_id"/>
+                <field name="project_id" optional="show"/>
+                <field name="template_id" optional="hide"/>
+                <field name="state"/>
+                <field name="result"/>
+                <field name="score" optional="hide" sum="—"/>
+                <field name="effective_date"/>
+                <field name="expiry_date"/>
+                <field name="expiry_status" optional="show"/>
+                <field name="condition_count" optional="show" string="Conditions"/>
+                <field name="assessor_id" optional="hide"/>
+                <field name="approver_id" optional="hide"/>
+                <field name="is_current" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_vendor_qualification_search" model="ir.ui.view">
+        <field name="name">procurement.vendor.qualification.search</field>
+        <field name="model">realestate.procurement.vendor.qualification</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="category_id"/>
+                <field name="project_id"/>
+                <filter name="current" string="Current"
+                        domain="[('is_current', '=', True)]"/>
+                <filter name="pending_assessment" string="Pending Assessment"
+                        domain="[('state', 'in', ('submitted', 'under_review'))]"/>
+                <filter name="pending_approval" string="Pending Approval"
+                        domain="[('state', '=', 'pending_approval')]"/>
+                <separator/>
+                <filter name="qualified" string="Qualified"
+                        domain="[('result', '=', 'qualified')]"/>
+                <filter name="conditional" string="Qualified With Conditions"
+                        domain="[('result', '=', 'qualified_with_conditions')]"/>
+                <filter name="not_qualified" string="Not Qualified"
+                        domain="[('result', '=', 'not_qualified')]"/>
+                <separator/>
+                <filter name="expired" string="Expired"
+                        domain="[('expiry_date', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter name="expiring_soon" string="Expiring Soon"
+                        domain="[('expiry_date', '&gt;=', context_today().strftime('%Y-%m-%d')),
+                                 ('expiry_date', '&lt;=', (context_today() + relativedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter name="endorsements" string="Project Endorsements"
+                        domain="[('project_id', '!=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_partner" string="Vendor"
+                            context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_category" string="Trade"
+                            context="{'group_by': 'category_id'}"/>
+                    <filter name="group_project" string="Project"
+                            context="{'group_by': 'project_id'}"/>
+                    <filter name="group_result" string="Result"
+                            context="{'group_by': 'result'}"/>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_vendor_qualification" model="ir.actions.act_window">
+        <field name="name">Qualification Register</field>
+        <field name="res_model">realestate.procurement.vendor.qualification</field>
+        <field name="view_mode">list,form,pivot</field>
+        <field name="context">{'search_default_current': 1}</field>
+    </record>
+
+    <record id="action_qualification_expiring" model="ir.actions.act_window">
+        <field name="name">Expiring &amp; Expired</field>
+        <field name="res_model">realestate.procurement.vendor.qualification</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('is_current', '=', True), ('expiry_date', '!=', False)]</field>
+        <field name="context">{'search_default_expiring_soon': 1}</field>
+    </record>
+
+    <record id="action_qualification_pending" model="ir.actions.act_window">
+        <field name="name">Pending Assessment &amp; Approval</field>
+        <field name="res_model">realestate.procurement.vendor.qualification</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('state', 'in', ('draft', 'submitted', 'under_review', 'assessed', 'pending_approval'))]</field>
+    </record>
+
+    <!-- ==========================================================
+         Restrictions
+         ========================================================== -->
+
+    <record id="view_vendor_restriction_form" model="ir.ui.view">
+        <field name="name">procurement.vendor.restriction.form</field>
+        <field name="model">realestate.procurement.vendor.restriction</field>
+        <field name="arch" type="xml">
+            <form string="Vendor Restriction">
+                <header>
+                    <button name="action_activate" type="object" string="Put In Force"
+                            class="btn-primary" invisible="state != 'draft'"
+                            groups="group_procurement_qualification_approver"/>
+                    <button name="%(action_restriction_lift)d" type="action" string="Lift"
+                            invisible="state != 'active'"
+                            groups="group_procurement_qualification_approver"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state != 'draft'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,active,lifted"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" icon="fa-shopping-cart"
+                                name="action_view_open_orders">
+                            <field name="open_order_count" widget="statinfo" string="Open Orders"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <div class="alert alert-info" role="alert" invisible="not open_order_count">
+                        This vendor has open purchase orders. A restriction does not cancel them,
+                        reverse anything or rewrite history — those are management decisions with
+                        money attached. The button above lists what is affected.
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="restriction_type"/>
+                            <field name="category_id"/>
+                            <field name="project_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="effective_from"/>
+                            <field name="effective_to"/>
+                            <field name="is_in_force"/>
+                            <field name="imposed_by_id"/>
+                            <field name="approved_by_id" invisible="not approved_by_id"/>
+                            <field name="source"/>
+                        </group>
+                    </group>
+                    <group string="Reason">
+                        <field name="reason" nolabel="1"
+                               placeholder="What happened, and what would have to change."/>
+                    </group>
+                    <group string="Lifted" invisible="state != 'lifted'">
+                        <field name="lifted_by_id"/>
+                        <field name="lifted_on"/>
+                        <field name="lift_reason"/>
+                    </group>
+                    <field name="notes" placeholder="Notes"/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_vendor_restriction_list" model="ir.ui.view">
+        <field name="name">procurement.vendor.restriction.list</field>
+        <field name="model">realestate.procurement.vendor.restriction</field>
+        <field name="arch" type="xml">
+            <list string="Vendor Restrictions"
+                  decoration-danger="is_in_force"
+                  decoration-muted="state in ('lifted', 'expired', 'cancelled')">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="restriction_type"/>
+                <field name="category_id" optional="show"/>
+                <field name="project_id" optional="show"/>
+                <field name="effective_from"/>
+                <field name="effective_to"/>
+                <field name="is_in_force"/>
+                <field name="state"/>
+                <field name="approved_by_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_vendor_restriction_search" model="ir.ui.view">
+        <field name="name">procurement.vendor.restriction.search</field>
+        <field name="model">realestate.procurement.vendor.restriction</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id"/>
+                <field name="reason"/>
+                <filter name="in_force" string="In Force"
+                        domain="[('state', '=', 'active')]"/>
+                <filter name="lifted" string="Lifted or Lapsed"
+                        domain="[('state', 'in', ('lifted', 'expired'))]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_partner" string="Vendor"
+                            context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_type" string="Type"
+                            context="{'group_by': 'restriction_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_vendor_restriction" model="ir.actions.act_window">
+        <field name="name">Vendor Restrictions</field>
+        <field name="res_model">realestate.procurement.vendor.restriction</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_in_force': 1}</field>
+    </record>
+
+    <!-- ==========================================================
+         M4AC rollout worklists — res.partner side
+         ========================================================== -->
+
+    <record id="view_partner_procurement_governance" model="ir.ui.view">
+        <field name="name">res.partner.procurement.governance</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" type="object" icon="fa-shield"
+                        name="action_open_vendor_governance"
+                        groups="atmta_roles.group_procurement_buyer"
+                        invisible="supplier_rank == 0">
+                    <div class="o_stat_info">
+                        <field name="procurement_qualification_count" class="o_stat_value"/>
+                        <span class="o_stat_text">Qualifications</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_vendors_unassessed" model="ir.actions.act_window">
+        <field name="name">Vendors Not Assessed</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('supplier_rank', '&gt;', 0),
+                              ('procurement_vendor_class', '!=', 'assessed')]</field>
+        <field name="context">{'res_partner_search_mode': 'supplier'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Every supplier has been assessed.</p>
+            <p>
+                This list is the M4 rollout worklist. A vendor appearing here has purchase
+                history, a price list or simply exists — none of which is a qualification, and
+                none of which M4 turned into one.
+            </p>
+        </field>
+    </record>
+
+</odoo>

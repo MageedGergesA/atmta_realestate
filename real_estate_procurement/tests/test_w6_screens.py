@@ -52,7 +52,7 @@ class TestWave6Screens(M3Common, HttpCase):
     def test_the_requisition_screens_open_and_show_the_demand(self):
         self.authenticate('admin', 'admin')
         views, records = self._open(
-            'real_estate_procurement.action_material_request')
+            'atmta_procurement_control.action_material_request')
         self.assertIn('list', views['views'])
         self.assertIn('form', views['views'])
         self.assertGreaterEqual(records['length'], 1,
@@ -61,7 +61,7 @@ class TestWave6Screens(M3Common, HttpCase):
     def test_the_reservation_screens_open_and_show_the_control_records(self):
         self.authenticate('admin', 'admin')
         views, records = self._open(
-            'real_estate_procurement.action_procurement_reservation')
+            'atmta_procurement_control.action_procurement_reservation')
         self.assertIn('list', views['views'])
         self.assertGreaterEqual(
             records['length'], 1,
@@ -71,7 +71,7 @@ class TestWave6Screens(M3Common, HttpCase):
     def test_the_control_exception_screen_opens(self):
         self.authenticate('admin', 'admin')
         views, _records = self._open(
-            'real_estate_procurement.action_control_exception')
+            'atmta_procurement_control.action_control_exception')
         self.assertIn('list', views['views'])
 
     def test_the_web_client_itself_loads_for_a_procurement_manager(self):

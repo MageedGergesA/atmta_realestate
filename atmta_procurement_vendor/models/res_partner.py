@@ -62,13 +62,13 @@ class ResPartner(models.Model):
              "supplier — never an approval.")
 
     _RE_VENDOR_TAG_XMLIDS = (
-        'real_estate_procurement.tag_vendor_contractor',
-        'real_estate_procurement.tag_vendor_material_supplier',
-        'real_estate_procurement.tag_vendor_service',
-        'real_estate_procurement.tag_vendor_marketing',
-        'real_estate_procurement.tag_vendor_consultant',
-        'real_estate_procurement.tag_vendor_utility',
-        'real_estate_procurement.tag_vendor_landowner',
+        'atmta_procurement_vendor.tag_vendor_contractor',
+        'atmta_procurement_vendor.tag_vendor_material_supplier',
+        'atmta_procurement_vendor.tag_vendor_service',
+        'atmta_procurement_vendor.tag_vendor_marketing',
+        'atmta_procurement_vendor.tag_vendor_consultant',
+        'atmta_procurement_vendor.tag_vendor_utility',
+        'atmta_procurement_vendor.tag_vendor_landowner',
     )
 
     @api.depends('category_id')

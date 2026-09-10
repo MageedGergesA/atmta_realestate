@@ -1,33 +1,43 @@
 # -*- coding: utf-8 -*-
 {
     'name': "Real Estate — Procurement",
-    'summary': "Shared procurement infrastructure for the real-estate suite.",
+    'summary': "Emptied compatibility shell for the procurement chain.",
     'description': """
-Real Estate Procurement
-=======================
-Cross-module supply-chain foundation used by Construction, Handover, Rental and Aftermarket:
+Real Estate Procurement (compatibility shell)
+=============================================
 
-* Procurement Plan (demand, not money) with revisions that keep what was planned
-* Requisition V2 — line-level project/WBS/cost-code coding, controlled edits, revision history
-* Sourcing that prepares draft RFQs for vendors a buyer names, and commits nothing
-* Budget control — approved demand reserves purchasing capacity; confirming an order converts
-  the reservation into Construction commitment, never both at once
-* Configurable budget policy (none / warn / approval required / block) and project purchase
-  governance (optional / controlled / required), per company with a project override
-* Approval matrix with snapshotted authority, maker/checker, rejection with reasons
-* Approval and reservation registers, and an exception register for every override
-* Vendor governance — qualification per company, trade and project, with templates,
-  evidence, conditions, expiry, reassessment and dated suspensions
-* One eligibility service answering "may this vendor take part, and why not" as of a
-  given date, consumed by the sourcing pool and by purchase-order confirmation
-* Vendor tags (contractor, material supplier, service vendor, marketing, consultant, utility, landowner)
-* Real-estate product flags (construction material, property fitting, marketing asset, maintenance consumable)
-* Filtered procurement menus (POs, vendors, catalog) scoped to real-estate activity
-* Starter catalog (~150 products across civil, structural, MEP, finishing, fittings, marketing, services)
+This module owns nothing. Waves 1 to 11 moved every model, screen, report,
+wizard, sequence, cron and seed record it once defined into the capability
+that owns them:
+
+* ``atmta_procurement_core`` — policy, product classification, the catalog
+* ``atmta_procurement_vendor`` — vendor governance, its crons and sequences
+* ``atmta_procurement_request`` — demand: requests, plans, revisions
+* ``atmta_procurement_control`` — reservations, approvals, exceptions
+* ``atmta_procurement_sourcing`` — sourcing events, invitations, bids
+* ``atmta_procurement_evaluation`` — evaluation rounds and the audit
+* ``atmta_procurement_award`` — award and its report
+* ``atmta_procurement_receipt`` — receipt inspection and three-way match
+* ``atmta_procurement_purchase`` — the purchase-order gate
+
+Two things stay, and both are deliberate:
+
+* the ten **legacy procurement groups**, and the bridge that gives each of them
+  its canonical twin in ``atmta_roles``. They cannot move: ``atmta_roles``
+  already defines five of these ten XML IDs for the canonical roles, so the
+  file would collide, and the bridge addresses the legacy groups by bare ID,
+  which would silently rebind to the canonical groups in any other module.
+  Databases that granted these groups keep working, and the bridge keeps
+  translating them.
+* the **cross-capability tests**, which exercise the whole chain end to end.
+  This module depends on every capability, so it is the one place that can.
+
+It is kept installed rather than uninstalled: uninstalling would cascade-delete
+the records its XML IDs still point at. AD-007 — uninstall is not rollback.
 """,
     'author': "Atmta",
     'license': 'LGPL-3',
-    'version': '18.0.15.0.0',
+    'version': '18.0.16.0.0',
     'category': 'Real Estate',
     'depends': [
         'atmta_real_estate',
@@ -61,45 +71,19 @@ Cross-module supply-chain foundation used by Construction, Handover, Rental and 
         'atmta_procurement_evaluation',
         'atmta_procurement_award',
         'atmta_procurement_receipt',
+        # Wave 11 — the purchase-order gate. Last procurement module to
+        # load; named here so this shell still pulls the whole chain.
+        'atmta_procurement_purchase',
     ],
     'data': [
+        # Wave 11 — all that remains. The legacy procurement groups and the
+        # bridge that maps them onto the canonical ATMTA roles. They stay here
+        # because `atmta_roles` already defines five of these ten XML IDs for
+        # the canonical roles, so moving the file would collide; and because
+        # the bridge's records address the legacy groups by bare ID, which
+        # would silently rebind to the canonical groups in any other module.
         'security/security.xml',
         'security/canonical_role_bridge.xml',
-        'security/ir.model.access.csv',
-        'data/sequences.xml',
-        'data/cron.xml',
-        'data/partner_categories.xml',
-        'data/product_categories.xml',
-        'data/qualification_areas.xml',
-        'data/products_seed.xml',
-        'views/approval_views.xml',
-        'views/procurement_control_views.xml',
-        # Wizard actions first: the governance views put them on buttons, and
-        # an action referenced before it exists is a load-order error, not a
-        # runtime one.
-        'wizard/vendor_governance_wizard_views.xml',
-        'views/vendor_governance_views.xml',
-        'views/sourcing_views.xml',
-        'views/evaluation_views.xml',
-        # The evaluation wizard action, and the report action, both before
-        # `views/menus.xml` — the menu references the first and the round form
-        # binds the second.
-        'wizard/evaluation_audit_wizard_views.xml',
-        'report/evaluation_report.xml',
-        'views/procurement_plan_views.xml',
-        'wizard/procurement_wizard_views.xml',
-        'views/material_request_views.xml',
-        'views/purchase_order_views.xml',
-        'views/product_views.xml',
-        'views/partner_views.xml',
-        'views/menus.xml',
-        # After menus.xml: the award menu hangs off `menu_evaluation`, and a
-        # parent referenced before it exists is a load-order error.
-        'views/award_views.xml',
-        'report/award_report.xml',
-        # M8 — receipt inspection. After menus.xml for the same reason
-        # the award views are: it hangs off `menu_procurement_operations`.
-        'views/receipt_inspection_views.xml',
     ],
     # M5 — the sourcing tour. Declared explicitly because a tour that is not
     # in a bundle is not discovered and not run: it would sit in the tree
@@ -112,5 +96,5 @@ Cross-module supply-chain foundation used by Construction, Handover, Rental and 
             '/real_estate_procurement/static/tests/tours/**/*.js',
         ],
     },
-    'application': True,
+    'application': False,
 }

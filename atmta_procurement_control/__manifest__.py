@@ -1,6 +1,6 @@
 {
     'name': 'ATMTA Procurement — Pre-commitment Control',
-    'version': '18.0.1.0.0',
+    'version': '18.0.2.0.0',
     'category': 'Real Estate/Procurement',
     'summary': 'Budget reservations, conversions, approval rules and steps, '
                'control exceptions.',
@@ -32,6 +32,14 @@ acyclic. Wave 6 / AD-008.
         'security/control_rules.xml',
         'data/control_sequences.xml',
         'data/control_cron.xml',
+        # Wave 11 — approval and control screens moved from the emptied shell.
+        'views/approval_views.xml',
+        'views/procurement_control_views.xml',
+        # Wave 11 — the requisition screens. They belong to demand, but they
+        # render nine columns this module declares on the request
+        # (reservations, approval steps, control status), so Control is the
+        # lowest module that can validate them.
+        'views/material_request_views.xml',
     ],
     'pre_init_hook': 'pre_init_hook',
     'application': False,

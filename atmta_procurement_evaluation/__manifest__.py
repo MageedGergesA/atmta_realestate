@@ -1,6 +1,6 @@
 {
     'name': 'ATMTA Procurement — Evaluation',
-    'version': '18.0.1.0.0',
+    'version': '18.0.2.0.0',
     'category': 'Real Estate/Procurement',
     'summary': 'Evaluation plans, criteria, rounds, candidates, technical and '
                'commercial scoring, integrity audit.',
@@ -29,6 +29,12 @@ the evaluation half. The event itself knows nothing about this module.
         'security/ir.model.access.csv',
         'security/evaluation_rules.xml',
         'data/evaluation_sequences.xml',
+        # Wave 11 — evaluation screens, the audit wizard and the evaluation report,
+        # moved from the emptied shell. The report action is declared here now,
+        # which removes this module's upward `env.ref` into the shell.
+        'views/evaluation_views.xml',
+        'wizard/evaluation_audit_wizard_views.xml',
+        'report/evaluation_report.xml',
     ],
     'pre_init_hook': 'pre_init_hook',
     'application': False,

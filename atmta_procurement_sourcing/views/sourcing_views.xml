@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ================================================================
+         M5 — Sourcing and Tender.
+
+         The bid response has no editable form on purpose: it is evidence,
+         and a screen offering to edit it would invite a refusal the user
+         could not have predicted.
+         ================================================================ -->
+
+    <record id="view_sourcing_event_list" model="ir.ui.view">
+        <field name="name">sourcing.event.list</field>
+        <field name="model">realestate.procurement.sourcing.event</field>
+        <field name="arch" type="xml">
+            <list string="Sourcing Events">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="project_id" optional="show"/>
+                <field name="sourcing_method"/>
+                <field name="buyer_id" optional="show"/>
+                <field name="close_datetime"/>
+                <field name="invitation_count" string="Invited"/>
+                <field name="response_count" string="Bids"/>
+                <field name="authorised_amount" sum="Authorised"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'published'"
+                       decoration-success="state == 'closed'"
+                       decoration-muted="state == 'cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sourcing_event_form" model="ir.ui.view">
+        <field name="name">sourcing.event.form</field>
+        <field name="model">realestate.procurement.sourcing.event</field>
+        <field name="arch" type="xml">
+            <form string="Sourcing Event">
+                <header>
+                    <button name="action_submit_review" type="object"
+                            string="Send for Review" class="btn-secondary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_publish" type="object"
+                            string="Publish" class="btn-primary"
+                            invisible="state not in ('draft', 'review')"/>
+                    <button name="action_close" type="object"
+                            string="Close Tender" class="btn-primary"
+                            invisible="state != 'published'"/>
+                    <button name="action_cancel" type="object"
+                            string="Cancel" class="btn-secondary"
+                            invisible="state in ('cancelled',)"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,review,published,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h2><field name="title" placeholder="What is being sourced"/></h2>
+                    </div>
+                    <group>
+                        <group string="Sourcing">
+                            <field name="sourcing_method"/>
+                            <field name="procurement_type"/>
+                            <field name="category_id"/>
+                            <field name="buyer_id"/>
+                            <field name="team_ids" widget="many2many_tags"/>
+                        </group>
+                        <group string="Context">
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="project_id"/>
+                            <field name="authorised_amount"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="current_version_id" readonly="1"/>
+                        </group>
+                        <group string="Dates">
+                            <field name="issue_datetime" readonly="1"/>
+                            <field name="clarification_deadline"/>
+                            <field name="original_close_datetime" readonly="1"/>
+                            <field name="close_datetime"/>
+                        </group>
+                        <group string="Planning">
+                            <field name="anticipated_award_date"/>
+                            <field name="required_on_site_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Scope" name="scope">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                    <field name="product_uom_id"/>
+                                    <field name="required_date"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Authorised Demand" name="demand">
+                            <field name="allocation_ids" readonly="1">
+                                <list>
+                                    <field name="request_id"/>
+                                    <field name="request_line_id"/>
+                                    <field name="coding_display" string="Coding"/>
+                                    <field name="quantity"/>
+                                    <field name="authorised_amount" sum="Authorised"/>
+                                    <field name="reservation_id"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Invited Vendors" name="invitations">
+                            <field name="invitation_ids" readonly="1">
+                                <list>
+                                    <field name="partner_id"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="invited_on"/>
+                                    <field name="version_id"/>
+                                    <field name="eligibility_status" string="Eligible at invitation"/>
+                                    <field name="current_eligibility_status" string="Eligible today"/>
+                                    <field name="eligibility_changed" widget="boolean_toggle" readonly="1"/>
+                                    <field name="acknowledgement_outstanding" widget="boolean_toggle" readonly="1"/>
+                                    <field name="purchase_order_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Bids Received" name="bids"
+                              groups="atmta_roles.group_procurement_buyer">
+                            <field name="bid_response_ids" readonly="1">
+                                <list decoration-muted="state == 'superseded'">
+                                    <field name="name"/>
+                                    <field name="partner_id"/>
+                                    <field name="revision"/>
+                                    <field name="version_id"/>
+                                    <field name="received_datetime"/>
+                                    <field name="amount_untaxed"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="is_late" widget="boolean_toggle"/>
+                                    <field name="above_authorisation" widget="boolean_toggle"/>
+                                    <field name="administrative_status"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                            <div class="alert alert-info" role="alert">
+                                Received bids are evidence of what a vendor submitted.
+                                They are not evaluated or ranked here, and they do not
+                                change when the operational RFQ changes.
+                            </div>
+                        </page>
+                        <page string="Clarifications" name="clarifications">
+                            <field name="clarification_ids">
+                                <list editable="bottom">
+                                    <field name="name" readonly="1"/>
+                                    <field name="clarification_type"/>
+                                    <field name="partner_id"/>
+                                    <field name="visibility"/>
+                                    <field name="question"/>
+                                    <field name="answer"/>
+                                    <field name="is_material" widget="boolean_toggle"/>
+                                    <field name="material_subject"/>
+                                    <field name="addendum_version_id" readonly="1"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Versions" name="versions">
+                            <field name="version_ids" readonly="1">
+                                <list>
+                                    <field name="revision"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="issued_on"/>
+                                    <field name="published_by_id"/>
+                                    <field name="effective_close_datetime"/>
+                                    <field name="reason"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="description"/>
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_sourcing_event_search" model="ir.ui.view">
+        <field name="name">sourcing.event.search</field>
+        <field name="model">realestate.procurement.sourcing.event</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="title"/>
+                <field name="project_id"/>
+                <field name="buyer_id"/>
+                <filter name="published" string="Published"
+                        domain="[('state', '=', 'published')]"/>
+                <filter name="closed" string="Closed"
+                        domain="[('state', '=', 'closed')]"/>
+                <filter name="mine" string="My Sourcing"
+                        domain="['|', ('buyer_id', '=', uid), ('team_ids', 'in', [uid])]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_project" string="Project"
+                            context="{'group_by': 'project_id'}"/>
+                    <filter name="group_method" string="Method"
+                            context="{'group_by': 'sourcing_method'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_sourcing_event" model="ir.actions.act_window">
+        <field name="name">Sourcing Events</field>
+        <field name="res_model">realestate.procurement.sourcing.event</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_mine': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Take authorised demand to market</p>
+            <p>A sourcing event invites vendors, issues a tender and records what
+               they submitted. It moves no money: authorisation stays where M3 put
+               it until an award is made.</p>
+        </field>
+    </record>
+
+    <record id="view_bid_response_list" model="ir.ui.view">
+        <field name="name">bid.response.list</field>
+        <field name="model">realestate.procurement.bid.response</field>
+        <field name="arch" type="xml">
+            <list string="Bid Responses" create="false"
+                  decoration-muted="state == 'superseded'">
+                <field name="name"/>
+                <field name="event_id"/>
+                <field name="partner_id"/>
+                <field name="revision"/>
+                <field name="received_datetime"/>
+                <field name="amount_untaxed"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="is_late" widget="boolean_toggle"/>
+                <field name="administrative_status"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_bid_response" model="ir.actions.act_window">
+        <field name="name">Bid Responses</field>
+        <field name="res_model">realestate.procurement.bid.response</field>
+        <field name="view_mode">list</field>
+    </record>
+
+</odoo>

@@ -131,7 +131,7 @@ class Contractor(models.Model):
             return self.service_product_id
         spec_label = dict(self._fields['specialization'].selection).get(self.specialization, '')
         name = _('Subcontract — %s (%s)') % (self.name, spec_label) if spec_label else _('Subcontract — %s') % self.name
-        services_cat = self.env.ref('real_estate_procurement.cat_re_services', raise_if_not_found=False)
+        services_cat = self.env.ref('atmta_procurement_core.cat_re_services', raise_if_not_found=False)
         product = self.env['product.product'].create({
             'name': name,
             'type': 'service',

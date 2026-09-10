@@ -232,7 +232,7 @@ class TestM7AwardConfidentiality(M7Common):
             award.with_user(tech).action_print_award()
 
     def test_the_award_document_is_not_offered_to_evaluation_groups(self):
-        report = self.env.ref('real_estate_procurement.action_report_award')
+        report = self.env.ref('atmta_procurement_award.action_report_award')
         allowed = set(report.groups_id.mapped('id'))
 
         for xmlid in ('real_estate_procurement.group_evaluation_technical',

@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ================================================================
+         M3T — the reservation register.
+
+         Every total on this list has to reconcile to what the availability
+         service says, which is why `amount_active` is the summed column and
+         the two it is derived from sit beside it. A register that shows only
+         a net figure cannot be checked against anything.
+         ================================================================ -->
+
+    <record id="view_procurement_reservation_list" model="ir.ui.view">
+        <field name="name">realestate.procurement.reservation.list</field>
+        <field name="model">realestate.procurement.reservation</field>
+        <field name="arch" type="xml">
+            <list decoration-info="state == 'reserved'"
+                  decoration-success="state == 'converted'"
+                  decoration-muted="state in ('released','cancelled','expired')"
+                  decoration-danger="has_anomaly">
+                <field name="name"/>
+                <field name="request_id"/>
+                <field name="line_description" optional="show"/>
+                <field name="project_id" optional="show"/>
+                <field name="reservation_date" optional="hide"/>
+                <field name="amount_reserved" sum="Reserved"/>
+                <field name="amount_converted" sum="Converted"/>
+                <field name="amount_released" optional="hide" sum="Released"/>
+                <field name="amount_active" sum="Active"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="source_amount" optional="hide"/>
+                <field name="source_currency_id" optional="hide"/>
+                <field name="control_status" widget="badge" optional="show"
+                       decoration-danger="control_status == 'over_budget'"
+                       decoration-warning="control_status == 'insufficient_data'"/>
+                <field name="purchase_order_ids" widget="many2many_tags"
+                       optional="show"/>
+                <field name="has_anomaly" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'reserved'"
+                       decoration-success="state == 'converted'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_procurement_reservation_form" model="ir.ui.view">
+        <field name="name">realestate.procurement.reservation.form</field>
+        <field name="model">realestate.procurement.reservation</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_reserve" type="object" string="Activate"
+                            class="oe_highlight" invisible="state != 'draft'"
+                            groups="atmta_roles.group_procurement_manager"/>
+                    <button name="action_open_release_wizard" type="object"
+                            string="Release" invisible="state != 'reserved'"
+                            groups="atmta_roles.group_procurement_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,reserved,converted"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-danger" role="alert"
+                         invisible="not has_anomaly">
+                        <field name="anomaly_note" readonly="1" nolabel="1"/>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Demand">
+                            <field name="request_id"/>
+                            <field name="request_line_id"/>
+                            <field name="line_description"/>
+                            <field name="project_id"/>
+                            <field name="revision"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Control">
+                            <field name="amount_reserved"/>
+                            <field name="amount_converted"/>
+                            <field name="amount_released"/>
+                            <field name="amount_active"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                            <field name="control_status"/>
+                            <field name="exception_id" invisible="not exception_id"/>
+                        </group>
+                        <group string="Source Amount" groups="base.group_multi_currency">
+                            <field name="source_amount"/>
+                            <field name="source_currency_id"/>
+                            <field name="rate_date"/>
+                        </group>
+                        <group string="Dates">
+                            <field name="reservation_date"/>
+                            <field name="expiry_date"/>
+                            <field name="converted_date" invisible="not converted_date"/>
+                            <field name="released_date" invisible="not released_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Control Position" name="position">
+                            <field name="control_note" readonly="1" nolabel="1"/>
+                        </page>
+                        <page string="Conversions" name="conversions"
+                              invisible="not conversion_ids">
+                            <field name="conversion_ids" readonly="1">
+                                <list decoration-muted="state == 'reversed'">
+                                    <field name="order_id"/>
+                                    <field name="po_line_id"/>
+                                    <field name="quantity"/>
+                                    <field name="amount" sum="Converted"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="conversion_date"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="reversal_reason" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Release" name="release"
+                              invisible="not release_reason">
+                            <field name="release_reason" readonly="1" nolabel="1"/>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_procurement_reservation_search" model="ir.ui.view">
+        <field name="name">realestate.procurement.reservation.search</field>
+        <field name="model">realestate.procurement.reservation</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="request_id"/>
+                <field name="project_id"/>
+                <filter string="Active" name="active_reservations"
+                        domain="[('state', '=', 'reserved')]"/>
+                <filter string="Converted" name="converted"
+                        domain="[('state', '=', 'converted')]"/>
+                <filter string="Released" name="released"
+                        domain="[('state', 'in', ['released','cancelled','expired'])]"/>
+                <separator/>
+                <filter string="Over Budget" name="over_budget"
+                        domain="[('control_status', '=', 'over_budget')]"/>
+                <filter string="Position Unknown" name="unknown"
+                        domain="[('control_status', '=', 'insufficient_data')]"/>
+                <filter string="Anomalies" name="anomalies"
+                        domain="[('has_anomaly', '=', True)]"/>
+                <filter string="Expired" name="expired"
+                        domain="[('state', '=', 'reserved'),
+                                 ('expiry_date', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Project" name="group_project"
+                            context="{'group_by': 'project_id'}"/>
+                    <filter string="Requisition" name="group_request"
+                            context="{'group_by': 'request_id'}"/>
+                    <filter string="State" name="group_state"
+                            context="{'group_by': 'state'}"/>
+                    <filter string="Control Status" name="group_control"
+                            context="{'group_by': 'control_status'}"/>
+                    <filter string="Reserved On" name="group_date"
+                            context="{'group_by': 'reservation_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_procurement_reservation_pivot" model="ir.ui.view">
+        <field name="name">realestate.procurement.reservation.pivot</field>
+        <field name="model">realestate.procurement.reservation</field>
+        <field name="arch" type="xml">
+            <pivot string="Reservations">
+                <field name="project_id" type="row"/>
+                <field name="state" type="col"/>
+                <field name="amount_active" type="measure"/>
+                <field name="amount_reserved" type="measure"/>
+                <field name="amount_converted" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_procurement_reservation" model="ir.actions.act_window">
+        <field name="name">Reservations</field>
+        <field name="res_model">realestate.procurement.reservation</field>
+        <field name="view_mode">list,pivot,form</field>
+        <field name="search_view_id" ref="view_procurement_reservation_search"/>
+        <field name="context">{'search_default_active_reservations': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No reservations yet</p>
+            <p>A reservation is approved demand consuming purchasing capacity
+            before anybody is owed anything. It is not a commitment, not an
+            encumbrance and not a journal entry — confirming a purchase order
+            converts it into Construction commitment, and the two never exist
+            for the same money at the same time.</p>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         M3F — the exception register.
+         ================================================================ -->
+
+    <record id="view_control_exception_list" model="ir.ui.view">
+        <field name="name">realestate.procurement.control.exception.list</field>
+        <field name="model">realestate.procurement.control.exception</field>
+        <field name="arch" type="xml">
+            <list decoration-warning="state == 'requested'"
+                  decoration-success="state == 'approved'"
+                  decoration-danger="state == 'rejected'">
+                <field name="name"/>
+                <field name="exception_type"/>
+                <field name="project_id" optional="show"/>
+                <field name="request_id" optional="show"/>
+                <field name="purchase_order_id" optional="show"/>
+                <field name="requested_amount" sum="Requested"/>
+                <field name="available_amount" optional="hide"/>
+                <field name="overage_amount" sum="Overage"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="requested_by_id" widget="many2one_avatar_user"/>
+                <field name="approved_by_id" widget="many2one_avatar_user" optional="show"/>
+                <field name="request_date" optional="hide"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_control_exception_form" model="ir.ui.view">
+        <field name="name">realestate.procurement.control.exception.form</field>
+        <field name="model">realestate.procurement.control.exception</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="oe_highlight" invisible="state != 'requested'"
+                            groups="atmta_roles.group_procurement_manager"/>
+                    <button name="action_reject" type="object" string="Reject"
+                            invisible="state != 'requested'"
+                            groups="atmta_roles.group_procurement_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="requested,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="exception_type" readonly="state != 'requested'"/>
+                            <field name="project_id" readonly="state != 'requested'"/>
+                            <field name="request_id" readonly="state != 'requested'"/>
+                            <field name="purchase_order_id" readonly="state != 'requested'"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="requested_amount" readonly="state != 'requested'"/>
+                            <field name="available_amount" readonly="state != 'requested'"/>
+                            <field name="overage_amount"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                            <field name="policy"/>
+                        </group>
+                        <group string="Requested">
+                            <field name="requested_by_id" widget="many2one_avatar_user"/>
+                            <field name="request_date"/>
+                        </group>
+                        <group string="Decided" invisible="state == 'requested'">
+                            <field name="approved_by_id" widget="many2one_avatar_user"/>
+                            <field name="approval_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Reason" name="reason">
+                            <field name="reason" readonly="state != 'requested'"/>
+                        </page>
+                        <page string="Control Position" name="position"
+                              invisible="not control_note">
+                            <field name="control_note" readonly="1" nolabel="1"/>
+                        </page>
+                        <page string="Decision" name="decision">
+                            <field name="decision_note"
+                                   placeholder="Required when refusing."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_control_exception_search" model="ir.ui.view">
+        <field name="name">realestate.procurement.control.exception.search</field>
+        <field name="model">realestate.procurement.control.exception</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="request_id"/>
+                <field name="purchase_order_id"/>
+                <filter string="Awaiting Authority" name="requested"
+                        domain="[('state', '=', 'requested')]"/>
+                <filter string="Approved" name="approved"
+                        domain="[('state', '=', 'approved')]"/>
+                <filter string="Rejected" name="rejected"
+                        domain="[('state', '=', 'rejected')]"/>
+                <separator/>
+                <filter string="Over Budget" name="type_over"
+                        domain="[('exception_type', '=', 'over_budget')]"/>
+                <filter string="Direct Purchase" name="type_direct"
+                        domain="[('exception_type', '=', 'direct_purchase')]"/>
+                <filter string="Amount Above Basis" name="type_delta"
+                        domain="[('exception_type', '=', 'amount_delta')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Type" name="group_type"
+                            context="{'group_by': 'exception_type'}"/>
+                    <filter string="Project" name="group_project"
+                            context="{'group_by': 'project_id'}"/>
+                    <filter string="State" name="group_state"
+                            context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_control_exception" model="ir.actions.act_window">
+        <field name="name">Control Exceptions</field>
+        <field name="res_model">realestate.procurement.control.exception</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_control_exception_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No exceptions raised</p>
+            <p>Every control in this module can be passed. This is where the
+            passing is written down — what was exceeded, by how much, under
+            which policy, who asked and who agreed.</p>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         Policy configuration.
+         ================================================================ -->
+
+    <record id="view_company_form_procurement" model="ir.ui.view">
+        <field name="name">res.company.form.procurement.control</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <group string="Procurement Control" name="procurement_control">
+                    <group>
+                        <field name="procurement_budget_policy"/>
+                        <field name="procurement_po_governance"/>
+                        <field name="procurement_reservation_expiry_days"/>
+                    </group>
+                    <group>
+                        <field name="procurement_amount_tolerance_pct"/>
+                        <field name="procurement_amount_tolerance_amount"/>
+                        <field name="procurement_allow_self_approval"/>
+                        <field name="procurement_self_approval_limit"
+                               invisible="not procurement_allow_self_approval"/>
+                    </group>
+                </group>
+                <group string="Vendor Governance" name="procurement_vendor_governance">
+                    <group>
+                        <field name="procurement_vendor_policy"/>
+                        <field name="procurement_qualification_warn_days"/>
+                    </group>
+                    <group>
+                        <field name="procurement_qualification_allow_self_approval"/>
+                    </group>
+                    <div colspan="2" class="text-muted">
+                        Optional is the shipped default and stays that way through an upgrade.
+                        Turning control on is a policy decision with a rollout worklist behind it —
+                        <em>Vendor Governance → Vendors Not Assessed</em> — not a side effect of
+                        installing a new version.
+                    </div>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

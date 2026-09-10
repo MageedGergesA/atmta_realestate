@@ -28,40 +28,40 @@
               groups="atmta_roles.group_procurement_requester,atmta_roles.group_procurement_technical_evaluator"/>
     <menuitem id="menu_plans"
               name="Procurement Plans" parent="menu_planning" sequence="10"
-              action="real_estate_procurement.action_procurement_plan"/>
+              action="atmta_procurement_request.action_procurement_plan"/>
     <menuitem id="menu_requisitions"
               name="Requisitions" parent="menu_planning" sequence="20"
-              action="real_estate_procurement.action_material_request"/>
+              action="atmta_procurement_control.action_material_request"/>
     <menuitem id="menu_plan_lines"
               name="Planned Items" parent="menu_planning" sequence="30"
-              action="real_estate_procurement.action_procurement_plan_line"/>
+              action="atmta_procurement_request.action_procurement_plan_line"/>
 
     <!-- ========================== SOURCING ========================== -->
     <menuitem id="menu_sourcing" name="Sourcing" parent="menu_root" sequence="20"
               groups="atmta_roles.group_procurement_buyer"/>
     <menuitem id="menu_tenders"
               name="Tenders" parent="menu_sourcing" sequence="10"
-              action="real_estate_procurement.action_sourcing_event"/>
+              action="atmta_procurement_sourcing.action_sourcing_event"/>
     <menuitem id="menu_bids"
               name="Bids" parent="menu_sourcing" sequence="20"
-              action="real_estate_procurement.action_bid_response"/>
+              action="atmta_procurement_sourcing.action_bid_response"/>
 
     <!-- ===================== EVALUATION &amp; AWARD ===================== -->
     <menuitem id="menu_evaluation" name="Evaluation &amp; Award" parent="menu_root" sequence="30"
               groups="atmta_roles.group_procurement_buyer,atmta_roles.group_procurement_technical_evaluator,atmta_roles.group_procurement_commercial_evaluator,atmta_roles.group_procurement_evaluation_manager"/>
     <menuitem id="menu_evaluations"
               name="Evaluations" parent="menu_evaluation" sequence="10"
-              action="real_estate_procurement.action_evaluation_round"/>
+              action="atmta_procurement_evaluation.action_evaluation_round"/>
     <menuitem id="menu_evaluation_plans"
               name="Evaluation Plans" parent="menu_evaluation" sequence="12"
-              action="real_estate_procurement.action_evaluation_plan"/>
+              action="atmta_procurement_evaluation.action_evaluation_plan"/>
     <menuitem id="menu_technical_evaluations"
               name="Technical Evaluations" parent="menu_evaluation" sequence="14"
-              action="real_estate_procurement.action_technical_evaluation"
+              action="atmta_procurement_evaluation.action_technical_evaluation"
               groups="atmta_roles.group_procurement_technical_evaluator,atmta_roles.group_procurement_evaluation_manager"/>
     <menuitem id="menu_awards"
               name="Awards" parent="menu_evaluation" sequence="20"
-              action="real_estate_procurement.action_procurement_award"
+              action="atmta_procurement_award.action_procurement_award"
               groups="atmta_roles.group_procurement_buyer,atmta_roles.group_procurement_manager"/>
 
     <!-- ==================== PURCHASE &amp; DELIVERY ==================== -->
@@ -69,33 +69,46 @@
               groups="atmta_roles.group_procurement_requester,atmta_roles.group_procurement_technical_evaluator"/>
     <menuitem id="menu_purchase_orders"
               name="Purchase Orders" parent="menu_purchase" sequence="10"
-              action="real_estate_procurement.action_realestate_purchase_orders"/>
+              action="atmta_procurement_purchase.action_realestate_purchase_orders"/>
     <menuitem id="menu_inspections"
               name="Material Inspections" parent="menu_purchase" sequence="20"
-              action="real_estate_procurement.action_receipt_inspection"
+              action="atmta_procurement_receipt.action_receipt_inspection"
               groups="atmta_roles.group_procurement_material_inspector,atmta_roles.group_procurement_manager"/>
 
     <!-- ========================== VENDORS ==========================
          Eight legacy destinations over three models collapse to one workspace.
-         The seven filtered registers (Qualification Register, Approved Vendor
-         List, Pending Assessment, Expiring & Expired, Vendors Not Assessed,
-         Restrictions, Data Audit) remain reachable from the legacy menu and
-         from this list's own filters; they are not permanent destinations. -->
+         Wave 11 retired the shell's parallel menu tree, so the three assessment
+         registers that used to be reachable only from it are carried here. The
+         registers stay filtered views of the same workspace, not separate
+         destinations. -->
     <menuitem id="menu_vendors" name="Vendors" parent="menu_root" sequence="50"
               groups="atmta_roles.group_procurement_requester,atmta_roles.group_procurement_technical_evaluator"/>
     <menuitem id="menu_vendor_workspace"
               name="Vendor Workspace" parent="menu_vendors" sequence="10"
-              action="real_estate_procurement.action_vendor_profile"/>
+              action="atmta_procurement_vendor.action_vendor_profile"/>
     <menuitem id="menu_qualification_register"
               name="Qualification Register" parent="menu_vendors" sequence="20"
-              action="real_estate_procurement.action_vendor_qualification"/>
+              action="atmta_procurement_vendor.action_vendor_qualification"/>
     <menuitem id="menu_vendor_restrictions"
               name="Restrictions" parent="menu_vendors" sequence="30"
-              action="real_estate_procurement.action_vendor_restriction"
+              action="atmta_procurement_vendor.action_vendor_restriction"
               groups="atmta_roles.group_procurement_qualification_assessor"/>
     <menuitem id="menu_vendor_audit"
               name="Data Audit" parent="menu_vendors" sequence="40"
-              action="real_estate_procurement.action_vendor_audit"
+              action="atmta_procurement_vendor.action_vendor_audit"
+              groups="atmta_roles.group_procurement_qualification_assessor"/>
+    <!-- Wave 11 — carried over from the retired shell menu tree. -->
+    <menuitem id="menu_qualification_pending"
+              name="Pending Assessment" parent="menu_vendors" sequence="50"
+              action="atmta_procurement_vendor.action_qualification_pending"
+              groups="atmta_roles.group_procurement_qualification_assessor"/>
+    <menuitem id="menu_qualification_expiring"
+              name="Expiring &amp; Expired" parent="menu_vendors" sequence="60"
+              action="atmta_procurement_vendor.action_qualification_expiring"
+              groups="atmta_roles.group_procurement_qualification_assessor"/>
+    <menuitem id="menu_vendors_unassessed"
+              name="Vendors Not Assessed" parent="menu_vendors" sequence="70"
+              action="atmta_procurement_vendor.action_vendors_unassessed"
               groups="atmta_roles.group_procurement_qualification_assessor"/>
 
     <!-- ========================== CONTROLS ========================== -->
@@ -103,13 +116,13 @@
               groups="atmta_roles.group_procurement_requester,atmta_roles.group_procurement_technical_evaluator"/>
     <menuitem id="menu_reservations"
               name="Reservations" parent="menu_controls" sequence="10"
-              action="real_estate_procurement.action_procurement_reservation"/>
+              action="atmta_procurement_control.action_procurement_reservation"/>
     <menuitem id="menu_exceptions"
               name="Exceptions" parent="menu_controls" sequence="20"
-              action="real_estate_procurement.action_control_exception"/>
+              action="atmta_procurement_control.action_control_exception"/>
     <menuitem id="menu_approval_register"
               name="Approval Register" parent="menu_controls" sequence="30"
-              action="real_estate_procurement.action_approval_register"
+              action="atmta_procurement_control.action_approval_register"
               groups="atmta_roles.group_procurement_approver,atmta_roles.group_procurement_manager"/>
 
     <!-- ========================= REPORTING ========================= -->
@@ -117,10 +130,10 @@
               groups="atmta_roles.group_procurement_requester,atmta_roles.group_procurement_technical_evaluator"/>
     <menuitem id="menu_avl"
               name="Approved Vendor List" parent="menu_reporting" sequence="10"
-              action="real_estate_procurement.action_avl_report"/>
+              action="atmta_procurement_vendor.action_avl_report"/>
     <menuitem id="menu_integrity_audit"
               name="Integrity Audit" parent="menu_reporting" sequence="20"
-              action="real_estate_procurement.action_evaluation_audit_wizard"
+              action="atmta_procurement_evaluation.action_evaluation_audit_wizard"
               groups="atmta_roles.group_procurement_evaluation_manager,atmta_roles.group_procurement_manager"/>
 
     <!-- ======================= CONFIGURATION ======================= -->
@@ -128,27 +141,27 @@
               groups="atmta_roles.group_procurement_manager"/>
     <menuitem id="menu_cfg_vendors"
               name="Vendors" parent="menu_config" sequence="10"
-              action="real_estate_procurement.action_realestate_vendors"/>
+              action="atmta_procurement_vendor.action_realestate_vendors"/>
     <menuitem id="menu_cfg_catalog"
               name="Material Catalog" parent="menu_config" sequence="20"
-              action="real_estate_procurement.action_realestate_catalog"/>
+              action="atmta_procurement_core.action_realestate_catalog"/>
     <menuitem id="menu_cfg_approval_rules"
               name="Approval Rules" parent="menu_config" sequence="30"
-              action="real_estate_procurement.action_approval_rule"/>
+              action="atmta_procurement_control.action_approval_rule"/>
     <menuitem id="menu_cfg_vendor_trades"
               name="Vendor Trades" parent="menu_config" sequence="40"
-              action="real_estate_procurement.action_vendor_category"/>
+              action="atmta_procurement_vendor.action_vendor_category"/>
     <menuitem id="menu_cfg_qual_areas"
               name="Qualification Areas" parent="menu_config" sequence="50"
-              action="real_estate_procurement.action_qualification_area"/>
+              action="atmta_procurement_vendor.action_qualification_area"/>
     <menuitem id="menu_cfg_qual_templates"
               name="Qualification Templates" parent="menu_config" sequence="60"
-              action="real_estate_procurement.action_qualification_template"/>
+              action="atmta_procurement_vendor.action_qualification_template"/>
     <menuitem id="menu_cfg_vendor_tags"
               name="Vendor Tags" parent="menu_config" sequence="70"
-              action="real_estate_procurement.action_realestate_vendor_tags"/>
+              action="atmta_procurement_vendor.action_realestate_vendor_tags"/>
     <menuitem id="menu_cfg_product_categories"
               name="Product Categories" parent="menu_config" sequence="80"
-              action="real_estate_procurement.action_realestate_product_categories"/>
+              action="atmta_procurement_core.action_realestate_product_categories"/>
 
 </odoo>

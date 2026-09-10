@@ -498,7 +498,7 @@ class EvaluationRound(models.Model):
                 "evaluation would state a result that has not been reached.")
                 % self.name)
         return self.env.ref(
-            'real_estate_procurement.action_report_evaluation'
+            'atmta_procurement_evaluation.action_report_evaluation'
         ).report_action(self)
 
     def action_cancel(self, reason=None):

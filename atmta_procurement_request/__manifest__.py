@@ -1,6 +1,6 @@
 {
     'name': 'ATMTA Procurement — Demand',
-    'version': '18.0.1.0.0',
+    'version': '18.0.2.0.0',
     'category': 'Real Estate/Procurement',
     'summary': 'Procurement plans and material requisitions with their '
                'revision trail.',
@@ -34,6 +34,12 @@ to control. Wave 6 / AD-008.
         'security/ir.model.access.csv',
         'security/request_rules.xml',
         'data/request_sequences.xml',
+        # Wave 11 — demand screens moved from the emptied shell. The request
+        # form itself is not here: it shows nine reservation and approval
+        # columns that `atmta_procurement_control` declares on the request, so
+        # it is loaded by Control, the lowest module that has both halves.
+        'views/procurement_plan_views.xml',
+        'wizard/procurement_wizard_views.xml',
     ],
     'pre_init_hook': 'pre_init_hook',
     'application': False,

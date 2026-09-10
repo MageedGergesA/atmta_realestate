@@ -1,6 +1,6 @@
 {
     'name': 'ATMTA Procurement — Sourcing',
-    'version': '18.0.1.0.0',
+    'version': '18.0.2.0.0',
     'category': 'Real Estate/Procurement',
     'summary': 'Sourcing events, versions, invitations, clarifications, '
                'bid responses.',
@@ -39,6 +39,8 @@ nothing about this module.
         'security/ir.model.access.csv',
         'security/sourcing_rules.xml',
         'data/sourcing_sequences.xml',
+        # Wave 11 — sourcing screens moved from the emptied shell.
+        'views/sourcing_views.xml',
     ],
     'pre_init_hook': 'pre_init_hook',
     'application': False,

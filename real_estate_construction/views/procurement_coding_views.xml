@@ -22,7 +22,7 @@
         <field name="name">realestate.material.request.form.construction.coding</field>
         <field name="model">realestate.material.request</field>
         <field name="inherit_id"
-               ref="real_estate_procurement.view_material_request_form"/>
+               ref="atmta_procurement_control.view_material_request_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='line_ids']/list/field[@name='qty']"
                    position="before">
@@ -48,7 +48,7 @@
         <field name="name">realestate.procurement.plan.form.construction.coding</field>
         <field name="model">realestate.procurement.plan</field>
         <field name="inherit_id"
-               ref="real_estate_procurement.view_procurement_plan_form"/>
+               ref="atmta_procurement_request.view_procurement_plan_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='line_ids']/list/field[@name='quantity']"
                    position="before">
@@ -64,7 +64,7 @@
         <field name="name">realestate.procurement.reservation.list.coding</field>
         <field name="model">realestate.procurement.reservation</field>
         <field name="inherit_id"
-               ref="real_estate_procurement.view_procurement_reservation_list"/>
+               ref="atmta_procurement_control.view_procurement_reservation_list"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='project_id']" position="after">
                 <field name="wbs_id" optional="hide"/>
@@ -77,7 +77,7 @@
         <field name="name">realestate.procurement.reservation.form.coding</field>
         <field name="model">realestate.procurement.reservation</field>
         <field name="inherit_id"
-               ref="real_estate_procurement.view_procurement_reservation_form"/>
+               ref="atmta_procurement_control.view_procurement_reservation_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='project_id']" position="after">
                 <field name="wbs_id"/>
@@ -90,7 +90,7 @@
         <field name="name">realestate.procurement.reservation.search.coding</field>
         <field name="model">realestate.procurement.reservation</field>
         <field name="inherit_id"
-               ref="real_estate_procurement.view_procurement_reservation_search"/>
+               ref="atmta_procurement_control.view_procurement_reservation_search"/>
         <field name="arch" type="xml">
             <xpath expr="//filter[@name='group_project']" position="after">
                 <filter string="Cost Code" name="group_cost_code"
@@ -107,7 +107,7 @@
         <field name="name">realestate.procurement.control.exception.form.coding</field>
         <field name="model">realestate.procurement.control.exception</field>
         <field name="inherit_id"
-               ref="real_estate_procurement.view_control_exception_form"/>
+               ref="atmta_procurement_control.view_control_exception_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='project_id']" position="after">
                 <field name="cost_code_id" options="{'no_create': True}"

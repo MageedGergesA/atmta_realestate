@@ -379,7 +379,7 @@ class ProcurementAward(models.Model):
         self._assert_authority(_("issue the award document"),
                                groups=DRAFTING_GROUPS)
         return self.env.ref(
-            'real_estate_procurement.action_report_award').report_action(self)
+            'atmta_procurement_award.action_report_award').report_action(self)
 
     def _cancel_losing_quotations(self):
         """Close the tender's unawarded RFQs when the award is issued."""

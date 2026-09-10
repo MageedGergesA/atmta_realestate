@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Wave 11 — the procurement policy group on the developer's project form.
+
+         It needs two things no procurement capability has together: the four
+         policy fields, declared by `atmta_procurement_core`, and
+         `real_estate_developer.view_project_form`, which owns the screen.
+         No capability depends on the developer application, and none should.
+         This module already depends on both through the procurement shell, so
+         the composition lives here — which is what an app module is for. -->
+
+    <record id="view_project_form_procurement" model="ir.ui.view">
+        <field name="name">realestate.project.form.procurement.control</field>
+        <field name="model">realestate.project</field>
+        <field name="inherit_id" ref="real_estate_developer.view_project_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group[1]" position="after">
+                <group string="Procurement Control" name="procurement_control"
+                       groups="atmta_roles.group_procurement_manager">
+                    <field name="procurement_budget_policy"/>
+                    <field name="procurement_po_governance"/>
+                    <field name="procurement_vendor_policy"/>
+                    <field name="procurement_vendor_endorsement_required"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

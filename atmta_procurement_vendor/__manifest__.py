@@ -55,7 +55,7 @@ Governance is consumed by those capabilities, not the other way round.
 """,
     'author': "Atmta",
     'license': 'LGPL-3',
-    'version': '18.0.2.0.0',
+    'version': '18.0.3.0.0',
     'category': 'Real Estate',
     'depends': [
         'base',
@@ -68,6 +68,16 @@ Governance is consumed by those capabilities, not the other way round.
     'data': [
         'security/ir.model.access.csv',
         'security/vendor_rules.xml',
+        # Wave 11 — the vendor governance surface, its seed data and its crons,
+        # moved from the emptied shell. Wizard actions load before the views
+        # that put them on buttons.
+        'data/sequences.xml',
+        'data/partner_categories.xml',
+        'data/qualification_areas.xml',
+        'data/cron.xml',
+        'wizard/vendor_governance_wizard_views.xml',
+        'views/vendor_governance_views.xml',
+        'views/partner_views.xml',
     ],
     'installable': True,
     'pre_init_hook': 'pre_init_hook',

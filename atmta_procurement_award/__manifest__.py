@@ -1,6 +1,6 @@
 {
     'name': 'ATMTA Procurement — Award',
-    'version': '18.0.1.0.0',
+    'version': '18.0.2.0.0',
     'category': 'Real Estate/Procurement',
     'summary': 'Award, award lines and allocations; issuing the purchase order.',
     'description': """
@@ -34,6 +34,10 @@ the award half, and the procurement integrity audit with the award checks.
         'security/ir.model.access.csv',
         'security/award_rules.xml',
         'data/award_sequences.xml',
+        # Wave 11 — award screens and the award report, moved from the emptied
+        # shell. Declaring the report here removes the upward `env.ref`.
+        'views/award_views.xml',
+        'report/award_report.xml',
     ],
     'pre_init_hook': 'pre_init_hook',
     'application': False,

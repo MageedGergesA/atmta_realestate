@@ -47,8 +47,7 @@ class TestControlCapability(TransactionCase):
                      'realestate.procurement.purchase.exception',
                      'realestate.procurement.reservation',
                      'realestate.procurement.reservation.conversion',
-                     'realestate.procurement.reservation.release',
-                     'realestate.procurement.restriction.lift'):
+                     'realestate.procurement.reservation.release'):
             self.assertIn(name, self.env)
             self.assertEqual(self.env[name]._original_module,
                              'atmta_procurement_control',

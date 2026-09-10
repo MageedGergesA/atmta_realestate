@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Extend the standard PO form to expose RE links -->
+    <record id="view_purchase_order_form_re" model="ir.ui.view">
+        <field name="name">purchase.order.form.realestate</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='other_info']" position="after">
+                <group string="Real Estate" name="re_group">
+                    <field name="re_project_id" options="{'no_create': True}"/>
+                    <field name="re_source_model" readonly="1"/>
+                    <field name="re_source_display" readonly="1"
+                           invisible="not re_source_display"/>
+                    <field name="re_governance" readonly="1"
+                           invisible="not re_project_id"/>
+                    <field name="re_requisition_ids" widget="many2many_tags"
+                           readonly="1" invisible="not re_requisition_ids"/>
+                    <field name="re_exception_id" readonly="1"
+                           invisible="not re_exception_id"/>
+                </group>
+            </xpath>
+            <xpath expr="//button[@name='button_confirm'][1]" position="before">
+                <button name="action_request_direct_purchase_exception"
+                        type="object" string="Request Purchase Exception"
+                        invisible="state not in ('draft', 'sent')
+                                   or re_governance == 'optional'
+                                   or not re_project_id
+                                   or re_requisition_ids"
+                        groups="atmta_roles.group_procurement_buyer"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Filtered list for "real-estate POs only" -->
+    <record id="action_realestate_purchase_orders" model="ir.actions.act_window">
+        <field name="name">Real Estate Purchase Orders</field>
+        <field name="res_model">purchase.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('is_realestate_po', '=', True)]</field>
+        <field name="context">{'search_default_group_by_state': 1}</field>
+    </record>
+</odoo>

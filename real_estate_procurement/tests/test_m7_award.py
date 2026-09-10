@@ -591,7 +591,7 @@ class TestM7SplitAndPartialAward(M7Common):
 class TestM7AwardReport(M7Common):
     """The document, and the word it uses for itself."""
 
-    REPORT = 'real_estate_procurement.report_award'
+    REPORT = 'atmta_procurement_award.report_award'
 
     def _html(self, award, user=None):
         Report = self.env['ir.actions.report']
