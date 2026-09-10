@@ -18,13 +18,10 @@ from odoo import api, fields, models
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
-    re_package_id = fields.Many2one(
-        'realestate.construction.contract.package',
-        string='Construction Package', index=True, ondelete='set null',
-        help="The commercial package this order executes. An order that "
-             "belongs to a package is *the* commitment for it — the package's "
-             "own value is then a comparison, not an addition.",
-    )
+    # Wave 13 — `re_package_id` itself is declared by
+    # `atmta_construction_contract`, beside the model whose `purchase_order_ids`
+    # inverts it. What stays here is the default-filling below, which writes
+    # `re_project_id` from the procurement chain.
 
     @api.onchange('re_package_id')
     def _onchange_re_package_id(self):

@@ -33,8 +33,6 @@ from dateutil.relativedelta import relativedelta
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
-from .claim import OPEN_CLAIM_STATES
-
 PACKAGE_STATES = [
     ('draft', 'Draft'),
     ('tender', 'Tender / Negotiation'),
@@ -123,9 +121,6 @@ class ConstructionContractPackage(models.Model):
         help="The value being negotiated. Becomes the original contract value "
              "at award unless a different figure is awarded.",
     )
-    commitment_change_ids = fields.One2many(
-        'realestate.construction.commitment.change', 'package_id',
-        string='Approved Variations', readonly=True)
     approved_variation_amount = fields.Monetary(
         string='Approved Variations', compute='_compute_variations',
         store=True, readonly=True, copy=False, tracking=True,
@@ -134,13 +129,21 @@ class ConstructionContractPackage(models.Model):
              "authorised it.",
     )
 
-    @api.depends('commitment_change_ids.amount',
-                 'commitment_change_ids.change_order_id.state')
+    def _variation_amount(self):
+        """Approved variations against this package.
+
+        Seam. The change-order workflow that authorises a variation lives in
+        `real_estate_construction`, above this module, so the sum cannot be
+        taken here. That module supplies `commitment_change_ids` and the
+        arithmetic; on its own the floor reports no variations, which is the
+        truthful answer when nothing can raise one.
+        """
+        self.ensure_one()
+        return 0.0
+
     def _compute_variations(self):
         for rec in self:
-            live = rec.commitment_change_ids.filtered(
-                lambda c: c.change_order_id.state in ('implemented', 'closed'))
-            rec.approved_variation_amount = sum(live.mapped('amount'))
+            rec.approved_variation_amount = rec._variation_amount()
     current_contract_value = fields.Monetary(
         compute='_compute_current_value', store=True, tracking=True)
 
@@ -174,10 +177,6 @@ class ConstructionContractPackage(models.Model):
         tracking=True, help="Taking-over / substantial completion, if the "
                             "contract uses one.")
     actual_completion_date = fields.Date(tracking=True)
-    eot_ids = fields.One2many(
-        'realestate.construction.eot', 'package_id', readonly=True)
-    claim_ids = fields.One2many(
-        'realestate.construction.claim', 'package_id', readonly=True)
 
     # -- Notice requirements. Deliberately per contract: 28 days is FIDIC's
     # -- number, not everybody's, and a hard-coded period would quietly
@@ -232,30 +231,20 @@ class ConstructionContractPackage(models.Model):
         'res.users', readonly=True, copy=False, string='Awarded By')
     notes = fields.Html()
 
-    @api.depends('eot_ids.state', 'eot_ids.determined_days',
-                 'eot_ids.claimed_days', 'claim_ids.state',
-                 'claim_ids.claimed_days')
-    def _compute_eot_days(self):
-        """Approved days move the contract date. Claimed days are reported.
+    def _eot_day_totals(self):
+        """(approved days, claimed days) for this package.
 
-        Claimed days are counted from the extensions that exist, plus the
-        claims that ask for time and have not yet produced one — otherwise a
-        claim for sixty days would be invisible until somebody remembered to
-        raise an EOT record for it.
+        Seam. Extensions of time and claims are `real_estate_construction`
+        models. Approved days move the contract completion date; claimed days
+        are reported beside it and never inside it. That module overrides this
+        with the real sums.
         """
+        self.ensure_one()
+        return 0.0, 0.0
+
+    def _compute_eot_days(self):
         for rec in self:
-            implemented = rec.eot_ids.filtered(
-                lambda e: e.state == 'implemented')
-            rec.approved_eot_days = sum(implemented.mapped('determined_days'))
-            pending = rec.eot_ids.filtered(
-                lambda e: e.state not in ('implemented', 'rejected',
-                                          'withdrawn', 'superseded'))
-            claimed = sum(pending.mapped('claimed_days'))
-            claims_without_eot = rec.claim_ids.filtered(
-                lambda c: c.claimed_days and c.state in OPEN_CLAIM_STATES
-                and not c.eot_ids)
-            claimed += sum(claims_without_eot.mapped('claimed_days'))
-            rec.claimed_eot_days = claimed
+            rec.approved_eot_days, rec.claimed_eot_days = rec._eot_day_totals()
 
     @api.depends('original_completion_date', 'approved_eot_days',
                  'other_time_adjustment_days')
@@ -280,11 +269,28 @@ class ConstructionContractPackage(models.Model):
     @api.depends('purchase_order_ids.state',
                  'purchase_order_ids.amount_untaxed',
                  'current_contract_value', 'state')
+    def _package_commitment(self):
+        """(amount, source) this package currently commits.
+
+        Seam. The precedence rule -- purchase orders when there are any, the
+        package's own contract value when there are none -- is stated once, in
+        `commitment.py` in `real_estate_construction`. Repeating it here would
+        be a second place for the double-count this suite exists to prevent.
+        The floor answers from the purchase orders it can see.
+        """
+        self.ensure_one()
+        confirmed = self.purchase_order_ids.filtered(
+            lambda po: po.state in ('purchase', 'done'))
+        if confirmed:
+            return sum(confirmed.mapped('amount_untaxed')), 'purchase_orders'
+        if self.current_contract_value:
+            return self.current_contract_value, 'package'
+        return 0.0, 'none'
+
     def _compute_po_stats(self):
-        Commitment = self.env['realestate.construction.commitment']
         for rec in self:
             rec.purchase_order_count = len(rec.purchase_order_ids)
-            amount, source = Commitment._package_commitment(rec)
+            amount, source = rec._package_commitment()
             rec.committed_amount = amount
             rec.commitment_source = source
 
@@ -429,15 +435,13 @@ class ConstructionContractPackage(models.Model):
         An omission cannot take a contract below this — a contract worth less
         than what has been paid under it is not a contract, it is an error
         waiting to be discovered by an auditor.
+
+        Seam. Payment certificates are a `real_estate_construction` model.
+        On the floor nothing has been certified, so nothing constrains an
+        omission; that module supplies the real figure.
         """
         self.ensure_one()
-        certificates = self.env[
-            'realestate.construction.payment.certificate'].sudo().search([
-                ('project_id', '=', self.project_id.id),
-                ('contractor_id', '=', self.contractor_id.id),
-                ('state', 'in', ('certified', 'invoiced', 'paid')),
-            ])
-        return sum(certificates.mapped('gross_amount'))
+        return 0.0
 
     def action_view_purchase_orders(self):
         self.ensure_one()

@@ -24,6 +24,9 @@ Track construction progress for projects and phases:
         # company accounts moved down to the floor. Declared so the floor
         # loads first and the field metadata can change owner cleanly.
         'atmta_construction_core',
+        # Wave 13 — contractors and contract packages moved down to the
+        # commercial floor so the capabilities above could point at them.
+        'atmta_construction_contract',
         # Named for the bridge below, which gives each legacy construction
         # group its canonical twin.
         'atmta_roles',

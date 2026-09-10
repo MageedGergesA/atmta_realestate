@@ -1,4 +1,3 @@
-from . import contractor
 from . import milestone
 from . import construction_task
 from . import boq
@@ -9,7 +8,6 @@ from . import payment_certificate
 from . import cost_line
 from . import project_analytic
 from . import budget
-from . import contract_package
 from . import commitment
 from . import purchase_order_construction
 from . import project_controls
@@ -48,3 +46,12 @@ from . import procurement_requisition
 # The WBS, the cost codes, the analytic distribution helper and the four
 # company accounts are defined there and are reached through the ORM registry
 # exactly as before.
+
+# Wave 13 — `realestate.contractor` and
+# `realestate.construction.contract.package` moved to
+# `atmta_construction_contract`, the commercial floor this module now depends
+# on. These two files add back the half that only construction can know:
+# milestones, certificates, retention, variations, extensions of time, claims
+# and the commitment precedence rule.
+from . import contractor_construction
+from . import contract_package_construction

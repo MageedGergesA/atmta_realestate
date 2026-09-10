@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_contractor_user,Contractor User,model_realestate_contractor,atmta_roles.group_construction_site_user,1,1,1,0
+access_contractor_manager,Contractor Manager,model_realestate_contractor,atmta_roles.group_construction_manager,1,1,1,1
+access_construction_package_user,package user,model_realestate_construction_contract_package,atmta_roles.group_construction_site_user,1,0,0,0
+access_construction_package_manager,package manager,model_realestate_construction_contract_package,atmta_roles.group_construction_manager,1,1,1,1
