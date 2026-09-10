@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!--
+            Wave 12 — the bridge from this module's legacy construction groups
+            to the canonical ATMTA roles.
+
+            `atmta_construction_core` now owns the WBS and the cost codes, and
+            its access rules name canonical roles. They have to: a floor cannot
+            depend on the module above it merely to borrow a group XML ID, and
+            that dependency is the one this extraction exists to remove.
+
+            Each legacy group is given its canonical twin. The legacy hierarchy
+            stays where it already was (manager implies user, commercial and
+            cost; commercial and cost each imply user), so everyone reaches
+            exactly the canonical roles their legacy position already implied.
+            Nobody gains a permission and nobody loses one; the same people are
+            described in a second vocabulary.
+
+            The canonical roles are left flat, as Wave 4 defined them. The
+            hierarchy lives here, in the legacy layer that already had it.
+
+            Note the names do not line up one for one. `group_construction_user`
+            is the site role, and `group_construction_cost` is cost control.
+            Reading the mapping off the identifier would get two of the four
+            wrong.
+        -->
+
+        <record id="group_construction_user" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('atmta_roles.group_construction_site_user'))]"/>
+        </record>
+
+        <record id="group_construction_commercial" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('atmta_roles.group_construction_commercial_manager'))]"/>
+        </record>
+
+        <record id="group_construction_cost" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('atmta_roles.group_construction_cost_control'))]"/>
+        </record>
+
+        <record id="group_construction_manager" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+        </record>
+    </data>
+</odoo>

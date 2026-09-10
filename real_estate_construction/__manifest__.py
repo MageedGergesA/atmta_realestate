@@ -18,15 +18,27 @@ Track construction progress for projects and phases:
     # Construction model, record, formula or test changes with it.
     'version': '1.0.1',
     'category': 'Real Estate',
-    'depends': ['real_estate_developer', 'account', 'purchase', 'real_estate_procurement', 'stock'],
+    'depends': [
+        'real_estate_developer', 'account', 'purchase', 'real_estate_procurement', 'stock',
+        # Wave 12 — the WBS, the cost codes, the analytic helper and the
+        # company accounts moved down to the floor. Declared so the floor
+        # loads first and the field metadata can change owner cleanly.
+        'atmta_construction_core',
+        # Named for the bridge below, which gives each legacy construction
+        # group its canonical twin.
+        'atmta_roles',
+    ],
     'data': [
         'security/security.xml',
+        'security/canonical_role_bridge.xml',
         'security/ir.model.access.csv',
         'security/construction_rules.xml',
         'data/sequences.xml',
-        'data/analytic_plans.xml',
+        # Wave 12 — the analytic plans moved to `atmta_construction_core`
+        # with the helper that names them.
         'wizard/subcontract_po_wizard_views.xml',
-        'views/cost_structure_views.xml',
+        # Wave 12 — cost-structure screens moved with their models to
+        # `atmta_construction_core`.
         'views/budget_views.xml',
         'views/forecast_views.xml',
         'views/change_views.xml',

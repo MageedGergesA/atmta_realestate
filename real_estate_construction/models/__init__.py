@@ -2,15 +2,12 @@ from . import contractor
 from . import milestone
 from . import construction_task
 from . import boq
-from . import construction_accounts
 from . import retention
 from . import advance
 from . import payment_certificate_line
 from . import payment_certificate
 from . import cost_line
-from . import construction_analytic
 from . import project_analytic
-from . import cost_structure
 from . import budget
 from . import contract_package
 from . import commitment
@@ -45,3 +42,9 @@ from . import control_exceptions
 from . import control_tower
 from . import integrity_audit
 from . import procurement_requisition
+
+# Wave 12 — cost_structure, construction_analytic and construction_accounts
+# moved to `atmta_construction_core`, the floor this module now depends on.
+# The WBS, the cost codes, the analytic distribution helper and the four
+# company accounts are defined there and are reached through the ORM registry
+# exactly as before.

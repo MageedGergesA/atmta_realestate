@@ -617,7 +617,7 @@ class TestAnalyticIntegration(ConstructionCommon):
 
         self.assertEqual(
             account.plan_id,
-            self.env.ref('real_estate_construction.analytic_plan_re_projects'))
+            self.env.ref('atmta_construction_core.analytic_plan_re_projects'))
 
     def test_the_analytic_account_takes_the_projects_company(self):
         """FIXED IN M1 — was

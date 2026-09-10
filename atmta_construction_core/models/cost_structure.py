@@ -63,8 +63,8 @@ COST_CATEGORY = [
 ]
 
 #: XML ids of the two analytic plans this module relies on.
-PROJECT_PLAN_XMLID = 'real_estate_construction.analytic_plan_re_projects'
-COST_CODE_PLAN_XMLID = 'real_estate_construction.analytic_plan_cost_codes'
+PROJECT_PLAN_XMLID = 'atmta_construction_core.analytic_plan_re_projects'
+COST_CODE_PLAN_XMLID = 'atmta_construction_core.analytic_plan_cost_codes'
 
 
 class ConstructionWBS(models.Model):

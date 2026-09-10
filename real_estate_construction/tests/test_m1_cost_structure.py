@@ -180,7 +180,7 @@ class TestAnalyticArchitecture(ConstructionCommon):
 
         self.assertEqual(
             account.plan_id,
-            self.env.ref('real_estate_construction.analytic_plan_re_projects'),
+            self.env.ref('atmta_construction_core.analytic_plan_re_projects'),
             "A project cost centre must land in the Real Estate Projects "
             "plan, whatever else exists in the database.")
 
@@ -210,7 +210,7 @@ class TestAnalyticArchitecture(ConstructionCommon):
 
         self.assertEqual(
             account.plan_id,
-            self.env.ref('real_estate_construction.analytic_plan_cost_codes'))
+            self.env.ref('atmta_construction_core.analytic_plan_cost_codes'))
         self.assertEqual(account.company_id, code.company_id)
 
     def test_a_distribution_carries_one_account_from_each_plan(self):
@@ -258,7 +258,7 @@ class TestAnalyticArchitecture(ConstructionCommon):
 
         cost_code_accounts = self.env['account.analytic.account'].search([
             ('plan_id', '=', self.env.ref(
-                'real_estate_construction.analytic_plan_cost_codes').id)])
+                'atmta_construction_core.analytic_plan_cost_codes').id)])
 
         self.assertEqual(len(cost_code_accounts), 5)
 
