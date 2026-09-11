@@ -436,7 +436,7 @@ class ConstructionForecast(models.Model):
         if allow_self in ('True', 'true', '1'):
             return True
         if self.prepared_by_id == self.env.user and not self.env.user.has_group(
-                'real_estate_construction.group_construction_manager'):
+                'atmta_roles.group_construction_manager'):
             raise UserError(_(
                 "A forecast is approved by somebody other than the person who "
                 "prepared it."))

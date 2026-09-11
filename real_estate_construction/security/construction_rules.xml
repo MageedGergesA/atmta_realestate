@@ -24,27 +24,6 @@
     
     
     
-    <record id="rule_realestate_construction_budget_company" model="ir.rule">
-        <field name="name">realestate.construction.budget: company</field>
-        <field name="model_id" ref="model_realestate_construction_budget"/>
-        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
-
-    <record id="rule_realestate_construction_budget_change_line_company" model="ir.rule">
-        <field name="name">realestate.construction.budget.change.line: company</field>
-        <field name="model_id" ref="model_realestate_construction_budget_change_line"/>
-        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
-
-    <record id="rule_realestate_construction_budget_line_company" model="ir.rule">
-        <field name="name">realestate.construction.budget.line: company</field>
-        <field name="model_id" ref="model_realestate_construction_budget_line"/>
-        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
-
     
     
     
@@ -54,13 +33,10 @@
     
     
     
-    <record id="rule_realestate_construction_commitment_change_company" model="ir.rule">
-        <field name="name">realestate.construction.commitment.change: company</field>
-        <field name="model_id" ref="model_realestate_construction_commitment_change"/>
-        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
-
+    
+    
+    
+    
     <!-- Wave 13 — the company rule for the package moved with it to
          `atmta_construction_contract`. The project-team and manager rules
          below stay: their domains read a project field this module declares. -->
@@ -78,30 +54,6 @@
     
     
     
-    <record id="rule_realestate_construction_forecast_company" model="ir.rule">
-        <field name="name">realestate.construction.forecast: company</field>
-        <field name="model_id" ref="model_realestate_construction_forecast"/>
-        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
-
-    <record id="rule_realestate_construction_forecast_line_company" model="ir.rule">
-        <field name="name">realestate.construction.forecast.line: company</field>
-        <field name="model_id" ref="model_realestate_construction_forecast_line"/>
-        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
-
-    
-    
-    
-    <record id="rule_realestate_construction_issue_company" model="ir.rule">
-        <field name="name">realestate.construction.issue: company</field>
-        <field name="model_id" ref="model_realestate_construction_issue"/>
-        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
-
     
     
     
@@ -111,28 +63,16 @@
     
     
     
-    <record id="rule_realestate_construction_revenue_change_company" model="ir.rule">
-        <field name="name">realestate.construction.revenue.change: company</field>
-        <field name="model_id" ref="model_realestate_construction_revenue_change"/>
-        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
-
     
-    <record id="rule_realestate_construction_risk_company" model="ir.rule">
-        <field name="name">realestate.construction.risk: company</field>
-        <field name="model_id" ref="model_realestate_construction_risk"/>
-        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
-
-    <record id="rule_realestate_construction_risk_action_company" model="ir.rule">
-        <field name="name">realestate.construction.risk.action: company</field>
-        <field name="model_id" ref="model_realestate_construction_risk_action"/>
-        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -169,32 +109,20 @@
     
     <record id="rule_realestate_construction_budget_project_member" model="ir.rule">
         <field name="name">realestate.construction.budget: project team</field>
-        <field name="model_id" ref="model_realestate_construction_budget"/>
+        <field name="model_id" ref="atmta_construction_cost.model_realestate_construction_budget"/>
         <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
         <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
     </record>
 
-    <record id="rule_realestate_construction_budget_manager" model="ir.rule">
-        <field name="name">realestate.construction.budget: manager sees every project</field>
-        <field name="model_id" ref="model_realestate_construction_budget"/>
-        <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
-    </record>
-
+    
     <record id="rule_realestate_construction_budget_line_project_member" model="ir.rule">
         <field name="name">realestate.construction.budget.line: project team</field>
-        <field name="model_id" ref="model_realestate_construction_budget_line"/>
+        <field name="model_id" ref="atmta_construction_cost.model_realestate_construction_budget_line"/>
         <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
         <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
     </record>
 
-    <record id="rule_realestate_construction_budget_line_manager" model="ir.rule">
-        <field name="name">realestate.construction.budget.line: manager sees every project</field>
-        <field name="model_id" ref="model_realestate_construction_budget_line"/>
-        <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
-    </record>
-
+    
     <record id="rule_realestate_construction_change_event_project_member" model="ir.rule">
         <field name="name">realestate.construction.change.event: project team</field>
         <field name="model_id" ref="atmta_construction_change.model_realestate_construction_change_event"/>
@@ -299,32 +227,20 @@
     
     <record id="rule_realestate_construction_forecast_project_member" model="ir.rule">
         <field name="name">realestate.construction.forecast: project team</field>
-        <field name="model_id" ref="model_realestate_construction_forecast"/>
+        <field name="model_id" ref="atmta_construction_cost.model_realestate_construction_forecast"/>
         <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
         <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
     </record>
 
-    <record id="rule_realestate_construction_forecast_manager" model="ir.rule">
-        <field name="name">realestate.construction.forecast: manager sees every project</field>
-        <field name="model_id" ref="model_realestate_construction_forecast"/>
-        <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
-    </record>
-
+    
     <record id="rule_realestate_construction_forecast_line_project_member" model="ir.rule">
         <field name="name">realestate.construction.forecast.line: project team</field>
-        <field name="model_id" ref="model_realestate_construction_forecast_line"/>
+        <field name="model_id" ref="atmta_construction_cost.model_realestate_construction_forecast_line"/>
         <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
         <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
     </record>
 
-    <record id="rule_realestate_construction_forecast_line_manager" model="ir.rule">
-        <field name="name">realestate.construction.forecast.line: manager sees every project</field>
-        <field name="model_id" ref="model_realestate_construction_forecast_line"/>
-        <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
-    </record>
-
+    
     <record id="rule_realestate_construction_inspection_project_member" model="ir.rule">
         <field name="name">realestate.construction.inspection: project team</field>
         <field name="model_id" ref="atmta_construction_quality.model_realestate_construction_inspection"/>
@@ -343,18 +259,12 @@
     
     <record id="rule_realestate_construction_issue_project_member" model="ir.rule">
         <field name="name">realestate.construction.issue: project team</field>
-        <field name="model_id" ref="model_realestate_construction_issue"/>
+        <field name="model_id" ref="atmta_construction_cost.model_realestate_construction_issue"/>
         <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
         <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
     </record>
 
-    <record id="rule_realestate_construction_issue_manager" model="ir.rule">
-        <field name="name">realestate.construction.issue: manager sees every project</field>
-        <field name="model_id" ref="model_realestate_construction_issue"/>
-        <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
-    </record>
-
+    
     <record id="rule_realestate_construction_itp_project_member" model="ir.rule">
         <field name="name">realestate.construction.itp: project team</field>
         <field name="model_id" ref="atmta_construction_quality.model_realestate_construction_itp"/>
@@ -437,18 +347,12 @@
     
     <record id="rule_realestate_construction_risk_project_member" model="ir.rule">
         <field name="name">realestate.construction.risk: project team</field>
-        <field name="model_id" ref="model_realestate_construction_risk"/>
+        <field name="model_id" ref="atmta_construction_cost.model_realestate_construction_risk"/>
         <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
         <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
     </record>
 
-    <record id="rule_realestate_construction_risk_manager" model="ir.rule">
-        <field name="name">realestate.construction.risk: manager sees every project</field>
-        <field name="model_id" ref="model_realestate_construction_risk"/>
-        <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
-    </record>
-
+    
     <record id="rule_realestate_construction_submittal_project_member" model="ir.rule">
         <field name="name">realestate.construction.submittal: project team</field>
         <field name="model_id" ref="atmta_construction_documents.model_realestate_construction_submittal"/>

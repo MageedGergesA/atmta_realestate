@@ -1,36 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo noupdate="1">
 
-    <record id="seq_construction_budget" model="ir.sequence">
-        <field name="name">Construction Budget</field>
-        <field name="code">realestate.construction.budget</field>
-        <field name="prefix">BUD/%(year)s/</field>
-        <field name="padding">4</field>
-    </record>
     <record id="seq_construction_package" model="ir.sequence">
         <field name="name">Construction Contract Package</field>
         <field name="code">realestate.construction.contract.package</field>
         <field name="prefix">PKG/%(year)s/</field>
-        <field name="padding">4</field>
-    </record>
-    <record id="seq_construction_forecast" model="ir.sequence">
-        <field name="name">Construction Forecast</field>
-        <field name="code">realestate.construction.forecast</field>
-        <field name="prefix">FC/%(year)s/</field>
-        <field name="padding">4</field>
-    </record>
-
-    <record id="seq_construction_risk" model="ir.sequence">
-        <field name="name">Project Risk</field>
-        <field name="code">realestate.construction.risk</field>
-        <field name="prefix">RSK/%(year)s/</field>
-        <field name="padding">4</field>
-    </record>
-
-    <record id="seq_construction_issue" model="ir.sequence">
-        <field name="name">Project Issue</field>
-        <field name="code">realestate.construction.issue</field>
-        <field name="prefix">ISS/%(year)s/</field>
         <field name="padding">4</field>
     </record>
 

@@ -162,7 +162,7 @@ class ConstructionChangeAuthority(models.AbstractModel):
     #: parameter → (group, label). Checked in order, smallest first.
     LEVELS = [
         ('real_estate_construction.change_approval_limit_manager',
-         'real_estate_construction.group_construction_manager',
+         'atmta_roles.group_construction_manager',
          'Construction Manager', 1_000_000.0),
     ]
 
@@ -175,7 +175,7 @@ class ConstructionChangeAuthority(models.AbstractModel):
             if abs(order.gross_impact) <= threshold:
                 return {'group': group, 'group_name': label,
                         'threshold': threshold}
-        return {'group': 'real_estate_construction.group_construction_manager',
+        return {'group': 'atmta_roles.group_construction_manager',
                 'group_name': _('Construction Manager (above all thresholds)'),
                 'threshold': 0.0}
 

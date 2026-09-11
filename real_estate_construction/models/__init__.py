@@ -1,18 +1,8 @@
 from . import project_analytic
-from . import budget
-from . import commitment
 from . import purchase_order_construction
-from . import project_controls
-from . import forecast
-from . import change_impact
-from . import cost_report
-from . import budget_migration
 from . import project_construction
 from . import phase_construction
 from . import construction_dashboard
-from . import risk_issue
-from . import exposure
-from . import cost_sheet
 from . import control_exceptions
 from . import control_tower
 from . import integrity_audit
@@ -65,3 +55,12 @@ from . import delay_daily_link
 # progress billing moved to `atmta_construction_certification`. The BOQ-line
 # relation Wave 18 had to leave here went with them: the module that owns the
 # certificate line is the one that says which BOQ line it consumes.
+
+# Wave 20 — budgets, change impact, commitment, exposure, cost sheets,
+# forecasts, cost reporting, project controls and risk moved to
+# `atmta_construction_cost`. It is the last cluster that owned data.
+#
+# What stays here owns nothing and only reads: the control tower, the
+# integrity audit, the dashboard and the data-control exceptions. They
+# consume every module below and add no figure of their own, which is why
+# they sit with the screens rather than in a capability of their own.

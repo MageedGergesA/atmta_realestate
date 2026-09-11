@@ -500,7 +500,9 @@ class TestRemainingBOQForecast(CertificationCommon):
         return boq
 
     def test_the_method_is_no_longer_disabled(self):
-        from odoo.addons.real_estate_construction.models.forecast import (
+        # Wave 20 — forecast moved to `atmta_construction_cost`. The import
+        # path follows it; what is asserted is unchanged.
+        from odoo.addons.atmta_construction_cost.models.forecast import (
             DISABLED_METHODS)
         self.assertEqual(DISABLED_METHODS, {})
 

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+        <!--
+            Wave 20 — company rules for the cost and forecast models. The
+            project-team rules stayed in `real_estate_construction`: their
+            domains read `project_id.construction_member_ids`, which that
+            module declares. Group references are rebound to canonical roles
+            via the Wave 12 bridge.
+        -->
+        <record id="rule_realestate_construction_budget_company" model="ir.rule">
+                <field name="name">realestate.construction.budget: company</field>
+                <field name="model_id" ref="model_realestate_construction_budget"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_budget_change_line_company" model="ir.rule">
+                <field name="name">realestate.construction.budget.change.line: company</field>
+                <field name="model_id" ref="model_realestate_construction_budget_change_line"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_budget_line_company" model="ir.rule">
+                <field name="name">realestate.construction.budget.line: company</field>
+                <field name="model_id" ref="model_realestate_construction_budget_line"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_commitment_change_company" model="ir.rule">
+                <field name="name">realestate.construction.commitment.change: company</field>
+                <field name="model_id" ref="model_realestate_construction_commitment_change"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_forecast_company" model="ir.rule">
+                <field name="name">realestate.construction.forecast: company</field>
+                <field name="model_id" ref="model_realestate_construction_forecast"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_forecast_line_company" model="ir.rule">
+                <field name="name">realestate.construction.forecast.line: company</field>
+                <field name="model_id" ref="model_realestate_construction_forecast_line"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_issue_company" model="ir.rule">
+                <field name="name">realestate.construction.issue: company</field>
+                <field name="model_id" ref="model_realestate_construction_issue"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_revenue_change_company" model="ir.rule">
+                <field name="name">realestate.construction.revenue.change: company</field>
+                <field name="model_id" ref="model_realestate_construction_revenue_change"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_risk_company" model="ir.rule">
+                <field name="name">realestate.construction.risk: company</field>
+                <field name="model_id" ref="model_realestate_construction_risk"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_risk_action_company" model="ir.rule">
+                <field name="name">realestate.construction.risk.action: company</field>
+                <field name="model_id" ref="model_realestate_construction_risk_action"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_budget_manager" model="ir.rule">
+                <field name="name">realestate.construction.budget: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_construction_budget"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+        <record id="rule_realestate_construction_budget_line_manager" model="ir.rule">
+                <field name="name">realestate.construction.budget.line: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_construction_budget_line"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+        <record id="rule_realestate_construction_forecast_manager" model="ir.rule">
+                <field name="name">realestate.construction.forecast: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_construction_forecast"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+        <record id="rule_realestate_construction_forecast_line_manager" model="ir.rule">
+                <field name="name">realestate.construction.forecast.line: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_construction_forecast_line"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+        <record id="rule_realestate_construction_issue_manager" model="ir.rule">
+                <field name="name">realestate.construction.issue: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_construction_issue"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+        <record id="rule_realestate_construction_risk_manager" model="ir.rule">
+                <field name="name">realestate.construction.risk: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_construction_risk"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+    </data>
+</odoo>

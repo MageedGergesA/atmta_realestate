@@ -41,6 +41,9 @@ Track construction progress for projects and phases:
         # Wave 19 — certificates, retention, advances and owner billing
         # moved down to certification.
         'atmta_construction_certification',
+        # Wave 20 — budget, commitment, forecast, cost reporting and risk
+        # moved down. The last cluster that owned data.
+        'atmta_construction_cost',
         # Named for the bridge below, which gives each legacy construction
         # group its canonical twin.
         'atmta_roles',

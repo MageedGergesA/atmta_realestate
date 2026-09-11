@@ -371,7 +371,7 @@ class ConstructionBudget(models.Model):
         if allow_self in ('True', 'true', '1'):
             return True
         if self.create_uid == self.env.user and not self.env.user.has_group(
-                'real_estate_construction.group_construction_manager'):
+                'atmta_roles.group_construction_manager'):
             raise UserError(_(
                 "A budget is approved by somebody other than the person who "
                 "prepared it. Ask a Commercial Manager, or set "

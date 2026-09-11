@@ -345,7 +345,7 @@ class ConstructionRisk(models.Model):
         """A cost controller's explicit act, recorded as one."""
         self.ensure_one()
         if not self.env.user.has_group(
-                'real_estate_construction.group_construction_manager'):
+                'atmta_roles.group_construction_manager'):
             raise UserError(_(
                 "Putting a risk into the forecast is a cost controller's "
                 "decision."))
