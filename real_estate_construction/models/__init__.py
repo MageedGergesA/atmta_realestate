@@ -15,9 +15,7 @@ from . import forecast
 from . import change_event
 from . import change_order
 from . import change_impact
-from . import quality
 from . import daily_report
-from . import quality_wizard
 from . import cost_report
 from . import budget_migration
 from . import owner_progress_billing
@@ -57,3 +55,8 @@ from . import contract_package_construction
 # not go with them: the link from a submittal or an RFI to the change event it
 # raises, which this module declares.
 from . import information_change_event
+
+# Wave 15 — inspections, NCRs and observations moved to
+# `atmta_construction_quality`. This file adds back the NCR's change-event
+# link, and registers the daily-report mode on the reason wizard.
+from . import quality_change_event

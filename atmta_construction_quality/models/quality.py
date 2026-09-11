@@ -103,7 +103,6 @@ SEVERITIES = [
     ('minor', 'Minor'), ('major', 'Major'), ('critical', 'Critical'),
 ]
 
-
 # =====================================================================
 # ITP
 # =====================================================================
@@ -308,7 +307,6 @@ class ConstructionITP(models.Model):
                     company=rec.company_id.display_name,
                     other=rec.project_id.company_id.display_name))
 
-
 class ConstructionITPItem(models.Model):
     """One checkpoint in a plan."""
     _name = 'realestate.construction.itp.item'
@@ -350,7 +348,6 @@ class ConstructionITPItem(models.Model):
         for rec in self:
             rec.work_release_required = rec.inspection_point == 'hold'
 
-
 # =====================================================================
 # Checklist templates
 # =====================================================================
@@ -371,7 +368,6 @@ class ConstructionChecklistTemplate(models.Model):
         'realestate.construction.checklist.template.line', 'template_id',
         string='Items', copy=True)
     active = fields.Boolean(default=True)
-
 
 class ConstructionChecklistTemplateLine(models.Model):
     _name = 'realestate.construction.checklist.template.line'
@@ -402,7 +398,6 @@ class ConstructionChecklistTemplateLine(models.Model):
     selection_values = fields.Char(help="Comma-separated options.")
     is_mandatory = fields.Boolean(default=True)
     reference = fields.Char()
-
 
 # =====================================================================
 # Inspection request  →  inspection
@@ -592,7 +587,6 @@ class ConstructionInspectionRequest(models.Model):
                     "project is in %(other)s.", name=rec.name,
                     company=rec.company_id.display_name,
                     other=rec.project_id.company_id.display_name))
-
 
 class ConstructionInspection(models.Model):
     """What the inspector actually found, and against what."""
@@ -922,7 +916,6 @@ class ConstructionInspection(models.Model):
                     company=rec.company_id.display_name,
                     other=rec.project_id.company_id.display_name))
 
-
 class ConstructionInspectionLine(models.Model):
     """One checked item, and what it measured."""
     _name = 'realestate.construction.inspection.line'
@@ -1000,7 +993,6 @@ class ConstructionInspectionLine(models.Model):
                 raise ValidationError(_(
                     "'%s' failed and has no disposition. A failure nobody "
                     "resolved is the one that reaches the client.") % rec.name)
-
 
 # =====================================================================
 # Observation  →  NCR
@@ -1111,7 +1103,6 @@ class ConstructionQualityObservation(models.Model):
             rec.state = 'void'
         return True
 
-
     def action_open_reason_wizard(self):
         self.ensure_one()
         return {
@@ -1156,7 +1147,6 @@ class ConstructionQualityObservation(models.Model):
                     rec.project_id.company_id != rec.company_id:
                 raise ValidationError(_("Observation and project companies "
                                         "disagree."))
-
 
 class ConstructionNCR(models.Model):
     """A formal non-conformance: what was wrong, what is being done, who checked.
@@ -1276,8 +1266,6 @@ class ConstructionNCR(models.Model):
     currency_id = fields.Many2one(
         'res.currency', required=True,
         default=lambda self: self.env.company.currency_id)
-    change_event_id = fields.Many2one(
-        'realestate.construction.change.event', readonly=True, copy=False)
 
     reinspection_id = fields.Many2one(
         'realestate.construction.inspection', readonly=True, copy=False,
@@ -1366,8 +1354,11 @@ class ConstructionNCR(models.Model):
         self.ensure_one()
         if self.proposed_disposition not in ('use_as_is', 'concession'):
             return True
+        # Wave 15 — the canonical role. The legacy construction groups are
+        # declared above this module; the Wave 12 bridge gives every legacy
+        # manager this role, so the same people pass the check.
         if not self.env.user.has_group(
-                'real_estate_construction.group_construction_manager'):
+                'atmta_roles.group_construction_manager'):
             raise UserError(_(
                 "Accepting non-conforming work as-is is a manager's decision, "
                 "not a workflow step."))
@@ -1443,7 +1434,6 @@ class ConstructionNCR(models.Model):
             })
         return True
 
-
     def action_open_reason_wizard(self):
         self.ensure_one()
         return {
@@ -1486,34 +1476,6 @@ class ConstructionNCR(models.Model):
                       }))
         self.reinspection_id = inspection
         return inspection
-
-    def action_create_change_event(self):
-        """Hand commercial consequences to M4. Never automatic."""
-        self.ensure_one()
-        if self.change_event_id:
-            raise UserError(_("%s already has a change event.") % self.name)
-        event = self.env['realestate.construction.change.event'].create({
-            'title': _("NCR %(number)s — %(title)s",
-                       number=self.name, title=self.title),
-            'project_id': self.project_id.id,
-            'company_id': self.company_id.id,
-            'currency_id': self.currency_id.id,
-            'package_id': self.package_id.id or False,
-            'contractor_id': self.contractor_id.id or False,
-            'wbs_id': self.wbs_id.id or False,
-            'cost_code_id': self.cost_code_id.id or False,
-            'source': 'ncr_corrective_work',
-            'source_reference': self.name,
-            'source_model': self._name,
-            'source_id': self.id,
-            'estimated_cost_impact': self.estimated_rework_cost,
-            'estimated_schedule_days': self.estimated_delay_days,
-            'description': self.description,
-        })
-        self.change_event_id = event
-        if self.cost_impact == 'potential':
-            self.cost_impact = 'managed'
-        return event
 
     def write(self, vals):
         """Closed evidence is not edited."""
