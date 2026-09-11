@@ -217,12 +217,11 @@ class ConstructionChangeOrder(models.Model):
     approval_threshold = fields.Monetary(compute='_compute_authority')
 
     # ----- implementation links, which are what make it idempotent -----
-    budget_change_ids = fields.One2many(
-        'realestate.construction.budget.change.line', 'change_order_id',
-        string='Budget Changes', readonly=True)
-    commitment_change_ids = fields.One2many(
-        'realestate.construction.commitment.change', 'change_order_id',
-        string='Commitment Changes', readonly=True)
+    # The implementation links -- the budget and commitment change records an
+    # approved order produces -- are declared by `real_estate_construction`,
+    # which owns those models. What is idempotent about implementation is the
+    # existence of those records, so the check that reads them is restated up
+    # there with the relation it needs.
     is_implemented = fields.Boolean(
         compute='_compute_implemented', store=True)
 
@@ -260,15 +259,24 @@ class ConstructionChangeOrder(models.Model):
             rec.change_margin = (
                 rec.approved_revenue_amount - rec.approved_cost_amount)
 
-    @api.depends('budget_change_ids', 'commitment_change_ids', 'state')
+    @api.depends('state')
     def _compute_implemented(self):
         for rec in self:
             rec.is_implemented = rec.state in ('implemented', 'closed')
 
+    def _authority_rule(self):
+        """The approval rule this order falls under, or None.
+
+        Seam. The authority matrix is a `real_estate_construction` model. On
+        its own this module states no threshold, which is the truthful answer
+        when nothing has defined one; that module overrides it with the rule.
+        """
+        self.ensure_one()
+        return None
+
     def _compute_authority(self):
-        Authority = self.env['realestate.construction.change.authority']
         for rec in self:
-            rule = Authority.rule_for(rec)
+            rule = rec._authority_rule()
             rec.requires_approval_by = rule['group_name'] if rule else ''
             rec.approval_threshold = rule['threshold'] if rule else 0.0
 
@@ -436,7 +444,7 @@ class ConstructionChangeOrder(models.Model):
             rec._require_state(('approved',), _('implemented'))
             rec._lock()
 
-            if rec.budget_change_ids or rec.commitment_change_ids:
+            if rec._already_implemented():
                 # The lock let a competing caller finish first. Its records
                 # exist, so there is nothing left to do.
                 rec.message_post(body=_(
@@ -468,92 +476,59 @@ class ConstructionChangeOrder(models.Model):
             "SELECT pg_advisory_xact_lock(%s, %s)",
             (hash('re.construction.change') % 2147483647, self.id))
 
-    def _apply_budget_impact(self):
-        """Budget changes become records; the baseline is never rewritten."""
-        self.ensure_one()
-        Budget = self.env['realestate.construction.budget']
-        budget = Budget.current_for(self.project_id)
-        budget_lines = self.line_ids.filtered(
-            lambda l: l.impact_side in ('budget', 'contingency')
-            and l.approved_amount)
-        if not budget_lines:
-            return
-        if not budget:
-            raise UserError(_(
-                "%(project)s has no baselined budget, so there is nothing for "
-                "a budget change to change. Baseline a budget first.",
-                project=self.project_id.display_name))
+    def _already_implemented(self):
+        """Whether implementation has already produced its records.
 
-        ChangeLine = self.env['realestate.construction.budget.change.line']
-        for line in budget_lines:
-            target = budget.line_ids.filtered(
-                lambda bl: bl.cost_code_id == line.cost_code_id)[:1]
-            ChangeLine.create({
-                'change_order_id': self.id,
-                'budget_id': budget.id,
-                'budget_line_id': target.id if target else False,
-                'cost_code_id': line.cost_code_id.id,
-                'wbs_id': line.wbs_id.id or False,
-                'amount': line.approved_amount,
-                'change_type': line._budget_change_type(),
-                'effective_date': self.effective_date,
-            })
-
-    def _apply_commitment_impact(self):
-        """Commitment changes sit beside the original, never inside it."""
-        self.ensure_one()
-        commitment_lines = self.line_ids.filtered(
-            lambda l: l.impact_side == 'commitment' and l.approved_amount)
-        if not commitment_lines:
-            return
-        Change = self.env['realestate.construction.commitment.change']
-        for line in commitment_lines:
-            Change.create({
-                'change_order_id': self.id,
-                'project_id': self.project_id.id,
-                'package_id': self.package_id.id or False,
-                'cost_code_id': line.cost_code_id.id,
-                'wbs_id': line.wbs_id.id or False,
-                'amount': line.approved_amount,
-                'effective_date': self.effective_date,
-            })
-
-    def _apply_revenue_impact(self):
-        """Owner-side value. Cost and revenue changes are not the same money."""
-        self.ensure_one()
-        revenue = self.approved_revenue_amount
-        if not revenue:
-            return
-        self.env['realestate.construction.revenue.change'].create({
-            'change_order_id': self.id,
-            'project_id': self.project_id.id,
-            'partner_id': self.partner_id.id or False,
-            'amount': revenue,
-            'effective_date': self.effective_date,
-        })
-
-    def _convert_forecast_anticipations(self):
-        """§44 — an anticipation that has become real stops being anticipated.
-
-        Only **draft** forecasts are touched. An approved forecast is history
-        and is left exactly as it was, even though it now contains an
-        anticipation of something that has since been approved: that is what
-        was believed at the time, and rewriting it would destroy the record.
+        Seam, and the idempotency guard. What makes implementation
+        idempotent is the existence of the budget and commitment change
+        records, and those are `real_estate_construction` models, so only that
+        module can see them. Below it nothing is ever produced, so nothing has
+        to be detected, and answering False is the honest reading rather than a
+        permissive one.
         """
         self.ensure_one()
-        events = self.change_event_id | self.related_event_ids
-        if not events:
-            return
-        adjustments = self.env[
-            'realestate.construction.forecast.adjustment'].search([
-                ('change_event_id', 'in', events.ids),
-                ('converted_to_change_order', '=', False),
-            ])
-        for adjustment in adjustments:
-            adjustment.sudo().write({
-                'converted_to_change_order': True,
-                'converted_by_order_id': self.id,
-            })
+        return False
+
+    def _apply_budget_impact(self):
+        """Turn approved budget lines into budget change records.
+
+        Seam. Budgets and budget change lines are `real_estate_construction`
+        models. Below that module an approved order changes no budget, because
+        there is no budget to change; that module supplies the real behaviour,
+        including the refusal when a project has no baseline.
+        """
+        self.ensure_one()
+        return True
+
+    def _apply_commitment_impact(self):
+        """Turn approved commitment lines into commitment change records.
+
+        Seam. Commitment changes are a `real_estate_construction` model, and
+        they sit beside the original commitment rather than inside it.
+        """
+        self.ensure_one()
+        return True
+
+    def _apply_revenue_impact(self):
+        """Record the owner-side value of an approved order.
+
+        Seam. Revenue changes are a `real_estate_construction` model. Cost and
+        revenue changes are not the same money, which is why they are separate
+        records rather than a sign on one.
+        """
+        self.ensure_one()
+        return True
+
+    def _convert_forecast_anticipations(self):
+        """Mark anticipations that this order has made real.
+
+        Seam. Forecast adjustments are a `real_estate_construction` model.
+        Only draft forecasts are ever touched, and that rule stays with them:
+        an approved forecast is history, and rewriting it would destroy the
+        record of what was believed at the time.
+        """
+        self.ensure_one()
+        return True
 
     # ------------------------------------------------------------------
     # Validation
@@ -606,8 +581,11 @@ class ConstructionChangeOrder(models.Model):
         return True
 
     def _check_authority(self):
+        """Refuse an approval the approver has no authority for.
+
+        Seam. The authority matrix is a `real_estate_construction` model.
+        """
         self.ensure_one()
-        self.env['realestate.construction.change.authority'].check(self)
         return True
 
     @api.constrains('project_id', 'company_id', 'package_id')

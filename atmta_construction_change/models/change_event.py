@@ -159,10 +159,6 @@ class ConstructionChangeEvent(models.Model):
     approved_cost_change = fields.Monetary(compute='_compute_orders')
     approved_revenue_change = fields.Monetary(compute='_compute_orders')
 
-    forecast_adjustment_ids = fields.One2many(
-        'realestate.construction.forecast.adjustment', 'change_event_id',
-        string='Forecast Adjustments')
-
     age_days = fields.Integer(compute='_compute_age')
     is_potential = fields.Boolean(compute='_compute_age', store=True)
 

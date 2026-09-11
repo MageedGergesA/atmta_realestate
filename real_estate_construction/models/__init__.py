@@ -12,8 +12,6 @@ from . import commitment
 from . import purchase_order_construction
 from . import project_controls
 from . import forecast
-from . import change_event
-from . import change_order
 from . import change_impact
 from . import daily_report
 from . import cost_report
@@ -60,3 +58,10 @@ from . import information_change_event
 # `atmta_construction_quality`. This file adds back the NCR's change-event
 # link, and registers the daily-report mode on the reason wizard.
 from . import quality_change_event
+
+# Wave 16 — change events and change orders moved to
+# `atmta_construction_change`. This file supplies the implementation: the
+# budget, commitment and revenue records an approved order produces, the
+# authority matrix it is checked against, and the forecast anticipations it
+# converts.
+from . import change_implementation

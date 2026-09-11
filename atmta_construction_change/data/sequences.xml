@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!-- Wave 16 — sequences for change events and change orders. `noupdate`,
+         which `_process_end` skips, so the hand-over names them explicitly. -->
+    <record id="seq_construction_change_event" model="ir.sequence">
+        <field name="name">Construction Change Event</field>
+        <field name="code">realestate.construction.change.event</field>
+        <field name="prefix">CE/%(year)s/</field>
+        <field name="padding">4</field>
+    </record>
+
+    <record id="seq_construction_change_order" model="ir.sequence">
+        <field name="name">Construction Change Order</field>
+        <field name="code">realestate.construction.change.order</field>
+        <field name="prefix">CO/%(year)s/</field>
+        <field name="padding">4</field>
+    </record>
+</odoo>
