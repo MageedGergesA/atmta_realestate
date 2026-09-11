@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
-"""Wave 18 — what certification consumes from a BOQ line.
+"""What certification consumes from a BOQ line.
 
-The bill of quantities moved to `atmta_construction_site` with the rest of
-site execution. Payment certificates did not: they are the money, and they
-stay here with retention, advances and owner billing.
+Wave 18 moved the bill of quantities to `atmta_construction_site` and left
+this relation in the monolith, because payment certificates were still there.
+Wave 19 moved the certificates here, so the relation comes with them: the
+module that owns the certificate line is the one that should say which BOQ
+line it consumes.
 
-So the relation from a BOQ line to the certificate lines that consume it is
-declared here, and the seam the line exposes is answered here. The rule is
-unchanged and still stated once: only certificates that reached certified,
-invoiced or paid count against the authorised quantity. What over-certification
-means is unchanged too, and it is still visible rather than floored at zero.
+The rule is unchanged and still stated once: only certificates that reached
+certified, invoiced or paid count against the authorised quantity, and
+over-certification stays visible rather than floored at zero.
 """
 from odoo import api, fields, models
 

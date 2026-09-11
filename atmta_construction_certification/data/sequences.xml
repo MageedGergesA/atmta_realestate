@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!-- Wave 19 — sequences for payment certificates, owner progress billing,
+         retention releases and advances. `noupdate`, which `_process_end`
+         skips, so the hand-over names them explicitly. -->
+    <record id="seq_payment_certificate" model="ir.sequence">
+        <field name="name">Payment Certificate</field>
+        <field name="code">realestate.construction.payment.certificate</field>
+        <field name="prefix">CERT-</field>
+        <field name="padding">5</field>
+    </record>
+
+    <record id="seq_owner_progress_billing" model="ir.sequence">
+        <field name="name">Owner Progress Billing</field>
+        <field name="code">realestate.owner.progress.billing</field>
+        <field name="prefix">OPB-</field>
+        <field name="padding">5</field>
+    </record>
+
+    <record id="seq_construction_retention_release" model="ir.sequence">
+        <field name="name">Retention Release</field>
+        <field name="code">realestate.construction.retention.release</field>
+        <field name="prefix">RET/%(year)s/</field>
+        <field name="padding">4</field>
+    </record>
+
+    <record id="seq_construction_advance" model="ir.sequence">
+        <field name="name">Construction Advance</field>
+        <field name="code">realestate.construction.advance</field>
+        <field name="prefix">ADV/%(year)s/</field>
+        <field name="padding">4</field>
+    </record>
+</odoo>

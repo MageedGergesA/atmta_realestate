@@ -1,7 +1,3 @@
-from . import retention
-from . import advance
-from . import payment_certificate_line
-from . import payment_certificate
 from . import project_analytic
 from . import budget
 from . import commitment
@@ -11,7 +7,6 @@ from . import forecast
 from . import change_impact
 from . import cost_report
 from . import budget_migration
-from . import owner_progress_billing
 from . import project_construction
 from . import phase_construction
 from . import construction_dashboard
@@ -65,4 +60,8 @@ from . import delay_daily_link
 # bill of quantities, tasks, daily reports, the labour log and cost lines. This
 # file keeps the one relation that could not go with it, because payment
 # certificates are still declared here.
-from . import boq_certification
+
+# Wave 19 — payment certificates, their lines, retention, advances and owner
+# progress billing moved to `atmta_construction_certification`. The BOQ-line
+# relation Wave 18 had to leave here went with them: the module that owns the
+# certificate line is the one that says which BOQ line it consumes.

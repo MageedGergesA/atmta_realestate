@@ -22,20 +22,8 @@
     
     
     
-    <record id="rule_realestate_construction_advance_company" model="ir.rule">
-        <field name="name">realestate.construction.advance: company</field>
-        <field name="model_id" ref="model_realestate_construction_advance"/>
-        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
-
-    <record id="rule_realestate_construction_advance_recovery_company" model="ir.rule">
-        <field name="name">realestate.construction.advance.recovery: company</field>
-        <field name="model_id" ref="model_realestate_construction_advance_recovery"/>
-        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
-
+    
+    
     <record id="rule_realestate_construction_budget_company" model="ir.rule">
         <field name="name">realestate.construction.budget: company</field>
         <field name="model_id" ref="model_realestate_construction_budget"/>
@@ -118,35 +106,11 @@
     
     
     
-    <record id="rule_realestate_construction_payment_certificate_company" model="ir.rule">
-        <field name="name">realestate.construction.payment.certificate: company</field>
-        <field name="model_id" ref="model_realestate_construction_payment_certificate"/>
-        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
-
-    <record id="rule_realestate_construction_payment_certificate_line_company" model="ir.rule">
-        <field name="name">realestate.construction.payment.certificate.line: company</field>
-        <field name="model_id" ref="model_realestate_construction_payment_certificate_line"/>
-        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
-
     
-    <record id="rule_realestate_construction_retention_company" model="ir.rule">
-        <field name="name">realestate.construction.retention: company</field>
-        <field name="model_id" ref="model_realestate_construction_retention"/>
-        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
-
-    <record id="rule_realestate_construction_retention_release_company" model="ir.rule">
-        <field name="name">realestate.construction.retention.release: company</field>
-        <field name="model_id" ref="model_realestate_construction_retention_release"/>
-        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
-
+    
+    
+    
+    
     <record id="rule_realestate_construction_revenue_change_company" model="ir.rule">
         <field name="name">realestate.construction.revenue.change: company</field>
         <field name="model_id" ref="model_realestate_construction_revenue_change"/>
@@ -178,13 +142,7 @@
          `atmta_construction_core`. The project-team rule below stays: its
          domain reads a project field this module declares. -->
 
-    <record id="rule_realestate_owner_progress_billing_company" model="ir.rule">
-        <field name="name">realestate.owner.progress.billing: company</field>
-        <field name="model_id" ref="model_realestate_owner_progress_billing"/>
-        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-        <field name="global" eval="True"/>
-    </record>
-
+    
     <record id="rule_realestate_boq_project_member" model="ir.rule">
         <field name="name">realestate.boq: project team</field>
         <field name="model_id" ref="atmta_construction_site.model_realestate_boq"/>
@@ -203,18 +161,12 @@
     
     <record id="rule_realestate_construction_advance_project_member" model="ir.rule">
         <field name="name">realestate.construction.advance: project team</field>
-        <field name="model_id" ref="model_realestate_construction_advance"/>
+        <field name="model_id" ref="atmta_construction_certification.model_realestate_construction_advance"/>
         <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
         <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
     </record>
 
-    <record id="rule_realestate_construction_advance_manager" model="ir.rule">
-        <field name="name">realestate.construction.advance: manager sees every project</field>
-        <field name="model_id" ref="model_realestate_construction_advance"/>
-        <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
-    </record>
-
+    
     <record id="rule_realestate_construction_budget_project_member" model="ir.rule">
         <field name="name">realestate.construction.budget: project team</field>
         <field name="model_id" ref="model_realestate_construction_budget"/>
@@ -445,18 +397,12 @@
     
     <record id="rule_realestate_construction_payment_certificate_project_member" model="ir.rule">
         <field name="name">realestate.construction.payment.certificate: project team</field>
-        <field name="model_id" ref="model_realestate_construction_payment_certificate"/>
+        <field name="model_id" ref="atmta_construction_certification.model_realestate_construction_payment_certificate"/>
         <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
         <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
     </record>
 
-    <record id="rule_realestate_construction_payment_certificate_manager" model="ir.rule">
-        <field name="name">realestate.construction.payment.certificate: manager sees every project</field>
-        <field name="model_id" ref="model_realestate_construction_payment_certificate"/>
-        <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
-    </record>
-
+    
     <record id="rule_realestate_construction_quality_observation_project_member" model="ir.rule">
         <field name="name">realestate.construction.quality.observation: project team</field>
         <field name="model_id" ref="atmta_construction_quality.model_realestate_construction_quality_observation"/>
@@ -467,32 +413,20 @@
     
     <record id="rule_realestate_construction_retention_project_member" model="ir.rule">
         <field name="name">realestate.construction.retention: project team</field>
-        <field name="model_id" ref="model_realestate_construction_retention"/>
+        <field name="model_id" ref="atmta_construction_certification.model_realestate_construction_retention"/>
         <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
         <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
     </record>
 
-    <record id="rule_realestate_construction_retention_manager" model="ir.rule">
-        <field name="name">realestate.construction.retention: manager sees every project</field>
-        <field name="model_id" ref="model_realestate_construction_retention"/>
-        <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
-    </record>
-
+    
     <record id="rule_realestate_construction_retention_release_project_member" model="ir.rule">
         <field name="name">realestate.construction.retention.release: project team</field>
-        <field name="model_id" ref="model_realestate_construction_retention_release"/>
+        <field name="model_id" ref="atmta_construction_certification.model_realestate_construction_retention_release"/>
         <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
         <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
     </record>
 
-    <record id="rule_realestate_construction_retention_release_manager" model="ir.rule">
-        <field name="name">realestate.construction.retention.release: manager sees every project</field>
-        <field name="model_id" ref="model_realestate_construction_retention_release"/>
-        <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
-    </record>
-
+    
     <record id="rule_realestate_construction_rfi_project_member" model="ir.rule">
         <field name="name">realestate.construction.rfi: project team</field>
         <field name="model_id" ref="atmta_construction_documents.model_realestate_construction_rfi"/>
@@ -563,16 +497,10 @@
 
     <record id="rule_realestate_owner_progress_billing_project_member" model="ir.rule">
         <field name="name">realestate.owner.progress.billing: project team</field>
-        <field name="model_id" ref="model_realestate_owner_progress_billing"/>
+        <field name="model_id" ref="atmta_construction_certification.model_realestate_owner_progress_billing"/>
         <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
         <field name="groups" eval="[(4, ref('group_construction_user'))]"/>
     </record>
 
-    <record id="rule_realestate_owner_progress_billing_manager" model="ir.rule">
-        <field name="name">realestate.owner.progress.billing: manager sees every project</field>
-        <field name="model_id" ref="model_realestate_owner_progress_billing"/>
-        <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('group_construction_manager'))]"/>
-    </record>
-
+    
 </odoo>

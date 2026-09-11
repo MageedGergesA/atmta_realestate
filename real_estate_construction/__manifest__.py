@@ -38,6 +38,9 @@ Track construction progress for projects and phases:
         # Wave 18 — BOQ, milestones, tasks, daily reports, labour and cost
         # lines moved down to site execution.
         'atmta_construction_site',
+        # Wave 19 — certificates, retention, advances and owner billing
+        # moved down to certification.
+        'atmta_construction_certification',
         # Named for the bridge below, which gives each legacy construction
         # group its canonical twin.
         'atmta_roles',
