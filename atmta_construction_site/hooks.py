@@ -79,6 +79,14 @@ VIEW_XMLIDS = [
     'view_work_item_list',
 ]
 
+# Wave 23 — the daily report's own list and form, which had been living in
+# the quality view file and are declared here now.
+W23_XMLIDS = [
+    'action_daily_report',
+    'view_daily_report_form',
+    'view_daily_report_list',
+]
+
 XMLIDS = [
     'access_boq_line_mgr',
     'access_boq_line_user',
@@ -181,3 +189,9 @@ def pre_init_hook(env):
          WHERE module = %s AND name = ANY(%s)
     """, (NEW, OLD, VIEW_XMLIDS))
     _logger.info("Wave 21: %s view identifiers taken from %s", cr.rowcount, OLD)
+
+    cr.execute("""
+        UPDATE ir_model_data SET module = %s
+         WHERE module = %s AND name = ANY(%s)
+    """, (NEW, OLD, W23_XMLIDS))
+    _logger.info("Wave 23: %s screen identifiers taken from %s", cr.rowcount, OLD)

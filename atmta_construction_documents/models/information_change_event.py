@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
-"""Wave 14 — the commercial consequence of a document.
+"""The commercial consequence of a document.
 
-Submittals and RFIs moved to `atmta_construction_documents`, below every
-capability that files a document against a contract. What could not move with
-them is the link to a change event: `realestate.construction.change.event` is
-declared here, and a Many2one may not point at a model defined above it.
+A submittal or an RFI may raise a **change event**: the point at which a
+question about the works becomes a question about money.
 
-So the link and the action that creates it stay, added back onto the two models
-by inheritance. Both were already deliberate actions somebody takes rather than
-automatic consequences, and that is unchanged: an RFI that raised change events
-by itself would turn every "might this cost more?" into a commercial record
-nobody decided to raise.
+Wave 14 could not declare this here. Change events were still in
+`real_estate_construction`, above this module, and a Many2one may not point at
+a model defined above it. Wave 16 gave change events their own module, and
+Wave 23 declared the dependency, so the link finally sits beside the models it
+belongs to.
+
+Both entry points remain deliberate actions somebody takes rather than
+automatic consequences: an RFI that raised change events by itself would turn
+every "might this cost more?" into a commercial record nobody decided to raise.
 """
 from odoo import _, fields, models
 from odoo.exceptions import UserError

@@ -54,6 +54,33 @@ MODELS = [
 # Declared above this module, on a model it owns. It stays there.
 STAYS_ABOVE = ['change_event_id']
 
+# Wave 23 — the screens that came down once the change-event link did,
+# and the link itself. Both were declared by `real_estate_construction`
+# until change events got their own module.
+W23_XMLIDS = [
+    'action_checklist_template',
+    'action_inspection',
+    'action_inspection_request',
+    'action_itp',
+    'action_ncr',
+    'action_observation',
+    'view_inspection_form',
+    'view_inspection_list',
+    'view_inspection_request_form',
+    'view_inspection_request_list',
+    'view_itp_form',
+    'view_itp_list',
+    'view_ncr_form',
+    'view_ncr_list',
+    'view_observation_form',
+    'view_observation_list',
+    'view_reason_wizard_form',
+]
+
+W23_FIELDS = [
+    ('realestate.construction.ncr', 'change_event_id'),
+]
+
 XMLIDS = [
     'access_construction_checklist_template_line_manager',
     'access_construction_checklist_template_line_user',
@@ -138,3 +165,19 @@ def pre_init_hook(env):
            AND f.name <> ALL(%s)
     """, (NEW, OLD, MODELS, STAYS_ABOVE))
     _logger.info("Wave 15: %s selection identifiers taken", cr.rowcount)
+
+    cr.execute("""
+        UPDATE ir_model_data SET module = %s
+         WHERE module = %s AND name = ANY(%s)
+    """, (NEW, OLD, W23_XMLIDS))
+    _logger.info("Wave 23: %s screen identifiers taken from %s", cr.rowcount, OLD)
+
+    for model, field in W23_FIELDS:
+        cr.execute("""
+            UPDATE ir_model_data d SET module = %s
+              FROM ir_model_fields f
+             WHERE d.module = %s AND d.model = 'ir.model.fields'
+               AND f.id = d.res_id AND f.model = %s AND f.name = %s
+        """, (NEW, OLD, model, field))
+        if cr.rowcount:
+            _logger.info("Wave 23: took %s.%s", model, field)

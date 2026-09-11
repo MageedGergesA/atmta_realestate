@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'ATMTA Construction — Documents',
-    'version': '18.0.1.0.0',
+    'version': '18.0.2.0.0',
     'category': 'Real Estate/Construction',
     'summary': 'Document control: drawings, submittals, transmittals, RFIs.',
     'description': """
@@ -32,6 +32,9 @@ actions somebody takes, and they still are.
     'author': 'ATMTA',
     'license': 'LGPL-3',
     'depends': [
+        # A submittal or an RFI may raise a change event. One way only:
+        # change reads nothing here.
+        'atmta_construction_change',
         # Packages and contractors: what a document is filed against.
         'atmta_construction_contract',
         # WBS and cost codes: what it is coded to.
@@ -53,6 +56,9 @@ actions somebody takes, and they still are.
         'data/sequences.xml',
         'security/ir.model.access.csv',
         'security/construction_documents_rules.xml',
+        # Wave 23 — the document screens, which could come down once the
+        # change-event link did.
+        'views/information_views.xml',
     ],
     'pre_init_hook': 'pre_init_hook',
     'application': False,

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'ATMTA Construction — Site',
-    'version': '18.0.2.0.0',
+    'version': '18.0.3.0.0',
     'category': 'Real Estate/Construction',
     'summary': 'BOQ, milestones, tasks, daily reports, labour, cost lines.',
     'description': """
@@ -62,6 +62,9 @@ offer to raise a material request from a BOQ line.
         'views/boq_views.xml',
         'views/cost_line_views.xml',
         'views/labor_log_views.xml',
+        # Wave 23 — the daily report's own list and form, which had been
+        # living in the quality view file.
+        'views/daily_report_views.xml',
     ],
     'pre_init_hook': 'pre_init_hook',
     'application': False,

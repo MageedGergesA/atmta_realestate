@@ -9,3 +9,6 @@
 # -- the change event an NCR may raise -- is declared above and added back.
 from . import quality
 from . import quality_wizard
+
+# Wave 23 — the NCR's change-event link, which Wave 15 had to leave above.
+from . import ncr_change_event

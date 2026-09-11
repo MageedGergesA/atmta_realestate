@@ -86,35 +86,35 @@
               parent="menu_construction_root" sequence="19"/>
     <menuitem id="menu_construction_rfi" name="RFIs"
               parent="menu_construction_information_root"
-              action="action_rfi" sequence="10"/>
+              action="atmta_construction_documents.action_rfi" sequence="10"/>
     <menuitem id="menu_construction_submittals" name="Submittals"
               parent="menu_construction_information_root"
-              action="action_submittal" sequence="20"/>
+              action="atmta_construction_documents.action_submittal" sequence="20"/>
     <menuitem id="menu_construction_documents" name="Document Register"
               parent="menu_construction_information_root"
-              action="action_document" sequence="30"/>
+              action="atmta_construction_documents.action_document" sequence="30"/>
     <menuitem id="menu_construction_revisions" name="Revision Register"
               parent="menu_construction_information_root"
-              action="action_document_revision" sequence="40"/>
+              action="atmta_construction_documents.action_document_revision" sequence="40"/>
     <menuitem id="menu_construction_transmittals" name="Transmittals"
               parent="menu_construction_information_root"
-              action="action_transmittal" sequence="50"/>
+              action="atmta_construction_documents.action_transmittal" sequence="50"/>
     <menuitem id="menu_construction_quality_root" name="Quality &amp; Site"
               parent="menu_construction_root" sequence="21"/>
     <menuitem id="menu_construction_itp" name="Inspection &amp; Test Plans"
-              parent="menu_construction_quality_root" action="action_itp" sequence="10"/>
+              parent="menu_construction_quality_root" action="atmta_construction_quality.action_itp" sequence="10"/>
     <menuitem id="menu_construction_inspection_requests" name="Inspection Requests"
-              parent="menu_construction_quality_root" action="action_inspection_request" sequence="20"/>
+              parent="menu_construction_quality_root" action="atmta_construction_quality.action_inspection_request" sequence="20"/>
     <menuitem id="menu_construction_inspections" name="Inspections"
-              parent="menu_construction_quality_root" action="action_inspection" sequence="30"/>
+              parent="menu_construction_quality_root" action="atmta_construction_quality.action_inspection" sequence="30"/>
     <menuitem id="menu_construction_observations" name="Observations"
-              parent="menu_construction_quality_root" action="action_observation" sequence="40"/>
+              parent="menu_construction_quality_root" action="atmta_construction_quality.action_observation" sequence="40"/>
     <menuitem id="menu_construction_ncrs" name="Non-Conformance Reports"
-              parent="menu_construction_quality_root" action="action_ncr" sequence="50"/>
+              parent="menu_construction_quality_root" action="atmta_construction_quality.action_ncr" sequence="50"/>
     <menuitem id="menu_construction_daily_reports" name="Daily Site Reports"
-              parent="menu_construction_quality_root" action="action_daily_report" sequence="60"/>
+              parent="menu_construction_quality_root" action="atmta_construction_site.action_daily_report" sequence="60"/>
     <menuitem id="menu_construction_checklist_templates" name="Checklist Templates"
-              parent="menu_construction_quality_root" action="action_checklist_template" sequence="70"/>
+              parent="menu_construction_quality_root" action="atmta_construction_quality.action_checklist_template" sequence="70"/>
     <menuitem id="menu_construction_certification_root" name="Certification"
               parent="menu_construction_root" sequence="18"/>
     <menuitem id="menu_construction_advances" name="Advances"

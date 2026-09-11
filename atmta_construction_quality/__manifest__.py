@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'ATMTA Construction — Quality',
-    'version': '18.0.1.0.0',
+    'version': '18.0.2.0.0',
     'category': 'Real Estate/Construction',
     'summary': 'Inspection and test plans, inspections, observations, NCRs.',
     'description': """
@@ -39,6 +39,9 @@ Two things point the other way and are therefore declared above, in
     'author': 'ATMTA',
     'license': 'LGPL-3',
     'depends': [
+        # An NCR may raise a change event. One way only: change reads nothing
+        # here.
+        'atmta_construction_change',
         # Packages and contractors: what an inspection is raised against.
         'atmta_construction_contract',
         # Document revisions and submittals: what it is checked against.
@@ -57,6 +60,9 @@ Two things point the other way and are therefore declared above, in
         'data/sequences.xml',
         'security/ir.model.access.csv',
         'security/construction_quality_rules.xml',
+        # Wave 23 — the quality screens, minus the daily-report views that
+        # went to site with their model.
+        'views/quality_views.xml',
     ],
     'pre_init_hook': 'pre_init_hook',
     'application': False,

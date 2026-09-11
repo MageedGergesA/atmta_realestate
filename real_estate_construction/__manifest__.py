@@ -68,8 +68,6 @@ Track construction progress for projects and phases:
         # Wave 14 — the models moved to `atmta_construction_documents`; these
         # screens did not, because they render `change_event_id` and the
         # action that raises it, which this module declares.
-        'views/information_views.xml',
-        'views/quality_views.xml',
         'views/claims_views.xml',
         'views/contractor_views.xml',
         'views/project_views.xml',

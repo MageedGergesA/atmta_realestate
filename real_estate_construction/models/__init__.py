@@ -27,12 +27,11 @@ from . import contract_package_construction
 # `atmta_construction_documents`. This file adds back the one thing that could
 # not go with them: the link from a submittal or an RFI to the change event it
 # raises, which this module declares.
-from . import information_change_event
 
 # Wave 15 — inspections, NCRs and observations moved to
 # `atmta_construction_quality`. This file adds back the NCR's change-event
 # link, and registers the daily-report mode on the reason wizard.
-from . import quality_change_event
+from . import quality_reason_dispatch
 
 # Wave 16 — change events and change orders moved to
 # `atmta_construction_change`. This file supplies the implementation: the
