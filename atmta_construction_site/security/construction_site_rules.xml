@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+        <!--
+            Wave 18 — company rules for the site-execution models. The
+            project-team rules stayed in `real_estate_construction`: their
+            domains read `project_id.construction_member_ids`, which that
+            module declares. Group references are rebound to canonical roles
+            via the Wave 12 bridge.
+        -->
+        <record id="rule_realestate_boq_company" model="ir.rule">
+                <field name="name">realestate.boq: company</field>
+                <field name="model_id" ref="model_realestate_boq"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_boq_line_company" model="ir.rule">
+                <field name="name">realestate.boq.line: company</field>
+                <field name="model_id" ref="model_realestate_boq_line"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_boq_line_variation_company" model="ir.rule">
+                <field name="name">realestate.boq.line.variation: company</field>
+                <field name="model_id" ref="model_realestate_boq_line_variation"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_daily_delay_company" model="ir.rule">
+                <field name="name">realestate.construction.daily.delay: company</field>
+                <field name="model_id" ref="model_realestate_construction_daily_delay"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_daily_delivery_company" model="ir.rule">
+                <field name="name">realestate.construction.daily.delivery: company</field>
+                <field name="model_id" ref="model_realestate_construction_daily_delivery"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_daily_equipment_company" model="ir.rule">
+                <field name="name">realestate.construction.daily.equipment: company</field>
+                <field name="model_id" ref="model_realestate_construction_daily_equipment"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_daily_report_company" model="ir.rule">
+                <field name="name">realestate.construction.daily.report: company</field>
+                <field name="model_id" ref="model_realestate_construction_daily_report"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_daily_work_company" model="ir.rule">
+                <field name="name">realestate.construction.daily.work: company</field>
+                <field name="model_id" ref="model_realestate_construction_daily_work"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_boq_manager" model="ir.rule">
+                <field name="name">realestate.boq: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_boq"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+        <record id="rule_realestate_boq_line_manager" model="ir.rule">
+                <field name="name">realestate.boq.line: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_boq_line"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+        <record id="rule_realestate_construction_cost_line_manager" model="ir.rule">
+                <field name="name">realestate.construction.cost.line: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_construction_cost_line"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+        <record id="rule_realestate_construction_daily_delay_manager" model="ir.rule">
+                <field name="name">realestate.construction.daily.delay: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_construction_daily_delay"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+        <record id="rule_realestate_construction_daily_report_manager" model="ir.rule">
+                <field name="name">realestate.construction.daily.report: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_construction_daily_report"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+        <record id="rule_realestate_construction_daily_work_manager" model="ir.rule">
+                <field name="name">realestate.construction.daily.work: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_construction_daily_work"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+        <record id="rule_realestate_construction_labor_log_manager" model="ir.rule">
+                <field name="name">realestate.construction.labor.log: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_construction_labor_log"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+        <record id="rule_realestate_construction_milestone_manager" model="ir.rule">
+                <field name="name">realestate.construction.milestone: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_construction_milestone"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+        <record id="rule_realestate_construction_task_manager" model="ir.rule">
+                <field name="name">realestate.construction.task: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_construction_task"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+    </data>
+</odoo>

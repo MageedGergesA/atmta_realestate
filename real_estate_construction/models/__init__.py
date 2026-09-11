@@ -1,11 +1,7 @@
-from . import milestone
-from . import construction_task
-from . import boq
 from . import retention
 from . import advance
 from . import payment_certificate_line
 from . import payment_certificate
-from . import cost_line
 from . import project_analytic
 from . import budget
 from . import commitment
@@ -13,11 +9,9 @@ from . import purchase_order_construction
 from . import project_controls
 from . import forecast
 from . import change_impact
-from . import daily_report
 from . import cost_report
 from . import budget_migration
 from . import owner_progress_billing
-from . import labor_log
 from . import project_construction
 from . import phase_construction
 from . import construction_dashboard
@@ -66,3 +60,9 @@ from . import change_implementation
 # `atmta_construction_claims`. This file keeps the one relation that could not
 # go with them: the daily-report records that evidence a delay.
 from . import delay_daily_link
+
+# Wave 18 — site execution moved to `atmta_construction_site`: milestones, the
+# bill of quantities, tasks, daily reports, the labour log and cost lines. This
+# file keeps the one relation that could not go with it, because payment
+# certificates are still declared here.
+from . import boq_certification

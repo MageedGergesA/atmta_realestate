@@ -291,11 +291,10 @@ class BOQLine(models.Model):
         compute='_compute_certified', store=True,
         help="More has been certified than is authorised. Phase 0 hid this by "
              "flooring the remaining quantity at zero.")
-    certification_line_ids = fields.One2many(
-        'realestate.construction.payment.certificate.line',
-        'boq_line_id',
-        string='Certification Lines',
-    )
+    # The certification lines that consume this BOQ line belong to payment
+    # certificates, which `real_estate_construction` declares. What this line
+    # needs from them -- how much has been certified -- is asked for through a
+    # seam instead.
 
     currency_id = fields.Many2one(
         related='boq_id.currency_id', store=True, readonly=True,
@@ -342,19 +341,22 @@ class BOQLine(models.Model):
             ln.variation_quantity = sum(approved.mapped('quantity_delta'))
             ln.authorised_quantity = (ln.quantity or 0.0) + ln.variation_quantity
 
-    @api.depends(
-        'certification_line_ids.qty',
-        'certification_line_ids.amount',
-        'certification_line_ids.certificate_id.state',
-        'authorised_quantity',
-    )
+    def _certified_totals(self):
+        """(quantity, amount) certified against this line.
+
+        Seam. Payment certificates are a `real_estate_construction` model.
+        Nothing below it has certified anything, so nothing has been consumed,
+        which is the truthful reading: it is what an uncertified line reports
+        anyway. That module supplies the real totals, counting only
+        certificates that reached certified, invoiced or paid.
+        """
+        self.ensure_one()
+        return 0.0, 0.0
+
+    @api.depends('authorised_quantity')
     def _compute_certified(self):
         for ln in self:
-            live = ln.certification_line_ids.filtered(
-                lambda cl: cl.certificate_id.state in ('certified', 'invoiced', 'paid')
-            )
-            ln.certified_qty = sum(live.mapped('qty'))
-            ln.certified_amount = sum(live.mapped('amount'))
+            ln.certified_qty, ln.certified_amount = ln._certified_totals()
             ln.remaining_qty = max(0.0, ln.authorised_quantity - ln.certified_qty)
             ln.is_over_certified = ln.certified_qty > ln.authorised_quantity + 1e-6
 
