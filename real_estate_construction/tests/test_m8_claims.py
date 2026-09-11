@@ -892,16 +892,37 @@ class TestClaimSecurity(ClaimCommon):
         issue.with_user(engineer).read(['title'])
 
     def test_commercial_fields_are_restricted_server_side(self):
-        """Hiding a field in a view leaves it readable through a relation."""
+        """Hiding a field in a view leaves it readable through a relation.
+
+        Wave 17 moved claims below this module, so the field can no longer
+        name the legacy commercial group: doing so would make the claims
+        module depend on the one that depends on it. It names the canonical
+        role instead, and the Wave 12 bridge gives every legacy commercial
+        holder that role, so the same people read the same fields. What this
+        test guards is that the restriction is on the *field*, server side,
+        and not merely on a view.
+        """
         claim = self._claim(self.project, self.package,
                             claimed_cost=5_000_000.0)
-        field = claim._fields['assessed_cost']
+        canonical = 'atmta_roles.group_construction_commercial_manager'
+        self.assertEqual(claim._fields['assessed_cost'].groups, canonical)
         self.assertEqual(
-            field.groups,
-            'real_estate_construction.group_construction_commercial')
-        self.assertEqual(
-            claim._fields['internal_position'].groups,
-            'real_estate_construction.group_construction_commercial')
+            claim._fields['internal_position'].groups, canonical)
+
+        # And the restriction bites, through the bridge: a user holding only
+        # the legacy commercial group reads them, because that group implies
+        # the canonical role; a site engineer does not.
+        commercial = self.env['res.users'].create({
+            'name': 'Commercial Manager', 'login': 'commercial.w17',
+            'groups_id': [(6, 0, [
+                self.env.ref('base.group_user').id,
+                self.env.ref(
+                    'real_estate_construction.group_construction_commercial').id,
+            ])],
+        })
+        claim.with_user(commercial).read(['assessed_cost'])
+        with self.assertRaises(AccessError):
+            claim.with_user(self._site_engineer()).read(['assessed_cost'])
 
 
 @tagged('post_install', '-at_install', 'atmta_construction')

@@ -21,10 +21,6 @@ from . import labor_log
 from . import project_construction
 from . import phase_construction
 from . import construction_dashboard
-from . import delay_event
-from . import notice
-from . import claim
-from . import eot
 from . import risk_issue
 from . import exposure
 from . import cost_sheet
@@ -65,3 +61,8 @@ from . import quality_change_event
 # authority matrix it is checked against, and the forecast anticipations it
 # converts.
 from . import change_implementation
+
+# Wave 17 — claims, delay events, extensions of time and notices moved to
+# `atmta_construction_claims`. This file keeps the one relation that could not
+# go with them: the daily-report records that evidence a delay.
+from . import delay_daily_link

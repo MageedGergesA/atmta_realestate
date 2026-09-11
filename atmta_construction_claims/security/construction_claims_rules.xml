@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+        <!--
+            Wave 17 — company rules for the claims models. The project-team
+            rules stayed in `real_estate_construction`: their domains read
+            `project_id.construction_member_ids`, which that module declares.
+            Group references are rebound to canonical roles via the Wave 12
+            bridge.
+        -->
+        <record id="rule_realestate_construction_claim_company" model="ir.rule">
+                <field name="name">realestate.construction.claim: company</field>
+                <field name="model_id" ref="model_realestate_construction_claim"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_claim_cost_line_company" model="ir.rule">
+                <field name="name">realestate.construction.claim.cost.line: company</field>
+                <field name="model_id" ref="model_realestate_construction_claim_cost_line"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_claim_determination_company" model="ir.rule">
+                <field name="name">realestate.construction.claim.determination: company</field>
+                <field name="model_id" ref="model_realestate_construction_claim_determination"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_claim_evidence_company" model="ir.rule">
+                <field name="name">realestate.construction.claim.evidence: company</field>
+                <field name="model_id" ref="model_realestate_construction_claim_evidence"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_claim_submission_company" model="ir.rule">
+                <field name="name">realestate.construction.claim.submission: company</field>
+                <field name="model_id" ref="model_realestate_construction_claim_submission"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_delay_event_company" model="ir.rule">
+                <field name="name">realestate.construction.delay.event: company</field>
+                <field name="model_id" ref="model_realestate_construction_delay_event"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_eot_company" model="ir.rule">
+                <field name="name">realestate.construction.eot: company</field>
+                <field name="model_id" ref="model_realestate_construction_eot"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_notice_company" model="ir.rule">
+                <field name="name">realestate.construction.notice: company</field>
+                <field name="model_id" ref="model_realestate_construction_notice"/>
+                <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+        <record id="rule_realestate_construction_claim_manager" model="ir.rule">
+                <field name="name">realestate.construction.claim: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_construction_claim"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+        <record id="rule_realestate_construction_delay_event_manager" model="ir.rule">
+                <field name="name">realestate.construction.delay.event: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_construction_delay_event"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+        <record id="rule_realestate_construction_eot_manager" model="ir.rule">
+                <field name="name">realestate.construction.eot: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_construction_eot"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+        <record id="rule_realestate_construction_notice_manager" model="ir.rule">
+                <field name="name">realestate.construction.notice: manager sees every project</field>
+                <field name="model_id" ref="model_realestate_construction_notice"/>
+                <field name="domain_force">[(1, '=', 1)]</field>
+                <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
+            </record>
+    </data>
+</odoo>

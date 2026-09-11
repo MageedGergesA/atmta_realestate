@@ -16,7 +16,10 @@ that states it.
 """
 from odoo import api, fields, models
 
-from .claim import OPEN_CLAIM_STATES
+# Wave 17 — claims moved to `atmta_construction_claims`, which this module
+# depends on. The constant is imported across the module boundary rather than
+# restated, so the two cannot drift apart.
+from odoo.addons.atmta_construction_claims.models.claim import OPEN_CLAIM_STATES
 
 
 class ContractPackageConstruction(models.Model):

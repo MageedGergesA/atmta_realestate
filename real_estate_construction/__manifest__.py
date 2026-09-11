@@ -33,6 +33,8 @@ Track construction progress for projects and phases:
         'atmta_construction_quality',
         # Wave 16 — change events and change orders moved down.
         'atmta_construction_change',
+        # Wave 17 — claims, delay events, EOTs and notices moved down.
+        'atmta_construction_claims',
         # Named for the bridge below, which gives each legacy construction
         # group its canonical twin.
         'atmta_roles',

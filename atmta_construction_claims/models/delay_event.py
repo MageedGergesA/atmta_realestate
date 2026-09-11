@@ -143,11 +143,9 @@ class ConstructionDelayEvent(models.Model):
     ], default='draft', required=True, tracking=True, copy=False, index=True)
 
     # -- Relations to the records that prove it happened -------------------
-    daily_delay_ids = fields.One2many(
-        'realestate.construction.daily.delay', 'delay_event_id',
-        string='Daily Report Records', readonly=True,
-        help="The daily site reports that recorded this event while it was "
-             "happening. Evidence, referenced — never copied.")
+    # The daily-report records that evidence this delay are declared by
+    # `real_estate_construction`, which owns daily reporting. What the count
+    # and the chronology need is asked for through seams instead.
     daily_record_count = fields.Integer(compute='_compute_counts')
     rfi_ids = fields.Many2many(
         'realestate.construction.rfi', 'delay_event_rfi_rel',
@@ -180,10 +178,29 @@ class ConstructionDelayEvent(models.Model):
                 (end - rec.start_date).total_seconds() / 86400.0
                 if end else 0.0)
 
-    @api.depends('daily_delay_ids', 'claim_ids')
+    def _daily_record_count(self):
+        """How many daily reports recorded this delay.
+
+        Seam. Daily reporting is a `real_estate_construction` model. Below it
+        no daily report has recorded anything, which is the truthful count
+        rather than an optimistic one.
+        """
+        self.ensure_one()
+        return 0
+
+    def _daily_delay_chronology(self):
+        """(date, reference, description) rows this delay contributes.
+
+        Seam. The claim chronology is built from what the record says happened
+        and when; the daily-report half of that lives above this module.
+        """
+        self.ensure_one()
+        return []
+
+    @api.depends('claim_ids')
     def _compute_counts(self):
         for rec in self:
-            rec.daily_record_count = len(rec.daily_delay_ids)
+            rec.daily_record_count = rec._daily_record_count()
             rec.claim_count = len(rec.claim_ids)
 
     @api.constrains('start_date', 'end_date')

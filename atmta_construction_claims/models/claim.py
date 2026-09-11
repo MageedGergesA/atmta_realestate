@@ -167,7 +167,7 @@ class ConstructionClaim(models.Model):
         tracking=True,
         help="The current submission's figure. Earlier revisions keep theirs.")
     assessed_cost = fields.Monetary(
-        tracking=True, groups='real_estate_construction.group_construction_commercial',
+        tracking=True, groups='atmta_roles.group_construction_commercial_manager',
         help="The internal assessment. Commercial roles only — an assessment "
              "visible to the other side is a negotiating position given away.")
     determined_cost = fields.Monetary(
@@ -185,7 +185,7 @@ class ConstructionClaim(models.Model):
         compute='_compute_from_submissions', store=True, readonly=False,
         tracking=True)
     assessed_days = fields.Float(
-        tracking=True, groups='real_estate_construction.group_construction_commercial')
+        tracking=True, groups='atmta_roles.group_construction_commercial_manager')
     determined_days = fields.Float(
         readonly=True, copy=False, tracking=True,
         compute='_compute_from_determinations', store=True)
@@ -205,12 +205,12 @@ class ConstructionClaim(models.Model):
 
     # -- Narrative ---------------------------------------------------------
     contractual_basis = fields.Html(
-        groups='real_estate_construction.group_construction_commercial')
+        groups='atmta_roles.group_construction_commercial_manager')
     cause_and_effect = fields.Html()
     mitigation_narrative = fields.Html()
     relief_sought = fields.Html()
     internal_position = fields.Html(
-        groups='real_estate_construction.group_construction_commercial',
+        groups='atmta_roles.group_construction_commercial_manager',
         help="Negotiating position and strategy. Server-side restricted — "
              "hiding it in a view would still expose it through a relation.")
 
@@ -419,7 +419,7 @@ class ConstructionClaim(models.Model):
     def _check_assessment_authority(self):
         self.ensure_one()
         if not self.env.user.has_group(
-                'real_estate_construction.group_construction_commercial'):
+                'atmta_roles.group_construction_commercial_manager'):
             raise UserError(_(
                 "Assessing a claim is a commercial role's work."))
         return True
@@ -468,7 +468,7 @@ class ConstructionClaim(models.Model):
                     "Settle a claim after it has been determined or "
                     "disputed."))
             if not self.env.user.has_group(
-                    'real_estate_construction.group_construction_commercial'):
+                    'atmta_roles.group_construction_commercial_manager'):
                 raise UserError(_(
                     "Settling a claim is a commercial decision."))
             rec.write({
@@ -528,9 +528,9 @@ class ConstructionClaim(models.Model):
             add(event.start_date, event.name, _('Delay event starts'))
             if event.end_date:
                 add(event.end_date, event.name, _('Delay event ends'))
-            for record in event.daily_delay_ids:
-                add(record.report_id.report_date, record.report_id.name,
-                    _('Daily report records the delay'))
+            for date, reference, description in \
+                    event._daily_delay_chronology():
+                add(date, reference, description)
         for notice in self.notice_ids:
             add(notice.notice_date, notice.name, _('Notice issued'))
             if notice.acknowledged_on:
@@ -749,7 +749,7 @@ class ConstructionClaimCostLine(models.Model):
         help="Tax-exclusive, like every control figure in this module.")
     claimed_amount = fields.Monetary()
     assessed_amount = fields.Monetary(
-        groups='real_estate_construction.group_construction_commercial')
+        groups='atmta_roles.group_construction_commercial_manager')
     determined_amount = fields.Monetary(readonly=True, copy=False)
 
     basis = fields.Text(
@@ -810,10 +810,20 @@ class ConstructionClaimEvidence(models.Model):
         ('notice', 'Notice'),
         ('other', 'Other'),
     ], required=True, default='other', index=True)
-    record_ref = fields.Reference(selection=[
-        ('realestate.construction.daily.report', 'Daily Site Report'),
-        ('realestate.construction.labor.log', 'Labour Log'),
-        ('realestate.construction.daily.equipment', 'Equipment Record'),
+    record_ref = fields.Reference(
+        selection='_record_ref_selection', string='Record')
+
+    @api.model
+    def _record_ref_selection(self):
+        """What an evidence row may cite.
+
+        Seam. Daily reports, labour logs, equipment records and payment
+        certificates are `real_estate_construction` models, and a claim cannot
+        offer to cite a record that is not there. That module adds them back.
+        Everything below is a model this one depends on, so it is always
+        citable.
+        """
+        return [
         ('realestate.construction.rfi', 'RFI'),
         ('realestate.construction.submittal', 'Submittal'),
         ('realestate.construction.document.revision', 'Document Revision'),
@@ -821,12 +831,11 @@ class ConstructionClaimEvidence(models.Model):
         ('realestate.construction.inspection', 'Inspection'),
         ('realestate.construction.ncr', 'NCR'),
         ('realestate.construction.change.event', 'Change Event'),
-        ('realestate.construction.payment.certificate', 'Payment Certificate'),
         ('realestate.construction.delay.event', 'Delay Event'),
         ('realestate.construction.notice', 'Notice'),
         ('account.move', 'Journal Entry'),
         ('account.analytic.line', 'Analytic Line'),
-    ], string='Record')
+        ]
     #: What the record was when it was cited. M5 proved why this matters:
     #: citing "the drawing" and letting it mean Rev D three months later is
     #: how an evidence bundle stops matching the argument built on it.

@@ -50,7 +50,7 @@ class ConstructionEOT(models.Model):
     claimed_days = fields.Float(tracking=True)
     assessed_days = fields.Float(
         tracking=True,
-        groups='real_estate_construction.group_construction_commercial')
+        groups='atmta_roles.group_construction_commercial_manager')
     determined_days = fields.Float(
         tracking=True,
         help="Granted days. Only these move the current completion date, and "
