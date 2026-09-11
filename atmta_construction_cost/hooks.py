@@ -57,6 +57,14 @@ MODELS = [
     'realestate.construction.issue',
 ]
 
+# Wave 21 — the screens for these models, moved down from the monolith
+# once they were shown to render no field declared above this module.
+VIEW_XMLIDS = [
+    'action_construction_forecast',
+    'view_construction_forecast_form',
+    'view_construction_forecast_list',
+]
+
 XMLIDS = [
     'access_construction_budget_change_line_manager',
     'access_construction_budget_change_line_user',
@@ -145,3 +153,9 @@ def pre_init_hook(env):
            AND s.id = d.res_id AND f.model = ANY(%s)
     """, (NEW, OLD, MODELS))
     _logger.info("Wave 20: %s selection identifiers taken", cr.rowcount)
+
+    cr.execute("""
+        UPDATE ir_model_data SET module = %s
+         WHERE module = %s AND name = ANY(%s)
+    """, (NEW, OLD, VIEW_XMLIDS))
+    _logger.info("Wave 21: %s view identifiers taken from %s", cr.rowcount, OLD)

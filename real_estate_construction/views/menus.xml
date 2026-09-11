@@ -8,25 +8,25 @@
     <menuitem id="menu_construction_milestones"
               name="Milestones"
               parent="menu_construction_root"
-              action="action_milestone"
+              action="atmta_construction_site.action_milestone"
               sequence="10"/>
 
     <menuitem id="menu_construction_tasks"
               name="Tasks"
               parent="menu_construction_root"
-              action="action_construction_task"
+              action="atmta_construction_site.action_construction_task"
               sequence="15"/>
 
     <menuitem id="menu_construction_cost_lines"
               name="Cost Lines"
               parent="menu_construction_root"
-              action="action_cost_line"
+              action="atmta_construction_site.action_cost_line"
               sequence="20"/>
 
     <menuitem id="menu_construction_payment_certificates"
               name="Payment Certificates"
               parent="menu_construction_root"
-              action="action_payment_certificate"
+              action="atmta_construction_certification.action_payment_certificate"
               sequence="25"/>
 
     <menuitem id="menu_construction_contractors"
@@ -51,11 +51,11 @@
     <menuitem id="menu_construction_boq_root" name="BOQ"
               parent="menu_construction_root" sequence="40"/>
     <menuitem id="menu_construction_boq_list" name="Bills of Quantities"
-              parent="menu_construction_boq_root" action="action_boq" sequence="10"/>
+              parent="menu_construction_boq_root" action="atmta_construction_site.action_boq" sequence="10"/>
     <menuitem id="menu_construction_work_items" name="Work Items"
-              parent="menu_construction_boq_root" action="action_work_item" sequence="20"/>
+              parent="menu_construction_boq_root" action="atmta_construction_site.action_work_item" sequence="20"/>
     <menuitem id="menu_construction_work_item_cats" name="Work Item Categories"
-              parent="menu_construction_boq_root" action="action_work_item_category" sequence="30"/>
+              parent="menu_construction_boq_root" action="atmta_construction_site.action_work_item_category" sequence="30"/>
     <!-- M1 — project controls structure -->
     <menuitem id="menu_construction_structure_root" name="Cost Structure"
               parent="menu_construction_root" sequence="15"/>
@@ -73,7 +73,7 @@
               action="action_construction_package" sequence="18"/>
     <menuitem id="menu_construction_forecasts" name="Forecasts"
               parent="menu_construction_structure_root"
-              action="action_construction_forecast" sequence="7"/>
+              action="atmta_construction_cost.action_construction_forecast" sequence="7"/>
     <menuitem id="menu_construction_change_root" name="Change Management"
               parent="menu_construction_root" sequence="17"/>
     <menuitem id="menu_construction_change_events" name="Change Events"
@@ -118,11 +118,11 @@
     <menuitem id="menu_construction_certification_root" name="Certification"
               parent="menu_construction_root" sequence="18"/>
     <menuitem id="menu_construction_advances" name="Advances"
-              parent="menu_construction_certification_root" action="action_advance" sequence="20"/>
+              parent="menu_construction_certification_root" action="atmta_construction_certification.action_advance" sequence="20"/>
     <menuitem id="menu_construction_retention_register" name="Retention Register"
-              parent="menu_construction_certification_root" action="action_retention" sequence="30"/>
+              parent="menu_construction_certification_root" action="atmta_construction_certification.action_retention" sequence="30"/>
     <menuitem id="menu_construction_retention_releases" name="Retention Releases"
-              parent="menu_construction_certification_root" action="action_retention_release" sequence="40"/>
+              parent="menu_construction_certification_root" action="atmta_construction_certification.action_retention_release" sequence="40"/>
     <menuitem id="menu_construction_claims_root" name="Claims &amp; Risk"
               parent="menu_construction_root" sequence="24"/>
     <menuitem id="menu_construction_delay_events" name="Delay Register"
@@ -139,4 +139,14 @@
               parent="menu_construction_claims_root" action="action_risk" sequence="50"/>
     <menuitem id="menu_construction_issues" name="Issue Register"
               parent="menu_construction_claims_root" action="action_issue" sequence="60"/>
+
+    <!-- Wave 21 — menu items for screens that moved to their capability
+         modules. The screens went down; these stayed, because they hang off
+         this module's tree and name their actions across the boundary. -->
+    <menuitem id="menu_construction_labor" name="Daily Labor"
+              parent="menu_construction_root"
+              action="atmta_construction_site.action_labor_log" sequence="22"/>
+    <menuitem id="menu_construction_owner_billing" name="Owner Progress Billing"
+              parent="menu_construction_root" action="atmta_construction_certification.action_owner_billing"
+              sequence="27"/>
 </odoo>

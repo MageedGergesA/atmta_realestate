@@ -60,7 +60,8 @@
         <field name="view_mode">list,form</field>
     </record>
 
-    <menuitem id="menu_construction_labor" name="Daily Labor"
-              parent="menu_construction_root"
-              action="action_labor_log" sequence="22"/>
+    <!-- Wave 21 — the menu item that pointed here stayed in
+         `real_estate_construction`: it hangs off that module's menu tree,
+         and a parent cannot be reached from below it. The action it opens
+         is declared in this file and is named from up there. -->
 </odoo>

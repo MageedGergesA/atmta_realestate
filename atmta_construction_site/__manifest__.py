@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'ATMTA Construction — Site',
-    'version': '18.0.1.0.0',
+    'version': '18.0.2.0.0',
     'category': 'Real Estate/Construction',
     'summary': 'BOQ, milestones, tasks, daily reports, labour, cost lines.',
     'description': """
@@ -50,11 +50,18 @@ offer to raise a material request from a BOQ line.
         'mail',
         'atmta_roles',
     ],
-    # No views. The site screens are loaded by `real_estate_construction`.
     'data': [
         'data/sequences.xml',
         'security/ir.model.access.csv',
         'security/construction_site_rules.xml',
+        # Wave 21 — this module's own screens, moved down from
+        # `real_estate_construction`. They render only models it owns and
+        # no field declared above it, which is what made the move safe.
+        'views/milestone_views.xml',
+        'views/construction_task_views.xml',
+        'views/boq_views.xml',
+        'views/cost_line_views.xml',
+        'views/labor_log_views.xml',
     ],
     'pre_init_hook': 'pre_init_hook',
     'application': False,

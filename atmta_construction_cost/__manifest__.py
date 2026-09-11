@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'ATMTA Construction — Cost',
-    'version': '18.0.1.0.0',
+    'version': '18.0.2.0.0',
     'category': 'Real Estate/Construction',
     'summary': 'Budget, commitment, forecast, cost reporting, risk.',
     'description': """
@@ -54,11 +54,14 @@ data-control exceptions.
         'mail',
         'atmta_roles',
     ],
-    # No views. The cost screens are loaded by `real_estate_construction`.
     'data': [
         'data/sequences.xml',
         'security/ir.model.access.csv',
         'security/construction_cost_rules.xml',
+        # Wave 21 — this module's own screens, moved down from
+        # `real_estate_construction`. They render only models it owns and
+        # no field declared above it, which is what made the move safe.
+        'views/forecast_views.xml',
     ],
     'pre_init_hook': 'pre_init_hook',
     'application': False,

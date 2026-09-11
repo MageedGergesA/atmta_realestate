@@ -49,6 +49,26 @@ FOREIGN_FIELDS = [
     ('realestate.boq.line', 'certification_line_ids'),
 ]
 
+# Wave 21 — the screens for these models, moved down from the monolith
+# once they were shown to render no field declared above this module.
+VIEW_XMLIDS = [
+    'action_advance',
+    'action_owner_billing',
+    'action_payment_certificate',
+    'action_retention',
+    'action_retention_release',
+    'view_advance_form',
+    'view_advance_list',
+    'view_construction_config_settings',
+    'view_owner_billing_form',
+    'view_owner_billing_list',
+    'view_payment_certificate_form',
+    'view_payment_certificate_list',
+    'view_retention_list',
+    'view_retention_release_form',
+    'view_retention_release_list',
+]
+
 XMLIDS = [
     'access_construction_advance_manager',
     'access_construction_advance_recovery_manager',
@@ -135,3 +155,9 @@ def pre_init_hook(env):
         """, (NEW, OLD, model, field))
         if cr.rowcount:
             _logger.info("Wave 19: took %s.%s", model, field)
+
+    cr.execute("""
+        UPDATE ir_model_data SET module = %s
+         WHERE module = %s AND name = ANY(%s)
+    """, (NEW, OLD, VIEW_XMLIDS))
+    _logger.info("Wave 21: %s view identifiers taken from %s", cr.rowcount, OLD)

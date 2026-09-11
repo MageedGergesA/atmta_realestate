@@ -49,6 +49,10 @@ Track construction progress for projects and phases:
         'atmta_roles',
     ],
     'data': [
+        # Wave 21 — the screens for BOQ, tasks, cost lines, labour, milestones,
+        # certification, owner billing and forecasting moved to the modules that
+        # own the models they render. What stays here renders fields this module
+        # declares, or spans two capabilities.
         'security/security.xml',
         'security/canonical_role_bridge.xml',
         'security/ir.model.access.csv',
@@ -60,25 +64,16 @@ Track construction progress for projects and phases:
         # Wave 12 — cost-structure screens moved with their models to
         # `atmta_construction_core`.
         'views/budget_views.xml',
-        'views/forecast_views.xml',
         'views/change_views.xml',
         # Wave 14 — the models moved to `atmta_construction_documents`; these
         # screens did not, because they render `change_event_id` and the
         # action that raises it, which this module declares.
         'views/information_views.xml',
         'views/quality_views.xml',
-        'views/certification_views.xml',
         'views/claims_views.xml',
         'views/contractor_views.xml',
-        'views/milestone_views.xml',
-        'views/construction_task_views.xml',
-        'views/boq_views.xml',
-        'views/payment_certificate_views.xml',
-        'views/cost_line_views.xml',
         'views/project_views.xml',
         'views/menus.xml',
-        'views/owner_progress_billing_views.xml',
-        'views/labor_log_views.xml',
         'views/construction_dashboard_views.xml',
         # Additive: Construction's coding fields on Procurement's documents.
         'views/procurement_coding_views.xml',

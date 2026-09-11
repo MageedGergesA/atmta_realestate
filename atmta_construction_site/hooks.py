@@ -52,6 +52,33 @@ MODELS = [
 # Declared above this module, on a model it owns.
 STAYS_ABOVE = ['certification_line_ids']
 
+# Wave 21 — the screens for these models, moved down from the monolith
+# once they were shown to render no field declared above this module.
+VIEW_XMLIDS = [
+    'action_boq',
+    'action_construction_task',
+    'action_cost_line',
+    'action_labor_log',
+    'action_milestone',
+    'action_work_item',
+    'action_work_item_category',
+    'view_boq_form',
+    'view_boq_list',
+    'view_construction_task_form',
+    'view_construction_task_list',
+    'view_cost_line_form',
+    'view_cost_line_list',
+    'view_labor_log_form',
+    'view_labor_log_list',
+    'view_milestone_form',
+    'view_milestone_kanban',
+    'view_milestone_list',
+    'view_work_item_category_form',
+    'view_work_item_category_list',
+    'view_work_item_form',
+    'view_work_item_list',
+]
+
 XMLIDS = [
     'access_boq_line_mgr',
     'access_boq_line_user',
@@ -148,3 +175,9 @@ def pre_init_hook(env):
            AND f.name <> ALL(%s)
     """, (NEW, OLD, MODELS, STAYS_ABOVE))
     _logger.info("Wave 18: %s selection identifiers taken", cr.rowcount)
+
+    cr.execute("""
+        UPDATE ir_model_data SET module = %s
+         WHERE module = %s AND name = ANY(%s)
+    """, (NEW, OLD, VIEW_XMLIDS))
+    _logger.info("Wave 21: %s view identifiers taken from %s", cr.rowcount, OLD)

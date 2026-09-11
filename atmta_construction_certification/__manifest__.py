@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'ATMTA Construction — Certification',
-    'version': '18.0.1.0.0',
+    'version': '18.0.2.0.0',
     'category': 'Real Estate/Construction',
     'summary': 'Payment certificates, retention, advances, owner billing.',
     'description': """
@@ -46,12 +46,16 @@ say which BOQ line it consumes.
         'mail',
         'atmta_roles',
     ],
-    # No views. The certification screens are loaded by
-    # `real_estate_construction`.
     'data': [
         'data/sequences.xml',
         'security/ir.model.access.csv',
         'security/construction_certification_rules.xml',
+        # Wave 21 — this module's own screens, moved down from
+        # `real_estate_construction`. They render only models it owns and
+        # no field declared above it, which is what made the move safe.
+        'views/certification_views.xml',
+        'views/payment_certificate_views.xml',
+        'views/owner_progress_billing_views.xml',
     ],
     'pre_init_hook': 'pre_init_hook',
     'application': False,
