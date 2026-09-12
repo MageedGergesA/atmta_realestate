@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'ATMTA Construction — Quality',
-    'version': '18.0.2.0.0',
+    'version': '18.0.3.0.0',
     'category': 'Real Estate/Construction',
     'summary': 'Inspection and test plans, inspections, observations, NCRs.',
     'description': """

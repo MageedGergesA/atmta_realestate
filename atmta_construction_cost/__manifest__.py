@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'ATMTA Construction — Cost',
-    'version': '18.0.3.0.0',
+    'version': '18.0.4.0.0',
     'category': 'Real Estate/Construction',
     'summary': 'Budget, commitment, forecast, cost reporting, risk.',
     'description': """

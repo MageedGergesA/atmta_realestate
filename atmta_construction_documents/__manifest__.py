@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'ATMTA Construction — Documents',
-    'version': '18.0.2.0.0',
+    'version': '18.0.3.0.0',
     'category': 'Real Estate/Construction',
     'summary': 'Document control: drawings, submittals, transmittals, RFIs.',
     'description': """

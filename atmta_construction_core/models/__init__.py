@@ -9,3 +9,6 @@
 from . import cost_structure
 from . import construction_analytic
 from . import construction_accounts
+
+# Wave 25 — the construction team field, read by every project-team rule.
+from . import project_construction_member

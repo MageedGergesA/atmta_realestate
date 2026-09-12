@@ -4,13 +4,9 @@ from odoo import _, api, fields, models
 class ProjectConstruction(models.Model):
     _inherit = 'realestate.project'
 
-    construction_member_ids = fields.Many2many(
-        'res.users', 'construction_project_member_rel', 'project_id',
-        'user_id', string='Construction Team',
-        help="Who may see this project's construction records. Leave empty "
-             "and the project stays visible to everyone in the company, "
-             "exactly as before — naming anybody is what turns access "
-             "control on, per project, as a deliberate act.")
+    # Wave 25 — `construction_member_ids` moved down to
+    # `atmta_construction_core`, so the project-team rules could move with
+    # their models. This module still reads it; it no longer declares it.
 
     milestone_ids = fields.One2many('realestate.construction.milestone', 'project_id', string='Milestones')
     cost_line_ids = fields.One2many('realestate.construction.cost.line', 'project_id', string='Cost Lines')

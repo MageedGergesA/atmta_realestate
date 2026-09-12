@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'ATMTA Construction — Certification',
-    'version': '18.0.2.0.0',
+    'version': '18.0.3.0.0',
     'category': 'Real Estate/Construction',
     'summary': 'Payment certificates, retention, advances, owner billing.',
     'description': """

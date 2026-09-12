@@ -115,3 +115,13 @@ def pre_init_hook(env):
            AND f.name <> ALL(%s)
     """, (NEW, OLD, MODELS, STAYS_ABOVE))
     _logger.info("Wave 16: %s selection identifiers taken", cr.rowcount)
+
+# Wave 25 -- the project-team and manager rules, moved down from
+# `real_estate_construction` once that module stopped declaring
+# `construction_member_ids`. The identifiers keep their original names, so the
+# hand-over is an UPDATE of the module column and the loader then updates the
+# existing rows in place instead of creating second copies.
+W25_RULE_XMLIDS = [
+    'rule_realestate_construction_change_event_project_member',
+    'rule_realestate_construction_change_order_project_member',
+]

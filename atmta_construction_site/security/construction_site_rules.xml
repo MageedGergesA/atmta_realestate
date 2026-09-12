@@ -110,5 +110,90 @@
                 <field name="domain_force">[(1, '=', 1)]</field>
                 <field name="groups" eval="[(4, ref('atmta_roles.group_construction_manager'))]"/>
             </record>
+
+        <!--
+            Wave 25 — the project-team rules, finally beside their models.
+
+            These stayed in `real_estate_construction` through every earlier
+            wave for one reason, recorded in this file at the time: their
+            domains read `project_id.construction_member_ids`, and a rule may
+            be declared above the model it guards but never below the field it
+            reads. Wave 25 moved that field down to
+            `atmta_construction_core`, which removed the pin.
+
+            The group is rebound from the legacy `group_construction_user` to
+            the canonical role it already implies. Every legacy member is
+            materialised into the canonical group by the Wave 12 bridge, so
+            nobody covered by these rules stops being covered. Users holding
+            only the canonical role start being covered, which tightens the
+            filter and never loosens it. That widening was measured before
+            and after, per model, per user.
+
+            `(6, 0, [...])` and not `(4, ...)`: the records already exist and
+            carry the legacy group, and appending would leave both bound.
+        -->
+
+        <record id="rule_realestate_boq_line_project_member" model="ir.rule">
+            <field name="name">realestate.boq.line: project team</field>
+            <field name="model_id" ref="model_realestate_boq_line"/>
+            <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+            <field name="groups" eval="[(6, 0, [ref('atmta_roles.group_construction_site_user')])]"/>
+        </record>
+
+        <record id="rule_realestate_boq_project_member" model="ir.rule">
+            <field name="name">realestate.boq: project team</field>
+            <field name="model_id" ref="model_realestate_boq"/>
+            <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+            <field name="groups" eval="[(6, 0, [ref('atmta_roles.group_construction_site_user')])]"/>
+        </record>
+
+        <record id="rule_realestate_construction_cost_line_project_member" model="ir.rule">
+            <field name="name">realestate.construction.cost.line: project team</field>
+            <field name="model_id" ref="model_realestate_construction_cost_line"/>
+            <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+            <field name="groups" eval="[(6, 0, [ref('atmta_roles.group_construction_site_user')])]"/>
+        </record>
+
+        <record id="rule_realestate_construction_daily_delay_project_member" model="ir.rule">
+            <field name="name">realestate.construction.daily.delay: project team</field>
+            <field name="model_id" ref="model_realestate_construction_daily_delay"/>
+            <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+            <field name="groups" eval="[(6, 0, [ref('atmta_roles.group_construction_site_user')])]"/>
+        </record>
+
+        <record id="rule_realestate_construction_daily_report_project_member" model="ir.rule">
+            <field name="name">realestate.construction.daily.report: project team</field>
+            <field name="model_id" ref="model_realestate_construction_daily_report"/>
+            <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+            <field name="groups" eval="[(6, 0, [ref('atmta_roles.group_construction_site_user')])]"/>
+        </record>
+
+        <record id="rule_realestate_construction_daily_work_project_member" model="ir.rule">
+            <field name="name">realestate.construction.daily.work: project team</field>
+            <field name="model_id" ref="model_realestate_construction_daily_work"/>
+            <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+            <field name="groups" eval="[(6, 0, [ref('atmta_roles.group_construction_site_user')])]"/>
+        </record>
+
+        <record id="rule_realestate_construction_labor_log_project_member" model="ir.rule">
+            <field name="name">realestate.construction.labor.log: project team</field>
+            <field name="model_id" ref="model_realestate_construction_labor_log"/>
+            <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+            <field name="groups" eval="[(6, 0, [ref('atmta_roles.group_construction_site_user')])]"/>
+        </record>
+
+        <record id="rule_realestate_construction_milestone_project_member" model="ir.rule">
+            <field name="name">realestate.construction.milestone: project team</field>
+            <field name="model_id" ref="model_realestate_construction_milestone"/>
+            <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+            <field name="groups" eval="[(6, 0, [ref('atmta_roles.group_construction_site_user')])]"/>
+        </record>
+
+        <record id="rule_realestate_construction_task_project_member" model="ir.rule">
+            <field name="name">realestate.construction.task: project team</field>
+            <field name="model_id" ref="model_realestate_construction_task"/>
+            <field name="domain_force">['|', '|', ('project_id', '=', False), ('project_id.construction_member_ids', '=', False), ('project_id.construction_member_ids', 'in', [user.id])]</field>
+            <field name="groups" eval="[(6, 0, [ref('atmta_roles.group_construction_site_user')])]"/>
+        </record>
     </data>
 </odoo>

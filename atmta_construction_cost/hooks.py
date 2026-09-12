@@ -177,3 +177,17 @@ def pre_init_hook(env):
          WHERE module = %s AND name = ANY(%s)
     """, (NEW, OLD, W24_XMLIDS))
     _logger.info("Wave 24: %s screen identifiers taken from %s", cr.rowcount, OLD)
+
+# Wave 25 -- the project-team and manager rules, moved down from
+# `real_estate_construction` once that module stopped declaring
+# `construction_member_ids`. The identifiers keep their original names, so the
+# hand-over is an UPDATE of the module column and the loader then updates the
+# existing rows in place instead of creating second copies.
+W25_RULE_XMLIDS = [
+    'rule_realestate_construction_budget_line_project_member',
+    'rule_realestate_construction_budget_project_member',
+    'rule_realestate_construction_forecast_line_project_member',
+    'rule_realestate_construction_forecast_project_member',
+    'rule_realestate_construction_issue_project_member',
+    'rule_realestate_construction_risk_project_member',
+]

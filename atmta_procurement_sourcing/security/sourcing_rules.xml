@@ -75,5 +75,28 @@
                 <field name="domain_force">[(1, '=', 1)]</field>
             </record>
 
+        <!--
+            Wave 25 — the addendum acknowledgement had no access rule of any
+            kind, neither table nor row. It was reached only through `sudo()`
+            on the write side, which is why nothing failed on the way in, and
+            read without `sudo()` on the way out, which is where it failed:
+            administrative assessment of a bid and the sourcing audit both
+            read `invitation_id.acknowledgement_ids`, so under an
+            `addendum_ack_policy` of `required_before_response` a buyer met an
+            access error instead of the policy answer. Tests never saw it
+            because tests run as superuser.
+
+            Grants follow the invitation this record hangs off, and the
+            company rule follows every other model in this module. The
+            `company_id` here is related to the invitation and stored, so it
+            filters exactly as the siblings do.
+        -->
+        <record id="rule_sourcing_acknowledgement_company" model="ir.rule">
+                <field name="name">Addendum acknowledgement: company</field>
+                <field name="model_id" ref="model_realestate_procurement_sourcing_acknowledgement"/>
+                <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+                <field name="global" eval="True"/>
+            </record>
+
     </data>
 </odoo>
