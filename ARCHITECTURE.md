@@ -5,7 +5,7 @@ falls where it does, and what a maintainer needs to know before moving
 anything.
 
 This describes the state after the V2 extraction programme (commits `84caf41`
-through `e1775cd`). It is a map, not a plan: everything here is measured from
+through `c20fe57`). It is a map, not a plan: everything here is measured from
 the tree it documents.
 
 ---
@@ -23,14 +23,14 @@ ones above.
 | 3 | `atmta_construction_core` | 4 | WBS, cost codes, analytic wiring, company accounts |
 | 4 | `atmta_construction_contract` | 2 | contractors, contract packages |
 | 5 | `atmta_construction_change` | 6 | change events, change orders |
-| 5 | `atmta_construction_documents` | 10 | drawings, submittals, transmittals, RFIs |
-| 6 | `atmta_construction_quality` | 10 | ITPs, inspections, observations, NCRs |
-| 7 | `atmta_construction_claims` | 8 | delay events, notices, EOTs, claims |
-| 8 | `atmta_construction_site` | 14 | BOQ, milestones, tasks, daily reports, labour, cost lines |
-| 9 | `atmta_construction_certification` | 8 | payment certificates, retention, advances, owner billing |
-| 10 | `atmta_construction_cost` | 21 | budget, commitment, forecast, cost reporting, risk |
-| 11 | `real_estate_construction` | 5 | the application layer (see §4) |
-| 12 | `atmta_construction_app` | 0 | navigation |
+| 6 | `atmta_construction_documents` | 10 | drawings, submittals, transmittals, RFIs |
+| 7 | `atmta_construction_quality` | 10 | ITPs, inspections, observations, NCRs |
+| 8 | `atmta_construction_claims` | 8 | delay events, notices, EOTs, claims |
+| 9 | `atmta_construction_site` | 14 | BOQ, milestones, tasks, daily reports, labour, cost lines |
+| 10 | `atmta_construction_certification` | 8 | payment certificates, retention, advances, owner billing |
+| 11 | `atmta_construction_cost` | 21 | budget, commitment, forecast, cost reporting, risk |
+| 12 | `real_estate_construction` | 5 | the application layer (see §4) |
+| 13 | `atmta_construction_app` | 0 | navigation |
 
 `real_estate_construction` began with **88 owned models**. It now owns 5.
 
@@ -101,7 +101,7 @@ The arithmetic never changed during extraction; only the module stating it.
 | `_apply_revenue_impact` | change | `change_implementation.py` |
 | `_convert_forecast_anticipations` | change | `change_implementation.py` |
 | `_already_implemented` | change | `change_implementation.py` |
-| `_reason_dispatch` | quality | `quality_change_event.py` |
+| `_reason_dispatch` | quality | `quality_reason_dispatch.py` |
 | `_record_ref_selection` | claims | `delay_daily_link.py` |
 | `_daily_record_count` | claims | `delay_daily_link.py` |
 | `_daily_delay_chronology` | claims | `delay_daily_link.py` |
@@ -124,16 +124,19 @@ exceptions and the integrity audit consume every module beneath them and add
 no figure of their own. The tower has zero writes and zero numeric fields; its
 own header says it never adds a sixth opinion. Plus one subcontract PO wizard.
 
-**Eleven cross-layer extension files.** Each declares a relation whose two ends
+**Ten cross-layer extension files.** Each declares a relation whose two ends
 sit in modules that cannot depend on each other. `contract_package_construction.py`
-adds variations and EOTs to a package at depth 4 from models at depths 7 and 10.
-`delay_daily_link.py` joins delay events (claims, 7) to daily records (site, 8)
+adds variations and EOTs to a package at depth 4 from models at depths 8 and 11.
+`delay_daily_link.py` joins delay events (claims, 8) to daily records (site, 9)
 — and site depends on claims, so claims can never declare it. Only a module
-above both can. That is this one.
+above both can. That is this one. `quality_reason_dispatch.py` is the same
+shape: quality owns the reason prompt, but amending a daily report is a site
+concern, and site sits above quality.
 
-**Ten view files.** Four render fields this module declares; four span two
-capabilities; plus the menu tree and the dashboard. The other nine view files
-moved to their owners in Wave 21.
+**Eight view files.** Three render fields this module declares (`change`,
+`contractor`, `project`); three span two capabilities (`budget`, `claims`,
+`procurement coding`); plus the menu tree and the dashboard. Eleven view files
+moved to their owners, nine in Wave 21 and two in Wave 23.
 
 **The test suite: 33 files, 563 methods.** Measured: `common.py` is 617 lines
 with 45 helpers touching 30 models, 31 of 33 files import it, and 249 of 563
@@ -154,6 +157,11 @@ passed — and the views had been deleted and recreated with new database ids,
 which would have orphaned any inherited view or saved filter layered on them.
 Caught by comparing a database id across the upgrade, not a count. If a module
 may already be installed, it needs a migration.
+
+Wave 23 is the counter-example that shows the rule works. All three modules it
+touched were already installable, so migrations were written from the start and
+verified by id: three views kept 1653, 1670 and 1672 across the upgrade while
+changing owner. The rule cost one wave to learn and nothing afterwards.
 
 **`_process_end` skips `noupdate` records.** Sequences are `noupdate`, so
 nothing hands them over automatically. Every wave that moved a sequence named
@@ -197,13 +205,16 @@ Every wave was held to the same gate, and none of it was assumed:
 
 ## 7. If you continue
 
-The reachable work, in rough order of value:
+Wave 23 did the first item on the original list: documents and quality now
+depend on change, `change_event_id` sits beside the models it belongs to, and
+two more view files followed it down.
 
-1. **Repatriate the change-event links.** Give documents and quality a
-   dependency on change so `change_event_id` comes down, as Wave 19 did for
-   certification. Removes one extension file and part of another.
-2. **Split the four mixed view files** so each half sits with its owner, at
-   the cost of inherited-view indirection.
-3. **Leave the rest.** The five models, the eleven extension files and the
+What is left:
+
+1. **Split the three mixed view files** — `budget`, `claims` and
+   `procurement coding` each render two capabilities' models. Splitting lets
+   each half sit with its owner, at the cost of inherited-view indirection
+   where there is none today.
+2. **Leave the rest.** The five models, the ten extension files and the
    integration suite are where they belong. Moving them would trade a correct
    architecture for a tidier file listing.
