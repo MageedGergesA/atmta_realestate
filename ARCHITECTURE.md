@@ -5,7 +5,7 @@ falls where it does, and what a maintainer needs to know before moving
 anything.
 
 This describes the state after the V2 extraction programme (commits `84caf41`
-through `c20fe57`). It is a map, not a plan: everything here is measured from
+through `HEAD`). It is a map, not a plan: everything here is measured from
 the tree it documents.
 
 ---
@@ -133,10 +133,11 @@ above both can. That is this one. `quality_reason_dispatch.py` is the same
 shape: quality owns the reason prompt, but amending a daily report is a site
 concern, and site sits above quality.
 
-**Eight view files.** Three render fields this module declares (`change`,
-`contractor`, `project`); three span two capabilities (`budget`, `claims`,
-`procurement coding`); plus the menu tree and the dashboard. Eleven view files
-moved to their owners, nine in Wave 21 and two in Wave 23.
+**Seven view files.** Four render fields this module declares (`change`,
+`contractor`, `project`, `procurement coding`); one spans capabilities with no
+common owner below (`claims`); plus the menu tree and the dashboard. Twelve
+view files moved to their owners: nine in Wave 21, two in Wave 23, one in
+Wave 24.
 
 **The test suite: 33 files, 563 methods.** Measured: `common.py` is 617 lines
 with 45 helpers touching 30 models, 31 of 33 files import it, and 249 of 563
@@ -209,12 +210,27 @@ Wave 23 did the first item on the original list: documents and quality now
 depend on change, `change_event_id` sits beside the models it belongs to, and
 two more view files followed it down.
 
-What is left:
+Wave 24 finished the view work and corrected this section, which had
+recommended splitting three files. A closer measurement — asking what blocks
+each file *per candidate target module*, rather than which models it renders —
+showed that was wrong:
 
-1. **Split the three mixed view files** — `budget`, `claims` and
-   `procurement coding` each render two capabilities' models. Splitting lets
-   each half sit with its owner, at the cost of inherited-view indirection
-   where there is none today.
-2. **Leave the rest.** The five models, the ten extension files and the
-   integration suite are where they belong. Moving them would trade a correct
-   architecture for a tidier file listing.
+* `budget_views.xml` needed no split at all. It renders a budget, the contract
+  package beside it and the cost report over both, and `cost` already depends
+  on `contract`, so the file moved whole.
+* `claims_views.xml` cannot move, and should not. It renders
+  `delay.event.daily_delay_ids`, and the only modules above both claims and
+  site are certification, cost and this one. None of the first two is about
+  delay evidence, so the glue belongs here.
+* `procurement_coding_views.xml` renders ten fields this module declares.
+
+**Nothing structural is left.** The seven remaining view files render fields
+this module declares or span capabilities that have no common owner below it.
+The five models, the ten extension files and the integration suite are where
+they belong. Moving any of them would trade a correct architecture for a
+shorter file listing.
+
+If you want more assurance rather than more movement, the useful next step is
+an audit: nineteen modules now exist that have never been checked as modules —
+for v18-to-v19 breakers, for access rules that no longer match their new
+owners, or for screens whose menu still points across a boundary.

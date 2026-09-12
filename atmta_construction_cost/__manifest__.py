@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'ATMTA Construction — Cost',
-    'version': '18.0.2.0.0',
+    'version': '18.0.3.0.0',
     'category': 'Real Estate/Construction',
     'summary': 'Budget, commitment, forecast, cost reporting, risk.',
     'description': """
@@ -62,6 +62,10 @@ data-control exceptions.
         # `real_estate_construction`. They render only models it owns and
         # no field declared above it, which is what made the move safe.
         'views/forecast_views.xml',
+        # Wave 24 — the budget, contract-package and cost-report screens.
+        # They render a package alongside a budget, and this module already
+        # depends on contract, so the file moves whole rather than splitting.
+        'views/budget_views.xml',
     ],
     'pre_init_hook': 'pre_init_hook',
     'application': False,

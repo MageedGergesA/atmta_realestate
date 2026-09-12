@@ -65,6 +65,18 @@ VIEW_XMLIDS = [
     'view_construction_forecast_list',
 ]
 
+# Wave 24 — the budget, package and cost-report screens, which came down
+# whole because this module already depends on contract.
+W24_XMLIDS = [
+    'action_construction_budget',
+    'action_construction_package',
+    'view_construction_budget_form',
+    'view_construction_budget_list',
+    'view_construction_cost_report_form',
+    'view_construction_package_form',
+    'view_construction_package_list',
+]
+
 XMLIDS = [
     'access_construction_budget_change_line_manager',
     'access_construction_budget_change_line_user',
@@ -159,3 +171,9 @@ def pre_init_hook(env):
          WHERE module = %s AND name = ANY(%s)
     """, (NEW, OLD, VIEW_XMLIDS))
     _logger.info("Wave 21: %s view identifiers taken from %s", cr.rowcount, OLD)
+
+    cr.execute("""
+        UPDATE ir_model_data SET module = %s
+         WHERE module = %s AND name = ANY(%s)
+    """, (NEW, OLD, W24_XMLIDS))
+    _logger.info("Wave 24: %s screen identifiers taken from %s", cr.rowcount, OLD)

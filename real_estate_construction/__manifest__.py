@@ -63,7 +63,6 @@ Track construction progress for projects and phases:
         'wizard/subcontract_po_wizard_views.xml',
         # Wave 12 — cost-structure screens moved with their models to
         # `atmta_construction_core`.
-        'views/budget_views.xml',
         'views/change_views.xml',
         # Wave 14 — the models moved to `atmta_construction_documents`; these
         # screens did not, because they render `change_event_id` and the
