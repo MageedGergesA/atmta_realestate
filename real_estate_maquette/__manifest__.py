@@ -19,14 +19,16 @@ override available.
 """,
     'author': "Atmta",
     'license': 'LGPL-3',
-    'version': '0.4',
+    'version': '0.6',
     'category': 'Real Estate',
     'depends': [
+        'atmta_property_core',
         'atmta_real_estate',
         'real_estate_developer',
         'web',
     ],
     'data': [
+        'security/visual_security.xml',
         'security/ir.model.access.csv',
         'views/spec_tag_views.xml',
         'views/building_floor_views.xml',
@@ -35,11 +37,27 @@ override available.
         'views/property_views.xml',
         'views/building_region_views.xml',
         'views/building_preview_views.xml',
+        'views/visual_gallery_views.xml',
         'views/menus.xml',
     ],
     'assets': {
+        # HOOT unit tests. `chooseExperience()` and the disposal helpers are
+        # pure functions precisely so the fallback decision can be verified
+        # without a GPU.
+        # Browser tours — need @web_tour, which lives in the tests bundle.
+        'web.assets_tests': [
+            '/real_estate_maquette/static/tests/tours/**/*.js',
+        ],
+        'web.assets_unit_tests': [
+            '/real_estate_maquette/static/tests/**/*.test.js',
+        ],
         'web.assets_backend': [
             '/real_estate_maquette/static/src/scss/maquette_viewer.scss',
+            # Imported by maquette_viewer.js. Declared before it so the module
+            # graph resolves in both bundles — omitting them broke every
+            # backend page, not just the viewer.
+            '/real_estate_maquette/static/src/js/visual_capability.js',
+            '/real_estate_maquette/static/src/js/visual_dispose.js',
             '/real_estate_maquette/static/src/js/maquette_viewer.js',
             '/real_estate_maquette/static/src/js/maquette_field.js',
             '/real_estate_maquette/static/src/js/glb_viewer.js',
@@ -49,6 +67,9 @@ override available.
             '/real_estate_maquette/static/src/js/maquette_preview.js',
             '/real_estate_maquette/static/src/js/master_plan_2d.js',
             '/real_estate_maquette/static/src/js/master_plan_2d_field.js',
+            '/real_estate_maquette/static/src/scss/visual_gallery.scss',
+            '/real_estate_maquette/static/src/js/visual_gallery.js',
+            '/real_estate_maquette/static/src/xml/visual_gallery.xml',
             '/real_estate_maquette/static/src/xml/maquette_viewer.xml',
         ],
         # Same components reused on public portal pages (portal mode is set
@@ -57,6 +78,8 @@ override available.
         # backend-only; the frontend uses image_carousel_dialog.js.
         'web.assets_frontend': [
             '/real_estate_maquette/static/src/scss/maquette_viewer.scss',
+            '/real_estate_maquette/static/src/js/visual_capability.js',
+            '/real_estate_maquette/static/src/js/visual_dispose.js',
             '/real_estate_maquette/static/src/js/image_carousel_dialog.js',
             '/real_estate_maquette/static/src/js/building_elevation.js',
             '/real_estate_maquette/static/src/js/maquette_viewer.js',

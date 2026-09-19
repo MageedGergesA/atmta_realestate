@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import datetime, time, timedelta
 from odoo import api, fields, models
 
 
@@ -9,7 +9,15 @@ class BrokerageDashboard(models.AbstractModel):
     @api.model
     def get_data(self):
         Listing = self.env['realestate.listing']
-        Lead = self.env['realestate.lead']
+        # Opportunities live on crm.lead since 0.2 (crm_lead.py); the legacy
+        # realestate.lead only holds pre-migration rows, so counting it shows
+        # zero for every real pipeline.
+        Lead = self.env['crm.lead']
+        re_opportunities = [('re_is_realestate', '=', True),
+                            ('type', '=', 'opportunity')]
+        # Commission lines that were clawed back or cancelled were never
+        # earned; they must not read as revenue or rank an agent.
+        live_commission = [('state', 'not in', ('clawed_back', 'cancelled'))]
         Viewing = self.env['realestate.viewing']
         Offer = self.env['realestate.offer']
         Transaction = self.env['realestate.transaction']
@@ -19,7 +27,10 @@ class BrokerageDashboard(models.AbstractModel):
         today = fields.Date.today()
         month_start = today.replace(day=1)
         week_start = today - timedelta(days=today.weekday())
-        week_end = week_start + timedelta(days=6)
+        # `scheduled_at` is a datetime: bound the week by the next Monday's
+        # midnight, exclusive, or Sunday's viewings fall off the end.
+        week_end = datetime.combine(week_start + timedelta(days=7), time.min)
+        week_start = datetime.combine(week_start, time.min)
         next_30 = today + timedelta(days=30)
 
         # ---- KPIs ----
@@ -28,30 +39,32 @@ class BrokerageDashboard(models.AbstractModel):
         sold_mtd = Listing.search_count([
             ('state', '=', 'sold'), ('sold_date', '>=', month_start),
         ])
-        open_leads = Lead.search_count([('state', 'not in', ('converted', 'lost'))])
-        hot_leads = Lead.search_count([
-            ('state', 'not in', ('converted', 'lost')),
-            ('priority', 'in', ('3', '4', '5')),
-        ])
+        # Open = neither lost (archived) nor won.
+        open_domain = re_opportunities + [('stage_id.is_won', '=', False)]
+        open_leads = Lead.search_count(open_domain)
+        hot_leads = Lead.search_count(
+            open_domain + [('priority', 'in', ('2', '3'))])
         viewings_this_week = Viewing.search_count([
             ('scheduled_at', '>=', week_start),
-            ('scheduled_at', '<=', week_end),
-            ('state', 'in', ('scheduled', 'completed')),
+            ('scheduled_at', '<', week_end),
+            ('state', 'in', ('scheduled', 'confirmed', 'completed')),
         ])
         pending_offers = Offer.search_count([('state', 'in', ('submitted', 'countered'))])
 
         # Conversion: closed leads / total touched
-        total_leads = Lead.search_count([])
-        converted_leads = Lead.search_count([('state', '=', 'converted')])
+        AllLeads = Lead.with_context(active_test=False)
+        total_leads = AllLeads.search_count(re_opportunities)
+        converted_leads = AllLeads.search_count(
+            re_opportunities + [('stage_id.is_won', '=', True)])
         conversion_rate = round((converted_leads / total_leads * 100.0), 1) if total_leads else 0.0
 
         # Revenue (commissions paid)
         commissions_mtd = sum(Commission.search([
             ('payment_date', '>=', month_start), ('paid', '=', True),
-        ]).mapped('amount'))
+        ] + live_commission).mapped('amount'))
         total_commission_pipeline = sum(Commission.search([
             ('transaction_id.state', 'in', ('contract_signed', 'closed')),
-        ]).mapped('amount'))
+        ] + live_commission).mapped('amount'))
 
         kpis = {
             'active_listings': active_listings,
@@ -72,9 +85,13 @@ class BrokerageDashboard(models.AbstractModel):
             listing_states[st] = Listing.search_count([('state', '=', st)])
 
         # ---- Lead funnel (bar) ----
+        # One bar per pipeline stage, in pipeline order, keyed by stage name.
         lead_funnel = {}
-        for st in ('new', 'qualified', 'matched', 'viewing_scheduled', 'offer', 'converted'):
-            lead_funnel[st] = Lead.search_count([('state', '=', st)])
+        for stage, count in Lead._read_group(
+                re_opportunities, groupby=['stage_id'], aggregates=['__count'],
+                order='stage_id'):
+            if stage:
+                lead_funnel[stage.name] = count
 
         # ---- Days on market histogram ----
         active_with_dom = Listing.search_read([('state', '=', 'active')], ['days_on_market'])
@@ -88,7 +105,7 @@ class BrokerageDashboard(models.AbstractModel):
 
         # ---- Top recipients (commission earned, paid only) ----
         recipient_totals = {}
-        for c in Commission.search([('paid', '=', True)]):
+        for c in Commission.search([('paid', '=', True)] + live_commission):
             recipient = c.partner_id
             if not recipient:
                 continue
@@ -128,13 +145,13 @@ class BrokerageDashboard(models.AbstractModel):
             p['listing_state'] = prop_to_listing_state.get(p['id'], 'active')
 
         # ---- Recent leads list ----
-        recent_leads = Lead.search([], order='create_date desc', limit=10)
+        recent_leads = Lead.search(re_opportunities, order='create_date desc', limit=10)
         recent_leads_list = [{
             'id': l.id, 'name': l.name,
-            'partner_name': l.partner_id.name or '',
-            'source': l.source or '',
-            'state': l.state,
-            'agent': l.agent_id.name or '',
+            'partner_name': l.partner_id.name or l.partner_name or l.contact_name or '',
+            'source': l.source_id.name or '',
+            'state': l.stage_id.name or '',
+            'agent': l.user_id.name or '',
             'priority': l.priority,
             'create_date': l.create_date.isoformat() if l.create_date else None,
         } for l in recent_leads]
@@ -142,7 +159,7 @@ class BrokerageDashboard(models.AbstractModel):
         # ---- Upcoming viewings ----
         upcoming = Viewing.search([
             ('scheduled_at', '>=', today),
-            ('state', '=', 'scheduled'),
+            ('state', 'in', ('scheduled', 'confirmed')),
         ], order='scheduled_at asc', limit=10)
         viewings_list = [{
             'id': v.id, 'name': v.name,

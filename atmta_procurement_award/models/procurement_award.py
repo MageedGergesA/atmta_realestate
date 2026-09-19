@@ -99,7 +99,7 @@ class ProcurementAward(models.Model):
         ('single', 'Single Award'),
         ('split', 'Split Award — more than one vendor'),
         ('partial', 'Partial Award — part of the tender only'),
-    ], required=True, default='single', readonly=True,
+    ], required=True, default='single',
         help="Recorded rather than inferred. A split award and a partial "
              "award are different decisions with different consequences for "
              "the demand that was not awarded, and the file should say which "
@@ -298,6 +298,17 @@ class ProcurementAward(models.Model):
             # still drafts. Without this a split award confirms every vendor's
             # copy of the full tender scope.
             award._apply_awarded_scope()
+            # Marked issued *before* the orders confirm, inside the same
+            # transaction. The purchase gate authorises a tender order only
+            # for an issued award, so that pressing Confirm on the RFQ itself
+            # cannot skip the trim above and commit the full tender scope.
+            # If anything below refuses, the rollback takes this mark with it
+            # and the award is approved and re-issuable exactly as before.
+            award.write({
+                'state': 'issued',
+                'issued_by_id': self.env.user.id,
+                'issued_on': fields.Datetime.now(),
+            })
             pending = orders.filtered(lambda o: o.state in ('draft', 'sent'))
             # `skip_alternative_check` suppresses Odoo's native "shall I
             # cancel the other quotations?" prompt, which otherwise returns a
@@ -324,11 +335,6 @@ class ProcurementAward(models.Model):
                     "been issued. A part-issued award would leave the tender "
                     "in a state nobody decided on.",
                     orders=', '.join(unconfirmed.mapped('name'))))
-            award.write({
-                'state': 'issued',
-                'issued_by_id': self.env.user.id,
-                'issued_on': fields.Datetime.now(),
-            })
             award.message_post(body=_(
                 "Award issued. %(count)s purchase order(s) confirmed; the "
                 "reservation has converted and Construction now reads the "

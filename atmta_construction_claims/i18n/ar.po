@@ -1,0 +1,2636 @@
+# Translation of Odoo Server.
+# This file contains the Arabic translation of the following modules:
+# 	* atmta_construction_claims
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:12+0000\n"
+"PO-Revision-Date: 2026-09-17 10:12+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid ""
+"%(name)s determined %(amount)s of cost and no change order carries it. Money"
+" determined and never authorised is the gap every final account argues "
+"about."
+msgstr ""
+"حدد %(name)s تكلفة بمبلغ %(amount)s ولا يوجد أمر تغيير يحملها. المبالغ "
+"المحددة وغير المصرح بها هي الفجوة التي يدور حولها كل خلاف على الحساب "
+"الختامي."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/eot.py:0
+msgid ""
+"%(package)s has no original completion date. An extension extends something;"
+" award the package first."
+msgstr ""
+"%(package)s ليس لها تاريخ إنجاز أصلي. التمديد يمدد شيئًا قائمًا؛ قم بترسية "
+"حزمة الأعمال أولًا."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/eot.py:0
+msgid ""
+"%(ref)s implemented: %(days)s day(s). Completion moves from %(before)s to "
+"%(after)s. Original remains %(original)s."
+msgstr ""
+"تم تنفيذ %(ref)s: %(days)s يوم. ينتقل تاريخ الإنجاز من %(before)s إلى "
+"%(after)s. يبقى التاريخ الأصلي %(original)s."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid ""
+"%(refs)s are determined and not implemented. The contract completion date "
+"does not yet reflect them."
+msgstr "%(refs)s تم البت فيها ولم تنفذ. تاريخ إنجاز العقد لا يعكسها بعد."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid ""
+"%(refs)s have been determined. A determined claim is part of the record — "
+"issue a further submission or a superseding determination."
+msgstr ""
+"تم البت في %(refs)s. المطالبة المبتوت فيها جزء من السجل — قدم تقديمًا "
+"إضافيًا أو قرارًا بديلًا."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/eot.py:0
+msgid ""
+"%(refs)s have been implemented and the contract date reflects them. Issue a "
+"correcting extension rather than editing one that already moved a completion"
+" date."
+msgstr ""
+"تم تنفيذ %(refs)s وتاريخ العقد يعكسها. أصدر تمديدًا تصحيحيًا بدلًا من تعديل "
+"تمديد غيّر تاريخ الإنجاز بالفعل."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid ""
+"%(refs)s have been issued. A determination is corrected by a superseding "
+"determination, which is how the record shows that it changed."
+msgstr "تم إصدار %(refs)s. يصحح القرار بقرار بديل، وبذلك يظهر السجل أنه تغير."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/notice.py:0
+msgid ""
+"%(refs)s have been issued. When a notice actually went out is the fact a "
+"time-bar argument turns on — issue a further notice rather than editing this"
+" one."
+msgstr ""
+"تم إصدار %(refs)s. وقت إرسال الإشعار فعليًا هو الواقعة التي تبنى عليها حجة "
+"سقوط الحق بمرور المدة — أصدر إشعارًا إضافيًا بدلًا من تعديل هذا الإشعار."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid ""
+"%(user)s submitted this claim. Determining one's own claim needs a separate "
+"authority, or the configuration that explicitly permits it."
+msgstr ""
+"قدم %(user)s هذه المطالبة. البت في المطالبة من قبل مقدمها يتطلب صلاحية "
+"منفصلة، أو إعدادًا يسمح بذلك صراحة."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "%s already has a change order."
+msgstr "%s لديها أمر تغيير بالفعل."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/delay_event.py:0
+msgid "%s cannot be assessed yet."
+msgstr "لا يمكن تقييم %s بعد."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid ""
+"%s claims neither time nor money. Record what is being asked for — a claimed"
+" cost of zero is a statement, and an empty one is not."
+msgstr ""
+"%s لا تطالب بوقت ولا بمال. سجل ما يطالب به — التكلفة المطالب بها بقيمة صفر "
+"إفادة، أما الفارغة فليست كذلك."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/delay_event.py:0
+msgid "%s ended before it started."
+msgstr "%s انتهى قبل أن يبدأ."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/eot.py:0
+msgid "%s extends a package on another project."
+msgstr "%s يمدد حزمة أعمال في مشروع آخر."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/notice.py:0
+msgid "%s has already been issued."
+msgstr "%s صدر بالفعل."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/eot.py:0
+msgid "%s has already moved a contract date."
+msgstr "%s غيّر تاريخ عقد بالفعل."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/eot.py:0
+msgid "%s has not been determined."
+msgstr "لم يتم البت في %s."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "%s has not reached an outcome to close on."
+msgstr "%s لم يصل إلى نتيجة يمكن الإغلاق عليها."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/delay_event.py:0
+msgid "%s has nothing to close."
+msgstr "%s ليس لديه ما يغلق."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "%s is already issued."
+msgstr "%s صادرة بالفعل."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/delay_event.py:0
+msgid "%s is already open."
+msgstr "%s مفتوح بالفعل."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "%s is closed."
+msgstr "%s مغلقة."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "%s is no longer live."
+msgstr "%s لم تعد سارية."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/eot.py:0
+msgid "%s is not open for determination."
+msgstr "%s غير مفتوح للبت."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/delay_event.py:0
+msgid "%s is not running."
+msgstr "%s ليس جاريًا."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "%s is not submitted."
+msgstr "%s غير مقدمة."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/eot.py:0
+msgid "%s is past assessment."
+msgstr "%s تجاوز مرحلة التقييم."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "%s is past preparation."
+msgstr "%s تجاوز مرحلة الإعداد."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/delay_event.py:0
+msgid ""
+"%s is relied on by a claim. Close it with a reason rather than voiding the "
+"record the claim points at."
+msgstr ""
+"%s تستند إليه مطالبة. أغلقه مع ذكر السبب بدلًا من إلغاء السجل الذي تشير إليه"
+" المطالبة."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "<p>Determined on claim %(ref)s.</p>"
+msgstr "<p>تم اتخاذ القرار بشأنه في المطالبة %(ref)s.</p>"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "A claim is assessed after it is submitted."
+msgstr "تقيم المطالبة بعد تقديمها."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_eot__is_correction
+msgid ""
+"A correcting record. Corrections may carry negative days; the original stays"
+" exactly as it was determined."
+msgstr ""
+"سجل تصحيحي. يجوز أن تتضمن التصحيحات أيامًا سالبة؛ ويبقى السجل الأصلي كما صدر"
+" القرار بشأنه تمامًا."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_delay_event__is_ongoing
+msgid ""
+"A delay can run for months. An end date is not required while it is still "
+"running."
+msgstr ""
+"قد يستمر التأخير لأشهر. تاريخ النهاية غير مطلوب ما دام التأخير مستمرًا."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "A determination without reasons is an instruction. Record why."
+msgstr "القرار دون أسباب مجرد تعليمات. سجل السبب."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid ""
+"A negative quantum line is a credit, and belongs on the other side of the "
+"claim."
+msgstr ""
+"بند مبلغ المطالبة السالب يمثل رصيدًا دائنًا، ومكانه في الجانب الآخر من "
+"المطالبة."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/notice.py:0
+msgid "A notice that was never issued cannot be acknowledged."
+msgstr "لا يمكن الإقرار باستلام إشعار لم يصدر أصلًا."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__claim_type__acceleration
+msgid "Acceleration"
+msgstr "التسريع"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__event_type__access_delay
+msgid "Access / Possession"
+msgstr "الوصول / الحيازة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__acknowledged
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_notice__status__acknowledged
+msgid "Acknowledged"
+msgstr "تم الإقرار بالاستلام"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__acknowledged_on
+msgid "Acknowledged On"
+msgstr "تاريخ الإقرار بالاستلام"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__acknowledgement_reference
+msgid "Acknowledgement Reference"
+msgstr "مرجع الإقرار بالاستلام"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__message_needaction
+msgid "Action Needed"
+msgstr "إجراء مطلوب"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__activity_ids
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__activity_ids
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__activity_ids
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__activity_ids
+msgid "Activities"
+msgstr "الأنشطة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "زخرفة استثناء النشاط"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_delay_event__schedule_activity_ref
+msgid ""
+"Activity ID in the external programme (P6, MS Project). ATMTA does not "
+"schedule; it records which activity was affected."
+msgstr ""
+"معرف النشاط في البرنامج الزمني الخارجي (P6، مايكروسوفت بروجكت). لا يقوم "
+"ATMTA بالجدولة؛ بل يسجل النشاط الذي تأثر."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__activity_state
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__activity_state
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__activity_state
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__affected_work
+msgid "Affected Work"
+msgstr "الأعمال المتأثرة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__age_days
+msgid "Age Days"
+msgstr "العمر بالأيام"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__amount
+msgid "Amount"
+msgstr "المبلغ"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "An extension of time extends a contract. Link the package."
+msgstr "تمديد المدة يمدد العقد. اربط حزمة الأعمال."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__analysis_document_revision_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__analysis_document_revision_id
+msgid "Analysis Document"
+msgstr "مستند التحليل"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__analysis_method
+msgid "Analysis Method"
+msgstr "طريقة التحليل"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__schedule_method__as_planned_vs_as_built
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_eot__analysis_method__as_planned_vs_as_built
+msgid "As-Planned vs As-Built"
+msgstr "المخطط مقابل المنفذ فعليًا"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "Assess the claim before asking for a determination."
+msgstr "قيم المطالبة قبل طلب القرار."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__state__assessed
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__state__assessed
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_eot__state__assessed
+msgid "Assessed"
+msgstr "تم التقييم"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__assessed_amount
+msgid "Assessed Amount"
+msgstr "المبلغ المقيم"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__assessed_cost
+msgid "Assessed Cost"
+msgstr "التكلفة المقيمة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__assessed_days
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__assessed_days
+msgid "Assessed Days"
+msgstr "الأيام المقيمة"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "Assessing a claim is a commercial role's work."
+msgstr "تقييم المطالبة من اختصاص الدور التجاري."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__assigned_to_id
+msgid "Assigned To"
+msgstr "المكلف"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__authority_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__authority_id
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__cause_category__authority
+msgid "Authority"
+msgstr "الجهة الحكومية"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__event_type__authority_delay
+msgid "Authority / Permit"
+msgstr "الجهات الحكومية / التصاريح"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__authority_role
+msgid "Authority Role"
+msgstr "صفة الجهة المختصة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__awareness_date
+msgid "Awareness Date"
+msgstr "تاريخ العلم"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__basis
+msgid "Basis"
+msgstr "الأساس"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__state__cancelled
+msgid "Cancelled"
+msgstr "ملغى"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__category
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_evidence__category
+msgid "Category"
+msgstr "الفئة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__cause_and_effect
+msgid "Cause And Effect"
+msgstr "السبب والأثر"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__cause_category
+msgid "Cause Category"
+msgstr "فئة السبب"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_evidence__category__change_event
+msgid "Change Event"
+msgstr "حدث التغيير"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__change_order_id
+msgid "Change Order"
+msgstr "أمر تغيير"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "Change event opened"
+msgstr "تم فتح حدث تغيير"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__chronology_html
+msgid "Chronology Html"
+msgstr "التسلسل الزمني (HTML)"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_evidence__cited_by_id
+msgid "Cited By"
+msgstr "مستشهد به في"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_evidence__cited_on
+msgid "Cited On"
+msgstr "تاريخ الاستشهاد"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/delay_event.py:0
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__claim_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__claim_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_evidence__claim_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_submission__claim_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__claim_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__claim_id
+msgid "Claim"
+msgstr "المطالبة"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "Claim %(name)s is in %(company)s but its project is in %(other)s."
+msgstr ""
+"المطالبة %(name)s تابعة للشركة %(company)s بينما مشروعها تابع للشركة "
+"%(other)s."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "Claim %(ref)s — %(title)s"
+msgstr "المطالبة %(ref)s — %(title)s"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__claim_count
+msgid "Claim Count"
+msgstr "عدد المطالبات"
+
+#. module: atmta_construction_claims
+#: model:ir.model,name:atmta_construction_claims.model_realestate_construction_claim_determination
+msgid "Claim Determination"
+msgstr "قرار البت في مطالبة"
+
+#. module: atmta_construction_claims
+#: model:ir.model,name:atmta_construction_claims.model_realestate_construction_claim_evidence
+msgid "Claim Evidence"
+msgstr "أدلة المطالبة"
+
+#. module: atmta_construction_claims
+#: model:ir.model,name:atmta_construction_claims.model_realestate_construction_claim_cost_line
+msgid "Claim Quantum Line"
+msgstr "بند مبلغ المطالبة"
+
+#. module: atmta_construction_claims
+#: model:ir.model,name:atmta_construction_claims.model_realestate_construction_claim_submission
+msgid "Claim Submission"
+msgstr "تقديم المطالبة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__claim_type
+msgid "Claim Type"
+msgstr "نوع المطالبة"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "Claim submission revision %s"
+msgstr "مراجعة تقديم المطالبة %s"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__claimant_partner_id
+msgid "Claimant"
+msgstr "المطالب"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__claimed_amount
+msgid "Claimed Amount"
+msgstr "المبلغ المطالب به"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__claimed_cost
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_submission__claimed_cost
+msgid "Claimed Cost"
+msgstr "التكلفة المطالب بها"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__claimed_days
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_submission__claimed_days
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__claimed_days
+msgid "Claimed Days"
+msgstr "الأيام المطالب بها"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__claim_ids
+msgid "Claims"
+msgstr "المطالبات"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim__side
+msgid ""
+"Claims do not only come from contractors. An employer claim runs through the"
+" same administration in the other direction."
+msgstr ""
+"لا تصدر المطالبات عن المقاولين فقط. تمر مطالبة صاحب العمل بالإجراءات ذاتها "
+"في الاتجاه المعاكس."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__state__closed
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__state__closed
+msgid "Closed"
+msgstr "مغلق"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__closed_date
+msgid "Closed Date"
+msgstr "تاريخ الإغلاق"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__comments
+msgid "Comments"
+msgstr "التعليقات"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__company_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__company_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__company_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_evidence__company_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_submission__company_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__company_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__company_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__completion_date_after
+msgid "Completion Date After"
+msgstr "تاريخ الإنجاز بعد"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__completion_date_before
+msgid "Completion Date Before"
+msgstr "تاريخ الإنجاز قبل"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_notice__deadline_date
+msgid ""
+"Computed from the period configured on THIS contract. Empty when the "
+"contract records no period — which is not the same as a deadline of today."
+msgstr ""
+"محسوب من المدة المحددة في هذا العقد تحديدًا. يكون فارغًا إذا لم يسجل العقد "
+"أي مدة — وهذا لا يعني أن الموعد النهائي هو اليوم."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__cause_category__concurrent
+msgid "Concurrent / Mixed"
+msgstr "متزامن / مختلط"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__conditions
+msgid "Conditions"
+msgstr "الشروط"
+
+#. module: atmta_construction_claims
+#: model:ir.model,name:atmta_construction_claims.model_realestate_construction_claim
+msgid "Construction Claim"
+msgstr "مطالبة إنشائية"
+
+#. module: atmta_construction_claims
+#: model:ir.actions.server,name:atmta_construction_claims.cron_refresh_dates_ir_actions_server
+msgid "Construction Claims: refresh notice status and delay durations"
+msgstr "مطالبات الإنشاء: تحديث حالة الإشعارات ومدد التأخير"
+
+#. module: atmta_construction_claims
+#: model:ir.model,name:atmta_construction_claims.model_realestate_construction_claims_refresh
+msgid "Construction claims: refresh values that depend on today's date"
+msgstr "مطالبات الإنشاء: تحديث القيم المعتمدة على تاريخ اليوم"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__event_type__consultant_delay
+msgid "Consultant"
+msgstr "الاستشاري"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__cause_category__consultant
+msgid "Consultant / Engineer"
+msgstr "الاستشاري / المهندس"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__evidence_ids
+msgid "Contemporary Records"
+msgstr "السجلات المعاصرة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__clause_reference
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__clause_reference
+msgid "Contract Clause"
+msgstr "بند العقد"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__contractor_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__contractor_id
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__cause_category__contractor
+msgid "Contractor"
+msgstr "المقاول"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__side__contractor
+msgid "Contractor Claim"
+msgstr "مطالبة المقاول"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__event_type__contractor_delay
+msgid "Contractor Performance"
+msgstr "أداء المقاول"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__contractual_basis
+msgid "Contractual Basis"
+msgstr "الأساس التعاقدي"
+
+#. module: atmta_construction_claims
+#: model:ir.model,name:atmta_construction_claims.model_realestate_construction_notice
+msgid "Contractual Notice"
+msgstr "إشعار تعاقدي"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_notice__method__transmittal
+msgid "Controlled Transmittal"
+msgstr "كتاب إحالة موثق"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/eot.py:0
+msgid "Correction of %s."
+msgstr "تصحيح لـ %s."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/eot.py:0
+msgid "Corrections apply to extensions that were implemented."
+msgstr "تنطبق التصحيحات على التمديدات التي تم تنفيذها."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_evidence__category__cost
+msgid "Cost / Accounting Record"
+msgstr "سجل تكلفة / محاسبي"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__cost_claimed_known
+msgid "Cost Claimed Known"
+msgstr "التكلفة المطالب بها معروفة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__cost_code_id
+msgid "Cost Code"
+msgstr "رمز التكلفة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_evidence__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_submission__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__create_date
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__create_date
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__create_date
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_evidence__create_date
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_submission__create_date
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__create_date
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__create_date
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_submission__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__currency_id
+msgid "Currency"
+msgstr "العملة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__current_submission_id
+msgid "Current Submission"
+msgstr "التقديم الحالي"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__daily_record_count
+msgid "Daily Record Count"
+msgstr "عدد السجلات اليومية"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_evidence__category__daily_report
+msgid "Daily Site Report"
+msgstr "تقرير الموقع اليومي"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__claim_type__damage
+msgid "Damage"
+msgstr "الأضرار"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__days_remaining
+msgid "Days Remaining"
+msgstr "الأيام المتبقية"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__days_taken
+msgid "Days Taken"
+msgstr "الأيام المستغرقة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__deadline_date
+msgid "Deadline Date"
+msgstr "تاريخ الموعد النهائي"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__deadline_warning
+msgid "Deadline Warning"
+msgstr "تنبيه الموعد النهائي"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__claim_type__defect_cost
+msgid "Defect Cost"
+msgstr "تكلفة العيوب"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__claim_type__delay_cost
+msgid "Delay Cost"
+msgstr "تكلفة التأخير"
+
+#. module: atmta_construction_claims
+#: model:ir.model,name:atmta_construction_claims.model_realestate_construction_delay_event
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__delay_event_id
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_evidence__category__delay_event
+msgid "Delay Event"
+msgstr "حدث تأخير"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__delay_event_ids
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__delay_event_ids
+msgid "Delay Events"
+msgstr "أحداث التأخير"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/delay_event.py:0
+msgid ""
+"Delay event %(name)s is in %(company)s but its project is in %(other)s."
+msgstr ""
+"حدث التأخير %(name)s تابع للشركة %(company)s بينما مشروعه تابع للشركة "
+"%(other)s."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "Delay event ends"
+msgstr "انتهاء حدث التأخير"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "Delay event starts"
+msgstr "بداية حدث التأخير"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__description
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__description
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_evidence__description
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__description
+msgid "Description"
+msgstr "الوصف"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__event_type__design_change
+msgid "Design Change"
+msgstr "تغيير في التصميم"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_notice__notice_type__detailed_particulars
+msgid "Detailed Particulars"
+msgstr "التفاصيل المفصلة"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "Determination"
+msgstr "القرار"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__determination_authority_id
+msgid "Determination Authority"
+msgstr "جهة إصدار القرار"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__determination_date
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__determination_date
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__determination_date
+msgid "Determination Date"
+msgstr "تاريخ القرار"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__document_revision_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__document_revision_id
+msgid "Determination Document"
+msgstr "مستند القرار"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__state__determination_pending
+msgid "Determination Pending"
+msgstr "بانتظار القرار"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__determination_ids
+msgid "Determinations"
+msgstr "القرارات"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__state__determined
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_eot__state__determined
+msgid "Determined"
+msgstr "صدر القرار"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__determined_amount
+msgid "Determined Amount"
+msgstr "المبلغ المقرر"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__determined_cost
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__determined_cost
+msgid "Determined Cost"
+msgstr "التكلفة المقررة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__determined_days
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__determined_days
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__determined_days
+msgid "Determined Days"
+msgstr "الأيام المقررة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__claim_type__differing_site_condition
+msgid "Differing Site Condition"
+msgstr "اختلاف ظروف الموقع"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_cost_line__category__labor
+msgid "Direct Labour"
+msgstr "العمالة المباشرة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__discovered_on
+msgid "Discovered On"
+msgstr "تاريخ الاكتشاف"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__display_name
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__display_name
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__display_name
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_evidence__display_name
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_submission__display_name
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__display_name
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__display_name
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__dispute_document_revision_id
+msgid "Dispute Notice"
+msgstr "إشعار النزاع"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__dispute_reason
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__dispute_reason
+msgid "Dispute Reason"
+msgstr "سبب النزاع"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__disputed
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__state__disputed
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_notice__status__disputed
+msgid "Disputed"
+msgstr "متنازع عليه"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__disputed_cost
+msgid "Disputed Cost"
+msgstr "التكلفة المتنازع عليها"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__disputed_days
+msgid "Disputed Days"
+msgstr "الأيام المتنازع عليها"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__claim_type__disruption
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_cost_line__category__disruption
+msgid "Disruption"
+msgstr "الإرباك"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_evidence__category__document
+msgid "Document Revision"
+msgstr "مراجعة مستند"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__state__draft
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_determination__state__draft
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_submission__state__draft
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__state__draft
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_eot__state__draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_notice__status__due_soon
+msgid "Due Soon"
+msgstr "يستحق قريبًا"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__duration_days
+msgid "Duration Days"
+msgstr "المدة بالأيام"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/eot.py:0
+msgid "EOT %(name)s is in %(company)s but its project is in %(other)s."
+msgstr ""
+"تمديد المدة %(name)s تابع للشركة %(company)s بينما مشروعه تابع للشركة "
+"%(other)s."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "EOT determined"
+msgstr "صدر قرار تمديد المدة"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "EOT implemented"
+msgstr "تم تنفيذ تمديد المدة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__effective_date
+msgid "Effective Date"
+msgstr "تاريخ السريان"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_delay_event__duration_days
+msgid ""
+"Elapsed calendar days of the event itself. This is not an entitlement to "
+"that many days of extension."
+msgstr ""
+"الأيام التقويمية المنقضية للحدث نفسه. ولا يعني ذلك استحقاق تمديد بعدد هذه "
+"الأيام."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_notice__method__email
+msgid "Email"
+msgstr "البريد الإلكتروني"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__cause_category__employer
+msgid "Employer / Client"
+msgstr "صاحب العمل / العميل"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__side__employer
+msgid "Employer / Owner Claim"
+msgstr "مطالبة صاحب العمل / المالك"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__event_type__employer_delay
+msgid "Employer Act or Omission"
+msgstr "فعل أو إغفال من صاحب العمل"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_notice__notice_type__employer_claim
+msgid "Employer Claim Notice"
+msgstr "إشعار مطالبة صاحب العمل"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__end_date
+msgid "End Date"
+msgstr "تاريخ النهاية"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__state__ended
+msgid "Ended"
+msgstr "منتهي"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim_determination__authority_role
+msgid ""
+"Engineer, Employer's Representative, Project Manager — as the contract names"
+" the role."
+msgstr ""
+"المهندس، أو ممثل صاحب العمل، أو مدير المشروع — حسب مسمى الدور في العقد."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__eot_ids
+msgid "Eot"
+msgstr "تمديد المدة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_cost_line__category__equipment
+msgid "Equipment / Plant"
+msgstr "المعدات / الآليات"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__event_type__equipment_delay
+msgid "Equipment Delay"
+msgstr "تأخير المعدات"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_evidence__category__equipment
+msgid "Equipment Record"
+msgstr "سجل المعدات"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_cost_line__category__escalation
+msgid "Escalation"
+msgstr "تصاعد الأسعار"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__estimated_cost_impact
+msgid "Estimated Cost Impact"
+msgstr "الأثر التقديري على التكلفة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__estimated_delay_days
+msgid "Estimated Delay Days"
+msgstr "أيام التأخير المقدرة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__estimated_exposure
+msgid "Estimated Exposure"
+msgstr "الأثر المالي المقدر"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "Event"
+msgstr "الحدث"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__event_date
+msgid "Event Date"
+msgstr "تاريخ الحدث"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__event_type
+msgid "Event Type"
+msgstr "نوع الحدث"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__evidence_count
+msgid "Evidence Count"
+msgstr "عدد الأدلة"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "Evidence cited"
+msgstr "تم الاستشهاد بدليل"
+
+#. module: atmta_construction_claims
+#: model:ir.model,name:atmta_construction_claims.model_realestate_construction_eot
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__claim_type__extension_of_time
+msgid "Extension of Time"
+msgstr "تمديد المدة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__schedule_method__external
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_eot__analysis_method__external
+msgid "External Scheduler Determination"
+msgstr "قرار من جهة جدولة خارجية"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_submission__is_final
+msgid "Final Particulars"
+msgstr "التفاصيل النهائية"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_cost_line__category__financing
+msgid "Financing"
+msgstr "التمويل"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__first_notice_date
+msgid "First Notice Date"
+msgstr "تاريخ أول إشعار"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim__activity_type_icon
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_delay_event__activity_type_icon
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_eot__activity_type_icon
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_notice__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "أيقونة Font Awesome، مثل fa-tasks"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__event_type__force_majeure
+msgid "Force Majeure / Exceptional Event"
+msgstr "القوة القاهرة / حدث استثنائي"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid ""
+"Give the quantum at least one cost code, so the change order lands somewhere"
+" the cost report can see."
+msgstr ""
+"اربط مبلغ المطالبة برمز تكلفة واحد على الأقل، حتى يظهر أمر التغيير في موضع "
+"يراه تقرير التكاليف."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_eot__determined_days
+msgid ""
+"Granted days. Only these move the current completion date, and only once "
+"implemented."
+msgstr ""
+"الأيام الممنوحة. هي وحدها التي تغير تاريخ الإنجاز الحالي، وبعد تنفيذها فقط."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_notice__method__hand
+msgid "Hand Delivery"
+msgstr "تسليم باليد"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__has_deadline
+msgid "Has Deadline"
+msgstr "له موعد نهائي"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__has_late_notice
+msgid "Has Late Notice"
+msgstr "يوجد إشعار متأخر"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__has_message
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__has_message
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__has_message
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__has_message
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__has_message
+msgid "Has Message"
+msgstr "يحتوي على رسالة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_cost_line__category__head_office
+msgid "Head Office Overhead"
+msgstr "المصاريف العامة للمكتب الرئيسي"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim_cost_line__basis
+msgid ""
+"How the figure was built. A quantum line nobody can follow is a quantum line"
+" nobody will accept."
+msgstr "طريقة احتساب الرقم. بند المبلغ الذي لا يمكن لأحد تتبعه لن يقبله أحد."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_evidence__id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_submission__id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__activity_exception_icon
+msgid "Icon"
+msgstr "الأيقونة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim__activity_exception_icon
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_delay_event__activity_exception_icon
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_eot__activity_exception_icon
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_notice__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "أيقونة للإشارة إلى نشاط استثنائي."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim__message_needaction
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim_determination__message_needaction
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_delay_event__message_needaction
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_eot__message_needaction
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_notice__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا كان محددًا، فهناك رسائل جديدة تتطلب انتباهك."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim__message_has_error
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim_determination__message_has_error
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim_determination__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_delay_event__message_has_error
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_delay_event__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_eot__message_has_error
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_eot__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_notice__message_has_error
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_notice__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا كان محددًا، فبعض الرسائل بها خطأ في التسليم."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__schedule_method__impacted_as_planned
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_eot__analysis_method__impacted_as_planned
+msgid "Impacted As-Planned"
+msgstr "الأثر على البرنامج المخطط"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_eot__state__implemented
+msgid "Implemented"
+msgstr "منفذ"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_evidence__category__inspection
+msgid "Inspection"
+msgstr "المعاينة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__event_type__interface
+msgid "Interface / Coordination"
+msgstr "التداخل / التنسيق"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__internal_position
+msgid "Internal Position"
+msgstr "الموقف الداخلي"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__is_correction
+msgid "Is Correction"
+msgstr "تصحيح"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__is_late
+msgid "Is Late"
+msgstr "متأخر"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__is_ongoing
+msgid "Is Ongoing"
+msgstr "مستمر"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_determination__state__issued
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_submission__state__issued
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_notice__status__issued
+msgid "Issued"
+msgstr "صادر"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__issued_by_id
+msgid "Issued By"
+msgstr "جهة الإصدار"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_notice__status__late
+msgid "Issued Late"
+msgstr "صدر متأخرًا"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__issued_to_partner_id
+msgid "Issued To Partner"
+msgstr "صادر إلى الطرف"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_evidence__category__labor
+msgid "Labour Record"
+msgstr "سجل العمالة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__event_type__labor_shortage
+msgid "Labour Shortage"
+msgstr "نقص العمالة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_evidence__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_submission__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__write_date
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__write_date
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__write_date
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_evidence__write_date
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_submission__write_date
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__write_date
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__write_date
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__event_type__late_approval
+msgid "Late Approval"
+msgstr "تأخر الاعتماد"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__event_type__late_information
+msgid "Late Information"
+msgstr "تأخر المعلومات"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_notice__method__letter
+msgid "Letter"
+msgstr "خطاب"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__location
+msgid "Location"
+msgstr "الموقع"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__claim_type__loss_and_expense
+msgid "Loss and Expense"
+msgstr "الخسائر والمصاريف"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__schedule_method__manual
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_eot__analysis_method__manual
+msgid "Manual Assessment"
+msgstr "تقييم يدوي"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim_submission__is_final
+msgid ""
+"Marks the fully detailed submission, where the contract distinguishes one."
+msgstr "يحدد التقديم المفصل بالكامل، إذا كان العقد يميز بينه وبين غيره."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__event_type__material_delay
+msgid "Material Delay"
+msgstr "تأخر المواد"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_cost_line__category__materials
+msgid "Materials"
+msgstr "المواد"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__claim_type__measurement
+msgid "Measurement"
+msgstr "القياس"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__method
+msgid "Method"
+msgstr "الطريقة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__mitigation_narrative
+msgid "Mitigation Narrative"
+msgstr "وصف إجراءات التخفيف"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__state__monitoring
+msgid "Monitoring"
+msgstr "المتابعة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "موعد نشاطي النهائي"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_evidence__category__ncr
+msgid "NCR"
+msgstr "تقرير عدم مطابقة"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "NCR raised"
+msgstr "تم رفع تقرير عدم مطابقة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_delay_event__responsible_party
+msgid "Named party, where one has been identified."
+msgstr "الطرف المسمى، إن تم تحديده."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_submission__narrative
+msgid "Narrative"
+msgstr "الوصف"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/eot.py:0
+msgid ""
+"Negative days belong on a correction record, so the history shows an "
+"extension was reduced rather than quietly shrinking one that was already "
+"granted."
+msgstr ""
+"الأيام السالبة مكانها سجل تصحيحي، حتى يظهر السجل التاريخي أن التمديد قد خفض "
+"بدلًا من تقليص تمديد سبق منحه بصمت."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim__internal_position
+msgid ""
+"Negotiating position and strategy. Server-side restricted — hiding it in a "
+"view would still expose it through a relation."
+msgstr ""
+"الموقف التفاوضي والاستراتيجية. مقيد على مستوى الخادم — فإخفاؤه في واجهة "
+"العرض سيبقيه مكشوفًا عبر العلاقات."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__cause_category__neutral
+msgid "Neutral Event"
+msgstr "حدث محايد"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+#: code:addons/atmta_construction_claims/models/delay_event.py:0
+#: code:addons/atmta_construction_claims/models/eot.py:0
+#: code:addons/atmta_construction_claims/models/notice.py:0
+msgid "New"
+msgstr "جديد"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__next_action
+msgid "Next Action"
+msgstr "الإجراء التالي"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "حدث التقويم للنشاط التالي"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__activity_summary
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__activity_summary
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__activity_summary
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__activity_type_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__activity_type_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__activity_type_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/notice.py:0
+msgid ""
+"No notice recorded and the configured deadline (%(deadline)s) has passed."
+msgstr "لم يسجل أي إشعار وقد انقضى الموعد النهائي المحدد (%(deadline)s)."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_notice__status__not_required
+msgid "Not Required"
+msgstr "غير مطلوب"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__cause_category__undetermined
+msgid "Not Yet Assessed"
+msgstr "لم يقيم بعد"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__notes
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__notes
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__notes
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "Nothing has been determined to authorise."
+msgstr "لا يوجد قرار صادر لاعتماده."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid ""
+"Nothing linked yet. The chronology is built from the records, not typed."
+msgstr ""
+"لا يوجد شيء مرتبط بعد. يبنى التسلسل الزمني من السجلات، ولا يكتب يدويًا."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/delay_event.py:0
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__notice_ids
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_evidence__category__notice
+msgid "Notice"
+msgstr "الإشعار"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/notice.py:0
+msgid "Notice %(name)s is in %(company)s but its project is in %(other)s."
+msgstr ""
+"الإشعار %(name)s تابع للشركة %(company)s بينما مشروعه تابع للشركة %(other)s."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__document_revision_id
+msgid "Notice Document"
+msgstr "مستند الإشعار"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__state__notice
+msgid "Notice Given"
+msgstr "تم تقديم الإشعار"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__notice_date
+msgid "Notice Issued"
+msgstr "تم إصدار الإشعار"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__notice_status
+msgid "Notice Status"
+msgstr "حالة الإشعار"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__notice_type
+msgid "Notice Type"
+msgstr "نوع الإشعار"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "Notice acknowledged"
+msgstr "تم الإقرار باستلام الإشعار"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "Notice issued"
+msgstr "تم إصدار الإشعار"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/notice.py:0
+msgid ""
+"Notice issued %(days)s day(s) after the deadline configured on this contract"
+" (%(deadline)s). The contractual consequence, if any, is a matter for the "
+"contract, the governing law and the determination."
+msgstr ""
+"صدر الإشعار بعد %(days)s يوم من الموعد النهائي المحدد في هذا العقد "
+"(%(deadline)s). والأثر التعاقدي، إن وجد، يحدده العقد والقانون الواجب التطبيق"
+" والقرار."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_notice__notice_type__claim_event
+msgid "Notice of Claim Event"
+msgstr "إشعار بحدث مطالبة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_notice__notice_type__eot
+msgid "Notice of Delay / EOT"
+msgstr "إشعار تأخير / تمديد المدة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_notice__notice_type__dissatisfaction
+msgid "Notice of Dissatisfaction"
+msgstr "إشعار عدم الرضا"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_notice__notice_type__intention
+msgid "Notice of Intention"
+msgstr "إشعار النية"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__notice_ids
+msgid "Notices"
+msgstr "الإشعارات"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__notified_on
+msgid "Notified On"
+msgstr "تاريخ الإخطار"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim_determination__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_delay_event__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_eot__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_notice__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراء"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim_determination__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_delay_event__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_eot__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_notice__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي بها خطأ في التسليم"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "Only an issued determination is superseded."
+msgstr "لا يستبدل إلا قرار صادر."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/delay_event.py:0
+msgid "Only an open event is monitored."
+msgstr "لا يتابع إلا حدث مفتوح."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__state__open
+msgid "Open"
+msgstr "فتح"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__original_completion_date
+msgid "Original Completion Date"
+msgstr "تاريخ الإنجاز الأصلي"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__claim_type__other
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_cost_line__category__other
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_evidence__category__other
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__event_type__other
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_notice__method__other
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_notice__notice_type__other
+msgid "Other"
+msgstr "أخرى"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_notice__status__overdue
+msgid "Overdue — Not Issued"
+msgstr "متأخر — لم يصدر"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__package_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__package_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__package_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__package_id
+msgid "Package"
+msgstr "حزمة الأعمال"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__claim_type__payment
+msgid "Payment"
+msgstr "الدفعة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_evidence__category__certificate
+msgid "Payment Certificate"
+msgstr "شهادة دفع"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_notice__status__pending
+msgid "Pending"
+msgstr "معلق"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__period_end
+msgid "Period End"
+msgstr "نهاية الفترة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__period_start
+msgid "Period Start"
+msgstr "بداية الفترة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__state__preparing
+msgid "Preparing"
+msgstr "قيد الإعداد"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__event_type__procurement
+msgid "Procurement"
+msgstr "المشتريات"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__schedule_reference
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__schedule_reference
+msgid "Programme Revision"
+msgstr "مراجعة البرنامج الزمني"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__schedule_reference
+msgid "Programme Revision Analysed"
+msgstr "مراجعة البرنامج الزمني المحللة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__project_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__project_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__project_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__project_id
+msgid "Project"
+msgstr "المشروع"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_notice__method__portal
+msgid "Project Portal"
+msgstr "بوابة المشروع"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__claim_type__prolongation
+msgid "Prolongation"
+msgstr "إطالة المدة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__quantity
+msgid "Quantity"
+msgstr "الكمية"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__cost_line_ids
+msgid "Quantum"
+msgstr "مبلغ المطالبة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_evidence__category__rfi
+msgid "RFI"
+msgstr "طلب معلومات"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "RFI raised"
+msgstr "تم رفع طلب معلومات"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__raised_by_id
+msgid "Raised By"
+msgstr "مقدم بواسطة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__rate
+msgid "Rate"
+msgstr "السعر"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__reason
+msgid "Reason"
+msgstr "السبب"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__reasons
+msgid "Reasons"
+msgstr "الأسباب"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_evidence__record_ref
+msgid "Record"
+msgstr "السجل"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_evidence__record_date
+msgid "Record Date"
+msgstr "تاريخ السجل"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/delay_event.py:0
+msgid ""
+"Record who is assessed to have caused %s before marking it assessed. `Not "
+"Yet Assessed` and an assessment are different things."
+msgstr ""
+"سجل الطرف الذي تم تقييمه كمتسبب في %s قبل تعليمه كمقيم. `Not Yet Assessed` "
+"والتقييم أمران مختلفان."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/eot.py:0
+msgid "Record why the extension was granted or refused."
+msgstr "سجل سبب منح التمديد أو رفضه."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__name
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__name
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_evidence__reference
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__name
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__name
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__name
+msgid "Reference"
+msgstr "المرجع"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__state__rejected
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_eot__state__rejected
+msgid "Rejected"
+msgstr "مرفوض"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__change_event_ids
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__change_event_ids
+msgid "Related Change Events"
+msgstr "أحداث التغيير المرتبطة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__ncr_ids
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__ncr_ids
+msgid "Related NCRs"
+msgstr "تقارير عدم المطابقة المرتبطة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__rfi_ids
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__rfi_ids
+msgid "Related RFIs"
+msgstr "طلبات المعلومات المرتبطة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_evidence__relevance
+msgid "Relevance"
+msgstr "الصلة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__relief_sought
+msgid "Relief Sought"
+msgstr "التعويض المطلوب"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__respondent_partner_id
+msgid "Respondent"
+msgstr "المدعى عليه"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__response_due_date
+msgid "Response Due Date"
+msgstr "تاريخ استحقاق الرد"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__responsible_party
+msgid "Responsible Party"
+msgstr "الطرف المسؤول"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__reviewer_id
+msgid "Responsible Reviewer"
+msgstr "المراجع المسؤول"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__activity_user_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__activity_user_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__activity_user_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__schedule_method__retrospective
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_eot__analysis_method__retrospective
+msgid "Retrospective Longest Path"
+msgstr "المسار الأطول بأثر رجعي"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__revision
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_submission__revision
+msgid "Revision"
+msgstr "المراجعة"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid ""
+"Revision %(revs)s has been issued. Raise the next revision rather than "
+"rewriting the one already sent."
+msgstr ""
+"تم إصدار المراجعة %(revs)s. أنشئ المراجعة التالية بدلًا من إعادة كتابة "
+"المراجعة المرسلة."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "Revision %s is already issued."
+msgstr "المراجعة %s صادرة بالفعل."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_evidence__revision_label
+msgid "Revision Label"
+msgstr "تسمية المراجعة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__event_type__rework
+msgid "Rework"
+msgstr "إعادة العمل"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "خطأ في إرسال الرسائل النصية القصيرة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__schedule_activity_ref
+msgid "Schedule Activity ID"
+msgstr "معرف نشاط الجدول الزمني"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__schedule_analyst
+msgid "Schedule Analyst"
+msgstr "محلل الجدول الزمني"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__schedule_conclusion
+msgid "Schedule Conclusion"
+msgstr "نتيجة تحليل الجدول الزمني"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__schedule_method
+msgid "Schedule Method"
+msgstr "طريقة الجدولة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__schedule_method__narrative
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_eot__analysis_method__narrative
+msgid "Schedule Narrative"
+msgstr "وصف الجدول الزمني"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__sequence
+msgid "Sequence"
+msgstr "المسلسل"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim_cost_line__uses_actual_cost
+msgid ""
+"Set when the figure was taken from posted ledger cost. Actual cost is "
+"evidence of spend, not proof of entitlement — somebody still has to decide "
+"it is recoverable."
+msgstr ""
+"يحدد عند أخذ الرقم من التكلفة المرحلة في دفتر الأستاذ. التكلفة الفعلية دليل "
+"على الإنفاق، لا إثبات للاستحقاق — لا بد أن يقرر أحد أنها قابلة للاسترداد."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "Settle a claim after it has been determined or disputed."
+msgstr "قم بتسوية المطالبة بعد صدور القرار بشأنها أو المنازعة فيها."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__settled_cost
+msgid "Settled Cost"
+msgstr "التكلفة المسواة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__settled_days
+msgid "Settled Days"
+msgstr "الأيام المسواة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__state__settlement
+msgid "Settlement"
+msgstr "التسوية"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__settlement_document_revision_id
+msgid "Settlement Agreement"
+msgstr "اتفاقية التسوية"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__settlement_authority_id
+msgid "Settlement Authority"
+msgstr "جهة اعتماد التسوية"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__settlement_date
+msgid "Settlement Date"
+msgstr "تاريخ التسوية"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "Settling a claim is a commercial decision."
+msgstr "تسوية المطالبة قرار تجاري."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__side
+msgid "Side"
+msgstr "الجهة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_cost_line__category__site_overhead
+msgid "Site Overhead / Prolongation"
+msgstr "المصاريف العامة للموقع / إطالة المدة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_delay_event__estimated_delay_days
+msgid ""
+"Somebody's estimate of the time impact. An estimate, on a factual record — "
+"not a determination."
+msgstr "تقدير شخص ما للأثر الزمني. مجرد تقدير في سجل وقائع — وليس قرارًا."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__source_id
+msgid "Source"
+msgstr "المصدر"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__source_model
+msgid "Source Model"
+msgstr "النموذج المصدر"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__source_reference
+msgid "Source Reference"
+msgstr "المرجع المصدر"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__start_date
+msgid "Start Date"
+msgstr "تاريخ البداية"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__state
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__state
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_submission__state
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__state
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__state
+msgid "State"
+msgstr "الحالة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__status
+msgid "Status"
+msgstr "الحالة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim__activity_state
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_delay_event__activity_state
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_eot__activity_state
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_notice__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الحالة بناءً على الأنشطة\n"
+"متأخرة: تاريخ الاستحقاق قد مضى\n"
+"اليوم: تاريخ النشاط هو اليوم\n"
+"مخطط لها: أنشطة مستقبلية."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_eot__analysis_method
+msgid ""
+"Stored as a reference to how the conclusion was reached. ATMTA does not run "
+"delay analysis and does not schedule."
+msgstr ""
+"محفوظ كمرجع لكيفية الوصول إلى النتيجة. لا يجري ATMTA تحليل التأخير ولا يقوم "
+"بالجدولة."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_cost_line__category__subcontract
+msgid "Subcontract"
+msgstr "عقد من الباطن"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__submission_date
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_submission__submission_date
+msgid "Submission Date"
+msgstr "تاريخ التقديم"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_submission__document_revision_id
+msgid "Submission Document"
+msgstr "مستند التقديم"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__submission_ids
+msgid "Submissions"
+msgstr "التقديمات"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_evidence__category__submittal
+msgid "Submittal"
+msgstr "مستند مقدم للاعتماد"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__state__submitted
+msgid "Submitted"
+msgstr "مقدم"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__submitted_by_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_submission__submitted_by_id
+msgid "Submitted By"
+msgstr "مقدم بواسطة"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid ""
+"Submitted with a notice issued after the deadline configured on this "
+"contract. The consequence, if any, is a matter for the contract and the "
+"determination."
+msgstr ""
+"قدمت مع إشعار صدر بعد الموعد النهائي المحدد في هذا العقد. والأثر، إن وجد، "
+"يحدده العقد والقرار."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_determination__state__superseded
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_submission__state__superseded
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_eot__state__superseded
+msgid "Superseded"
+msgstr "مستبدل"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__superseded_by_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__superseded_by_id
+msgid "Superseded By"
+msgstr "استبدل بـ"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__supersedes_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__supersedes_id
+msgid "Supersedes"
+msgstr "يحل محل"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__claim_type__suspension
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__event_type__suspension
+msgid "Suspension"
+msgstr "الإيقاف"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim_cost_line__amount
+msgid "Tax-exclusive, like every control figure in this module."
+msgstr "غير شامل الضريبة، مثل جميع الأرقام الرقابية في هذه الوحدة."
+
+#. module: atmta_construction_claims
+#: model:ir.model.constraint,message:atmta_construction_claims.constraint_realestate_construction_claim_submission_revision_uniq_per_claim
+msgid "That revision number already exists on this claim."
+msgstr "رقم المراجعة هذا موجود بالفعل في هذه المطالبة."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim__change_order_id
+msgid ""
+"The change order created from an accepted determination. M4 owns what it "
+"does to the baseline."
+msgstr "أمر التغيير الناتج عن قرار مقبول. تتولى M4 أثره على خط الأساس."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_notice__clause_reference
+msgid "The clause this notice is given under, as written in this contract."
+msgstr "البند الذي يصدر بموجبه هذا الإشعار، كما ورد في هذا العقد."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_notice__transmittal_id
+msgid ""
+"The controlled transmittal that carried it. M5 already proves what was sent "
+"and when; nothing is re-implemented here."
+msgstr ""
+"كتاب الإحالة الموثق الذي نقله. تثبت M5 بالفعل ما أرسل ومتى؛ ولا يعاد تنفيذ "
+"شيء هنا."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_eot__completion_date_before
+msgid ""
+"The current completion date immediately before this extension was "
+"implemented."
+msgstr "تاريخ الإنجاز الحالي مباشرة قبل تنفيذ هذا التمديد."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim__claimed_cost
+msgid "The current submission's figure. Earlier revisions keep theirs."
+msgstr "رقم التقديم الحالي. تحتفظ المراجعات السابقة بأرقامها."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim__assessed_cost
+msgid ""
+"The internal assessment. Commercial roles only — an assessment visible to "
+"the other side is a negotiating position given away."
+msgstr ""
+"التقييم الداخلي. للأدوار التجارية فقط — فالتقييم المكشوف للطرف الآخر موقف "
+"تفاوضي مجاني له."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim_determination__reasons
+msgid "The reasoning. Written by the person determining, not generated."
+msgstr "التعليل. يكتبه الشخص المختص بإصدار القرار، ولا يولد تلقائيًا."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim_evidence__reference
+msgid "The record's reference as it stood when it was cited."
+msgstr "مرجع السجل كما كان وقت الاستشهاد به."
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid "There is nothing determined to dispute yet."
+msgstr "لا يوجد بعد ما تم البت فيه للاعتراض عليه."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__cause_category__third_party
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__event_type__third_party
+msgid "Third Party"
+msgstr "طرف ثالث"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__schedule_method__time_impact
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_eot__analysis_method__time_impact
+msgid "Time Impact Analysis"
+msgstr "تحليل الأثر الزمني"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__title
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__title
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__title
+msgid "Title"
+msgstr "العنوان"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__transmittal_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__transmittal_id
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_evidence__category__transmittal
+msgid "Transmittal"
+msgstr "كتاب إحالة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__trigger_date
+msgid "Triggering Event"
+msgstr "الحدث المسبب"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_delay_event__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_eot__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_notice__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع النشاط الاستثنائي في السجل."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__state__under_review
+msgid "Under Review"
+msgstr "قيد المراجعة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__claim_type__unforeseen_condition
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__event_type__unforeseen_condition
+msgid "Unforeseen Condition"
+msgstr "ظرف غير متوقع"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__uom_id
+msgid "UoM"
+msgstr "وحدة القياس"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__uses_actual_cost
+msgid "Uses Actual Cost"
+msgstr "يستخدم التكلفة الفعلية"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__event_type__utility
+msgid "Utility"
+msgstr "الخدمة"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__claim_type__variation
+msgid "Variation"
+msgstr "تغيير"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__state__void
+msgid "Void"
+msgstr "ملغى"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_cost_line__wbs_id
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__wbs_id
+msgid "WBS"
+msgstr "هيكل تجزئة العمل"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_delay_event__event_type__weather
+msgid "Weather"
+msgstr "الطقس"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim_evidence__category__weather
+msgid "Weather Record"
+msgstr "سجل الطقس"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_claim_determination__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_delay_event__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_eot__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_claims.field_realestate_construction_notice__website_message_ids
+msgid "Website Messages"
+msgstr "رسائل الموقع الإلكتروني"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim_determination__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_delay_event__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_eot__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_notice__website_message_ids
+msgid "Website communication history"
+msgstr "سجل التواصل عبر الموقع الإلكتروني"
+
+#. module: atmta_construction_claims
+#. odoo-python
+#: code:addons/atmta_construction_claims/models/claim.py:0
+msgid ""
+"What a claim cited, and which revision it cited, is part of the claim. Add a"
+" further evidence line instead."
+msgstr ""
+"ما استندت إليه المطالبة، وأي مراجعة استندت إليها، جزء من المطالبة. أضف سطر "
+"إثبات جديدا بدلا من ذلك."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim__chronology_html
+msgid ""
+"What happened, in order, from the records themselves. Nothing here is "
+"authored — every line is a record that already exists."
+msgstr ""
+"ما حدث بالترتيب، مأخوذ من السجلات نفسها. لا شيء هنا مكتوب يدويا — كل سطر هو "
+"سجل موجود مسبقا."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_delay_event__description
+msgid "What happened, in the words of the people who were there."
+msgstr "ما حدث، بكلمات الأشخاص الذين كانوا حاضرين."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_delay_event__event_type
+msgid "What kind of event it was. Not who is liable for it."
+msgstr "نوع الحدث، وليس الجهة المسؤولة عنه."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim__estimated_exposure
+msgid "What this might cost, before anybody claimed anything."
+msgstr "التكلفة المحتملة لهذا الأمر، قبل أن يطالب أحد بأي شيء."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_delay_event__notified_on
+msgid "When notice was actually given, if it was."
+msgstr "تاريخ تقديم الإشعار فعليا، إن قدم."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_notice__trigger_date
+msgid "When the event that requires notice occurred."
+msgstr "تاريخ وقوع الحدث الذي يستلزم تقديم إشعار."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_notice__awareness_date
+msgid ""
+"When the party became aware. Most contracts run the period from awareness "
+"rather than from the event."
+msgstr ""
+"تاريخ علم الطرف بالحدث. تحتسب معظم العقود المدة من تاريخ العلم وليس من تاريخ"
+" الحدث."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim__cost_claimed_known
+msgid ""
+"Whether a cost figure has been claimed at all. A claim with no money is not "
+"a claim for nothing — M3's rule, applied here."
+msgstr ""
+"ما إذا كان قد تمت المطالبة بمبلغ تكلفة أصلا. المطالبة التي لا تتضمن مبلغا "
+"ليست مطالبة بلا قيمة — تطبيقا لقاعدة المرحلة M3."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim__schedule_method
+msgid ""
+"Which delay-analysis method was used. ATMTA stores the method and the "
+"analyst's conclusion; it does not run the analysis."
+msgstr ""
+"طريقة تحليل التأخير المستخدمة. يخزن ATMTA الطريقة واستنتاج المحلل، ولا يجري "
+"التحليل بنفسه."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_delay_event__schedule_reference
+msgid "Which revision of the programme the activity reference belongs to."
+msgstr "مراجعة البرنامج الزمني التي ينتمي إليها مرجع النشاط."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_delay_event__cause_category
+msgid ""
+"Who is assessed to have caused it, once somebody has assessed it. `Not Yet "
+"Assessed` is the honest default."
+msgstr ""
+"الجهة التي تم تقييمها على أنها المتسببة، بعد إجراء التقييم. القيمة "
+"الافتراضية الصادقة هي `Not Yet Assessed` (لم يتم التقييم بعد)."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields,help:atmta_construction_claims.field_realestate_construction_claim_evidence__relevance
+msgid "Why this record matters to this claim."
+msgstr "سبب أهمية هذا السجل لهذه المطالبة."
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__schedule_method__windows
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_eot__analysis_method__windows
+msgid "Windows Analysis"
+msgstr "تحليل النوافذ الزمنية"
+
+#. module: atmta_construction_claims
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_claim__state__withdrawn
+#: model:ir.model.fields.selection,name:atmta_construction_claims.selection__realestate_construction_eot__state__withdrawn
+msgid "Withdrawn"
+msgstr "مسحوب"

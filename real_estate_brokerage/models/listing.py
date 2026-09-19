@@ -251,3 +251,19 @@ class Listing(models.Model):
             ('expiry_date', '<', today),
         ])
         expired.write({'state': 'expired', 'withdrawn_date': today})
+
+        # `days_on_market` is stored but counts up to today, and a stored
+        # compute only reruns when the listing changes: without this, a listing
+        # nobody edits keeps the count it had on its last save. Only listings
+        # still counting are refreshed; one with its end date set has its
+        # final figure.
+        counting = self.search([
+            ('list_date', '!=', False),
+            '|', '|',
+            ('state', 'in', ('draft', 'active', 'under_offer')),
+            '&', ('state', '=', 'sold'), ('sold_date', '=', False),
+            '&', ('state', 'in', ('withdrawn', 'expired')), ('withdrawn_date', '=', False),
+        ])
+        if counting:
+            counting.modified(['list_date'])
+            self.env.flush_all()

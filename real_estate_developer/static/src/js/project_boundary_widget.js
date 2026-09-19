@@ -122,9 +122,10 @@ export class BoundaryPickerField extends Component {
             preferCanvas: true,
         });
 
+        // OpenStreetMap's own tiles: free, no API key (CARTO now requires one).
         const streets = L.tileLayer(
-            "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
-            { attribution: "&copy; CARTO", maxZoom: 19, subdomains: "abcd" }
+            "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+            { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 19 }
         );
         const satellite = L.tileLayer(
             "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",

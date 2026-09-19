@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--
+        M23 — the deposit slip.
+
+        One of only two documents in this module that is genuinely useful on
+        paper: it is what a treasurer carries to the teller and gets stamped.
+        Everything else is a dataset and lives as a list/pivot action.
+    -->
+    <record id="action_report_deposit_slip" model="ir.actions.report">
+        <field name="name">Deposit Slip</field>
+        <field name="model">realestate.check.deposit</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">real_estate_checks.report_deposit_slip</field>
+        <field name="report_file">real_estate_checks.report_deposit_slip</field>
+        <field name="binding_model_id" ref="model_realestate_check_deposit"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Deposit Slip - %s' % (object.name)</field>
+    </record>
+
+    <template id="report_deposit_slip">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Cheque Deposit Slip</h2>
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <table class="table table-sm table-borderless">
+                                    <tr>
+                                        <td><strong>Reference</strong></td>
+                                        <td><span t-field="doc.name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Company</strong></td>
+                                        <td><span t-field="doc.company_id"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Deposit Date</strong></td>
+                                        <td><span t-field="doc.deposit_date"/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-6">
+                                <table class="table table-sm table-borderless">
+                                    <tr>
+                                        <td><strong>Bank / Journal</strong></td>
+                                        <td><span t-field="doc.journal_id"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Bank Slip #</strong></td>
+                                        <td><span t-field="doc.bank_slip_ref"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Currency</strong></td>
+                                        <td><span t-field="doc.currency_id"/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <table class="table table-sm mt-3">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Cheque #</th>
+                                    <th>Drawer</th>
+                                    <th>Drawer Bank</th>
+                                    <th>Due Date</th>
+                                    <th class="text-end">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doc.check_ids" t-as="check">
+                                    <td><span t-esc="check_index + 1"/></td>
+                                    <td><span t-field="check.check_number"/></td>
+                                    <td><span t-field="check.partner_id"/></td>
+                                    <td>
+                                        <span t-field="check.bank_id"/>
+                                        <t t-if="check.branch"> — <span t-field="check.branch"/></t>
+                                    </td>
+                                    <td><span t-field="check.due_date"/></td>
+                                    <td class="text-end">
+                                        <span t-field="check.amount"
+                                              t-options='{"widget": "monetary", "display_currency": check.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="5" class="text-end">
+                                        Total — <span t-field="doc.check_count"/> cheque(s)
+                                    </th>
+                                    <th class="text-end">
+                                        <span t-field="doc.total_amount"
+                                              t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    </th>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <div class="row mt-5">
+                            <div class="col-6">
+                                <p><strong>Prepared by</strong></p>
+                                <p><span t-field="doc.prepared_by_id"/></p>
+                                <p class="mt-4">_______________________</p>
+                            </div>
+                            <div class="col-6">
+                                <p><strong>Confirmed by</strong></p>
+                                <p><span t-field="doc.confirmed_by_id"/></p>
+                                <p class="mt-4">_______________________</p>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <p><strong>Received by bank</strong></p>
+                                <p class="mt-5">_______________________ &#160;&#160;&#160;
+                                   Date: _______________</p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

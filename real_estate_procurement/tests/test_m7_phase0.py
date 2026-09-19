@@ -22,7 +22,7 @@ instead of rebuilding machinery that already works and is already tested.
 from odoo.exceptions import AccessError, UserError
 from odoo.tests import tagged
 
-from .common import M6Common
+from .common import M6Common, module_installed
 
 
 @tagged('post_install', '-at_install', 'atmta_procurement', 'atmta_m7')
@@ -120,6 +120,11 @@ class TestM7ConfirmationIntegrationGate(M6Common):
 
     def setUp(self):
         super().setUp()
+        if not module_installed(self.env, 'real_estate_developer'):
+            # A project's stock location is Developer's (project_stock.py); the
+            # purchase order already skips it when Developer is absent.
+            self.skipTest('real_estate_developer is not installed: per-project '
+                          'stock locations are its feature')
         self._set_po_governance('optional', project=self.project)
 
     def _direct_project_order(self):

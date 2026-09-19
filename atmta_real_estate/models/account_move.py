@@ -5,7 +5,7 @@ class AccountMove(models.Model):
 
     contract_id = fields.Many2one(
         'realestate.contract',
-        string="Contract",
+        string="Lease",
         ondelete='set null',
         index=True
     )

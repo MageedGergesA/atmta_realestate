@@ -63,8 +63,12 @@ class TestPropertyCoreExtraction(TransactionCase):
             [('name', '=', 'atmta_property_core')], limit=1)
         self.assertTrue(module, "atmta_property_core is not installed.")
         deps = set(module.dependencies_id.mapped('name'))
+        # web_hierarchy: this module owns view_property_hierarchy, a <hierarchy>
+        # view; without it the view type does not exist and the module cannot
+        # load. It is an Odoo addon, so "Odoo alone" still holds, and the set
+        # stays exact so any other new dependency still fails here.
         self.assertEqual(
-            deps, {'base', 'mail', 'product', 'web_editor'},
+            deps, {'base', 'mail', 'product', 'web_editor', 'web_hierarchy'},
             "Property Core may depend on Odoo alone. Found: %s" % sorted(deps))
 
     # -- the three things unique to this model ----------------------------

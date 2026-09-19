@@ -8,6 +8,32 @@ Sensitive fields explicitly NOT exposed:
 """
 
 from odoo import api, fields, models
+from odoo.exceptions import AccessError
+
+from odoo.addons.real_estate_maquette.models.visual_access import (
+    VISUAL_ASSET_KINDS,
+)
+
+#: The kinds that actually moved behind the grant, matching
+#: `VISUAL_ASSET_REDIRECT` in `real_estate_api.controllers.api_v1_image`.
+#: Deliberately not every key of `VISUAL_ASSET_KINDS`: `unit_image` and
+#: `gallery_image` describe ordinary marketing photos that are still served
+#: on the open image route, and gating them here would 404 every unit photo
+#: in the public catalogue.
+GATED_KINDS = (
+    'maquette_glb', 'maquette_hdr', 'master_plan_2d',
+    'plan_image', 'floor_plan_image', 'elevation_sheet', 'interior_glb',
+)
+
+#: (model, field) -> gated asset kind, inverted from the authoritative map in
+#: `realestate.visual.access` rather than restated here. Every field in it is
+#: served only by `/visual/asset/...` behind a grant, so a serializer that
+#: hands out a bare `/api/v1/image/...` URL for one of them produces a link
+#: that 404s.
+GATED_FIELD_KINDS = {
+    (model, field): kind for kind, (model, field) in VISUAL_ASSET_KINDS.items()
+    if kind in GATED_KINDS
+}
 
 
 # Public-facing status mapping. Anything not in this map is hidden from
@@ -53,6 +79,30 @@ class RealEstateProject(models.Model):
         """Domain restricting the catalog to publicly visible projects."""
         return [('state', 'in', self._api_public_states())]
 
+    def _visual_asset_url(self, kind, record_id, unique=None):
+        """A grant-bearing URL for a visual asset.
+
+        The descriptor used to hand out `/api/v1/image/...` URLs that needed no
+        authorisation at all. It now mints one grant per descriptor and scopes
+        every URL to it, so the URLs expire and cannot be edited into a
+        different project's.
+        """
+        try:
+            grant = self.env['realestate.visual.access'].sudo(
+                ).grant_for_public_project(
+                    self,
+                    kinds=['maquette_glb', 'maquette_hdr', 'master_plan_2d',
+                           'plan_image', 'floor_plan_image', 'elevation_sheet',
+                           'interior_glb'],
+                    source='embed_token', source_ref='api/maquette-3d')
+        except AccessError:
+            # The project is not published. A serializer must answer "there is
+            # no URL", not raise: the route's own contract is a 404, and the
+            # six descriptors that call this build whole payloads around it.
+            return None
+        url = '/visual/asset/%s/%s?t=%s' % (kind, record_id, grant.token)
+        return '%s&unique=%s' % (url, unique) if unique else url
+
     def _api_image_url(self, field, size=None):
         """Build a public image URL.
 
@@ -67,6 +117,13 @@ class RealEstateProject(models.Model):
         if not has_image:
             return None
         unique = self.write_date.strftime('%Y%m%d%H%M%S') if self.write_date else ''
+
+        # A gated asset is never reachable on the open image route, whatever
+        # size is asked for. Mint the grant and hand back the gated URL.
+        kind = GATED_FIELD_KINDS.get(('realestate.project', field))
+        if kind:
+            return self._visual_asset_url(kind, self.id, unique=unique)
+
         qs = [f"unique={unique}"]
         if size and 'x' in size:
             w, h = size.split('x', 1)
@@ -85,13 +142,18 @@ class RealEstateProject(models.Model):
         currency_name = self.currency_id.name or ''
         currency_symbol = self.currency_id.symbol or ''
 
-        # Price range across publicly-listed units in this project.
+        # Price range across the units actually on the market. Units that are
+        # unreleased, blocked or committed have no public price, and folding
+        # their internal `base_price` into the range would publish it anyway.
         Property = self.env['realestate.property'].sudo()
-        unit_prices = Property.search([
-            ('project_id', '=', self.id),
-            ('hierarchy_level', 'in', ('unit', 'room')),
-            ('base_price', '>', 0),
-        ]).mapped('base_price')
+        unit_prices = [
+            price for price in (
+                unit._public_price() for unit in Property.search([
+                    ('project_id', '=', self.id),
+                    ('is_available_for_sale', '=', True),
+                ]))
+            if price > 0
+        ]
         price_min = min(unit_prices) if unit_prices else 0.0
         price_max = max(unit_prices) if unit_prices else 0.0
 
@@ -248,14 +310,12 @@ class RealEstateProject(models.Model):
         return {
             'project_id': self.id,
             'name': self.name or '',
-            'glb_url': (f"/api/v1/image/realestate.project/{self.id}/maquette_glb"
-                        f"?unique={unique}"),
+            'glb_url': self._visual_asset_url('maquette_glb', self.id, unique),
             'glb_filename': self.maquette_glb_filename or 'maquette.glb',
             'env_hdr_url': (
-                f"/api/v1/image/realestate.project/{self.id}/maquette_env_hdr"
-                f"?unique={unique}"
+                self._visual_asset_url('maquette_hdr', self.id, unique)
                 if self.maquette_env_hdr else None
             ),
             'default_camera': self.maquette_default_camera or '',
-            'units': self.get_maquette_units_data(),
+            'units': self.get_maquette_units_data(audience='public'),
         }

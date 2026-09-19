@@ -28,6 +28,11 @@ class ContractorConstruction(models.Model):
         'realestate.construction.payment.certificate', 'contractor_id',
         string='Payment Certificates',
     )
+    # Only here so the stored totals below can depend on the register: a
+    # confirmed release adds a movement, and nothing on the certificates moves.
+    retention_movement_ids = fields.One2many(
+        'realestate.construction.retention', 'contractor_id',
+        string='Retention Movements', readonly=True)
     total_certified = fields.Monetary(
         string='Total Certified', compute='_compute_retention_totals',
         store=True,
@@ -45,7 +50,11 @@ class ContractorConstruction(models.Model):
 
     @api.depends('payment_certificate_ids.state',
                  'payment_certificate_ids.gross_amount',
-                 'payment_certificate_ids.retention_amount')
+                 'payment_certificate_ids.retention_amount',
+                 'payment_certificate_ids.retention_posted_correctly',
+                 'retention_movement_ids.signed_amount',
+                 'retention_movement_ids.side',
+                 'retention_released')
     def _compute_retention_totals(self):
         """Held is what the register says, not a re-derivation.
 
@@ -64,8 +73,12 @@ class ContractorConstruction(models.Model):
                 [('contractor_id', '=', rec.id), ('side', '=', 'contractor')],
                 aggregates=['signed_amount:sum'])
             registered = (groups[0][0] if groups else 0.0) or 0.0
+            # Legacy retention is what a pre-M7 bill withheld without a
+            # movement. A certificate that is certified but not yet billed has
+            # withheld nothing — its retention reaches the register when billed.
             legacy = sum(paid_or_billed.filtered(
-                lambda c: not c.retention_posted_correctly).mapped(
+                lambda c: c.state in ('invoiced', 'paid')
+                and not c.retention_posted_correctly).mapped(
                     'retention_amount'))
             rec.total_retention_held = registered + (
                 0.0 if rec.retention_released else legacy)

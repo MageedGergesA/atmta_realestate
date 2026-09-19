@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_unit_release_batch_list" model="ir.ui.view">
+        <field name="name">realestate.unit.release.batch.list</field>
+        <field name="model">realestate.unit.release.batch</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state in ('cancelled','closed')"
+                  decoration-success="state == 'released'">
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="phase_id" optional="show"/>
+                <field name="release_date"/>
+                <field name="valid_from" optional="show"/>
+                <field name="valid_until" optional="show"/>
+                <field name="property_count" string="Units"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'released'"
+                       decoration-info="state == 'approved'"
+                       decoration-muted="state in ('cancelled','closed')"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_unit_release_batch_form" model="ir.ui.view">
+        <field name="name">realestate.unit.release.batch.form</field>
+        <field name="model">realestate.unit.release.batch</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_release" type="object" string="Release for Sale"
+                            class="oe_highlight" invisible="state != 'approved'"/>
+                    <button name="action_close" type="object" string="Close"
+                            invisible="state != 'released'"
+                            confirm="Closing withdraws these units from the market. The record is kept. Continue?"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state not in ('draft','approved')"/>
+                    <button name="action_reset_draft" type="object" string="Reset to Draft"
+                            invisible="state not in ('cancelled','approved')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,approved,released,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_units" type="object"
+                                class="oe_stat_button" icon="fa-building">
+                            <field name="property_count" widget="statinfo" string="Units"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id" options="{'no_create': True}"
+                                   readonly="state in ('released','closed')"/>
+                            <field name="phase_id" options="{'no_create': True}"
+                                   readonly="state in ('released','closed')"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="release_date"/>
+                            <field name="valid_from" readonly="state in ('released','closed')"/>
+                            <field name="valid_until"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Units" name="units">
+                            <field name="property_ids" readonly="state in ('released','closed')"
+                                   options="{'no_create': True}">
+                                <list>
+                                    <field name="property_code"/>
+                                    <field name="name"/>
+                                    <field name="phase_id" optional="show"/>
+                                    <field name="area_sqm" optional="show"/>
+                                    <field name="commercial_status" widget="badge"/>
+                                    <field name="is_available_for_sale" widget="boolean_toggle" readonly="1"/>
+                                    <field name="sale_unavailable_reason" optional="show"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Approval" name="approval">
+                            <group>
+                                <group string="Approved">
+                                    <field name="approved_by_id"/>
+                                    <field name="approved_on"/>
+                                </group>
+                                <group string="Released">
+                                    <field name="released_by_id"/>
+                                    <field name="released_on"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_unit_release_batch_search" model="ir.ui.view">
+        <field name="name">realestate.unit.release.batch.search</field>
+        <field name="model">realestate.unit.release.batch</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="phase_id"/>
+                <filter name="live" string="Live" domain="[('state','=','released')]"/>
+                <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>
+                <separator/>
+                <filter name="group_project" string="Project" context="{'group_by': 'project_id'}"/>
+                <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_unit_release_batch" model="ir.actions.act_window">
+        <field name="name">Unit Releases</field>
+        <field name="res_model">realestate.unit.release.batch</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Release inventory for sale</p>
+            <p>
+                A unit is not sellable merely because nobody has bought it. A
+                release batch is the record of the decision to put specific
+                units on the market, from a specific date, and it is what makes
+                them appear as available for sale.
+            </p>
+        </field>
+    </record>
+
+</odoo>

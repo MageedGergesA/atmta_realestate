@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+      V2 navigation is no longer a pilot. The root was restricted to the
+      atmta_v2_pilot group; a <menuitem> without groups leaves groups already
+      stored in place, so they are cleared explicitly. Every entry below the
+      root keeps its own role groups.
+    -->
+    <record id="menu_root" model="ir.ui.menu">
+        <field name="groups_id" eval="[(5, 0, 0)]"/>
+    </record>
+
+    <!--
+      The legacy application roots this app replaces. Deactivated, not deleted:
+      their menus, actions and XML IDs stay, and uninstalling this app
+      reactivates them (uninstall_hook).
+    -->
+    <record id="real_estate_investment.menu_investment_root" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+
+</odoo>

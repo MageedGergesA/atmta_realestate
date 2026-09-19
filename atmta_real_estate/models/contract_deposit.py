@@ -33,57 +33,30 @@ class ContractDeposit(models.Model):
             else:
                 rec.deposit_forfeit_amount = 0.0
 
+    def _refuse_legacy_deposit_action(self):
+        """The legacy deposit buttons changed a status and nothing else.
+
+        They recorded, refunded and forfeited deposits without posting any
+        accounting, and "Deposit Held" never counted them. Deposits are handled
+        on the lease's Security Deposit records, which post to the deposit
+        journal and keep these legacy fields in sync as read-only history.
+        """
+        raise UserError(_(
+            "Deposits are recorded, refunded and forfeited on the lease's "
+            "Security Deposit records (Deposits smart button), which post the "
+            "accounting. The legacy deposit fields are kept as read-only history."))
+
     def action_record_deposit(self):
-        for rec in self:
-            if rec.deposit_state not in ('none',):
-                raise UserError(_("Deposit can only be recorded from the 'Not Collected' state."))
-            if not rec.deposit_amount:
-                raise UserError(_("Set a deposit amount before recording it."))
-            rec.write({
-                'deposit_state': 'held',
-                'deposit_paid_date': fields.Date.today(),
-            })
+        return self._refuse_legacy_deposit_action()
 
     def action_refund_deposit(self):
-        for rec in self:
-            if rec.deposit_state != 'held':
-                raise UserError(_("Only held deposits can be refunded."))
-            rec.write({
-                'deposit_state': 'refunded',
-                'deposit_refund_amount': rec.deposit_amount,
-                'deposit_settled_date': fields.Date.today(),
-            })
+        return self._refuse_legacy_deposit_action()
 
     def action_partial_refund_deposit(self):
-        """Partial refund — keep deposit_refund_amount as set by the user."""
-        for rec in self:
-            if rec.deposit_state != 'held':
-                raise UserError(_("Only held deposits can be partially refunded."))
-            if not rec.deposit_refund_amount or rec.deposit_refund_amount >= rec.deposit_amount:
-                raise UserError(_(
-                    "Set a partial refund amount between 0 and the full deposit (%s).",
-                    rec.deposit_amount,
-                ))
-            rec.write({
-                'deposit_state': 'partial_refund',
-                'deposit_settled_date': fields.Date.today(),
-            })
+        return self._refuse_legacy_deposit_action()
 
     def action_forfeit_deposit(self):
-        for rec in self:
-            if rec.deposit_state != 'held':
-                raise UserError(_("Only held deposits can be forfeited."))
-            rec.write({
-                'deposit_state': 'forfeited',
-                'deposit_refund_amount': 0.0,
-                'deposit_settled_date': fields.Date.today(),
-            })
+        return self._refuse_legacy_deposit_action()
 
     def action_reset_deposit(self):
-        for rec in self:
-            rec.write({
-                'deposit_state': 'none',
-                'deposit_paid_date': False,
-                'deposit_settled_date': False,
-                'deposit_refund_amount': 0.0,
-            })
+        return self._refuse_legacy_deposit_action()

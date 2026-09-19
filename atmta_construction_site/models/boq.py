@@ -115,6 +115,15 @@ class BOQ(models.Model):
     _AGREED_FIELDS = {'project_id', 'phase_id', 'milestone_id',
                       'contractor_id', 'currency_id'}
 
+    @api.depends('name', 'revision')
+    def _compute_display_name(self):
+        # A revision keeps the reference of the BOQ it revises, so the
+        # revision number is what tells them apart wherever one is picked.
+        for rec in self:
+            rec.display_name = _(
+                "%(name)s (Rev %(revision)s)", name=rec.name,
+                revision=rec.revision) if rec.revision > 1 else rec.name
+
     @api.depends('line_ids.line_amount')
     def _compute_totals(self):
         for rec in self:
@@ -158,6 +167,28 @@ class BOQ(models.Model):
                     refs=', '.join(frozen.mapped('name'))))
         return super().write(vals)
 
+    # ---------- Revisions ----------
+    def _is_superseded(self):
+        """Retired by an approved revision.
+
+        `superseded_by_id` is set as soon as a revision is drafted, but the
+        BOQ it revises stays the contract until that revision is approved.
+        Once it is, the revision's lines are what may be certified.
+        """
+        self.ensure_one()
+        return self.superseded_by_id.state in ('approved', 'locked')
+
+    def _revision_chain(self):
+        """This BOQ and every revision before and after it."""
+        self.ensure_one()
+        chain = self
+        for link in ('supersedes_id', 'superseded_by_id'):
+            node = self[link]
+            while node and node not in chain:
+                chain |= node
+                node = node[link]
+        return chain
+
     # ---------- Actions ----------
     def action_create_revision(self):
         """Copy the BOQ forward, leaving the approved one intact."""
@@ -166,6 +197,14 @@ class BOQ(models.Model):
             raise UserError(_(
                 "A draft BOQ is edited directly. Revisions are for what was "
                 "already agreed."))
+        if self.superseded_by_id and \
+                self.superseded_by_id.state != 'cancelled':
+            # A second revision of the same BOQ would fork the chain, and the
+            # certified quantity is counted along one chain.
+            raise UserError(_(
+                "%(boq)s has already been revised as %(revision)s. Continue "
+                "from that revision.", boq=self.display_name,
+                revision=self.superseded_by_id.display_name))
         revision = self.with_context(re_boq_revision=True).copy({
             'name': self.name,
             'revision': self.revision + 1,

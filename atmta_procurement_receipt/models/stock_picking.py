@@ -165,9 +165,29 @@ class StockPicking(models.Model):
                 line.move_id.id: line.accepted_qty
                 for line in inspection.sudo().line_ids
             }
+            capped = []
             for move in picking.move_ids:
-                if move.id in by_move:
-                    move.quantity = by_move[move.id]
+                if move.id not in by_move:
+                    continue
+                accepted = by_move[move.id]
+                # The sheet may have been opened before the load was counted,
+                # and what arrived can only shrink afterwards. Accepting more
+                # than the receipt says turned up would book stock nobody
+                # delivered, so the arrival is the ceiling — and the chatter
+                # says so rather than leaving two documents disagreeing.
+                if accepted - move.quantity > 1e-6:
+                    capped.append(_(
+                        "%(product)s: %(accepted)s accepted on the sheet, "
+                        "%(arrived)s delivered.",
+                        product=move.product_id.display_name,
+                        accepted=accepted, arrived=move.quantity))
+                    accepted = move.quantity
+                move.quantity = accepted
+            if capped:
+                picking.message_post(body=_(
+                    "The inspection accepted more than the receipt records as "
+                    "delivered. What is booked is what arrived:\n%s")
+                    % '\n'.join(capped))
             picking.message_post(body=_(
                 "Inspection %(name)s: %(accepted)s accepted, %(rejected)s "
                 "rejected. The rejected quantity is not received and is not "
@@ -185,7 +205,12 @@ class StockPicking(models.Model):
         event, so that is where the rollup is triggered from.
         """
         res = super()._action_done()
-        requests = self.move_ids.purchase_line_id.re_material_request_id
+        # Rolled up as the system, for the same reason `_compute_re_inspection`
+        # reads as the system: validating a receipt is a storekeeper's job and
+        # a storekeeper is not a procurement role. The requisition moving from
+        # ordered to received is a consequence of what they just did, not a
+        # record they are being given the right to edit.
+        requests = self.sudo().move_ids.purchase_line_id.re_material_request_id
         if requests:
             requests.invalidate_recordset()
             requests._refresh_state_from_lines()

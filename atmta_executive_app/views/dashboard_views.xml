@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_executive_dashboard" model="ir.actions.client">
+        <field name="name">Suite Overview</field>
+        <field name="tag">atmta_dashboard</field>
+        <field name="params" eval="{'provider': 'realestate.executive.dashboard'}"/>
+    </record>
+
+    <menuitem id="menu_suite_overview" name="Suite Overview" parent="menu_root" sequence="1"
+              action="action_executive_dashboard"
+              groups="real_estate_investment.group_investment_user,real_estate_construction.group_construction_user,real_estate_developer.group_dev_readonly,real_estate_checks.group_checks_user,atmta_real_estate.group_realestate_readonly"/>
+
+</odoo>

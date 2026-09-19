@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <!-- ============================================================= -->
+    <!-- KPI card                                                       -->
+    <!-- ============================================================= -->
+    <t t-name="atmta_real_estate.KpiCard">
+        <div class="o_re_kpi"
+             t-att-class="{
+                'o_re_kpi_clickable': props.clickable,
+                'o_re_kpi_warning': props.warning,
+                'o_re_kpi_positive': props.tone === 'positive',
+             }"
+             t-att-role="props.clickable ? 'button' : null"
+             t-att-tabindex="props.clickable ? 0 : null"
+             t-att-aria-label="ariaLabel"
+             t-on-click="onCardClick"
+             t-on-keydown="onKeydown">
+
+            <div class="o_re_kpi_label">
+                <span t-esc="props.label"/>
+                <sup t-if="props.hint" class="o_re_kpi_hint" t-att-title="props.hint">
+                    <i class="fa fa-question-circle-o" role="img" t-att-aria-label="props.hint"/>
+                </sup>
+            </div>
+
+            <div class="o_re_kpi_value" t-esc="props.formattedValue"/>
+
+            <!-- Status is never colour-only: a warning also carries an icon
+                 and a text label for screen readers and colour-blind users. -->
+            <div t-if="props.warning" class="o_re_kpi_status">
+                <i class="fa fa-exclamation-triangle" role="img" aria-hidden="true"/>
+                <span t-esc="statusLabel"/>
+            </div>
+
+            <div t-if="props.progress !== undefined" class="o_re_kpi_progress"
+                 role="progressbar"
+                 t-att-aria-valuenow="props.progress"
+                 aria-valuemin="0" aria-valuemax="100">
+                <div class="o_re_kpi_progress_bar" t-attf-style="inline-size: {{ props.progress }}%;"/>
+            </div>
+
+            <div t-if="props.clickable" class="o_re_kpi_drill" aria-hidden="true">
+                <i class="fa fa-arrow-right"/>
+            </div>
+        </div>
+    </t>
+
+    <!-- ============================================================= -->
+    <!-- Chart panel                                                    -->
+    <!-- ============================================================= -->
+    <t t-name="atmta_real_estate.DashboardChart">
+        <div class="o_re_panel o_re_chart_panel">
+            <div class="o_re_panel_head">
+                <div>
+                    <h3 class="o_re_panel_title" t-esc="props.definition.title"/>
+                    <p t-if="props.definition.subtitle" class="o_re_panel_subtitle"
+                       t-esc="props.definition.subtitle"/>
+                </div>
+            </div>
+
+            <div t-if="isEmpty" class="o_re_empty" role="status">
+                <i class="fa fa-bar-chart o_re_empty_icon" aria-hidden="true"/>
+                <p class="o_re_empty_text" t-esc="emptyText"/>
+            </div>
+
+            <div t-else="" class="o_re_chart_canvas_wrap">
+                <canvas t-ref="canvas" t-att-aria-label="props.definition.title" role="img"/>
+            </div>
+        </div>
+    </t>
+
+    <!-- ============================================================= -->
+    <!-- Map card                                                       -->
+    <!-- ============================================================= -->
+    <t t-name="atmta_real_estate.DashboardMap">
+        <div class="o_re_panel o_re_map_card">
+            <div class="o_re_panel_head">
+                <div>
+                    <h3 class="o_re_panel_title">Units on the map</h3>
+                    <p t-if="state.status === 'ready'" class="o_re_panel_subtitle">
+                        <span class="o_re_map_located"><t t-esc="state.units.length"/> located</span>
+                        <t t-if="state.withoutCoordinates">
+                            <span class="o_re_sep" aria-hidden="true">·</span>
+                            <span class="o_re_map_missing"><t t-esc="state.withoutCoordinates"/> without coordinates</span>
+                        </t>
+                        <t t-if="state.truncated">
+                            <span class="o_re_sep" aria-hidden="true">·</span>
+                            <span>open the full map to see every unit</span>
+                        </t>
+                    </p>
+                </div>
+                <button class="btn btn-link o_re_panel_more o_re_map_open_full" t-on-click="openFullMap">
+                    <span>Open full map</span>
+                    <i class="fa fa-arrow-right ms-1" aria-hidden="true"/>
+                </button>
+            </div>
+
+            <div t-if="state.status === 'loading'" class="o_re_map_loading" aria-busy="true">
+                <span class="visually-hidden">Loading the map…</span>
+            </div>
+            <div t-elif="state.status === 'error'" class="o_re_empty" role="status">
+                <i class="fa fa-exclamation-circle o_re_empty_icon" aria-hidden="true"/>
+                <p class="o_re_empty_text">The map could not be loaded.</p>
+            </div>
+            <div t-elif="!state.units.length" class="o_re_empty o_re_map_empty" role="status">
+                <i class="fa fa-map-marker o_re_empty_icon" aria-hidden="true"/>
+                <p class="o_re_empty_text">No rental unit has coordinates yet. Add a latitude and longitude on a unit to place it on the map.</p>
+            </div>
+            <t t-else="">
+                <p t-if="state.noLibrary" class="o_re_empty_text">The map library is not available.</p>
+                <div t-else="" class="o_re_map_canvas" t-ref="map" role="region" aria-label="Map of rental units"/>
+                <ul class="o_re_map_legend">
+                    <li t-foreach="legend" t-as="item" t-key="item.key">
+                        <span class="o_re_map_dot" t-attf-style="background: {{ item.color }};" aria-hidden="true"/>
+                        <span t-esc="item.label"/>
+                        <span class="o_re_map_count" t-esc="item.count"/>
+                    </li>
+                </ul>
+            </t>
+        </div>
+    </t>
+
+    <!-- ============================================================= -->
+    <!-- Dashboard                                                      -->
+    <!-- ============================================================= -->
+    <t t-name="atmta_real_estate.RentalDashboard">
+        <!-- No `dir` attribute: direction is inherited from the action manager,
+             which rtlcss mirrors for right-to-left languages. -->
+        <div class="o_re_dashboard o_action">
+          <!-- The root is Odoo's `.o_action`: a full-height column whose overflow
+               Odoo hides, and that rule outranks ours. This inner box scrolls,
+               the way `.o_content` does in Odoo's own views. -->
+          <div class="o_re_scroll">
+
+            <!-- – Header – -->
+            <header class="o_re_header">
+                <div class="o_re_header_titles">
+                    <h1 class="o_re_title">Rental</h1>
+                    <p class="o_re_subtitle">
+                        <t t-if="companyName">
+                            <span t-esc="companyName"/>
+                            <span class="o_re_sep" aria-hidden="true">·</span>
+                        </t>
+                        <t t-if="asOf">
+                            <span>As of <t t-esc="asOf"/></span>
+                        </t>
+                    </p>
+                </div>
+                <div class="o_re_header_actions">
+                    <div t-if="quickActions.length" class="o_re_quick_actions">
+                        <t t-foreach="quickActions" t-as="quick" t-key="quick.key">
+                            <button class="btn o_re_quick_action"
+                                    t-att-class="quick_first ? 'btn-primary' : 'btn-secondary'"
+                                    t-att-data-quick-action="quick.key"
+                                    t-on-click="() => this.runQuickAction(quick.key)">
+                                <i t-attf-class="fa {{ quick.icon }} me-1" aria-hidden="true"/>
+                                <span t-esc="quick.label"/>
+                            </button>
+                        </t>
+                    </div>
+                    <div class="btn-group o_re_scope" role="group" aria-label="Whose work to show">
+                        <button class="btn btn-sm"
+                                t-att-class="state.scope === 'mine' ? 'btn-primary' : 'btn-outline-secondary'"
+                                t-att-aria-pressed="state.scope === 'mine' ? 'true' : 'false'"
+                                data-scope="mine"
+                                t-on-click="() => this.setScope('mine')">Mine</button>
+                        <button class="btn btn-sm"
+                                t-att-class="state.scope === 'team' ? 'btn-primary' : 'btn-outline-secondary'"
+                                t-att-aria-pressed="state.scope === 'team' ? 'true' : 'false'"
+                                data-scope="team"
+                                t-on-click="() => this.setScope('team')">Team</button>
+                    </div>
+                    <button class="btn btn-secondary o_re_refresh"
+                            t-on-click="onRefresh"
+                            t-att-disabled="state.refreshing"
+                            aria-label="Refresh the dashboard">
+                        <i class="fa fa-refresh"
+                           t-att-class="{ 'fa-spin': state.refreshing }" aria-hidden="true"/>
+                        <span class="d-none d-md-inline ms-1">Refresh</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- – Error – -->
+            <div t-if="isError" class="o_re_state o_re_state_error" role="alert">
+                <i class="fa fa-exclamation-circle o_re_state_icon" aria-hidden="true"/>
+                <h2 class="o_re_state_title">The dashboard could not be loaded</h2>
+                <p class="o_re_state_text" t-esc="state.errorMessage"/>
+                <button class="btn btn-primary" t-on-click="onRetry">
+                    <i class="fa fa-refresh me-1" aria-hidden="true"/>
+                    <span>Retry</span>
+                </button>
+            </div>
+
+            <!-- – Loading skeleton: placeholders, never a fake zero – -->
+            <div t-elif="isLoading" class="o_re_body" aria-busy="true">
+                <t t-foreach="['work', 'portfolio']" t-as="section" t-key="section">
+                    <section class="o_re_section">
+                        <div class="o_re_kpi_grid">
+                            <t t-foreach="[1, 2, 3, 4]" t-as="i" t-key="i">
+                                <div class="o_re_kpi o_re_skeleton">
+                                    <div class="o_re_skel_line o_re_skel_label"/>
+                                    <div class="o_re_skel_line o_re_skel_value"/>
+                                </div>
+                            </t>
+                        </div>
+                    </section>
+                </t>
+                <span class="visually-hidden">Loading dashboard data…</span>
+            </div>
+
+            <!-- – Ready – -->
+            <div t-else="" class="o_re_body">
+
+                <t t-foreach="sections" t-as="section" t-key="section.id">
+                    <section class="o_re_section" t-att-data-section="section.id">
+                        <h2 class="o_re_section_title">
+                            <i t-attf-class="fa {{ section.icon }}" aria-hidden="true"/>
+                            <span t-esc="section.title"/>
+                        </h2>
+                        <div class="o_re_kpi_grid">
+                            <t t-foreach="section.cards" t-as="card" t-key="card.key">
+                                <div class="o_re_kpi_slot" t-att-data-tile="card.key">
+                                    <KpiCard
+                                        label="card.label"
+                                        value="card.value"
+                                        formattedValue="card.formattedValue"
+                                        hint="card.hint"
+                                        warning="card.warning"
+                                        clickable="card.clickable"
+                                        onDrill="() => this.drill(card.key)"/>
+                                </div>
+                            </t>
+                        </div>
+                    </section>
+                </t>
+
+                <!-- Map: portfolio-wide, loads on its own after the tiles -->
+                <section class="o_re_section" data-section="map">
+                    <h2 class="o_re_section_title">
+                        <i class="fa fa-map-marker" aria-hidden="true"/>
+                        <span>Map</span>
+                    </h2>
+                    <DashboardMap/>
+                </section>
+
+                <!-- Trends: loaded after the tiles -->
+                <section class="o_re_section" data-section="trends">
+                    <h2 class="o_re_section_title">
+                        <i class="fa fa-line-chart" aria-hidden="true"/>
+                        <span>Trends</span>
+                    </h2>
+                    <div t-if="state.trendsStatus === 'error'" class="o_re_empty" role="status">
+                        <i class="fa fa-exclamation-circle o_re_empty_icon" aria-hidden="true"/>
+                        <p class="o_re_empty_text">The trend charts could not be loaded.</p>
+                    </div>
+                    <div t-elif="state.trendsStatus === 'loading'" class="o_re_chart_grid" aria-busy="true">
+                        <t t-foreach="chartDefs" t-as="def" t-key="def.key">
+                            <div class="o_re_panel o_re_skeleton o_re_chart_skeleton">
+                                <div class="o_re_skel_line o_re_skel_label"/>
+                                <div class="o_re_skel_chart"/>
+                            </div>
+                        </t>
+                    </div>
+                    <div t-else="" class="o_re_chart_grid">
+                        <t t-foreach="chartDefs" t-as="def" t-key="def.key">
+                            <DashboardChart
+                                definition="def"
+                                payload="chartPayload(def.key)"
+                                currencyId="currencyId"
+                                onSegmentClick="(bucket) => this.drillArrearsBucket(bucket)"/>
+                        </t>
+                    </div>
+                </section>
+            </div>
+          </div>
+        </div>
+    </t>
+
+</templates>

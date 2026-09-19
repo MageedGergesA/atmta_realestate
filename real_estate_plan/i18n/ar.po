@@ -1,0 +1,827 @@
+# Translation of Odoo Server.
+# This file contains the Arabic translation of the following modules:
+# 	* real_estate_plan
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:14+0000\n"
+"PO-Revision-Date: 2026-09-17 10:14+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_project_form_boundary_overlay
+msgid "2D Master Plan overlay"
+msgstr "طبقة المخطط العام ثنائي الأبعاد"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_project_form_plan_inherit
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid "2D Plan"
+msgstr "المخطط ثنائي الأبعاد"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_project__main_property_id
+msgid "2D Plan Entry Property"
+msgstr "عقار الدخول للمخطط ثنائي الأبعاد"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_property__plan_image
+msgid "2D Plan Image"
+msgstr "صورة المخطط ثنائي الأبعاد"
+
+#. module: real_estate_plan
+#: model:ir.model,name:real_estate_plan.model_realestate_plan_region
+msgid "2D Plan Region"
+msgstr "منطقة المخطط ثنائي الأبعاد"
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid "<b>1.</b> Upload the plan image and save the record."
+msgstr "<b>1.</b> ارفع صورة المخطط واحفظ السجل."
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid ""
+"<b>2.</b> Hover the image to reveal pencil (upload) and trash (clear) icons,"
+" or use <b>Remove plan image</b> above."
+msgstr ""
+"<b>2.</b> مرر المؤشر فوق الصورة لإظهار أيقونتي القلم (رفع) وسلة المهملات "
+"(مسح)، أو استخدم <b>حذف صورة المخطط</b> أعلاه."
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid "<b>3.</b> Click <b>Edit regions</b> → <b>+ Add region</b>."
+msgstr "<b>3.</b> انقر <b>تعديل المناطق</b> → <b>+ إضافة منطقة</b>."
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid ""
+"<b>4.</b> Click on the image to drop polygon points (3 or more), then click "
+"<b>Finish</b>."
+msgstr ""
+"<b>4.</b> انقر على الصورة لوضع نقاط المضلع (3 نقاط أو أكثر)، ثم انقر "
+"<b>إنهاء</b>."
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid "<b>5.</b> Pick the child property the region links to (form opens)."
+msgstr "<b>5.</b> اختر العقار الفرعي الذي ترتبط به المنطقة (يفتح النموذج)."
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid ""
+"<b>6.</b> Drag vertices to reshape; right-click vertex to remove; or use the"
+" <b>Regions</b> list to delete a whole region."
+msgstr ""
+"<b>6.</b> اسحب الرؤوس لتعديل الشكل؛ انقر بزر الفأرة الأيمن على الرأس لحذفه؛ "
+"أو استخدم قائمة <b>المناطق</b> لحذف منطقة كاملة."
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_project_form_plan_inherit
+msgid ""
+"<i class=\"fa fa-arrows-alt me-1\"/>Open 2D Drill-Down Viewer\n"
+"                            <span class=\"ms-1 text-white-50\">\n"
+"                                (drill into the entry property →)\n"
+"                            </span>"
+msgstr ""
+"<i class=\"fa fa-arrows-alt me-1\"/>فتح عارض التعمق ثنائي الأبعاد\n"
+"                            <span class=\"ms-1 text-white-50\">\n"
+"                                (التعمق في عقار الدخول →)\n"
+"                            </span>"
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid ""
+"<i class=\"fa fa-arrows-alt me-1\"/>Open Plan Viewer\n"
+"                            <span class=\"ms-1 text-white-50\">(drill into children →)</span>"
+msgstr ""
+"<i class=\"fa fa-arrows-alt me-1\"/>فتح عارض المخطط\n"
+"                            <span class=\"ms-1 text-white-50\">(التعمق في العقارات الفرعية →)</span>"
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid "<i class=\"fa fa-trash me-1\"/>Remove plan image"
+msgstr "<i class=\"fa fa-trash me-1\"/>حذف صورة المخطط"
+
+#. module: real_estate_plan
+#: model:ir.model.constraint,message:real_estate_plan.constraint_realestate_plan_region_unique_target_per_parent
+msgid "A child property can only have one region on its parent plan."
+msgstr "لا يمكن أن يكون للعقار الفرعي سوى منطقة واحدة على مخطط العقار الأصلي."
+
+#. module: real_estate_plan
+#. odoo-python
+#: code:addons/real_estate_plan/models/plan_region.py:0
+msgid "A region cannot point back to its own parent property."
+msgstr "لا يمكن أن تشير المنطقة إلى عقارها الأصلي نفسه."
+
+#. module: real_estate_plan
+#. odoo-python
+#: code:addons/real_estate_plan/models/plan_region.py:0
+msgid "A region needs at least 3 vertices."
+msgstr "تحتاج المنطقة إلى 3 رؤوس على الأقل."
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Add region"
+msgstr "إضافة منطقة"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Area"
+msgstr "المساحة"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Back"
+msgstr "رجوع"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Base price"
+msgstr "السعر الأساسي"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Bathrooms"
+msgstr "دورات المياه"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Bedrooms"
+msgstr "غرف النوم"
+
+#. module: real_estate_plan
+#: model:ir.model,name:real_estate_plan.model_realestate_building_floor
+msgid "Building Floor"
+msgstr "طابق المبنى"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Children on this plan:"
+msgstr "العقارات الفرعية على هذا المخطط:"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Click"
+msgstr "انقر"
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_project_form_plan_inherit
+msgid ""
+"Click <b>Open 2D Drill-Down Viewer</b>: the viewer\n"
+"                                    will jump straight into that property and let you\n"
+"                                    drill compound → buildings → floors → units, never\n"
+"                                    showing other unrelated properties."
+msgstr ""
+"انقر <b>فتح عارض التعمق ثنائي الأبعاد</b>: سينتقل العارض مباشرة إلى ذلك "
+"العقار ويتيح لك التعمق من المجمع → المباني → الطوابق → الوحدات، دون عرض "
+"عقارات أخرى غير مرتبطة."
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Click a region to edit its shape, or add a new one."
+msgstr "انقر على منطقة لتعديل شكلها، أو أضف منطقة جديدة."
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Click to add points • Press"
+msgstr "انقر لإضافة النقاط • اضغط"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Close"
+msgstr "إغلاق"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,help:real_estate_plan.field_realestate_plan_region__target_state
+msgid ""
+"DEPRECATED compatibility bridge, derived from the status dimensions. Kept "
+"because downstream ATMTA modules and the public API still read it. Write the"
+" dimension you own instead."
+msgstr ""
+"حقل توافق متقادم مشتق من أبعاد الحالة. تم الإبقاء عليه لأن وحدات ATMTA "
+"البرمجية التابعة وواجهة البرمجة العامة لا تزال تقرؤه. اكتب البُعد الذي تملكه"
+" بدلًا منه."
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Delete"
+msgstr "حذف"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Delete this region (remove its coordinates from the image)"
+msgstr "حذف هذه المنطقة (إزالة إحداثياتها من الصورة)"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Done"
+msgstr "منجز"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Done editing"
+msgstr "إنهاء التعديل"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid ""
+"Drag vertices to reshape • Right-click vertex to remove • Click edge dot to "
+"add."
+msgstr ""
+"اسحب الرؤوس لتعديل الشكل • انقر بزر الفأرة الأيمن على الرأس لحذفه • انقر على"
+" نقطة الضلع للإضافة."
+
+#. module: real_estate_plan
+#. odoo-python
+#: code:addons/real_estate_plan/models/plan_region.py:0
+msgid "Each vertex must be [x, y] with numeric coordinates."
+msgstr "يجب أن يكون كل رأس بالصيغة [x, y] بإحداثيات رقمية."
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Edit info"
+msgstr "تعديل المعلومات"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Edit region info"
+msgstr "تعديل بيانات المنطقة"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Edit regions"
+msgstr "تعديل المناطق"
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_project_form_plan_inherit
+msgid "Entry property"
+msgstr "عقار الدخول"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Esc"
+msgstr "Esc"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Exit"
+msgstr "خروج"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Exit viewer"
+msgstr "الخروج من العارض"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__color
+msgid "Fill Color"
+msgstr "لون التعبئة"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Finish"
+msgstr "إنهاء"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Floor"
+msgstr "الطابق"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_property__has_plan_image
+msgid "Has Plan Image"
+msgstr "يحتوي على صورة مخطط"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,help:real_estate_plan.field_realestate_plan_region__color
+msgid "Hex color used to render the polygon overlay (semi-transparent)."
+msgstr "لون سداسي عشري يستخدم لعرض طبقة المضلع (شبه شفافة)."
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__target_hierarchy_level
+msgid "Hierarchy Level"
+msgstr "المستوى الهرمي"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__label
+msgid "Hover Label"
+msgstr "تسمية التمرير"
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_project_form_plan_inherit
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid "How it works"
+msgstr "طريقة العمل"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Images"
+msgstr "الصور"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,help:real_estate_plan.field_realestate_plan_region__polygon
+msgid ""
+"JSON list of [x%, y%] points relative to the plan image, e.g. \"[[10, 12], "
+"[40, 12], [40, 35], [10, 35]]\"."
+msgstr ""
+"قائمة JSON بنقاط [x%, y%] نسبة إلى صورة المخطط، مثال: \"[[10, 12], [40, 12],"
+" [40, 35], [10, 35]]\"."
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_project_form_plan_inherit
+msgid ""
+"Leave the field empty to see the project-level picker\n"
+"                                    (all top-level properties under this project)."
+msgstr ""
+"اترك الحقل فارغًا لعرض أداة الاختيار على مستوى المشروع (جميع العقارات "
+"الرئيسية ضمن هذا المشروع)."
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Loading…"
+msgstr "جارٍ التحميل…"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid ""
+"No child properties yet — create children first so you can link regions to "
+"them."
+msgstr ""
+"لا توجد عقارات فرعية بعد — أنشئ العقارات الفرعية أولًا لتتمكن من ربط المناطق"
+" بها."
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "No images uploaded yet — click"
+msgstr "لم يتم رفع صور بعد — انقر"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "No property selected."
+msgstr "لم يتم اختيار عقار."
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Open"
+msgstr "فتح"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Open Carousel"
+msgstr "فتح عرض الصور"
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_plan_region_form
+msgid "Open Target"
+msgstr "فتح الهدف"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Open form"
+msgstr "فتح النموذج"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Open the form and upload a plan image under the"
+msgstr "افتح النموذج وارفع صورة المخطط ضمن تبويب"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Other children (no plan image — open form to configure):"
+msgstr "عقارات فرعية أخرى (بدون صورة مخطط — افتح النموذج لإعدادها):"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__parent_property_id
+msgid "Parent Property"
+msgstr "العقار الأصل"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,help:real_estate_plan.field_realestate_building_floor__unit_id
+msgid ""
+"Pick any unit on the floor — its Floor Number and Usage drive this row."
+msgstr ""
+"اختر أي وحدة في الطابق — رقم الطابق والاستخدام الخاصان بها يحددان هذا الصف."
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Plan"
+msgstr "الخطة"
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid "Plan Image"
+msgstr "صورة المخطط"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_property__plan_image_filename
+msgid "Plan Image Filename"
+msgstr "اسم ملف صورة المخطط"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_property__plan_region_count
+msgid "Plan Region Count"
+msgstr "عدد مناطق المخطط"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_property__plan_region_ids
+msgid "Plan Regions"
+msgstr "مناطق المخطط"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__polygon
+msgid "Polygon (JSON)"
+msgstr "المضلع (JSON)"
+
+#. module: real_estate_plan
+#. odoo-python
+#: code:addons/real_estate_plan/models/plan_region.py:0
+msgid "Polygon must be valid JSON: %s"
+msgstr "يجب أن يكون المضلع بصيغة JSON صالحة: %s"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,help:real_estate_plan.field_realestate_plan_region__target_hierarchy_level
+msgid ""
+"Position in the property tree. A child's level must be deeper than its "
+"parent's."
+msgstr ""
+"الموقع في شجرة العقارات. يجب أن يكون مستوى العنصر التابع أعمق من مستوى "
+"العنصر الأصل."
+
+#. module: real_estate_plan
+#: model:ir.model,name:real_estate_plan.model_realestate_project
+msgid "Real Estate Development Project"
+msgstr "مشروع التطوير العقاري"
+
+#. module: real_estate_plan
+#: model:ir.model,name:real_estate_plan.model_realestate_property
+msgid "Real Estate Property"
+msgstr "عقار"
+
+#. module: real_estate_plan
+#. odoo-python
+#: code:addons/real_estate_plan/models/plan_region.py:0
+msgid "Region target '%(t)s' must be a direct child of '%(p)s'."
+msgstr "يجب أن يكون هدف المنطقة '%(t)s' عقارًا فرعيًا مباشرًا لـ '%(p)s'."
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Regions on this plan ("
+msgstr "المناطق على هذا المخطط ("
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid "Remove the 2D plan image and keep regions?"
+msgstr "حذف صورة المخطط ثنائي الأبعاد مع الإبقاء على المناطق؟"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Reset"
+msgstr "إعادة تعيين"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Save the property first to draw regions."
+msgstr "احفظ العقار أولًا لرسم المناطق."
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__sequence
+msgid "Sequence"
+msgstr "المسلسل"
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_project_form_plan_inherit
+msgid ""
+"Set <b>2D Plan Entry Property</b> to the top-level\n"
+"                                    property (typically the compound) whose own 2D plan\n"
+"                                    + regions you've already configured."
+msgstr ""
+"اضبط <b>عقار الدخول للمخطط ثنائي الأبعاد</b> على العقار الرئيسي (عادة "
+"المجمع) الذي سبق إعداد مخططه ثنائي الأبعاد ومناطقه."
+
+#. module: real_estate_plan
+#: model:ir.model.fields,help:real_estate_plan.field_realestate_plan_region__label
+msgid "Short text shown on hover. Defaults to the target's name."
+msgstr "نص قصير يظهر عند تمرير المؤشر. الافتراضي هو اسم الهدف."
+
+#. module: real_estate_plan
+#: model:ir.model.fields,help:real_estate_plan.field_realestate_property__plan_image
+msgid ""
+"Site plan / building elevation / floor plan / villa lot map. Polygon regions"
+" drawn under the 2D Plan tab overlay this image."
+msgstr ""
+"مخطط الموقع / واجهة المبنى / مخطط الطابق / خريطة قطع الفلل. المناطق المضلعة "
+"المرسومة في تبويب المخطط ثنائي الأبعاد تظهر فوق هذه الصورة."
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__target_state
+msgid "Status (legacy)"
+msgstr "الحالة (القديم)"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,help:real_estate_plan.field_realestate_plan_region__company_id
+msgid ""
+"Stored related on the property carrying the plan. Phase 0 found this model "
+"readable and writable across companies by every internal user."
+msgstr ""
+"حقل مرتبط مخزن على العقار الذي يحمل المخطط. كشفت المرحلة 0 أن هذا النموذج "
+"كان قابلًا للقراءة والكتابة عبر الشركات لكل مستخدم داخلي."
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__target_property_id
+msgid "Target Property"
+msgstr "العقار المستهدف"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,help:real_estate_plan.field_realestate_plan_region__target_property_id
+msgid "The child property this region links to."
+msgstr "العقار الفرعي الذي ترتبط به هذه المنطقة."
+
+#. module: real_estate_plan
+#: model:ir.model.fields,help:real_estate_plan.field_realestate_plan_region__parent_property_id
+msgid "The property whose plan image carries this region."
+msgstr "العقار الذي تحمل صورة مخططه هذه المنطقة."
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "This"
+msgstr "هذا"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Undo"
+msgstr "تراجع"
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_building_floor__unit_id
+msgid "Unit"
+msgstr "الوحدة"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Upload a plan image above to start drawing regions."
+msgstr "ارفع صورة المخطط أعلاه لبدء رسم المناطق."
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_project_form_boundary_overlay
+msgid ""
+"Upload a top-down site plan (PNG/JPG). It renders\n"
+"                            georeferenced across the polygon on the map below\n"
+"                            once you have 3+ boundary points."
+msgstr ""
+"ارفع مخططًا علويًا للموقع (PNG/JPG). سيُعرض مطابقًا جغرافيًا على المضلع في "
+"الخريطة أدناه بمجرد وجود 3 نقاط حدود أو أكثر."
+
+#. module: real_estate_plan
+#. odoo-python
+#: code:addons/real_estate_plan/models/plan_region.py:0
+msgid "Vertex coordinates must be percentages in [0, 100]."
+msgstr "يجب أن تكون إحداثيات الرؤوس نسبًا مئوية ضمن [0, 100]."
+
+#. module: real_estate_plan
+#: model:ir.model.fields,help:real_estate_plan.field_realestate_project__main_property_id
+msgid ""
+"When set, the 2D Drill-Down Viewer jumps straight into this property (e.g. "
+"the compound) and shows only its hierarchy. Useful when the project has no "
+"master_plan_2d of its own but the compound underneath has its plan + regions"
+" fully set up."
+msgstr ""
+"عند تعيينه، ينتقل عارض المخطط ثنائي الأبعاد مباشرة إلى هذا العقار (مثل "
+"المجمع) ويعرض تسلسله الهرمي فقط. مفيد عندما لا يملك المشروع مخططًا ثنائي "
+"الأبعاد خاصًا به (master_plan_2d) بينما المجمع التابع له مكتمل الإعداد "
+"بمخططه ومناطقه."
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Zoom in"
+msgstr "تكبير"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Zoom out"
+msgstr "تصغير"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "breadcrumb"
+msgstr "مسار التنقل"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid ""
+"has no 2D plan image of its own —\n"
+"                            pick a child below to drill into its configured plan."
+msgstr ""
+"لا يحتوي على صورة مخطط ثنائي الأبعاد خاصة به —\n"
+"                            اختر عنصرًا فرعيًا أدناه للانتقال إلى مخططه المعد."
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "has no 2D plan image yet."
+msgstr "لا يحتوي على صورة مخطط ثنائي الأبعاد بعد."
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "image"
+msgstr "صورة"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "plan thumb"
+msgstr "صورة مصغرة للمخطط"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid ""
+"tab,\n"
+"                            or configure regions on a child property — they'll appear here."
+msgstr ""
+"،\n"
+"                            أو قم بإعداد المناطق على عقار فرعي — وستظهر هنا."
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "to cancel."
+msgstr "للإلغاء."
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "to remove a region's coordinates from the image."
+msgstr "لإزالة إحداثيات منطقة من الصورة."
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "to upload some."
+msgstr "لرفع بعض الصور."
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/js/plan_viewer.js:0
+msgid "Available"
+msgstr "متاح"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/js/plan_viewer.js:0
+msgid "Blocked"
+msgstr "محجوب"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/js/plan_viewer.js:0
+msgid "Contracted"
+msgstr "متعاقد عليه"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/js/plan_viewer.js:0
+msgid "No Commercial Data"
+msgstr "لا توجد بيانات تجارية"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/js/plan_viewer.js:0
+msgid "Not Yet Released"
+msgstr "لم يُطرح بعد"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/js/plan_viewer.js:0
+msgid "Not for Sale"
+msgstr "غير معروض للبيع"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/js/plan_viewer.js:0
+msgid "On Hold"
+msgstr "محجوز مؤقتاً"
+
+#. module: real_estate_plan
+#. odoo-python
+#: code:addons/real_estate_plan/models/plan_region.py:0
+msgid "Region %s"
+msgstr "المنطقة %s"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/js/plan_viewer.js:0
+msgid "Reserved"
+msgstr "محجوز"
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/js/plan_viewer.js:0
+msgid "Sold"
+msgstr "مباع"
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_project_form_boundary_overlay
+msgid ""
+"This plan is part of the project's Sales Gallery.\n"
+"                            Replacing or removing it returns the gallery to\n"
+"                            Draft: it goes offline and must be validated and\n"
+"                            published again (Sales Gallery tab)."
+msgstr "هذا المخطط جزء من معرض مبيعات المشروع. استبداله أو إزالته يعيد المعرض إلى حالة المسودة: يتوقف عن العرض ويجب اعتماده ونشره من جديد (تبويب معرض المبيعات)."

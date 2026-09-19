@@ -1,0 +1,2629 @@
+# Translation of Odoo Server.
+# This file contains the Arabic translation of the following modules:
+# 	* atmta_construction_quality
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:12+0000\n"
+"PO-Revision-Date: 2026-09-17 10:12+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid ""
+"%(count)s mandatory checklist item(s) have no answer. An inspection cannot "
+"be accepted on unanswered checks."
+msgstr ""
+"%(count)s بند إلزامي في قائمة التحقق بلا إجابة. لا يمكن قبول تفتيش بفحوصات "
+"لم تتم الإجابة عليها."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid ""
+"%(items)s failed with no disposition recorded. A failure nobody resolved is "
+"the one that reaches the client."
+msgstr ""
+"%(items)s فشل دون تسجيل معالجة. الإخفاق الذي لم يعالجه أحد هو الذي يصل إلى "
+"العميل."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid ""
+"%(name)s revision %(rev)s is already active. Supersede it rather than "
+"activating a second one."
+msgstr ""
+"المراجعة %(rev)s من %(name)s سارية بالفعل. استبدلها بدلًا من تفعيل مراجعة "
+"ثانية."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid ""
+"%(refs)s are in force or historical. Create a revision rather than editing "
+"the plan inspections were performed against."
+msgstr ""
+"%(refs)s سارية أو تاريخية. أنشئ مراجعة بدلًا من تعديل الخطة التي أُجري "
+"التفتيش على أساسها."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid ""
+"%(refs)s have been carried out and recorded. Raise a reinspection rather "
+"than rewriting what was found."
+msgstr ""
+"%(refs)s تم تنفيذها وتسجيلها. اطلب إعادة تفتيش بدلًا من إعادة كتابة ما تم "
+"رصده."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid ""
+"%(refs)s have been verified or closed. Reopen with a reason rather than "
+"editing the record somebody signed."
+msgstr ""
+"%(refs)s تم التحقق منها أو إغلاقها. أعد فتحها مع ذكر السبب بدلًا من تعديل "
+"سجل وقّعه أحدهم."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/ncr_change_event.py:0
+msgid "%s already has a change event."
+msgstr "%s لديه حدث تغيير بالفعل."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "%s already has a result. Raise a reinspection instead."
+msgstr "%s لديه نتيجة بالفعل. اطلب إعادة تفتيش بدلًا من ذلك."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "%s has already been escalated."
+msgstr "تم تصعيد %s بالفعل."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "%s is not open for a result."
+msgstr "%s غير مفتوح لتسجيل نتيجة."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "%s was accepted — there is nothing to reinspect."
+msgstr "تم قبول %s — لا يوجد ما يستدعي إعادة التفتيش."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid ""
+"'%s' failed and has no disposition. A failure nobody resolved is the one "
+"that reaches the client."
+msgstr ""
+"'%s' فشل ولا توجد له معالجة. الإخفاق الذي لم يعالجه أحد هو الذي يصل إلى "
+"العميل."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "A closed observation is part of the record."
+msgstr "الملاحظة المغلقة جزء من السجل."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid ""
+"A critical non-conformance is not accepted as-is by the person who raised "
+"it."
+msgstr "لا يقبل من رفع عدم المطابقة الحرجة قبولها على حالها."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "A disposition without a root cause fixes this one and nothing else."
+msgstr "المعالجة دون سبب جذري تصلح هذه الحالة فقط ولا شيء غيرها."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "A verified NCR cannot be voided."
+msgstr "لا يمكن إبطال تقرير عدم مطابقة تم التحقق منه."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "A verified NCR is part of the record."
+msgstr "تقرير عدم المطابقة الذي تم التحقق منه جزء من السجل."
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_form
+msgid "Accept"
+msgstr "قبول"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_form
+msgid "Accept with Comments"
+msgstr "قبول مع ملاحظات"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template_line__acceptance_criteria
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__acceptance_criteria
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp_item__acceptance_criteria
+msgid "Acceptance Criteria"
+msgstr "معايير القبول"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__result__accepted
+msgid "Accepted"
+msgstr "مقبول"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_line__disposition__accepted
+msgid "Accepted with Comment"
+msgstr "مقبول مع ملاحظة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__result__accepted_with_comments
+msgid "Accepted with Comments"
+msgstr "مقبول مع ملاحظات"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid ""
+"Accepting non-conforming work as-is is a manager's decision, not a workflow "
+"step."
+msgstr ""
+"قبول الأعمال غير المطابقة على حالها قرار إداري، وليس خطوة في سير العمل."
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_form
+msgid "Action"
+msgstr "الإجراء"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__message_needaction
+msgid "Action Needed"
+msgstr "إجراء مطلوب"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_quality_observation__state__action_required
+msgid "Action Required"
+msgstr "إجراء مطلوب"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_itp_form
+msgid "Activate"
+msgstr "تفعيل"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template__active
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_itp__state__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__activity_ids
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__activity_ids
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__activity_ids
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__activity_ids
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__activity_ids
+msgid "Activities"
+msgstr "الأنشطة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__activity
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp_item__activity
+msgid "Activity"
+msgstr "النشاط"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "زخرفة استثناء النشاط"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__activity_state
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__activity_state
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__activity_state
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__activity_state
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__actual_completion_date
+msgid "Actual Completion Date"
+msgstr "تاريخ الإنجاز الفعلي"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_reason_wizard__mode__amend_daily_report
+msgid "Amend Daily Report"
+msgstr "تعديل التقرير اليومي"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "An NCR closes after verification, not instead of it."
+msgstr "يُغلق تقرير عدم المطابقة بعد التحقق، وليس بدلًا منه."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "An inspection closes on a result, not on a wish."
+msgstr "يُغلق التفتيش بناءً على نتيجة، وليس على أمنية."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "An inspection has already been performed."
+msgstr "تم إجراء تفتيش بالفعل."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "An inspection has been performed against this request."
+msgstr "تم إجراء تفتيش بناءً على هذا الطلب."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "An inspection plan with no checkpoints plans nothing."
+msgstr "خطة التفتيش التي لا تحتوي على نقاط فحص لا تخطط لشيء."
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_itp_form
+msgid "Approve"
+msgstr "اعتماد"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_form
+msgid "Approve Disposition"
+msgstr "اعتماد المعالجة"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "Approve the new revision before retiring this one."
+msgstr "اعتمد المراجعة الجديدة قبل إيقاف هذه المراجعة."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_itp__state__approved
+msgid "Approved"
+msgstr "معتمد"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__approved_by_id
+msgid "Approved By"
+msgstr "اعتمد بواسطة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template__discipline__architectural
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__discipline__architectural
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__discipline__architectural
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_itp__discipline__architectural
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__discipline__architectural
+msgid "Architectural"
+msgstr "معماري"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__inspector_id
+msgid "Assigned Inspector"
+msgstr "المفتش المكلف"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__assigned_to_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__assigned_to_id
+msgid "Assigned To"
+msgstr "المكلف"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template_line__item_type__attachment
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_line__item_type__attachment
+msgid "Attachment Required"
+msgstr "مرفق مطلوب"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__attachment_ids
+msgid "Attachments"
+msgstr "المرفقات"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__source__audit
+msgid "Audit"
+msgstr "تدقيق"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_request_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_reason_wizard_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__result__cancelled
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__state__cancelled
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__state__cancelled
+msgid "Cancelled"
+msgstr "ملغى"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp_item__certificate_required
+msgid "Certificate Required"
+msgstr "شهادة مطلوبة"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_form
+msgid "Chain"
+msgstr "التسلسل"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__change_event_id
+msgid "Change Event"
+msgstr "حدث التغيير"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__checklist_line_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_form
+msgid "Checklist"
+msgstr "قائمة التحقق"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp_item__checklist_template_id
+msgid "Checklist Template"
+msgstr "قالب قائمة التحقق"
+
+#. module: atmta_construction_quality
+#: model:ir.model,name:atmta_construction_quality.model_realestate_construction_checklist_template_line
+msgid "Checklist Template Item"
+msgstr "بند قالب قائمة التحقق"
+
+#. module: atmta_construction_quality
+#: model:ir.actions.act_window,name:atmta_construction_quality.action_checklist_template
+msgid "Checklist Templates"
+msgstr "قوالب قوائم التحقق"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__item_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_itp_form
+msgid "Checkpoints"
+msgstr "نقاط الفحص"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template__discipline__civil
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__discipline__civil
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__discipline__civil
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_itp__discipline__civil
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__discipline__civil
+msgid "Civil"
+msgstr "مدني"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__source__client
+msgid "Client / Consultant"
+msgstr "العميل / الاستشاري"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__witness_partner_id
+msgid "Client / Consultant Representative"
+msgstr "ممثل العميل / الاستشاري"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_form
+msgid "Close"
+msgstr "إغلاق"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__state__closed
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__state__closed
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_itp__state__closed
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__state__closed
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_quality_observation__state__closed
+msgid "Closed"
+msgstr "مغلق"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__closure_date
+msgid "Closure Date"
+msgstr "تاريخ الإغلاق"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__closure_time_days
+msgid "Closure Time Days"
+msgstr "مدة الإغلاق بالأيام"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_checklist_template_line__selection_values
+msgid "Comma-separated options."
+msgstr "خيارات مفصولة بفواصل."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__comments
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__comments
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_form
+msgid "Comments"
+msgstr "التعليقات"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template__company_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__company_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__company_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__company_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__company_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp_item__company_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__company_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__completed_date
+msgid "Completed Date"
+msgstr "تاريخ الإنجاز"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__proposed_disposition__concession
+msgid "Concession"
+msgstr "قبول استثنائي"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_reason_wizard_form
+msgid "Confirm"
+msgstr "تأكيد"
+
+#. module: atmta_construction_quality
+#: model:ir.actions.server,name:atmta_construction_quality.cron_refresh_dates_ir_actions_server
+msgid "Construction Quality: refresh overdue flags"
+msgstr "جودة الإنشاءات: تحديث مؤشرات التأخير"
+
+#. module: atmta_construction_quality
+#: model:ir.model,name:atmta_construction_quality.model_realestate_construction_quality_refresh
+msgid "Construction quality: refresh values that depend on today's date"
+msgstr "جودة الإنشاءات: تحديث القيم المعتمدة على تاريخ اليوم"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__reviewer_partner_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp_item__reviewer_partner_id
+msgid "Consultant / Client"
+msgstr "الاستشاري / العميل"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__contractor_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__contractor_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__contractor_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__contractor_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__contractor_id
+msgid "Contractor"
+msgstr "المقاول"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__root_cause_category__coordination
+msgid "Coordination"
+msgstr "التنسيق"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_line__disposition__corrected
+msgid "Corrected on the Spot"
+msgstr "تم التصحيح في الموقع"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__corrective_action
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__corrective_action
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__state__corrective_action
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_form
+msgid "Corrective Action"
+msgstr "الإجراء التصحيحي"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "Corrective action comes before verification."
+msgstr "الإجراء التصحيحي يسبق التحقق."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "Corrective work is verified once it is complete."
+msgstr "يتم التحقق من الأعمال التصحيحية بعد اكتمالها."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__cost_code_id
+msgid "Cost Code"
+msgstr "رمز التكلفة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__cost_impact
+msgid "Cost Impact"
+msgstr "الأثر على التكلفة"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_form
+msgid "Create Change Event"
+msgstr "إنشاء حدث تغيير"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_itp_form
+msgid "Create Revision"
+msgstr "إنشاء مراجعة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template_line__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp_item__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_reason_wizard__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template__create_date
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template_line__create_date
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__create_date
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__create_date
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__create_date
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__create_date
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp_item__create_date
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__create_date
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__create_date
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_reason_wizard__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__severity__critical
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_quality_observation__severity__critical
+msgid "Critical"
+msgstr "حرجة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__currency_id
+msgid "Currency"
+msgstr "العملة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template_line__item_type__date
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_line__item_type__date
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__date_value
+msgid "Date Value"
+msgstr "قيمة التاريخ"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template__description
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__description
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__description
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_form
+msgid "Description"
+msgstr "الوصف"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__root_cause_category__design
+msgid "Design"
+msgstr "التصميم"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template__discipline
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__discipline
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__discipline
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__discipline
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__discipline
+msgid "Discipline"
+msgstr "التخصص"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__discovery_date
+msgid "Discovery Date"
+msgstr "تاريخ الاكتشاف"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template__display_name
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template_line__display_name
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__display_name
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__display_name
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__display_name
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__display_name
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp_item__display_name
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__display_name
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__display_name
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_reason_wizard__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__disposition
+msgid "Disposition"
+msgstr "المعالجة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__disposition_approved_by_id
+msgid "Disposition Approved By"
+msgstr "المعالجة معتمدة بواسطة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__disposition_approved_on
+msgid "Disposition Approved On"
+msgstr "تاريخ اعتماد المعالجة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__state__disposition_proposed
+msgid "Disposition Proposed"
+msgstr "تم اقتراح المعالجة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__disposition_reason
+msgid "Disposition Reason"
+msgstr "سبب المعالجة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__document_revision_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__document_revision_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__document_revision_id
+msgid "Document Revision"
+msgstr "مراجعة مستند"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__root_cause_category__documentation
+msgid "Documentation"
+msgstr "التوثيق"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__state__draft
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__state__draft
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_itp__state__draft
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__state__draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__due_date
+msgid "Due Date"
+msgstr "تاريخ الاستحقاق"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_itp_item__frequency
+msgid "Each pour, every 500m², weekly…"
+msgstr "كل صبة، كل 500m²، أسبوعيًا…"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__effective_date
+msgid "Effective Date"
+msgstr "تاريخ السريان"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template__discipline__electrical
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__discipline__electrical
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__discipline__electrical
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_itp__discipline__electrical
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__discipline__electrical
+msgid "Electrical"
+msgstr "كهربائي"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__root_cause_category__equipment
+msgid "Equipment"
+msgstr "المعدات"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_reason_wizard__mode__escalate_observation
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_observation_form
+msgid "Escalate to NCR"
+msgstr "تصعيد إلى تقرير عدم مطابقة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__source__observation
+msgid "Escalated Observation"
+msgstr "ملاحظة مُصعدة"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "Escalated from %s"
+msgstr "مُصعد من %s"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__escalation_reason
+msgid "Escalation Reason"
+msgstr "سبب التصعيد"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__estimated_delay_days
+msgid "Estimated Delay Days"
+msgstr "أيام التأخير المقدرة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__estimated_rework_cost
+msgid "Estimated Rework Cost"
+msgstr "التكلفة التقديرية لإعادة العمل"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_form
+msgid ""
+"Estimated rework is <strong>quality exposure</strong>. It is not\n"
+"                        actual cost and authorises no budget — use Create Change Event."
+msgstr ""
+"التكلفة التقديرية لإعادة العمل هي <strong>تعرض من حيث الجودة</strong>. وليست"
+" تكلفة فعلية ولا تعتمد أي ميزانية — استخدم إنشاء حدث تغيير."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__attachment_ids
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__attachment_ids
+msgid "Evidence"
+msgstr "الأدلة"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_list
+msgid "Exposure"
+msgstr "التعرض"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_line__passed__fail
+msgid "Fail"
+msgstr "فشل"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__failed_line_count
+msgid "Failed Line Count"
+msgstr "عدد البنود الفاشلة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template__inspection_type__final
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__inspection_type__final
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__inspection_type__final
+msgid "Final Inspection"
+msgstr "المعاينة النهائية"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_form
+msgid "Findings"
+msgstr "النتائج"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__follow_up_required
+msgid "Follow Up Required"
+msgstr "متابعة مطلوبة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection__activity_type_icon
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection_request__activity_type_icon
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_itp__activity_type_icon
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_ncr__activity_type_icon
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_quality_observation__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "أيقونة Font Awesome، مثل fa-tasks"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp_item__frequency
+msgid "Frequency"
+msgstr "التكرار"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template__discipline__hvac
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__discipline__hvac
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__discipline__hvac
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_itp__discipline__hvac
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__discipline__hvac
+msgid "HVAC"
+msgstr "التكييف والتهوية"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__has_message
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__has_message
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__has_message
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__has_message
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__has_message
+msgid "Has Message"
+msgstr "يحتوي على رسالة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__has_reinspection
+msgid "Has Reinspection"
+msgstr "توجد إعادة تفتيش"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_itp_item__inspection_point__hold
+msgid "Hold Point"
+msgstr "نقطة توقف"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__hold_point_count
+msgid "Hold Point Count"
+msgstr "عدد نقاط التوقف"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection__inspection_point
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_itp_item__inspection_point
+msgid ""
+"Hold points stop the work until released. Witness points give the reviewer "
+"the opportunity to attend."
+msgstr ""
+"نقاط التوقف توقف العمل حتى يتم الإفراج عنها. نقاط الشهود تتيح للمراجع فرصة "
+"الحضور."
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_form
+msgid "How recurrence is prevented (optional)"
+msgstr "كيف يتم منع التكرار (اختياري)"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template__id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template_line__id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp_item__id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_reason_wizard__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "ITP %(name)s is in %(company)s but its project is in %(other)s."
+msgstr ""
+"خطة الفحص والاختبار %(name)s تتبع الشركة %(company)s بينما مشروعها يتبع "
+"%(other)s."
+
+#. module: atmta_construction_quality
+#: model:ir.model,name:atmta_construction_quality.model_realestate_construction_itp_item
+msgid "ITP Checkpoint"
+msgstr "نقطة فحص في خطة الفحص والاختبار"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__activity_exception_icon
+msgid "Icon"
+msgstr "الأيقونة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection__activity_exception_icon
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection_request__activity_exception_icon
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_itp__activity_exception_icon
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_ncr__activity_exception_icon
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_quality_observation__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "أيقونة للإشارة إلى نشاط استثنائي."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection__message_needaction
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection_request__message_needaction
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_itp__message_needaction
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_ncr__message_needaction
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_quality_observation__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا كان محددًا، فهناك رسائل جديدة تتطلب انتباهك."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection__message_has_error
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection_request__message_has_error
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection_request__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_itp__message_has_error
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_itp__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_ncr__message_has_error
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_ncr__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_quality_observation__message_has_error
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_quality_observation__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا كان محددًا، فبعض الرسائل بها خطأ في التسليم."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__immediate_action
+msgid "Immediate Action"
+msgstr "إجراء فوري"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_form
+msgid "Impact"
+msgstr "الأثر"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__state__in_progress
+msgid "In Progress"
+msgstr "قيد التنفيذ"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__inspection_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__inspection_id
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__source__inspection
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_form
+msgid "Inspection"
+msgstr "المعاينة"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "Inspection %(name)s is in %(company)s but its project is in %(other)s."
+msgstr "التفتيش %(name)s يتبع الشركة %(company)s بينما مشروعه يتبع %(other)s."
+
+#. module: atmta_construction_quality
+#: model:ir.model,name:atmta_construction_quality.model_realestate_construction_itp
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_itp_form
+msgid "Inspection & Test Plan"
+msgstr "خطة الفحص والاختبار"
+
+#. module: atmta_construction_quality
+#: model:ir.actions.act_window,name:atmta_construction_quality.action_itp
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_itp_list
+msgid "Inspection & Test Plans"
+msgstr "خطط التفتيش والاختبار"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp_item__description
+msgid "Inspection / Test"
+msgstr "التفتيش / الاختبار"
+
+#. module: atmta_construction_quality
+#: model:ir.model,name:atmta_construction_quality.model_realestate_construction_inspection_line
+msgid "Inspection Checklist Result"
+msgstr "نتيجة قائمة تحقق التفتيش"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__inspection_count
+msgid "Inspection Count"
+msgstr "عدد عمليات التفتيش"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__inspection_datetime
+msgid "Inspection Datetime"
+msgstr "تاريخ ووقت التفتيش"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__inspection_point
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp_item__inspection_point
+msgid "Inspection Point"
+msgstr "نقطة التفتيش"
+
+#. module: atmta_construction_quality
+#: model:ir.model,name:atmta_construction_quality.model_realestate_construction_inspection_request
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_request_form
+msgid "Inspection Request"
+msgstr "طلب تفتيش"
+
+#. module: atmta_construction_quality
+#: model:ir.actions.act_window,name:atmta_construction_quality.action_inspection_request
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_request_list
+msgid "Inspection Requests"
+msgstr "طلبات التفتيش"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template__inspection_type
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__inspection_type
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__inspection_type
+msgid "Inspection Type"
+msgstr "نوع التفتيش"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__state__in_progress
+msgid "Inspection in Progress"
+msgstr "التفتيش قيد التنفيذ"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid ""
+"Inspection request %(name)s is in %(company)s but its project is in "
+"%(other)s."
+msgstr ""
+"طلب التفتيش %(name)s يتبع الشركة %(company)s بينما مشروعه يتبع %(other)s."
+
+#. module: atmta_construction_quality
+#: model:ir.actions.act_window,name:atmta_construction_quality.action_inspection
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__inspection_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_list
+msgid "Inspections"
+msgstr "التفتيش"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__inspector_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp_item__inspector_id
+msgid "Inspector"
+msgstr "المفتش"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template__inspection_type__installation
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__inspection_type__installation
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__inspection_type__installation
+msgid "Installation"
+msgstr "التركيب"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template__discipline__interior
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__discipline__interior
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__discipline__interior
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_itp__discipline__interior
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__discipline__interior
+msgid "Interior"
+msgstr "التصميم الداخلي"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_form
+msgid "Investigate"
+msgstr "تحقيق"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_form
+msgid "Investigation"
+msgstr "التحقيق"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__is_first_inspection
+msgid "Is First Inspection"
+msgstr "أول تفتيش"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template_line__is_mandatory
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__is_mandatory
+msgid "Is Mandatory"
+msgstr "إلزامي"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__is_overdue
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__is_overdue
+msgid "Is Overdue"
+msgstr "متأخر"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__item_count
+msgid "Item Count"
+msgstr "عدد البنود"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template_line__item_type
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__item_type
+msgid "Item Type"
+msgstr "نوع البند"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template__line_ids
+msgid "Items"
+msgstr "البنود"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__itp_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__itp_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp_item__itp_id
+msgid "Itp"
+msgstr "خطة الفحص والاختبار"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__itp_item_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__itp_item_id
+msgid "Itp Item"
+msgstr "بند خطة الفحص والاختبار"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__itp_revision
+msgid "Itp Revision"
+msgstr "مراجعة خطة الفحص والاختبار"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template__discipline__landscape
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__discipline__landscape
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__discipline__landscape
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_itp__discipline__landscape
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__discipline__landscape
+msgid "Landscape"
+msgstr "تنسيق المواقع"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template_line__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp_item__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_reason_wizard__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template__write_date
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template_line__write_date
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__write_date
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__write_date
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__write_date
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__write_date
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp_item__write_date
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__write_date
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__write_date
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_reason_wizard__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__lead_time_hours
+msgid "Lead Time Hours"
+msgstr "مهلة الإشعار بالساعات"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__lead_time_shortfall
+msgid "Lead Time Shortfall"
+msgstr "نقص مهلة الإشعار"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__location
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__location
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__location
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__location
+msgid "Location"
+msgstr "الموقع"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__severity__major
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_quality_observation__severity__major
+msgid "Major"
+msgstr "رئيسية"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__cost_impact__managed
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__schedule_impact__managed
+msgid "Managed by Change Management"
+msgstr "تُدار عبر إدارة التغيير"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__product_id
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__root_cause_category__material
+msgid "Material"
+msgstr "المواد"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template__inspection_type__material
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__inspection_type__material
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__inspection_type__material
+msgid "Material Inspection"
+msgstr "فحص المواد"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template_line__maximum_value
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__maximum_value
+msgid "Maximum Value"
+msgstr "القيمة القصوى"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__measured_value
+msgid "Measured Value"
+msgstr "القيمة المقاسة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template_line__item_type__measurement
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_line__item_type__measurement
+msgid "Measurement"
+msgstr "القياس"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template__discipline__mechanical
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__discipline__mechanical
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__discipline__mechanical
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_itp__discipline__mechanical
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__discipline__mechanical
+msgid "Mechanical"
+msgstr "ميكانيكي"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__root_cause_category__method
+msgid "Method"
+msgstr "الطريقة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__method_statement_revision_id
+msgid "Method Statement"
+msgstr "بيان طريقة العمل"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template_line__minimum_value
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__minimum_value
+msgid "Minimum Value"
+msgstr "القيمة الدنيا"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__severity__minor
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_quality_observation__severity__minor
+msgid "Minor"
+msgstr "ثانوية"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_reason_wizard__mode
+msgid "Mode"
+msgstr "الوضع"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "موعد نشاطي النهائي"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "NCR %(name)s is in %(company)s but its project is in %(other)s."
+msgstr ""
+"تقرير عدم المطابقة %(name)s يتبع الشركة %(company)s بينما مشروعه يتبع "
+"%(other)s."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/ncr_change_event.py:0
+msgid "NCR %(number)s — %(title)s"
+msgstr "تقرير عدم مطابقة %(number)s — %(title)s"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__name
+msgid "NCR Number"
+msgstr "رقم تقرير عدم المطابقة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_line__disposition__ncr
+msgid "NCR Raised"
+msgstr "تم رفع تقرير عدم مطابقة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__ncr_ids
+msgid "NCRs"
+msgstr "تقارير عدم المطابقة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template__name
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template_line__name
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__ncr_id
+msgid "Ncr"
+msgstr "تقرير عدم المطابقة"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "New"
+msgstr "جديد"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "حدث التقويم للنشاط التالي"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__activity_summary
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__activity_summary
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__activity_summary
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__activity_summary
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__activity_type_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__activity_type_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__activity_type_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__activity_type_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_line__disposition__none
+msgid "No Action — Reason Recorded"
+msgstr "لا إجراء — تم تسجيل السبب"
+
+#. module: atmta_construction_quality
+#: model:ir.model,name:atmta_construction_quality.model_realestate_construction_ncr
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_form
+msgid "Non-Conformance Report"
+msgstr "تقرير عدم مطابقة"
+
+#. module: atmta_construction_quality
+#: model:ir.actions.act_window,name:atmta_construction_quality.action_ncr
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_list
+msgid "Non-Conformance Reports"
+msgstr "تقارير عدم المطابقة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__cost_impact__none
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__schedule_impact__none
+msgid "None"
+msgstr "لا يوجد"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_itp_item__inspection_point__normal
+msgid "Normal Inspection"
+msgstr "تفتيش عادي"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__result__not_applicable
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_line__passed__na
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_form
+msgid "Not Applicable"
+msgstr "غير منطبق"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__notes
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__notes
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp_item__notes
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_itp_form
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality_wizard.py:0
+msgid ""
+"Nothing here answers for %s. The module that owns that record is not "
+"installed."
+msgstr "لا يوجد ما يخص %s هنا. الوحدة البرمجية المالكة لهذا السجل غير مثبتة."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection_request__lead_time_hours
+msgid ""
+"Notice given. The required minimum is configuration, not a number baked into"
+" the code."
+msgstr ""
+"مدة الإشعار المقدم. الحد الأدنى المطلوب يحدد من الإعدادات، وليس رقمًا ثابتًا"
+" في الكود."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template_line__item_type__number
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_line__item_type__number
+msgid "Number"
+msgstr "الرقم"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection_request__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_itp__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_ncr__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_quality_observation__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراء"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection_request__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_itp__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_ncr__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_quality_observation__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي بها خطأ في التسليم"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_line__disposition__observation
+msgid "Observation Raised"
+msgstr "تم تسجيل ملاحظة"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "Observation and project companies disagree."
+msgstr "شركة الملاحظة وشركة المشروع غير متطابقتين."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__observation_ids
+msgid "Observations"
+msgstr "الملاحظات الميدانية"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "Only a closed NCR reopens."
+msgstr "لا يعاد فتح إلا تقرير عدم مطابقة مغلق."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "Only a draft ITP can be submitted."
+msgstr "لا يمكن إرسال إلا خطة فحص واختبار في حالة مسودة."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "Only a draft NCR can be opened."
+msgstr "لا يمكن فتح إلا تقرير عدم مطابقة في حالة مسودة."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "Only a draft request can be raised."
+msgstr "لا يمكن تقديم إلا طلب في حالة مسودة."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "Only a raised request can be scheduled."
+msgstr "لا يمكن جدولة إلا طلب مقدم."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "Only an ITP under review is approved."
+msgstr "لا تعتمد إلا خطة فحص واختبار قيد المراجعة."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "Only an approved ITP becomes active."
+msgstr "لا تصبح سارية إلا خطة فحص واختبار معتمدة."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "Only an open NCR is investigated."
+msgstr "لا يتم التحقيق إلا في تقرير عدم مطابقة مفتوح."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "Only the active revision can be revised."
+msgstr "لا يمكن مراجعة إلا المراجعة السارية."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__state__open
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_quality_observation__state__open
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_form
+msgid "Open"
+msgstr "فتح"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_form
+msgid "Origin"
+msgstr "المصدر"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template__discipline__other
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template__inspection_type__other
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__discipline__other
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__inspection_type__other
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__discipline__other
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__inspection_type__other
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_itp__discipline__other
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__discipline__other
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__proposed_disposition__other
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__root_cause_category__other
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__source__other
+msgid "Other"
+msgstr "أخرى"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__package_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__package_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__package_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__package_id
+msgid "Package"
+msgstr "حزمة الأعمال"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_line__passed__pass
+msgid "Pass"
+msgstr "ناجح"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template_line__item_type__pass_fail
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_line__item_type__pass_fail
+msgid "Pass / Fail"
+msgstr "ناجح / راسب"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__passed
+msgid "Passed"
+msgstr "ناجح"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template_line__item_type__photo
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_line__item_type__photo
+msgid "Photo Required"
+msgstr "صورة مطلوبة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__attachment_ids
+msgid "Photos"
+msgstr "الصور"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__attachment_ids
+msgid "Photos & Evidence"
+msgstr "الصور والأدلة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template__discipline__plumbing
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__discipline__plumbing
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__discipline__plumbing
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_itp__discipline__plumbing
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__discipline__plumbing
+msgid "Plumbing"
+msgstr "السباكة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__cost_impact__potential
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__schedule_impact__potential
+msgid "Potential"
+msgstr "محتمل"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template__inspection_type__pre_pour
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__inspection_type__pre_pour
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__inspection_type__pre_pour
+msgid "Pre-Pour"
+msgstr "قبل الصب"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__prepared_by_id
+msgid "Prepared By"
+msgstr "أعده"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__preventive_action
+msgid "Preventive Action"
+msgstr "الإجراء الوقائي"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__project_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__project_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__project_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__project_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__project_id
+msgid "Project"
+msgstr "المشروع"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_form
+msgid "Propose Disposition"
+msgstr "اقتراح المعالجة"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "Propose what should be done about it."
+msgstr "اقترح ما يجب فعله حيال ذلك."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__proposed_disposition
+msgid "Proposed Disposition"
+msgstr "المعالجة المقترحة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__purchase_order_id
+msgid "Purchase Order"
+msgstr "أمر شراء"
+
+#. module: atmta_construction_quality
+#: model:ir.model,name:atmta_construction_quality.model_realestate_construction_checklist_template
+msgid "Quality Checklist Template"
+msgstr "قالب قائمة تحقق الجودة"
+
+#. module: atmta_construction_quality
+#: model:ir.model,name:atmta_construction_quality.model_realestate_construction_inspection
+msgid "Quality Inspection"
+msgstr "تفتيش الجودة"
+
+#. module: atmta_construction_quality
+#: model:ir.model,name:atmta_construction_quality.model_realestate_construction_quality_observation
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_observation_form
+msgid "Quality Observation"
+msgstr "ملاحظة جودة"
+
+#. module: atmta_construction_quality
+#: model:ir.actions.act_window,name:atmta_construction_quality.action_observation
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_observation_list
+msgid "Quality Observations"
+msgstr "ملاحظات الجودة"
+
+#. module: atmta_construction_quality
+#: model:ir.model,name:atmta_construction_quality.model_realestate_construction_reason_wizard
+msgid "Quality Reason Prompt"
+msgstr "طلب سبب الجودة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_ncr__estimated_rework_cost
+msgid ""
+"Quality exposure — an estimate of putting it right. Not actual cost: only "
+"Accounting posts that, and only M4 authorises a budget for it."
+msgstr ""
+"تعرض الجودة — تقدير لتكلفة التصحيح. ليست تكلفة فعلية: وحدها المحاسبة تقيدها،"
+" ووحدها M4 تعتمد ميزانية لها."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__quantity
+msgid "Quantity"
+msgstr "الكمية"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_form
+msgid "Raise NCR"
+msgstr "إصدار تقرير عدم مطابقة"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_form
+msgid "Raise Observation"
+msgstr "تسجيل ملاحظة"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_form
+msgid "Raise Reinspection"
+msgstr "طلب إعادة تفتيش"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__raised_by_id
+msgid "Raised By"
+msgstr "مقدم بواسطة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__state__ready_for_verification
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_quality_observation__state__ready_for_verification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_observation_form
+msgid "Ready for Verification"
+msgstr "جاهز للتحقق"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_reason_wizard__reason
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_reason_wizard_form
+msgid "Reason"
+msgstr "السبب"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp_item__record_required
+msgid "Record Required"
+msgstr "السجل المطلوب"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "Record this inspection's result before reinspecting."
+msgstr "سجل نتيجة هذا التفتيش قبل إعادة التفتيش."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "Record what was actually done before asking for verification."
+msgstr "سجل ما تم تنفيذه فعليًا قبل طلب التحقق."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__proposed_disposition__redesign
+msgid "Redesign"
+msgstr "إعادة التصميم"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template_line__reference
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__name
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__reference
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__name
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__name
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__name
+msgid "Reference"
+msgstr "المرجع"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_itp_form
+msgid "Reference Documents"
+msgstr "المستندات المرجعية"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__document_revision_ids
+msgid "Reference Revisions"
+msgstr "المراجعات المرجعية"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__parent_inspection_id
+msgid "Reinspection Of"
+msgstr "إعادة تفتيش لـ"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__reinspection_reason
+msgid "Reinspection Reason"
+msgstr "سبب إعادة التفتيش"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__result__reinspection_required
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_form
+msgid "Reinspection Required"
+msgstr "يتطلب إعادة تفتيش"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__reinspection_sequence
+msgid "Reinspection Sequence"
+msgstr "تسلسل إعادة التفتيش"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "Reinspection after %s"
+msgstr "إعادة تفتيش بعد %s"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__reinspection_ids
+msgid "Reinspections"
+msgstr "عمليات إعادة التفتيش"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_request_form
+msgid "Reject"
+msgstr "رفض"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__proposed_disposition__reject
+msgid "Reject / Remove"
+msgstr "رفض / إزالة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__result__rejected
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__state__rejected
+msgid "Rejected"
+msgstr "مرفوض"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_form
+msgid "Reopen"
+msgstr "إعادة فتح"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_reason_wizard__mode__reopen_ncr
+msgid "Reopen NCR"
+msgstr "إعادة فتح تقرير عدم المطابقة"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "Reopen Non-Conformance"
+msgstr "إعادة فتح عدم المطابقة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__reopen_reason
+msgid "Reopen Reason"
+msgstr "سبب إعادة الفتح"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__state__reopened
+msgid "Reopened"
+msgstr "أعيد فتحه"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__reopened_by_id
+msgid "Reopened By"
+msgstr "أعيد فتحه بواسطة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__reopened_date
+msgid "Reopened Date"
+msgstr "تاريخ إعادة الفتح"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_form
+msgid "Reopening"
+msgstr "إعادة الفتح"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid ""
+"Reopening a closed non-conformance needs a reason — the previous closure is "
+"evidence somebody signed."
+msgstr ""
+"إعادة فتح عدم مطابقة مغلقة تتطلب سببًا — الإغلاق السابق دليل على توقيع شخص "
+"ما."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__proposed_disposition__repair
+msgid "Repair"
+msgstr "الإصلاح"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__proposed_disposition__replace
+msgid "Replace"
+msgstr "استبدال"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__request_id
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_request_form
+msgid "Request"
+msgstr "الطلب"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__state__rejected_request
+msgid "Request Rejected"
+msgstr "تم رفض الطلب"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__state__requested
+msgid "Requested"
+msgstr "المطلوب"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__requested_by_id
+msgid "Requested By"
+msgstr "مقدم الطلب"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__requested_datetime
+msgid "Requested Datetime"
+msgstr "تاريخ ووقت الطلب"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_observation_form
+msgid "Require Action"
+msgstr "طلب إجراء"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__required_datetime
+msgid "Required Datetime"
+msgstr "التاريخ والوقت المطلوبان"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__requirement_violated
+msgid "Requirement Violated"
+msgstr "المتطلب المخالف"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_reason_wizard__res_id
+msgid "Res"
+msgstr "معرف السجل"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__state__responded
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__state__responded
+msgid "Responded"
+msgstr "تم الرد"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp_item__responsible_contractor_id
+msgid "Responsible Contractor"
+msgstr "المقاول المسؤول"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__activity_user_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__activity_user_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__activity_user_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__activity_user_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__result
+msgid "Result"
+msgstr "النتيجة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__result_datetime
+msgid "Result Datetime"
+msgstr "تاريخ ووقت النتيجة"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_itp_form
+msgid "Rev"
+msgstr "مراجعة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_itp_item__inspection_point__review
+msgid "Review Point"
+msgstr "نقطة مراجعة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__reviewed_by_id
+msgid "Reviewed By"
+msgstr "راجعه"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__revision
+msgid "Revision"
+msgstr "المراجعة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__proposed_disposition__rework
+msgid "Rework"
+msgstr "إعادة العمل"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__root_cause
+msgid "Root Cause"
+msgstr "السبب الجذري"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__root_cause_category
+msgid "Root Cause Category"
+msgstr "فئة السبب الجذري"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "خطأ في إرسال الرسائل النصية القصيرة"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "Say what was done before asking somebody to verify it."
+msgstr "وضح ما تم تنفيذه قبل أن تطلب من أحد التحقق منه."
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_request_form
+msgid "Schedule"
+msgstr "جدولة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__schedule_impact
+msgid "Schedule Impact"
+msgstr "الأثر على الجدول الزمني"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__state__scheduled
+msgid "Scheduled"
+msgstr "مجدول"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template_line__item_type__selection
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_line__item_type__selection
+msgid "Selection"
+msgstr "اختيار"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template_line__selection_values
+msgid "Selection Values"
+msgstr "قيم الاختيار"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template_line__sequence
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__sequence
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp_item__sequence
+msgid "Sequence"
+msgstr "المسلسل"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_quality_observation__ncr_id
+msgid ""
+"Set when this observation was escalated. The observation stays exactly as it"
+" was — escalating is not converting."
+msgstr ""
+"يعين عند تصعيد هذه الملاحظة. تبقى الملاحظة كما هي تمامًا — التصعيد ليس "
+"تحويلًا."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__severity
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__severity
+msgid "Severity"
+msgstr "الشدة"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_request_form
+msgid "Short notice given. Recorded, not blocked."
+msgstr "تم تقديم إشعار قصير. تم تسجيله دون منعه."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection_request__lead_time_shortfall
+msgid "Short notice. Reported rather than blocked — sites work."
+msgstr "إشعار قصير. يتم الإبلاغ عنه بدلًا من منعه — فالمواقع تعمل."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "Short notice: %(hours).1f hours given."
+msgstr "إشعار قصير: تم تقديمه قبل %(hours).1f ساعة."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__source
+msgid "Source"
+msgstr "المصدر"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__source_inspection_id
+msgid "Source Inspection"
+msgstr "التفتيش المصدر"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__source_observation_id
+msgid "Source Observation"
+msgstr "الملاحظة المصدر"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__specification_reference
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp_item__reference
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__specification_reference
+msgid "Specification Reference"
+msgstr "مرجع المواصفات"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__specification_section
+msgid "Specification Section"
+msgstr "بند المواصفات"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_form
+msgid "Start"
+msgstr "البداية"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_request_form
+msgid "Start Inspection"
+msgstr "بدء المعاينة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__state
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__state
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__state
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__state
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__state
+msgid "State"
+msgstr "الحالة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection__activity_state
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection_request__activity_state
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_itp__activity_state
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_ncr__activity_state
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_quality_observation__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الحالة بناءً على الأنشطة\n"
+"متأخرة: تاريخ الاستحقاق قد مضى\n"
+"اليوم: تاريخ النشاط هو اليوم\n"
+"مخطط لها: أنشطة مستقبلية."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__root_cause_category__handling
+msgid "Storage / Handling"
+msgstr "التخزين / المناولة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template__discipline__structural
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__discipline__structural
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__discipline__structural
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_itp__discipline__structural
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__discipline__structural
+msgid "Structural"
+msgstr "إنشائي"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_request_form
+msgid "Subject"
+msgstr "الموضوع"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_itp_form
+msgid "Submit"
+msgstr "إرسال"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__submittal_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__submittal_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__submittal_id
+msgid "Submittal"
+msgstr "مستند مقدم للاعتماد"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_itp_form
+msgid "Supersede"
+msgstr "استبدال"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_itp__state__superseded
+msgid "Superseded"
+msgstr "مستبدل"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__superseded_by_id
+msgid "Superseded By"
+msgstr "استبدل بـ"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__supersedes_id
+msgid "Supersedes"
+msgstr "يحل محل"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__root_cause_category__supervision
+msgid "Supervision"
+msgstr "الإشراف"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__root_cause_category__supplier
+msgid "Supplier"
+msgstr "المورد"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_itp_item__inspection_point__surveillance
+msgid "Surveillance"
+msgstr "مراقبة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__target_completion_date
+msgid "Target Completion Date"
+msgstr "تاريخ الإنجاز المستهدف"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template_line__target_value
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__target_value
+msgid "Target Value"
+msgstr "القيمة المستهدفة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template_line__template_id
+msgid "Template"
+msgstr "القالب"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template__inspection_type__test
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__inspection_type__test
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__inspection_type__test
+msgid "Test"
+msgstr "اختبار"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__source__test
+msgid "Test Result"
+msgstr "نتيجة اختبار"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template_line__item_type__text
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_line__item_type__text
+msgid "Text"
+msgstr "نص"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__text_value
+msgid "Text Value"
+msgstr "القيمة النصية"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_ncr__requirement_violated
+msgid "The clause, drawing note or specification that was not met."
+msgstr "البند أو ملاحظة المخطط أو المواصفة التي لم يتم استيفاؤها."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection__document_revision_id
+msgid ""
+"The exact revision inspected against. It stays this revision when a newer "
+"one is issued."
+msgstr ""
+"المراجعة المحددة التي تم التفتيش على أساسها. تبقى هي نفسها عند إصدار مراجعة "
+"أحدث."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_ncr__document_revision_id
+msgid "The exact revision the requirement comes from."
+msgstr "المراجعة المحددة التي يستند إليها المتطلب."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid ""
+"The person who carried out the corrective work does not verify their own "
+"%(severity)s non-conformance."
+msgstr ""
+"الشخص الذي نفذ الأعمال التصحيحية لا يتحقق من عدم المطابقة %(severity)s "
+"الخاصة به."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection__itp_revision
+msgid ""
+"The plan revision in force when this inspection happened. Recorded, not "
+"looked up, so revising the plan later cannot rewrite what this was measured "
+"against."
+msgstr ""
+"مراجعة الخطة السارية وقت إجراء هذا التفتيش. تسجل ولا يتم جلبها لاحقًا، حتى "
+"لا تغير مراجعة الخطة لاحقًا الأساس الذي قيس عليه هذا التفتيش."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality_wizard.py:0
+msgid "The record is no longer there."
+msgstr "السجل لم يعد موجودًا."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_itp_item__record_required
+msgid "The record this checkpoint produces."
+msgstr "السجل الذي تنتجه نقطة الفحص هذه."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_itp__activity
+msgid "The work this plan governs."
+msgstr "الأعمال التي تحكمها هذه الخطة."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "There is no disposition to approve."
+msgstr "لا توجد معالجة لاعتمادها."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "There is nothing to verify yet."
+msgstr "لا يوجد ما يتم التحقق منه بعد."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "This inspection has already started."
+msgstr "هذا التفتيش قد بدأ بالفعل."
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_inspection_form
+msgid ""
+"This inspection has been recorded. Raise a reinspection rather\n"
+"                        than rewriting what was found."
+msgstr ""
+"تم تسجيل هذا التفتيش. اطلب إعادة تفتيش بدلًا من إعادة كتابة ما تم العثور "
+"عليه."
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_itp_form
+msgid ""
+"This plan is in force. Inspections record the revision they were\n"
+"                        performed against — create a revision rather than editing it."
+msgstr ""
+"هذه الخطة سارية. تسجل عمليات التفتيش المراجعة التي نفذت على أساسها — أنشئ "
+"مراجعة جديدة بدلًا من تعديلها."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "This request is closed."
+msgstr "هذا الطلب مغلق."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__title
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__title
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__title
+msgid "Title"
+msgstr "العنوان"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_itp_item__work_release_required
+msgid ""
+"True for hold points: downstream work needs an accepted inspection before it"
+" may proceed."
+msgstr ""
+"صحيح لنقاط التوقف: الأعمال اللاحقة تحتاج إلى تفتيش مقبول قبل أن تستمر."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection_request__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_itp__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_ncr__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_quality_observation__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع النشاط الاستثنائي في السجل."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__state__under_investigation
+msgid "Under Investigation"
+msgstr "قيد التحقيق"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_itp__state__review
+msgid "Under Review"
+msgstr "قيد المراجعة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__cost_impact__unknown
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__schedule_impact__unknown
+msgid "Unknown"
+msgstr "غير معروف"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid "Unknown inspection result: %s"
+msgstr "نتيجة تفتيش غير معروفة: %s"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_checklist_template_line__uom_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__uom_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__uom_id
+msgid "UoM"
+msgstr "وحدة القياس"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__proposed_disposition__use_as_is
+msgid "Use As Is"
+msgstr "الاستخدام كما هو"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__reinspection_id
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_form
+msgid "Verification Inspection"
+msgstr "تفتيش التحقق"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__verification_method
+msgid "Verification Method"
+msgstr "طريقة التحقق"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__state__verified
+msgid "Verified"
+msgstr "تم التحقق"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__verified_by_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__verified_by_id
+msgid "Verified By"
+msgstr "تم التحقق بواسطة"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__verified_date
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__verified_date
+msgid "Verified Date"
+msgstr "تاريخ التحقق"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_form
+msgid "Verify"
+msgstr "تحقق"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_observation_form
+msgid "Verify & Close"
+msgstr "تحقق وإغلاق"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__state__void
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_quality_observation__state__void
+msgid "Void"
+msgstr "ملغى"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__wbs_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__wbs_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__wbs_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__wbs_id
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__wbs_id
+msgid "WBS"
+msgstr "هيكل تجزئة العمل"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_request__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_ncr__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_quality_observation__website_message_ids
+msgid "Website Messages"
+msgstr "رسائل الموقع الإلكتروني"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection_request__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_itp__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_ncr__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_quality_observation__website_message_ids
+msgid "Website communication history"
+msgstr "سجل التواصل عبر الموقع الإلكتروني"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_observation_form
+msgid "What is wrong"
+msgstr "ما الخطأ"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection_line__disposition
+msgid ""
+"What was done about a failure. A failure with no disposition is a failure "
+"nobody resolved."
+msgstr "ما تم اتخاذه حيال الإخفاق. الإخفاق بلا معالجة هو إخفاق لم يعالجه أحد."
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_observation_form
+msgid "What was done about it"
+msgstr "ما تم اتخاذه حيالها"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_form
+msgid "What was done straight away"
+msgstr "ما تم اتخاذه فورًا"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,help:atmta_construction_quality.field_realestate_construction_inspection_request__required_datetime
+msgid "When the contractor wants the inspection to happen."
+msgstr "الموعد الذي يريد المقاول إجراء التفتيش فيه."
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_form
+msgid "Where"
+msgstr "المكان"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_ncr_form
+msgid "Why it happened"
+msgstr "سبب حدوثه"
+
+#. module: atmta_construction_quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_quality.view_reason_wizard_form
+msgid "Why — this is kept on the record."
+msgstr "السبب — يحفظ هذا في السجل."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_inspection_line__within_tolerance
+msgid "Within Tolerance"
+msgstr "ضمن التفاوت المسموح"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_itp_item__inspection_point__witness
+msgid "Witness Point"
+msgstr "نقطة شهود"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template__inspection_type__work
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection__inspection_type__work
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_request__inspection_type__work
+msgid "Work Inspection"
+msgstr "تفتيش الأعمال"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields,field_description:atmta_construction_quality.field_realestate_construction_itp_item__work_release_required
+msgid "Work Release Required"
+msgstr "يتطلب الإفراج عن الأعمال"
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_ncr__root_cause_category__workmanship
+msgid "Workmanship"
+msgstr "جودة التنفيذ"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality_wizard.py:0
+msgid "Write the reason."
+msgstr "اكتب السبب."
+
+#. module: atmta_construction_quality
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_checklist_template_line__item_type__yes_no
+#: model:ir.model.fields.selection,name:atmta_construction_quality.selection__realestate_construction_inspection_line__item_type__yes_no
+msgid "Yes / No"
+msgstr "نعم / لا"
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid ""
+"%s is no longer open. Only an open observation is sent back for action."
+msgstr "%s لم تعد مفتوحة. لا يُعاد للمعالجة إلا ملاحظة مفتوحة."
+
+#. module: atmta_construction_quality
+#. odoo-python
+#: code:addons/atmta_construction_quality/models/quality.py:0
+msgid ""
+"%s is not being worked on. Only an open observation is put up for "
+"verification."
+msgstr "%s ليست قيد المعالجة. لا تُرفع للتحقق إلا ملاحظة مفتوحة."

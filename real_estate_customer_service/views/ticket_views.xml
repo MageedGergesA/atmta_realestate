@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_ticket_list" model="ir.ui.view">
+        <field name="name">realestate.customer.ticket.list</field>
+        <field name="model">realestate.customer.ticket</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="sla_breached"
+                  decoration-success="state in ('resolved','closed')"
+                  decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="partner_id"/>
+                <field name="property_id" optional="show"/>
+                <field name="project_id" optional="hide"/>
+                <field name="category_id"/>
+                <field name="priority" widget="priority"/>
+                <field name="assignee_id" widget="many2one_avatar_user"/>
+                <field name="sla_deadline"/>
+                <field name="sla_breached" invisible="1"/>
+                <field name="state" widget="badge"
+                       decoration-success="state in ('resolved','closed')"
+                       decoration-warning="state == 'waiting'"
+                       decoration-info="state == 'in_progress'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ticket_kanban" model="ir.ui.view">
+        <field name="name">realestate.customer.ticket.kanban</field>
+        <field name="model">realestate.customer.ticket</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="partner_id"/>
+                <field name="priority"/>
+                <field name="sla_breached"/>
+                <field name="assignee_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click #{record.sla_breached.raw_value ? 'oe_kanban_color_2' : ''}">
+                            <strong><field name="name"/></strong> — <field name="title"/>
+                            <div><field name="partner_id"/></div>
+                            <div>Priority: <field name="priority" widget="priority"/></div>
+                            <div>Assignee: <field name="assignee_id" widget="many2one_avatar_user"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_ticket_form" model="ir.ui.view">
+        <field name="name">realestate.customer.ticket.form</field>
+        <field name="model">realestate.customer.ticket</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_assign" type="object" string="Assign"
+                            invisible="state != 'new'" class="oe_highlight"/>
+                    <button name="action_start" type="object" string="Start Work"
+                            invisible="state not in ('new','assigned','waiting')" class="oe_highlight"/>
+                    <button name="action_wait_customer" type="object" string="Wait Customer"
+                            invisible="state != 'in_progress'"/>
+                    <button name="action_resolve" type="object" string="Resolve"
+                            invisible="state not in ('in_progress','waiting','assigned')" class="oe_highlight"/>
+                    <button name="action_close" type="object" string="Close"
+                            invisible="state != 'resolved'"/>
+                    <button name="action_reopen" type="object" string="Reopen"
+                            invisible="state not in ('resolved','closed')"/>
+                    <field name="material_request_available" invisible="1"/>
+                    <button name="action_create_material_request" type="object"
+                            string="Raise Material Request"
+                            invisible="not material_request_available or state in ('resolved','closed','cancelled')"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state not in ('new','assigned','in_progress','waiting')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="new,assigned,in_progress,resolved,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h2><field name="title" placeholder="One-line summary..."/></h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="property_id"/>
+                            <field name="project_id" readonly="1"/>
+                            <field name="category_id"/>
+                            <field name="priority" widget="priority"/>
+                        </group>
+                        <group>
+                            <field name="assignee_id" widget="many2one_avatar_user"/>
+                            <field name="sla_deadline"/>
+                            <field name="sla_breached" widget="boolean_toggle" readonly="1"/>
+                            <field name="resolved_on" readonly="1"/>
+                            <field name="closed_on" readonly="1"/>
+                            <field name="material_request_id" readonly="1" invisible="not material_request_available"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ticket_search" model="ir.ui.view">
+        <field name="name">realestate.customer.ticket.search</field>
+        <field name="model">realestate.customer.ticket</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="title"/>
+                <field name="partner_id"/>
+                <field name="property_id"/>
+                <field name="project_id"/>
+                <filter name="my_tickets" string="Assigned to Me"
+                        domain="[('assignee_id', '=', uid)]"/>
+                <filter name="sla_breached" string="SLA Breached"
+                        domain="[('sla_breached', '=', True)]"/>
+                <separator/>
+                <filter name="open" string="Open" domain="[('state', 'in', ('new','assigned','in_progress','waiting'))]"/>
+                <filter name="resolved" string="Resolved" domain="[('state', '=', 'resolved')]"/>
+                <filter name="closed" string="Closed" domain="[('state', '=', 'closed')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="g_state" string="State" context="{'group_by': 'state'}"/>
+                    <filter name="g_category" string="Category" context="{'group_by': 'category_id'}"/>
+                    <filter name="g_assignee" string="Assignee" context="{'group_by': 'assignee_id'}"/>
+                    <filter name="g_project" string="Project" context="{'group_by': 'project_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_customer_ticket" model="ir.actions.act_window">
+        <field name="name">Customer Tickets</field>
+        <field name="res_model">realestate.customer.ticket</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="view_ticket_search"/>
+    </record>
+</odoo>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!--
+        Commercial dimension on the project form.
+
+        Added as an inherited view rather than by editing project_views.xml, so
+        the construction-oriented view stays recognisable to anyone who knows
+        the old module, and the commercial layer is visibly a separate concern.
+    -->
+    <record id="view_project_form_commercial" model="ir.ui.view">
+        <field name="name">realestate.project.form.commercial</field>
+        <field name="model">realestate.project</field>
+        <field name="inherit_id" ref="atmta_project_core.view_project_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//header" position="inside">
+                <button name="action_commercial_pre_launch" type="object"
+                        string="Pre-Launch" invisible="commercial_state != 'planning'"/>
+                <button name="action_commercial_start_selling" type="object"
+                        string="Open Sales" class="oe_highlight"
+                        invisible="commercial_state not in ('planning','pre_launch')"/>
+                <button name="action_commercial_sold_out" type="object"
+                        string="Mark Sold Out" invisible="commercial_state != 'selling'"/>
+                <button name="action_commercial_close" type="object"
+                        string="Close Sales"
+                        invisible="commercial_state in ('planning','closed')"/>
+                <field name="commercial_state" widget="statusbar"
+                       statusbar_visible="planning,pre_launch,selling,sold_out,closed"
+                       options="{'clickable': false}"/>
+            </xpath>
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_release_batches" type="object"
+                        class="oe_stat_button" icon="fa-flag-checkered">
+                    <field name="released_unit_count" widget="statinfo"
+                           string="Released"/>
+                </button>
+            </xpath>
+
+            <xpath expr="//notebook" position="inside">
+                <page string="Commercial" name="commercial">
+                    <group>
+                        <group string="Sales Calendar">
+                            <field name="commercial_launch_date"/>
+                            <field name="sales_opening_date"/>
+                            <field name="booking_start_date"/>
+                            <field name="booking_end_date"/>
+                            <field name="expected_handover_date"/>
+                        </group>
+                        <group string="Defaults for New Deals">
+                            <field name="default_hold_duration_hours"/>
+                            <field name="default_booking_fee"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Inventory">
+                        <group>
+                            <field name="released_unit_count"/>
+                            <field name="for_sale_unit_count"/>
+                            <field name="held_unit_count"/>
+                        </group>
+                        <group>
+                            <field name="reserved_commercial_unit_count"/>
+                            <field name="contracted_unit_count"/>
+                            <field name="blocked_unit_count"/>
+                        </group>
+                    </group>
+                    <!--
+                        Sale money, offered to the Developer roles only.
+
+                        Both fields are summed from realestate.sale.contract,
+                        which only this application grants read on. The project
+                        form is shared: Construction opens it from
+                        Construction/Projects, and a site user loading it was
+                        refused the sale contracts behind these two numbers
+                        before the screen finished. The node is offered to
+                        exactly the roles that can read what it shows: the
+                        Read-only role, which every Developer role implies.
+                    -->
+                    <group string="Value" groups="real_estate_developer.group_dev_readonly">
+                        <field name="contracted_value"/>
+                        <field name="contracted_deal_count"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_project_list_commercial" model="ir.ui.view">
+        <field name="name">realestate.project.list.commercial</field>
+        <field name="model">realestate.project</field>
+        <field name="inherit_id" ref="atmta_project_core.view_project_list"/>
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <field name="commercial_state" widget="badge"
+                       decoration-success="commercial_state == 'selling'"
+                       decoration-info="commercial_state == 'pre_launch'"
+                       decoration-muted="commercial_state == 'closed'"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Phase -->
+    <record id="view_phase_form_commercial" model="ir.ui.view">
+        <field name="name">realestate.phase.form.commercial</field>
+        <field name="model">realestate.phase</field>
+        <field name="inherit_id" ref="atmta_project_core.view_phase_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_commercial_start_selling" type="object"
+                        string="Open Sales" class="oe_highlight"
+                        invisible="commercial_state in ('selling','sold_out','closed')"/>
+                <button name="action_commercial_close" type="object"
+                        string="Close Sales"
+                        invisible="commercial_state in ('planning','closed')"/>
+                <field name="commercial_state" widget="statusbar"
+                       statusbar_visible="planning,pre_launch,selling,sold_out,closed"
+                       options="{'clickable': false}"/>
+            </xpath>
+            <xpath expr="//group" position="after">
+                <group string="Commercial">
+                    <group>
+                        <field name="sales_launch_date"/>
+                        <field name="target_sales_value"/>
+                        <field name="currency_id" invisible="1"/>
+                    </group>
+                    <group string="Overrides (empty = inherit project)">
+                        <field name="hold_duration_hours"
+                               placeholder="Inherits the project's default"/>
+                        <field name="booking_fee"
+                               placeholder="Inherits the project's default"/>
+                    </group>
+                </group>
+                <group string="Inventory">
+                    <field name="released_unit_count"/>
+                    <field name="for_sale_unit_count"/>
+                    <field name="contracted_unit_count"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Property: the authoritative sale-availability answer, with its reason -->
+    <record id="view_property_form_sale_availability" model="ir.ui.view">
+        <field name="name">realestate.property.form.sale.availability</field>
+        <field name="model">realestate.property</field>
+        <field name="inherit_id" ref="real_estate_developer.view_property_form_inherit_developer"/>
+        <field name="arch" type="xml">
+            <field name="base_price" position="after">
+                <field name="is_released_for_sale" readonly="1"/>
+                <field name="is_available_for_sale" readonly="1"/>
+                <field name="sale_unavailable_reason" readonly="1"
+                       invisible="is_available_for_sale"/>
+                <field name="active_block_id" readonly="1"
+                       invisible="not active_block_id"/>
+                <field name="is_contracted" readonly="1" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

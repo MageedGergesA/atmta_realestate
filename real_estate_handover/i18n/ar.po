@@ -1,0 +1,1229 @@
+# Translation of Odoo Server.
+# This file contains the Arabic translation of the following modules:
+# 	* real_estate_handover
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:14+0000\n"
+"PO-Revision-Date: 2026-09-17 10:14+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "100% Ready"
+msgstr "جاهزة 100%"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__message_needaction
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__message_needaction
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__message_needaction
+msgid "Action Needed"
+msgstr "إجراء مطلوب"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_template__active
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_warranty__state__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "Active Warranties"
+msgstr "الضمانات السارية"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__activity_ids
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__activity_ids
+msgid "Activities"
+msgstr "الأنشطة"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__activity_exception_decoration
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "زخرفة استثناء النشاط"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__activity_state
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__activity_type_icon
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
+
+#. module: real_estate_handover
+#. odoo-python
+#: code:addons/real_estate_handover/models/handover.py:0
+msgid "All checklist items must be completed or skipped before completion."
+msgstr "يجب إكمال جميع بنود قائمة التحقق أو تخطيها قبل الإكمال."
+
+#. module: real_estate_handover
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_snagging_form
+msgid "Assign"
+msgstr "تكليف"
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_snagging_issue__state__assigned
+msgid "Assigned"
+msgstr "مكلف"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__contractor_id
+msgid "Assigned Contractor"
+msgstr "المقاول المكلف"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__message_attachment_count
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__message_attachment_count
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "Auto OFF"
+msgstr "التلقائي متوقف"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "Auto ON"
+msgstr "التلقائي مفعل"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "Avg Readiness"
+msgstr "متوسط الجاهزية"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__partner_id
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__partner_id
+msgid "Buyer"
+msgstr "مسؤول الشراء"
+
+#. module: real_estate_handover
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_handover_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_handover__state__cancelled
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_warranty__state__cancelled
+msgid "Cancelled"
+msgstr "ملغى"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_item__category
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_template_item__category
+msgid "Category"
+msgstr "الفئة"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__checklist_item_ids
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_handover_form
+msgid "Checklist"
+msgstr "قائمة التحقق"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__checklist_progress
+msgid "Checklist Complete (%)"
+msgstr "اكتمال قائمة التحقق (%)"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__checklist_done_count
+msgid "Checklist Done Count"
+msgstr "عدد البنود المنجزة في قائمة التحقق"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__template_id
+msgid "Checklist Template"
+msgstr "قالب قائمة التحقق"
+
+#. module: real_estate_handover
+#: model:ir.actions.act_window,name:real_estate_handover.action_template
+#: model:ir.ui.menu,name:real_estate_handover.menu_handover_templates
+msgid "Checklist Templates"
+msgstr "قوالب قوائم التحقق"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__checklist_total_count
+msgid "Checklist Total Count"
+msgstr "إجمالي بنود قائمة التحقق"
+
+#. module: real_estate_handover
+#. odoo-python
+#: code:addons/real_estate_handover/models/handover.py:0
+msgid "Checklist already populated. Clear it manually before reloading."
+msgstr "قائمة التحقق معبأة بالفعل. امسحها يدويًا قبل إعادة التحميل."
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "Checklist:"
+msgstr "قائمة التحقق:"
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_handover_checklist_item__category__cleaning
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_handover_checklist_template_item__category__cleaning
+msgid "Cleaning"
+msgstr "التنظيف"
+
+#. module: real_estate_handover
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_handover_form
+msgid "Complete Handover"
+msgstr "إكمال التسليم"
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_handover__state__completed
+msgid "Completed"
+msgstr "مكتمل"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_item__completed_at
+msgid "Completed At"
+msgstr "تاريخ الإكمال"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_item__completed_by_id
+msgid "Completed By"
+msgstr "أكملها"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "Completed MTD"
+msgstr "المكتمل منذ بداية الشهر"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__actual_date
+msgid "Completed On"
+msgstr "تاريخ الإنجاز"
+
+#. module: real_estate_handover
+#: model:ir.ui.menu,name:real_estate_handover.menu_handover_config
+msgid "Configuration"
+msgstr "الإعدادات"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_property__ready_to_deliver
+msgid ""
+"Construction is physically complete and the unit can begin the handover "
+"process."
+msgstr "اكتمل البناء فعليًا ويمكن بدء إجراءات تسليم الوحدة."
+
+#. module: real_estate_handover
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_warranty_form
+msgid "Coverage"
+msgstr "التغطية"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__create_uid
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_item__create_uid
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_template__create_uid
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_template_item__create_uid
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__create_uid
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__create_date
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_item__create_date
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_template__create_date
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_template_item__create_date
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__create_date
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_snagging_issue__severity__critical
+msgid "Critical"
+msgstr "حرجة"
+
+#. module: real_estate_handover
+#: model:ir.ui.menu,name:real_estate_handover.menu_handover_dashboard
+msgid "Dashboard"
+msgstr "لوحة المعلومات"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_item__description
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_template__description
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_template_item__description
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__description
+msgid "Description"
+msgstr "الوصف"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__display_name
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_item__display_name
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_template__display_name
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_template_item__display_name
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__display_name
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_handover_checklist_item__category__documents
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_handover_checklist_template_item__category__documents
+msgid "Documents"
+msgstr "المستندات"
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_handover_checklist_item__status__done
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_handover_form
+msgid "Done"
+msgstr "منجز"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_snagging_issue__location_on_unit
+msgid "E.g. Master bathroom, Living room ceiling"
+msgstr "مثال: الحمام الرئيسي، سقف غرفة المعيشة"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__end_date
+msgid "End Date"
+msgstr "تاريخ النهاية"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__exclusion_notes
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_warranty_form
+msgid "Exclusions"
+msgstr "الاستثناءات"
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_warranty__state__expired
+msgid "Expired"
+msgstr "منتهي"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "Expires"
+msgstr "ينتهي"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "Expiring Warranties (30d)"
+msgstr "الضمانات القاربة على الانتهاء (30 يومًا)"
+
+#. module: real_estate_handover
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_handover_form
+msgid "Fail"
+msgstr "فشل"
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_handover_checklist_item__status__failed
+msgid "Failed"
+msgstr "لم يجتز"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_property__readiness_finishing
+msgid "Finishing %"
+msgstr "التشطيبات %"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__message_follower_ids
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__message_follower_ids
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__message_partner_ids
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__message_partner_ids
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_handover__activity_type_icon
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_snagging_issue__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "أيقونة Font Awesome، مثل fa-tasks"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_item__handover_id
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__handover_id
+#: model:ir.ui.menu,name:real_estate_handover.menu_handover_root
+msgid "Handover"
+msgstr "التسليم"
+
+#. module: real_estate_handover
+#: model:ir.model,name:real_estate_handover.model_realestate_handover_checklist_item
+msgid "Handover Checklist Item"
+msgstr "بند قائمة تحقق التسليم"
+
+#. module: real_estate_handover
+#: model:ir.model,name:real_estate_handover.model_realestate_handover_checklist_template
+msgid "Handover Checklist Template"
+msgstr "قالب قائمة تحقق التسليم"
+
+#. module: real_estate_handover
+#: model:ir.model,name:real_estate_handover.model_realestate_handover_checklist_template_item
+msgid "Handover Checklist Template Item"
+msgstr "بند قالب قائمة تحقق التسليم"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_property__handover_count
+msgid "Handover Count"
+msgstr "عدد عمليات التسليم"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+#: model:ir.actions.client,name:real_estate_handover.action_handover_dashboard
+msgid "Handover Dashboard"
+msgstr "لوحة معلومات التسليم"
+
+#. module: real_estate_handover
+#: model:ir.model,name:real_estate_handover.model_realestate_handover_dashboard
+msgid "Handover Dashboard data provider"
+msgstr "مزود بيانات لوحة معلومات التسليم"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "Handover Properties — colored by readiness"
+msgstr "عقارات التسليم — ملونة حسب الجاهزية"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "Handover States"
+msgstr "حالات التسليم"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "Handover Trend (6 mo)"
+msgstr "اتجاه التسليم (6 أشهر)"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_property__ready_to_move
+msgid "Handover has been completed: occupant can move in immediately."
+msgstr "اكتمل التسليم: يمكن للساكن الانتقال فورًا."
+
+#. module: real_estate_handover
+#: model:ir.actions.server,name:real_estate_handover.cron_warranty_state_ir_actions_server
+msgid "Handover: Update warranty states"
+msgstr "التسليم: تحديث حالات الضمان"
+
+#. module: real_estate_handover
+#: model:ir.actions.act_window,name:real_estate_handover.action_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_property__handover_ids
+#: model:ir.ui.menu,name:real_estate_handover.menu_handovers
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_property_form_inherit_handover
+msgid "Handovers"
+msgstr "عمليات التسليم"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__has_message
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__has_message
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__has_message
+msgid "Has Message"
+msgstr "يحتوي على رسالة"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__id
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_item__id
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_template__id
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_template_item__id
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__id
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__activity_exception_icon
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__activity_exception_icon
+msgid "Icon"
+msgstr "الأيقونة"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_handover__activity_exception_icon
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_snagging_issue__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "أيقونة للإشارة إلى نشاط استثنائي."
+
+#. module: real_estate_handover
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_handover__message_needaction
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_snagging_issue__message_needaction
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_warranty__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا كان محددًا، فهناك رسائل جديدة تتطلب انتباهك."
+
+#. module: real_estate_handover
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_handover__message_has_error
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_handover__message_has_sms_error
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_snagging_issue__message_has_error
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_snagging_issue__message_has_sms_error
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_warranty__message_has_error
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_warranty__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا كان محددًا، فبعض الرسائل بها خطأ في التسليم."
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_handover__state__inspection
+msgid "In Inspection"
+msgstr "قيد المعاينة"
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_snagging_issue__state__in_progress
+msgid "In Progress"
+msgstr "قيد التنفيذ"
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_handover_checklist_item__category__inspection
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_handover_checklist_template_item__category__inspection
+msgid "Inspection"
+msgstr "المعاينة"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_property__readiness_inspection
+msgid "Inspection %"
+msgstr "المعاينة %"
+
+#. module: real_estate_handover
+#. odoo-python
+#: code:addons/real_estate_handover/models/handover.py:0
+msgid "Inspection can only start from a Scheduled handover."
+msgstr "لا يمكن بدء المعاينة إلا من تسليم مجدول."
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__message_is_follower
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__message_is_follower
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_item__name
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_template_item__name
+msgid "Item"
+msgstr "البند"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_template__item_ids
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_template_form
+msgid "Items"
+msgstr "البنود"
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_handover_checklist_item__category__keys
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_handover_checklist_template_item__category__keys
+msgid "Keys"
+msgstr "المفاتيح"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__write_uid
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_item__write_uid
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_template__write_uid
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_template_item__write_uid
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__write_uid
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__write_date
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_item__write_date
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_template__write_date
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_template_item__write_date
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__write_date
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "Last update:"
+msgstr "آخر تحديث:"
+
+#. module: real_estate_handover
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_handover_form
+msgid "Load Template Items"
+msgstr "تحميل بنود القالب"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__location_on_unit
+msgid "Location on Unit"
+msgstr "الموقع داخل الوحدة"
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_snagging_issue__severity__major
+msgid "Major"
+msgstr "رئيسية"
+
+#. module: real_estate_handover
+#: model:res.groups,name:real_estate_handover.group_handover_manager
+msgid "Manager"
+msgstr "المدير"
+
+#. module: real_estate_handover
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_snagging_form
+msgid "Mark Resolved"
+msgstr "تحديد كمحلول"
+
+#. module: real_estate_handover
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_handover_form
+msgid "Mark Snagging"
+msgstr "تحديد ملاحظات الاستلام"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__message_has_error
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__message_has_error
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__message_ids
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__message_ids
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_snagging_issue__severity__minor
+msgid "Minor"
+msgstr "ثانوية"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__my_activity_date_deadline
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "موعد نشاطي النهائي"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_template__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: real_estate_handover
+#. odoo-python
+#: code:addons/real_estate_handover/models/handover.py:0
+#: code:addons/real_estate_handover/models/snagging_issue.py:0
+#: code:addons/real_estate_handover/models/warranty.py:0
+msgid "New"
+msgstr "جديد"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__activity_calendar_event_id
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "حدث التقويم للنشاط التالي"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__activity_date_deadline
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__activity_summary
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__activity_type_id
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "No open snags. 🎉"
+msgstr "لا توجد ملاحظات استلام مفتوحة. 🎉"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "None expiring soon"
+msgstr "لا شيء قارب على الانتهاء"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "None scheduled"
+msgstr "لا شيء مجدول"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__notes
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_item__notes
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__notes
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_handover_form
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_snagging_form
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__message_needaction_counter
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__message_needaction_counter
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__message_has_error_counter
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__message_has_error_counter
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_handover__message_needaction_counter
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_snagging_issue__message_needaction_counter
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_warranty__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراء"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_handover__message_has_error_counter
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_snagging_issue__message_has_error_counter
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_warranty__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي بها خطأ في التسليم"
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_snagging_issue__state__open
+msgid "Open"
+msgstr "فتح"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "Open Snagging"
+msgstr "ملاحظات الاستلام المفتوحة"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__open_snagging_count
+msgid "Open Snagging Count"
+msgstr "عدد ملاحظات الاستلام المفتوحة"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "Open Snagging by Severity"
+msgstr "ملاحظات الاستلام المفتوحة حسب الخطورة"
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_handover_checklist_item__category__other
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_handover_checklist_template_item__category__other
+msgid "Other"
+msgstr "أخرى"
+
+#. module: real_estate_handover
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_property_form_inherit_handover
+msgid "Overall"
+msgstr "الإجمالي"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_property__readiness_overall
+msgid "Overall Readiness %"
+msgstr "الجاهزية الإجمالية %"
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_handover_checklist_item__status__pending
+msgid "Pending"
+msgstr "معلق"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__period_months
+msgid "Period Months"
+msgstr "المدة بالأشهر"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__phase_id
+msgid "Phase"
+msgstr "المرحلة"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__photo
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_snagging_form
+msgid "Photo"
+msgstr "الصورة"
+
+#. module: real_estate_handover
+#. odoo-python
+#: code:addons/real_estate_handover/models/handover.py:0
+msgid "Pick a checklist template first."
+msgstr "اختر قالب قائمة التحقق أولًا."
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__project_id
+msgid "Project"
+msgstr "المشروع"
+
+#. module: real_estate_handover
+#: model:ir.model,name:real_estate_handover.model_realestate_handover
+msgid "Property Handover"
+msgstr "تسليم العقار"
+
+#. module: real_estate_handover
+#: model:ir.model,name:real_estate_handover.model_realestate_warranty
+msgid "Property Warranty"
+msgstr "ضمان العقار"
+
+#. module: real_estate_handover
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_property_form_inherit_handover
+msgid "Readiness & Handover"
+msgstr "الجاهزية والتسليم"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "Readiness Distribution"
+msgstr "توزيع الجاهزية"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_property__handover_ready
+msgid "Ready for Handover"
+msgstr "جاهزة للتسليم"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_property__ready_to_deliver
+msgid "Ready to Deliver"
+msgstr "جاهزة للتسليم"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_property__ready_to_move
+msgid "Ready to Move"
+msgstr "جاهزة للسكن"
+
+#. module: real_estate_handover
+#: model:ir.module.category,name:real_estate_handover.module_category_handover
+msgid "Real Estate Handover"
+msgstr "تسليم العقارات"
+
+#. module: real_estate_handover
+#: model:ir.model,name:real_estate_handover.model_realestate_property
+msgid "Real Estate Property"
+msgstr "عقار"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__name
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__name
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__name
+msgid "Reference"
+msgstr "المرجع"
+
+#. module: real_estate_handover
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_snagging_form
+msgid "Reject"
+msgstr "رفض"
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_snagging_issue__state__rejected
+msgid "Rejected"
+msgstr "مرفوض"
+
+#. module: real_estate_handover
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_snagging_form
+msgid "Reopen"
+msgstr "إعادة فتح"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__reported_date
+msgid "Reported Date"
+msgstr "تاريخ الإبلاغ"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__reporter_id
+msgid "Reporter"
+msgstr "مقدم البلاغ"
+
+#. module: real_estate_handover
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_handover_form
+msgid "Reset"
+msgstr "إعادة تعيين"
+
+#. module: real_estate_handover
+#. odoo-python
+#: code:addons/real_estate_handover/models/handover.py:0
+msgid "Resolve all open snagging issues before completing the handover."
+msgstr "يجب حل جميع ملاحظات الاستلام المفتوحة قبل إكمال التسليم."
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_snagging_issue__state__resolved
+msgid "Resolved"
+msgstr "تمت المعالجة"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__resolved_date
+msgid "Resolved Date"
+msgstr "تاريخ الحل"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__activity_user_id
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__message_has_sms_error
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__message_has_sms_error
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "خطأ في إرسال الرسائل النصية القصيرة"
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_handover_checklist_item__category__safety
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_handover_checklist_template_item__category__safety
+msgid "Safety"
+msgstr "السلامة"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__sale_contract_id
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__sale_contract_id
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__sale_contract_id
+msgid "Sale Contract"
+msgstr "عقد البيع"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__scheduled_date
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_handover__state__scheduled
+msgid "Scheduled"
+msgstr "مجدول"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "Scheduled (week)"
+msgstr "المجدول (الأسبوع)"
+
+#. module: real_estate_handover
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_handover_kanban
+msgid "Scheduled:"
+msgstr "مجدول:"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_item__sequence
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_template_item__sequence
+msgid "Sequence"
+msgstr "المسلسل"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__severity
+msgid "Severity"
+msgstr "الشدة"
+
+#. module: real_estate_handover
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_handover_form
+msgid "Skip"
+msgstr "تخطي"
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_handover_checklist_item__status__skipped
+msgid "Skipped"
+msgstr "تم التخطي"
+
+#. module: real_estate_handover
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_handover_form
+msgid "Snagging"
+msgstr "حصر الملاحظات"
+
+#. module: real_estate_handover
+#: model:ir.model,name:real_estate_handover.model_realestate_snagging_issue
+msgid "Snagging / Defect Issue"
+msgstr "ملاحظة استلام / عيب"
+
+#. module: real_estate_handover
+#: model:ir.actions.act_window,name:real_estate_handover.action_snagging
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__snagging_issue_ids
+#: model:ir.ui.menu,name:real_estate_handover.menu_snagging
+msgid "Snagging Issues"
+msgstr "ملاحظات الاستلام"
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_handover__state__snagging
+msgid "Snagging Open"
+msgstr "ملاحظات الاستلام مفتوحة"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "Snagging States"
+msgstr "حالات ملاحظات الاستلام"
+
+#. module: real_estate_handover
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_snagging_form
+msgid "Start"
+msgstr "البداية"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__start_date
+msgid "Start Date"
+msgstr "تاريخ البداية"
+
+#. module: real_estate_handover
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_handover_form
+msgid "Start Inspection"
+msgstr "بدء المعاينة"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__state
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__state
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__state
+msgid "State"
+msgstr "الحالة"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_item__status
+msgid "Status"
+msgstr "الحالة"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_handover__activity_state
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_snagging_issue__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الحالة بناءً على الأنشطة\n"
+"متأخرة: تاريخ الاستحقاق قد مضى\n"
+"اليوم: تاريخ النشاط هو اليوم\n"
+"مخطط لها: أنشطة مستقبلية."
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_property__readiness_structural
+msgid "Structural %"
+msgstr "الهيكل الإنشائي %"
+
+#. module: real_estate_handover
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_property_form_inherit_handover
+msgid "Sub-scores"
+msgstr "الدرجات الفرعية"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__target_resolution_date
+msgid "Target Resolution Date"
+msgstr "تاريخ الحل المستهدف"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover_checklist_template_item__template_id
+msgid "Template"
+msgstr "القالب"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__total_snagging_count
+msgid "Total Snagging Count"
+msgstr "إجمالي ملاحظات الاستلام"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_property__handover_ready
+msgid "True when all readiness dimensions are at 100%."
+msgstr "صحيح عندما تكون جميع أبعاد الجاهزية عند 100%."
+
+#. module: real_estate_handover
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_handover__activity_exception_decoration
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_snagging_issue__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع النشاط الاستثنائي في السجل."
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__property_id
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__property_id
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__property_id
+msgid "Unit"
+msgstr "الوحدة"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "Upcoming Handovers"
+msgstr "عمليات التسليم القادمة"
+
+#. module: real_estate_handover
+#: model:res.groups,name:real_estate_handover.group_handover_user
+msgid "User"
+msgstr "المستخدم"
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_handover_checklist_item__category__utilities
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_handover_checklist_template_item__category__utilities
+msgid "Utilities"
+msgstr "الخدمات"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_property__readiness_utilities
+msgid "Utilities %"
+msgstr "الخدمات %"
+
+#. module: real_estate_handover
+#: model:ir.model.fields.selection,name:real_estate_handover.selection__realestate_snagging_issue__state__verified
+msgid "Verified"
+msgstr "تم التحقق"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__verified_date
+msgid "Verified Date"
+msgstr "تاريخ التحقق"
+
+#. module: real_estate_handover
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_snagging_form
+msgid "Verify Fix"
+msgstr "التحقق من الإصلاح"
+
+#. module: real_estate_handover
+#: model:ir.actions.act_window,name:real_estate_handover.action_warranty
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_property__warranty_ids
+#: model:ir.ui.menu,name:real_estate_handover.menu_warranties
+msgid "Warranties"
+msgstr "الضمانات"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__warranty_id
+msgid "Warranty"
+msgstr "الضمان"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__warranty_period_months
+msgid "Warranty Period (months)"
+msgstr "مدة الضمان (بالأشهر)"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_handover__website_message_ids
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__website_message_ids
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__website_message_ids
+msgid "Website Messages"
+msgstr "رسائل الموقع الإلكتروني"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_handover__website_message_ids
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_snagging_issue__website_message_ids
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_warranty__website_message_ids
+msgid "Website communication history"
+msgstr "سجل التواصل عبر الموقع الإلكتروني"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_warranty__coverage_notes
+msgid "What’s Covered"
+msgstr "ما يشمله الضمان"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "critical"
+msgstr "حرجة"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "expiring 30d"
+msgstr "تنتهي خلال 30 يومًا"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "handovers"
+msgstr "عمليات تسليم"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "in inspection / snagging"
+msgstr "قيد المعاينة / ملاحظات الاستلام"
+
+#. module: real_estate_handover
+#: model_terms:ir.ui.view,arch_db:real_estate_handover.view_handover_kanban
+msgid "open snags"
+msgstr "ملاحظات استلام مفتوحة"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "ready to move"
+msgstr "جاهزة للسكن"
+
+#. module: real_estate_handover
+#. odoo-javascript
+#: code:addons/real_estate_handover/static/src/xml/handover_dashboard.xml:0
+msgid "total"
+msgstr "الإجمالي"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,help:real_estate_handover.field_realestate_snagging_issue__severity_rank
+msgid "1 = minor, 2 = major, 3 = critical. Used to sort worst first."
+msgstr "1 = بسيط، 2 = كبير، 3 = حرج. يُستخدم لترتيب الأسوأ أولاً."
+
+#. module: real_estate_handover
+#. odoo-python
+#: code:addons/real_estate_handover/models/handover.py:0
+msgid "A completed or cancelled handover cannot be cancelled."
+msgstr "لا يمكن إلغاء تسليم مكتمل أو ملغى."
+
+#. module: real_estate_handover
+#. odoo-python
+#: code:addons/real_estate_handover/models/handover.py:0
+msgid "A handover can only be completed after inspection."
+msgstr "لا يمكن إتمام التسليم إلا بعد المعاينة."
+
+#. module: real_estate_handover
+#. odoo-python
+#: code:addons/real_estate_handover/models/handover.py:0
+msgid ""
+"Contract %(contract)s is %(state)s. A handover can only be scheduled for a "
+"signed, active or financially cleared contract."
+msgstr "العقد %(contract)s في حالة %(state)s. لا يمكن جدولة التسليم إلا لعقد موقَّع أو نشط أو مخالص مالياً."
+
+#. module: real_estate_handover
+#. odoo-python
+#: code:addons/real_estate_handover/models/handover.py:0
+msgid ""
+"Contract %s already has a handover. Cancel it before scheduling another."
+msgstr "العقد %s له تسليم بالفعل. ألغه قبل جدولة تسليم آخر."
+
+#. module: real_estate_handover
+#. odoo-python
+#: code:addons/real_estate_handover/models/handover.py:0
+msgid ""
+"Every snagging issue must be verified before completing the handover. Not "
+"verified: %s"
+msgstr "يجب التحقق من كل ملاحظة معاينة قبل إتمام التسليم. غير المتحقق منها: %s"
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_property__handover_event_ids
+msgid "Handover Events"
+msgstr "أحداث التسليم"
+
+#. module: real_estate_handover
+#. odoo-python
+#: code:addons/real_estate_handover/models/snagging_issue.py:0
+msgid "Only a resolved issue's fix can be rejected."
+msgstr "لا يمكن رفض المعالجة إلا لملاحظة تم حلها."
+
+#. module: real_estate_handover
+#: model:ir.model.fields,field_description:real_estate_handover.field_realestate_snagging_issue__severity_rank
+msgid "Severity Rank"
+msgstr "ترتيب الخطورة"
+
+#. module: real_estate_handover
+#. odoo-python
+#: code:addons/real_estate_handover/models/handover.py:0
+msgid "Snagging can only be marked during inspection."
+msgstr "لا يمكن تسجيل ملاحظات المعاينة إلا أثناء المعاينة."

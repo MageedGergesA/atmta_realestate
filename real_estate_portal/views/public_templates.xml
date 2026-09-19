@@ -61,6 +61,7 @@
         <t t-call="website.layout">
             <div class="o_re_public_root o_re_public_project"
                  t-att-data-project-id="project.id"
+                 t-att-data-visual-grant="visual_grant_token"
                  t-att-data-has-2d="'1' if has_2d_entry else '0'"
                  t-att-data-has-3d="'1' if project.has_maquette else '0'">
 
@@ -134,6 +135,7 @@
                                  class="tab-pane fade show active" id="tab2d" role="tabpanel">
                                 <div class="o_re_portal_2d_mount h-100"
                                      t-att-data-project-id="project.id"
+                                     t-att-data-visual-grant="visual_grant_token"
                                      style="min-height:600px;">
                                     <div class="d-flex align-items-center justify-content-center h-100 text-muted">
                                         <i class="fa fa-spinner fa-spin me-2"/> Loading 2D plan…
@@ -145,6 +147,7 @@
                                  id="tab3d" role="tabpanel">
                                 <div class="o_re_portal_3d_mount h-100"
                                      t-att-data-project-id="project.id"
+                                     t-att-data-visual-grant="visual_grant_token"
                                      style="min-height:600px;">
                                     <div class="d-flex align-items-center justify-content-center h-100 text-muted">
                                         <i class="fa fa-spinner fa-spin me-2"/> Loading 3D maquette…

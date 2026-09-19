@@ -12,14 +12,14 @@
 
                     <group string="Select Sections to Include" col="2">
                         <!-- Contract Parties -->
-                        <group string="Contract Parties" col="2">
+                        <group string="Lease Parties" col="2">
                             <field name="lessor_data"/>
                             <field name="tenant_data"/>
                             <field name="tenant_representative_data"/>
                         </group>
 
                         <!-- Contract & Documents -->
-                        <group string="Contract &amp; Documents" col="2">
+                        <group string="Lease &amp; Documents" col="2">
                             <field name="contract_data"/>
                             <field name="ownership_doc_data"/>
                         </group>
@@ -59,7 +59,7 @@
     </record>
 
     <record id="real_estate_contract_wiz_action" model="ir.actions.act_window">
-        <field name="name">Customize Contract Report</field>
+        <field name="name">Customize Lease Report</field>
         <field name="res_model">realestate.contracts.wizard</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>

@@ -134,10 +134,16 @@ class CommercialAnalysis(models.Model):
                     "%s is finalised. Its commercial basis cannot be "
                     "recalculated.") % round_.name)
             plan = round_.plan_id
-            bid = candidate.bid_response_id
+            # The submitted bid and the tender dates are read as the system.
+            # Normalising is authorised by `action_normalise`'s own group check
+            # (Commercial Evaluator, Evaluation Manager, Procurement Manager);
+            # none of those roles is granted the bid register or the sourcing
+            # event, and they should not need to be to apply a frozen basis
+            # to offers already in the round. Nothing is written back to M5.
+            bid = candidate.sudo().bid_response_id
             source = bid.currency_id
             target = plan.evaluation_currency_id
-            date = plan.rate_date_for()
+            date = plan.sudo().rate_date_for()
 
             rate = analysis._rate_for(source, target, date)
             converted = target.round((bid.amount_untaxed or 0.0) * rate)
@@ -211,7 +217,8 @@ class CommercialAnalysis(models.Model):
         self.leveling_line_ids.sudo().unlink()
         rate = self.rate_used or 1.0
         target = self.evaluation_currency_id
-        for bid_line in self.bid_response_id.line_ids:
+        # Read as the system for the reason given in `_normalise`.
+        for bid_line in self.sudo().bid_response_id.line_ids:
             Line.create({
                 'analysis_id': self.id,
                 'bid_line_id': bid_line.id,
@@ -340,8 +347,37 @@ class CommercialAdjustment(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         adjustments = super().create(vals_list)
+        # The same refusal `action_add_adjustment` makes, here too: the
+        # analysis form adds adjustments by creating them directly, and the
+        # cost is recomputed through the engine, past the analysis's own
+        # finalised guard.
+        adjustments._assert_round_open()
         adjustments.mapped('analysis_id')._recompute_cost()
         return adjustments
+
+    def write(self, vals):
+        self._assert_round_open()
+        # An approval covers an amount. Changing the amount or the kind of
+        # adjustment after it was approved would carry the approval over to a
+        # figure nobody reviewed.
+        if {'amount', 'adjustment_type', 'analysis_id'} & set(vals):
+            approved = self.filtered('approved_by_id')
+            if approved:
+                raise UserError(_(
+                    "%s is approved. Remove it and enter a new adjustment "
+                    "instead, so the new figure is reviewed too.")
+                    % ', '.join(approved.mapped('rationale')))
+        res = super().write(vals)
+        self.mapped('analysis_id')._recompute_cost()
+        return res
+
+    def _assert_round_open(self):
+        for adjustment in self:
+            if adjustment.analysis_id.round_id.state == 'finalised':
+                raise UserError(_(
+                    "%s is finalised; its commercial adjustments were settled "
+                    "before the ranking was struck.")
+                    % adjustment.analysis_id.round_id.name)
 
 
 class LevelingLine(models.Model):

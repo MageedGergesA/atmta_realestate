@@ -10,12 +10,18 @@ class BuildingRegion(models.Model):
     stored as percentages of the image so they survive any display size."""
     _name = 'realestate.building.region'
     _description = '2D Master Plan Building Region'
+
     _order = 'project_id, sequence, id'
 
     sequence = fields.Integer(default=10)
     project_id = fields.Many2one(
         'realestate.project', required=True, ondelete='cascade', index=True,
     )
+    company_id = fields.Many2one(
+        related='project_id.company_id', store=True, index=True, readonly=True,
+        help="Stored related, so a region can never disagree with the project "
+             "it is drawn on. Phase 0 found no company field on any visual "
+             "model and no record rule anywhere.")
     property_id = fields.Many2one(
         'realestate.property', string='Property',
         required=True, ondelete='cascade',
@@ -55,22 +61,50 @@ class BuildingRegion(models.Model):
                     raise ValidationError(_(
                         "Vertex coordinates must be percentages in [0, 100]."))
 
-    def name_get(self):
-        return [(r.id, r.label or (r.property_id.display_name or _('Region %s') % r.id))
-                for r in self]
+    @api.constrains('project_id', 'property_id')
+    def _check_property_project(self):
+        """A region may only point at a property of its own project, or at one
+        that has no project yet (which it then adopts).
+
+        Pinning a building that already belongs to another project used to
+        rewrite that building's project — and all its units' — so drawing a
+        polygon on one master plan silently took inventory away from another
+        project."""
+        for rec in self:
+            prop = rec.property_id
+            if prop and prop.project_id and prop.project_id != rec.project_id:
+                raise ValidationError(_(
+                    "%(property)s belongs to project %(other)s and cannot be "
+                    "pinned on the master plan of %(project)s.",
+                    property=prop.display_name,
+                    other=prop.project_id.display_name,
+                    project=rec.project_id.display_name))
+
+    @api.depends('label', 'property_id.display_name')
+    def _compute_display_name(self):
+        # `name_get` is no longer consulted in Odoo 18; without this the
+        # region read "realestate.building.region,7" everywhere it was shown.
+        for rec in self:
+            rec.display_name = (
+                rec.label or rec.property_id.display_name
+                or _('Region %s', rec.id))
 
     def _sync_property_project(self):
-        """When a region links a property that has no project yet (or a
-        different one), attach the property — and its descendants — to this
-        project. That's how the project's Properties / hierarchy starts
-        showing the buildings the user pinned on the master plan."""
+        """When a region links a property that has no project yet, attach the
+        property — and those of its descendants that have no project either —
+        to this project. That's how the project's Properties / hierarchy
+        starts showing the buildings the user pinned on the master plan.
+
+        Only project-less properties are adopted: a property that already
+        belongs to a project is that project's inventory, and moving it is
+        not a side effect a polygon may have."""
         for rec in self:
             if not rec.property_id or not rec.project_id:
                 continue
             family = self.env['realestate.property'].search([
                 ('id', 'child_of', rec.property_id.id),
             ])
-            to_link = family.filtered(lambda p: p.project_id != rec.project_id)
+            to_link = family.filtered(lambda p: not p.project_id)
             if to_link:
                 to_link.write({'project_id': rec.project_id.id})
 
@@ -79,7 +113,7 @@ class BuildingRegion(models.Model):
         """One-time data fix for regions created before the auto-sync hook
         existed. Idempotent — safe to call on every upgrade."""
         self.search([]).filtered(
-            lambda r: r.property_id and r.property_id.project_id != r.project_id
+            lambda r: r.property_id and not r.property_id.project_id
         )._sync_property_project()
 
     @api.model_create_multi

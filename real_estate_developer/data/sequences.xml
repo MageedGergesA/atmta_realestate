@@ -19,4 +19,25 @@
         <field name="padding">5</field>
     </record>
 
+    <record id="seq_realestate_release_batch" model="ir.sequence">
+        <field name="name">Unit Release Batch</field>
+        <field name="code">realestate.unit.release.batch</field>
+        <field name="prefix">REL-</field>
+        <field name="padding">5</field>
+    </record>
+
+    <record id="seq_commercial_approval_request" model="ir.sequence">
+        <field name="name">Commercial Approval Request</field>
+        <field name="code">realestate.commercial.approval.request</field>
+        <field name="prefix">APR-</field>
+        <field name="padding">5</field>
+    </record>
+
+    <record id="seq_contract_amendment" model="ir.sequence">
+        <field name="name">Sale Contract Amendment</field>
+        <field name="code">realestate.sale.contract.amendment</field>
+        <field name="prefix">AMD-</field>
+        <field name="padding">5</field>
+    </record>
+
 </odoo>

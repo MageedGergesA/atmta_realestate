@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--
+        M24 — the cheque receipt.
+
+        The wording is the whole point. When Treasury takes twenty post-dated
+        cheques from a buyer, the buyer wants something in writing. What they
+        must NOT be handed is a document headed "Payment Receipt", because no
+        payment has been made: they have handed over instruments that will be
+        presented on future dates and may not be honoured.
+
+        So this is a PDC Acknowledgement, it says on its face that it is not a
+        payment receipt, and it does not use the words "paid", "received" (of
+        money) or "settled" anywhere.
+    -->
+    <record id="action_report_pdc_acknowledgement" model="ir.actions.report">
+        <field name="name">PDC Acknowledgement</field>
+        <field name="model">realestate.sale.contract</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">real_estate_checks.report_pdc_acknowledgement</field>
+        <field name="report_file">real_estate_checks.report_pdc_acknowledgement</field>
+        <field name="print_report_name">'PDC Acknowledgement - %s' % (object.name)</field>
+    </record>
+
+    <template id="report_pdc_acknowledgement">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Cheque Receipt / PDC Acknowledgement</h2>
+                        <p class="text-muted">
+                            This document acknowledges receipt of the <strong>physical
+                            instruments</strong> listed below. It is <strong>not a payment
+                            receipt</strong>: no payment has been made, and each instalment
+                            remains outstanding until the corresponding cheque is presented
+                            and honoured by the drawer's bank.
+                        </p>
+
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <table class="table table-sm table-borderless">
+                                    <tr>
+                                        <td><strong>Contract</strong></td>
+                                        <td><span t-field="doc.name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Customer</strong></td>
+                                        <td><span t-field="doc.partner_id"/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-6">
+                                <table class="table table-sm table-borderless">
+                                    <tr>
+                                        <td><strong>Unit</strong></td>
+                                        <td><span t-field="doc.property_id"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Date</strong></td>
+                                        <td><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <t t-set="held" t-value="doc.check_ids.filtered(lambda c: c.state in ('draft', 'registered'))"/>
+                        <table class="table table-sm mt-3">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Cheque #</th>
+                                    <th>Drawer Bank</th>
+                                    <th>Due Date</th>
+                                    <th>Instalment</th>
+                                    <th class="text-end">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="held" t-as="check">
+                                    <td><span t-esc="check_index + 1"/></td>
+                                    <td><span t-field="check.check_number"/></td>
+                                    <td><span t-field="check.bank_id"/></td>
+                                    <td><span t-field="check.due_date"/></td>
+                                    <td><span t-field="check.sale_installment_id"/></td>
+                                    <td class="text-end">
+                                        <span t-field="check.amount"
+                                              t-options='{"widget": "monetary", "display_currency": check.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="5" class="text-end">
+                                        Total — <span t-esc="len(held)"/> cheque(s) held
+                                    </th>
+                                    <th class="text-end">
+                                        <span t-esc="sum(held.mapped('amount'))"
+                                              t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    </th>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <div class="row mt-5">
+                            <div class="col-6">
+                                <p><strong>Received on behalf of</strong>
+                                   <span t-field="doc.company_id"/></p>
+                                <p class="mt-4">_______________________</p>
+                            </div>
+                            <div class="col-6">
+                                <p><strong>Delivered by</strong>
+                                   <span t-field="doc.partner_id"/></p>
+                                <p class="mt-4">_______________________</p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

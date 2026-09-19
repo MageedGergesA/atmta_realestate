@@ -68,13 +68,19 @@ class PlaceholderAutoFillWizard(models.TransientModel):
         lines = []
         for tok in tokens:
             row, conf = match_token(tok, catalog)
+            # A suggestion is a suggestion. The scan used to tick `accepted`
+            # and fill `mapped_jinja` for anything scoring 50, which meant a
+            # wrong guess was applied to the master .docx unless the user
+            # spotted and un-ticked it — and a mis-mapped placeholder silently
+            # prints the wrong value in every contract afterwards. The human
+            # accepts, here or through "Accept High Confidence".
             lines.append((0, 0, {
                 'token': tok,
                 'suggested_label': row['label'] if row else '',
                 'suggested_jinja': row['jinja'] if row else '',
-                'mapped_jinja': row['jinja'] if (row and conf >= 50) else '',
+                'mapped_jinja': '',
                 'confidence': conf if row else 0,
-                'accepted': bool(row and conf >= 50),
+                'accepted': False,
             }))
         self.write({
             'state': 'review',
@@ -155,3 +161,11 @@ class PlaceholderAutoFillLine(models.TransientModel):
         help="The Jinja expression that will replace [Token] in the document.",
     )
     accepted = fields.Boolean(default=False)
+
+    @api.onchange('accepted')
+    def _onchange_accepted(self):
+        """Ticking the box is the accept; save the user retyping the
+        suggestion they just accepted. Nothing is filled in until they do."""
+        for line in self:
+            if line.accepted and not line.mapped_jinja and line.suggested_jinja:
+                line.mapped_jinja = line.suggested_jinja

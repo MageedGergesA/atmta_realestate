@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_operations_dashboard" model="ir.actions.client">
+        <field name="name">Property Operations Dashboard</field>
+        <field name="tag">atmta_dashboard</field>
+        <field name="params" eval="{'provider': 'realestate.operations.dashboard'}"/>
+    </record>
+
+    <!-- Every section below is gated by its own application's roles; the entry is
+         offered to anyone holding one of them. -->
+    <menuitem id="menu_overview" name="Overview" parent="menu_root" sequence="1"
+              action="action_operations_dashboard"
+              groups="real_estate_handover.group_handover_user,real_estate_customer_service.group_service_user,atmta_real_estate.group_realestate_readonly"/>
+
+</odoo>

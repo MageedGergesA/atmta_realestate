@@ -12,7 +12,7 @@ create, edit or delete one.
 from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.tests import tagged
 
-from .common import ProcurementCommon
+from .common import ProcurementCommon, groups_of
 
 
 @tagged('post_install', '-at_install', 'atmta_procurement')
@@ -37,8 +37,7 @@ class TestM2Security(ProcurementCommon):
             'email': '%s@example.com' % login,
             'company_id': self.company.id,
             'company_ids': [(6, 0, [self.company.id])],
-            'groups_id': [(6, 0, [
-                self.env.ref(xmlid).id for xmlid in groups])],
+            'groups_id': [(6, 0, groups_of(self.env, groups).ids)],
         })
 
     def _buyer(self):

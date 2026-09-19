@@ -31,15 +31,99 @@
               action="action_sale_contract"
               sequence="40"/>
 
+    <menuitem id="menu_developer_amendments"
+              name="Contract Amendments"
+              parent="menu_developer_root"
+              action="action_contract_amendment"
+              sequence="45"/>
+
+    <menuitem id="menu_developer_receivables"
+              name="Receivables Schedule"
+              parent="menu_developer_root"
+              action="action_receivables_schedule"
+              sequence="55"/>
+
     <menuitem id="menu_developer_installments"
               name="Installments"
               parent="menu_developer_root"
               action="action_sale_installment"
               sequence="50"/>
 
+    <!-- Inventory: what is on the market, and what is withheld -->
+    <menuitem id="menu_developer_inventory"
+              name="Inventory"
+              parent="menu_developer_root"
+              sequence="25"/>
+
+    <menuitem id="menu_developer_units"
+              name="Units"
+              parent="menu_developer_inventory"
+              action="action_developer_units"
+              sequence="5"/>
+
+    <menuitem id="menu_developer_releases"
+              name="Unit Releases"
+              parent="menu_developer_inventory"
+              action="action_unit_release_batch"
+              sequence="10"/>
+
+    <menuitem id="menu_developer_blocks"
+              name="Commercial Blocks"
+              parent="menu_developer_inventory"
+              action="action_unit_block"
+              sequence="20"/>
+
+    <!-- Pricing -->
+    <menuitem id="menu_developer_pricing"
+              name="Pricing"
+              parent="menu_developer_root"
+              sequence="15"/>
+
+    <menuitem id="menu_developer_price_books"
+              name="Price Books"
+              parent="menu_developer_pricing"
+              action="action_price_book"
+              sequence="10"/>
+
+    <menuitem id="menu_developer_promotions"
+              name="Promotions"
+              parent="menu_developer_pricing"
+              action="action_promotion"
+              sequence="20"/>
+
+    <menuitem id="menu_developer_payment_plans"
+              name="Payment Plans"
+              parent="menu_developer_pricing"
+              action="action_payment_plan"
+              sequence="25"/>
+
+    <menuitem id="menu_developer_price_history"
+              name="Price History"
+              parent="menu_developer_pricing"
+              action="action_price_history"
+              sequence="30"/>
+
+    <menuitem id="menu_developer_bulk_price"
+              name="Bulk Price Update"
+              parent="menu_developer_pricing"
+              action="action_price_bulk_update"
+              sequence="40"/>
+
+    <menuitem id="menu_developer_approvals"
+              name="Approval Requests"
+              parent="menu_developer_root"
+              action="action_approval_request"
+              sequence="60"/>
+
     <menuitem id="menu_developer_config"
               name="Configuration"
               parent="menu_developer_root"
               sequence="200"/>
+
+    <menuitem id="menu_developer_approval_rules"
+              name="Approval Authority"
+              parent="menu_developer_config"
+              action="action_approval_rule"
+              sequence="10"/>
 
 </odoo>

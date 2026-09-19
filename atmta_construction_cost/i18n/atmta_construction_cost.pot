@@ -1,0 +1,3424 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* atmta_construction_cost
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:12+0000\n"
+"PO-Revision-Date: 2026-09-17 10:12+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/change_impact.py:0
+msgid "%(amount)s of gross change needs %(role)s approval."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget_migration.py:0
+msgid ""
+"%(count)s BOQ line(s) had no cost code and were not carried over: %(items)s."
+" Map them on the BOQ and regenerate — a budget line nobody can classify "
+"cannot be controlled."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"%(count)s BOQ line(s) on this cost code have no rate. Forecasting the rest "
+"would report part of the work as all of it."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid ""
+"%(fields)s cannot change on a baselined budget (%(names)s). Create a "
+"revision instead — the approved figure is the record of a decision, not a "
+"draft."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "%(label)s must sit on the configured 1–%(max)s scale."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "%(name)s already materialised into %(issue)s."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "%(periods)s period(s) at %(rate)s."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"%(project)s already has an approved forecast for %(date)s (%(name)s). "
+"Supersede it rather than approving a second one for the same period."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid ""
+"%(project)s is already baselined on %(budget)s. Supersede that baseline "
+"rather than adding a second one — two current budgets is the same as none."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "%(user)s included this risk in forecast exposure at %(amount)s."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "%s already has a change event."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "%s already has a delay event."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid ""
+"%s came true. Close the issue it became; the risk stays as the record that "
+"it was foreseen."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "%s has a manual ETC with no basis."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "%s has no forecast method."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "%s has no recorded resolution. A due date passing is not a resolution."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "%s is in a different currency from the forecast."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "%s is overridden without a reason."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid ""
+".\n"
+"                        These figures are frozen — later accounting does not change them."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid ""
+"A baselined budget cannot be cancelled — it is what the project was "
+"authorised to spend."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid ""
+"A baselined budget cannot be deleted. Supersede it with a revision; the "
+"history is the reason it exists."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid "A baselined budget cannot be reopened."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/change_impact.py:0
+msgid ""
+"A budget change is a record of a decision. Correct it with another change, "
+"not by editing this one."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid ""
+"A budget is approved by somebody other than the person who prepared it. Ask "
+"a Commercial Manager, or set `real_estate_construction.allow_self_approval` "
+"if this company genuinely has one person doing both."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid "A budget with no lines authorises nothing."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/change_impact.py:0
+msgid ""
+"A commitment change records what was approved. Correct it with another "
+"change."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__include_in_forecast
+msgid ""
+"A cost controller's explicit decision. Nothing adds a risk to the forecast "
+"on its own — a probability-weighted number that wanders into an approved EAC"
+" is a forecast nobody signed."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"A forecast is approved by somebody other than the person who prepared it."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "A forecast with no lines forecasts nothing."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid "A line cannot be removed from a baselined budget."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "A manual estimate needs a stated basis."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid ""
+"A mitigation strategy with no plan and no actions is a hope. Record what "
+"will actually be done."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.constraint,message:atmta_construction_cost.constraint_realestate_construction_budget_version_uniq_per_project
+msgid "A project cannot have two budgets with the same version number."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__response_strategy__accept
+msgid "Accept"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__category__access
+msgid "Access"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__name
+msgid "Action"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__state__actioning
+msgid "Actioning"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__action_ids
+msgid "Actions"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Activate"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__activity_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__activity_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__activity_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__activity_state
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__activity_state
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__activity_state
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_list
+msgid "Actual"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__actual_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__actual_cost
+msgid "Actual Cost"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_actual_cost
+msgid "Actual Cost (Ledger)"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__actual_exceeds_commitment
+msgid "Actual Exceeds Commitment"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_report.py:0
+msgid ""
+"Actual cost is understated by %(amount)s: retention on %(count)s posted "
+"certificate(s) was booked as a negative expense line rather than a retention"
+" liability. The posted entries are not rewritten; Finance reclassification "
+"is required. See IMPLEMENTATION_REPORT.md §Retention."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"Actual cost on this code cannot be attributed to its commitment, so "
+"remaining commitment is unknown. Use a manual estimate rather than guessing."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__actual_amount
+msgid "Actual to Date"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Actuals and commitments refreshed."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__adjustment_total
+msgid "Adjustment Total"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__adjustment_type
+msgid "Adjustment Type"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__age_days
+msgid "Age Days"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__amount
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__amount
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__amount
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__amount
+msgid "Amount"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__amount_mode
+msgid "Amount Mode"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "An approved forecast cannot be reopened."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"An approved forecast is a record of what was believed on %(date)s. Create a "
+"new forecast rather than refreshing this one."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"An approved forecast is history. Supersede it with a later one instead of "
+"cancelling it."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__management_rating
+msgid ""
+"An explicit human rating, which overrides the arithmetic on the register "
+"when set."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "Analytic postings"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_adjustment__adjustment_type__anticipated_variation
+msgid "Anticipated Variation"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Approve"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid ""
+"Approve the revision first. A baseline is not withdrawn until there is "
+"something to put in its place."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget__state__approved
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast__state__approved
+msgid "Approved"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__approved_change_amount
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__approved_budget_changes
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__approved_budget_changes
+msgid "Approved Budget Changes"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__approved_by_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__approved_by_id
+msgid "Approved By"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__approved_change_amount
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__change_line_ids
+msgid "Approved Changes"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__approved_commitment_changes
+msgid "Approved Commitment Changes"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__approved_on
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__approved_on
+msgid "Approved On"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__approved_change_amount
+msgid ""
+"Approved changes since baseline. M4's change control writes these; until "
+"then they are zero, which is the truth."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "Approved forecast lines"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Approved on"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"Approved. EAC %(eac)s against a current budget of %(budget)s (variance "
+"%(variance)s). Coverage %(coverage).1f%%."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__as_of_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__as_of_date
+msgid "As Of Date"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__state__assessed
+msgid "Assessed"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Assumed to finish at budget."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__attachment_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__attachment_ids
+msgid "Attachment"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__authority
+msgid "Authority / Permitting"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__category__authority
+msgid "Authority Approval"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Available"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__available_before_commitment
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__available_before_commitment
+msgid "Available Before Commitment"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__response_strategy__avoid
+msgid "Avoid"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Award"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+msgid "Baseline"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__baseline_date
+msgid "Baseline Date"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "Baseline budget lines"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget__state__baselined
+msgid "Baselined"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid "Baselined: original budget %(amount)s."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__version
+msgid ""
+"Baselines are numbered. Revision 2 supersedes revision 1; revision 1 is "
+"still readable, which is the point."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__manual_reason
+msgid "Basis / Reason"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__state__blocked
+msgid "Blocked"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__budget_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__budget_id
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Budget"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid ""
+"Budget %(name)s is in %(company)s but %(project)s belongs to "
+"%(project_company)s."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_available_before_commitment
+msgid "Budget Available Before Commitment"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_budget_change_line
+msgid "Budget Change Line"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Budget Changes"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__budget_line_id
+msgid "Budget Line"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_report.py:0
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__line_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+msgid "Budget Lines"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__budget_remaining_vs_actual
+msgid "Budget Remaining Vs Actual"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_budget_remaining_vs_actual
+msgid "Budget Remaining vs Actual"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/change_impact.py:0
+msgid ""
+"Budget changes cannot be deleted — they are why the current budget is what "
+"it is."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Budget lines"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__is_unawarded
+msgid "Budgeted scope with no commitment yet."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.actions.act_window,name:atmta_construction_cost.action_construction_budget
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__construction_budget_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_list
+msgid "Budgets"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__currency_id
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget_change_line__currency_id
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget_line__currency_id
+msgid ""
+"Budgets are held in one currency. Foreign-currency commitments are converted"
+" for control comparison, never re-accounted."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "By Cost Code"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__calculated_etc
+msgid "Calculated ETC"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Cancel"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget__state__cancelled
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast__state__cancelled
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__state__cancelled
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk_action__state__cancelled
+msgid "Cancelled"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__category
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__category
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__category
+msgid "Category"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__cause
+msgid "Cause"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_change_authority
+msgid "Change Approval Authority"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__change_event_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__change_event_id
+msgid "Change Event"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__change_event_ids
+msgid "Change Events"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__change_order_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__change_order_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__change_order_id
+msgid "Change Order"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__change_type
+msgid "Change Type"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_list
+msgid "Changes"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "Choose how %s is being responded to."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__claim_id
+msgid "Claim"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_claim_kpi
+msgid "Claims, Delay, Risk and Issue KPIs"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Close"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__state__closed
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__state__closed
+msgid "Closed"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__closure_reason
+msgid "Closure Reason"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__comment
+msgid "Comment"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__commercial
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Commercial"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__category__commercial
+msgid "Commercial Blocker"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Commitment"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Commitment & Actual"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Commitment & Terms"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_commitment_change
+msgid "Commitment Change"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_report.py:0
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Commitment Detail"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid ""
+"Commitment and Actual are two views of the same money and are\n"
+"                        never added together. ETC and EAC are blank until forecasting\n"
+"                        exists."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/change_impact.py:0
+msgid ""
+"Commitment changes cannot be deleted — they are why the current commitment "
+"is what it is."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Commitment detail"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__committed_remaining
+msgid ""
+"Commitment left to spend, where actual cost can be attributed to that same "
+"commitment."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Commitments exceed the current budget on this project."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_list
+msgid "Committed"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__committed_remaining
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__committed_remaining
+msgid "Committed Remaining"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__committed_remaining_known
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__committed_remaining_known
+msgid "Committed Remaining Known"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__company_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__company_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__company_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__company_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__company_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__company_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__company_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__company_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__company_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__company_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__company_id
+msgid "Company"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_cost_report__forecast_state__complete
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_project__ctrl_forecast_state__complete
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Complete"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__completed_on
+msgid "Completed On"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__consequence
+msgid "Consequence"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__construction
+msgid "Construction"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_budget
+msgid "Construction Budget"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_budget_line
+msgid "Construction Budget Line"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_commitment
+msgid "Construction Commitment Engine"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_forecast
+msgid "Construction Cost Forecast"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_cost_report
+msgid "Construction Cost Report"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_cost_report_line
+msgid "Construction Cost Report Line"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.actions.server,name:atmta_construction_cost.cron_refresh_dates_ir_actions_server
+msgid "Construction Cost: refresh overdue issues and risk actions"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_forecast_line
+msgid "Construction Forecast Line"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__escalation_level__construction_manager
+msgid "Construction Manager"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/change_impact.py:0
+msgid "Construction Manager (above all thresholds)"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_controls
+msgid "Construction Project Controls"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_cost_refresh
+msgid "Construction cost: refresh values that depend on today's date"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__contingency_amount
+msgid "Contingency"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget_change_line__change_type__contingency_drawdown
+msgid "Contingency Drawdown"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Contract Package"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.actions.act_window,name:atmta_construction_cost.action_construction_package
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__construction_package_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_list
+msgid "Contract Packages"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__converted_by_order_id
+msgid "Converted By Order"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__converted_to_change_order
+msgid "Converted To Change Order"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__cost_code_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__cost_code_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__cost_code_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__cost_code_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__cost_code_label
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__cost_code_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__cost_code_id
+msgid "Cost Code"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__line_ids
+msgid "Cost Codes"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__cost_exposure_likely
+msgid "Cost Exposure"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__cost_exposure_max
+msgid "Cost Exposure Max"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__cost_exposure_min
+msgid "Cost Exposure Min"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__cost_impact_score
+msgid "Cost Impact Score"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Cost Report"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Cost Report —"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_report.py:0
+msgid "Cost Report — %s"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid "Cost code %(code)s is scoped to another project."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__forecast_coverage
+msgid "Coverage (%)"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+msgid "Create Revision"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__created_by_id
+msgid "Created By"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__priority__critical
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__management_rating__critical
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__severity__critical
+msgid "Critical"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__currency_id
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__currency
+msgid "Currency"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_list
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_list
+msgid "Current"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__current_amount
+msgid "Current Amount"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__current_amount
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__current_budget
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__current_budget
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__current_budget
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_current_budget
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_list
+msgid "Current Budget"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_cost_report_line__budget_remaining_vs_actual
+msgid ""
+"Current Budget − Actual. What is left before the money is actually spent. A "
+"different question from the column beside it."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_cost_report_line__available_before_commitment
+msgid "Current Budget − Current Commitment. What is left to commit."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_cost_report_line__forecast_variance
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__total_forecast_variance
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__forecast_variance
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_project__ctrl_forecast_variance
+msgid "Current Budget − EAC. Positive is favourable."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__current_commitment
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__current_commitment
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__commitment_amount
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_current_commitment
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Current Commitment"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget_change_line__change_type__decrease
+msgid "Decrease"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_adjustment__adjustment_type__delay
+msgid "Delay"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__delay_event_id
+msgid "Delay Event"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget__source__legacy
+msgid "Derived from Legacy Data"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__description
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__description
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__description
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__description
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__description
+msgid "Description"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__design
+msgid "Design"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__category__design_coordination
+msgid "Design Coordination"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk_action__state__done
+msgid "Done"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget__state__draft
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast__state__draft
+msgid "Draft"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__due_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__due_date
+msgid "Due Date"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__eac_amount
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__eac_amount
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_eac
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_list
+msgid "EAC"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_eac_movement
+msgid "EAC Movement"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__etc_amount
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__etc_amount
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_list
+msgid "ETC"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__uncommitted_etc
+msgid "ETC beyond what is committed — scope still to be procured."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__eac_exceeds_budget
+msgid "Eac Exceeds Budget"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__eac_is_complete
+msgid "Eac Is Complete"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__eac_movement
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__eac_movement
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__eac_movement
+msgid "Eac Movement"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk_action__effectiveness__effective
+msgid "Effective"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__effective_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__effective_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__effective_date
+msgid "Effective Date"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__effectiveness
+msgid "Effectiveness"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__environmental
+msgid "Environmental"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__escalated_on
+msgid "Escalated On"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "Escalated issue %s"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__escalation_level
+msgid "Escalation Level"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__estimated_cost_impact
+msgid "Estimated Cost Impact"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__escalation_level__executive
+msgid "Executive"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__response_strategy__exploit
+msgid "Exploit (Opportunity)"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_adjustment__adjustment_type__fx
+msgid "FX Assumption"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__committed_remaining_known
+msgid ""
+"False means unknown, which is not the same as zero. The report shows N/A "
+"rather than a number nobody can stand behind."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_cost_report_line__committed_remaining_known
+msgid ""
+"False means unknown, which the report shows as N/A rather than as zero."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__has_etc
+msgid ""
+"False when nothing has produced an estimate. Distinguishes 'no forecast' "
+"from 'a forecast of zero'."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_cost_report_line__has_forecast
+msgid ""
+"False when the latest approved forecast does not cover this cost code. The "
+"amounts below are then meaningless."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__eac_is_complete
+msgid ""
+"False while any line is missing a forecast. A partial total is shown, and is"
+" never labelled authoritative."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__financial
+msgid "Financial"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_line__method__finish_at_budget
+msgid "Finish at Budget"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__activity_type_icon
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__activity_type_icon
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_issue__activity_type_icon
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__periods_remaining
+msgid "For time-based costs: how many periods of the rate remain."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__forecast_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__forecast_id
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Forecast"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_forecast_adjustment
+msgid "Forecast Adjustment"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__adjustment_ids
+msgid "Forecast Adjustments"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_forecast_age_days
+msgid "Forecast Age (days)"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_forecast_date
+msgid "Forecast As Of"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__forecast_coverage
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_forecast_coverage
+msgid "Forecast Coverage (%)"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__forecast_date
+msgid "Forecast Date"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__forecast_is_stale
+msgid "Forecast Is Stale"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__forecast_line_id
+msgid "Forecast Line"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__line_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Forecast Lines"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__forecast_method
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__method
+msgid "Forecast Method"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__forecast_quantity
+msgid "Forecast Quantity"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_forecast_is_stale
+msgid "Forecast Stale"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__forecast_state
+msgid "Forecast State"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__forecast_status
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_forecast_state
+msgid "Forecast Status"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__forecast_unit_rate
+msgid "Forecast Unit Rate"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__forecast_id
+msgid "Forecast Used"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__forecast_variance
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__forecast_variance
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_forecast_variance
+msgid "Forecast Variance"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__adjustment_total
+msgid ""
+"Forecast-only. Adjustments never touch budget, commitment or the ledger."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_line__forecast_status__forecasted
+msgid "Forecasted"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.actions.act_window,name:atmta_construction_cost.action_construction_forecast
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_list
+msgid "Forecasts"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_project__ctrl_eac
+msgid ""
+"From the latest approved forecast. Blank when none exists — a zero would "
+"read as 'this project will cost nothing more'."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget__source__boq
+msgid "Generated from a BOQ"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Go to Tender"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Governance"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_cost_report_line__eac_movement
+msgid "Growth in expected cost since the previous approved forecast."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__has_etc
+msgid "Has Etc"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__has_forecast
+msgid "Has Forecast"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__has_message
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__has_message
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__has_message
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__has_mitigation
+msgid "Has Mitigation"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__priority__high
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__management_rating__high
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__severity__high
+msgid "High"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__id
+msgid "ID"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__activity_exception_icon
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__activity_exception_icon
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_issue__activity_exception_icon
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__state__identified
+msgid "Identified"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__identified_by_id
+msgid "Identified By"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__identified_on
+msgid "Identified On"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__message_needaction
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__message_needaction
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_issue__message_needaction
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__message_has_error
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__message_has_error
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_issue__message_has_error
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_issue__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__message_has_error
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__impact
+msgid "Impact"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "Implemented budget changes"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "Implemented commitment changes"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk_action__state__in_progress
+msgid "In Progress"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__include_in_forecast
+msgid "Include In Forecast"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_cost_report__forecast_state__incomplete
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_project__ctrl_forecast_state__incomplete
+msgid "Incomplete"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget_change_line__change_type__increase
+msgid "Increase"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk_action__effectiveness__ineffective
+msgid "Ineffective"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_adjustment__adjustment_type__inflation
+msgid "Inflation"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__inherent_score
+msgid "Inherent Score"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_line__forecast_status__insufficient_data
+msgid "Insufficient Source Data"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_cost_sheet
+msgid "Integrated Construction Cost Sheet"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__interface
+msgid "Interface"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__is_contingency
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__is_contingency
+msgid "Is Contingency"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__is_overdue
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__is_overdue
+msgid "Is Overdue"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__is_overridden
+msgid "Is Overridden"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__is_unawarded
+msgid "Is Unawarded"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__issue_id
+msgid "Issue"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "Issue %(name)s is in %(company)s but its project is in %(other)s."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "Issue %(ref)s — %(title)s"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_forecast_id
+msgid "Latest Approved Forecast"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_budget_migration
+msgid "Legacy Budget Classification"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__line_id
+msgid "Line"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__line_count
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__line_count
+msgid "Line Count"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__line_count_forecasted
+msgid "Line Count Forecasted"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__line_count_insufficient
+msgid "Line Count Insufficient"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__line_count_missing
+msgid "Line Count Missing"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__priority__low
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__management_rating__low
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__severity__low
+msgid "Low"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget_line__amount_mode__lumpsum
+msgid "Lump Sum"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Main Civil Works"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_adjustment__adjustment_type__management
+msgid "Management Adjustment"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__management_rating
+msgid "Management Rating"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Management override."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__override_etc
+msgid "Management's number when it differs from the method's."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__manual_etc
+msgid "Manual ETC"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_line__method__manual
+msgid "Manual Estimate"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Manual estimate."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__period_label
+msgid "March 2027. A label, not a rule — month-end is not assumed."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Marked as needing no forecast."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__market
+msgid "Market"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_adjustment__adjustment_type__market_rate
+msgid "Market Rate"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__state__materialised
+msgid "Materialised"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__materialised_on
+msgid "Materialised On"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__materialised_snapshot
+msgid "Materialised Snapshot"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "Materialised into %(issue)s. %(reason)s"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__priority__medium
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__management_rating__medium
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__severity__medium
+msgid "Medium"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_line__forecast_status__missing
+msgid "Missing Forecast"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__response_strategy__mitigate
+msgid "Mitigate"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__mitigation_due_date
+msgid "Mitigation Due Date"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__mitigation_owner_id
+msgid "Mitigation Owner"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__mitigation_plan
+msgid "Mitigation Plan"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget_line__is_contingency
+msgid ""
+"Money set aside rather than allocated to scope. Drawing on it is a decision "
+"that is recorded, not a budget line that quietly grows."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__state__monitoring
+msgid "Monitoring"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Negative periods or rates are not a forecast."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "New"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__activity_summary
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__activity_summary
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__activity_summary
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__activity_type_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__activity_type_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__activity_type_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"No BOQ line on this cost code has an authorised quantity to forecast from."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_cost_report__forecast_state__none
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_project__ctrl_forecast_state__none
+msgid "No Forecast"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_line__forecast_status__not_required
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_line__method__not_required
+msgid "No Forecast Required"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "No approved forecast line for this cost code."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "No cost code — see the data-quality worklist"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"No cost has been posted yet, so performance cannot be measured from it."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "No forecast method has been chosen."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__escalation_level__none
+msgid "None"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk_action__effectiveness__unknown
+msgid "Not Yet Known"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget_line__amount_mode
+msgid ""
+"Not every cost has a sensible quantity. Forcing one produces a rate of 1 × "
+"the amount, which teaches nobody anything."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__notes
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__notes
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__notes
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__notes
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Notes"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"Nothing is committed against this code, so there is no remaining commitment "
+"to forecast from."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_issue__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_issue__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_project__ctrl_forecast_is_stale
+msgid ""
+"Older than the configured forecast interval "
+"(`real_estate_construction.forecast_interval_days`, default 35)."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__probability
+msgid "On the company's configured scale (1–5 by default)."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid "Only a baseline can be superseded."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid "Only a budget under review can be approved."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid "Only a draft budget can be submitted."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Only a draft forecast can be submitted."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Only a forecast under review can be approved."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget_migration.py:0
+msgid ""
+"Only an approved BOQ can seed a budget. A draft BOQ is a working document."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid "Only an approved budget can be baselined."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid "Only the current baseline can be revised."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__state__open
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk_action__state__open
+msgid "Open"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__open_action_count
+msgid "Open Action Count"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "Open change events"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__opened_on
+msgid "Opened On"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Orders"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_list
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_list
+msgid "Original"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__original_amount
+msgid "Original Amount"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__original_amount
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__original_budget
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__original_budget
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_original_budget
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Original Budget"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__original_commitment
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Original Commitment"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_adjustment__adjustment_type__other
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__category__other
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__other
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__response_strategy__other
+msgid "Other"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Outturn"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__over_committed
+msgid "Over Committed"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_over_committed
+msgid "Over-committed"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__overall_impact
+msgid "Overall Impact"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__overdue_action_count
+msgid "Overdue Action Count"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__overridden_by_id
+msgid "Overridden By"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__override_date
+msgid "Override Date"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__override_etc
+msgid "Override ETC"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__override_reason
+msgid "Override Reason"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__owner_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__owner_id
+msgid "Owner"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_revenue_change
+msgid "Owner Revenue Change"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_commitment_change__company_id
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_cost_report__company_id
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_revenue_change__company_id
+msgid "Owning company. Inventory, pricing and deals never cross companies."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__package_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__package_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__package_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__package_id
+msgid "Package"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk_action__effectiveness__partial
+msgid "Partially Effective"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__partner_id
+msgid "Partner"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "Payment certificates"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_line__method__percent_complete
+msgid "Performance (% Complete)"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Performance: %(actual)s at %(pct).1f%% complete."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__period_label
+msgid "Period Label"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__periods_remaining
+msgid "Periods Remaining"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__progress_pct
+msgid "Physical completion, for the performance method."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_adjustment__amount
+msgid "Positive increases the forecast. Negative records an expected saving."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_report.py:0
+msgid "Posted Cost"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Posted Cost to %s"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Posted cost"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_exposure
+msgid "Potential Commercial Exposure"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/exposure.py:0
+msgid ""
+"Potential commercial exposure %(amount)s across %(claims)s claim(s), "
+"%(events)s change event(s), %(issues)s issue(s) and %(risks)s carried "
+"risk(s). Each underlying event is counted once, at the furthest stage it has"
+" reached. Authorised change is not included — it is in the budget."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__prepared_by_id
+msgid "Prepared By"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget__source__manual
+msgid "Prepared Manually"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_previous_eac
+msgid "Previous EAC"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__previous_eac
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__previous_eac
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__previous_eac
+msgid "Previous Eac"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__previous_forecast_id
+msgid "Previous Forecast"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__priority
+msgid "Priority"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__probability
+msgid "Probability"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__procurement
+msgid "Procurement"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_adjustment__adjustment_type__productivity
+msgid "Productivity"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Programme"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__progress_pct
+msgid "Progress (%)"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Progress above 100% is not a measurement."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"Progress of zero cannot forecast an outturn — dividing by it says the "
+"project costs infinity."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__project_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__project_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__project_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__project_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__project_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__project_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__project_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__project_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__project_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__project_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__project_id
+msgid "Project"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_issue
+msgid "Project Issue"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__escalation_level__project_manager
+msgid "Project Manager"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_risk
+msgid "Project Risk"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__purchase_order_id
+msgid "Purchase Order"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Purchase Orders"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "Purchase order lines"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "Putting a risk into the forecast is a cost controller's decision."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Quality"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__category__quality
+msgid "Quality (see NCR)"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__quality_impact_score
+msgid "Quality Impact Score"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__quantity
+msgid "Quantity"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget_line__amount_mode__quantity
+msgid "Quantity × Rate"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget_line__original_amount
+msgid "Quantity × rate in quantity mode; typed directly for a lump sum."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__period_rate
+msgid "Rate per Period"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__state__ready_to_close
+msgid "Ready to Close"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_project
+msgid "Real Estate Development Project"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "Record what resolved %s."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk_action__effectiveness
+msgid ""
+"Recorded after the fact. A mitigation nobody reviewed is a mitigation nobody"
+" knows worked."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__name
+msgid "Reference"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__package_id
+msgid ""
+"Reference only. Lines stay cost-code based so a package spanning several "
+"codes cannot be counted twice."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__reflected_in_purchase_order
+msgid "Reflected In Purchase Order"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Refresh Actuals & Commitments"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_line__method__remaining_boq
+msgid "Remaining BOQ Quantity"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_line__method__remaining_commitment
+msgid "Remaining Commitment"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Remaining authorised BOQ quantity at contract rates."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Remaining commitment."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__budget_remaining_vs_actual
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Remaining vs Actual"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__report_id
+msgid "Report"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Reset to Draft"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__residual_impact
+msgid "Residual Impact"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__residual_probability
+msgid "Residual Probability"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__residual_score
+msgid "Residual Score"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__resolution
+msgid "Resolution"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__resolved_on
+msgid "Resolved On"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__category__resource
+msgid "Resource"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__state__response_planned
+msgid "Response Planned"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__response_strategy
+msgid "Response Strategy"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__responsible_id
+msgid "Responsible"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__responsible_party
+msgid "Responsible Party"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__activity_user_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__activity_user_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__activity_user_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_retention_disclosure
+msgid "Retention Treatment Disclosure"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__retention_warning
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__retention_warning
+msgid "Retention Warning"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "Retention register"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/change_impact.py:0
+msgid "Revenue changes are records, not drafts."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/change_impact.py:0
+msgid "Revenue changes cannot be deleted."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__review_date
+msgid "Review Date"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__reviewed_by_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__reviewed_by_id
+msgid "Reviewed By"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__risk_id
+msgid "Risk"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "Risk %(name)s is in %(company)s but its project is in %(other)s."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_adjustment__adjustment_type__risk
+msgid "Risk Allowance"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_risk_action
+msgid "Risk Mitigation Action"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__owner_id
+msgid "Risk Owner"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__schedule
+msgid "Schedule"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__category__schedule
+msgid "Schedule Constraint"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__schedule_exposure_days
+msgid "Schedule Exposure Days"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__schedule_impact_score
+msgid "Schedule Impact Score"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Scope"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__severity
+msgid "Severity"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__forecast_coverage
+msgid ""
+"Share of forecastable lines that actually carry an estimate, weighted by "
+"current budget where there is one."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__category__interface
+msgid "Site Interface"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__source
+msgid "Source"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__source_boq_id
+msgid "Source BOQ"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__source_delay_event_id
+msgid "Source Delay Event"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__source_ncr_id
+msgid "Source Ncr"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__source_rfi_id
+msgid "Source Rfi"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__source_risk_id
+msgid "Source Risk"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__stakeholder
+msgid "Stakeholder"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_cost_report__forecast_state__stale
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_project__ctrl_forecast_state__stale
+msgid "Stale"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__state
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__state
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__state
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__state
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__state
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__state
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__state
+msgid "State"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__status_reason
+msgid "Status Reason"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__activity_state
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__activity_state
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_issue__activity_state
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Submit"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+msgid "Submit for Review"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Substantially Complete"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+msgid "Supersede"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget__state__superseded
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast__state__superseded
+msgid "Superseded"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__superseded_by_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__superseded_by_id
+msgid "Superseded By"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__supersedes_id
+msgid "Supersedes"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__category__supplier
+msgid "Supplier Failure"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__supply_chain
+msgid "Supply Chain"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__source_boq_id
+msgid ""
+"The BOQ this budget was drafted from. A BOQ valuation is not automatically "
+"an approved budget — somebody reviewed it."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__previous_forecast_id
+msgid "The approved forecast this one follows, for the movement bridge."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget_change_line__budget_line_id
+msgid ""
+"The baselined line this change moves. Empty when the change adds a cost code"
+" the baseline never had — which is legitimate and is reported as an addition"
+" rather than forced onto an unrelated line."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_commitment_change__currency_id
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_revenue_change__currency_id
+msgid ""
+"The contract's currency. Control amounts are converted to the company "
+"currency for the cost report; no FX is posted."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__currency_id
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_adjustment__currency_id
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__currency_id
+msgid ""
+"The control currency. Foreign-currency sources are converted for comparison;"
+" nothing here re-accounts FX."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__as_of_date
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__as_of_date
+msgid ""
+"The cutoff. Actual counts postings on or before this date, so a bill posted "
+"afterwards cannot rewrite this forecast."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__issue_id
+msgid "The issue this risk became, when it came true."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid ""
+"The money on a baselined budget cannot be edited. Create a revision, or "
+"record an approved change — 'change 5M to 6M' on an approved line leaves no "
+"record that it was ever 5M."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__contingency_amount
+msgid ""
+"The part of the budget held against cost codes marked as contingency — money"
+" set aside rather than allocated to scope."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_adjustment__change_event_id
+msgid ""
+"The potential change this allowance anticipates. When that change is "
+"approved and implemented, the allowance is marked converted so the next "
+"forecast does not count the same money twice."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget_line__approved_change_amount
+msgid ""
+"The sum of implemented budget changes against this cost code. A derived "
+"number, not a typed one — every unit of it points at the change order that "
+"authorised it."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__original_amount
+msgid "The sum of the baselined lines. Frozen once baselined."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__overall_impact
+msgid ""
+"The worst of the impact dimensions, because a risk that is catastrophic for "
+"time and trivial for cost is a severe risk."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__eac_movement
+msgid ""
+"This EAC minus the previous approved EAC. Positive means the expected cost "
+"has grown, which is adverse."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"This forecast cannot be approved yet:\n"
+"\n"
+"%s"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid ""
+"This forecast does not cover every cost code. The total EAC\n"
+"                        below is partial and must not be quoted as the project's\n"
+"                        expected cost."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"This forecast was approved on %(date)s and cannot be changed. Create a new "
+"forecast — the history is the point."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+msgid ""
+"This is the project's current baseline. Its figures cannot be\n"
+"                        edited — create a revision, or record an approved change."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_line__method__date_range
+msgid "Time-Based (Remaining Periods)"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__title
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__title
+msgid "Title"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__total_actual
+msgid "Total Actual"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__total_commitment
+msgid "Total Commitment"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__total_current_budget
+msgid "Total Current Budget"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__total_eac
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__total_eac
+msgid "Total Eac"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__total_etc
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__total_etc
+msgid "Total Etc"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__total_forecast_variance
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__total_forecast_variance
+msgid "Total Forecast Variance"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__response_strategy__transfer
+msgid "Transfer"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget_change_line__change_type__transfer_in
+msgid "Transfer In"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget_change_line__change_type__transfer_out
+msgid "Transfer Out"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__trigger
+msgid "Trigger"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_adjustment__converted_to_change_order
+msgid ""
+"True once the anticipated change became a real approved one. The allowance "
+"stays on the historical forecast that recorded it — that is what was "
+"believed at the time — and is not carried into the next one."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_commitment_change__reflected_in_purchase_order
+msgid ""
+"True once the linked purchase order has been amended to include this change."
+" The commitment engine then reads the order and ignores this record, so the "
+"same money is counted once — the M2 source-precedence rule, extended to "
+"variations."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_issue__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "Unassigned"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_adjustment__adjustment_type__unawarded_scope
+msgid "Unawarded Scope"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__uncommitted_etc
+msgid "Uncommitted Etc"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget__state__review
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast__state__review
+msgid "Under Review"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__unit_rate
+msgid "Unit Rate"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Unknown forecast method."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Untaxed"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__uom_id
+msgid "UoM"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__category__utility
+msgid "Utility / Obstruction"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_list
+msgid "Variance"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_list
+msgid "Variations"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__version
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__version
+msgid "Version"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__wbs_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__wbs_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__wbs_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__wbs_id
+msgid "WBS"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid "WBS %(wbs)s belongs to another project."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__wbs_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__wbs_id
+msgid "Wbs"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_issue__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_issue__estimated_cost_impact
+msgid ""
+"What it might cost. Not a cost, not a commitment, and not authorisation for "
+"either."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__consequence
+msgid "What it would do if it did."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget_line__cost_code_id
+msgid ""
+"What kind of money. Required — an amount nobody can classify cannot be "
+"controlled."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__calculated_etc
+msgid "What the method produced, kept even when overridden."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__materialised_snapshot
+msgid ""
+"What the risk said at the moment it came true — the answer to 'did we see "
+"this coming?'."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__trigger
+msgid "What would tell us it is happening."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget_line__wbs_id
+msgid "Where in the works. Optional for a project-level allowance."
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__cause
+msgid "Why it might happen."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/change_impact.py:0
+msgid ""
+"You raised this change and cannot also approve it. Ask somebody with the "
+"authority, or set a self-approval limit if this company genuinely works that"
+" way."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "cost impact"
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "probability"
+msgstr ""
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__inherent_score
+msgid ""
+"probability × overall impact. A sortable number, not a quantification — "
+"multiplying ordinal scales is a convention, and `management_rating` exists "
+"for when it misleads."
+msgstr ""
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "schedule impact"
+msgstr ""

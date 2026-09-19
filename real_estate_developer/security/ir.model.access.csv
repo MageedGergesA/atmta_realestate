@@ -1,7 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 
 access_project_readonly,Project Readonly,atmta_project_core.model_realestate_project,group_dev_readonly,1,0,0,0
-access_project_agent,Project Agent,atmta_project_core.model_realestate_project,group_dev_agent,1,1,1,0
+access_project_agent,Project Agent,atmta_project_core.model_realestate_project,group_dev_agent,1,0,0,0
 access_project_manager,Project Manager,atmta_project_core.model_realestate_project,group_dev_manager,1,1,1,1
 
 access_project_boundary_readonly,Project Boundary Readonly,atmta_project_core.model_realestate_project_boundary_point,group_dev_readonly,1,0,0,0
@@ -9,11 +9,11 @@ access_project_boundary_agent,Project Boundary Agent,atmta_project_core.model_re
 access_project_boundary_manager,Project Boundary Manager,atmta_project_core.model_realestate_project_boundary_point,group_dev_manager,1,1,1,1
 
 access_phase_readonly,Phase Readonly,atmta_project_core.model_realestate_phase,group_dev_readonly,1,0,0,0
-access_phase_agent,Phase Agent,atmta_project_core.model_realestate_phase,group_dev_agent,1,1,1,0
+access_phase_agent,Phase Agent,atmta_project_core.model_realestate_phase,group_dev_agent,1,0,0,0
 access_phase_manager,Phase Manager,atmta_project_core.model_realestate_phase,group_dev_manager,1,1,1,1
 
 access_re_pt_segment_manager,Payment Term Segment Manager,model_realestate_payment_term_segment,account.group_account_manager,1,1,1,1
-access_re_pt_segment_user,Payment Term Segment User,model_realestate_payment_term_segment,base.group_user,1,0,0,0
+access_re_pt_segment_user,Payment Term Segment User,model_realestate_payment_term_segment,group_dev_readonly,1,0,0,0
 
 access_reservation_readonly,Reservation Readonly,model_realestate_unit_reservation,group_dev_readonly,1,0,0,0
 access_reservation_agent,Reservation Agent,model_realestate_unit_reservation,group_dev_agent,1,1,1,0
@@ -26,3 +26,88 @@ access_sale_contract_manager,Sale Contract Manager,model_realestate_sale_contrac
 access_sale_installment_readonly,Sale Installment Readonly,model_realestate_sale_installment,group_dev_readonly,1,0,0,0
 access_sale_installment_agent,Sale Installment Agent,model_realestate_sale_installment,group_dev_agent,1,1,1,0
 access_sale_installment_manager,Sale Installment Manager,model_realestate_sale_installment,group_dev_manager,1,1,1,1
+
+access_release_batch_readonly,Release Batch Readonly,model_realestate_unit_release_batch,group_dev_readonly,1,0,0,0
+access_release_batch_agent,Release Batch Agent,model_realestate_unit_release_batch,group_dev_agent,1,0,0,0
+access_release_batch_manager,Release Batch Manager,model_realestate_unit_release_batch,group_dev_manager,1,1,1,1
+
+access_unit_block_readonly,Unit Block Readonly,model_realestate_unit_block,group_dev_readonly,1,0,0,0
+access_unit_block_agent,Unit Block Agent,model_realestate_unit_block,group_dev_agent,1,0,0,0
+access_unit_block_manager,Unit Block Manager,model_realestate_unit_block,group_dev_manager,1,1,1,0
+
+access_approval_rule_readonly,Approval Rule Readonly,model_realestate_commercial_approval_rule,group_dev_readonly,1,0,0,0
+access_approval_rule_manager,Approval Rule Manager,model_realestate_commercial_approval_rule,group_dev_manager,1,1,1,1
+
+access_approval_request_agent,Approval Request Agent,model_realestate_commercial_approval_request,group_dev_agent,1,1,1,0
+access_approval_request_manager,Approval Request Manager,model_realestate_commercial_approval_request,group_dev_manager,1,1,1,1
+
+access_price_book_readonly,Price Book Readonly,model_realestate_price_book,group_dev_readonly,1,0,0,0
+access_price_book_agent,Price Book Agent,model_realestate_price_book,group_dev_agent,1,0,0,0
+access_price_book_manager,Price Book Manager,model_realestate_price_book,group_dev_manager,1,1,1,1
+
+access_price_book_line_readonly,Price Book Line Readonly,model_realestate_price_book_line,group_dev_readonly,1,0,0,0
+access_price_book_line_agent,Price Book Line Agent,model_realestate_price_book_line,group_dev_agent,1,0,0,0
+access_price_book_line_manager,Price Book Line Manager,model_realestate_price_book_line,group_dev_manager,1,1,1,1
+
+access_price_rule_readonly,Price Rule Readonly,model_realestate_price_rule,group_dev_readonly,1,0,0,0
+access_price_rule_manager,Price Rule Manager,model_realestate_price_rule,group_dev_manager,1,1,1,1
+
+access_price_component_readonly,Price Component Readonly,model_realestate_property_price_component,group_dev_readonly,1,0,0,0
+access_price_component_manager,Price Component Manager,model_realestate_property_price_component,group_dev_manager,1,1,1,1
+
+access_price_history_readonly,Price History Readonly,model_realestate_price_history,group_dev_readonly,1,0,0,0
+access_price_history_manager,Price History Manager,model_realestate_price_history,group_dev_manager,1,0,1,0
+
+access_promotion_readonly,Promotion Readonly,model_realestate_promotion,group_dev_readonly,1,0,0,0
+access_promotion_agent,Promotion Agent,model_realestate_promotion,group_dev_agent,1,0,0,0
+access_promotion_manager,Promotion Manager,model_realestate_promotion,group_dev_manager,1,1,1,1
+
+access_price_bulk_wizard,Bulk Price Wizard,model_realestate_price_bulk_update,group_dev_manager,1,1,1,1
+access_price_bulk_wizard_line,Bulk Price Wizard Line,model_realestate_price_bulk_update_line,group_dev_manager,1,1,1,1
+
+access_payment_plan_readonly,Payment Plan Readonly,model_realestate_payment_plan,group_dev_readonly,1,0,0,0
+access_payment_plan_agent,Payment Plan Agent,model_realestate_payment_plan,group_dev_agent,1,0,0,0
+access_payment_plan_manager,Payment Plan Manager,model_realestate_payment_plan,group_dev_manager,1,1,1,1
+
+access_payment_plan_line_readonly,Payment Plan Line Readonly,model_realestate_payment_plan_line,group_dev_readonly,1,0,0,0
+access_payment_plan_line_agent,Payment Plan Line Agent,model_realestate_payment_plan_line,group_dev_agent,1,0,0,0
+access_payment_plan_line_manager,Payment Plan Line Manager,model_realestate_payment_plan_line,group_dev_manager,1,1,1,1
+
+access_plan_preview_agent,Plan Preview Agent,model_realestate_payment_plan_preview,group_dev_agent,1,1,1,1
+access_plan_preview_line_agent,Plan Preview Line Agent,model_realestate_payment_plan_preview_line,group_dev_agent,1,1,1,1
+
+access_reservation_schedule_readonly,Reservation Schedule Readonly,model_realestate_reservation_schedule_line,group_dev_readonly,1,0,0,0
+access_reservation_schedule_agent,Reservation Schedule Agent,model_realestate_reservation_schedule_line,group_dev_agent,1,1,1,1
+
+access_reservation_extension_readonly,Reservation Extension Readonly,model_realestate_reservation_extension,group_dev_readonly,1,0,0,0
+access_reservation_extension_agent,Reservation Extension Agent,model_realestate_reservation_extension,group_dev_agent,1,0,1,0
+access_reservation_extension_manager,Reservation Extension Manager,model_realestate_reservation_extension,group_dev_manager,1,1,1,0
+
+access_reservation_cancel_wizard,Reservation Cancel Wizard,model_realestate_reservation_cancel,group_dev_agent,1,1,1,1
+
+access_contract_party_readonly,Contract Party Readonly,model_realestate_sale_contract_party,group_dev_readonly,1,0,0,0
+access_contract_party_agent,Contract Party Agent,model_realestate_sale_contract_party,group_dev_agent,1,1,1,1
+access_contract_party_manager,Contract Party Manager,model_realestate_sale_contract_party,group_dev_manager,1,1,1,1
+
+access_contract_prop_line_readonly,Contract Property Line Readonly,model_realestate_sale_contract_property_line,group_dev_readonly,1,0,0,0
+access_contract_prop_line_agent,Contract Property Line Agent,model_realestate_sale_contract_property_line,group_dev_agent,1,1,1,1
+access_contract_prop_line_manager,Contract Property Line Manager,model_realestate_sale_contract_property_line,group_dev_manager,1,1,1,1
+
+access_amendment_readonly,Amendment Readonly,model_realestate_sale_contract_amendment,group_dev_readonly,1,0,0,0
+access_amendment_agent,Amendment Agent,model_realestate_sale_contract_amendment,group_dev_agent,1,1,1,0
+access_amendment_manager,Amendment Manager,model_realestate_sale_contract_amendment,group_dev_manager,1,1,1,1
+
+access_inst_adjustment_readonly,Instalment Adjustment Readonly,model_realestate_sale_installment_adjustment,group_dev_readonly,1,0,0,0
+access_inst_adjustment_agent,Instalment Adjustment Agent,model_realestate_sale_installment_adjustment,group_dev_agent,1,1,1,0
+access_inst_adjustment_manager,Instalment Adjustment Manager,model_realestate_sale_installment_adjustment,group_dev_manager,1,1,1,0
+
+access_wiz_restructure,Restructure Wizard,model_realestate_contract_restructure,group_dev_manager,1,1,1,1
+access_wiz_restructure_line,Restructure Wizard Line,model_realestate_contract_restructure_line,group_dev_manager,1,1,1,1
+access_wiz_settlement,Settlement Wizard,model_realestate_contract_settlement,group_dev_manager,1,1,1,1
+access_wiz_cancel,Contract Cancel Wizard,model_realestate_contract_cancel,group_dev_manager,1,1,1,1
+access_wiz_unit_swap,Unit Swap Wizard,model_realestate_contract_unit_swap,group_dev_manager,1,1,1,1
+access_wiz_transfer,Transfer Wizard,model_realestate_contract_transfer,group_dev_manager,1,1,1,1
+access_realestate_property_dev_readonly,Property — Developer Readonly,atmta_property_core.model_realestate_property,group_dev_readonly,1,0,0,0
+access_realestate_property_dev_manager,Property — Developer Manager,atmta_property_core.model_realestate_property,group_dev_manager,1,1,1,0
+access_property_image_dev_readonly,Property Image — Developer Readonly,atmta_property_core.model_property_image,group_dev_readonly,1,0,0,0
+access_property_image_dev_manager,Property Image — Developer Manager,atmta_property_core.model_property_image,group_dev_manager,1,1,1,1

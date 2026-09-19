@@ -21,6 +21,12 @@ class PlanRegion(models.Model):
         'realestate.property', required=True, ondelete='cascade', index=True,
         help="The child property this region links to.",
     )
+    company_id = fields.Many2one(
+        related='parent_property_id.company_id', store=True, index=True,
+        readonly=True,
+        help="Stored related on the property carrying the plan. Phase 0 found "
+             "this model readable and writable across companies by every "
+             "internal user.")
     label = fields.Char(
         string='Hover Label',
         help="Short text shown on hover. Defaults to the target's name.",
@@ -47,6 +53,15 @@ class PlanRegion(models.Model):
          'UNIQUE(parent_property_id, target_property_id)',
          'A child property can only have one region on its parent plan.'),
     ]
+
+    @api.depends('label', 'target_property_id.display_name')
+    def _compute_display_name(self):
+        # The model has no `name`, so Odoo 18 showed "realestate.plan.region,7"
+        # wherever a region was displayed.
+        for rec in self:
+            rec.display_name = (
+                rec.label or rec.target_property_id.display_name
+                or _('Region %s', rec.id))
 
     @api.constrains('polygon')
     def _check_polygon(self):

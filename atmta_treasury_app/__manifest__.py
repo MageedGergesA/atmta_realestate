@@ -17,9 +17,10 @@ sale contracts alike, and therefore wrongly filed under Leasing.
 Group gating mirrors the legacy menus exactly, using the existing
 `real_estate_checks` groups.
 """,
-    'author': "Atmta", 'license': 'LGPL-3', 'version': '18.0.0.1.0',
+    'author': "Atmta", 'license': 'LGPL-3', 'version': '18.0.0.2.0',
     'category': 'Real Estate',
-    'depends': ['real_estate_checks', 'atmta_v2_pilot'],
-    'data': ['views/menus.xml'],
+    'depends': ['real_estate_checks'],
+    'uninstall_hook': 'uninstall_hook',
+    'data': ['views/menus.xml', 'data/retire_legacy_navigation.xml'],
     'installable': True, 'application': True, 'auto_install': False,
 }

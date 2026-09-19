@@ -22,7 +22,7 @@
     <record id="view_project_form_boundary_overlay" model="ir.ui.view">
         <field name="name">realestate.project.form.boundary_overlay</field>
         <field name="model">realestate.project</field>
-        <field name="inherit_id" ref="real_estate_developer.view_project_form"/>
+        <field name="inherit_id" ref="real_estate_developer.view_project_form_developer"/>
         <field name="arch" type="xml">
             <xpath expr="//page[@name='plot_boundary']/field[@name='boundary_point_ids']" position="before">
                 <group>
@@ -34,6 +34,19 @@
                             georeferenced across the polygon on the map below
                             once you have 3+ boundary points.
                         </div>
+                        <!-- The 2D plan is a gallery asset: replacing it sends a
+                             ready or published gallery back to draft
+                             (visual_config.write), which used to happen with
+                             no sign on this tab. -->
+                        <field name="visual_publication_state" invisible="1"/>
+                        <div class="alert alert-warning small mb-0 o_re_master_plan_unpublish_warning"
+                             role="alert" colspan="2"
+                             invisible="visual_publication_state not in ('ready', 'published', 'archived')">
+                            This plan is part of the project's Sales Gallery.
+                            Replacing or removing it returns the gallery to
+                            Draft: it goes offline and must be validated and
+                            published again (Sales Gallery tab).
+                        </div>
                     </group>
                 </group>
             </xpath>
@@ -43,7 +56,7 @@
     <record id="view_project_form_plan_inherit" model="ir.ui.view">
         <field name="name">realestate.project.form.plan</field>
         <field name="model">realestate.project</field>
-        <field name="inherit_id" ref="real_estate_developer.view_project_form"/>
+        <field name="inherit_id" ref="atmta_project_core.view_project_form"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page string="2D Plan" name="plan_drill">

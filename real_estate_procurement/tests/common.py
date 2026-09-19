@@ -11,6 +11,37 @@ from odoo import fields
 from odoo.tests.common import TransactionCase
 
 
+def module_installed(env, name):
+    """Whether an addon is installed in the database the test runs in."""
+    return bool(env['ir.module.module'].sudo().search_count(
+        [('name', '=', name), ('state', '=', 'installed')]))
+
+
+def groups_of(env, xmlids):
+    """Resolve group identifiers, leaving out those of modules not installed.
+
+    This module no longer depends on Rental or Developer, and some tests hand a
+    user one of their groups alongside the role under test. A group is left out
+    only when its module is not installed; a missing group of an installed module
+    still raises, so a mistyped identifier is never silently ignored."""
+    groups = env['res.groups']
+    for xmlid in xmlids:
+        if module_installed(env, xmlid.split('.', 1)[0]):
+            groups |= env.ref(xmlid)
+    return groups
+
+
+def optional_group(env, xmlid):
+    """A security group from a module this one no longer depends on.
+
+    Some tests hand a user a Rental or Developer group alongside their own role.
+    When that module is installed this returns the group and the test behaves
+    exactly as before; when it is not, it returns an empty recordset and the test
+    runs on the access this module grants by itself. A missing group of an
+    installed module still raises."""
+    return groups_of(env, [xmlid])
+
+
 class ProcurementCommon(TransactionCase):
     """Base fixtures.
 
@@ -236,7 +267,7 @@ class ProcurementCommon(TransactionCase):
             'name': login, 'login': login, 'email': '%s@example.com' % login,
             'company_id': self.company.id,
             'company_ids': [(6, 0, self.company.ids)],
-            'groups_id': [(6, 0, [self.env.ref(g).id for g in groups])],
+            'groups_id': [(6, 0, groups_of(self.env, groups).ids)],
         })
         return user
 

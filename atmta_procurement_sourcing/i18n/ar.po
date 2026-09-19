@@ -1,0 +1,2802 @@
+# Translation of Odoo Server.
+# This file contains the Arabic translation of the following modules:
+# 	* atmta_procurement_sourcing
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:13+0000\n"
+"PO-Revision-Date: 2026-09-17 10:13+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/material_request_sourcing.py:0
+msgid ""
+"%(count)s request(s) for quotation prepared: %(vendors)s. Nothing is "
+"committed until an order is confirmed."
+msgstr ""
+"تم تجهيز %(count)s طلب عرض سعر: %(vendors)s. لا يلتزم بشيء حتى يتم تأكيد "
+"أمر."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid ""
+"%(line)s has %(remaining)s left to source and this event asks for %(asked)s."
+" Sourcing the same demand twice would put one requirement in two tenders."
+msgstr ""
+"المتبقي للطرح في %(line)s هو %(remaining)s وهذه المناقصة تطلب %(asked)s. طرح"
+" الطلب نفسه مرتين سيضع احتياجًا واحدًا في مناقصتين."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_clarification.py:0
+msgid ""
+"%(name)s changes %(subject)s. Vendors priced the current version, so this "
+"goes out as an addendum — issue one from the tender and the clarification "
+"will be attached to it. Answering in text would move the basis without "
+"telling anybody it moved."
+msgstr ""
+"%(name)s يغير %(subject)s. سعر الموردون النسخة الحالية، لذا يصدر هذا كملحق —"
+" أصدر ملحقًا من المناقصة وسيرفق الاستيضاح به. الإجابة نصيًا ستغير الأساس دون"
+" إبلاغ أحد بتغيره."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid ""
+"%(name)s is what %(vendor)s submitted at %(when)s. It cannot be edited — "
+"record a revision instead, so that both what was offered and what replaced "
+"it survive."
+msgstr ""
+"%(name)s هو ما قدمه %(vendor)s في %(when)s. لا يمكن تعديله — سجل مراجعة "
+"بدلًا من ذلك، ليبقى ما تم تقديمه وما حل محله معًا."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid ""
+"%(user)s recorded this submission. Approving your own late exception is off "
+"by default — the point of the exception is that somebody else agreed."
+msgstr ""
+"سجل %(user)s هذا التقديم. اعتماد استثناء التأخير الخاص بك معطل افتراضيًا — "
+"فالغاية من الاستثناء أن يوافق عليه شخص آخر."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_invitation.py:0
+msgid ""
+"%(vendor)s cannot be invited to %(event)s.\n"
+"\n"
+"%(why)s\n"
+"\n"
+"Vendor qualification policy is %(policy)s. Lift the restriction or qualify the vendor — an invitation is a governance act, not a convenience."
+msgstr ""
+"لا يمكن دعوة %(vendor)s إلى %(event)s.\n"
+"\n"
+"%(why)s\n"
+"\n"
+"سياسة تأهيل الموردين هي %(policy)s. ارفع القيد أو أهل المورد — فالدعوة إجراء حوكمة وليست تسهيلًا."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid "%s belongs to another company."
+msgstr "%s يتبع شركة أخرى."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid ""
+"%s consumes no authorised demand. A tender with no approved requisition "
+"behind it has no authority."
+msgstr ""
+"%s لا يستهلك أي طلب معتمد. المناقصة التي لا يسندها طلب شراء معتمد لا صلاحية "
+"لها."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid ""
+"%s declined this tender. Recording a bid for them would contradict their own"
+" answer."
+msgstr "رفض %s هذه المناقصة. تسجيل عطاء له سيناقض إجابته."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid "%s has no RFQ to take a submission from."
+msgstr "لا يوجد لدى %s طلب عرض سعر لاستلام تقديم منه."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_invitation.py:0
+msgid "%s has no scope, so there is nothing to ask a vendor to quote."
+msgstr "لا يوجد نطاق في %s، فلا يوجد ما يطلب من المورد تسعيره."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid ""
+"%s has no scope. Publishing an empty tender asks vendors to quote nothing."
+msgstr "لا يوجد نطاق في %s. نشر مناقصة فارغة يطلب من الموردين تسعير لا شيء."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid "%s has nothing left to source."
+msgstr "لم يتبق شيء للطرح في %s."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid ""
+"%s is %s. Inviting a vendor now would be inviting them to something that is "
+"over."
+msgstr "%s حالتها %s. دعوة مورد الآن تعني دعوته إلى شيء انتهى."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid "%s is already invited to %s."
+msgstr "%s مدعو بالفعل إلى %s."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid "%s is already published or closed."
+msgstr "%s منشورة أو مغلقة بالفعل."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid "%s is cancelled."
+msgstr "%s ملغاة."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid "%s is demand for %s, and this event sources %s."
+msgstr "%s طلب خاص بـ %s، وهذه المناقصة تطرح %s."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid "%s is not approved demand, so it cannot authorise a tender."
+msgstr "%s ليس طلبًا معتمدًا، لذا لا يمكنه تفويض مناقصة."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_invitation.py:0
+msgid "%s is not published yet."
+msgstr "%s غير منشورة بعد."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid "%s is not published, so nothing can be submitted against it."
+msgstr "%s غير منشورة، لذا لا يمكن تقديم أي شيء عليها."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid ""
+"%s is published. Its basis changes by addendum, so that vendors are told "
+"what changed and when."
+msgstr "%s منشورة. يتغير أساسها بملحق، ليبلغ الموردون بما تغير ومتى."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid ""
+"%s is submitted evidence. Withdraw it — deleting it would make the tender "
+"file unexplainable."
+msgstr "%s دليل مقدم. اسحبه — فحذفه سيجعل ملف المناقصة غير قابل للتفسير."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid "%s was not late."
+msgstr "%s لم يكن متأخرًا."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_invitation.py:0
+msgid "- Not eligible (%s)."
+msgstr "- غير مؤهل (%s)."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.constraint,message:atmta_procurement_sourcing.constraint_realestate_procurement_bid_response_revision_uniq
+msgid "A bid revision number is used once per invitation."
+msgstr "رقم مراجعة العطاء يستخدم مرة واحدة لكل دعوة."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__award_readiness
+msgid ""
+"A description of where this tender stands on awarding, written by the M7 "
+"upgrade. It confers nothing: a tender with a finished evaluation is labelled"
+" as awaiting a decision, never given one."
+msgstr ""
+"وصف لموقف هذه المناقصة من الترسية، كتبته ترقية M7. لا يمنح شيئًا: المناقصة "
+"ذات التقييم المكتمل توصف بأنها بانتظار قرار، ولا يتخذ لها قرار."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__evaluation_readiness
+msgid ""
+"A description of where this tender stands, written by the M6 upgrade. It is "
+"not an evaluation and confers no result: a closed tender is labelled as "
+"awaiting one, never given one."
+msgstr ""
+"وصف لموقف هذه المناقصة، كتبته ترقية M6. ليس تقييمًا ولا يمنح نتيجة: المناقصة"
+" المغلقة توصف بأنها بانتظار التقييم، ولا تمنح نتيجة."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid "A late bid carries no record of the policy applied to it."
+msgstr "العطاء المتأخر لا يحمل سجلًا بالسياسة المطبقة عليه."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid "A published tender still has a draft version attached."
+msgstr "مناقصة منشورة لا تزال مرتبطة بنسخة مسودة."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid "A received bid answers a superseded tender version."
+msgstr "عطاء مستلم يجيب على نسخة مناقصة تم استبدالها."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid "A response is held against an addendum nobody acknowledged."
+msgstr "رد محتجز على ملحق لم يقر أحد باستلامه."
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.actions.act_window,help:atmta_procurement_sourcing.action_sourcing_event
+msgid ""
+"A sourcing event invites vendors, issues a tender and records what\n"
+"               they submitted. It moves no money: authorisation stays where M3 put\n"
+"               it until an award is made."
+msgstr ""
+"المناقصة تدعو الموردين وتصدر وثائق الطرح وتسجل ما قدموه. ولا تحرك أي أموال: "
+"تبقى الصلاحية حيث وضعتها M3 حتى تتم الترسية."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid "A sourcing event names a project from another company."
+msgstr "مناقصة تشير إلى مشروع تابع لشركة أخرى."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.constraint,message:atmta_procurement_sourcing.constraint_realestate_procurement_sourcing_event_name_uniq
+msgid "A sourcing reference must be unique per company."
+msgstr "يجب أن يكون مرجع المناقصة فريدًا لكل شركة."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid "A tender RFQ is confirmed, which M5 has no award to justify."
+msgstr "طلب عرض سعر لمناقصة مؤكد، ولا توجد لدى M5 ترسية تبرره."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid ""
+"A tender allocation has lost its requisition lineage, so M7 cannot recover "
+"its cost coding."
+msgstr ""
+"فقد تخصيص مناقصة ارتباطه بطلب الشراء، لذا لا تستطيع M7 استرجاع ترميز التكلفة"
+" الخاص به."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid "A tender has two versions with the same revision number."
+msgstr "توجد لمناقصة نسختان برقم المراجعة نفسه."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.constraint,message:atmta_procurement_sourcing.constraint_realestate_procurement_sourcing_version_revision_uniq
+msgid "A tender revision number is issued once per sourcing event."
+msgstr "رقم مراجعة المناقصة يصدر مرة واحدة لكل مناقصة."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid "A tender sources more than the requisition authorised."
+msgstr "مناقصة تطرح أكثر مما اعتمده طلب الشراء."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.constraint,message:atmta_procurement_sourcing.constraint_realestate_procurement_sourcing_acknowledgement_version_uniq
+msgid "A vendor acknowledges a tender version once."
+msgstr "يقر المورد باستلام نسخة المناقصة مرة واحدة."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.constraint,message:atmta_procurement_sourcing.constraint_realestate_procurement_sourcing_invitation_vendor_uniq
+msgid "A vendor is invited to a sourcing event once."
+msgstr "يدعى المورد إلى المناقصة مرة واحدة."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_clarification.py:0
+msgid "A vendor question needs the vendor who asked it."
+msgstr "سؤال المورد يحتاج إلى تحديد المورد الذي طرحه."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_clarification.py:0
+msgid "A vendor-only answer needs to name the vendor it is for."
+msgstr "الإجابة الخاصة بمورد واحد تحتاج إلى تحديد المورد المقصود."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid "A withdrawn bid is still the vendor's current response."
+msgstr "العطاء المسحوب لا يزال هو الرد الحالي للمورد."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__above_authorisation
+msgid "Above Authorisation"
+msgstr "يتجاوز الاعتماد"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_bid_response__policy_applied__allow_with_warning
+msgid "Accept and Flag"
+msgstr "قبول مع وضع علامة"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid "Accepting a late bid is a Procurement Manager's decision."
+msgstr "قبول العطاء المتأخر قرار يعود إلى مدير المشتريات."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_invitation__state__acknowledged
+msgid "Acknowledged"
+msgstr "تم الإقرار بالاستلام"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_acknowledgement__acknowledged_on
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__acknowledged_on
+msgid "Acknowledged On"
+msgstr "تاريخ الإقرار بالاستلام"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__acknowledged_version_id
+msgid "Acknowledged Version"
+msgstr "النسخة المقر باستلامها"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__acknowledgement_ids
+msgid "Acknowledgement"
+msgstr "الإقرار بالاستلام"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__acknowledgement_outstanding
+msgid "Acknowledgement Outstanding"
+msgstr "الإقرار بالاستلام معلق"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_invitation.py:0
+msgid "Acknowledgement of %(version)s recorded by %(user)s (%(method)s)."
+msgstr "سجل %(user)s الإقرار باستلام %(version)s (%(method)s)."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid ""
+"Acknowledgement of %s has not been recorded, and company policy requires it "
+"before a response is valid."
+msgstr ""
+"لم يسجل الإقرار باستلام %s، وسياسة الشركة تشترطه قبل أن يكون الرد صالحًا."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__message_needaction
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__message_needaction
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__message_needaction
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__message_needaction
+msgid "Action Needed"
+msgstr "إجراء مطلوب"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__activity_ids
+msgid "Activities"
+msgstr "الأنشطة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "زخرفة استثناء النشاط"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__actual_closed_datetime
+msgid "Actual Closed Datetime"
+msgstr "تاريخ ووقت الإغلاق الفعلي"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__addendum_ack_policy
+msgid "Addendum Acknowledgement"
+msgstr "الإقرار بالملحق"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid "Addendum issued as %(version)s: %(reason)s"
+msgstr "تم إصدار ملحق باسم %(version)s: %(reason)s"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__administrative_status
+msgid "Administrative Status"
+msgstr "الحالة الإدارية"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__require_validity_date
+msgid "Administrative requirement only."
+msgstr "متطلب إداري فقط."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__require_bid_document
+msgid ""
+"Administrative requirement only. What is *in* the document is M6's business,"
+" not this module's."
+msgstr ""
+"متطلب إداري فقط. محتوى المستند من اختصاص M6، وليس من اختصاص هذه الوحدة."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_bid_response__administrative_status
+msgid ""
+"Administrative standing only. Nothing here says whether the offer is any "
+"good: no technical result, no commercial ranking and no recommendation. That"
+" is M6."
+msgstr ""
+"الوضع الإداري فقط. لا شيء هنا يحدد جودة العرض: لا نتيجة فنية ولا ترتيب مالي "
+"ولا توصية. فذلك من اختصاص M6."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_bid_response__administrative_status__complete
+msgid "Administratively Complete"
+msgstr "مكتمل إداريًا"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid ""
+"Administratively complete. This says nothing about the merits of the offer."
+msgstr "مكتمل إداريًا. وهذا لا يعني شيئًا عن جدارة العرض."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_clarification__visibility__all_invited
+msgid "All Invited Vendors"
+msgstr "جميع الموردين المدعوين"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_line__allocation_ids
+msgid "Allocation"
+msgstr "تخصيص الوحدة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__evaluation_readiness__ambiguous
+msgid "Ambiguous"
+msgstr "غير محدد بوضوح"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response_line__amount_untaxed
+msgid "Amount Untaxed"
+msgstr "المبلغ غير شامل الضريبة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__resubmission_required
+msgid ""
+"An addendum changed the basis after this vendor responded. Their existing "
+"bid stands as submitted against the old version; a new revision is what "
+"answers the new one."
+msgstr ""
+"غير ملحق أساس المناقصة بعد رد هذا المورد. يبقى عطاؤه الحالي كما قدم مقابل "
+"النسخة القديمة؛ والرد على النسخة الجديدة يكون بمراجعة جديدة."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid ""
+"An addendum changes what vendors are quoting. %s is not published, so there "
+"is nothing to amend."
+msgstr "الملحق يغير ما يسعره الموردون. %s غير منشورة، فلا يوجد ما يعدل."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid ""
+"An addendum without a reason is an unexplained change to a published basis."
+msgstr "الملحق دون سبب هو تغيير غير مبرر لأساس منشور."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid ""
+"An invitation carries no eligibility snapshot, so why the vendor was allowed"
+" to bid cannot be answered."
+msgstr ""
+"لا تحمل الدعوة لقطة للأهلية، فلا يمكن معرفة سبب السماح للمورد بتقديم العطاء."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid ""
+"An operational RFQ no longer matches the bid recorded from it. Normal after "
+"a native compare, and exactly why the snapshot exists."
+msgstr ""
+"طلب عرض سعر تشغيلي لم يعد يطابق العطاء المسجل منه. هذا طبيعي بعد المقارنة "
+"الأصلية في النظام، وهو بالضبط سبب وجود اللقطة."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__answer
+msgid "Answer"
+msgstr "الإجابة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_clarification__state__answered
+msgid "Answered"
+msgstr "تمت الإجابة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__answered_by_id
+msgid "Answered By"
+msgstr "أجاب"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__answered_on
+msgid "Answered On"
+msgstr "تاريخ الإجابة"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid ""
+"Answers %(had)s; the tender is now at %(now)s. The offer stands as submitted"
+" — a new revision is needed against the current basis."
+msgstr ""
+"يجيب على %(had)s؛ والمناقصة الآن عند %(now)s. يبقى العرض كما قدم — ويلزم "
+"تقديم مراجعة جديدة على الأساس الحالي."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__anticipated_award_date
+msgid "Anticipated Award Date"
+msgstr "تاريخ الترسية المتوقع"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/material_request_sourcing.py:0
+msgid "Approve %s before sourcing it."
+msgstr "اعتمد %s قبل طرحه."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid ""
+"Ask the vendor to resubmit against the current basis. The existing bid stays"
+" as it is."
+msgstr ""
+"اطلب من المورد إعادة التقديم على الأساس الحالي. يبقى العطاء الحالي كما هو."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__version_id
+msgid "Asked Against"
+msgstr "مطروح على النسخة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__asked_on
+msgid "Asked On"
+msgstr "تاريخ السؤال"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_clarification__visibility__vendor_only
+msgid "Asking Vendor Only"
+msgstr "المورد السائل فقط"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__attachment_count
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_bid_response_line__purchase_order_line_id
+msgid "Audit reference only. Nothing here is computed from it."
+msgstr "مرجع للتدقيق فقط. لا يحتسب منه أي شيء هنا."
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_list
+msgid "Authorised"
+msgstr "معتمد"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_demand_allocation__authorised_amount
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__authorised_amount
+msgid "Authorised Amount"
+msgstr "المبلغ المعتمد تعاقديًا"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__allocation_ids
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Authorised Demand"
+msgstr "الطلب المعتمد"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_demand_allocation__project_id
+msgid "Auto-derived from the source document when applicable."
+msgstr "يُستنتج تلقائيًا من المستند المصدر عند الاقتضاء."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_invitation__response_status__awaiting
+msgid "Awaiting Response"
+msgstr "بانتظار الرد"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__award_readiness__award_approved
+msgid "Award Approved — Orders Not Yet Confirmed"
+msgstr "الترسية معتمدة — الأوامر لم تؤكد بعد"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__award_readiness__award_in_review
+msgid "Award Awaiting Approval"
+msgstr "الترسية بانتظار الاعتماد"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__award_readiness__award_drafted
+msgid "Award Drafted"
+msgstr "مسودة الترسية"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__award_readiness
+msgid "Award Readiness"
+msgstr "جاهزية الترسية"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__award_readiness__awarded
+msgid "Awarded and Issued"
+msgstr "تمت الترسية والإصدار"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__attachment_ids
+msgid "Bid Documents"
+msgstr "مستندات العطاء"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__bid_response_ids
+msgid "Bid Response"
+msgstr "العطاء"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.actions.act_window,name:atmta_procurement_sourcing.action_bid_response
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_bid_response_list
+msgid "Bid Responses"
+msgstr "العطاءات"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid "Bid Rev %(rev)s recorded at %(when)s against %(version)s."
+msgstr "سجلت مراجعة العطاء %(rev)s في %(when)s مقابل %(version)s."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__revision
+msgid "Bid Revision"
+msgstr "مراجعة العطاء"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__require_validity_date
+msgid "Bid Validity Required"
+msgstr "صلاحية العطاء مطلوبة"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_list
+msgid "Bids"
+msgstr "العطاءات"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Bids Received"
+msgstr "العطاءات المستلمة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__buyer_id
+msgid "Buyer"
+msgstr "مسؤول الشراء"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_clarification__clarification_type__buyer_clarification
+msgid "Buyer Clarification"
+msgstr "استيضاح من مسؤول الشراء"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_clarification__state__cancelled
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__award_readiness__cancelled
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__state__cancelled
+msgid "Cancelled"
+msgstr "ملغى"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_invitation__decline_reason_category__capacity
+msgid "Capacity"
+msgstr "الطاقة الاستيعابية"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__clarification_ids
+msgid "Clarification"
+msgstr "الاستيضاح"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_clarification.py:0
+msgid "Clarification %s: %s"
+msgstr "الاستيضاح %s: %s"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__clarification_deadline
+msgid "Clarification Deadline"
+msgstr "الموعد النهائي للاستيضاحات"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__clarification_type
+msgid "Clarification Type"
+msgstr "نوع الاستيضاح"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Clarifications"
+msgstr "الاستيضاحات"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid ""
+"Clear the current response. Do not promote the superseded revision "
+"underneath it."
+msgstr "امسح الرد الحالي. لا ترق المراجعة المستبدلة التي تحته."
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Close Tender"
+msgstr "إغلاق المناقصة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__state__closed
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_search
+msgid "Closed"
+msgstr "مغلق"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid ""
+"Closed with %s response(s). Closing ends bidding; it does not evaluate or "
+"award anything."
+msgstr ""
+"أغلقت بعدد %s من الردود. الإغلاق ينهي تقديم العطاءات؛ ولا يقيم أو يرسي أي "
+"شيء."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__evaluation_readiness__closed_unevaluated
+msgid "Closed — Awaiting Evaluation"
+msgstr "مغلقة — بانتظار التقييم"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Coding"
+msgstr "الترميز"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_demand_allocation__coding_display
+msgid "Coding Display"
+msgstr "عرض الترميز"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_clarification__material_subject__commercial_terms
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_invitation__decline_reason_category__commercial_terms
+msgid "Commercial Terms"
+msgstr "الشروط التجارية"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__award_readiness__committed_without_award
+msgid "Committed Without An Award"
+msgstr "ملتزم به دون ترسية"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response_line__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_acknowledgement__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_demand_allocation__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_line__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_version__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__addendum_ack_policy__company
+msgid "Company Default"
+msgstr "افتراضي الشركة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__sourcing_method__competitive_tender
+msgid "Competitive Tender"
+msgstr "مناقصة تنافسية"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__completeness_notes
+msgid "Completeness Notes"
+msgstr "ملاحظات الاكتمال"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_invitation__decline_reason_category__conflict
+msgid "Conflict of Interest"
+msgstr "تعارض المصالح"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__contact_id
+msgid "Contact"
+msgstr "جهة الاتصال"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Context"
+msgstr "السياق"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid "Correct the company or the project."
+msgstr "صحح الشركة أو المشروع."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response_line__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_acknowledgement__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_demand_allocation__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_line__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_version__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response_line__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_acknowledgement__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_demand_allocation__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_line__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_version__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__currency_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response_line__currency_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_demand_allocation__currency_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__currency_id
+msgid "Currency"
+msgstr "العملة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__current_eligibility_eligible
+msgid "Current Eligibility Eligible"
+msgstr "الأهلية الحالية: مؤهل"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__current_eligibility_status
+msgid "Current Eligibility Status"
+msgstr "حالة الأهلية الحالية"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__current_response_id
+msgid "Current Response"
+msgstr "الرد الحالي"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__current_version_id
+msgid "Current Version"
+msgstr "النسخة الحالية"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Dates"
+msgstr "التواريخ"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_clarification__material_subject__deadline
+msgid "Deadline"
+msgstr "الموعد النهائي"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__deadline_applied
+msgid "Deadline Applied"
+msgstr "الموعد النهائي المطبق"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__decline_narrative
+msgid "Decline Narrative"
+msgstr "تفاصيل الاعتذار"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__decline_reason_category
+msgid "Decline Reason Category"
+msgstr "فئة سبب الاعتذار"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_invitation__response_status__declined
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_invitation__state__declined
+msgid "Declined"
+msgstr "اعتذر"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__declined_on
+msgid "Declined On"
+msgstr "تاريخ الاعتذار"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_invitation__decline_reason_category__delivery
+msgid "Delivery / Programme"
+msgstr "التسليم / البرنامج الزمني"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__response_status
+msgid ""
+"Derived, and deliberately not the same field as `state`: `no_response` is "
+"only true once the deadline has actually passed. Before it, silence is a "
+"vendor still thinking."
+msgstr ""
+"قيمة مشتقة، وعمدًا ليست الحقل نفسه `state`: `no_response` لا تصبح صحيحة إلا "
+"بعد انقضاء الموعد النهائي فعلًا. وقبله، يعني الصمت أن المورد لا يزال يدرس."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__description
+msgid "Description"
+msgstr "الوصف"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response_line__deviation_notes
+msgid "Deviation Notes"
+msgstr "ملاحظات الانحراف"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__sourcing_method__direct_source
+msgid "Direct Source"
+msgstr "إسناد مباشر"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response_line__discount
+msgid "Discount"
+msgstr "الخصم"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response_line__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_acknowledgement__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_demand_allocation__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_line__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_version__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_clarification__material_subject__documents
+msgid "Document Basis"
+msgstr "أساس المستندات"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_bid_response__state__draft
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__state__draft
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_invitation__state__draft
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_version__state__draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__close_datetime
+msgid "Effective Close"
+msgstr "الإغلاق الفعلي"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_version__effective_close_datetime
+msgid "Effective Close Datetime"
+msgstr "تاريخ ووقت الإغلاق الفعلي"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid "Effective close: %s"
+msgstr "الإغلاق الفعلي: %s"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__eligibility_changed
+msgid "Eligibility Changed"
+msgstr "تغيرت الأهلية"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__eligibility_checked_on
+msgid "Eligibility Checked On"
+msgstr "تاريخ التحقق من الأهلية"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__eligibility_conditions
+msgid "Eligibility Conditions"
+msgstr "شروط الأهلية"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__eligibility_eligible
+msgid "Eligibility Eligible"
+msgstr "الأهلية: مؤهل"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__eligibility_payload
+msgid "Eligibility Payload"
+msgstr "بيانات الأهلية"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__eligibility_policy
+msgid "Eligibility Policy"
+msgstr "سياسة الأهلية"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__eligibility_qualified
+msgid "Eligibility Qualified"
+msgstr "الأهلية: التأهيل"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__eligibility_status
+msgid "Eligibility Status"
+msgstr "حالة الأهلية"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Eligible at invitation"
+msgstr "مؤهل عند الدعوة"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Eligible today"
+msgstr "مؤهل اليوم"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_acknowledgement__method__email_received
+msgid "Email Received from Vendor"
+msgstr "بريد إلكتروني مستلم من المورد"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__procurement_type__equipment
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_line__procurement_type__equipment
+msgid "Equipment"
+msgstr "المعدات"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid ""
+"Establish which award authorised it. Until M7 exists there is none, so this "
+"is a control that was bypassed."
+msgstr ""
+"حدد الترسية التي اعتمدته. لا توجد ترسية حتى تتوفر M7، لذا فهذا ضابط رقابي تم"
+" تجاوزه."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__evaluation_readiness__evaluated
+msgid "Evaluated in ATMTA"
+msgstr "تم التقييم في ATMTA"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__award_readiness__awaiting_award
+msgid "Evaluated — Awaiting an Award Decision"
+msgstr "تم التقييم — بانتظار قرار الترسية"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__evaluation_readiness__evaluation_candidate
+msgid "Evaluation Candidate"
+msgstr "مرشح التقييم"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__evaluation_readiness
+msgid "Evaluation Readiness"
+msgstr "جاهزية التقييم"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__event_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_acknowledgement__event_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__event_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_demand_allocation__event_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__event_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_line__event_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_version__event_id
+msgid "Event"
+msgstr "الحدث"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid "Event: %s"
+msgstr "المناقصة: %s"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_acknowledgement__attachment_ids
+msgid "Evidence"
+msgstr "الأدلة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_bid_response__amount_untaxed
+msgid ""
+"Exactly what the vendor submitted, in the currency they submitted it. Not "
+"normalised, not converted and not comparable across currencies — "
+"normalisation is M6."
+msgstr ""
+"المبلغ كما قدمه المورد تمامًا وبالعملة التي قدمه بها. غير موحد وغير محول ولا"
+" يمكن مقارنته بين العملات — التوحيد يتم في M6."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__exception_approved_by_id
+msgid "Exception Approved By"
+msgstr "استثناء معتمد بواسطة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__exception_approved_on
+msgid "Exception Approved On"
+msgstr "تاريخ اعتماد الاستثناء"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__exception_reason
+msgid "Exception Reason"
+msgstr "سبب الاستثناء"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__exception_required
+msgid "Exception Required"
+msgstr "يتطلب استثناء"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "أيقونة Font Awesome، مثل fa-tasks"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__sourcing_method__framework
+msgid "Framework / Reference Agreement"
+msgstr "اتفاقية إطارية / مرجعية"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_line__name
+msgid ""
+"Free text on purpose: subcontract and service scope routinely has no product"
+" record, and requiring one would push buyers into inventing catalogue items "
+"to run a tender."
+msgstr ""
+"نص حر عن قصد: نطاق عقود الباطن والخدمات غالبًا لا يقابله سجل منتج، واشتراط "
+"ذلك سيدفع مسؤولي الشراء إلى اختلاق بنود في الكتالوج لإجراء مناقصة."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_clarification__clarification_type__general
+msgid "General Clarification"
+msgstr "استيضاح عام"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_search
+msgid "Group By"
+msgstr "تجميع حسب"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__has_message
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__has_message
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__has_message
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__has_message
+msgid "Has Message"
+msgstr "يحتوي على رسالة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_acknowledgement__method
+msgid ""
+"How the confirmation reached us. ATMTA has no vendor portal in M5, so "
+"nothing here should be read as the vendor having clicked anything — "
+"`future_portal` exists so that portal acknowledgements stay distinguishable "
+"when one arrives."
+msgstr ""
+"كيف وصلنا التأكيد. لا تتوفر لدى ATMTA بوابة موردين في M5، لذا لا ينبغي فهم "
+"أي شيء هنا على أن المورد قد نقر على شيء — القيمة `future_portal` موجودة "
+"لتبقى إقرارات البوابة قابلة للتمييز عند توفرها."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__sourcing_method
+msgid ""
+"How the market is being approached. ATMTA does not implement public-"
+"procurement law: how many invitations or responses a method requires is "
+"company policy, not a property of the method."
+msgstr ""
+"طريقة التوجه إلى السوق. لا تطبق ATMTA نظام المشتريات الحكومية: عدد الدعوات "
+"أو العطاءات التي تتطلبها الطريقة هو سياسة للشركة وليس خاصية للطريقة."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response_line__id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_acknowledgement__id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_demand_allocation__id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_line__id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_version__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__activity_exception_icon
+msgid "Icon"
+msgstr "الأيقونة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "أيقونة للإشارة إلى نشاط استثنائي."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_bid_response__message_needaction
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__message_needaction
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__message_needaction
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا كان محددًا، فهناك رسائل جديدة تتطلب انتباهك."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_bid_response__message_has_error
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_bid_response__message_has_sms_error
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__message_has_error
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__message_has_sms_error
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__message_has_error
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__message_has_sms_error
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__message_has_error
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا كان محددًا، فبعض الرسائل بها خطأ في التسليم."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__state__review
+msgid "In Review"
+msgstr "قيد المراجعة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_bid_response__administrative_status__incomplete
+msgid "Incomplete"
+msgstr "غير مكتمل"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_clarification__visibility__internal
+msgid "Internal Only"
+msgstr "داخلي فقط"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__team_ids
+msgid ""
+"Internal participants. Confidential bid detail is readable by the buyer, "
+"this team and Procurement Managers."
+msgstr ""
+"المشاركون الداخليون. يمكن لمسؤول الشراء وهذا الفريق ومديري المشتريات الاطلاع"
+" على تفاصيل العطاءات السرية."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__invitation_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_acknowledgement__invitation_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__invitation_id
+msgid "Invitation"
+msgstr "الدعوة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__invitation_count
+msgid "Invitation Count"
+msgstr "عدد الدعوات"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_invitation__state__invited
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_list
+msgid "Invited"
+msgstr "مدعو"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__invited_on
+msgid "Invited On"
+msgstr "تاريخ الدعوة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__invitation_ids
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Invited Vendors"
+msgstr "الموردون المدعوون"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/material_request_sourcing.py:0
+msgid ""
+"Invited with governance gaps recorded:\n"
+"%s"
+msgstr ""
+"تمت الدعوة مع تسجيل ثغرات حوكمة:\n"
+"%s"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__is_evaluable
+msgid "Is Evaluable"
+msgstr "قابل للتقييم"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__message_is_follower
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__message_is_follower
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__message_is_follower
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__is_late
+msgid "Is Late"
+msgstr "متأخر"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__issue_datetime
+msgid "Issue Datetime"
+msgstr "تاريخ ووقت الإصدار"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid "Issue it as an addendum or remove it."
+msgstr "أصدره كملحق أو احذفه."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_version__state__issued
+msgid "Issued"
+msgstr "صادر"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__addendum_version_id
+msgid "Issued As"
+msgstr "صدر بصفة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_version__issued_on
+msgid "Issued On"
+msgstr "تاريخ الإصدار"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__version_id
+msgid "Issued Version"
+msgstr "النسخة المصدرة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response_line__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_acknowledgement__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_demand_allocation__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_line__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_version__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response_line__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_acknowledgement__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_demand_allocation__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_line__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_version__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__late_reason
+msgid "Late Reason"
+msgstr "سبب التأخير"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid "Late submission accepted by %(user)s: %(reason)s"
+msgstr "تم قبول التقديم المتأخر بواسطة %(user)s: %(reason)s"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_bid_response__administrative_status__late_exception_pending
+msgid "Late — Exception Pending"
+msgstr "متأخر — بانتظار الاستثناء"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_bid_response__administrative_status__late_rejected
+msgid "Late — Rejected by Policy"
+msgstr "متأخر — مرفوض وفق السياسة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__lateness_seconds
+msgid "Lateness Seconds"
+msgstr "مدة التأخير بالثواني"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__evaluation_readiness__legacy_external_evaluation
+msgid "Legacy / Evaluated Outside ATMTA"
+msgstr "القديم / تم التقييم خارج ATMTA"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__sourcing_method__limited_tender
+msgid "Limited Tender"
+msgstr "مناقصة محدودة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__line_ids
+msgid "Line"
+msgstr "البند"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_bid_response__policy_applied__exception_required
+msgid "Manager Exception Required"
+msgstr "يتطلب استثناء من المدير"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__procurement_type__material
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_line__procurement_type__material
+msgid "Material"
+msgstr "المواد"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__material_subject
+msgid "Material Subject"
+msgstr "الموضوع الجوهري"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__is_material
+msgid "Materially Changes the Tender"
+msgstr "يغير المناقصة جوهريًا"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_bid_response__is_evaluable
+msgid ""
+"May M6 evaluate this submission at all. A false value is an administrative "
+"statement — late and unexcused, superseded, withdrawn or answering a "
+"superseded basis — never a judgement about the offer."
+msgstr ""
+"هل يجوز لـ M6 تقييم هذا التقديم أصلًا. القيمة السالبة بيان إداري — متأخر دون"
+" عذر، أو مستبدل، أو مسحوب، أو يجيب على أساس مستبدل — وليست حكمًا على العرض "
+"أبدًا."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__message_has_error
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__message_has_error
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__message_has_error
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__message_ids
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__message_ids
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__message_ids
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_acknowledgement__method
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_search
+msgid "Method"
+msgstr "الطريقة"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid "Method: %s"
+msgstr "الطريقة: %s"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__procurement_type__mixed
+msgid "Mixed"
+msgstr "مختلط"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid "More than one received bid is current for the same vendor."
+msgstr "يوجد أكثر من عطاء مستلم ساري لنفس المورد."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "موعد نشاطي النهائي"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_search
+msgid "My Sourcing"
+msgstr "مناقصاتي"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__name
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response_line__name
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__name
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__name
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_line__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/material_request_sourcing.py:0
+msgid ""
+"Name the vendors to enquire with. Procurement no longer picks whichever "
+"supplier happens to be listed first — that was a purchase decision nobody "
+"made.%(hint)s"
+msgstr ""
+"حدد الموردين المراد الاستعلام منهم. لم تعد المشتريات تختار أول مورد يظهر في "
+"القائمة — فذلك كان قرار شراء لم يتخذه أحد.%(hint)s"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+#: code:addons/atmta_procurement_sourcing/models/sourcing_clarification.py:0
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid "New"
+msgstr "جديد"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "حدث التقويم للنشاط التالي"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_invitation__state__no_bid
+msgid "No Bid"
+msgstr "لا عطاء"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__no_bid_reason
+msgid "No Bid Reason"
+msgstr "سبب عدم تقديم عطاء"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_invitation__response_status__no_bid
+msgid "No Bid Returned"
+msgstr "أُعيد دون عطاء"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_invitation__decline_reason_category__no_interest
+msgid "No Interest"
+msgstr "لا يوجد اهتمام"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_invitation__response_status__no_response
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_invitation__state__no_response
+msgid "No Response"
+msgstr "لا يوجد رد"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid ""
+"No action. The snapshot is the evidence; the RFQ is the working document."
+msgstr "لا إجراء. اللقطة هي الدليل؛ وطلب عرض السعر هو مستند العمل."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid "No bid validity date was supplied."
+msgstr "لم يتم تقديم تاريخ صلاحية العطاء."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid "No submission document was attached."
+msgstr "لم يتم إرفاق مستند التقديم."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__award_readiness__not_evaluated
+msgid "Not Evaluated — Nothing to Award"
+msgstr "لم يُقيّم — لا شيء للترسية"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__notes
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_acknowledgement__notes
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__notes
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__notes
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_line__notes
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_bid_response__message_needaction_counter
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__message_needaction_counter
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__message_needaction_counter
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراء"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_bid_response__message_has_error_counter
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__message_has_error_counter
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__message_has_error_counter
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي بها خطأ في التسليم"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid "Only a draft event can be sent for review."
+msgstr "لا يمكن إرسال للمراجعة إلا مناقصة في حالة مسودة."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid "Only a published event can be closed."
+msgstr "لا يمكن إغلاق إلا مناقصة منشورة."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid "Only a received bid can be withdrawn."
+msgstr "لا يمكن سحب إلا عطاء مستلم."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_clarification__state__open
+msgid "Open"
+msgstr "فتح"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__evaluation_readiness__open_not_ready
+msgid "Open — Not Ready to Evaluate"
+msgstr "مفتوحة — غير جاهزة للتقييم"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__addendum_ack_policy__optional
+msgid "Optional"
+msgstr "اختياري"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__original_close_datetime
+msgid "Original Close Datetime"
+msgstr "تاريخ ووقت الإغلاق الأصلي"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid "Original issue."
+msgstr "الإصدار الأصلي."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_acknowledgement__method__other
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__sourcing_method__other
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_invitation__decline_reason_category__other
+msgid "Other"
+msgstr "أخرى"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_bid_response__administrative_status__pending_review
+msgid "Pending Review"
+msgstr "بانتظار المراجعة"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Planning"
+msgstr "التخطيط"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__policy_applied
+msgid "Policy Applied"
+msgstr "السياسة المطبقة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__previous_response_id
+msgid "Previous Response"
+msgstr "الرد السابق"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response_line__price_unit
+msgid "Price Unit"
+msgstr "سعر الوحدة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model,name:atmta_procurement_sourcing.model_realestate_procurement_sourcing_event
+msgid "Procurement Sourcing Event"
+msgstr "مناقصة المشتريات"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__procurement_type
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_line__procurement_type
+msgid "Procurement Type"
+msgstr "نوع الشراء"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response_line__product_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_line__product_id
+msgid "Product"
+msgstr "المنتج"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response_line__product_uom_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_line__product_uom_id
+msgid "Product Uom"
+msgstr "وحدة قياس المنتج"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_demand_allocation__project_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__project_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__project_id
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_search
+msgid "Project"
+msgstr "المشروع"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response_line__promised_date
+msgid "Promised Date"
+msgstr "التاريخ الموعود"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Publish"
+msgstr "نشر"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__state__published
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_search
+msgid "Published"
+msgstr "منشورة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_version__published_by_id
+msgid "Published By"
+msgstr "نشر بواسطة"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid "Published as %s."
+msgstr "نُشرت بصفة %s."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response_line__purchase_order_line_id
+msgid "Purchase Order Line"
+msgstr "بند أمر الشراء"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__qualification_id
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_invitation__decline_reason_category__qualification
+msgid "Qualification"
+msgstr "التأهيل"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__qualification_ref
+msgid "Qualification Ref"
+msgstr "مرجع التأهيل"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__qualification_valid_from
+msgid "Qualification Valid From"
+msgstr "التأهيل ساري من"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__qualification_valid_to
+msgid "Qualification Valid To"
+msgstr "التأهيل ساري حتى"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response_line__quantity
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_demand_allocation__quantity
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_line__quantity
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_clarification__material_subject__quantity
+msgid "Quantity"
+msgstr "الكمية"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__question
+msgid "Question"
+msgstr "السؤال"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__purchase_order_id
+msgid "RFQ"
+msgstr "طلب عرض السعر"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model,name:atmta_procurement_sourcing.model_realestate_material_request
+msgid "Real Estate Material Request"
+msgstr "طلب مواد عقاري"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model,name:atmta_procurement_sourcing.model_realestate_material_request_line
+msgid "Real Estate Material Request Line"
+msgstr "بند طلب مواد عقاري"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_version__reason
+msgid "Reason"
+msgstr "السبب"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_bid_response__state__received
+msgid "Received"
+msgstr "المستلم"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid ""
+"Received %(secs)s second(s) after the deadline. Company policy does not "
+"accept late submissions, so this is kept as evidence and is not evaluable."
+msgstr ""
+"استُلم بعد الموعد النهائي بـ %(secs)s ثانية. سياسة الشركة لا تقبل التقديمات "
+"المتأخرة، لذا يُحتفظ به كدليل وهو غير قابل للتقييم."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__received_datetime
+msgid "Received Datetime"
+msgstr "تاريخ ووقت الاستلام"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid ""
+"Received after the deadline and accepted under policy. It stays marked late."
+msgstr "استُلم بعد الموعد النهائي وقُبل وفق السياسة. يبقى مصنفًا كمتأخر."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid ""
+"Received after the deadline. A Procurement Manager must accept it by "
+"exception before it can be evaluated."
+msgstr ""
+"استُلم بعد الموعد النهائي. يجب أن يقبله مدير المشتريات كاستثناء قبل أن يمكن "
+"تقييمه."
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid ""
+"Received bids are evidence of what a vendor submitted.\n"
+"                                They are not evaluated or ranked here, and they do not\n"
+"                                change when the operational RFQ changes."
+msgstr ""
+"العطاءات المستلمة دليل على ما قدمه المورد. لا يتم تقييمها أو ترتيبها هنا، "
+"ولا تتغير عند تغير طلب عرض السعر التشغيلي."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid "Received bids are writable: the immutability guard is absent."
+msgstr ""
+"العطاءات المستلمة قابلة للتعديل: حماية عدم القابلية للتغيير غير موجودة."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid ""
+"Record the acknowledgement with its evidence, or accept the response cannot "
+"be evaluated."
+msgstr "سجّل الإقرار مع دليله، أو اقبل بأن العطاء لا يمكن تقييمه."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__recorded_by_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_acknowledgement__recorded_by_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__recorded_by_id
+msgid "Recorded By"
+msgstr "سجل بواسطة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_acknowledgement__method__buyer_recorded
+msgid "Recorded by Buyer"
+msgstr "سجله مسؤول الشراء"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid ""
+"Records created before M5 or written around the invitation API. Document "
+"rather than backfill: a snapshot invented today is not evidence of a "
+"decision made then."
+msgstr ""
+"سجلات أنشئت قبل M5 أو كُتبت متجاوزة واجهة الدعوات. وثّقها بدلًا من استكمالها"
+" بأثر رجعي: لقطة تُختلق اليوم ليست دليلًا على قرار اتُّخذ في حينه."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid ""
+"Reduce the allocation. Sourcing beyond authorised demand is buying something"
+" nobody approved."
+msgstr ""
+"خفّض التخصيص. التوريد بما يتجاوز الطلب المعتمد هو شراء شيء لم يعتمده أحد."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_bid_response__policy_applied__reject
+msgid "Reject"
+msgstr "رفض"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_demand_allocation__request_id
+msgid "Request"
+msgstr "الطلب"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_demand_allocation__request_line_id
+msgid "Request Line"
+msgstr "بند الطلب"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__sourcing_method__rfq
+msgid "Request for Quotation"
+msgstr "طلب عرض سعر"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_line__required_date
+msgid "Required Date"
+msgstr "التاريخ المطلوب"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__required_on_site_date
+msgid "Required On Site Date"
+msgstr "تاريخ الحاجة في الموقع"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__addendum_ack_policy__required_before_response
+msgid "Required before a response is valid"
+msgstr "مطلوب قبل اعتبار العطاء صالحًا"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__partner_id
+msgid "Required for a vendor question, and for a vendor-only answer."
+msgstr "مطلوب لسؤال المورد، وللإجابة الموجهة للمورد فقط."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_demand_allocation__reservation_id
+msgid "Reservation"
+msgstr "حجز الميزانية"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_invitation__response_status__responded
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_invitation__state__responded
+msgid "Responded"
+msgstr "تم الرد"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response_line__response_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__response_ids
+msgid "Response"
+msgstr "الرد"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__response_count
+msgid "Response Count"
+msgstr "عدد العطاءات"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__response_status
+msgid "Response Status"
+msgstr "حالة الرد"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid "Restore the link or remove the allocation."
+msgstr "استعد الرابط أو احذف التخصيص."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid "Restore the write guard in bid_response.py."
+msgstr "استعد حماية الكتابة في bid_response.py."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__resubmission_required
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_bid_response__administrative_status__resubmission_required
+msgid "Resubmission Required"
+msgstr "يتطلب إعادة التقديم"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid "Rev %s was issued and cannot be deleted."
+msgstr "تم إصدار المراجعة %s ولا يمكن حذفها."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid ""
+"Rev %s was issued on %s. Vendors quoted against it. Change the tender by "
+"addendum instead."
+msgstr ""
+"تم إصدار المراجعة %s بتاريخ %s. قدم الموردون أسعارهم بناءً عليها. عدّل "
+"المناقصة بملحق بدلًا من ذلك."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_version__revision
+msgid "Revision"
+msgstr "المراجعة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__rfq_count
+msgid "Rfq Count"
+msgstr "عدد طلبات عروض الأسعار"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "خطأ في إرسال الرسائل النصية القصيرة"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__line_ids
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_clarification__material_subject__scope
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Scope"
+msgstr "النطاق"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid "Scope:"
+msgstr "النطاق:"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Send for Review"
+msgstr "إرسال للمراجعة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_line__sequence
+msgid "Sequence"
+msgstr "المسلسل"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__procurement_type__service
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_line__procurement_type__service
+msgid "Service"
+msgstr "خدمة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__is_material
+msgid ""
+"Set when the answer would change what vendors are quoting. A material "
+"clarification is published as an addendum, never as text alone."
+msgstr ""
+"يُحدد عندما تغير الإجابة ما يسعّره الموردون. الاستيضاح الجوهري يُنشر كملحق، "
+"وليس كنص فقط أبدًا."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_acknowledgement__method__signed_document
+msgid "Signed Document"
+msgstr "مستند موقع"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__sourcing_method__single_source
+msgid "Single Source"
+msgstr "مصدر وحيد"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__purchase_order_id
+msgid "Source RFQ"
+msgstr "طلب عرض السعر المصدر"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Sourcing"
+msgstr "المناقصات"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Sourcing Event"
+msgstr "المناقصة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.actions.act_window,name:atmta_procurement_sourcing.action_sourcing_event
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_list
+msgid "Sourcing Events"
+msgstr "المناقصات"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model,name:atmta_procurement_sourcing.model_realestate_procurement_sourcing_audit
+msgid "Sourcing Integrity Audit"
+msgstr "تدقيق سلامة المناقصات"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response_line__sourcing_line_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_demand_allocation__sourcing_line_id
+msgid "Sourcing Line"
+msgstr "بند المناقصة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__sourcing_method
+msgid "Sourcing Method"
+msgstr "طريقة الطرح"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__team_ids
+msgid "Sourcing Team"
+msgstr "فريق المناقصة"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/material_request_sourcing.py:0
+msgid ""
+"Sourcing is a buyer's job. Raising the requisition and choosing who is asked"
+" to quote for it are deliberately not the same right."
+msgstr ""
+"الطرح مهمة مسؤول الشراء. رفع طلب الشراء واختيار من يُطلب منهم تقديم الأسعار "
+"له ليسا الصلاحية نفسها عن قصد."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_line__specification
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_clarification__material_subject__specification
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_invitation__decline_reason_category__specification
+msgid "Specification"
+msgstr "المواصفات"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__state
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__state
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__state
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__state
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_version__state
+msgid "State"
+msgstr "الحالة"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_search
+msgid "Status"
+msgstr "الحالة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الحالة بناءً على الأنشطة\n"
+"متأخرة: تاريخ الاستحقاق قد مضى\n"
+"اليوم: تاريخ النشاط هو اليوم\n"
+"مخطط لها: أنشطة مستقبلية."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_event__procurement_type__subcontract
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_line__procurement_type__subcontract
+msgid "Subcontract"
+msgstr "عقد من الباطن"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__require_bid_document
+msgid "Submission Document Required"
+msgstr "مستند التقديم مطلوب"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__amount_untaxed
+msgid "Submitted Amount (raw)"
+msgstr "المبلغ المقدم (خام)"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_bid_response__above_authorisation
+msgid ""
+"Submitted more than the authorised demand behind this tender. Flagged, never"
+" accommodated: the authorisation does not grow because the market is "
+"expensive."
+msgstr ""
+"قُدم بأكثر من الطلب المعتمد لهذه المناقصة. يُنبه عليه ولا يُستوعب أبدًا: "
+"الاعتماد لا يزيد لأن السوق مرتفع الأسعار."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__authorised_amount
+msgid ""
+"Sum of the authorised demand this event consumes. It is a ceiling to compare"
+" bids against, not money this event holds."
+msgstr ""
+"مجموع الطلب المعتمد الذي تستهلكه هذه المناقصة. هو سقف تُقارن به العطاءات، "
+"وليس أموالًا تحتجزها المناقصة."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid "Supersede or withdraw the duplicates; do not delete them."
+msgstr "استبدل التكرارات أو اسحبها؛ لا تحذفها."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_bid_response__state__superseded
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_version__state__superseded
+msgid "Superseded"
+msgstr "مستبدل"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__superseded_by_id
+msgid "Superseded By"
+msgstr "استبدل بـ"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid "Superseded by a later revision."
+msgstr "استُبدل بمراجعة لاحقة."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_version__supersedes_id
+msgid "Supersedes"
+msgstr "يحل محل"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.actions.act_window,help:atmta_procurement_sourcing.action_sourcing_event
+msgid "Take authorised demand to market"
+msgstr "اطرح الطلب المعتمد في السوق"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model,name:atmta_procurement_sourcing.model_realestate_procurement_sourcing_acknowledgement
+msgid "Tender Addendum Acknowledgement"
+msgstr "إقرار ملحق المناقصة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model,name:atmta_procurement_sourcing.model_realestate_procurement_bid_response
+msgid "Tender Bid Response"
+msgstr "عطاء المناقصة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model,name:atmta_procurement_sourcing.model_realestate_procurement_bid_response_line
+msgid "Tender Bid Response Line"
+msgstr "بند عطاء المناقصة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model,name:atmta_procurement_sourcing.model_realestate_procurement_sourcing_clarification
+msgid "Tender Clarification"
+msgstr "استيضاح المناقصة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model,name:atmta_procurement_sourcing.model_realestate_procurement_sourcing_demand_allocation
+msgid "Tender Demand Allocation"
+msgstr "تخصيص طلب المناقصة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model,name:atmta_procurement_sourcing.model_realestate_procurement_sourcing_line
+msgid "Tender Line"
+msgstr "بند المناقصة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model,name:atmta_procurement_sourcing.model_realestate_procurement_sourcing_invitation
+msgid "Tender Vendor Invitation"
+msgstr "دعوة مورد للمناقصة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model,name:atmta_procurement_sourcing.model_realestate_procurement_sourcing_version
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__version_id
+msgid "Tender Version"
+msgstr "نسخة المناقصة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__version_ids
+msgid "Tender Versions"
+msgstr "نسخ المناقصة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_version__terms_snapshot
+msgid "Terms Snapshot"
+msgstr "لقطة الشروط"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid ""
+"The clarification deadline is after the closing moment, so a question could "
+"be asked that nobody could answer in time to bid."
+msgstr ""
+"الموعد النهائي للاستيضاحات بعد موعد الإغلاق، لذا قد يُطرح سؤال لا يمكن لأحد "
+"الإجابة عنه في الوقت المناسب لتقديم العطاء."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__original_close_datetime
+msgid ""
+"The closing moment as first published. Never overwritten — an extension "
+"changes the effective close and leaves this alone."
+msgstr ""
+"موعد الإغلاق كما نُشر أول مرة. لا يُستبدل أبدًا — التمديد يغير الإغلاق "
+"الفعلي ويترك هذا دون تغيير."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__eligibility_payload
+msgid ""
+"The complete M4 answer as it was given, kept verbatim. A summary can be re-"
+"derived from it; it cannot be re-derived from a summary."
+msgstr ""
+"إجابة M4 الكاملة كما قُدمت، محفوظة حرفيًا. يمكن استخلاص الملخص منها، ولا "
+"يمكن استخلاصها من الملخص."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_bid_response__deadline_applied
+msgid ""
+"The effective close of the tender version this bid answers, copied at "
+"receipt. Later addenda do not move it."
+msgstr ""
+"الإغلاق الفعلي لنسخة المناقصة التي يجيب عليها هذا العطاء، منسوخ عند "
+"الاستلام. الملاحق اللاحقة لا تغيره."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_bid_response__policy_applied
+msgid ""
+"The late-bid policy in force when this was received. Kept so the decision "
+"stays explainable after the policy changes."
+msgstr ""
+"سياسة العطاءات المتأخرة السارية وقت الاستلام. محفوظة ليبقى القرار قابلًا "
+"للتفسير بعد تغير السياسة."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid ""
+"The policy is stamped at receipt; a gap means the record predates M5 or was "
+"written around the engine."
+msgstr ""
+"تُختم السياسة عند الاستلام؛ ووجود فجوة يعني أن السجل يسبق M5 أو كُتب "
+"متجاوزًا المحرك."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__project_id
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__project_id
+msgid "The project whose authorised demand this event sources."
+msgstr "المشروع الذي تغطي هذه المناقصة طلبه المعتمد."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_demand_allocation__reservation_id
+msgid ""
+"The reservation this demand already holds. The event reads it; it never "
+"creates, grows or releases one."
+msgstr ""
+"حجز الميزانية الذي يحتفظ به هذا الطلب مسبقًا. تقرؤه المناقصة؛ ولا تنشئ حجزًا"
+" أو تزيده أو تفرج عنه أبدًا."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__version_id
+msgid "The tender version in force when the question was asked."
+msgstr "نسخة المناقصة السارية وقت طرح السؤال."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__version_id
+msgid "The tender version this vendor was invited against."
+msgstr "نسخة المناقصة التي دُعي هذا المورد بناءً عليها."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_material_request_line__vendor_category_id
+msgid ""
+"The trade a vendor has to be qualified for to quote this line. Proposed from"
+" the product's category where exactly one trade claims it, and freely "
+"editable — the product tree describes what the item is, not what a supplier "
+"is capable of."
+msgstr ""
+"التخصص الذي يجب أن يكون المورد مؤهلًا له لتسعير هذا البند. يُقترح من فئة "
+"المنتج عندما يطالب بها تخصص واحد فقط، وقابل للتعديل بحرية — شجرة المنتجات "
+"تصف ماهية الصنف، لا ما يقدر عليه المورد."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__category_id
+msgid "The trade eligibility is asked about when vendors are invited."
+msgstr "التخصص الذي يُستعلم عن الأهلية له عند دعوة الموردين."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_audit.py:0
+msgid ""
+"The unique index should make this impossible; a hit here means it is "
+"missing."
+msgstr ""
+"الفهرس الفريد يفترض أن يجعل هذا مستحيلًا؛ ظهور نتيجة هنا يعني أنه مفقود."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__eligibility_changed
+msgid "The vendor's standing has moved since they were invited."
+msgstr "تغير وضع المورد منذ دعوته."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__current_version_id
+msgid "The version vendors are quoting against right now."
+msgstr "النسخة التي يسعّر الموردون بناءً عليها حاليًا."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_clarification.py:0
+msgid "There is no answer to publish."
+msgstr "لا توجد إجابة لنشرها."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/material_request_sourcing.py:0
+msgid "There is nothing to source."
+msgstr "لا يوجد ما يمكن طرحه."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/material_request_sourcing.py:0
+msgid ""
+"These vendors cannot be invited to quote:\n"
+"\n"
+"%(reasons)s\n"
+"\n"
+"Qualify them, lift the restriction, or change the vendor policy on %(scope)s."
+msgstr ""
+"لا يمكن دعوة هؤلاء الموردين لتقديم أسعار:\n"
+"\n"
+"%(reasons)s\n"
+"\n"
+"قم بتأهيلهم، أو ارفع القيد، أو غيّر سياسة الموردين في %(scope)s."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid "This line is part of %s, which is submitted evidence."
+msgstr "هذا البند جزء من %s، وهو دليل مقدم."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__title
+msgid "Title"
+msgstr "العنوان"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid "Title: %s"
+msgstr "العنوان: %s"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__category_id
+msgid "Trade / Category"
+msgstr "التخصص / الفئة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع النشاط الاستثنائي في السجل."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__validity_date
+msgid "Validity Date"
+msgstr "تاريخ الصلاحية"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__partner_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response_line__partner_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_acknowledgement__partner_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__partner_id
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__partner_id
+msgid "Vendor"
+msgstr "المورد"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_acknowledgement__method__future_portal
+msgid "Vendor Portal"
+msgstr "بوابة الموردين"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_clarification__clarification_type__vendor_question
+msgid "Vendor Question"
+msgstr "سؤال مورد"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__vendor_reference
+msgid "Vendor Reference"
+msgstr "مرجع المورد"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_material_request_line__vendor_category_id
+msgid "Vendor Trade"
+msgstr "تخصص المورد"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_acknowledgement__version_id
+msgid "Version"
+msgstr "الإصدار"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Versions"
+msgstr "النسخ"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__visibility
+msgid "Visibility"
+msgstr "الظهور"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__website_message_ids
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__website_message_ids
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__website_message_ids
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__website_message_ids
+msgid "Website Messages"
+msgstr "رسائل الموقع الإلكتروني"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_bid_response__website_message_ids
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__website_message_ids
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__website_message_ids
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__website_message_ids
+msgid "Website communication history"
+msgstr "سجل التواصل عبر الموقع الإلكتروني"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "What is being sourced"
+msgstr "ما يتم طرحه"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_version__terms_snapshot
+msgid ""
+"What the scope said at the moment this version was issued. Held as text on "
+"purpose: it is evidence, and evidence that recomputes itself from today's "
+"records is not evidence."
+msgstr ""
+"ما نص عليه النطاق لحظة إصدار هذه النسخة. محفوظ كنص عن قصد: فهو دليل، والدليل"
+" الذي يعيد حساب نفسه من سجلات اليوم ليس دليلًا."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__actual_closed_datetime
+msgid ""
+"When bidding was actually closed, which is not always the moment it was due "
+"to."
+msgstr "وقت إغلاق تقديم العطاءات فعليًا، وهو ليس دائمًا الوقت المقرر لذلك."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_bid_response__purchase_order_id
+msgid ""
+"Where the snapshot was taken from. A reference for audit — the amounts below"
+" never follow it afterwards."
+msgstr ""
+"المصدر الذي أُخذت منه اللقطة. مرجع للتدقيق — المبالغ أدناه لا تتبعه لاحقًا "
+"أبدًا."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_event__addendum_ack_policy
+msgid ""
+"Whether a vendor must acknowledge an addendum before their response counts. "
+"Not hard-coded either way: a two-day RFQ for sand and a nine-month "
+"subcontract tender do not need the same ceremony."
+msgstr ""
+"هل يجب على المورد الإقرار بالملحق قبل احتساب عطائه. غير مثبت في الكود بأي "
+"اتجاه: طلب عرض سعر لرمل مدته يومان ومناقصة عقد من الباطن مدتها تسعة أشهر لا "
+"تحتاجان الإجراءات نفسها."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_bid_response__version_id
+msgid ""
+"Which version of the ask this offer answers. A bid revision and a tender "
+"revision are different numbers and are kept apart."
+msgstr ""
+"أي نسخة من الطلب يجيب عليها هذا العرض. مراجعة العطاء ومراجعة المناقصة رقمان "
+"مختلفان ويُحتفظ بهما منفصلين."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_clarification__visibility
+msgid ""
+"Who the answer is for. Internal clarifications are never part of what "
+"vendors were told."
+msgstr ""
+"لمن الإجابة. الاستيضاحات الداخلية ليست أبدًا جزءًا مما أُبلغ به الموردون."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,help:atmta_procurement_sourcing.field_realestate_procurement_sourcing_invitation__decline_reason_category
+msgid ""
+"Why the vendor will not bid. Recorded for the tender file only: vendor "
+"performance is M9 and nothing here feeds it."
+msgstr ""
+"سبب عدم تقديم المورد عطاءً. يُسجل لملف المناقصة فقط: أداء الموردين في M9 ولا"
+" شيء هنا يغذيه."
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__withdrawal_reason
+msgid "Withdrawal Reason"
+msgstr "سبب السحب"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_bid_response__administrative_status__withdrawn
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_bid_response__state__withdrawn
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_invitation__response_status__withdrawn
+#: model:ir.model.fields.selection,name:atmta_procurement_sourcing.selection__realestate_procurement_sourcing_invitation__state__withdrawn
+msgid "Withdrawn"
+msgstr "مسحوب"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__withdrawn_before_close
+msgid "Withdrawn Before Close"
+msgstr "سُحب قبل الإغلاق"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__withdrawn_by_id
+msgid "Withdrawn By"
+msgstr "سُحب بواسطة"
+
+#. module: atmta_procurement_sourcing
+#: model:ir.model.fields,field_description:atmta_procurement_sourcing.field_realestate_procurement_bid_response__withdrawn_on
+msgid "Withdrawn On"
+msgstr "تاريخ السحب"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid "Withdrawn on %s."
+msgstr "سُحب بتاريخ %s."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid "Withdrawn: %s"
+msgstr "مسحوب: %s"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid "no project"
+msgstr "بدون مشروع"
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/sourcing_event.py:0
+msgid ""
+"%(line)s has %(remaining)s left to source and this event asks for %(asked)s."
+" Sourcing the same demand twice would put one requirement in two tenders, or"
+" in a tender and an RFQ already sent for it."
+msgstr "%(line)s متبقٍ منه %(remaining)s للتوريد، وهذه المناقصة تطلب %(asked)s. توريد الطلب نفسه مرتين يضع احتياجاً واحداً في مناقصتين، أو في مناقصة وطلب عرض أسعار سبق إرساله له."
+
+#. module: atmta_procurement_sourcing
+#. odoo-python
+#: code:addons/atmta_procurement_sourcing/models/bid_response.py:0
+msgid ""
+"%(vendor)s's submission is recorded as received on %(received)s, before "
+"%(event)s was issued on %(issued)s. A bid cannot answer a tender that did "
+"not exist yet."
+msgstr "عرض %(vendor)s مسجَّل كمستلَم بتاريخ %(received)s، أي قبل إصدار %(event)s بتاريخ %(issued)s. لا يمكن لعرض أن يجيب على مناقصة لم تكن قائمة بعد."
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Accept Late Bid"
+msgstr "قبول عرض متأخر"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid ""
+"Accept this late submission for evaluation? Your name goes on the record as "
+"the manager who accepted it."
+msgstr "هل تقبل هذا العرض المتأخر للتقييم؟ سيُسجَّل اسمك بوصفك المدير الذي قبله."
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Acknowledge"
+msgstr "إقرار بالاستلام"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Issue as Addendum"
+msgstr "إصدار كملحق"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid ""
+"Issue this clarification as a new tender version? Every invited vendor has "
+"to acknowledge it."
+msgstr "هل تصدر هذا الإيضاح كنسخة جديدة من المناقصة؟ على كل مورّد مدعو أن يقرّ باستلامه."
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Publish Answer"
+msgstr "نشر الإجابة"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Record Bid"
+msgstr "تسجيل عرض"
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid ""
+"Record that the vendor withdrew this bid? The bid stays on file as evidence;"
+" the invitation no longer has a current offer."
+msgstr "هل تسجّل أن المورّد سحب هذا العرض؟ يبقى العرض في الملف كمستند، ولم يعد للدعوة عرض قائم."
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid ""
+"Record what this vendor's RFQ says now as their submission, received at this"
+" moment? The bid is sealed once recorded."
+msgstr "هل تسجّل ما يتضمنه طلب عرض الأسعار الخاص بهذا المورّد الآن بوصفه عرضه، مستلماً في هذه اللحظة؟ يُختم العرض بمجرد تسجيله."
+
+#. module: atmta_procurement_sourcing
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_sourcing.view_sourcing_event_form
+msgid "Withdraw"
+msgstr "سحب"

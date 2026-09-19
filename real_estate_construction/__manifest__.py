@@ -19,7 +19,11 @@ Track construction progress for projects and phases:
     'version': '1.0.1',
     'category': 'Real Estate',
     'depends': [
-        'real_estate_developer', 'account', 'purchase', 'real_estate_procurement', 'stock',
+        'atmta_account_tools',
+        # Projects and phases belong to `atmta_project_core`; Construction
+        # extends their screens and uses nothing from the developer application.
+        'atmta_project_core',
+        'account', 'purchase', 'real_estate_procurement', 'stock',
         # Wave 12 — the WBS, the cost codes, the analytic helper and the
         # company accounts moved down to the floor. Declared so the floor
         # loads first and the field metadata can change owner cleanly.

@@ -4,7 +4,7 @@
 
     <menuitem id="menu_root" name="Brokerage"
               web_icon="atmta_brokerage_app,static/description/icon.png"
-              sequence="25" groups="atmta_v2_pilot.group_atmta_v2_pilot"/>
+              sequence="25"/>
 
     <menuitem id="menu_dashboard" name="Dashboard" parent="menu_root" sequence="1"
               action="real_estate_brokerage.action_brokerage_dashboard"
@@ -56,5 +56,5 @@
     <menuitem id="menu_cfg_channels" name="Marketing Channels" parent="menu_config" sequence="10"
               action="real_estate_brokerage.action_marketing_channel"/>
     <menuitem id="menu_cfg_lost_reasons" name="Lead Lost Reasons" parent="menu_config" sequence="20"
-              action="real_estate_brokerage.action_lost_reason"/>
+              action="crm.crm_lost_reason_action"/>
 </odoo>

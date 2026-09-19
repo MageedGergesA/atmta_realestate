@@ -3,7 +3,7 @@ from odoo import models, fields
 
 class RealEstateContractPaymentLine(models.Model):
     _name = 'realestate.contract.payment.line'
-    _description = 'Additional Charge on a Scheduled Payment'
+    _description = 'Additional Charge on a Billing Obligation'
     _order = 'payment_id, id'
 
     payment_id = fields.Many2one(

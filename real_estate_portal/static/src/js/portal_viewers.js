@@ -56,7 +56,13 @@ export const portalRealEstateViewersService = {
 
         for (const el of t3d) {
             const projectId = parseInt(el.dataset.projectId, 10);
-            await mountInto(env, el, MaquetteViewer, { projectId, mode: "portal" });
+            // The page authorised itself and minted a resource-scoped grant;
+            // the viewer carries its token on every asset request. Without it
+            // the gated routes answer 404, which is the point.
+            const grantToken = el.dataset.visualGrant || undefined;
+            await mountInto(env, el, MaquetteViewer, {
+                projectId, grantToken, mode: "portal",
+            });
         }
         wireFormEvent();
     },

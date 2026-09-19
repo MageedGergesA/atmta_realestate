@@ -24,8 +24,11 @@
                         <t t-esc="p.name"/> (<t t-esc="p.code"/>)
                     </option>
                 </select>
-                <span t-if="!state.projects.length" class="text-muted">
+                <span t-if="!state.projects.length and !state.loadError" class="text-muted">
                     No projects with a 3D maquette yet — upload a <code>.glb</code> on a project first.
+                </span>
+                <span t-if="state.loadError" class="o_maquette_load_error text-muted">
+                    <i class="fa fa-info-circle me-1"/><t t-esc="state.loadError"/>
                 </span>
             </div>
             <div class="o_maquette_preview_holder flex-grow-1">
@@ -249,8 +252,14 @@
                         </option>
                     </select>
                 </t>
-                <span t-if="!state.projects.length" class="text-muted">
+                <span t-if="!state.projects.length and !state.loadError" class="text-muted">
                     No projects with a 2D master plan yet — upload one on a project first.
+                </span>
+                <!-- Rule 4: a failure is stated here, not thrown into Odoo's
+                     global error dialog on top of a showroom screen. -->
+                <span t-if="state.loadError"
+                      class="o_master_plan_2d_error text-muted">
+                    <i class="fa fa-info-circle me-1"/><t t-esc="state.loadError"/>
                 </span>
                 <div t-if="state.projectId and canEditRegions" class="ms-auto d-flex gap-2 align-items-center">
                     <!-- Drafting toolbar -->
@@ -536,9 +545,62 @@
                     <div t-esc="state.loadingMsg"/>
                 </div>
             </div>
-            <div t-if="state.error" class="o_maquette_error alert alert-danger">
-                <strong>3D viewer failed:</strong>
-                <span t-esc="state.error"/>
+            <!--
+              Rule 4. When 3D cannot run, the customer gets the next
+              experience down — not a red box holding a Three.js exception.
+              The reason is one plain sentence; the technical detail is in the
+              console for whoever is debugging.
+            -->
+            <div t-if="state.experience !== '3d'" class="o_maquette_fallback">
+                <div t-if="state.degradedReason"
+                     class="alert alert-info d-flex align-items-center m-2"
+                     role="status">
+                    <i class="fa fa-info-circle me-2"/>
+                    <span t-esc="state.degradedReason"/>
+                </div>
+
+                <!-- 3D → optimised 2D -->
+                <div t-if="state.experience === '2d'"
+                     class="o_maquette_fallback_2d">
+                    <img t-if="state.fallback and state.fallback.master_plan_url"
+                         t-att-src="state.fallback.master_plan_url"
+                         class="img-fluid w-100" alt="Master plan"/>
+                </div>
+
+                <!-- 2D → the unit list, which is also the accessible path -->
+                <div t-if="state.experience === 'list'"
+                     class="o_maquette_fallback_list p-2">
+                    <table class="table table-sm table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>Unit</th><th>Type</th>
+                                <th class="text-end">Area</th>
+                                <th class="text-end">Floor</th>
+                                <th class="text-end">Price</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="fallbackUnits" t-as="u" t-key="u.id"
+                                t-on-click="() => this.selectUnitFromList(u)"
+                                style="cursor:pointer;">
+                                <td t-esc="u.property_code || u.name"/>
+                                <td t-esc="u.property_type"/>
+                                <td class="text-end" t-esc="u.area_sqm"/>
+                                <td class="text-end" t-esc="u.floor"/>
+                                <td class="text-end" t-esc="u.price"/>
+                                <td>
+                                    <span class="o_maquette_legend_dot me-1"
+                                          t-attf-style="background:{{ u.color }}"/>
+                                    <span t-esc="u.visual_state"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div t-if="!fallbackUnits.length" class="text-muted p-3">
+                        No units to show for this project yet.
+                    </div>
+                </div>
             </div>
 
             <div class="o_maquette_toolbar">
@@ -629,6 +691,22 @@
                                 </button>
                             </t>
                             <t t-elif="state.selectedUnit.id">
+                                <!--
+                                  A public visitor's favourite. Deliberately a
+                                  plain button carrying a property id and no
+                                  handler of its own: the portal's delegated
+                                  listener keeps the list in the visitor's own
+                                  sessionStorage, and nothing is sent anywhere
+                                  until they submit an enquiry. Browsing is not
+                                  a commercial event.
+                                -->
+                                <button type="button"
+                                        class="btn btn-sm btn-outline-secondary o_re_public_save"
+                                        aria-pressed="false"
+                                        t-att-data-re-shortlist="state.selectedUnit.id">
+                                    <i class="fa fa-heart-o me-1"/>
+                                    <span data-re-shortlist-label="1">Save</span>
+                                </button>
                                 <button class="btn btn-sm btn-primary" t-on-click="reserveUnit">
                                     <i class="fa fa-envelope me-1"/> Send EOI
                                 </button>

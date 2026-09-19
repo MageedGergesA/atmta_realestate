@@ -487,9 +487,17 @@ class MaterialRequest(models.Model):
             raise UserError(_(
                 "Say why the approved basis is changing. A revision without a "
                 "reason is indistinguishable from an overwrite."))
+        self._check_may_revise()
 
+        # Elevated for this one write, and for the same reason the control
+        # module elevates the reservation it releases: the snapshot is the
+        # consequence of a decision this user is entitled to take, not a
+        # table they are being given the right to write rows into. Everything
+        # in it is read from the requisition itself, and `_snapshot` still
+        # stamps `env.user` as the person who revised.
         snapshot = self.env[
-            'realestate.material.request.revision']._snapshot(self, reason)
+            'realestate.material.request.revision'].sudo()._snapshot(
+                self, reason)
         # M3 — the old reservation authorised the old basis. Releasing it here
         # rather than leaving it to be adjusted later is what stops a revised
         # requisition from holding capacity for demand nobody approved.
@@ -505,7 +513,27 @@ class MaterialRequest(models.Model):
         self.message_post(body=_(
             "Revision %(rev)s. Basis at revision %(prev)s kept: %(reason)s",
             rev=self.revision, prev=snapshot.revision, reason=reason))
-        return snapshot
+        return snapshot.with_env(self.env)
+
+    #: Who revises. The requester owns the demand and the buyer owns the
+    #: sourcing of it, and both may reopen it with a reason attached. An
+    #: approver decides the requisition in front of them; rewriting it and
+    #: then deciding the rewrite is the self-approval defect with extra steps.
+    _REVISING_GROUPS = ('atmta_roles.group_procurement_requester',
+                        'atmta_roles.group_procurement_buyer',
+                        'atmta_roles.group_procurement_manager')
+
+    def _check_may_revise(self):
+        """Server-side twin of the button's `groups`."""
+        self.ensure_one()
+        if self.env.su:
+            return
+        if not any(self.env.user.has_group(group)
+                   for group in self._REVISING_GROUPS):
+            raise UserError(_(
+                "Revising %(name)s reopens demand that was already "
+                "submitted. %(user)s does not hold a role that does that.",
+                name=self.name, user=self.env.user.display_name))
 
     def action_open_rfq_wizard(self):
         """Button target — a button cannot carry a vendor list."""

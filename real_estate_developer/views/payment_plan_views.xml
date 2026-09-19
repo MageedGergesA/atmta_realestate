@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_payment_plan_list" model="ir.ui.view">
+        <field name="name">realestate.payment.plan.list</field>
+        <field name="model">realestate.payment.plan</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state == 'active'"
+                  decoration-muted="state in ('expired','archived')"
+                  decoration-info="is_custom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="version"/>
+                <field name="project_id" optional="show"/>
+                <field name="phase_id" optional="hide"/>
+                <field name="installment_count" string="Payments"/>
+                <field name="duration_months" string="Months"/>
+                <field name="total_percent" string="Allocated %"/>
+                <field name="is_custom" string="Negotiated" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-warning="state == 'pending_approval'"
+                       decoration-muted="state in ('expired','archived')"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_payment_plan_form" model="ir.ui.view">
+        <field name="name">realestate.payment.plan.form</field>
+        <field name="model">realestate.payment.plan</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_preview" type="object" string="Preview Schedule"
+                            class="oe_highlight"/>
+                    <button name="action_submit" type="object" string="Submit for Approval"
+                            invisible="state != 'draft'"/>
+                    <button name="action_activate" type="object" string="Activate"
+                            class="oe_highlight"
+                            invisible="state not in ('draft','pending_approval')"/>
+                    <button name="action_new_version" type="object" string="New Version"
+                            invisible="state not in ('active','expired')"/>
+                    <button name="action_expire" type="object" string="Expire"
+                            invisible="state != 'active'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,pending_approval,active"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Negotiated" bg_color="text-bg-info"
+                            invisible="not is_custom"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. 10% Down / 8 Years"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id" options="{'no_create': True}"
+                                   readonly="state in ('active','expired','archived')"/>
+                            <field name="phase_id" options="{'no_create': True}"
+                                   readonly="state in ('active','expired','archived')"/>
+                            <field name="code"/>
+                            <field name="booking_handling"
+                                   readonly="state in ('active','expired','archived')"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="version" readonly="1"/>
+                            <field name="previous_version_id" readonly="1"
+                                   invisible="not previous_version_id"/>
+                            <field name="source_plan_id" readonly="1"
+                                   invisible="not is_custom"/>
+                            <field name="is_custom" invisible="1"/>
+                            <field name="valid_from"/>
+                            <field name="valid_until"/>
+                            <field name="currency_id" groups="base.group_multi_currency"
+                                   readonly="state in ('active','expired','archived')"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="status"
+                         invisible="state != 'draft'">
+                        The schedule must account for exactly 100% of the price.
+                        Use a <b>Residual</b> line to absorb whatever the fixed
+                        percentages leave over — that is also what makes a plan
+                        work at any unit price.
+                    </div>
+                    <notebook>
+                        <page string="Schedule" name="schedule">
+                            <field name="line_ids"
+                                   readonly="state in ('active','expired','archived')">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="kind"/>
+                                    <field name="calculation_type"/>
+                                    <field name="value"
+                                           readonly="calculation_type == 'residual'"/>
+                                    <field name="occurrences"/>
+                                    <field name="interval"
+                                           readonly="occurrences &lt;= 1"/>
+                                    <field name="date_rule"/>
+                                    <field name="offset_value"/>
+                                    <field name="fixed_date"
+                                           column_invisible="0"
+                                           readonly="date_rule != 'fixed_date'"
+                                           optional="hide"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="total_percent"/>
+                                <field name="installment_count"/>
+                                <field name="duration_months"/>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_payment_plan_search" model="ir.ui.view">
+        <field name="name">realestate.payment.plan.search</field>
+        <field name="model">realestate.payment.plan</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="project_id"/>
+                <filter name="active_plans" string="Active" domain="[('state','=','active')]"/>
+                <filter name="templates" string="Templates" domain="[('is_custom','=',False)]"/>
+                <filter name="negotiated" string="Negotiated" domain="[('is_custom','=',True)]"/>
+                <separator/>
+                <filter name="group_project" string="Project" context="{'group_by': 'project_id'}"/>
+                <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_payment_plan" model="ir.actions.act_window">
+        <field name="name">Payment Plans</field>
+        <field name="res_model">realestate.payment.plan</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_templates': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Build a payment plan</p>
+            <p>
+                A developer plan is a multi-year commercial agreement producing
+                many independent obligations — not a way of splitting one
+                invoice. Months here are calendar months, so a payment due
+                "3 months after booking" lands on the same day of the month,
+                every time, for ten years.
+            </p>
+        </field>
+    </record>
+
+    <!-- Preview wizard -->
+    <record id="view_payment_plan_preview_form" model="ir.ui.view">
+        <field name="name">realestate.payment.plan.preview.form</field>
+        <field name="model">realestate.payment.plan.preview</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="plan_id" readonly="1"/>
+                        <field name="unit_price"/>
+                        <field name="booking_amount"/>
+                    </group>
+                    <group>
+                        <field name="booking_date"/>
+                        <field name="handover_date"
+                               placeholder="Needed only for handover payments"/>
+                        <field name="currency_id" invisible="1"/>
+                    </group>
+                </group>
+                <div invisible="not line_ids">
+                    <group class="oe_subtotal_footer">
+                        <field name="payment_count"/>
+                        <field name="last_due_date"/>
+                        <field name="total_amount"/>
+                        <field name="total_percent"/>
+                        <field name="balances" widget="boolean_toggle"/>
+                    </group>
+                    <field name="line_ids">
+                        <list create="false" edit="false" delete="false">
+                            <field name="name"/>
+                            <field name="kind"/>
+                            <field name="date_due"/>
+                            <field name="percent"/>
+                            <field name="amount" sum="Total"/>
+                            <field name="cumulative_amount"/>
+                            <field name="cumulative_percent"/>
+                            <field name="remaining_amount"/>
+                            <field name="currency_id" column_invisible="1"/>
+                        </list>
+                    </field>
+                </div>
+                <footer>
+                    <button name="action_generate" type="object" string="Generate"
+                            class="btn-primary"/>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

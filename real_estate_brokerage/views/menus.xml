@@ -19,11 +19,26 @@
               action="action_realestate_listing"
               sequence="20"/>
 
+    <menuitem id="menu_brokerage_opportunities"
+              name="Opportunities"
+              parent="menu_brokerage_root"
+              action="action_crm_lead_realestate"
+              sequence="25"/>
+
+    <menuitem id="menu_brokerage_matches"
+              name="Matches &amp; Shortlists"
+              parent="menu_brokerage_root"
+              action="action_property_match"
+              sequence="28"/>
+
+    <!-- The pre-0.2 lead pipeline. Kept reachable so a migration can be
+         reviewed and finished; not the place new work starts. -->
     <menuitem id="menu_brokerage_leads"
-              name="Leads"
+              name="Legacy Leads"
               parent="menu_brokerage_root"
               action="action_realestate_lead"
-              sequence="30"/>
+              sequence="30"
+              groups="real_estate_brokerage.group_realestate_sales_manager"/>
 
     <menuitem id="menu_brokerage_viewings"
               name="Viewings"
@@ -43,6 +58,46 @@
               action="action_realestate_transaction"
               sequence="60"/>
 
+    <menuitem id="menu_brokerage_mandates"
+              name="Owner Mandates"
+              parent="menu_brokerage_root"
+              action="action_mandate"
+              sequence="55"/>
+
+    <menuitem id="menu_brokerage_channel"
+              name="Channel Partners"
+              parent="menu_brokerage_root"
+              sequence="70"/>
+
+    <menuitem id="menu_brokerage_brokers"
+              name="Brokers"
+              parent="menu_brokerage_channel"
+              action="action_broker_partner"
+              sequence="10"/>
+
+    <menuitem id="menu_brokerage_agreements"
+              name="Agreements"
+              parent="menu_brokerage_channel"
+              action="action_broker_agreement"
+              sequence="20"/>
+
+    <menuitem id="menu_brokerage_registrations"
+              name="Lead Registrations"
+              parent="menu_brokerage_channel"
+              action="action_lead_registration"
+              sequence="30"/>
+
+    <menuitem id="menu_brokerage_reporting"
+              name="Reporting"
+              parent="menu_brokerage_root"
+              sequence="150"/>
+
+    <menuitem id="menu_brokerage_source_performance"
+              name="Source Performance"
+              parent="menu_brokerage_reporting"
+              action="action_source_performance"
+              sequence="10"/>
+
     <!-- Configuration section inside Brokerage -->
     <menuitem id="menu_brokerage_config"
               name="Configuration"
@@ -54,6 +109,20 @@
               parent="menu_brokerage_config"
               action="action_marketing_channel"
               sequence="10"/>
+
+    <menuitem id="menu_brokerage_config_share_migration"
+              name="Commission Share Migration"
+              parent="menu_brokerage_config"
+              action="action_commission_share_migration"
+              sequence="30"
+              groups="real_estate_brokerage.group_realestate_sales_manager"/>
+
+    <menuitem id="menu_brokerage_config_commission_review"
+              name="Agents Needing Review"
+              parent="menu_brokerage_config"
+              action="action_users_commission_review"
+              sequence="40"
+              groups="real_estate_brokerage.group_realestate_sales_manager"/>
 
     <menuitem id="menu_brokerage_config_lost_reasons"
               name="Lead Lost Reasons"

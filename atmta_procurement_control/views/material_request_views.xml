@@ -55,8 +55,13 @@
         <field name="arch" type="xml">
             <form>
                 <header>
+                    <!-- Rejected is offered as well as draft: the model
+                         accepts a resubmission, and hiding the button left
+                         the requester with a rejection they could answer but
+                         not send back. -->
                     <button name="action_submit" type="object" string="Submit"
-                            class="oe_highlight" invisible="state != 'draft'"/>
+                            class="oe_highlight"
+                            invisible="state not in ('draft', 'rejected')"/>
                     <button name="action_approve" type="object" string="Approve"
                             class="oe_highlight" invisible="state != 'submitted'"
                             groups="atmta_roles.group_procurement_approver"/>
@@ -64,8 +69,13 @@
                             string="Create RFQs" class="oe_highlight"
                             invisible="state not in ('approved','sourcing')"
                             groups="atmta_roles.group_procurement_buyer"/>
+                    <!-- Revising is the requester's and the buyer's act: it
+                         reopens the demand and releases what it reserved.
+                         An approver decides a requisition; they do not
+                         rewrite it, and `action_revise` says the same. -->
                     <button name="action_open_revision_wizard" type="object" string="Revise"
-                            invisible="state not in ('submitted','approved','sourcing')"/>
+                            invisible="state not in ('submitted','approved','sourcing')"
+                            groups="atmta_roles.group_procurement_requester,atmta_roles.group_procurement_buyer,atmta_roles.group_procurement_manager"/>
                     <button name="action_request_budget_exception" type="object"
                             string="Request Budget Exception"
                             invisible="state in ('ordered','partially_ordered','received','done','cancelled')"/>
@@ -94,9 +104,15 @@
                                 invisible="po_count == 0">
                             <field name="po_count" widget="statinfo" string="POs"/>
                         </button>
+                        <!-- The reservation records themselves are the
+                             control system's, and a requester has no read
+                             access to them by design (see
+                             `_compute_reservation`). The figure they hold is
+                             shown on the requisition either way. -->
                         <button class="oe_stat_button" type="object"
                                 name="action_view_reservations" icon="fa-lock"
-                                invisible="reservation_status == 'none'">
+                                invisible="reservation_status == 'none'"
+                                groups="atmta_roles.group_procurement_buyer,atmta_roles.group_procurement_approver,atmta_roles.group_procurement_manager">
                             <field name="reserved_amount" widget="statinfo" string="Reserved"/>
                         </button>
                     </div>
@@ -216,7 +232,8 @@
                             </field>
                         </page>
                         <page string="Reservations" name="reservations"
-                              invisible="not reservation_ids">
+                              invisible="not reservation_ids"
+                              groups="atmta_roles.group_procurement_buyer,atmta_roles.group_procurement_approver,atmta_roles.group_procurement_manager">
                             <field name="reservation_ids" readonly="1">
                                 <list decoration-info="state == 'reserved'"
                                       decoration-success="state == 'converted'"

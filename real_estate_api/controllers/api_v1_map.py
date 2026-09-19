@@ -44,6 +44,15 @@ from ..models.realestate_project import PUBLIC_PROJECT_STATUS
 # 3rd-party would render a marker for.
 PUBLIC_PROPERTY_STATES = ('available', 'reserved', 'sold')
 
+# The legacy `state` above says nothing about whether a unit was ever put on
+# the market: an unreleased unit reads 'available'. For sellable leaves the
+# developer engine's `sale_status` decides, and a unit it does not list is not
+# plotted — the catalog reports the same unit as `hidden`.
+LISTED_LEAF_DOMAIN = [
+    '|', ('hierarchy_level', 'not in', ('unit', 'room')),
+    ('sale_status', '!=', 'not_listed'),
+]
+
 HARD_LIMIT_MAX = 5000
 
 
@@ -194,7 +203,7 @@ class MapApiV1(http.Controller):
         domain = [
             ('state', 'in', PUBLIC_PROPERTY_STATES),
             '|', ('latitude', '!=', 0), ('longitude', '!=', 0),
-        ]
+        ] + LISTED_LEAF_DOMAIN
         # Optional filters
         project_id = _int_arg(kw, 'project_id', None, lo=1)
         if project_id:
@@ -243,7 +252,9 @@ class MapApiV1(http.Controller):
                                   if p.property_type_id else ''),
                 'project_id': p.project_id.id if p.project_id else None,
                 'project_name': p.project_id.name if p.project_id else '',
-                'base_price': p.base_price if 'base_price' in p._fields else 0.0,
+                # Key kept for compatibility; the value is the public price,
+                # never the internal `base_price`.
+                'base_price': p._public_price(),
                 'currency': (p.currency_id.symbol
                              if p.currency_id else ''),
                 'area_sqm': p.area_sqm if 'area_sqm' in p._fields else 0.0,
@@ -259,7 +270,7 @@ class MapApiV1(http.Controller):
         missing_domain = [
             ('state', 'in', PUBLIC_PROPERTY_STATES),
             ('latitude', '=', 0), ('longitude', '=', 0),
-        ]
+        ] + LISTED_LEAF_DOMAIN
         if project_id:
             missing_domain.append(('project_id', '=', project_id))
         if hierarchy:

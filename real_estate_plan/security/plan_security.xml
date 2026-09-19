@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  M29 / M30 for the 2D layer.
+
+  The Phase 0 audit's single worst finding was in this module's ACL file:
+  `base.group_user,1,1,1,1` on `realestate.plan.region` gave every internal
+  user — accounting, HR, anybody with a login — create, edit and delete rights
+  on the polygon mappings a live sales gallery is drawn from.
+
+  The roles themselves are defined in `real_estate_maquette`, which this module
+  depends on, so the two halves of one product domain share one role model
+  rather than inventing a second.
+-->
+<odoo noupdate="1">
+
+    <record id="rule_plan_region_company" model="ir.rule">
+        <field name="name">2D plan region: own company</field>
+        <field name="model_id" ref="model_realestate_plan_region"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">
+            ['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]
+        </field>
+    </record>
+
+</odoo>

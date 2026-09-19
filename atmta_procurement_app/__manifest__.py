@@ -26,14 +26,14 @@ at `atmta_procurement_award` and `atmta_procurement_receipt` per
 """,
     'author': "Atmta",
     'license': 'LGPL-3',
-    'version': '18.0.0.3.0',
+    'version': '18.0.0.4.0',
     'category': 'Real Estate',
-    'depends': ['real_estate_procurement', 'atmta_v2_pilot', 'atmta_roles'],
+    'depends': ['real_estate_procurement', 'atmta_roles', 'atmta_dashboard'],
     'data': [
         'data/workspace_actions.xml',
         # Wave 11 — procurement policy on the project form; see the file header.
         'views/project_views.xml',
-        'views/menus.xml',
+        'views/menus.xml', 'views/dashboard_views.xml', 'data/retire_legacy_navigation.xml',
     ],
     'installable': True,
     'application': True,

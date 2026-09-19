@@ -128,24 +128,37 @@ class ProjectMaquette(models.Model):
         })
         return True
 
-    def get_maquette_units_data(self):
-        """JSON-serializable list of all units in this project with the data
-        the 3D viewer needs to render and react to clicks."""
+    def get_maquette_units_data(self, audience='public'):
+        """JSON-serialisable unit list for the viewer.
+
+        Delegates to `realestate.visual.commercial`, which is the single place
+        the gallery asks what a unit is worth and whether it is free. 0.4 built
+        this payload itself from `u.state` and `u.base_price` — Module 1's
+        legacy field, which knows nothing about release batches or commercial
+        blocks, and the internal figure discounts are measured against.
+
+        The signature keeps its old shape and the old keys are still present,
+        so nothing that already reads `mesh_name` or `area_sqm` breaks. What
+        changed is where `state` and the price come from, and `state` is now
+        spelled `visual_state` because it is a different question with a
+        different answer.
+
+        **The default audience is `public`, deliberately.** It was `internal`
+        for one release, and the portal's anonymous `units.json` endpoint —
+        which calls this with no argument — immediately began serving internal
+        list prices, unavailability reasons and commercial status to the
+        public. A caller that forgets to say who is asking should get the
+        least-privileged answer, not the most.
+        """
         self.ensure_one()
-        units = self.property_ids.filtered(lambda p: p.hierarchy_level == 'unit')
-        data = []
-        for u in units:
-            data.append({
-                'id': u.id,
-                'property_code': u.property_code or '',
-                'name': u.name,
-                'mesh_name': u.maquette_mesh_name or '',
-                'state': u.state or '',
-                'base_price': u.base_price if 'base_price' in u._fields else 0.0,
-                'currency': u.currency_id.symbol if u.currency_id else '',
-                'area_sqm': u.area_sqm or 0.0,
-                'property_type': u.property_type_id.name if u.property_type_id else '',
-                'has_floor_plan': bool(u.has_floor_plan_effective),
-                'color_override': u.maquette_color_override or '',
-            })
-        return data
+        units = self.property_ids.filtered(
+            lambda p: p.hierarchy_level == 'unit')
+        payload = self.env['realestate.visual.commercial'].unit_payload(
+            units, audience=audience)
+        for entry in payload:
+            # Backward compatibility for anything still reading `state`. It
+            # now carries the *visual* state, which is the honest answer to
+            # the question the viewer was actually asking.
+            entry.setdefault('state', entry['visual_state'])
+            entry.setdefault('base_price', entry['price'])
+        return payload

@@ -45,13 +45,13 @@ function goTo(action) {
     return {
         trigger: "body",
         run: () => {
-            window.location.href = `/odoo/action-real_estate_construction.${action}`;
+            window.location.href = `/odoo/action-atmta_construction_certification.${action}`;
         },
     };
 }
 
 registry.category("web_tour.tours").add("construction_certification_tour", {
-    url: "/odoo/action-real_estate_construction.action_payment_certificate",
+    url: "/odoo/action-atmta_construction_certification.action_payment_certificate",
     steps: () => [
         {
             content: "The certificate register lists the seeded certificate",

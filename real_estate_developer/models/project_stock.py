@@ -16,7 +16,7 @@ class ProjectStock(models.Model):
         self.ensure_one()
         if self.stock_location_id:
             return self.stock_location_id
-        root = self.env.ref('atmta_real_estate.stock_location_re_root')
+        root = self.env.ref('atmta_property_stock.stock_location_re_root')
         location = self.env['stock.location'].sudo().create({
             'name': self.name or self.code or _('Project %s') % self.id,
             'usage': 'internal',

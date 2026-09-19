@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  The phase screens, owned by the module that owns the model.
+
+  They lived in `real_estate_developer`. What needs the developer application
+  (the unit counts, and the Units page, which shows `base_price` and the
+  properties attached to a phase) is added back by
+  `real_estate_developer/views/phase_views.xml` as an extension.
+
+  The commercial extension in `real_estate_developer/views/commercial_views.xml`
+  anchors on `//group` (the first one), so the first `<group>` below must stay
+  first.
+-->
+<odoo>
+
+    <record id="view_phase_list" model="ir.ui.view">
+        <field name="name">realestate.phase.list</field>
+        <field name="model">realestate.phase</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle"/>
+                <field name="project_id"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="start_date"/>
+                <field name="expected_completion_date"/>
+                <field name="expected_delivery_date"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_phase_form" model="ir.ui.view">
+        <field name="name">realestate.phase.form</field>
+        <field name="model">realestate.phase</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_set_construction" type="object" string="Start Construction"
+                            class="oe_highlight" invisible="state != 'planning'"/>
+                    <button name="action_set_ready" type="object" string="Mark Ready"
+                            invisible="state != 'construction'"/>
+                    <button name="action_set_delivered" type="object" string="Deliver"
+                            invisible="state != 'ready'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box"/>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Phase Name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id" options="{'no_create': True}"/>
+                            <field name="code"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="expected_completion_date"/>
+                            <field name="expected_delivery_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+</odoo>

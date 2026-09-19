@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Record rules (Phases 27 & 28).
+
+  The pre-upgrade module had NO ir.rule records at all across the whole suite,
+  which meant multi-company isolation did not exist: any user could read any
+  company's properties, leases and rent.
+
+  Every model that carries a company is given the standard Odoo multi-company
+  rule (`company_id in company_ids`), so a user only ever sees the companies
+  they are logged into. These are global rules — they apply to every group,
+  including managers, because company isolation is not a permission level.
+
+  Note on realestate.property: its company comes from the delegated
+  product.template but is materialised as a real, indexed column
+  (see property_identity.py) precisely so it can be used here.
+-->
+<odoo noupdate="1">
+
+    <!-- ============================================================= -->
+    <!-- Multi-company isolation                                        -->
+    <!-- ============================================================= -->
+
+    <!--
+        Property isolation moved to `atmta_property_core`
+        (`security/property_core_rules.xml`), together with the `company_id` it
+        filters on. A module that defines a model owns the boundary around it;
+        this application keeps the rules for the lease models below, which are
+        genuinely its own.
+    -->
+
+    <record id="rule_contract_company" model="ir.rule">
+        <field name="name">Lease: multi-company</field>
+        <field name="model_id" ref="model_realestate_contract"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_contract_property_line_company" model="ir.rule">
+        <field name="name">Lease allocation: multi-company</field>
+        <field name="model_id" ref="model_realestate_contract_property_line"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_contract_party_company" model="ir.rule">
+        <field name="name">Lease party: multi-company</field>
+        <field name="model_id" ref="model_realestate_contract_party"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_contract_payment_company" model="ir.rule">
+        <field name="name">Billing obligation: multi-company</field>
+        <field name="model_id" ref="model_realestate_contract_payment"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_charge_rule_company" model="ir.rule">
+        <field name="name">Charge rule: multi-company</field>
+        <field name="model_id" ref="model_realestate_contract_charge_rule"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_escalation_company" model="ir.rule">
+        <field name="name">Rent escalation: multi-company</field>
+        <field name="model_id" ref="model_realestate_rent_escalation_rule"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_incentive_company" model="ir.rule">
+        <field name="name">Lease incentive: multi-company</field>
+        <field name="model_id" ref="model_realestate_contract_incentive"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_deposit_company" model="ir.rule">
+        <field name="name">Security deposit: multi-company</field>
+        <field name="model_id" ref="model_realestate_contract_deposit"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_renewal_company" model="ir.rule">
+        <field name="name">Lease renewal: multi-company</field>
+        <field name="model_id" ref="model_realestate_contract_renewal"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_amendment_company" model="ir.rule">
+        <field name="name">Lease amendment: multi-company</field>
+        <field name="model_id" ref="model_realestate_contract_amendment"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_termination_company" model="ir.rule">
+        <field name="name">Lease termination: multi-company</field>
+        <field name="model_id" ref="model_realestate_contract_termination"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_move_in_company" model="ir.rule">
+        <field name="name">Move-in: multi-company</field>
+        <field name="model_id" ref="model_realestate_move_in"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_move_out_company" model="ir.rule">
+        <field name="name">Move-out: multi-company</field>
+        <field name="model_id" ref="model_realestate_move_out"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_unit_turn_company" model="ir.rule">
+        <field name="name">Unit turn: multi-company</field>
+        <field name="model_id" ref="model_realestate_unit_turn"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_meter_company" model="ir.rule">
+        <field name="name">Property meter: multi-company</field>
+        <field name="model_id" ref="model_realestate_property_meter"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_meter_reading_company" model="ir.rule">
+        <field name="name">Meter reading: multi-company</field>
+        <field name="model_id" ref="model_realestate_property_meter_reading"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_rent_roll_company" model="ir.rule">
+        <field name="name">Rent roll: multi-company</field>
+        <field name="model_id" ref="model_realestate_rent_roll"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_maintenance_request_company" model="ir.rule">
+        <field name="name">Maintenance request: multi-company</field>
+        <field name="model_id" ref="model_realestate_maintenance_request"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('property_id', '=', False), ('property_id.company_id', 'in', company_ids)]</field>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- Portfolio scoping                                              -->
+    <!-- ============================================================= -->
+    <!--
+      A Rental User with no portfolio assignment sees the whole company's
+      estate; assigning them one narrows them to it. Modelled as a
+      NON-global rule on the Rental User group so that Property Managers and
+      above (who also carry a permissive rule below) are never restricted.
+    -->
+    <record id="rule_contract_portfolio_user" model="ir.rule">
+        <field name="name">Lease: own portfolio (Rental User)</field>
+        <field name="model_id" ref="model_realestate_contract"/>
+        <field name="groups" eval="[(4, ref('group_rental_user'))]"/>
+        <field name="domain_force">['|', '|',
+            ('user_id', '=', user.id),
+            ('user_id', '=', False),
+            ('create_uid', '=', user.id)]</field>
+    </record>
+
+    <record id="rule_contract_portfolio_manager" model="ir.rule">
+        <field name="name">Lease: all (Property Manager and above)</field>
+        <field name="model_id" ref="model_realestate_contract"/>
+        <field name="groups" eval="[(4, ref('group_property_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <!-- Group rules are combined with OR, so this lifts the Rental User
+         narrowing for flagged users; the global company rule above still
+         applies to them. -->
+    <record id="rule_contract_all_portfolios" model="ir.rule">
+        <field name="name">Lease: all (See All Portfolios)</field>
+        <field name="model_id" ref="model_realestate_contract"/>
+        <field name="groups" eval="[(4, ref('group_rental_all_portfolios'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- ================= Allocations (M3) ================= -->
+    <record id="view_check_allocation_list" model="ir.ui.view">
+        <field name="name">realestate.check.allocation.list</field>
+        <field name="model">realestate.check.allocation</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state == 'cancelled'">
+                <field name="check_id"/>
+                <field name="partner_id"/>
+                <field name="obligation_kind"/>
+                <field name="obligation_ref"/>
+                <field name="obligation_due_date"/>
+                <field name="obligation_amount" sum="Obligations"/>
+                <field name="allocated_amount" sum="Allocated"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="move_id" optional="show"/>
+                <field name="sale_contract_id" optional="hide"/>
+                <field name="rental_contract_id" optional="hide"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_check_allocation_form" model="ir.ui.view">
+        <field name="name">realestate.check.allocation.form</field>
+        <field name="model">realestate.check.allocation</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="alert alert-info" role="status">
+                        An allocation says what this cheque is <b>meant</b> to pay.
+                        It moves no money and settles nothing — the obligation stays
+                        outstanding until the cheque clears and Odoo reconciles it.
+                    </div>
+                    <group>
+                        <group>
+                            <field name="check_id"/>
+                            <field name="partner_id"/>
+                            <field name="allocated_amount"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                            <field name="state"/>
+                        </group>
+                        <group>
+                            <field name="sale_installment_id"/>
+                            <field name="rental_payment_id"/>
+                            <field name="obligation_amount"/>
+                            <field name="obligation_due_date"/>
+                            <field name="move_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <field name="note"/>
+                    <field name="cancel_reason" readonly="1"
+                           invisible="state != 'cancelled'"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_check_allocation" model="ir.actions.act_window">
+        <field name="name">Cheque Allocations</field>
+        <field name="res_model">realestate.check.allocation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ================= Custody (M4) ================= -->
+    <record id="view_check_custody_list" model="ir.ui.view">
+        <field name="name">realestate.check.custody.list</field>
+        <field name="model">realestate.check.custody</field>
+        <field name="arch" type="xml">
+            <list create="false" edit="false" delete="false">
+                <field name="date"/>
+                <field name="check_id"/>
+                <field name="partner_id"/>
+                <field name="amount" sum="Face Value"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="reason"/>
+                <field name="from_custodian_id"/>
+                <field name="to_custodian_id"/>
+                <field name="from_location_id"/>
+                <field name="to_location_id"/>
+                <field name="handed_over_by_id"/>
+                <field name="note"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_check_custody_search" model="ir.ui.view">
+        <field name="name">realestate.check.custody.search</field>
+        <field name="model">realestate.check.custody</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="check_id"/>
+                <field name="to_custodian_id"/>
+                <field name="to_location_id"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_reason" string="Reason" context="{'group_by':'reason'}"/>
+                    <filter name="group_to" string="To Custodian"
+                            context="{'group_by':'to_custodian_id'}"/>
+                    <filter name="group_location" string="To Location"
+                            context="{'group_by':'to_location_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_check_custody" model="ir.actions.act_window">
+        <field name="name">Custody Movements</field>
+        <field name="res_model">realestate.check.custody</field>
+        <field name="view_mode">list</field>
+        <field name="search_view_id" ref="view_check_custody_search"/>
+    </record>
+
+    <!-- ================= Presentations (M9) ================= -->
+    <record id="view_check_presentation_list" model="ir.ui.view">
+        <field name="name">realestate.check.presentation.list</field>
+        <field name="model">realestate.check.presentation</field>
+        <field name="arch" type="xml">
+            <list create="false" decoration-danger="state=='bounced'"
+                  decoration-success="state=='cleared'">
+                <field name="check_id"/>
+                <field name="attempt"/>
+                <field name="partner_id"/>
+                <field name="presented_date"/>
+                <field name="deposit_id"/>
+                <field name="journal_id"/>
+                <field name="amount" sum="Presented"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="payment_id"/>
+                <field name="cleared_date"/>
+                <field name="bounced_date"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_check_presentation" model="ir.actions.act_window">
+        <field name="name">Presentation Attempts</field>
+        <field name="res_model">realestate.check.presentation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ================= Custody locations ================= -->
+    <record id="view_check_location_list" model="ir.ui.view">
+        <field name="name">realestate.check.location.list</field>
+        <field name="model">realestate.check.location</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="kind"/>
+                <field name="custodian_id"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="check_count"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_check_location_form" model="ir.ui.view">
+        <field name="name">realestate.check.location.form</field>
+        <field name="model">realestate.check.location</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_checks" type="object"
+                                class="oe_stat_button" icon="fa-money">
+                            <field name="check_count" widget="statinfo" string="Cheques"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="kind"/>
+                        </group>
+                        <group>
+                            <field name="custodian_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                    <field name="note"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_check_location" model="ir.actions.act_window">
+        <field name="name">Custody Locations</field>
+        <field name="res_model">realestate.check.location</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

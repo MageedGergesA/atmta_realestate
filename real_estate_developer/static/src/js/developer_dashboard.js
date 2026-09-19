@@ -1,7 +1,8 @@
 /** @odoo-module **/
 
 import { registry } from "@web/core/registry";
-import { Component, onMounted, onWillUnmount, useEffect, useRef, useState } from "@odoo/owl";
+import { Component, onMounted, onWillStart, onWillUnmount, useEffect, useRef, useState } from "@odoo/owl";
+import { loadBundle } from "@web/core/assets";
 import { useService } from "@web/core/utils/hooks";
 
 const PROJ_COLORS = {
@@ -39,6 +40,13 @@ export class DeveloperDashboard extends Component {
     static props = ["*"];
 
     setup() {
+        // Chart.js is loaded on demand from Odoo's own `web.chartjs_lib`
+        // bundle. This dashboard previously relied on a copy that
+        // atmta_real_estate pushed into web.assets_backend for every page;
+        // that duplicate was removed in atmta_real_estate 0.4, so each
+        // consumer now loads the library itself, as Odoo's graph view does.
+        onWillStart(() => loadBundle("web.chartjs_lib"));
+
         this.orm = useService("orm");
         this.action = useService("action");
         this.mapRef = useRef("map");
@@ -93,8 +101,9 @@ export class DeveloperDashboard extends Component {
         patchLeaflet();
         if (!this.map) {
             this.map = L.map(this.mapRef.el, { center: [24.7136, 46.6753], zoom: 5, preferCanvas: true });
-            const streets = L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
-                attribution: '&copy; CARTO', maxZoom: 19, subdomains: "abcd",
+            // OpenStreetMap's own tiles: free, no API key (CARTO now requires one).
+            const streets = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 19,
             });
             const satellite = L.tileLayer(
                 "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
@@ -227,6 +236,14 @@ export class DeveloperDashboard extends Component {
     openContract(id) { this.action.doAction({ type:"ir.actions.act_window", res_model:"realestate.sale.contract", res_id:id, views:[[false,"form"]] }); }
     openReservation(id) { this.action.doAction({ type:"ir.actions.act_window", res_model:"realestate.unit.reservation", res_id:id, views:[[false,"form"]] }); }
     openInstallment(id) { this.action.doAction({ type:"ir.actions.act_window", res_model:"realestate.sale.installment", res_id:id, views:[[false,"form"]] }); }
+
+    // Revenue MTD opens the very payments it is the sum of: the server
+    // returns the action built from the same domain it summed, so the figure
+    // and the records behind it cannot drift apart.
+    async openCollectedMtd() {
+        const action = await this.orm.call("realestate.developer.dashboard", "action_collected_mtd", []);
+        this.action.doAction(action);
+    }
 
     formatMoney(n) {
         if (n === null || n === undefined) return "0";

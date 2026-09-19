@@ -1,6 +1,8 @@
 /** @odoo-module **/
 
 import { Component, onMounted, onWillUnmount, useRef, useState } from "@odoo/owl";
+import { probeCapability, chooseExperience } from "./visual_capability";
+import { disposeViewer } from "./visual_dispose";
 import { useService } from "@web/core/utils/hooks";
 import { rpc } from "@web/core/network/rpc";
 import { CarouselDialog } from "./image_carousel_dialog";
@@ -31,7 +33,10 @@ const THREEJS_URLS = {
     RGBELoader: `${THREEJS_LIB}/RGBELoader.js`,
 };
 
-// State → hex color (used both in 3D and in the side-panel badge).
+// Kept only as the last-resort fallback for a payload that predates the
+// visual-state service. Live colours arrive per unit in the payload, built
+// server-side from `VISUAL_STATE_PRESENTATION` — one table, shared by the 3D
+// tint, the 2D fill and the legend.
 const STATE_COLORS = {
     available: "#22c55e",   // green
     reserved: "#eab308",    // yellow
@@ -82,17 +87,74 @@ export class MaquetteViewer extends Component {
     static template = "real_estate_maquette.MaquetteViewer";
     static props = {
         projectId: { type: Number },
+        grantToken: { type: String, optional: true },
         focusPropertyId: { type: Number, optional: true },
         focusMeshName: { type: String, optional: true },
         mode: { type: String, optional: true },  // "backend" (default) | "portal"
+        // Told whenever the selection changes, with the unit or null. Optional
+        // because the viewer is perfectly usable on its own — Presentation
+        // Mode uses it to drive the shortlist / payment-plan / reserve panel
+        // beside the canvas, so a customer's selection means the same thing
+        // whether they clicked a mesh, a plan region or a list row.
+        onUnitSelected: { type: Function, optional: true },
     };
 
     get portalMode() {
         return this.props.mode === "portal";
     }
+    /**
+     *  A public grant, when the page supplied one.
+     *
+     *  Portal and embed pages authorise themselves, then mint a
+     *  resource-scoped grant and pass its token down. Asset URLs carry it, so
+     *  the bytes are authorised per request rather than by the URL being
+     *  guessable — which is what they were until M4.5-A.
+     */
+    /**
+     *  Units for the list fallback.
+     *
+     *  Read from the data already fetched, not re-requested: by the time we
+     *  are falling back, another round trip is exactly what may not work.
+     */
+    get fallbackUnits() {
+        const seen = new Set();
+        const out = [];
+        for (const u of Object.values(this._unitData || {})) {
+            if (u && u.id && !seen.has(u.id)) {
+                seen.add(u.id);
+                out.push(u);
+            }
+        }
+        return out.sort((a, b) => (a.floor || 0) - (b.floor || 0)
+            || String(a.property_code).localeCompare(String(b.property_code)));
+    }
+
+    /** Selecting from the list opens the same panel a mesh click would. */
+    selectUnitFromList(unit) {
+        this._setSelectedUnit(unit);
+    }
+
+    /**
+     * The one place selection changes.
+     *
+     * Every path into a selection — a mesh click, a chip, a list row, the
+     * close button — goes through here, so the parent hears about all of them
+     * rather than the three that were remembered.
+     */
+    _setSelectedUnit(unit) {
+        this.state.selectedUnit = unit || null;
+        if (this.props.onUnitSelected) {
+            this.props.onUnitSelected(this.state.selectedUnit);
+        }
+    }
+
+    get grantSuffix() {
+        return this.props.grantToken ? `?t=${this.props.grantToken}` : "";
+    }
+
     get glbUrl() {
         const base = this.portalMode
-            ? `/projects/${this.props.projectId}/glb`
+            ? `/visual/asset/maquette_glb/${this.props.projectId}${this.grantSuffix}`
             : `/maquette/glb/${this.props.projectId}`;
         // Append the version token so a re-uploaded/deleted GLB yields a new URL
         // the browser can't serve from its cache of the previous model.
@@ -120,6 +182,13 @@ export class MaquetteViewer extends Component {
             loading: true,
             loadingMsg: "Loading 3D viewer…",
             error: "",
+            // Rule 4. `experience` is what is actually on screen; `degraded`
+            // carries the one-sentence reason when it is not what was asked
+            // for. 0.4 had neither: every failure ended at a red box holding a
+            // Three.js exception message.
+            experience: "3d",
+            degradedReason: "",
+            fallback: null,
             selectedUnit: null,
             hovered: null,
             stats: { total: 0, available: 0, reserved: 0, sold: 0, mapped: 0 },
@@ -146,11 +215,43 @@ export class MaquetteViewer extends Component {
         onWillUnmount(() => this._teardown());
     }
 
+    /**
+     *  Degrade to `experience`, telling the customer why in one sentence.
+     *
+     *  Never surfaces a stack trace or a loader internal: "3D view is
+     *  unavailable on this device. Showing the interactive plan instead."
+     *  is actionable; `TypeError: Cannot read properties of undefined` is not.
+     *  The technical detail goes to the console for whoever is debugging.
+     */
+    _degradeTo(experience, reason, detail) {
+        if (detail) {
+            console.warn(`[maquette] falling back to ${experience}:`, detail);
+        }
+        // Everything already built has to go back, or a failed 3D attempt
+        // leaks a scene graph for the life of the tab.
+        this._teardown();
+        this.state.loading = false;
+        this.state.error = "";
+        this.state.experience = experience;
+        this.state.degradedReason = reason || "";
+    }
+
+    /** The chain: 3D → 2D → list. Never a dead end. */
+    _fallbackFrom3d(reason, detail) {
+        const fb = this.state.fallback || {};
+        if (fb.has_2d) {
+            this._degradeTo("2d", reason, detail);
+        } else {
+            this._degradeTo("list", reason, detail);
+        }
+    }
+
     async _init() {
         try {
-            this.state.loadingMsg = "Loading Three.js…";
-            this._three = await loadThreeJs();
-
+            // Units first, Three.js second. The payload says whether there is
+            // a model at all and what this device is allowed to render, and a
+            // project with no GLB should not pay 1.27 MB to find that out —
+            // nor should a device that will be sent to 2D anyway.
             this.state.loadingMsg = "Fetching units…";
             let units;
             // meta carries the optional backend extras (saved camera, HDR flag).
@@ -180,6 +281,36 @@ export class MaquetteViewer extends Component {
                 }
             }
             this._refreshStats(units);
+            this.state.fallback = meta.fallback || null;
+            this._assetConfig = meta.asset_config || null;
+
+            // Is there a model at all? A project with 2D and no GLB is a
+            // perfectly good gallery, not an error.
+            if (!this._hasGlb) {
+                this._fallbackFrom3d(
+                    "This project has no 3D model. Showing the interactive "
+                    + "plan instead.");
+                return;
+            }
+
+            // Capability, measured rather than sniffed. Done before loading
+            // the library so a device that will be sent to 2D never downloads
+            // a 3D engine it cannot use.
+            const capability = probeCapability();
+            const choice = chooseExperience(capability, this.state.fallback || {});
+            if (choice.experience !== "3d") {
+                this._fallbackFrom3d(
+                    capability.supported
+                        ? "3D is too demanding for this device. Showing the "
+                          + "interactive plan instead."
+                        : "3D view is unavailable on this device. Showing the "
+                          + "interactive plan instead.",
+                    { capability, choice });
+                return;
+            }
+
+            this.state.loadingMsg = "Loading Three.js…";
+            this._three = await loadThreeJs();
 
             this.state.loadingMsg = "Initializing scene…";
             this._buildScene();
@@ -203,9 +334,13 @@ export class MaquetteViewer extends Component {
             this.state.loading = false;
             this._animate();
         } catch (err) {
-            console.error("Maquette init failed:", err);
-            this.state.loading = false;
-            this.state.error = err.message || String(err);
+            // Anything that got this far — a malformed GLB, a network
+            // failure, a missing Draco decoder, a Three.js exception — lands
+            // in the same place: the customer gets the next experience down,
+            // not a dead end. The detail goes to the console.
+            this._fallbackFrom3d(
+                "The 3D view could not be loaded. Showing the interactive "
+                + "plan instead.", err);
         }
     }
 
@@ -213,9 +348,13 @@ export class MaquetteViewer extends Component {
         const stats = { total: units.length, available: 0, reserved: 0, sold: 0, mapped: 0 };
         for (const u of units) {
             if (u.mesh_name) stats.mapped++;
-            if (u.state === "available") stats.available++;
-            else if (u.state === "reserved") stats.reserved++;
-            else if (u.state === "sold") stats.sold++;
+            // `visual_state` is Developer's answer mapped to what a customer
+            // can distinguish; `state` is kept as an alias for compatibility
+            // but is the same value now.
+            const vs = u.visual_state || u.state;
+            if (vs === "available") stats.available++;
+            else if (vs === "reserved" || vs === "held") stats.reserved++;
+            else if (vs === "sold" || vs === "contracted") stats.sold++;
         }
         this.state.stats = stats;
     }
@@ -324,7 +463,17 @@ export class MaquetteViewer extends Component {
         // Optional Draco decoder for compressed GLBs
         try {
             const draco = new T.DRACOLoader();
-            draco.setDecoderPath(`https://unpkg.com/three@${THREEJS_VERSION}/examples/jsm/libs/draco/`);
+            // The path comes from the server, never from a CDN. The audit
+            // found this hard-coded to unpkg.com, so any Draco-compressed
+            // model needed public internet access from the customer's browser
+            // and failed silently behind a corporate or GCC firewall. A
+            // deployment that serves the decoder elsewhere sets
+            // `real_estate_maquette.draco_decoder_path` and needs no code
+            // change.
+            draco.setDecoderPath(
+                this._assetConfig?.draco_decoder_path
+                || "/real_estate_maquette/static/src/lib/threejs/draco/");
+            this._dracoLoader = draco;
             loader.setDRACOLoader(draco);
         } catch (e) { /* DRACOLoader missing — non-compressed GLBs still work */ }
 
@@ -415,16 +564,25 @@ export class MaquetteViewer extends Component {
         const T = this._three;
         for (const [key, mesh] of Object.entries(this._unitMeshes)) {
             const data = this._unitData[key];
-            const color = (data && data.color_override) ||
-                          (data && STATE_COLORS[data.state]) ||
-                          STATE_COLORS.default;
+            // The colour comes from the server, which built it from the same
+            // table the legend and the 2D polygon fill use. The JS used to
+            // keep its own `STATE_COLORS` map keyed on the legacy
+            // `property.state`, so a state the engine knew about and this file
+            // did not was silently drawn slate grey — and adding a state meant
+            // editing two tables that nothing kept in step.
+            const color = (data && data.color)
+                          || (data && data.color_override)
+                          || STATE_COLORS.default;
             if (mesh.material) {
                 if (!mesh.material.color) {
                     mesh.material = new T.MeshStandardMaterial({ color: new T.Color(color) });
                 } else {
                     mesh.material.color = new T.Color(color);
                     mesh.material.transparent = true;
-                    mesh.material.opacity = data && data.state === "sold" ? 0.5 : 0.95;
+                    const soldish = data
+                        && ["sold", "contracted"].includes(
+                            data.visual_state || data.state);
+                    mesh.material.opacity = soldish ? 0.5 : 0.95;
                     mesh.material.needsUpdate = true;
                 }
             }
@@ -461,14 +619,22 @@ export class MaquetteViewer extends Component {
         const T = this._three;
         try {
             const rgbe = new T.RGBELoader();
-            const url = this._glbVersion
-                ? `/maquette/hdr/${this.props.projectId}?v=${this._glbVersion}`
-                : `/maquette/hdr/${this.props.projectId}`;
+            // In portal/embed mode the HDR goes through the gated route with
+            // the page's grant, exactly like the model does. Internally the
+            // authenticated route still applies.
+            const url = this.portalMode
+                ? `/visual/asset/maquette_hdr/${this.props.projectId}${this.grantSuffix}`
+                : `/maquette/hdr/${this.props.projectId}?v=${this._glbVersion || 0}`;
             rgbe.load(url, (tex) => {
                 tex.mapping = T.EquirectangularReflectionMapping;
                 this._scene.environment = tex;
             });
-        } catch (e) { /* HDR is optional */ }
+        } catch (e) {
+            // Explicitly non-fatal. The environment map only affects
+            // lighting; a viewer without it is slightly flatter and entirely
+            // usable, and killing the whole gallery over it would be absurd.
+            console.warn("[maquette] environment map unavailable:", e);
+        }
     }
 
     _onMouseMove(ev) {
@@ -509,7 +675,7 @@ export class MaquetteViewer extends Component {
     _onSingleClick(ev) {
         const hit = this._hitUnit(ev);
         if (hit && hit.data) {
-            this.state.selectedUnit = hit.data;
+            this._setSelectedUnit(hit.data);
             this._highlight(hit.mesh);
         }
     }
@@ -519,7 +685,7 @@ export class MaquetteViewer extends Component {
         const hit = this._hitUnit(ev);
         if (!hit) return;                          // empty space
         if (hit.data) {
-            this.state.selectedUnit = hit.data;
+            this._setSelectedUnit(hit.data);
             this._highlight(hit.mesh);
         }
         this._openUnitPicker(hit.data ? hit.data.id : false, hit.mesh.name);
@@ -591,7 +757,7 @@ export class MaquetteViewer extends Component {
     _focusOnMesh(meshName) {
         const mesh = this._unitMeshes[meshName];
         if (!mesh) return;
-        this.state.selectedUnit = this._unitData[meshName];
+        this._setSelectedUnit(this._unitData[meshName]);
         this._highlight(mesh);
         // Tween camera to mesh
         const T = this._three;
@@ -607,23 +773,59 @@ export class MaquetteViewer extends Component {
         this._renderer.render(this._scene, this._camera);
     }
 
+    /**
+     *  Release everything: listeners, timers, and the GPU resources Three.js
+     *  will otherwise hold until the tab is closed.
+     *
+     *  0.4 disposed the renderer and nothing else — no geometry, materials,
+     *  textures, environment map or decoder workers. Three.js does not
+     *  garbage-collect GPU objects, so opening a project, leaving and coming
+     *  back grew the tab's memory every time until the context was dropped and
+     *  the viewer went black.
+     */
     _teardown() {
-        if (this._animationId) cancelAnimationFrame(this._animationId);
+        if (this._animationId) {
+            cancelAnimationFrame(this._animationId);
+            this._animationId = null;
+        }
         if (this._clickTimer) { clearTimeout(this._clickTimer); this._clickTimer = null; }
         if (this._onResize) window.removeEventListener("resize", this._onResize);
         if (this._resizeObserver) { this._resizeObserver.disconnect(); this._resizeObserver = null; }
         if (this._onCanvasWheel && this.canvasRef.el?.parentElement) {
             this.canvasRef.el.parentElement.removeEventListener("wheel", this._onCanvasWheel);
         }
-        if (this._renderer) {
-            this._renderer.dispose();
-            this._renderer = null;
-        }
+
+        this._disposalCounts = disposeViewer({
+            scene: this._scene,
+            renderer: this._renderer,
+            controls: this._controls,
+            pmremGenerator: this._pmremGenerator,
+            dracoLoader: this._dracoLoader,
+        });
+
+        // Drop every reference the component holds, so nothing keeps a
+        // disposed scene graph alive.
+        this._scene = null;
+        this._renderer = null;
+        this._controls = null;
+        this._camera = null;
+        this._rootObject = null;
+        this._pmremGenerator = null;
+        this._dracoLoader = null;
+        this._unitMeshes = {};
+        // `_unitData` deliberately survives. It is plain JSON, not a GPU
+        // resource, and it is what the list fallback renders from — tearing
+        // the scene down on the way *to* that list used to empty it, so the
+        // last rung of the chain always said "No units to show" while the
+        // legend above it counted them.
+        this._origMaterials.clear();
+        this._highlighted = null;
+        this._three = null;
     }
 
     // ----- Side panel actions -----
     closeSidePanel() {
-        this.state.selectedUnit = null;
+        this._setSelectedUnit(null);
         if (this._highlighted && this._origMaterials.has(this._highlighted)) {
             const prev = this._origMaterials.get(this._highlighted);
             this._highlighted.material.emissive = prev.emissive;
@@ -683,8 +885,19 @@ export class MaquetteViewer extends Component {
             this._dispatchPortalForm("eoi", u.id);
             return;
         }
-        if (u.state !== "available") {
-            this.notification.add("Unit is not available.", { type: "warning" });
+        // Developer's answer, not `property.state`. The audit found this
+        // gating on the legacy field, so an unreleased or blocked unit was
+        // offered to a customer and only refused once they had committed to
+        // clicking Reserve. `reservable` is computed server-side by the same
+        // service that colours the mesh, so the button and the colour can
+        // never disagree.
+        if (!u.reservable) {
+            this.notification.add(
+                u.unavailable_reason
+                    ? `This unit is not available (${u.unavailable_reason}).`
+                    : "This unit is not available.",
+                { type: "warning" }
+            );
             return;
         }
         await this.action.doAction({

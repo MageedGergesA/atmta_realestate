@@ -1,292 +1,383 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  Lease screens (rental re-architecture, Phase 4; RENTAL_UX_SPEC.md §6-§7).
+
+  One form: a single statusbar on the lease status, only the next sensible
+  actions in the header, one smart-button box, a summary above the notebook and
+  six tabs. Hiding a button is convenience only: every workflow method checks
+  its role and prerequisites on the server.
+
+  Other modules extend this form through `//header` and
+  `//div[@name='button_box']`; both anchors are kept.
+-->
 <odoo>
     <record id="view_realestate_contract_form" model="ir.ui.view">
         <field name="name">realestate.contract.form</field>
         <field name="model">realestate.contract</field>
         <field name="arch" type="xml">
-            <form string="Real Estate Contract">
+            <form string="Lease">
                 <header>
-                    <button name="action_generate_payment_lines"
-                            type="object"
-                            string="Generate Payment Schedule"
-                            class="btn-info"
-                            groups="atmta_real_estate.group_realestate_user"
-                            invisible="state != 'draft'"/>
-
-                    <button name="action_confirm"
-                            type="object"
-                            string="Confirm Contract"
-                            class="btn-primary"
-                            groups="atmta_real_estate.group_realestate_user"
-                            invisible="state != 'ready'"/>
-
-                    <button name="action_generate_invoices"
-                            type="object"
-                            string="Create Invoices"
-                            class="btn-warning"
-                            invisible="state != 'confirmed'"
-                            groups="account.group_account_user,account.group_account_invoice,atmta_real_estate.group_realestate_user"/>
-
-                    <button name="action_activate"
-                            type="object"
-                            string="Activate"
-                            class="btn-success"
-                            groups="atmta_real_estate.group_realestate_user"
-                            invisible="state != 'invoiced'"/>
-
-                    <button name="action_terminate"
-                            type="object"
-                            string="Terminate"
-                            class="btn-danger"
-                            groups="atmta_real_estate.group_realestate_user"
-                            invisible="state != 'active'"/>
-
-                    <button name="action_reset_to_draft"
-                            type="object"
-                            string="Reset to Draft"
-                            groups="atmta_real_estate.group_realestate_user"
-                            class="btn-secondary"/>
-
-                    <button name="action_open_report_wizard"
-                            type="object"
-                            groups="atmta_real_estate.group_realestate_user"
-                            string="Print Contract Report"
-                            class="btn-secondary"/>
-
-                    <field name="state"
-                           widget="statusbar"
-                           statusbar_visible="draft,ready,confirmed,invoiced,active,expired,terminated"/>
+                    <!-- Draft and proposal -->
+                    <button name="action_submit_for_approval" type="object"
+                            string="Submit for Approval" class="oe_highlight"
+                            invisible="lifecycle_state not in ('draft', 'proposal')"
+                            groups="atmta_real_estate.group_rental_agent"/>
+                    <button name="action_to_proposal" type="object" string="Propose"
+                            invisible="lifecycle_state != 'draft'"
+                            groups="atmta_real_estate.group_rental_agent"/>
+                    <button name="action_reopen_draft" type="object" string="Back to Draft"
+                            invisible="lifecycle_state not in ('proposal', 'pending_approval')"
+                            groups="atmta_real_estate.group_rental_manager"/>
+                    <!-- Approval and signature -->
+                    <button name="action_approve_lease" type="object" string="Approve"
+                            class="oe_highlight"
+                            invisible="lifecycle_state != 'pending_approval'"
+                            groups="atmta_real_estate.group_rental_manager"/>
+                    <button name="action_mark_signed" type="object" string="Mark Signed"
+                            class="oe_highlight"
+                            invisible="lifecycle_state != 'pending_signature' or signature_status == 'signed'"
+                            groups="atmta_real_estate.group_rental_agent"/>
+                    <button name="action_activate_lease" type="object" string="Activate"
+                            class="oe_highlight"
+                            invisible="lifecycle_state != 'pending_signature' or signature_status != 'signed'"
+                            groups="atmta_real_estate.group_property_manager"/>
+                    <!-- Live lease -->
+                    <button name="action_start_renewal" type="object" string="Renew"
+                            class="oe_highlight"
+                            invisible="lifecycle_state != 'active'"
+                            groups="atmta_real_estate.group_rental_agent"/>
+                    <button name="action_give_notice" type="object" string="Give Notice"
+                            invisible="lifecycle_state != 'active'"
+                            groups="atmta_real_estate.group_property_manager"/>
+                    <button name="action_start_termination" type="object" string="Terminate"
+                            invisible="lifecycle_state != 'active'"
+                            groups="atmta_real_estate.group_property_manager"/>
+                    <!-- On notice -->
+                    <button name="action_start_termination" type="object" string="Terminate"
+                            class="oe_highlight"
+                            invisible="lifecycle_state != 'notice'"
+                            groups="atmta_real_estate.group_property_manager"/>
+                    <button name="action_schedule_move_out" type="object" string="Schedule Move-Out"
+                            invisible="lifecycle_state != 'notice' or move_out_count"
+                            groups="atmta_real_estate.group_property_manager"/>
+                    <button name="action_withdraw_notice" type="object" string="Withdraw Notice"
+                            invisible="lifecycle_state != 'notice'"
+                            groups="atmta_real_estate.group_property_manager"
+                            confirm="Withdraw the notice and keep this lease active?"/>
+                    <!-- Cancel and reopen -->
+                    <button name="action_cancel_lease" type="object" string="Cancel"
+                            invisible="lifecycle_state not in ('draft', 'proposal', 'pending_approval', 'pending_signature')"
+                            groups="atmta_real_estate.group_rental_manager"
+                            confirm="Cancel this lease? A cancelled lease reserves no unit and bills nothing."/>
+                    <button name="action_reopen_draft" type="object" string="Reopen"
+                            invisible="lifecycle_state != 'cancelled'"
+                            groups="atmta_real_estate.group_rental_manager"/>
+                    <field name="lifecycle_state" widget="statusbar"
+                           statusbar_visible="draft,proposal,pending_approval,pending_signature,active,notice,ended"/>
                 </header>
                 <sheet>
-                    <!-- Top Stats -->
                     <div class="oe_button_box" name="button_box">
-                        <button name="action_open_payments"
-                                icon="fa-line-chart"
-                                type="object"
-                                class="oe_stat_button m-1"
-                                invisible="payment_count == 0">
-                            <field string="Payments" name="payment_count" widget="statinfo"/>
+                        <button name="action_open_payments" type="object"
+                                class="oe_stat_button" icon="fa-list-alt">
+                            <field name="payment_count" widget="statinfo" string="Billing Obligations"/>
                         </button>
-                        <button name="action_get_invoices"
-                                icon="fa-pencil-square-o"
-                                type="object"
-                                class="oe_stat_button m-1"
-                                invisible="payment_count == 0">
-                            <field string="Invoices" name="invoice_count" widget="statinfo"/>
+                        <button name="action_get_invoices" type="object"
+                                class="oe_stat_button" icon="fa-file-text-o"
+                                groups="account.group_account_invoice,account.group_account_readonly">
+                            <field name="invoice_count" widget="statinfo" string="Invoices"/>
                         </button>
-                        <button name="action_view_sale_order" type="object"
-                                icon="fa-shopping-cart" class="oe_stat_button m-1"
-                                string="Sale Order" invisible="not sale_order_id"/>
-                        <field name="sale_order_id" invisible="1"/>
+                        <button name="action_view_deposits" type="object"
+                                class="oe_stat_button" icon="fa-shield"
+                                invisible="deposit_record_count == 0">
+                            <field name="deposit_record_count" widget="statinfo" string="Deposits"/>
+                        </button>
+                        <button name="action_view_move_ins" type="object"
+                                class="oe_stat_button" icon="fa-sign-in"
+                                invisible="move_in_count == 0">
+                            <field name="move_in_count" widget="statinfo" string="Move-In"/>
+                        </button>
+                        <button name="action_view_move_outs" type="object"
+                                class="oe_stat_button" icon="fa-sign-out"
+                                invisible="move_out_count == 0">
+                            <field name="move_out_count" widget="statinfo" string="Move-Out"/>
+                        </button>
+                        <button name="action_view_renewals" type="object"
+                                class="oe_stat_button" icon="fa-refresh"
+                                invisible="renewal_count == 0">
+                            <field name="renewal_count" widget="statinfo" string="Renewals"/>
+                        </button>
+                        <button name="action_view_amendments" type="object"
+                                class="oe_stat_button" icon="fa-pencil-square-o"
+                                invisible="amendment_count == 0">
+                            <field name="amendment_count" widget="statinfo" string="Amendments"/>
+                        </button>
+                        <button name="action_view_terminations" type="object"
+                                class="oe_stat_button" icon="fa-ban"
+                                invisible="termination_count == 0">
+                            <field name="termination_count" widget="statinfo" string="Terminations"/>
+                        </button>
                     </div>
 
-                    <!-- Title -->
                     <div class="oe_title">
-                        <h1>
-                            <field name="name" readonly="1"/>
-                        </h1>
+                        <label for="name" string="Lease Number"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                        <div class="d-flex flex-wrap gap-3 text-muted">
+                            <span>Signature:
+                                <field name="signature_status" widget="badge" readonly="1"
+                                       decoration-success="signature_status == 'signed'"
+                                       decoration-warning="signature_status != 'signed'"/>
+                            </span>
+                            <span>Billing:
+                                <field name="billing_status" widget="badge" readonly="1"
+                                       decoration-success="billing_status == 'fully_invoiced'"/>
+                            </span>
+                            <span invisible="not renewal_state">Renewal:
+                                <field name="renewal_state" widget="badge" readonly="1"
+                                       decoration-success="renewal_state in ('accepted', 'renewed')"
+                                       decoration-danger="renewal_state == 'rejected'"/>
+                            </span>
+                        </div>
                     </div>
 
-                    <group col="2">
-                        <!-- ========== Contract Info Section ========== -->
-                        <group string="Contract Information" col="2"
-                               style="padding-right: 16px; border-right: 1px solid #f0f0f0;">
-                            <field name="partner_id"/>
-                            <field name="main_contract_no"/>
-                            <field name="contract_no"/>
-                            <field name="contract_type"/>
-                            <field name="lessor_rep_id"/>
-                            <field name="lessor_id"/>
-                            <field name="issuer"/>
-                            <field name="title_need_no"/>
-                            <field name="place_of_issue"/>
-                            <field name="issue_Date"/>
-                            <field name="start_date"/>
-                            <field name="end_date"/>
-                            <field name="notes"/>
+                    <group name="lease_summary">
+                        <group>
+                            <field name="partner_id" string="Tenant"/>
+                            <field name="property_id" string="Unit" invisible="is_multi_property"
+                                   options="{'no_create': True}"/>
+                            <field name="property_line_count" string="Units" invisible="not is_multi_property"/>
+                            <label for="start_date" string="Term"/>
+                            <div class="o_row">
+                                <field name="start_date" class="oe_inline"/>
+                                <span class="mx-1">→</span>
+                                <field name="end_date" class="oe_inline"/>
+                                <span class="ms-2 text-muted"
+                                      invisible="lifecycle_state not in ('active', 'notice')">
+                                    (<field name="days_to_expiry" class="oe_inline" nolabel="1"/> days left)
+                                </span>
+                            </div>
+                            <field name="user_id" string="Responsible" widget="many2one_avatar_user"/>
+                            <field name="company_id" groups="base.group_multi_company"
+                                   options="{'no_create': True}"/>
                         </group>
-
-                        <!-- ========== Sealing Info Section ========== -->
-                        <group string="Sealing Information" col="2"
-                               style="padding-right: 16px; border-right: 1px solid #f0f0f0;">
-                            <field name="contract_sealing_location_id"/>
-                            <field name="contract_sealing_date"/>
-                            <field name="is_renewed" widget="boolean_toggle"/>
-                            <field name="old_contract_id" invisible="is_renewed == False"/>
-                                                        <field name="property_id"/>
-                            <field name="property_type_id"/>
-                            <field name="price"/>
-
+                        <group>
+                            <label for="current_rent" string="Rent"/>
+                            <div class="o_row">
+                                <field name="current_rent" class="oe_inline" widget="monetary"/>
+                                <span class="mx-1 text-muted">per</span>
+                                <field name="billing_frequency" class="oe_inline" nolabel="1"/>
+                            </div>
+                            <label for="amount_outstanding" string="Balance Due"/>
+                            <div class="o_row">
+                                <field name="amount_outstanding" class="oe_inline" widget="monetary"/>
+                                <field name="payment_status" widget="badge" class="ms-2 oe_inline"
+                                       decoration-danger="payment_status == 'overdue'"
+                                       decoration-success="payment_status == 'paid'"/>
+                            </div>
+                            <field name="deposit_held_total" string="Deposit Held" widget="monetary"/>
+                            <label for="next_escalation_date" string="Next Escalation"/>
+                            <div class="o_row">
+                                <span invisible="not next_escalation_date">
+                                    <field name="next_escalation_date" class="oe_inline"/>
+                                    <span class="mx-1">→</span>
+                                    <field name="next_escalation_amount" class="oe_inline" widget="monetary"/>
+                                </span>
+                                <span class="text-muted" invisible="next_escalation_date">None scheduled</span>
+                            </div>
                         </group>
                     </group>
 
-                    <!-- ========== Property Settings Section ========== -->
-                    <group string=" " col="2">
+                    <!-- Technical fields the header, tabs and chips read. -->
+                    <field name="state" invisible="1"/>
+                    <field name="is_single_property" invisible="1"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="country_id" invisible="1"/>
 
-                        <!-- ✅ Manual Payment Toggle -->
-                        <group string="Payment Configuration" col="2">
-                            <field name="use_manual_payment"/>
-                        </group>
-
-                        <!-- ✅ Property Mode: Single or Multi -->
-                        <group string="Property Mode" col="2" invisible="not use_manual_payment">
-                            <field name="is_single_property"/>
-                            <field name="is_multi_property"/>
-                        </group>
-
-                        <!-- ✅ Single Property Details -->
-                        <group string="Single Property Details" col="2"
-                               invisible="not use_manual_payment or not is_single_property">
-                            <field name="payment_plan_ids" widget="many2many_tags"/>
-                            <field name="increment_rule_ids" widget="many2many_tags"/>
-                            <field name="discount_rule_ids" widget="many2many_tags"/>
-                        </group>
-
-                    </group>
-                    <br/>
-                    <br/>
-
-                    <!-- Notebook Tabs -->
                     <notebook>
-                        <!-- Contract Lines Tab -->
-                        <page string="Contract Lines" invisible="not is_multi_property">
-                            <field name="line_ids" widget="sol_o2m" mode="list,kanban">
-                                <form string="Contract Line">
-                                    <sheet>
-                                        <group col="2">
-                                            <field name="contract_id"/>
-                                            <field name="property_id"/>
-                                            <field name="start_date"/>
-                                            <field name="end_date"/>
-                                            <field name="payment_plan_ids" widget="many2many_tags"/>
-                                            <field name="price"/>
-                                        </group>
-                                        <group>
-                                            <field name="notes"/>
-                                        </group>
-                                    </sheet>
-                                </form>
-
-                                <list string="Contract Lines" editable="bottom">
-                                    <field name="property_id" optional="show"/>
-                                    <field name="property_type_id" optional="show"/>
-                                    <field name="start_date" optional="show"/>
-                                    <field name="end_date" optional="show"/>
-                                    <field name="payment_plan_ids" widget="many2many_tags" options="{'no_create': True}"
-                                           optional="show"/>
-                                    <field name="increment_rule_ids" widget="many2many_tags"
-                                           options="{'no_create': True}" optional="show"/>
-                                    <field name="discount_rule_ids" widget="many2many_tags"
-                                           options="{'no_create': True}" optional="show"/>
-                                    <field name="price"/>
-                                    <field name="state" widget="badge"
-                                           decoration-success="state == 'active'"
-                                           decoration-danger="state in ('terminated', 'expired')"
-                                           decoration-info="state in ('confirmed', 'invoiced')"
-                                           decoration-warning="state == 'ready'"
-                                           decoration-muted="state == 'draft'"/>
-                                    <field name="notes"/>
-                                </list>
-                            </field>
-                        </page>
-
-                        <!-- Payment Schedules Tab -->
-                        <page string="Payment Schedules">
-                            <field name="contract_payment_ids">
-                                <list editable="bottom">
-                                    <field name="name" optional="show"/>
-                                    <field name="label" optional="show"/>
-                                    <field name="contract_id" optional="show"/>
-                                    <field name="partner_id" optional="show"/>
-                                    <field name="contract_line_id" invisible="not is_multi_property" optional="hide"/>
-                                    <field name="property_id" optional="show"/>
-                                    <field name="date_due" optional="show"/>
-                                    <field name="amount" sum="Total Amount" optional="show"/>
-                                    <field name="move_state" optional="show" widget="badge"
-                                           decoration-success="move_state == 'posted'"
-                                           decoration-warning="move_state == 'draft'"
-                                           decoration-danger="move_state == 'cancel'"/>
-                                    <field name="move_id" optional="show" widget="badge"
-                                           decoration-success="move_state == 'posted'"
-                                           decoration-warning="move_state == 'draft'"
-                                           decoration-danger="move_state == 'cancel'"
-                                    />
-                                    <field name="payment_plan_id" optional="hide"/>
-                                    <field name="increment_rule_ids" widget="many2many_tags" optional="hide"/>
-                                    <field name="discount_rule_ids" widget="many2many_tags" optional="hide"/>
-                                    <field name="increase_amount" sum="Total Increase Amount" optional="hide"/>
-                                    <field name="discount_amount" sum="Total Discount Amount" optional="hide"/>
-                                </list>
-                            </field>
-                        </page>
-
-                        <!-- Utilities Tab -->
-                        <page string="Utilities">
-                            <field name="utility_line_ids">
-                                <list>
-                                    <field name="name"/>
-                                    <field name="vendor_id"/>
-                                    <field name="date"/>
-                                    <field name="amount"/>
-                                    <field name="state" widget="badge"/>
-                                    <field name="bill_id"/>
-                                    <field name="bill_paid" readonly="1"/>
-                                    <button name="action_confirm_utility" type="object"
-                                            icon="fa-check" title="Confirm &amp; Create Bill"
-                                            invisible="state != 'draft'"/>
-                                    <button name="action_register_payment_utility" type="object"
-                                            icon="fa-money" title="Register Payment"
-                                            invisible="state != 'confirmed' or bill_paid"/>
-                                </list>
-                            </field>
+                        <page string="Units" name="units">
                             <group>
-                                <field name="total_utilities" readonly="1"/>
-                                <field name="paid_utilities" readonly="1"/>
-                                <field name="net_income" readonly="1"/>
+                                <field name="is_multi_property" string="Several Units" widget="boolean_toggle"/>
                             </group>
+                            <div class="text-muted mb-2" invisible="is_multi_property">
+                                A single-unit lease takes its unit, dates and rent from the summary above.
+                            </div>
+                            <field name="property_line_ids" readonly="not is_multi_property"
+                                   context="{'default_contract_id': id}"/>
                         </page>
 
-                        <!-- Financial Summary Tab -->
-                        <page string="Financial Summary">
-                            <group string="Financial Summary" col="2" style="padding-left: 16px;">
-                                <field name="total_scheduled" readonly="1"/>
-                                <field name="total_paid" readonly="1"/>
-                                <field name="balance_due" readonly="1"/>
-                            </group>
+                        <page string="Parties" name="parties">
+                            <field name="party_ids" context="{'default_contract_id': id}"/>
                         </page>
 
-                        <!-- Attachments Tab -->
-                        <page string="Attachments">
+                        <page string="Billing" name="billing">
+                            <group>
+                                <group string="Rent">
+                                    <field name="price" string="Base Rent"/>
+                                    <field name="use_billing_engine" string="Bill per Period"/>
+                                    <field name="billing_frequency" invisible="not use_billing_engine"/>
+                                    <field name="billing_mode" invisible="not use_billing_engine"/>
+                                    <field name="billing_due_rule" invisible="not use_billing_engine"/>
+                                    <field name="billing_due_offset_days" invisible="not use_billing_engine"/>
+                                </group>
+                                <group string="Totals">
+                                    <field name="total_scheduled" widget="monetary"/>
+                                    <field name="total_paid" widget="monetary"/>
+                                    <field name="balance_due" widget="monetary"/>
+                                    <field name="last_generated" string="Schedule Generated"/>
+                                </group>
+                            </group>
+                            <div class="alert alert-info" role="status" invisible="not invoice_id">
+                                This lease is billed by a single invoice for its whole term
+                                (<field name="invoice_id" readonly="1" class="oe_inline"/>),
+                                so it is not invoiced per period.
+                            </div>
+                            <div class="d-flex flex-wrap gap-2 mb-2">
+                                <button name="action_generate_billing_schedule" type="object"
+                                        string="Generate Billing Schedule" class="btn-secondary"
+                                        invisible="not use_billing_engine or invoice_id or lifecycle_state in ('ended', 'terminated', 'cancelled')"/>
+                                <field name="can_post_accounting" invisible="1"/>
+                                <button name="action_invoice_due_obligations" type="object"
+                                        string="Invoice Due" class="btn-secondary"
+                                        invisible="lifecycle_state not in ('active', 'notice') or invoice_id or not can_post_accounting"/>
+                                <button name="action_generate_invoices" type="object"
+                                        string="Invoice Whole Term" class="btn-secondary"
+                                        invisible="use_billing_engine or invoice_id or state != 'confirmed' or not can_post_accounting"
+                                        groups="account.group_account_user,account.group_account_invoice,atmta_real_estate.group_realestate_user"/>
+                            </div>
+                            <field name="contract_payment_ids" readonly="1">
+                                <list string="Billing Schedule"
+                                      decoration-danger="days_overdue &gt; 0"
+                                      decoration-muted="state == 'cancelled'">
+                                    <field name="name" string="Obligation"/>
+                                    <field name="period_label" string="Period"/>
+                                    <field name="property_id" string="Unit" optional="hide"/>
+                                    <field name="date_due" string="Due"/>
+                                    <field name="amount" sum="Amount"/>
+                                    <field name="amount_residual" string="Outstanding" sum="Outstanding"/>
+                                    <field name="state" string="Status" widget="badge"
+                                           decoration-success="state == 'paid'"
+                                           decoration-info="state == 'invoiced'"/>
+                                    <field name="move_id" string="Invoice" optional="hide"/>
+                                    <field name="days_overdue" column_invisible="1"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Charges &amp; Adjustments" name="adjustments">
+                            <separator string="Rent Escalations"/>
+                            <field name="escalation_rule_ids" context="{'default_contract_id': id}"/>
+                            <separator string="Recurring Charges"/>
+                            <field name="charge_rule_ids" context="{'default_contract_id': id}"/>
+                            <separator string="Incentives"/>
+                            <field name="incentive_ids" context="{'default_contract_id': id}"/>
+                        </page>
+
+                        <page string="Deposit &amp; Occupancy" name="deposit_occupancy">
+                            <separator string="Security Deposits"/>
+                            <field name="deposit_record_ids" readonly="1"
+                                   context="{'default_contract_id': id}"/>
+                            <button name="action_create_deposit" type="object"
+                                    string="New Security Deposit" class="btn-link"
+                                    groups="atmta_real_estate.group_rental_agent"/>
+                            <separator string="Move-Ins"/>
+                            <field name="move_in_ids" readonly="1"/>
+                            <button name="action_schedule_move_in" type="object"
+                                    string="Schedule Move-In" class="btn-link"
+                                    invisible="lifecycle_state not in ('pending_signature', 'active')"
+                                    groups="atmta_real_estate.group_property_manager"/>
+                            <separator string="Move-Outs"/>
+                            <field name="move_out_ids" readonly="1"/>
+                            <button name="action_schedule_move_out" type="object"
+                                    string="Schedule Move-Out" class="btn-link"
+                                    invisible="lifecycle_state not in ('active', 'notice')"
+                                    groups="atmta_real_estate.group_property_manager"/>
+                        </page>
+
+                        <page string="Terms &amp; Documents" name="terms">
+                            <group>
+                                <group string="Lease Details">
+                                    <field name="contract_type" string="Lease Type"/>
+                                    <field name="main_contract_no"/>
+                                    <field name="contract_no"/>
+                                    <field name="lessor_id"/>
+                                    <field name="lessor_rep_id"/>
+                                    <field name="is_renewed" string="Renewal Lease"/>
+                                    <field name="old_contract_id" string="Renews Lease"
+                                           invisible="not is_renewed"/>
+                                </group>
+                                <group string="Registration">
+                                    <field name="contract_sealing_location_id"/>
+                                    <field name="contract_sealing_date"/>
+                                    <field name="issuer"/>
+                                    <field name="title_need_no"/>
+                                    <field name="place_of_issue"/>
+                                    <field name="issue_Date"/>
+                                </group>
+                                <group string="Signature &amp; Approval">
+                                    <field name="signed_date"/>
+                                    <field name="approved_by_id" readonly="1"/>
+                                    <field name="approval_date" readonly="1"/>
+                                </group>
+                            </group>
+                            <group string="Terms and Conditions">
+                                <field name="notes" nolabel="1" colspan="2"/>
+                            </group>
                             <group string="Attachments">
-                                <field name="attachment_ids" widget="many2many_binary"/>
+                                <field name="attachment_ids" widget="many2many_binary" nolabel="1" colspan="2"/>
                             </group>
                         </page>
                     </notebook>
                 </sheet>
-                <div class="o_attachment_preview"/>
-
                 <chatter/>
             </form>
         </field>
+    </record>
+
+    <!-- Gear-menu actions: occasional actions stay out of the header. -->
+    <record id="action_server_print_lease" model="ir.actions.server">
+        <field name="name">Print Lease</field>
+        <field name="model_id" ref="model_realestate_contract"/>
+        <field name="binding_model_id" ref="model_realestate_contract"/>
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_open_report_wizard()</field>
+    </record>
+
+    <record id="action_server_amend_lease" model="ir.actions.server">
+        <field name="name">Amend Lease</field>
+        <field name="model_id" ref="model_realestate_contract"/>
+        <field name="binding_model_id" ref="model_realestate_contract"/>
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_amend_lease()</field>
     </record>
 
     <record id="view_realestate_contract_list" model="ir.ui.view">
         <field name="name">realestate.contract.list</field>
         <field name="model">realestate.contract</field>
         <field name="arch" type="xml">
-            <list>
-                <field name="name" optional="show"/>
-                <field name="partner_id" optional="show"/>
-                <field name="start_date" optional="show"/>
-                <field name="end_date" optional="show"/>
-                <field name="state" widget="badge"
-                       decoration-success="state == 'active'"
-                       decoration-danger="state in ('terminated', 'expired')"
-                       decoration-info="state in ('confirmed', 'invoiced')"
-                       decoration-warning="state == 'ready'"
-                       decoration-muted="state == 'draft'" optional="show"/>
-                <field name="is_renewed" optional="show"/>
-
+            <list string="Leases"
+                  decoration-danger="payment_status == 'overdue'"
+                  decoration-warning="lifecycle_state == 'active' and days_to_expiry &lt;= 30"
+                  decoration-info="lifecycle_state in ('pending_approval', 'pending_signature')"
+                  decoration-muted="lifecycle_state in ('ended', 'terminated', 'cancelled')">
+                <field name="name" string="Lease"/>
+                <field name="partner_id" string="Tenant"/>
+                <field name="property_id" string="Unit"/>
+                <field name="start_date" string="Start"/>
+                <field name="end_date" string="End"/>
+                <field name="current_rent" string="Rent" widget="monetary"/>
+                <field name="lifecycle_state" string="Status" widget="badge"
+                       decoration-success="lifecycle_state == 'active'"
+                       decoration-warning="lifecycle_state == 'notice'"
+                       decoration-info="lifecycle_state in ('pending_approval', 'pending_signature')"/>
+                <field name="payment_status" string="Collection" widget="badge"
+                       decoration-danger="payment_status == 'overdue'"
+                       decoration-success="payment_status == 'paid'"/>
+                <field name="user_id" string="Responsible" widget="many2one_avatar_user" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="days_to_expiry" column_invisible="1"/>
+                <field name="currency_id" column_invisible="1"/>
             </list>
         </field>
     </record>
@@ -295,127 +386,116 @@
         <field name="name">realestate.contract.pivot</field>
         <field name="model">realestate.contract</field>
         <field name="arch" type="xml">
-            <pivot string="Contracts">
-                <field name="state" type="row"/>
-                <field name="partner_id" type="row"/>
-                <field name="start_date" type="col"/>
-                <field name="total_scheduled" type="measure"/>
-                <field name="total_paid" type="measure"/>
+            <pivot string="Lease Analysis">
+                <field name="lifecycle_state" type="row"/>
+                <field name="start_date" interval="year" type="col"/>
+                <field name="current_rent" type="measure"/>
                 <field name="balance_due" type="measure"/>
             </pivot>
         </field>
     </record>
+
+    <!-- Proposal pipeline: leases by status on the way to signature. -->
     <record id="view_realestate_contract_kanban" model="ir.ui.view">
         <field name="name">realestate.contract.kanban</field>
         <field name="model">realestate.contract</field>
         <field name="arch" type="xml">
-            <kanban class="o_kanban_realestate_contract" default_order="start_date desc">
-                <field name="name"/>
-                <field name="partner_id"/>
-                <field name="state"/>
-                <field name="start_date"/>
-                <field name="end_date"/>
-
+            <kanban default_group_by="lifecycle_state" class="o_kanban_small_column"
+                    quick_create="false" group_create="false" records_draggable="false">
+                <field name="currency_id"/>
                 <templates>
-                    <t t-name="card" class="rounded shadow-sm">
-                        <div class="oe_kanban_global_click ">
-                            <div t-att-class="
-                'border-start border-4 p-3 ' +
-                (
-                    record.state.raw_value == 'active' and 'border-success' or
-                    record.state.raw_value in ['terminated', 'expired'] and 'border-danger' or
-                    record.state.raw_value in ['confirmed', 'invoiced'] and 'border-primary' or
-                    record.state.raw_value == 'ready' and 'border-warning' or
-                    'border-secondary'
-                )
-            ">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <strong class="text-primary fs-6">
-                                        <field name="name"/>
-                                    </strong>
-                                    <field name="state" widget="badge"
-                                           decoration-success="state == 'active'"
-                                           decoration-danger="state in ('terminated', 'expired')"
-                                           decoration-info="state in ('confirmed', 'invoiced')"
-                                           decoration-warning="state == 'ready'"
-                                           decoration-muted="state == 'draft'"
-                                           optional="show"/>
-                                </div>
-
-                                <div class="text-muted small mb-1">
-                                    <i class="fa fa-user me-1 text-secondary"/>
-                                    <span class="fw-semibold text-dark">
-                                        <field name="partner_id"/>
-                                    </span>
-                                </div>
-
-                                <div class="text-muted small">
-                                    <i class="fa fa-calendar me-1 text-info"/>
-                                    <field name="start_date"/>
-                                    →
-                                    <field name="end_date"/>
-                                </div>
-                            </div>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between">
+                            <field name="name" class="fw-bold"/>
+                            <field name="activity_ids" widget="kanban_activity"/>
                         </div>
+                        <field name="partner_id"/>
+                        <field name="property_id" class="text-muted"/>
+                        <footer class="d-flex justify-content-between align-items-center">
+                            <field name="current_rent" widget="monetary"/>
+                            <field name="user_id" widget="many2one_avatar_user"/>
+                        </footer>
                     </t>
                 </templates>
             </kanban>
         </field>
     </record>
+
     <record id="view_realestate_contract_search" model="ir.ui.view">
         <field name="name">realestate.contract.search</field>
         <field name="model">realestate.contract</field>
         <field name="arch" type="xml">
-            <search string="Real Estate Contracts">
-                <!-- Default Filters -->
-                <filter string="Active" name="active" domain="[('state', '=', 'active')]"/>
-                <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
-                <filter string="Ready to Invoice" name="ready" domain="[('state', '=', 'ready')]"/>
-                <filter string="Invoiced" name="invoiced" domain="[('state', '=', 'invoiced')]"/>
-                <filter string="Expired" name="expired" domain="[('state', '=', 'expired')]"/>
-                <filter string="Terminated" name="terminated" domain="[('state', '=', 'terminated')]"/>
+            <search string="Leases">
+                <field name="name" string="Lease Number"/>
+                <field name="partner_id" string="Tenant"
+                       filter_domain="['|', ('partner_id', 'ilike', self), ('party_ids.partner_id', 'ilike', self)]"/>
+                <field name="property_id" string="Unit"
+                       filter_domain="['|', ('property_id', 'ilike', self), ('property_line_ids.property_id', 'ilike', self)]"/>
+                <field name="user_id" string="Responsible"/>
 
-                <!-- Searchable Fields -->
-                <field name="name"/>
-                <field name="partner_id"/>
-                <field name="property_id"/>
-                <field name="property_type_id"/>
-                <field name="state"/>
-                <field name="start_date"/>
-                <field name="end_date"/>
-                <field name="is_single_property"/>
-                <field name="is_multi_property"/>
-                <field name="is_renewed"/>
-                <field name="old_contract_id"/>
+                <filter name="my_leases" string="My Leases" domain="[('user_id', '=', uid)]"/>
+                <separator/>
+                <filter name="current" string="Current"
+                        domain="[('lifecycle_state', 'in', ('draft', 'proposal', 'pending_approval', 'pending_signature', 'active', 'notice'))]"/>
+                <filter name="draft_proposal" string="Draft &amp; Proposal"
+                        domain="[('lifecycle_state', 'in', ('draft', 'proposal'))]"/>
+                <filter name="awaiting_approval" string="Awaiting Approval"
+                        domain="[('lifecycle_state', '=', 'pending_approval')]"/>
+                <filter name="awaiting_signature" string="Awaiting Signature"
+                        domain="[('lifecycle_state', '=', 'pending_signature')]"/>
+                <filter name="active_leases" string="Active"
+                        domain="[('lifecycle_state', '=', 'active')]"/>
+                <filter name="on_notice" string="On Notice"
+                        domain="[('lifecycle_state', '=', 'notice')]"/>
+                <filter name="ended" string="Ended"
+                        domain="[('lifecycle_state', 'in', ('ended', 'terminated'))]"/>
+                <filter name="cancelled" string="Cancelled"
+                        domain="[('lifecycle_state', '=', 'cancelled')]"/>
+                <separator/>
+                <filter name="expiring_30" string="Expiring in 30 Days"
+                        domain="[('lifecycle_state', 'in', ('active', 'notice')),
+                                 ('end_date', '&gt;=', context_today().strftime('%Y-%m-%d')),
+                                 ('end_date', '&lt;=', (context_today() + relativedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <filter name="expiring_60" string="Expiring in 60 Days"
+                        domain="[('lifecycle_state', 'in', ('active', 'notice')),
+                                 ('end_date', '&gt;=', context_today().strftime('%Y-%m-%d')),
+                                 ('end_date', '&lt;=', (context_today() + relativedelta(days=60)).strftime('%Y-%m-%d'))]"/>
+                <filter name="expiring_90" string="Expiring in 90 Days"
+                        domain="[('lifecycle_state', 'in', ('active', 'notice')),
+                                 ('end_date', '&gt;=', context_today().strftime('%Y-%m-%d')),
+                                 ('end_date', '&lt;=', (context_today() + relativedelta(days=90)).strftime('%Y-%m-%d'))]"/>
+                <filter name="in_arrears" string="Overdue"
+                        domain="[('payment_status', '=', 'overdue')]"/>
+                <filter name="renewal_not_started" string="Renewal Not Started"
+                        domain="[('lifecycle_state', 'in', ('active', 'notice')), ('renewal_state', '=', False)]"/>
 
-                <!-- Group By Options -->
-                <group expand="1" string="Group By">
-                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
-                    <filter string="Tenant" name="group_partner" context="{'group_by': 'partner_id'}"/>
-                    <filter string="Property" name="group_property" context="{'group_by': 'property_id'}"/>
-                    <filter string="Start Date" name="group_start_date" context="{'group_by': 'start_date'}"/>
-                    <filter string="End Date" name="group_end_date" context="{'group_by': 'end_date'}"/>
-                    <filter string="Property Type" name="group_type" context="{'group_by': 'property_type_id'}"/>
-                    <filter string="Single vs Multi" name="group_single_multi"
-                            context="{'group_by': 'is_single_property'}"/>
+                <group expand="0" string="Group By">
+                    <filter name="gb_lifecycle" string="Status" context="{'group_by': 'lifecycle_state'}"/>
+                    <filter name="gb_unit" string="Unit" context="{'group_by': 'property_id'}"/>
+                    <filter name="group_partner" string="Tenant" context="{'group_by': 'partner_id'}"/>
+                    <filter name="gb_manager" string="Responsible" context="{'group_by': 'user_id'}"/>
+                    <filter name="gb_end_month" string="End Month" context="{'group_by': 'end_date:month'}"/>
+                    <filter name="group_expiry" string="Expiry Bucket" context="{'group_by': 'expiry_bucket'}"/>
+                    <filter name="gb_company" string="Company" context="{'group_by': 'company_id'}"
+                            groups="base.group_multi_company"/>
                 </group>
 
-                <!-- Advanced Filters -->
-                <separator/>
-                <field name="total_scheduled"/>
-                <field name="total_paid"/>
-                <field name="balance_due"/>
-                <field name="total_utilities"/>
-                <field name="paid_utilities"/>
-                <field name="net_income"/>
+                <searchpanel>
+                    <field name="lifecycle_state" string="Status" enable_counters="1"/>
+                </searchpanel>
             </search>
         </field>
     </record>
 
-
     <record id="action_realestate_contract" model="ir.actions.act_window">
-        <field name="name">Contracts</field>
+        <field name="name">Leases</field>
         <field name="res_model">realestate.contract</field>
-        <field name="view_mode">kanban,list,form,pivot</field>
+        <field name="view_mode">list,kanban,form,pivot</field>
+        <field name="context">{'search_default_current': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first lease</p>
+            <p>Leases track a tenant's occupancy of one or more units, from proposal through
+                signature, billing and renewal.</p>
+        </field>
     </record>
 </odoo>

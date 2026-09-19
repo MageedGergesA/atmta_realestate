@@ -4,6 +4,7 @@ import { registry } from "@web/core/registry";
 import { Component, onMounted, onWillUpdateProps, onWillUnmount, useRef, useState } from "@odoo/owl";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
 import { _t } from "@web/core/l10n/translation";
+import { STREET_TILES } from "./map_tiles";
 
 const LEAFLET_IMAGE_BASE = "/atmta_real_estate/static/src/lib/leaflet/images";
 const DEFAULT_CENTER = [24.7136, 46.6753]; // Riyadh
@@ -82,17 +83,9 @@ export class PropertyMap extends Component {
             preferCanvas: true,
         });
 
-        // Streets layer (default) — Carto Voyager: richer street/building detail
-        // than OSM-standard and typically faster from MENA region.
-        const streetsLayer = L.tileLayer(
-            "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
-            {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-                maxZoom: 20,
-                subdomains: "abcd",
-                crossOrigin: true,
-            }
-        );
+        // Streets layer (default): the shared OpenStreetMap tiles (map_tiles.js),
+        // so this widget, Units -> Map and the Overview card cannot drift apart.
+        const streetsLayer = L.tileLayer(STREET_TILES.url, STREET_TILES.options);
 
         // Satellite layer — Esri World Imagery (no API key required)
         const satelliteLayer = L.tileLayer(

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- M6 — Presentation Mode. A client action, because a showroom is not
+         a form view and dressing a form up as one would fight the framework
+         the whole way. -->
+    <record id="action_visual_gallery" model="ir.actions.client">
+        <field name="name">Sales Gallery</field>
+        <field name="tag">realestate.visual_gallery</field>
+        <field name="target">fullscreen</field>
+    </record>
+
+    <!-- Where the Close button lands. -->
+    <record id="action_visual_gallery_exit" model="ir.actions.act_window">
+        <field name="name">Projects</field>
+        <field name="res_model">realestate.project</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Layout templates -->
+    <record id="view_visual_unit_type_list" model="ir.ui.view">
+        <field name="name">realestate.visual.unit.type.list</field>
+        <field name="model">realestate.visual.unit.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="property_type_id"/>
+                <field name="property_count" string="Units"/>
+                <field name="override_count" string="Overrides"/>
+                <field name="version"/>
+                <field name="assets_updated_on" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company"
+                       optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_visual_unit_type_form" model="ir.ui.view">
+        <field name="name">realestate.visual.unit.type.form</field>
+        <field name="model">realestate.visual.unit.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_units" type="object"
+                                class="oe_stat_button" icon="fa-home">
+                            <field name="property_count" widget="statinfo"
+                                   string="Units"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Layout B2"/></h1>
+                    </div>
+                    <div class="alert alert-info" role="alert">
+                        This is a <strong>visual asset package</strong>. Price,
+                        availability, reservation and contract stay on each
+                        physical unit — replacing an asset here changes what
+                        units display and nothing commercial.
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="project_id"/>
+                            <field name="property_type_id"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                        <group string="Provenance">
+                            <field name="version"/>
+                            <field name="assets_updated_on"/>
+                            <field name="assets_updated_by_id"/>
+                            <field name="override_count"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Assets" name="assets">
+                            <group>
+                                <field name="floor_plan_image" widget="image"
+                                       class="oe_avatar"/>
+                                <field name="floor_plan_pdf"
+                                       filename="floor_plan_pdf_filename"/>
+                                <field name="floor_plan_pdf_filename"
+                                       invisible="1"/>
+                                <field name="interior_glb"
+                                       filename="interior_glb_filename"/>
+                                <field name="interior_glb_filename"
+                                       invisible="1"/>
+                                <field name="floor_plan_image_filename"
+                                       invisible="1"/>
+                            </group>
+                            <field name="render_ids"
+                                   widget="many2many_binary"/>
+                        </page>
+                        <page string="Specifications" name="specs">
+                            <field name="spec_tag_ids"
+                                   widget="many2many_tags"/>
+                            <field name="description"/>
+                        </page>
+                        <page string="Units" name="units">
+                            <field name="property_ids" readonly="1">
+                                <list>
+                                    <field name="property_code"/>
+                                    <field name="name"/>
+                                    <field name="floor_number"/>
+                                    <field name="visual_assets_from_type"
+                                           string="Uses Package"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_visual_unit_type" model="ir.actions.act_window">
+        <field name="name">Layouts</field>
+        <field name="res_model">realestate.visual.unit.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Floor templates -->
+    <record id="view_visual_floor_template_list" model="ir.ui.view">
+        <field name="name">realestate.visual.floor.template.list</field>
+        <field name="model">realestate.visual.floor.template</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="slot_count" string="Slots"/>
+                <field name="floor_count" string="Floors"/>
+                <field name="company_id" groups="base.group_multi_company"
+                       optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_visual_floor_template_form" model="ir.ui.view">
+        <field name="name">realestate.visual.floor.template.form</field>
+        <field name="model">realestate.visual.floor.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_validate" type="object"
+                            string="Validate Assignments" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"
+                                   placeholder="Typical Floor T01"/></h1>
+                    </div>
+                    <div class="alert alert-info" role="alert">
+                        A template holds <strong>geometry only</strong>. Each
+                        floor maps the slots to its own units, and those units
+                        remain the authority for price and availability.
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="project_id"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                        <group>
+                            <field name="plan_image" widget="image"
+                                   class="oe_avatar"/>
+                            <field name="plan_image_filename" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Slots" name="slots">
+                            <field name="slot_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="code"/>
+                                    <field name="label"/>
+                                    <field name="color" widget="color"/>
+                                    <field name="polygon"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Floors Using This" name="floors">
+                            <field name="floor_ids" readonly="1">
+                                <list>
+                                    <field name="display_name"/>
+                                    <field name="floor_number"/>
+                                    <field name="visual_unmapped_slots"
+                                           string="Unmapped"/>
+                                    <field name="visual_mapping_complete"
+                                           string="Complete"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_visual_floor_template" model="ir.actions.act_window">
+        <field name="name">Floor Templates</field>
+        <field name="res_model">realestate.visual.floor.template</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Floor form: template assignment and slot mapping -->
+    <record id="view_building_floor_form_template" model="ir.ui.view">
+        <field name="name">realestate.building.floor.form.template</field>
+        <field name="model">realestate.building.floor</field>
+        <field name="inherit_id" ref="view_building_floor_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <group string="Typical Floor Template">
+                    <group>
+                        <field name="visual_template_id"/>
+                        <field name="visual_mapping_complete"/>
+                        <field name="visual_unmapped_slots"/>
+                    </group>
+                </group>
+                <field name="visual_slot_map_ids"
+                       invisible="not visual_template_id">
+                    <list editable="bottom">
+                        <field name="slot_id"/>
+                        <field name="property_id"/>
+                    </list>
+                </field>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -3,10 +3,15 @@
     <record id="view_project_form_inherit_construction" model="ir.ui.view">
         <field name="name">realestate.project.form.construction</field>
         <field name="model">realestate.project</field>
-        <field name="inherit_id" ref="real_estate_developer.view_project_form"/>
+        <field name="inherit_id" ref="atmta_project_core.view_project_form"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
-                <page string="Construction" name="construction">
+                <!-- Developer owns this form and its salespeople hold no
+                     Construction group. The page lists milestones and cost
+                     lines, which only these two roles may read, so for anyone
+                     else it made the whole project form fail to open. -->
+                <page string="Construction" name="construction"
+                      groups="atmta_roles.group_construction_site_user,atmta_roles.group_construction_manager">
                     <group>
                         <group>
                             <field name="construction_progress" widget="progressbar" readonly="1"/>
@@ -53,10 +58,12 @@
     <record id="view_phase_form_inherit_construction" model="ir.ui.view">
         <field name="name">realestate.phase.form.construction</field>
         <field name="model">realestate.phase</field>
-        <field name="inherit_id" ref="real_estate_developer.view_phase_form"/>
+        <field name="inherit_id" ref="atmta_project_core.view_phase_form"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
-                <page string="Construction" name="construction">
+                <!-- Same reason as the project page above. -->
+                <page string="Construction" name="construction"
+                      groups="atmta_roles.group_construction_site_user,atmta_roles.group_construction_manager">
                     <group>
                         <field name="construction_progress" widget="progressbar" readonly="1"/>
                     </group>
@@ -75,4 +82,26 @@
             </xpath>
         </field>
     </record>
+
+    <!-- Projects, from the Construction app.
+
+         Construction had no route to its projects of its own: they were reached
+         through the developer application. Construction now installs without
+         Developer, and its managers can create and edit projects (see
+         security/ir.model.access.csv), so the app needs an entry point. The
+         views are Project Core's, named explicitly. -->
+    <record id="action_construction_projects" model="ir.actions.act_window">
+        <field name="name">Projects</field>
+        <field name="res_model">realestate.project</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('atmta_project_core.view_project_kanban')}),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('atmta_project_core.view_project_list')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('atmta_project_core.view_project_form')})]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add the first project</p>
+            <p>A project carries its phases, budget, contractors and site records.</p>
+        </field>
+    </record>
+
 </odoo>

@@ -33,6 +33,7 @@ API_KEY_HEADER = 'X-API-Key'
 AUTHORIZATION_HEADER = 'Authorization'
 BEARER_PREFIX = 'Bearer '
 API_KEY_SCOPE = 'real_estate_api'
+API_USER_GROUP = 'real_estate_api.group_realestate_api_user'
 
 # Status codes the JSON encoder maps Odoo exceptions to.
 EXC_STATUS = {
@@ -148,6 +149,18 @@ def _authenticate_api_key():
     return uid, _key_fingerprint(key)
 
 
+def _key_user_allowed(env):
+    """Whether the (already authenticated) key's user may use the API.
+
+    A key with the ``real_estate_api`` scope proves who is calling, not that
+    they are allowed to: any internal user can mint one from their
+    preferences. ``group_realestate_api_user`` is the group that holds API
+    access (Manager and Downloads imply it), so a key belonging to anybody
+    else is refused rather than quietly treated as anonymous.
+    """
+    return env.user.has_group(API_USER_GROUP)
+
+
 # ---------------------------------------------------------------------------
 # Rate limit
 # ---------------------------------------------------------------------------
@@ -211,6 +224,12 @@ def json_endpoint(*, methods, auth='public', require_key=False):
                     # for catalog lookups, but writes go through the real uid.
                     request.update_env(user=uid)
                     env = request.env
+                    if not _key_user_allowed(env):
+                        return json_error(
+                            'forbidden',
+                            _("This API key's user is not in the Real Estate "
+                              "API User group."),
+                            status=403)
 
                 # Rate limit
                 ok = _apply_default_rate_limit(env,

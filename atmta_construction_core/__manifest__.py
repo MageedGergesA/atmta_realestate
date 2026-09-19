@@ -38,15 +38,27 @@ declares, exactly as Wave 6 did for procurement.
     'depends': [
         # `realestate.project` — every WBS node and cost code belongs to one.
         'atmta_project_core',
-        # `realestate.phase` — one optional Many2one on the WBS node. This is
-        # the only reason the floor knows the developer application exists.
-        'real_estate_developer',
+        # `realestate.phase` (one optional Many2one on the WBS node) used to be
+        # the only reason the floor depended on the developer application. The
+        # model has since moved to `atmta_project_core`, declared above, so the
+        # floor -- and with it the whole Construction app -- installs without
+        # Developer.
         # `account.account` for the company accounts, and the analytic plan,
         # account and line the distribution helper builds and reads.
         'account',
         # Canonical roles. The floor names these rather than the legacy
         # construction groups, which are declared by the module above it.
         'atmta_roles',
+        # `realestate.property`, for one access rule and nothing else: a
+        # construction project is built on a property, and every screen the
+        # Construction app puts a project on names it -- the master plan on
+        # the project form, the unit counters on its list and kanban. The
+        # floor grants the canonical site role read on that model, because an
+        # access rule may be declared above the model it guards but never
+        # below it, and `real_estate_construction` is not where a floor's
+        # rights belong. Property Core is a peer floor (Odoo alone), so this
+        # edge adds no application to the Construction install.
+        'atmta_property_core',
     ],
     'data': [
         # The two analytic plans the distribution helper names. They moved

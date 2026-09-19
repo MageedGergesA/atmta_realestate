@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <menuitem id="menu_contract_documents"
-              name="Generated Documents"
-              parent="atmta_real_estate.menu_contract_management"
-              action="action_contract_document"
-              sequence="70"/>
+    <!-- Generated documents are opened from the lease's Documents button, and
+         listed under Development & Sales › Configuration; the Rental menu keeps
+         only the templates its leases are generated from. -->
 
     <menuitem id="menu_contract_templates"
               name="Contract Templates"

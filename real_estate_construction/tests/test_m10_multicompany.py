@@ -13,7 +13,7 @@ active, which is the shape of the real deployment.
 from odoo.exceptions import AccessError
 from odoo.tests import tagged
 
-from .common import ConstructionCommon
+from .common import ConstructionCommon, optional_group
 
 
 @tagged('post_install', '-at_install', 'atmta_construction')
@@ -65,7 +65,7 @@ class TestMultiCompanyIsolation(ConstructionCommon):
         base_groups = [
             self.env.ref('base.group_user').id,
             self.env.ref('base.group_multi_company').id,
-            self.env.ref('atmta_real_estate.group_realestate_user').id,
+            *optional_group(self.env, 'atmta_real_estate.group_realestate_user').ids,
         ]
         developer = self.env.ref('real_estate_developer.group_dev_manager',
                                  raise_if_not_found=False)

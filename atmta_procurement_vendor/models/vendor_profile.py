@@ -55,6 +55,12 @@ GOVERNANCE_STATUS = [
 #: qualification says.
 BLOCKED_STATUSES = ('suspended', 'inactive')
 
+#: Statuses a restriction put the vendor into, and only a lift takes them
+#: out of. `inactive` is deliberately not one of them: deactivating creates no
+#: restriction, so refusing to activate an inactive vendor asked people to
+#: lift something that does not exist and left the vendor dormant for good.
+RESTRICTION_STATUSES = ('suspended', 'restricted')
+
 
 class VendorProfile(models.Model):
     _name = 'realestate.procurement.vendor.profile'
@@ -224,8 +230,16 @@ class VendorProfile(models.Model):
         }).with_env(self.env)
 
     def _on_qualification_approved(self, qualification):
-        """A first approval onboards the vendor; later ones only date-stamp."""
-        for rec in self:
+        """A first approval onboards the vendor; later ones only date-stamp.
+
+        Written with elevated rights: the approval itself is what
+        `action_approve()` has already established this user may take, and
+        the profile's dates are a consequence of it. A qualification approver
+        who held write access to the governance profile could change a
+        vendor's standing directly, which is a different decision with a
+        different screen.
+        """
+        for rec in self.sudo():
             values = {'last_reviewed_date': qualification.approved_date
                       or fields.Date.context_today(rec)}
             if not rec.first_approved_date:
@@ -244,7 +258,7 @@ class VendorProfile(models.Model):
 
     def action_activate(self):
         for rec in self:
-            if rec.governance_status in BLOCKED_STATUSES:
+            if rec.governance_status in RESTRICTION_STATUSES:
                 raise UserError(_(
                     "%s is %s. Lift the restriction that put it there rather "
                     "than overwriting the status — otherwise the reason "
@@ -276,8 +290,15 @@ class VendorProfile(models.Model):
 
         The status is derived here and nowhere else, so a lifted suspension
         returns the vendor to whatever they were rather than to a guess.
+
+        Elevated for the same reason as `_on_qualification_approved`: putting
+        a restriction in force, lifting it or letting it expire are decisions
+        the restriction record has already established this user may take,
+        and the headline status is the consequence. A qualification approver
+        holding write access to the governance profile itself could set that
+        status directly, which is what the restriction exists to prevent.
         """
-        for rec in self:
+        for rec in self.sudo():
             active = rec.active_restriction_ids
             if active.filtered(lambda r: r.restriction_type in (
                     'sourcing_suspension', 'debarment', 'temporary_hold')):

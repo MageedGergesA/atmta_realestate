@@ -64,6 +64,7 @@ from ._base import (
     _apply_cors_headers,
     _apply_default_rate_limit,
     _authenticate_api_key,
+    _key_user_allowed,
     json_error,
 )
 from .api_v1_portal import _resolve_partner
@@ -135,7 +136,15 @@ def _render_pdf(env, report_ref, res_ids):
     if not report:
         raise werkzeug.exceptions.NotFound(_(
             "Report template not installed: %s") % report_ref)
-    pdf_bytes, _ext = report._render_qweb_pdf(report_ref, res_ids)
+    # Rendered as superuser. The key's user is an integration account, not
+    # an accountant or a sales user: it has no read access to the phase,
+    # unit or journal entry the templates print, so rendering as that user
+    # failed with a 500 on every by-ref document. The authorisation already
+    # happened before this call — every caller resolves the record through
+    # the customer-ownership check (by-ref) or the Downloads group gate
+    # (top-level) first — so sudo here widens what is printed, not who may
+    # ask for it.
+    pdf_bytes, _ext = report.sudo()._render_qweb_pdf(report_ref, res_ids)
     return pdf_bytes
 
 
@@ -398,6 +407,14 @@ def pdf_endpoint(*, require_downloads_group=False):
                                       _("API key required."), status=401)
                 request.update_env(user=uid)
                 env = request.env
+
+                # Every download needs an API user, by-ref ones included:
+                # they serve customer PII and financial documents.
+                if not _key_user_allowed(env):
+                    return json_error('forbidden',
+                                      _("This API key's user is not in the "
+                                        "Real Estate API User group."),
+                                      status=403)
 
                 # Group gate (top-level endpoints only)
                 if require_downloads_group and not env.user.has_group(

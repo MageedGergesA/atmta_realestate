@@ -58,6 +58,7 @@ Two things point the other way and are therefore declared above, in
     # half. Wave 11 and Wave 14 made the same call for the same reason.
     'data': [
         'data/sequences.xml',
+        'data/date_refresh_cron.xml',
         'security/ir.model.access.csv',
         'security/construction_quality_rules.xml',
         # Wave 23 — the quality screens, minus the daily-report views that

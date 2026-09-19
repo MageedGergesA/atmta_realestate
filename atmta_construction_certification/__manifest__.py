@@ -34,6 +34,7 @@ say which BOQ line it consumes.
     'author': 'ATMTA',
     'license': 'LGPL-3',
     'depends': [
+        'atmta_account_tools',
         # A certificate line consumes a BOQ line and pays a milestone.
         'atmta_construction_site',
         # Packages and contractors: whose certificate it is.

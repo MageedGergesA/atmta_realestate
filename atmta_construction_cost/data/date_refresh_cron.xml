@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Daily recompute of stored values that depend on today's date
+     (decision 15 Sep 2026). See models/date_refresh.py. -->
+<odoo noupdate="1">
+    <record id="cron_refresh_dates" model="ir.cron">
+        <field name="name">Construction Cost: refresh overdue issues and risk actions</field>
+        <field name="model_id" ref="model_realestate_construction_cost_refresh"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_refresh_dates()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

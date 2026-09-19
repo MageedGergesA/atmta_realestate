@@ -286,6 +286,21 @@ def _searchable(s):
     return s
 
 
+# The last segment of a path is what actually picks the value out of the
+# record: `partner_id.zip` is a postcode, `partner_id.name` is a name. These
+# leaves are the *identity* of whatever they hang off — they say nothing of
+# their own — so a token that only names the relation ("[Buyer]") is allowed to
+# land on them. Any other leaf has to be named by the token itself.
+_IDENTITY_LEAF_WORDS = {'name', 'display', 'id', 'record'}
+
+
+def _leaf_terms(row):
+    """Searchable words of the *last* path segment of a catalog row."""
+    leaf = row['path'].rsplit('.', 1)[-1]
+    label_leaf = row['label'].rsplit('/', 1)[-1]
+    return set(_searchable(f"{label_leaf} {leaf}").split())
+
+
 def match_token(token, catalog):
     """Score every catalog row against the token; return (best_row, confidence)
     where confidence is 0..100. Returns (None, 0) if catalog is empty."""
@@ -299,20 +314,32 @@ def match_token(token, catalog):
     for row in catalog:
         hay = row['searchable']
         hay_words = set(hay.split())
-        # Word-overlap component (0..1)
+        # Word-overlap component (0..1), normalised by BOTH sides (F1).
+        # Dividing by the token alone made every one-word token a 100% match
+        # against the dozens of rows that happen to contain that word, so the
+        # ranking was decided by the tie-break instead of by the words.
         if needle_words and hay_words:
-            overlap = len(needle_words & hay_words) / len(needle_words)
+            common = len(needle_words & hay_words)
+            overlap = (2.0 * common / (len(needle_words) + len(hay_words))) if common else 0.0
         else:
             overlap = 0.0
         # Sequence-ratio component (0..1)
         ratio = SequenceMatcher(None, needle, hay).ratio()
         score = 0.7 * overlap + 0.3 * ratio
+        # The leaf outranks the parent label: rows sharing a relation label
+        # ("Buyer / Name", "Buyer / Zip") score identically on words, and the
+        # character ratio then picks the *shortest* leaf — which is how
+        # "[Buyer]" ended up mapped to the buyer's postcode. A leaf the token
+        # never mentions is penalised, unless it is an identity leaf.
+        leaf_words = _leaf_terms(row)
+        if leaf_words and not (leaf_words & needle_words) and not (leaf_words <= _IDENTITY_LEAF_WORDS):
+            score -= 0.15
         # Tiny boost for shorter paths (prefer 'name' over 'partner_id.name'
         # when both could match equally).
         score += 0.02 * (1.0 / (1 + row['path'].count('.')))
         if score > best_score:
             best_score, best_row = score, row
-    return best_row, int(round(best_score * 100))
+    return best_row, max(0, int(round(best_score * 100)))
 
 
 # ---------------------------------------------------------------------------

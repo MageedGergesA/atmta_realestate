@@ -11,7 +11,17 @@ class HandoverDashboard(models.AbstractModel):
         Handover = self.env['realestate.handover']
         Snagging = self.env['realestate.snagging.issue']
         Warranty = self.env['realestate.warranty']
-        Property = self.env['realestate.property']
+        # A Handover user has no right on realestate.property (that belongs
+        # to the property apps), yet the readiness tiles are part of this
+        # screen. They are aggregates only -- an average, two counts and a
+        # histogram -- so they are read with sudo. Anything that would expose
+        # a unit's own data (the map: name, code, coordinates) is only sent to
+        # users who may read properties themselves.
+        can_read_properties = self.env['realestate.property'].has_access('read')
+        Property = self.env['realestate.property'].sudo()
+        # sudo lifts access rights, not the company boundary: count only the
+        # units of the companies this user is working in.
+        company_domain = [('company_id', 'in', self.env.companies.ids + [False])]
 
         today = fields.Date.today()
         now = fields.Datetime.now()
@@ -44,7 +54,7 @@ class HandoverDashboard(models.AbstractModel):
         ])
 
         # Readiness — avg across properties that have at least one readiness value set
-        properties_with_readiness = Property.search([
+        properties_with_readiness = Property.search(company_domain + [
             '|', '|', '|',
             ('readiness_structural', '>', 0),
             ('readiness_finishing', '>', 0),
@@ -55,8 +65,8 @@ class HandoverDashboard(models.AbstractModel):
         if properties_with_readiness:
             avg_readiness = round(
                 sum(p.readiness_overall for p in properties_with_readiness) / len(properties_with_readiness), 1)
-        ready_to_deliver = Property.search_count([('ready_to_deliver', '=', True)])
-        ready_to_move = Property.search_count([('ready_to_move', '=', True)])
+        ready_to_deliver = Property.search_count(company_domain + [('ready_to_deliver', '=', True)])
+        ready_to_move = Property.search_count(company_domain + [('ready_to_move', '=', True)])
 
         kpis = {
             'scheduled': scheduled,
@@ -122,21 +132,25 @@ class HandoverDashboard(models.AbstractModel):
             ]))
 
         # ---- Map: properties with handover events ----
-        ho_property_ids = list(set(Handover.search([]).mapped('property_id').ids))
-        map_props = Property.search_read([
-            ('id', 'in', ho_property_ids),
-            '|', ('latitude', '!=', 0), ('longitude', '!=', 0),
-        ], ['id', 'name', 'property_code', 'latitude', 'longitude', 'city',
-            'readiness_overall', 'ready_to_deliver', 'ready_to_move'])
+        map_props = []
+        if can_read_properties:
+            ho_property_ids = list(set(Handover.search([]).mapped('property_id').ids))
+            map_props = self.env['realestate.property'].search_read([
+                ('id', 'in', ho_property_ids),
+                '|', ('latitude', '!=', 0), ('longitude', '!=', 0),
+            ], ['id', 'name', 'property_code', 'latitude', 'longitude', 'city',
+                'readiness_overall', 'ready_to_deliver', 'ready_to_move'])
 
         # ---- Upcoming handovers ----
+        # Unit labels are read with sudo: they are the same display names the
+        # handover, snag and warranty forms already show this user.
         upcoming = Handover.search([
             ('state', '=', 'scheduled'),
             ('scheduled_date', '>=', now),
         ], order='scheduled_date asc', limit=10)
         upcoming_list = [{
             'id': h.id, 'name': h.name,
-            'property': h.property_id.display_name if h.property_id else '',
+            'property': h.property_id.sudo().display_name if h.property_id else '',
             'buyer': h.partner_id.name or '',
             'scheduled_date': h.scheduled_date.isoformat() if h.scheduled_date else None,
             'checklist_progress': h.checklist_progress,
@@ -145,10 +159,10 @@ class HandoverDashboard(models.AbstractModel):
         # ---- Critical / open snagging issues ----
         snag_recs = Snagging.search([
             ('state', 'in', ('open', 'assigned', 'in_progress')),
-        ], order='severity desc, reported_date desc', limit=10)
+        ], order='severity_rank desc, reported_date desc', limit=10)
         snag_list = [{
             'id': s.id, 'name': s.name,
-            'property': s.property_id.display_name if s.property_id else '',
+            'property': s.property_id.sudo().display_name if s.property_id else '',
             'description': s.description or '',
             'severity': s.severity,
             'state': s.state,
@@ -163,7 +177,7 @@ class HandoverDashboard(models.AbstractModel):
         ], order='end_date asc', limit=10)
         warranty_list = [{
             'id': w.id, 'name': w.name,
-            'property': w.property_id.display_name if w.property_id else '',
+            'property': w.property_id.sudo().display_name if w.property_id else '',
             'buyer': w.partner_id.name or '',
             'end_date': w.end_date.isoformat() if w.end_date else None,
             'days_left': (w.end_date - today).days if w.end_date else 0,

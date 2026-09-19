@@ -10,7 +10,7 @@ actually found and fixed rather than a hypothetical.
 from odoo.exceptions import AccessError
 from odoo.tests import tagged
 
-from .common import ConstructionCommon
+from .common import ConstructionCommon, optional_group
 
 
 @tagged('post_install', '-at_install', 'atmta_construction')
@@ -205,7 +205,7 @@ class TestFreezeInvariants(ConstructionCommon):
                 self.env.ref('base.group_user').id,
                 self.env.ref(
                     'real_estate_construction.group_construction_user').id,
-                self.env.ref('atmta_real_estate.group_realestate_user').id,
+                *optional_group(self.env, 'atmta_real_estate.group_realestate_user').ids,
             ])],
         })
 

@@ -122,6 +122,18 @@
                                     <field name="eligibility_changed" widget="boolean_toggle" readonly="1"/>
                                     <field name="acknowledgement_outstanding" widget="boolean_toggle" readonly="1"/>
                                     <field name="purchase_order_id"/>
+                                    <!-- Row buttons only for what needs no input. Allocating
+                                         demand, inviting a vendor and issuing an addendum
+                                         each need a record or a reason and have no wizard. -->
+                                    <button name="action_record_bid" type="object"
+                                            string="Record Bid" icon="fa-download"
+                                            groups="atmta_roles.group_procurement_buyer"
+                                            invisible="state in ('draft', 'declined') or parent.state not in ('published', 'closed')"
+                                            confirm="Record what this vendor's RFQ says now as their submission, received at this moment? The bid is sealed once recorded."/>
+                                    <button name="action_acknowledge" type="object"
+                                            string="Acknowledge" icon="fa-check"
+                                            groups="atmta_roles.group_procurement_buyer"
+                                            invisible="not acknowledgement_outstanding"/>
                                 </list>
                             </field>
                         </page>
@@ -140,6 +152,18 @@
                                     <field name="above_authorisation" widget="boolean_toggle"/>
                                     <field name="administrative_status"/>
                                     <field name="state" widget="badge"/>
+                                    <field name="exception_required" column_invisible="1"/>
+                                    <field name="exception_approved_on" column_invisible="1"/>
+                                    <button name="action_approve_late_exception" type="object"
+                                            string="Accept Late Bid" icon="fa-clock-o"
+                                            groups="atmta_roles.group_procurement_manager"
+                                            invisible="not is_late or exception_approved_on or state != 'received'"
+                                            confirm="Accept this late submission for evaluation? Your name goes on the record as the manager who accepted it."/>
+                                    <button name="action_withdraw" type="object"
+                                            string="Withdraw" icon="fa-undo"
+                                            groups="atmta_roles.group_procurement_buyer"
+                                            invisible="state != 'received'"
+                                            confirm="Record that the vendor withdrew this bid? The bid stays on file as evidence; the invitation no longer has a current offer."/>
                                 </list>
                             </field>
                             <div class="alert alert-info" role="alert">
@@ -161,6 +185,15 @@
                                     <field name="material_subject"/>
                                     <field name="addendum_version_id" readonly="1"/>
                                     <field name="state" widget="badge"/>
+                                    <button name="action_answer" type="object"
+                                            string="Publish Answer" icon="fa-reply"
+                                            groups="atmta_roles.group_procurement_buyer"
+                                            invisible="state != 'open'"/>
+                                    <button name="action_issue_addendum" type="object"
+                                            string="Issue as Addendum" icon="fa-files-o"
+                                            groups="atmta_roles.group_procurement_buyer"
+                                            invisible="not is_material or addendum_version_id or parent.state != 'published'"
+                                            confirm="Issue this clarification as a new tender version? Every invited vendor has to acknowledge it."/>
                                 </list>
                             </field>
                         </page>

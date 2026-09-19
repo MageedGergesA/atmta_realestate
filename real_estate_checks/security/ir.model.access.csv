@@ -1,0 +1,28 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_check_user,Check User,model_realestate_check,group_checks_user,1,1,1,0
+access_check_treasurer,Check Treasury Officer,model_realestate_check,group_checks_treasurer,1,1,1,0
+access_check_manager,Check Manager,model_realestate_check,group_checks_manager,1,1,1,1
+access_deposit_user,Deposit Read,model_realestate_check_deposit,group_checks_user,1,0,0,0
+access_deposit_treasurer,Deposit Treasury Officer,model_realestate_check_deposit,group_checks_treasurer,1,1,1,0
+access_deposit_manager,Deposit Manager,model_realestate_check_deposit,group_checks_manager,1,1,1,1
+access_bounce_user,Bounce Read,model_realestate_check_bounce,group_checks_user,1,0,0,0
+access_bounce_treasurer,Bounce Treasury Officer,model_realestate_check_bounce,group_checks_treasurer,1,1,1,0
+access_bounce_manager,Bounce Manager,model_realestate_check_bounce,group_checks_manager,1,1,1,1
+access_allocation_user,Allocation User,model_realestate_check_allocation,group_checks_user,1,1,1,0
+access_allocation_manager,Allocation Manager,model_realestate_check_allocation,group_checks_manager,1,1,1,1
+access_custody_user,Custody Read,model_realestate_check_custody,group_checks_user,1,0,0,0
+access_custody_treasurer,Custody Treasury Officer,model_realestate_check_custody,group_checks_treasurer,1,1,1,0
+access_custody_manager,Custody Manager,model_realestate_check_custody,group_checks_manager,1,1,1,0
+access_presentation_user,Presentation Read,model_realestate_check_presentation,group_checks_user,1,0,0,0
+access_presentation_treasurer,Presentation Treasury Officer,model_realestate_check_presentation,group_checks_treasurer,1,1,1,0
+access_presentation_manager,Presentation Manager,model_realestate_check_presentation,group_checks_manager,1,1,1,1
+access_location_user,Location Read,model_realestate_check_location,group_checks_user,1,0,0,0
+access_location_manager,Location Manager,model_realestate_check_location,group_checks_manager,1,1,1,1
+access_bulk_wiz_user,Bulk Wizard User,model_realestate_check_bulk_wizard,group_checks_user,1,1,1,1
+access_bulk_wiz_line_user,Bulk Wizard Line,model_realestate_check_bulk_wizard_line,group_checks_user,1,1,1,1
+access_deposit_wiz_treasurer,Deposit Workbench,model_realestate_check_deposit_wizard,group_checks_treasurer,1,1,1,1
+access_bounce_wiz_treasurer,Bounce Wizard,model_realestate_check_bounce_wizard,group_checks_treasurer,1,1,1,1
+access_custody_wiz_treasurer,Custody Wizard,model_realestate_check_custody_wizard,group_checks_treasurer,1,1,1,1
+access_replace_wiz_treasurer,Replacement Wizard,model_realestate_check_replace_wizard,group_checks_treasurer,1,1,1,1
+access_allocate_wiz_user,Allocation Wizard,model_realestate_check_allocate_wizard,group_checks_user,1,1,1,1
+access_allocate_wiz_line_user,Allocation Wizard Line,model_realestate_check_allocate_wizard_line,group_checks_user,1,1,1,1

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--
+        M28 — segregation of duties.
+
+        0.1 shipped three groups (User / Treasurer / Manager) and ZERO record
+        rules, so every user who could read a cheque could read every cheque in
+        every company, including the drawer's bank account number.
+
+        The three existing xml ids are KEPT exactly as they are: production
+        users are assigned to them, and renaming an id silently un-assigns
+        everybody. `group_checks_treasurer` is the Treasury Officer of M28's
+        four-role model; the new `group_checks_approver` slots in above it.
+
+            User  →  Treasury Officer  →  Treasury Approver  →  Manager
+    -->
+    <record id="module_category_realestate_checks" model="ir.module.category">
+        <field name="name">Real Estate Checks</field>
+        <field name="description">PDC treasury and cheque collection.</field>
+        <field name="sequence">30</field>
+    </record>
+
+    <record id="group_checks_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="module_category_realestate_checks"/>
+        <field name="comment">Register cheques and allocate them to obligations. Cannot present, clear, bounce or move custody.</field>
+    </record>
+
+    <record id="group_checks_treasurer" model="res.groups">
+        <field name="name">Treasury Officer</field>
+        <field name="category_id" ref="module_category_realestate_checks"/>
+        <field name="implied_ids" eval="[(4, ref('group_checks_user'))]"/>
+        <field name="comment">Hold custody, prepare and confirm deposits, record bounces, authorise re-presentation and replacement.</field>
+    </record>
+
+    <record id="group_checks_approver" model="res.groups">
+        <field name="name">Treasury Approver</field>
+        <field name="category_id" ref="module_category_realestate_checks"/>
+        <field name="implied_ids" eval="[(4, ref('group_checks_treasurer'))]"/>
+        <field name="comment">Confirm deposits under maker/checker, and approve sensitive treasury operations.</field>
+    </record>
+
+    <record id="group_checks_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_category_realestate_checks"/>
+        <field name="implied_ids" eval="[(4, ref('group_checks_approver'))]"/>
+        <field name="comment">Configure locations and policy, resolve bounces, override.</field>
+    </record>
+
+    <!--
+        M32 — full instrument detail is Treasury's.
+
+        An ordinary sales user needs to know a cheque exists, its number, its
+        due date and its state. They do not need the drawer's account number or
+        the internal treasury notes, and the form hides those behind this group
+        rather than showing them to everyone who can open a contract.
+    -->
+    <record id="group_checks_see_bank_details" model="res.groups">
+        <field name="name">Checks: See Full Bank Details</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="comment">Reveals drawer account numbers and branch detail on cheque records.</field>
+    </record>
+    <record id="group_checks_treasurer" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('group_checks_see_bank_details'))]"/>
+    </record>
+
+    <!-- ================================================================
+         M29 — company isolation.
+
+         Every rule is global (no `groups`), so it applies to administrators as
+         well. None of them admit `company_id = False`: a cheque with no
+         company is a data error, and making it visible to everybody would be
+         the wrong way to surface it.
+         ================================================================ -->
+    <record id="rule_check_company" model="ir.rule">
+        <field name="name">Cheque: own companies only</field>
+        <field name="model_id" ref="model_realestate_check"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_check_deposit_company" model="ir.rule">
+        <field name="name">Deposit slip: own companies only</field>
+        <field name="model_id" ref="model_realestate_check_deposit"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_check_bounce_company" model="ir.rule">
+        <field name="name">Bounce: own companies only</field>
+        <field name="model_id" ref="model_realestate_check_bounce"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_check_allocation_company" model="ir.rule">
+        <field name="name">Allocation: own companies only</field>
+        <field name="model_id" ref="model_realestate_check_allocation"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_check_custody_company" model="ir.rule">
+        <field name="name">Custody movement: own companies only</field>
+        <field name="model_id" ref="model_realestate_check_custody"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_check_presentation_company" model="ir.rule">
+        <field name="name">Presentation: own companies only</field>
+        <field name="model_id" ref="model_realestate_check_presentation"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_check_location_company" model="ir.rule">
+        <field name="name">Custody location: own companies only</field>
+        <field name="model_id" ref="model_realestate_check_location"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+</odoo>

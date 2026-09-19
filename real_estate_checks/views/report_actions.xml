@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--
+        M25 — the eight operational registers.
+
+        These are list / pivot / graph actions rather than PDFs. A register is
+        a dataset a treasurer filters, sorts and exports; rendering it to paper
+        would make it less useful, not more. Only two documents in this module
+        genuinely need to be printed — the deposit slip you hand to a teller,
+        and the acknowledgement you hand to a buyer — and those are QWeb PDFs
+        under `report/`.
+    -->
+
+    <!-- 1. Check Register -->
+    <record id="action_report_check_register" model="ir.actions.act_window">
+        <field name="name">Check Register</field>
+        <field name="res_model">realestate.check</field>
+        <field name="view_mode">list,pivot,graph,form</field>
+        <field name="search_view_id" ref="view_realestate_check_search"/>
+        <field name="context">{'search_default_group_state': 1}</field>
+    </record>
+
+    <!-- 2. PDC Maturity -->
+    <record id="action_report_pdc_maturity" model="ir.actions.act_window">
+        <field name="name">PDC Maturity Forecast</field>
+        <field name="res_model">realestate.check</field>
+        <field name="view_mode">pivot,list,graph,form</field>
+        <field name="search_view_id" ref="view_realestate_check_search"/>
+        <field name="domain">[('state', 'in', ('draft', 'registered'))]</field>
+        <field name="context">{'search_default_group_bucket': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No post-dated cheques on hand.</p>
+            <p>Face value of cheques maturing in each window. This is expected
+               <b>paper</b>, not guaranteed cash — a cheque can still bounce.</p>
+        </field>
+    </record>
+
+    <!-- 3. Deposit Register -->
+    <record id="action_report_deposit_register" model="ir.actions.act_window">
+        <field name="name">Deposit Register</field>
+        <field name="res_model">realestate.check.deposit</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_check_deposit_search"/>
+        <field name="context">{'search_default_group_journal': 1}</field>
+    </record>
+
+    <!-- 4. Cleared Register -->
+    <record id="action_report_cleared_register" model="ir.actions.act_window">
+        <field name="name">Cleared Register</field>
+        <field name="res_model">realestate.check</field>
+        <field name="view_mode">list,pivot,graph,form</field>
+        <field name="search_view_id" ref="view_realestate_check_search"/>
+        <field name="domain">[('state', '=', 'cleared')]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nothing has cleared yet.</p>
+            <p>Cheques the bank has honoured and Odoo has reconciled. This is the
+               one register in this module that corresponds to money.</p>
+        </field>
+    </record>
+
+    <!-- 5. Bounce Register -->
+    <record id="action_report_bounce_register" model="ir.actions.act_window">
+        <field name="name">Bounce Register</field>
+        <field name="res_model">realestate.check.bounce</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_check_bounce_search"/>
+        <field name="context">{'search_default_group_reason': 1}</field>
+    </record>
+
+    <!-- 6. Replacement Register -->
+    <record id="action_report_replacement_register" model="ir.actions.act_window">
+        <field name="name">Replacement Register</field>
+        <field name="res_model">realestate.check</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_realestate_check_search"/>
+        <field name="domain">['|', ('replaces_check_id', '!=', False),
+                                   ('replacement_check_id', '!=', False)]</field>
+        <field name="context">{'search_default_group_partner': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No replacement chains.</p>
+            <p>Group by <b>Original Cheque</b> to read a whole chain — CHK-A
+               bounced, replaced by CHK-B, replaced by CHK-C which cleared.</p>
+        </field>
+    </record>
+
+    <!-- 7. Check Coverage -->
+    <record id="action_report_check_coverage" model="ir.actions.act_window">
+        <field name="name">PDC Coverage</field>
+        <field name="res_model">realestate.sale.installment</field>
+        <field name="view_mode">list,pivot,form</field>
+        <field name="domain">[('is_cancelled', '=', False),
+                              ('state', 'not in', ('paid', 'cancelled'))]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No outstanding obligations.</p>
+            <p>Outstanding obligations against the face value of cheques securing
+               them. <b>Secured is not collected</b> — a cheque in the safe
+               secures an obligation; only clearance settles it.</p>
+        </field>
+    </record>
+
+    <!-- 8. Customer PDC Statement -->
+    <record id="action_report_customer_pdc" model="ir.actions.act_window">
+        <field name="name">Customer PDC Statement</field>
+        <field name="res_model">realestate.check</field>
+        <field name="view_mode">list,pivot,form</field>
+        <field name="search_view_id" ref="view_realestate_check_search"/>
+        <field name="context">{'search_default_group_partner': 1,
+                               'search_default_group_state': 1}</field>
+    </record>
+</odoo>

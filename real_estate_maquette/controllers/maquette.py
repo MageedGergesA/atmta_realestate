@@ -15,88 +15,59 @@ class MaquetteController(http.Controller):
     Access is restricted by the user's read access to the underlying project.
     """
 
+    # ------------------------------------------------------------------
+    # Asset delivery
+    #
+    # These three keep their URLs for backward compatibility, but no longer
+    # authorise or stream anything themselves: they delegate to
+    # `realestate.visual.access`, the one gate every visual asset passes
+    # through. Three near-identical copies of "check access, base64-decode,
+    # set headers" is three places to get authorisation wrong, and the audit
+    # found two more of them in other modules.
+    # ------------------------------------------------------------------
+    def _delegate(self, kind, record_id):
+        from ..controllers.visual_asset import VisualAssetController
+        return VisualAssetController().visual_asset(kind, record_id)
+
     @http.route(
         '/maquette/glb/<int:project_id>',
         type='http', auth='user', methods=['GET'], csrf=False,
     )
     def serve_glb(self, project_id, **kw):
-        """Stream the project's GLB to the browser. Browser caches by ETag."""
-        project = request.env['realestate.project'].browse(project_id)
-        try:
-            project.check_access_rights('read')
-            project.check_access_rule('read')
-        except AccessError:
-            return Response("Forbidden", status=403)
-        if not project.exists() or not project.maquette_glb:
-            return Response("No GLB", status=404)
-        binary = base64.b64decode(project.maquette_glb)
-        headers = [
-            ('Content-Type', 'model/gltf-binary'),
-            ('Content-Length', str(len(binary))),
-            ('Content-Disposition',
-             'inline; filename="%s"' % (project.maquette_glb_filename or 'maquette.glb')),
-            ('Cache-Control', 'private, max-age=300'),
-        ]
-        return Response(binary, headers=headers)
+        return self._delegate('maquette_glb', project_id)
 
     @http.route(
         '/maquette/hdr/<int:project_id>',
         type='http', auth='user', methods=['GET'], csrf=False,
     )
     def serve_hdr(self, project_id, **kw):
-        """Stream the project's HDR environment map, if any."""
-        project = request.env['realestate.project'].browse(project_id)
-        try:
-            project.check_access_rights('read')
-            project.check_access_rule('read')
-        except AccessError:
-            return Response("Forbidden", status=403)
-        if not project.exists() or not project.maquette_env_hdr:
-            return Response("No HDR", status=404)
-        binary = base64.b64decode(project.maquette_env_hdr)
-        headers = [
-            ('Content-Type', 'image/vnd.radiance'),
-            ('Content-Length', str(len(binary))),
-            ('Cache-Control', 'private, max-age=300'),
-        ]
-        return Response(binary, headers=headers)
+        return self._delegate('maquette_hdr', project_id)
 
     @http.route(
         '/maquette/interior/<int:property_id>',
         type='http', auth='user', methods=['GET'], csrf=False,
     )
     def serve_interior(self, property_id, **kw):
-        """Stream a unit's 3D interior GLB."""
-        prop = request.env['realestate.property'].browse(property_id)
-        try:
-            prop.check_access_rights('read')
-            prop.check_access_rule('read')
-        except AccessError:
-            return Response("Forbidden", status=403)
-        if not prop.exists() or not prop.interior_glb:
-            return Response("No interior", status=404)
-        # Revalidate against the record's write_date so a re-uploaded interior
-        # GLB is not served from a stale browser cache of the previous model.
-        etag = '"re-int-%s-%s"' % (
-            prop.id, int(prop.write_date.timestamp()) if prop.write_date else 0)
-        if request.httprequest.headers.get('If-None-Match') == etag:
-            return Response(status=304, headers=[
-                ('ETag', etag), ('Cache-Control', 'no-cache')])
-        binary = base64.b64decode(prop.interior_glb)
-        headers = [
-            ('Content-Type', 'model/gltf-binary'),
-            ('Content-Length', str(len(binary))),
-            ('Cache-Control', 'no-cache'),
-            ('ETag', etag),
-        ]
-        return Response(binary, headers=headers)
+        return self._delegate('interior_glb', property_id)
 
     @http.route(
         '/maquette/units/<int:project_id>',
         type='json', auth='user', methods=['POST'],
     )
     def get_units(self, project_id, **kw):
-        """Return JSON of all units in the project with the data the viewer needs."""
+        """Everything the viewer needs to render and react to clicks.
+
+        Three things changed from 0.4, all of them consequences of the audit:
+
+        * the payload comes from `realestate.visual.commercial`, so colour,
+          price and the Reserve gate agree with Developer rather than with
+          `property.state`;
+        * the audience is decided here rather than by the caller, so an
+          internal panel and a public embed cannot accidentally be handed the
+          same dictionary;
+        * a legend and a fallback descriptor ride along, because M25 forbids
+          colour as the only signal and Rule 4 forbids 3D being the only path.
+        """
         project = request.env['realestate.project'].browse(project_id)
         try:
             project.check_access_rights('read')
@@ -105,18 +76,32 @@ class MaquetteController(http.Controller):
             return {'error': 'forbidden'}
         if not project.exists():
             return {'error': 'not_found'}
+
+        audience = ('internal' if request.env.user._is_internal()
+                    else 'public')
+        units = project.get_maquette_units_data(audience=audience)
+        Commercial = request.env['realestate.visual.commercial']
         return {
             'project_id': project.id,
             'project_name': project.display_name,
-            'units': project.get_maquette_units_data(),
+            'units': units,
+            'legend': Commercial.legend({u['visual_state'] for u in units}),
             'default_camera': project.maquette_default_camera or '',
             'has_glb': bool(project.maquette_glb),
             'has_hdr': bool(project.maquette_env_hdr),
             'mesh_naming_hint': project.maquette_mesh_naming_hint or '',
-            # Cache-busting token: changes whenever the project (and thus its
-            # uploaded GLB/HDR) is written, so the viewer requests a fresh URL
-            # instead of a stale browser-cached model.
-            'glb_version': int(project.write_date.timestamp()) if project.write_date else 0,
+            # Rule 4 — what to fall back to when 3D cannot run. Sent with the
+            # payload rather than fetched after a failure, so the fallback is
+            # available at the moment the failure happens.
+            'fallback': project._visual_fallback_descriptor(),
+            # Cache-busting on publish, not on `write_date`. 0.4 invalidated
+            # every browser's copy of a multi-megabyte model whenever anybody
+            # edited the project's phone number.
+            'glb_version': project.visual_version,
+            'asset_config': request.env[
+                'realestate.visual.assets'].viewer_config(),
+            'publication_state': project.visual_publication_state,
+            'is_live': project.visual_is_live,
         }
 
     @http.route(
@@ -124,22 +109,8 @@ class MaquetteController(http.Controller):
         type='http', auth='user', methods=['GET'], csrf=False,
     )
     def serve_floor_plan(self, property_id, **kw):
-        """Serve a unit's floor plan image."""
-        prop = request.env['realestate.property'].browse(property_id)
-        try:
-            prop.check_access_rights('read')
-            prop.check_access_rule('read')
-        except AccessError:
-            return Response("Forbidden", status=403)
-        if not prop.exists() or not prop.floor_plan_image:
-            return Response("No plan", status=404)
-        binary = base64.b64decode(prop.floor_plan_image)
-        headers = [
-            ('Content-Type', 'image/png'),
-            ('Content-Length', str(len(binary))),
-            ('Cache-Control', 'private, max-age=300'),
-        ]
-        return Response(binary, headers=headers)
+        """Serve a unit's floor plan image, through the one gate."""
+        return self._delegate('floor_plan_image', property_id)
 
     @http.route(
         '/maquette/save_camera',
@@ -248,20 +219,34 @@ class MaquetteController(http.Controller):
             return {'error': 'forbidden'}
         if not isinstance(polygon, list) or len(polygon) < 3:
             return {'error': 'invalid_polygon'}
+        Region = request.env['realestate.building.region']
+        region = Region
+        if region_id:
+            region = Region.browse(int(region_id))
+            # A region of another project is not this project's to rewrite:
+            # the write below would move it here.
+            if not region.exists() or region.project_id != project:
+                return {'error': 'not_found'}
+        # Only this project's properties, or ones with no project yet. The
+        # route took any id, and saving the region then moved a building of
+        # another project (and its units) onto this one. The model refuses it
+        # too; answering here keeps the viewer's error a message, not a crash.
+        building = request.env['realestate.property'].browse(
+            int(building_id)).exists()
+        if not building:
+            return {'error': 'not_found'}
+        if building.project_id and building.project_id != project:
+            return {'error': 'foreign_property'}
         vals = {
             'project_id': project.id,
-            'property_id': int(building_id),
+            'property_id': building.id,
             'polygon': json.dumps(polygon),
         }
         if label is not None:
             vals['label'] = label
         if color:
             vals['color'] = color
-        Region = request.env['realestate.building.region']
-        if region_id:
-            region = Region.browse(int(region_id))
-            if not region.exists():
-                return {'error': 'not_found'}
+        if region:
             region.write(vals)
         else:
             region = Region.create(vals)

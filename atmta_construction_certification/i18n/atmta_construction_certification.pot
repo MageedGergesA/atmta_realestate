@@ -1,0 +1,1936 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* atmta_construction_certification
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:12+0000\n"
+"PO-Revision-Date: 2026-09-17 10:12+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__retention_pct
+msgid "% withheld from this payment. Defaults from the contractor."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid ""
+"%(advance)s advanced %(amount).2f and %(already).2f has already been "
+"recovered. Recovering %(now).2f more would take back money that was never "
+"paid out."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/advance.py:0
+msgid ""
+"%(advance)s was paid to %(paid)s. It cannot be recovered from %(other)s's "
+"certificate."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid ""
+"%(bill)s is not paid yet. Register the payment in Accounting; this "
+"certificate follows the ledger rather than deciding it."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid ""
+"%(contractor)s belongs to %(other)s. A certificate cannot bill another "
+"company's vendor."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid ""
+"%(item)s: certifying %(qty).2f would take the total to %(total).2f against "
+"an authorised quantity of %(authorised).2f. Extra quantity is a variation."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid ""
+"%(name)s certifies %(certified)s against a claim of %(applied)s. More cannot"
+" be certified than was applied for — the extra belongs on the next "
+"application."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid ""
+"%(name)s nets to %(net).2f. Nothing is payable, so there is nothing to bill "
+"— reduce the recovery or wait for the next certificate."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid ""
+"%(name)s would take cumulative certification to %(cumulative).2f against an "
+"authorised %(authorised).2f. Certifying beyond the contract needs a "
+"variation, not a bigger certificate."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid "%(ref)s — work certified to %(date)s"
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/advance.py:0
+msgid ""
+"%(refs)s have already been billed. Raise a further advance or a credit note "
+"— the amount advanced is not edited after the fact."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid ""
+"%(refs)s have been certified. Issue the next certificate with an adjustment "
+"rather than rewriting one somebody signed and a bill was posted from."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/retention.py:0
+msgid ""
+"%(release)s would release %(amount)s but only %(held)s is held. Retention "
+"that was never withheld cannot be paid back."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/advance.py:0
+msgid "%(type)s — %(ref)s"
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/advance.py:0
+msgid "%s already has a bill."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/retention.py:0
+msgid ""
+"%s already released retention and posted a bill. Reverse the bill in "
+"Accounting; the register keeps both entries."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/advance.py:0
+msgid "%s has been billed. Reverse the bill in Accounting."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/advance.py:0
+msgid "%s is not a draft advance."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid "%s is not a draft application."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/retention.py:0
+msgid "%s is not a draft release."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/owner_progress_billing.py:0
+msgid "%s — %.2f%% construction progress on %s"
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid ""
+"A certificate for a negative amount is a credit note, and belongs in "
+"Accounting."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/owner_progress_billing.py:0
+msgid "A customer invoice already exists."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/advance.py:0
+msgid "A recovery of nothing is not a recovery."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/retention.py:0
+msgid ""
+"A retention movement of nothing is not a movement. Use the type to say "
+"whether it is held or released."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid "A vendor bill already exists for this certificate."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__activity_ids
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__activity_ids
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__activity_ids
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__activity_state
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__activity_state
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__activity_state
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance_recovery__advance_id
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_advance_form
+msgid "Advance"
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/advance.py:0
+msgid "Advance %(name)s is in %(company)s but its project is in %(other)s."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__advance_date
+msgid "Advance Date"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__guarantee_reference
+msgid "Advance Payment Guarantee"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model,name:atmta_construction_certification.model_realestate_construction_advance_recovery
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__recovery_line_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_payment_certificate_form
+msgid "Advance Recovery"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__advance_type
+msgid "Advance Type"
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid "Advance recovery — %(advance)s"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_advance_list
+msgid "Advanced"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.actions.act_window,name:atmta_construction_certification.action_advance
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_advance_list
+msgid "Advances"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_retention__amount
+msgid "Always positive. The type carries the sign."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__amount
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance_recovery__amount
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate_line__amount
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention__amount
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__amount
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing_deduction__amount
+msgid "Amount"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_owner_billing_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_payment_certificate_form
+msgid "Amounts"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_advance_form
+msgid ""
+"An advance is an asset until it is recovered. It is not\n"
+"                        project cost and does not appear in the cost report."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/advance.py:0
+msgid "An advance is recovered on the project that paid it."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/advance.py:0
+msgid "An advance of nothing is not an advance."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_advance__side
+msgid ""
+"An advance we pay is an asset. An advance we receive is a liability. "
+"Opposite money, identical recovery arithmetic."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid "An application for nothing cannot be assessed."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__analytic_account_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__analytic_account_id
+msgid "Analytic Account"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__applied_amount
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_payment_certificate__state__submitted
+msgid "Applied For"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_payment_certificate_form
+msgid "Apply For"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__approved_by_id
+msgid "Approved By"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_construction_config_settings
+msgid "Asset holding advances paid to contractors until they are recovered."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_construction_config_settings
+msgid "Asset holding retention the owner withholds from our progress billing."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__authorised_amount
+msgid "Authorised Amount"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model,name:atmta_construction_certification.model_realestate_boq_line
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate_line__boq_line_id
+msgid "BOQ Line"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__line_ids
+msgid "BOQ Line Detail"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_payment_certificate_form
+msgid "BOQ Line Detail (optional)"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_advance__guarantee_reference
+msgid "Bank guarantee covering the advance."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__contract_value
+msgid "Base amount for percentage certification when no package is linked."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_owner_progress_billing__contract_value
+msgid "Base amount for percentage certification."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing_deduction__billing_id
+msgid "Billing"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_advance_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_owner_billing_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_payment_certificate_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_retention_release_form
+msgid "Cancel"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_advance__state__cancelled
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_payment_certificate__state__cancelled
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_retention_release__state__cancelled
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_owner_progress_billing__state__cancelled
+msgid "Cancelled"
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid ""
+"Cannot cancel a certificate whose vendor bill is already posted. Reverse the"
+" bill in Accounting first."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/owner_progress_billing.py:0
+msgid "Cannot cancel — reverse the customer invoice first."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate_line.py:0
+msgid "Cannot certify %(q)s on '%(w)s' — only %(r)s remaining on the BOQ."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance_recovery__certificate_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate_line__certificate_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention__certificate_id
+msgid "Certificate"
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid ""
+"Certificate %(name)s is in %(company)s but its project is in %(other)s."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_boq_line__certification_line_ids
+msgid "Certification Lines"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__certified_amount
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_payment_certificate__state__certified
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_owner_progress_billing__state__certified
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_payment_certificate_form
+msgid "Certified"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__certified_by_id
+msgid "Certified By"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__certified_on
+msgid "Certified On"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__previous_certified_amount
+msgid ""
+"Certified before this certificate, read from the register of certificates "
+"rather than typed."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate_line.py:0
+msgid "Certified quantity cannot be negative."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_owner_billing_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_payment_certificate_form
+msgid "Certify"
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid "Certify an amount, or reject the application."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_payment_certificate_form
+msgid "Claim and certificate"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__disallowed_amount
+msgid ""
+"Claimed and not certified. The number the final account argues about — kept,"
+" not overwritten."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__company_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance_recovery__company_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__company_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate_line__company_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention__company_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__company_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__company_id
+msgid "Company"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_advance_form
+msgid "Confirm"
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/advance.py:0
+msgid "Confirm %s before billing the advance."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_advance__state__confirmed
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_retention_release__state__confirmed
+msgid "Confirmed"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_construction_config_settings
+msgid "Construction Control Accounts"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__package_id
+msgid "Contract Package"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__contract_value
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__contract_value
+msgid "Contract Value"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__contractor_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__contractor_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention__contractor_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__contractor_id
+msgid "Contractor"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model,name:atmta_construction_certification.model_realestate_construction_advance
+msgid "Contractor Advance"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_construction_config_settings
+msgid "Contractor Advances"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model,name:atmta_construction_certification.model_realestate_construction_payment_certificate
+msgid "Contractor Payment Certificate"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_construction_config_settings
+msgid "Contractor Retention"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_retention__side
+msgid ""
+"Contractor retention is a liability we owe back. Owner retention is an asset"
+" somebody owes us. They are the same arithmetic and opposite money, so they "
+"are kept apart."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/retention.py:0
+msgid "Contractor retention is held from somebody. Name them."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__cost_code_id
+msgid "Cost Code"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_advance_form
+msgid "Create Bill"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_owner_billing_form
+msgid "Create Customer Invoice"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_payment_certificate_form
+msgid "Create Vendor Bill"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance_recovery__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate_line__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing_deduction__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__create_date
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance_recovery__create_date
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__create_date
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate_line__create_date
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention__create_date
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__create_date
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__create_date
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing_deduction__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_payment_certificate_list
+msgid "Cumulative %"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__cumulative_certified_pct
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__cumulative_certified_pct
+msgid "Cumulative (%)"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__cumulative_certified_amount
+msgid "Cumulative Certified Amount"
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/owner_progress_billing.py:0
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid "Cumulative certification cannot exceed 100%% (would be %.2f%%)."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance_recovery__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate_line__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing_deduction__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__held_amount
+msgid "Currently Held"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__partner_id
+msgid "Customer"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__customer_invoice_id
+msgid "Customer Invoice"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_owner_progress_billing__sale_contract_id
+msgid "Customer-side contract this billing certifies against."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention__date
+msgid "Date"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_owner_billing_list
+msgid "Deducted"
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/owner_progress_billing.py:0
+msgid "Deduction"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__deduction_ids
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__deduction_total
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_owner_billing_form
+msgid "Deductions"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate_line__description
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing_deduction__description
+msgid "Description"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__disallowance_reason
+msgid "Disallowance Reason"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__disallowed_amount
+msgid "Disallowed Amount"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__display_name
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance_recovery__display_name
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__display_name
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate_line__display_name
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention__display_name
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__display_name
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__display_name
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing_deduction__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_advance__state__draft
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_payment_certificate__state__draft
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_retention_release__state__draft
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_owner_progress_billing__state__draft
+msgid "Draft"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_retention_release__stage__defects_liability
+msgid "End of Defects Liability Period"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_advance__activity_type_icon
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__activity_type_icon
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_retention_release__activity_type_icon
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_owner_progress_billing__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_advance__state__recovered
+msgid "Fully Recovered"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_owner_billing_list
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_payment_certificate_list
+msgid "Gross"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__gross_amount
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__gross_amount
+msgid "Gross This Period"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_advance_form
+msgid "Guarantee"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__guarantee_expiry
+msgid "Guarantee Expiry"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__has_authorised_base
+msgid "Has Authorised Base"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__has_message
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__has_message
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__has_message
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_retention_list
+msgid "Held"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance_recovery__id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate_line__id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention__id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing_deduction__id
+msgid "ID"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_advance__activity_exception_icon
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__activity_exception_icon
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_retention_release__activity_exception_icon
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_owner_progress_billing__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_advance__message_needaction
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__message_needaction
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_retention_release__message_needaction
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_owner_progress_billing__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_advance__message_has_error
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_advance__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__message_has_error
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_retention_release__message_has_error
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_retention_release__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_owner_progress_billing__message_has_error
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_owner_progress_billing__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_payment_certificate_form
+msgid "Inspector notes / supporting docs reference..."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/owner_progress_billing.py:0
+msgid "Invoice %s is not yet fully paid."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_payment_certificate__state__invoiced
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_owner_progress_billing__state__invoiced
+msgid "Invoiced"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__is_fully_recovered
+msgid "Is Fully Recovered"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__is_po_linked
+msgid "Is Po Linked"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention__move_id
+msgid "Journal Entry"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing_deduction__kind
+msgid "Kind"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance_recovery__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate_line__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing_deduction__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__write_date
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance_recovery__write_date
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__write_date
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate_line__write_date
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention__write_date
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__write_date
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__write_date
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing_deduction__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__milestone_id
+msgid "Leave blank for project-level certification."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__analytic_account_id
+msgid ""
+"Legacy single-plan cost centre. The cost code drives the distribution when "
+"it is set."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_construction_config_settings
+msgid "Liability holding advances received from the owner until recovered."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_construction_config_settings
+msgid ""
+"Liability holding retention withheld from payment certificates. Certificates"
+" refuse to post retention without it."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__lines_gross_amount
+msgid "Lines Gross"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_owner_billing_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_payment_certificate_form
+msgid "Mark Paid"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_advance__advance_type__materials
+msgid "Materials Advance"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_owner_progress_billing_deduction__kind__materials
+msgid "Materials Advance Recovery"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__milestone_id
+msgid "Milestone"
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid "Mismatch"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_advance__advance_type__mobilization
+msgid "Mobilisation Advance"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_owner_progress_billing_deduction__kind__mobilization
+msgid "Mobilization Advance Recovery"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__movement_id
+msgid "Movement"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention__movement_type
+msgid "Movement Type"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/advance.py:0
+msgid "Name the contractor advanced to."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/advance.py:0
+msgid "Name the owner who advanced it."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_owner_billing_list
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_payment_certificate_list
+msgid "Net"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__net_payable
+msgid "Net Payable"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__net_invoiced
+msgid "Net To Invoice"
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/owner_progress_billing.py:0
+msgid "Net-to-invoice must be positive."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/advance.py:0
+#: code:addons/atmta_construction_certification/models/owner_progress_billing.py:0
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+#: code:addons/atmta_construction_certification/models/retention.py:0
+msgid "New"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__activity_summary
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__activity_summary
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__activity_summary
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__activity_type_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__activity_type_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__activity_type_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.actions.act_window,help:atmta_construction_certification.action_retention
+msgid "No retention has moved yet."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid "No vendor bill is linked to this certificate."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention__note
+msgid "Note"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__notes
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__notes
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__notes
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_advance_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_owner_billing_form
+msgid "Notes"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_advance__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_retention_release__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_owner_progress_billing__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_advance__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_retention_release__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_owner_progress_billing__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid "Only a draft or applied-for certificate is certified."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid "Only an open application can be rejected."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/owner_progress_billing.py:0
+msgid "Only certified billings can be invoiced."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid "Only certified certificates can be billed."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/owner_progress_billing.py:0
+msgid "Only draft billings can be certified."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/owner_progress_billing.py:0
+msgid "Only invoiced billings can be marked paid."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid "Only invoiced certificates can be marked paid."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_retention_release__stage__other
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_owner_progress_billing_deduction__kind__other
+msgid "Other"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_advance__advance_type__other
+msgid "Other Advance"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_advance_list
+msgid "Outstanding"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__outstanding_amount
+msgid "Outstanding Amount"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate_line__description
+msgid "Overrides work item name on the vendor bill."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__partner_id
+msgid "Owner"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_construction_config_settings
+msgid "Owner Advances Received"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model,name:atmta_construction_certification.model_realestate_owner_progress_billing_deduction
+msgid "Owner Billing Deduction"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.actions.act_window,name:atmta_construction_certification.action_owner_billing
+msgid "Owner Progress Billing"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_construction_config_settings
+msgid "Owner Retention Receivable"
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/retention.py:0
+msgid "Owner retention is held by somebody. Name them."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model,name:atmta_construction_certification.model_realestate_owner_progress_billing
+msgid "Owner-Side Progress Billing"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__purchase_order_line_id
+msgid "PO Line"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__package_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention__package_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__package_id
+msgid "Package"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_advance__state__paid
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_payment_certificate__state__paid
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_owner_progress_billing__state__paid
+msgid "Paid"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_advance__side__contractor
+msgid "Paid to a Contractor"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_retention_release__stage__partial
+msgid "Partial Release"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention__partner_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__partner_id
+msgid "Partner"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_payment_certificate_form
+msgid "Payment"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model,name:atmta_construction_certification.model_realestate_construction_payment_certificate_line
+msgid "Payment Certificate Line (BOQ Detail)"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.actions.act_window,name:atmta_construction_certification.action_payment_certificate
+msgid "Payment Certificates"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_owner_progress_billing_deduction__kind__penalty
+msgid "Penalty / LD"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__period_end
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__period_end
+msgid "Period End"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__period_start
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__period_start
+msgid "Period Start"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_payment_certificate_form
+msgid ""
+"Populate to certify by quantity (Σ qty × rate) instead of\n"
+"                                percentage. Leave empty to use % of Contract Value."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_retention_release__stage__practical_completion
+msgid "Practical Completion"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__previous_certified_amount
+msgid "Previous Certified Amount"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__previous_certified_pct
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__previous_certified_pct
+msgid "Previously Certified (%)"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__project_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__project_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention__project_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__project_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__project_id
+msgid "Project"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate_line__qty
+msgid "Qty Certified"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__line_ids
+msgid ""
+"Quantity-based BOQ certification lines. When populated they drive the "
+"applied amount."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate_line__unit_rate
+msgid "Rate"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__reason
+msgid "Reason"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_advance__side__owner
+msgid "Received from the Owner"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_advance_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_advance_list
+msgid "Recovered"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__recovered_amount
+msgid "Recovered Amount"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_advance__recovered_amount
+msgid "Recovered by certified certificates. Draft claims do not count."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__recovery_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_advance_form
+msgid "Recovery"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__recovery_pct
+msgid "Recovery Rate (%)"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__recovery_total
+msgid "Recovery Total"
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/advance.py:0
+msgid "Recovery rate is a percentage of each certificate."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_payment_certificate_form
+msgid ""
+"Recovery reduces what is paid, never what the work\n"
+"                                cost. It cannot exceed what was advanced."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__name
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__name
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__name
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__name
+msgid "Reference"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_payment_certificate_form
+msgid "Reject"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_payment_certificate__state__rejected
+msgid "Rejected"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention__release_id
+msgid "Release"
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/retention.py:0
+msgid "Release %(name)s is in %(company)s but its project is in %(other)s."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_retention_release_form
+msgid "Release & Bill"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__release_date
+msgid "Release Date"
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/retention.py:0
+msgid "Release an amount."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_retention__movement_type__release
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_retention_release_list
+msgid "Released"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate_line__remaining_qty
+msgid "Remaining Qty on BOQ Line"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__activity_user_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__activity_user_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__activity_user_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_owner_progress_billing_deduction__kind__retention
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_payment_certificate_list
+msgid "Retention"
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/owner_progress_billing.py:0
+msgid "Retention %(pct).2f%% held by the owner — %(ref)s"
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid "Retention %(pct).2f%% withheld — %(ref)s"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__retention_pct
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__retention_pct
+msgid "Retention (%)"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__retention_amount
+msgid "Retention Amount"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model,name:atmta_construction_certification.model_realestate_construction_retention
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__retention_movement_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__retention_movement_id
+msgid "Retention Movement"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_retention_list
+msgid "Retention Movements"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__retention_posted_correctly
+msgid "Retention Posted Correctly"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.actions.act_window,name:atmta_construction_certification.action_retention
+msgid "Retention Register"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model,name:atmta_construction_certification.model_realestate_construction_retention_release
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_retention_release_form
+msgid "Retention Release"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.actions.act_window,name:atmta_construction_certification.action_retention_release
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_retention_release_list
+msgid "Retention Releases"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__retention_amount
+msgid "Retention Withheld"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.actions.act_window,help:atmta_construction_certification.action_retention
+msgid ""
+"Retention appears here when a payment certificate withholds it,\n"
+"               and disappears when a release pays it back. The balance is the\n"
+"               sum of the movements — nothing recomputes it from percentages."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/retention.py:0
+msgid ""
+"Retention movements are a register. Post a release rather than editing what "
+"was already withheld."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/retention.py:0
+msgid "Retention release — %(stage)s (%(ref)s)"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__sale_contract_id
+msgid "Sale Contract"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__sale_contract_available
+msgid "Sale Contract Available"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_owner_progress_billing__sale_contract_available
+msgid ""
+"Sale contracts belong to the developer application. Without it the Sale "
+"Contract link has no model behind it (Odoo points it at `_unknown`), so it "
+"is hidden and nothing reads through it."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/retention.py:0
+msgid "Say who is holding the retention before releasing it."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate_line__sequence
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing_deduction__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/owner_progress_billing.py:0
+msgid "Set a non-zero 'This Period (%)' before certifying."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_retention__contractor_id
+msgid "Set on the contractor side."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_retention__partner_id
+msgid "Set on the owner side — whoever is holding our money."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__retention_posted_correctly
+msgid ""
+"Set when the bill posted retention to the liability account. Certificates "
+"posted before M7 stay false, and the disclosure keeps reporting them."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_advance__recovery_pct
+msgid ""
+"Share of each certificate's certified amount recovered against this advance."
+" A rate, not a rule — the certificate decides how much it actually recovers."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__side
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention__side
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__side
+msgid "Side"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention__signed_amount
+msgid "Signed Amount"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_payment_certificate_form
+msgid "Source PO"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__purchase_order_id
+msgid ""
+"Source purchase order — usually the contractor's master subcontract PO."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__purchase_order_line_id
+msgid "Specific milestone line being certified. Drives qty_received."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__stage
+msgid "Stage"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__state
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__state
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__state
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__state
+msgid "State"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_advance__activity_state
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__activity_state
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_retention_release__activity_state
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_owner_progress_billing__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__purchase_order_id
+msgid "Subcontract PO"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_advance__amount
+msgid "Tax-exclusive amount advanced."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__gross_amount
+msgid ""
+"The certified amount. Kept under its old name because reports and live data "
+"refer to it."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__package_id
+msgid ""
+"The contract this certificate draws down. When set, the authorised value and"
+" the cumulative ceiling come from it."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_retention__move_id
+msgid ""
+"The entry that made this movement real. A movement without one is a note, "
+"not a balance."
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid "The selected PO belongs to a different vendor than this contractor."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_payment_certificate_list
+msgid "This Period %"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__current_certified_pct
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__current_certified_pct
+msgid "This Period (%)"
+msgstr ""
+
+#. module: atmta_construction_certification
+#. odoo-python
+#: code:addons/atmta_construction_certification/models/owner_progress_billing.py:0
+#: code:addons/atmta_construction_certification/models/payment_certificate.py:0
+msgid "This period's certification cannot be negative."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_owner_billing_form
+msgid "Total"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_advance__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_retention_release__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_owner_progress_billing__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__contractor_partner_id
+msgid "Vendor"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__vendor_bill_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__vendor_bill_id
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__vendor_bill_id
+msgid "Vendor Bill"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__wbs_id
+msgid "WBS"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_advance__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_retention_release__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_owner_progress_billing__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_advance__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_retention_release__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_owner_progress_billing__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__certified_amount
+msgid "What is certified for payment. Frozen once certified."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__authorised_amount
+msgid ""
+"What may be certified in total: the package's current contract value "
+"(original plus approved variations), or the contract value typed here. Zero "
+"means no authorised base is known — not that nothing is authorised."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__applied_amount
+msgid "What the contractor claimed for this period, tax-exclusive."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_retention_release__held_amount
+msgid "What the register says is still held for this contractor."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__cost_code_id
+msgid ""
+"Where this certificate's cost lands in the cost report. Without it the "
+"largest document on the job reaches the project and no cost code."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model_terms:ir.ui.view,arch_db:atmta_construction_certification.view_retention_release_form
+msgid "Why it is due now."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_retention_release__reason
+msgid ""
+"Why it is due now. A release with no reason is a payment nobody can explain "
+"later."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_payment_certificate__disallowance_reason
+msgid "Why the claim was not certified in full."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_retention__movement_type__hold
+msgid "Withheld"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_retention__side__owner
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_retention_release__side__owner
+msgid "Withheld by the Owner from us"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_owner_progress_billing__retention_pct
+msgid ""
+"Withheld by the owner from this billing. It is still ours to collect, so it "
+"is posted to a receivable — not written off as revenue we never earned."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_retention__side__contractor
+#: model:ir.model.fields.selection,name:atmta_construction_certification.selection__realestate_construction_retention_release__side__contractor
+msgid "Withheld from a Contractor"
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,help:atmta_construction_certification.field_realestate_construction_retention__signed_amount
+msgid "Withheld is positive, released is negative. The balance is their sum."
+msgstr ""
+
+#. module: atmta_construction_certification
+#: model:ir.model.fields,field_description:atmta_construction_certification.field_realestate_construction_payment_certificate_line__work_item_id
+msgid "Work Item"
+msgstr ""

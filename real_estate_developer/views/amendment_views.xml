@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ========================== Amendment ========================== -->
+    <record id="view_amendment_list" model="ir.ui.view">
+        <field name="name">realestate.sale.contract.amendment.list</field>
+        <field name="model">realestate.sale.contract.amendment</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state == 'applied'"
+                  decoration-muted="state == 'cancelled'"
+                  decoration-warning="state == 'pending_approval'">
+                <field name="name"/>
+                <field name="contract_id"/>
+                <field name="partner_id" optional="show"/>
+                <field name="amendment_type"/>
+                <field name="effective_date"/>
+                <field name="financial_effect" sum="Net effect"/>
+                <field name="fee_amount" optional="hide"/>
+                <field name="approved_by_id" optional="show"/>
+                <field name="applied_on" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'applied'"
+                       decoration-warning="state == 'pending_approval'"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_amendment_form" model="ir.ui.view">
+        <field name="name">realestate.sale.contract.amendment.form</field>
+        <field name="model">realestate.sale.contract.amendment</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit" type="object"
+                            string="Submit for Approval" class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="oe_highlight"
+                            invisible="state != 'pending_approval'"/>
+                    <button name="action_request_approval" type="object"
+                            string="Request Approval"
+                            invisible="not approval_request_available"/>
+                    <field name="approval_request_available" invisible="1"/>
+                    <button name="action_sign" type="object" string="Mark Signed"
+                            invisible="state != 'approved'"/>
+                    <button name="action_apply" type="object" string="Apply"
+                            class="oe_highlight"
+                            invisible="state not in ('approved','signed') or amendment_type in ('early_settlement','cancellation')"
+                            confirm="Applying an amendment changes a signed contract. It cannot be undone — only reversed by a further amendment. Continue?"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('applied','cancelled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,pending_approval,approved,signed,applied"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Applied" bg_color="text-bg-success"
+                            invisible="state != 'applied'"/>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="contract_id" options="{'no_create': True}"
+                                   readonly="state != 'draft'"/>
+                            <field name="partner_id"/>
+                            <field name="project_id"/>
+                            <field name="amendment_type" readonly="state != 'draft'"/>
+                            <field name="effective_date"/>
+                        </group>
+                        <group>
+                            <field name="financial_effect"/>
+                            <field name="fee_amount"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+
+                    <group string="Change" invisible="amendment_type not in ('unit_swap','price_change','buyer_change','payment_plan_change','schedule_change')">
+                        <group string="From">
+                            <field name="old_property_id" readonly="1"
+                                   invisible="amendment_type != 'unit_swap'"/>
+                            <field name="old_price" readonly="1"
+                                   invisible="amendment_type not in ('unit_swap','price_change')"/>
+                            <field name="old_partner_id" readonly="1"
+                                   invisible="amendment_type != 'buyer_change'"/>
+                            <field name="old_payment_plan_id" readonly="1"
+                                   invisible="amendment_type not in ('payment_plan_change','schedule_change')"/>
+                        </group>
+                        <group string="To">
+                            <field name="new_property_id"
+                                   invisible="amendment_type != 'unit_swap'"
+                                   readonly="state == 'applied'"/>
+                            <field name="new_price"
+                                   invisible="amendment_type not in ('unit_swap','price_change')"
+                                   readonly="state == 'applied'"/>
+                            <field name="new_partner_id"
+                                   invisible="amendment_type != 'buyer_change'"
+                                   readonly="state == 'applied'"/>
+                            <field name="new_payment_plan_id"
+                                   invisible="amendment_type not in ('payment_plan_change','schedule_change')"
+                                   readonly="state == 'applied'"/>
+                        </group>
+                    </group>
+
+                    <group string="Reason">
+                        <field name="reason" nolabel="1"
+                               placeholder="Why this change was agreed, in the words you would use in a dispute"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Instalment Adjustments" name="adjustments"
+                              invisible="not adjustment_ids">
+                            <field name="adjustment_ids" readonly="1">
+                                <list create="false" edit="false" delete="false">
+                                    <field name="installment_id"/>
+                                    <field name="adjustment_type"/>
+                                    <field name="amount_before"/>
+                                    <field name="amount_after"/>
+                                    <field name="amount_delta" sum="Net"/>
+                                    <field name="date_before" optional="hide"/>
+                                    <field name="date_after" optional="show"/>
+                                    <field name="is_applied"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Audit" name="audit">
+                            <group>
+                                <group string="Approved">
+                                    <field name="approved_by_id"/>
+                                    <field name="approved_on"/>
+                                    <field name="signed_on"/>
+                                </group>
+                                <group string="Applied">
+                                    <field name="applied_by_id"/>
+                                    <field name="applied_on"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_contract_amendment" model="ir.actions.act_window">
+        <field name="name">Contract Amendments</field>
+        <field name="res_model">realestate.sale.contract.amendment</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Change a signed contract</p>
+            <p>
+                Every post-signature change — a swap, a restructuring, a
+                settlement, a transfer, a cancellation — is an amendment:
+                typed, approved, applied once, and never deleted.
+            </p>
+        </field>
+    </record>
+
+    <!-- ===================== Instalment adjustments ===================== -->
+    <record id="view_installment_adjustment_list" model="ir.ui.view">
+        <field name="name">realestate.sale.installment.adjustment.list</field>
+        <field name="model">realestate.sale.installment.adjustment</field>
+        <field name="arch" type="xml">
+            <list create="false" delete="false"
+                  decoration-muted="not is_applied">
+                <field name="create_date" string="Recorded"/>
+                <field name="contract_id"/>
+                <field name="installment_id"/>
+                <field name="adjustment_type"/>
+                <field name="amount_before"/>
+                <field name="amount_after"/>
+                <field name="amount_delta" sum="Net"/>
+                <field name="reason" optional="show"/>
+                <field name="requested_by_id" optional="show"/>
+                <field name="is_applied"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ============================ Wizards ============================ -->
+    <record id="view_contract_restructure_form" model="ir.ui.view">
+        <field name="name">realestate.contract.restructure.form</field>
+        <field name="model">realestate.contract.restructure</field>
+        <field name="arch" type="xml">
+            <form>
+                <div class="alert alert-warning" role="alert"
+                     invisible="not blocking_check_count">
+                    <field name="blocking_check_count" readonly="1" nolabel="1"
+                           class="oe_inline"/>
+                    cheque(s) have been deposited or cleared against the
+                    instalments being changed. Resolve them first — restructuring
+                    underneath a presented cheque would corrupt a financial
+                    instrument.
+                </div>
+                <group>
+                    <group string="Contract">
+                        <field name="contract_id" readonly="1"/>
+                        <field name="partner_id" readonly="1"/>
+                        <field name="property_id" readonly="1"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="state" invisible="1"/>
+                    </group>
+                    <group string="Current Position">
+                        <field name="paid_amount" readonly="1"/>
+                        <field name="outstanding_amount" readonly="1"/>
+                        <field name="open_installment_count" readonly="1"
+                               string="Open Instalments"/>
+                    </group>
+                </group>
+                <group>
+                    <group>
+                        <field name="new_plan_id" options="{'no_create': True}"
+                               readonly="state == 'preview'"/>
+                        <field name="effective_date"/>
+                    </group>
+                    <group>
+                        <field name="new_total" readonly="1"
+                               invisible="state != 'preview'"/>
+                    </group>
+                </group>
+                <group string="Reason">
+                    <field name="reason" nolabel="1"/>
+                </group>
+                <field name="line_ids" readonly="1" invisible="state != 'preview'">
+                    <list create="false" edit="false" delete="false">
+                        <field name="name"/>
+                        <field name="kind"/>
+                        <field name="date_due"/>
+                        <field name="amount" sum="Total"/>
+                        <field name="currency_id" column_invisible="1"/>
+                    </list>
+                </field>
+                <footer>
+                    <button name="action_preview" type="object" string="Preview"
+                            class="btn-primary" invisible="state == 'preview'"/>
+                    <button name="action_apply" type="object" string="Apply"
+                            class="btn-primary" invisible="state != 'preview'"
+                            confirm="This replaces the open instalments with the schedule above. Paid instalments and posted invoices are untouched. Continue?"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_contract_settlement_form" model="ir.ui.view">
+        <field name="name">realestate.contract.settlement.form</field>
+        <field name="model">realestate.contract.settlement</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group string="Contract">
+                        <field name="contract_id" readonly="1"/>
+                        <field name="partner_id" readonly="1"/>
+                        <field name="paid_amount" readonly="1"/>
+                        <field name="outstanding_amount" readonly="1"/>
+                        <field name="currency_id" invisible="1"/>
+                    </group>
+                    <group string="Settlement">
+                        <field name="effective_date"/>
+                        <field name="discount_amount"/>
+                        <field name="discount_percent" readonly="1"/>
+                        <field name="fee_amount"/>
+                        <field name="eligible_count" readonly="1"
+                               string="Instalments Cleared"/>
+                        <field name="net_settlement" readonly="1"
+                               class="oe_subtotal_footer_separator"/>
+                    </group>
+                </group>
+                <group string="Reason">
+                    <field name="reason" nolabel="1"/>
+                </group>
+                <footer>
+                    <button name="action_apply" type="object"
+                            string="Settle" class="btn-primary"
+                            confirm="This clears the remaining schedule and raises a single settlement obligation. Continue?"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_contract_cancel_form" model="ir.ui.view">
+        <field name="name">realestate.contract.cancel.form</field>
+        <field name="model">realestate.contract.cancel</field>
+        <field name="arch" type="xml">
+            <form>
+                <div class="alert alert-info" role="status">
+                    Paid instalments and posted invoices are kept. Future
+                    obligations are cancelled with a reason on each one, and the
+                    unit is returned to the market only if nothing else commits
+                    it.
+                </div>
+                <group>
+                    <group string="Contract">
+                        <field name="contract_id" readonly="1"/>
+                        <field name="partner_id" readonly="1"/>
+                        <field name="property_id" readonly="1"/>
+                        <field name="paid_amount" readonly="1"/>
+                        <field name="outstanding_amount" readonly="1"/>
+                        <field name="currency_id" invisible="1"/>
+                    </group>
+                    <group string="Settlement">
+                        <field name="terminate"/>
+                        <field name="effective_date"/>
+                        <field name="penalty_amount"/>
+                        <field name="forfeit_amount"/>
+                        <field name="refundable_amount" readonly="1"/>
+                        <field name="release_property"/>
+                    </group>
+                </group>
+                <group>
+                    <group>
+                        <field name="future_installment_count" readonly="1"
+                               string="Future Instalments to Cancel"/>
+                    </group>
+                    <group>
+                        <field name="posted_invoice_count" readonly="1"
+                               string="Posted Invoices (left standing)"/>
+                    </group>
+                </group>
+                <group string="Reason">
+                    <field name="reason" nolabel="1"/>
+                </group>
+                <footer>
+                    <button name="action_apply" type="object"
+                            string="Cancel Contract" class="btn-primary"/>
+                    <button string="Back" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_contract_unit_swap_form" model="ir.ui.view">
+        <field name="name">realestate.contract.unit.swap.form</field>
+        <field name="model">realestate.contract.unit.swap</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group string="From">
+                        <field name="contract_id" readonly="1"/>
+                        <field name="property_id" readonly="1"/>
+                        <field name="paid_amount" readonly="1"/>
+                        <field name="outstanding_amount" readonly="1"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="company_id" invisible="1"/>
+                    </group>
+                    <group string="To">
+                        <field name="new_property_id" options="{'no_create': True}"/>
+                        <field name="new_price"
+                               placeholder="Empty = the new unit's list price"/>
+                        <field name="price_difference" readonly="1"/>
+                        <field name="carried_forward" readonly="1"/>
+                        <field name="remaining_after" readonly="1"/>
+                        <field name="fee_amount"/>
+                        <field name="effective_date"/>
+                    </group>
+                </group>
+                <group string="Reason">
+                    <field name="reason" nolabel="1"/>
+                </group>
+                <footer>
+                    <button name="action_apply" type="object" string="Swap Unit"
+                            class="btn-primary"
+                            confirm="The deal moves to the new unit, payments carry forward, and the old unit returns to the market if nothing else commits it. Continue?"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_contract_transfer_form" model="ir.ui.view">
+        <field name="name">realestate.contract.transfer.form</field>
+        <field name="model">realestate.contract.transfer</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="contract_id" readonly="1"/>
+                        <field name="partner_id" readonly="1" string="Current Buyer"/>
+                        <field name="transfer_type"/>
+                        <field name="new_partner_id"/>
+                        <field name="currency_id" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="effective_date"/>
+                        <field name="fee_amount"
+                               invisible="transfer_type == 'add_co_buyer'"/>
+                        <field name="paid_amount" readonly="1"/>
+                        <field name="outstanding_amount" readonly="1"/>
+                    </group>
+                </group>
+                <group string="Reason">
+                    <field name="reason" nolabel="1"/>
+                </group>
+                <footer>
+                    <button name="action_apply" type="object" string="Apply"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Contract buttons for the change workflows -->
+    <record id="view_sale_contract_form_changes" model="ir.ui.view">
+        <field name="name">realestate.sale.contract.form.changes</field>
+        <field name="model">realestate.sale.contract</field>
+        <field name="inherit_id" ref="real_estate_developer.view_sale_contract_form_v2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_open_restructure" type="object"
+                        string="Restructure"
+                        invisible="state not in ('signed','active')"/>
+                <button name="action_open_settlement" type="object"
+                        string="Early Settlement"
+                        invisible="state not in ('signed','active')"/>
+                <button name="action_open_unit_swap" type="object"
+                        string="Swap Unit"
+                        invisible="state not in ('signed','active')"/>
+                <button name="action_open_buyer_transfer" type="object"
+                        string="Transfer Buyer"
+                        invisible="state not in ('signed','active','financially_cleared')"/>
+                <button name="action_open_cancellation" type="object"
+                        string="Cancel Contract"
+                        invisible="state not in ('signed','active','financially_cleared')"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_amendments" type="object"
+                        class="oe_stat_button" icon="fa-file-text-o"
+                        invisible="not amendment_count">
+                    <field name="amendment_count" widget="statinfo"
+                           string="Amendments"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

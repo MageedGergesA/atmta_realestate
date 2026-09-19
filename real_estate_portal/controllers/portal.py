@@ -1,3 +1,5 @@
+from datetime import date
+
 from odoo import http
 from odoo.http import request
 from odoo.addons.portal.controllers.portal import CustomerPortal
@@ -30,9 +32,39 @@ class RealEstatePortal(CustomerPortal):
                 'date': line.date_maturity or line.date,
                 'amount': amount,
                 'paid': residual < 0.01,
+                'paid_amount': amount - residual,
+                'residual': residual,
                 'currency': invoice.currency_id,
             })
         return rows
+
+    def _contract_schedule(self, contract):
+        """The buyer's payment schedule for one contract.
+
+        Signing now raises the schedule as `realestate.sale.installment` rows,
+        each invoiced on its own; the whole-price invoice (`invoice_id`) the
+        portal used to read is no longer created, so every such buyer saw an
+        empty schedule, no instalments and a zero counter.
+
+        A contract that does carry a posted V1 invoice, or has no live
+        instalments, keeps the V1 reading: the same split the contract's own
+        balances use (`sale_contract_v2._compute_balances`).
+        """
+        live = contract.installment_ids.filtered(
+            lambda i: i.state != 'cancelled')
+        if (contract.invoice_id and contract.invoice_id.state == 'posted') \
+                or not live:
+            return self._invoice_schedule(contract.invoice_id)
+        return [{
+            'date': inst.date_due,
+            'amount': inst.current_amount,
+            'paid': inst.state == 'paid',
+            # Cash received and still owed, from the instalment's invoice
+            # residual -- partial payments included.
+            'paid_amount': inst.paid_amount,
+            'residual': inst.residual_amount,
+            'currency': inst.currency_id or contract.currency_id,
+        } for inst in live.sorted(lambda i: (i.date_due, i.sequence, i.id))]
 
     def _owns_property(self, partner, property_id):
         return bool(request.env['realestate.sale.contract'].sudo().search_count(
@@ -49,8 +81,9 @@ class RealEstatePortal(CustomerPortal):
                 [('partner_id', '=', partner.id)])
         if 'installment_count' in counters:
             count = 0
-            for inv in self._re_contracts(partner).mapped('invoice_id'):
-                count += sum(1 for r in self._invoice_schedule(inv) if not r['paid'])
+            for contract in self._re_contracts(partner):
+                count += sum(1 for r in self._contract_schedule(contract)
+                             if not r['paid'])
             values['installment_count'] = count
         if 'snagging_count' in counters:
             values['snagging_count'] = request.env['realestate.snagging.issue'].sudo().search_count(
@@ -77,7 +110,7 @@ class RealEstatePortal(CustomerPortal):
         prop = contract.property_id
         return request.render('real_estate_portal.portal_my_sale_contract_detail', {
             'contract': contract,
-            'schedule': self._invoice_schedule(contract.invoice_id),
+            'schedule': self._contract_schedule(contract),
             'handovers': request.env['realestate.handover'].sudo().search(
                 [('sale_contract_id', '=', contract.id)]),
             'warranties': request.env['realestate.warranty'].sudo().search(
@@ -90,16 +123,18 @@ class RealEstatePortal(CustomerPortal):
     @http.route(['/my/installments'], type='http', auth='user', website=True)
     def portal_my_installments(self, **kw):
         partner = self._re_partner()
-        rows, total, paid = [], 0.0, 0.0
+        rows, total, paid, balance = [], 0.0, 0.0, 0.0
         for c in self._re_contracts(partner):
-            for r in self._invoice_schedule(c.invoice_id):
+            for r in self._contract_schedule(c):
                 rows.append(dict(r, contract=c))
                 total += r['amount']
-                if r['paid']:
-                    paid += r['amount']
-        rows.sort(key=lambda r: r['date'] or '')
+                # Paid and balance from the residuals, so a partly paid
+                # instalment counts for what was actually received.
+                paid += r['paid_amount']
+                balance += r['residual']
+        rows.sort(key=lambda r: r['date'] or date.min)
         return request.render('real_estate_portal.portal_my_installments', {
-            'rows': rows, 'total': total, 'paid': paid, 'balance': total - paid,
+            'rows': rows, 'total': total, 'paid': paid, 'balance': balance,
             'currency': partner.company_id.currency_id or request.env.company.currency_id,
             'page_name': 'installments',
         })

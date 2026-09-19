@@ -3,3 +3,4 @@ from . import procurement_award
 # looks like to the procurement integrity audit.
 from . import sourcing_event_award
 from . import evaluation_audit_award
+from . import evaluation_round_award

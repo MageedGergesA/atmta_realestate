@@ -13,6 +13,30 @@ website without intent.
 """
 
 from odoo import api, models
+from odoo.exceptions import AccessError
+
+from odoo.addons.real_estate_maquette.models.visual_access import (
+    VISUAL_ASSET_KINDS,
+)
+
+#: The kinds that actually moved behind the grant, matching
+#: `VISUAL_ASSET_REDIRECT` in `real_estate_api.controllers.api_v1_image`.
+#: Deliberately not every key of `VISUAL_ASSET_KINDS`: `unit_image` and
+#: `gallery_image` describe ordinary marketing photos that are still served
+#: on the open image route, and gating them here would 404 every unit photo
+#: in the public catalogue.
+GATED_KINDS = (
+    'maquette_glb', 'maquette_hdr', 'master_plan_2d',
+    'plan_image', 'floor_plan_image', 'elevation_sheet', 'interior_glb',
+)
+
+#: (model, field) -> gated asset kind, inverted from the authoritative map in
+#: `realestate.visual.access`. A property's plan, floor plan, elevation sheet
+#: and interior model are all served only behind a grant.
+GATED_FIELD_KINDS = {
+    (model, field): kind for kind, (model, field) in VISUAL_ASSET_KINDS.items()
+    if kind in GATED_KINDS
+}
 
 
 # Map raw sale_status → website-facing label. Anything not in this
@@ -39,11 +63,46 @@ class RealEstateProperty(models.Model):
             ('project_id', '!=', False),  # only project-attached properties
         ]
 
+    def _visual_asset_url(self, kind, unique=None):
+        """A grant-bearing URL for one of this property's gated assets.
+
+        Grants are scoped to a project, never to a property, so the grant is
+        minted for the project this property belongs to. A property with no
+        project is not in the public catalogue at all -- `_api_public_domain`
+        already requires one -- so there is nothing to authorise and nothing
+        to serve.
+        """
+        self.ensure_one()
+        project = self.sudo().project_id
+        if not project:
+            return None
+        try:
+            grant = self.env['realestate.visual.access'].sudo(
+                ).grant_for_public_project(
+                    project,
+                    kinds=['plan_image', 'floor_plan_image',
+                           'elevation_sheet', 'interior_glb'],
+                    source='embed_token', source_ref='api/plan-2d')
+        except AccessError:
+            # Not published. Answer "no URL" rather than raising out of a
+            # serializer that is building a whole plan tree.
+            return None
+        url = '/visual/asset/%s/%s?t=%s' % (kind, self.id, grant.token)
+        return '%s&unique=%s' % (url, unique) if unique else url
+
     def _api_image_url(self, field, size=None):
         self.ensure_one()
         if field not in self._fields or not self[field]:
             return None
         unique = self.write_date.strftime('%Y%m%d%H%M%S') if self.write_date else ''
+
+        # A gated asset is never reachable on the open image route, whatever
+        # size is asked for. The grant route serves the full asset; the `w`/`h`
+        # hints are dropped because resizing happens behind the gate.
+        kind = GATED_FIELD_KINDS.get(('realestate.property', field))
+        if kind:
+            return self._visual_asset_url(kind, unique=unique)
+
         qs = [f"unique={unique}"]
         if size and 'x' in size:
             w, h = size.split('x', 1)
@@ -125,7 +184,10 @@ class RealEstateProperty(models.Model):
                 'bedrooms': self.bedroom_count or 0,
                 'bathrooms': self.bathroom_count or 0,
                 'floor_number': self.floor_number or 0,
-                'price': self.base_price or 0.0,
+                # `base_price` is the internal number every discount is
+                # measured against, and an unreleased unit has no public price
+                # at all. Developer owns that rule in `_public_price()`.
+                'price': self._public_price(),
                 'furnished_status': self.furnished_status or '',
             })
 

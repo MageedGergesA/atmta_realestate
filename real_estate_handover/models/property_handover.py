@@ -10,6 +10,9 @@ class PropertyHandover(models.Model):
     handover_ids = fields.One2many('realestate.handover', compute='_compute_handover_ids', string='Handovers')
     handover_count = fields.Integer(compute='_compute_handover_ids')
     warranty_ids = fields.One2many('realestate.warranty', compute='_compute_warranty_ids', string='Warranties')
+    # A real inverse of the handover's stored unit, so the milestones below can
+    # depend on handover states: `handover_ids` is computed and cannot.
+    handover_event_ids = fields.One2many('realestate.handover', 'property_id', string='Handover Events')
 
     readiness_structural = fields.Float(string='Structural %', default=0.0)
     readiness_finishing = fields.Float(string='Finishing %', default=0.0)
@@ -60,15 +63,14 @@ class PropertyHandover(models.Model):
             rec.readiness_overall = sum(vals) / len(vals)
             rec.handover_ready = all(v >= 100.0 for v in vals)
 
-    @api.depends('handover_ready', 'readiness_overall')
+    @api.depends('handover_ready', 'readiness_overall', 'handover_event_ids.state')
     def _compute_handover_milestones(self):
-        """Driven by both readiness and whether a handover event has completed."""
-        Handover = self.env['realestate.handover']
+        """Driven by both readiness and whether a handover event has completed.
+
+        Depending on the handovers' state recomputes the flags when a handover
+        completes or is cancelled; before, they only moved on readiness edits."""
         for rec in self:
-            completed = Handover.search_count([
-                ('property_id', '=', rec.id),
-                ('state', '=', 'completed'),
-            ])
+            completed = len(rec.handover_event_ids.filtered(lambda h: h.state == 'completed'))
             rec.ready_to_deliver = rec.handover_ready and not completed
             rec.ready_to_move = bool(completed) and rec.readiness_overall >= 100.0
 

@@ -1,0 +1,1188 @@
+# Translation of Odoo Server.
+# This file contains the Arabic translation of the following modules:
+# 	* atmta_procurement_core
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:13+0000\n"
+"PO-Revision-Date: 2026-09-17 10:13+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_virtual_tour
+msgid "3D Virtual Tour"
+msgstr "جولة افتراضية ثلاثية الأبعاد"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_res_company__procurement_amount_tolerance_amount
+msgid ""
+"A flat alternative to the percentage. Whichever is larger applies; both "
+"default to zero."
+msgstr ""
+"بديل بمبلغ ثابت عن النسبة المئوية. يُطبق الأكبر منهما؛ وكلاهما صفر "
+"افتراضيًا."
+
+#. module: atmta_procurement_core
+#. odoo-python
+#: code:addons/atmta_procurement_core/models/procurement_policy.py:0
+msgid ""
+"A negative tolerance would mean an order had to come in under the approved "
+"amount to be allowed."
+msgstr "التفاوت السالب يعني أن الأمر يجب أن يقل عن المبلغ المعتمد ليُسمح به."
+
+#. module: atmta_procurement_core
+#. odoo-python
+#: code:addons/atmta_procurement_core/models/procurement_policy.py:0
+msgid "A warning period cannot run backwards."
+msgstr "لا يمكن أن تكون فترة التنبيه سالبة."
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_ac_filter_hepa
+msgid "AC Filter (HEPA)"
+msgstr "فلتر مكيف (HEPA)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_ac_filter_std
+msgid "AC Filter (Standard)"
+msgstr "فلتر مكيف (قياسي)"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__res_company__procurement_late_bid_policy__allow_with_warning
+msgid "Accept and flag"
+msgstr "قبول مع تمييز"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_res_company__procurement_addendum_ack_policy
+msgid "Addendum Acknowledgement"
+msgstr "الإقرار بالملحق"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_aggregate_10
+msgid "Aggregate 10mm"
+msgstr "حصى 10 مم"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_aggregate_20
+msgid "Aggregate 20mm"
+msgstr "حصى 20 مم"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_res_company__procurement_allow_self_approval
+msgid "Allow Procurement Self-Approval"
+msgstr "السماح بالاعتماد الذاتي للمشتريات"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_res_company__procurement_qualification_allow_self_approval
+msgid "Allow Qualification Self-Approval"
+msgstr "السماح بالاعتماد الذاتي للتأهيل"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_res_company__procurement_allow_self_late_exception
+msgid "Allow Self-Approved Late Exception"
+msgstr "السماح باعتماد ذاتي لاستثناء التأخير"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_aluminum_window
+msgid "Aluminum Window"
+msgstr "نافذة ألمنيوم"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_res_company__procurement_amount_tolerance_amount
+msgid "Amount Tolerance"
+msgstr "التفاوت المسموح بالمبلغ"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_res_company__procurement_amount_tolerance_pct
+msgid "Amount Tolerance (%)"
+msgstr "نسبة التفاوت المسموح (%)"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__realestate_project__procurement_budget_policy__approval_required
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__res_company__procurement_budget_policy__approval_required
+msgid "Approval Required"
+msgstr "يتطلب اعتمادًا"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_bathtub
+msgid "Bathtub"
+msgstr "حوض استحمام"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_bed_king
+msgid "Bed Frame (King)"
+msgstr "هيكل سرير (كينج)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_bidet_spray
+msgid "Bidet Spray"
+msgstr "شطاف"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__realestate_project__procurement_budget_policy__block
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__res_company__procurement_budget_policy__block
+msgid "Block"
+msgstr "منع"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_brochures_1000
+msgid "Brochure Print Run (1000)"
+msgstr "طباعة كتيبات (1000)"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_product_product__is_construction_material
+#: model:ir.model.fields,help:atmta_procurement_core.field_product_template__is_construction_material
+#: model:ir.model.fields,help:atmta_procurement_core.field_realestate_property__is_construction_material
+msgid ""
+"Building materials used during construction (cement, rebar, blocks, "
+"finishes, MEP, etc.)."
+msgstr ""
+"مواد البناء المستخدمة أثناء الإنشاء (أسمنت، حديد تسليح، بلوك، تشطيبات، أعمال"
+" كهروميكانيكية، إلخ)."
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_built_in_oven
+msgid "Built-in Oven"
+msgstr "فرن مدمج"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_business_cards
+msgid "Business Cards (Box of 500)"
+msgstr "بطاقات عمل (علبة 500)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_cctv_dome
+msgid "CCTV Camera (Dome)"
+msgstr "كاميرا مراقبة (قبة)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_cement_board
+msgid "Cement Board (1.2x2.4m)"
+msgstr "لوح أسمنتي (1.2x2.4 م)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_tile_ceramic_30
+msgid "Ceramic Tile 30x30 cm"
+msgstr "بلاط سيراميك 30x30 سم"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_tile_ceramic_60
+msgid "Ceramic Tile 60x60 cm"
+msgstr "بلاط سيراميك 60x60 سم"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_detergent_5l
+msgid "Cleaning Detergent (5L)"
+msgstr "منظف (5 لتر)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_svc_cleaning
+msgid "Cleaning Service (visit)"
+msgstr "خدمة تنظيف (زيارة)"
+
+#. module: atmta_procurement_core
+#: model:ir.model,name:atmta_procurement_core.model_res_company
+msgid "Companies"
+msgstr "الشركات"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__realestate_project__procurement_budget_policy__company
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__realestate_project__procurement_po_governance__company
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__realestate_project__procurement_receipt_inspection__company
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__realestate_project__procurement_vendor_policy__company
+msgid "Company Default"
+msgstr "افتراضي الشركة"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_concrete_block_10
+msgid "Concrete Block 10cm"
+msgstr "بلوك خرساني 10 سم"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_concrete_block_15
+msgid "Concrete Block 15cm"
+msgstr "بلوك خرساني 15 سم"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_concrete_block_20
+msgid "Concrete Block 20cm"
+msgstr "بلوك خرساني 20 سم"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_product_product__is_construction_material
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_product_template__is_construction_material
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_realestate_property__is_construction_material
+msgid "Construction Material"
+msgstr "مواد بناء"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__realestate_project__procurement_po_governance__controlled
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__res_company__procurement_po_governance__controlled
+msgid "Controlled — requisition or approved exception"
+msgstr "مُحكم — طلب شراء أو استثناء معتمد"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_copper_pipe_12
+msgid "Copper Pipe 1/2\""
+msgstr "ماسورة نحاس 1/2\""
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_crushed_stone
+msgid "Crushed Stone"
+msgstr "حجر مكسر"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_res_company__procurement_reservation_expiry_days
+msgid ""
+"Days an unsourced reservation keeps consuming capacity. Zero means it never "
+"expires — which is the honest default, because an expiry nobody chose would "
+"release real demand on a date nobody knew about."
+msgstr ""
+"عدد الأيام التي يظل فيها الحجز غير المُورَّد يستهلك الميزانية. الصفر يعني "
+"أنه لا ينتهي أبدًا — وهو الافتراض الأمين، لأن انتهاءً لم يختره أحد سيفرج عن "
+"طلب حقيقي في تاريخ لم يعلم به أحد."
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_dining_table
+msgid "Dining Table"
+msgstr "طاولة طعام"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_dishwasher
+msgid "Dishwasher"
+msgstr "غسالة صحون"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_disinfectant_5l
+msgid "Disinfectant (5L)"
+msgstr "مطهر (5 لتر)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_db_12way
+msgid "Distribution Board (12-way)"
+msgstr "لوحة توزيع (12 خط)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_db_24way
+msgid "Distribution Board (24-way)"
+msgstr "لوحة توزيع (24 خط)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_drone_session
+msgid "Drone Photo Session"
+msgstr "جلسة تصوير بالطائرة المسيّرة"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_cable_25
+msgid "Electrical Cable 2.5mm²"
+msgstr "كابل كهربائي 2.5 مم²"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_cable_4
+msgid "Electrical Cable 4mm²"
+msgstr "كابل كهربائي 4 مم²"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_cable_6
+msgid "Electrical Cable 6mm²"
+msgstr "كابل كهربائي 6 مم²"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_conduit_20
+msgid "Electrical Conduit 20mm"
+msgstr "ماسورة كهرباء 20 مم"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_svc_environmental_study
+msgid "Environmental Study"
+msgstr "دراسة بيئية"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_res_company__procurement_qualification_warn_days
+msgid "Expiring Soon (days)"
+msgstr "قارب على الانتهاء (أيام)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_flexible_duct
+msgid "Flexible Duct"
+msgstr "مجرى هواء مرن"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_floor_cleaner_5l
+msgid "Floor Cleaner (5L)"
+msgstr "منظف أرضيات (5 لتر)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_floor_drain
+msgid "Floor Drain"
+msgstr "صفاية أرضية"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_floor_plan_render
+msgid "Floor Plan Render"
+msgstr "تصميم مخطط الطابق"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_diesel_fuel
+msgid "Generator Diesel Fuel"
+msgstr "وقود ديزل للمولد"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_granite_slab
+msgid "Granite Slab"
+msgstr "لوح جرانيت"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_gypsum_board
+msgid "Gypsum Board (1.2x2.4m)"
+msgstr "لوح جبس (1.2x2.4 م)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_gypsum_powder
+msgid "Gypsum Powder (25kg bag)"
+msgstr "جبس بودرة (كيس 25 كجم)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_hdpe_pipe_50
+msgid "HDPE Pipe 50mm"
+msgstr "ماسورة HDPE قطر 50 مم"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_hvac_diffuser
+msgid "HVAC Diffuser"
+msgstr "ناشر هواء تكييف"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_hvac_grille
+msgid "HVAC Grille"
+msgstr "شبكة تكييف"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_svc_hvac_pm
+msgid "HVAC Preventive Maintenance (visit)"
+msgstr "صيانة وقائية للتكييف (زيارة)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_hollow_block
+msgid "Hollow Block"
+msgstr "بلوك مفرغ"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_res_company__procurement_amount_tolerance_pct
+msgid ""
+"How far a purchase order may exceed the approved requisition basis before "
+"the approval stops covering it. Zero means an approved amount is an approved"
+" amount."
+msgstr ""
+"الحد الذي يجوز لأمر الشراء أن يتجاوز به أساس طلب الشراء المعتمد قبل أن يتوقف"
+" الاعتماد عن تغطيته. الصفر يعني أن المبلغ المعتمد هو المبلغ المعتمد تمامًا."
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_res_company__procurement_qualification_warn_days
+msgid ""
+"How far ahead the register flags an expiring qualification. Thirty days is a"
+" starting point, not a rule — a supplier whose ISO renewal takes a quarter "
+"needs more."
+msgstr ""
+"المدة المسبقة التي ينبه فيها السجل إلى تأهيل قارب على الانتهاء. ثلاثون يومًا"
+" نقطة بداية وليست قاعدة — فالمورد الذي يستغرق تجديد شهادة ISO لديه ربع سنة "
+"يحتاج إلى مدة أطول."
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_insulated_duct
+msgid "Insulated Duct"
+msgstr "مجرى هواء معزول"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_product_product__is_realestate_product
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_product_template__is_realestate_product
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_realestate_property__is_realestate_product
+msgid "Is Realestate Product"
+msgstr "منتج عقاري"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_product_product__is_property_fitting
+#: model:ir.model.fields,help:atmta_procurement_core.field_product_template__is_property_fitting
+#: model:ir.model.fields,help:atmta_procurement_core.field_realestate_property__is_property_fitting
+msgid ""
+"Items shipped with a finished unit (appliances, sanitary, smart-home, "
+"furniture for furnished rentals)."
+msgstr ""
+"بنود تُسلَّم مع الوحدة المشطبة (أجهزة، أدوات صحية، منزل ذكي، أثاث للوحدات "
+"المؤجرة مفروشة)."
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_junction_box
+msgid "Junction Box"
+msgstr "علبة توصيل"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_led_driver
+msgid "LED Driver"
+msgstr "محول إضاءة LED"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_res_company__procurement_late_bid_policy
+msgid "Late Bid Handling"
+msgstr "معالجة العطاءات المتأخرة"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_svc_legal
+msgid "Legal Consultation (hour)"
+msgstr "استشارة قانونية (ساعة)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_led_15w
+msgid "Light Bulb (LED 15W)"
+msgstr "لمبة (LED 15 واط)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_led_9w
+msgid "Light Bulb (LED 9W)"
+msgstr "لمبة (LED 9 واط)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_lightweight_block
+msgid "Lightweight AAC Block"
+msgstr "بلوك خفيف الوزن (خرسانة خلوية)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_lime_powder
+msgid "Lime Powder (25kg bag)"
+msgstr "جير بودرة (كيس 25 كجم)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_lockbox
+msgid "Lockbox (Combination)"
+msgstr "صندوق مفاتيح (بأرقام سرية)"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_product_product__is_maintenance_consumable
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_product_template__is_maintenance_consumable
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_realestate_property__is_maintenance_consumable
+msgid "Maintenance Consumable"
+msgstr "مستهلكات صيانة"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__res_company__procurement_late_bid_policy__exception_required
+msgid "Manager exception required"
+msgstr "يتطلب استثناءً من المدير"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_marble_slab
+msgid "Marble Slab"
+msgstr "لوح رخام"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_product_product__is_marketing_asset
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_product_template__is_marketing_asset
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_realestate_property__is_marketing_asset
+msgid "Marketing Asset"
+msgstr "أصل تسويقي"
+
+#. module: atmta_procurement_core
+#: model:ir.actions.act_window,name:atmta_procurement_core.action_realestate_catalog
+msgid "Material Catalog"
+msgstr "كتالوج المواد"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_realestate_project__procurement_receipt_inspection
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_res_company__procurement_receipt_inspection
+msgid "Material Inspection on Receipt"
+msgstr "فحص المواد عند الاستلام"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_microwave
+msgid "Microwave Oven"
+msgstr "فرن ميكروويف"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_mortar_premix
+msgid "Mortar Premix (40kg bag)"
+msgstr "مونة جاهزة (كيس 40 كجم)"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__realestate_project__procurement_budget_policy__none
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__res_company__procurement_budget_policy__none
+msgid "No Control"
+msgstr "بدون رقابة"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_res_company__procurement_qualification_allow_self_approval
+msgid ""
+"Off by default. Assessing a vendor and approving that assessment are two "
+"jobs; this is deliberately separate from the spend self-approval switch "
+"because a company may reasonably allow one and not the other."
+msgstr ""
+"معطل افتراضيًا. تقييم المورد واعتماد ذلك التقييم مهمتان منفصلتان؛ وهذا "
+"الخيار منفصل عمدًا عن خيار الاعتماد الذاتي للإنفاق لأن الشركة قد تسمح "
+"بأحدهما دون الآخر لأسباب معقولة."
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_res_company__procurement_allow_self_late_exception
+msgid ""
+"Off by default. The buyer who recorded a late submission approving their own"
+" exception for it defeats the point of having one."
+msgstr ""
+"معطل افتراضيًا. اعتماد مسؤول الشراء الذي سجّل تقديمًا متأخرًا لاستثنائه "
+"الخاص يُفقد الاستثناء الغاية منه."
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_res_company__procurement_allow_self_approval
+msgid ""
+"Off by default. When on, a requester may satisfy their own approval step up "
+"to the limit below — a decision a company makes explicitly, not one it "
+"discovers."
+msgstr ""
+"معطل افتراضيًا. عند تفعيله، يجوز لمقدم الطلب استيفاء خطوة الاعتماد الخاصة به"
+" حتى الحد أدناه — وهو قرار تتخذه الشركة صراحةً، لا قرار تكتشفه لاحقًا."
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__realestate_project__procurement_receipt_inspection__off
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__res_company__procurement_receipt_inspection__off
+msgid "Off — receipts are not inspected"
+msgstr "معطل — لا يتم فحص الاستلامات"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_realestate_project__procurement_vendor_endorsement_required
+msgid ""
+"On for developments where a generally qualified vendor still needs this "
+"project's own sign-off — usually because the client or the lender insists. "
+"Off everywhere else, so the general qualification is enough."
+msgstr ""
+"يُفعَّل للمشاريع التي يحتاج فيها المورد المؤهل عمومًا إلى موافقة خاصة من "
+"المشروع — عادةً لأن العميل أو الممول يشترط ذلك. ويُعطَّل في غيرها، فيكفي "
+"التأهيل العام."
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_listing_boost
+msgid "Online Listing Boost (monthly)"
+msgstr "تعزيز الإعلان الإلكتروني (شهري)"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__res_company__procurement_addendum_ack_policy__optional
+msgid "Optional"
+msgstr "اختياري"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__realestate_project__procurement_po_governance__optional
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__res_company__procurement_po_governance__optional
+msgid "Optional — direct purchase orders allowed"
+msgstr "اختياري — أوامر الشراء المباشرة مسموحة"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__realestate_project__procurement_vendor_policy__optional
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__res_company__procurement_vendor_policy__optional
+msgid "Optional — qualification available, never required"
+msgstr "اختياري — التأهيل متاح وغير مطلوب أبدًا"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_realestate_project__procurement_budget_policy
+msgid ""
+"Override the company's budget-control policy for this project. A cost-plus "
+"project and a fixed-price tower rarely want the same answer."
+msgstr ""
+"تجاوز سياسة الشركة لرقابة الميزانية لهذا المشروع. فمشروع التكلفة زائد الربح "
+"وبرج السعر الثابت نادرًا ما يحتاجان إلى الإجابة نفسها."
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_realestate_project__procurement_po_governance
+msgid "Override the company's purchase-governance policy for this project."
+msgstr "تجاوز سياسة الشركة لحوكمة المشتريات لهذا المشروع."
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_realestate_project__procurement_receipt_inspection
+msgid ""
+"Override the company's receipt-inspection policy for this project. A "
+"structural package and a fit-out snag list do not need the same answer."
+msgstr ""
+"تجاوز سياسة الشركة لفحص الاستلام لهذا المشروع. فحزمة الأعمال الإنشائية "
+"وقائمة ملاحظات التشطيب لا تحتاجان إلى الإجابة نفسها."
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_realestate_project__procurement_vendor_policy
+msgid ""
+"Override the company's vendor-qualification policy. A landmark tower with a "
+"client-approved vendor list and a small refurbishment do not need the same "
+"answer."
+msgstr ""
+"تجاوز سياسة الشركة لتأهيل الموردين. فالبرج المميز ذو قائمة الموردين المعتمدة"
+" من العميل وأعمال التجديد الصغيرة لا يحتاجان إلى الإجابة نفسها."
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_pvc_pipe_1
+msgid "PVC Pipe 1\""
+msgstr "ماسورة PVC مقاس 1\""
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_pvc_pipe_12
+msgid "PVC Pipe 1/2\""
+msgstr "ماسورة PVC مقاس 1/2\""
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_pvc_pipe_2
+msgid "PVC Pipe 2\""
+msgstr "ماسورة PVC مقاس 2\""
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_pvc_pipe_34
+msgid "PVC Pipe 3/4\""
+msgstr "ماسورة PVC مقاس 3/4\""
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_svc_pest_control
+msgid "Pest Control (visit)"
+msgstr "مكافحة حشرات (زيارة)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_plumbing_tape
+msgid "Plumbing Tape"
+msgstr "شريط سباكة"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_tile_porcelain_80
+msgid "Porcelain Tile 80x80 cm"
+msgstr "بلاط بورسلان 80x80 سم"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_cement_portland
+msgid "Portland Cement (50kg bag)"
+msgstr "أسمنت بورتلاندي (كيس 50 كجم)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_socket
+msgid "Power Socket"
+msgstr "مقبس كهربائي"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_primer_20l
+msgid "Primer (20L)"
+msgstr "طلاء أساس (20 لتر)"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_realestate_project__procurement_budget_policy
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_res_company__procurement_budget_policy
+msgid "Procurement Budget Control"
+msgstr "رقابة ميزانية المشتريات"
+
+#. module: atmta_procurement_core
+#: model:ir.model,name:atmta_procurement_core.model_product_template
+msgid "Product"
+msgstr "المنتج"
+
+#. module: atmta_procurement_core
+#: model:ir.actions.act_window,name:atmta_procurement_core.action_realestate_product_categories
+msgid "Product Categories"
+msgstr "فئات المنتجات"
+
+#. module: atmta_procurement_core
+#: model:ir.model,name:atmta_procurement_core.model_product_product
+msgid "Product Variant"
+msgstr "متغير المنتج"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_photo_session
+msgid "Professional Photo Session"
+msgstr "جلسة تصوير احترافية"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_realestate_project__procurement_po_governance
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_res_company__procurement_po_governance
+msgid "Project Purchase Governance"
+msgstr "حوكمة مشتريات المشروع"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_product_product__is_property_fitting
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_product_template__is_property_fitting
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_realestate_property__is_property_fitting
+msgid "Property Fitting"
+msgstr "تجهيزات العقار"
+
+#. module: atmta_procurement_core
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_core.view_product_template_form_re
+msgid "Real Estate"
+msgstr "العقارات"
+
+#. module: atmta_procurement_core
+#: model:ir.model,name:atmta_procurement_core.model_realestate_project
+msgid "Real Estate Development Project"
+msgstr "مشروع التطوير العقاري"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_rebar_10
+msgid "Rebar 10mm"
+msgstr "حديد تسليح 10 مم"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_rebar_12
+msgid "Rebar 12mm"
+msgstr "حديد تسليح 12 مم"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_rebar_16
+msgid "Rebar 16mm"
+msgstr "حديد تسليح 16 مم"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_rebar_20
+msgid "Rebar 20mm"
+msgstr "حديد تسليح 20 مم"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_rebar_25
+msgid "Rebar 25mm"
+msgstr "حديد تسليح 25 مم"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_rebar_08
+msgid "Rebar 8mm"
+msgstr "حديد تسليح 8 مم"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_product_product__is_maintenance_consumable
+#: model:ir.model.fields,help:atmta_procurement_core.field_product_template__is_maintenance_consumable
+#: model:ir.model.fields,help:atmta_procurement_core.field_realestate_property__is_maintenance_consumable
+msgid ""
+"Recurring maintenance materials: filters, lamps, plumbing parts, cleaning "
+"chemicals."
+msgstr "مواد الصيانة المتكررة: فلاتر، لمبات، قطع سباكة، مواد تنظيف كيميائية."
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_red_brick
+msgid "Red Brick (standard)"
+msgstr "طوب أحمر (قياسي)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_fridge_300l
+msgid "Refrigerator (300L)"
+msgstr "ثلاجة (300 لتر)"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__res_company__procurement_late_bid_policy__reject
+msgid "Reject — a late submission is not received"
+msgstr "رفض — لا يُستلم التقديم المتأخر"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__res_company__procurement_addendum_ack_policy__required_before_response
+msgid "Required before a response is valid"
+msgstr "مطلوب قبل اعتبار العطاء صالحًا"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__realestate_project__procurement_vendor_policy__required_for_sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__res_company__procurement_vendor_policy__required_for_sourcing
+msgid "Required to be invited"
+msgstr "مطلوب للدعوة"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__realestate_project__procurement_vendor_policy__required_for_award
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__res_company__procurement_vendor_policy__required_for_award
+msgid "Required to receive the order"
+msgstr "مطلوب لاستلام أمر الشراء"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__realestate_project__procurement_receipt_inspection__required
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__res_company__procurement_receipt_inspection__required
+msgid "Required — an uninspected receipt cannot be validated"
+msgstr "مطلوب — لا يمكن تأكيد استلام غير مفحوص"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__realestate_project__procurement_po_governance__required
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__res_company__procurement_po_governance__required
+msgid "Required — approved requisition only"
+msgstr "مطلوب — طلب شراء معتمد فقط"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_realestate_project__procurement_vendor_endorsement_required
+msgid "Requires Project Endorsement"
+msgstr "يتطلب موافقة المشروع"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_res_company__procurement_reservation_expiry_days
+msgid "Reservation Expiry (days)"
+msgstr "انتهاء الحجز (أيام)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_safety_helmet
+msgid "Safety Helmet"
+msgstr "خوذة سلامة"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_safety_vest
+msgid "Safety Vest"
+msgstr "سترة سلامة"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_product_product__is_marketing_asset
+#: model:ir.model.fields,help:atmta_procurement_core.field_product_template__is_marketing_asset
+#: model:ir.model.fields,help:atmta_procurement_core.field_realestate_property__is_marketing_asset
+msgid "Sales/marketing items: signage, brochures, drone sessions, ads."
+msgstr ""
+"بنود المبيعات والتسويق: اللوحات الإرشادية، الكتيبات، جلسات التصوير الجوي، "
+"الإعلانات."
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_sand
+msgid "Sand"
+msgstr "رمل"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_scaffold
+msgid "Scaffolding Frame (rental)"
+msgstr "هيكل سقالات (إيجار)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_sealant
+msgid "Sealant Cartridge"
+msgstr "خرطوشة مانع تسرب"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_svc_security_month
+msgid "Security Service (month)"
+msgstr "خدمة حراسة أمنية (شهر)"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_res_company__procurement_self_approval_limit
+msgid "Self-Approval Limit"
+msgstr "حد الاعتماد الذاتي"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_shower_mixer
+msgid "Shower Mixer"
+msgstr "خلاط دش"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_sink_mixer
+msgid "Sink Mixer"
+msgstr "خلاط مغسلة"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_site_office_container
+msgid "Site Office Container (rental)"
+msgstr "حاوية مكتب موقع (إيجار)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_site_signage
+msgid "Site Signage"
+msgstr "لوحات الموقع"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_skirting
+msgid "Skirting"
+msgstr "وزرة"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_smart_lock
+msgid "Smart Door Lock"
+msgstr "قفل باب ذكي"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_smart_doorbell
+msgid "Smart Doorbell"
+msgstr "جرس باب ذكي"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_smart_switch
+msgid "Smart Light Switch"
+msgstr "مفتاح إنارة ذكي"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_smart_thermostat
+msgid "Smart Thermostat"
+msgstr "منظم حرارة ذكي"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_sofa_set
+msgid "Sofa Set"
+msgstr "طقم كنب"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_ac_15ton
+msgid "Split AC 1.5 Ton"
+msgstr "مكيف سبليت 1.5 طن"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_ac_2ton
+msgid "Split AC 2 Ton"
+msgstr "مكيف سبليت 2 طن"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_ac_3ton
+msgid "Split AC 3 Ton"
+msgstr "مكيف سبليت 3 طن"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_steel_angle
+msgid "Steel Angle"
+msgstr "زاوية حديد"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_steel_ibeam
+msgid "Steel I-Beam"
+msgstr "كمرة حديد I"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_steel_plate
+msgid "Steel Plate"
+msgstr "لوح حديد"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_wire_mesh
+msgid "Steel Wire Mesh (sheet)"
+msgstr "شبك حديد ملحوم (لوح)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_svc_subcontract_civil
+msgid "Subcontract — Civil Works"
+msgstr "عقد من الباطن — أعمال مدنية"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_svc_subcontract_elevator
+msgid "Subcontract — Elevator Installation"
+msgstr "عقد من الباطن — تركيب مصاعد"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_svc_subcontract_facade
+msgid "Subcontract — Facade Cladding"
+msgstr "عقد من الباطن — تكسية الواجهات"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_svc_subcontract_finishing
+msgid "Subcontract — Finishing Works"
+msgstr "عقد من الباطن — أعمال التشطيبات"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_svc_subcontract_general
+msgid "Subcontract — General Contractor"
+msgstr "عقد من الباطن — مقاول عام"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_svc_subcontract_landscape
+msgid "Subcontract — Landscape"
+msgstr "عقد من الباطن — تنسيق الموقع"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_svc_subcontract_mep
+msgid "Subcontract — MEP Works"
+msgstr "عقد من الباطن — أعمال كهروميكانيكية"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_svc_subcontract_structural
+msgid "Subcontract — Structural Works"
+msgstr "عقد من الباطن — أعمال إنشائية"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_tv_stand
+msgid "TV Stand"
+msgstr "طاولة تلفاز"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_tarpaulin
+msgid "Tarpaulin"
+msgstr "مشمع"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_temp_fencing
+msgid "Temporary Fencing"
+msgstr "سياج مؤقت"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_res_company__procurement_self_approval_limit
+msgid ""
+"The ceiling on self-approval, in company currency. Zero with self-approval "
+"enabled means nothing qualifies."
+msgstr ""
+"الحد الأعلى للاعتماد الذاتي بعملة الشركة. الصفر مع تفعيل الاعتماد الذاتي "
+"يعني أنه لا شيء مؤهل."
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_thermostat
+msgid "Thermostat"
+msgstr "منظم حرارة"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_toilet_wc
+msgid "Toilet WC"
+msgstr "مرحاض"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_svc_topo_survey
+msgid "Topographic Survey"
+msgstr "رفع مساحي طبوغرافي"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_product_product__is_realestate_product
+#: model:ir.model.fields,help:atmta_procurement_core.field_product_template__is_realestate_product
+#: model:ir.model.fields,help:atmta_procurement_core.field_realestate_property__is_realestate_product
+msgid ""
+"True when the product carries any real-estate flag — used for catalog "
+"filtering."
+msgstr "صحيح عندما يحمل المنتج أي علامة عقارية — يُستخدم لتصفية الكتالوج."
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_realestate_project__procurement_vendor_policy
+#: model:ir.model.fields,field_description:atmta_procurement_core.field_res_company__procurement_vendor_policy
+msgid "Vendor Qualification Control"
+msgstr "رقابة تأهيل الموردين"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_paint_wall_20l
+msgid "Wall Paint (20L)"
+msgstr "دهان جدران (20 لتر)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_paint_wall_4l
+msgid "Wall Paint (4L)"
+msgstr "دهان جدران (4 لتر)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_wall_putty
+msgid "Wall Putty (25kg)"
+msgstr "معجون جدران (25 كجم)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_switch_1g
+msgid "Wall Switch (1-gang)"
+msgstr "مفتاح جداري (مفرد)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_switch_2g
+msgid "Wall Switch (2-gang)"
+msgstr "مفتاح جداري (مزدوج)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_wardrobe_3door
+msgid "Wardrobe (3-door)"
+msgstr "خزانة ملابس (3 أبواب)"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__realestate_project__procurement_budget_policy__warn
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__res_company__procurement_budget_policy__warn
+msgid "Warn and Record"
+msgstr "تنبيه وتسجيل"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__realestate_project__procurement_vendor_policy__warn
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__res_company__procurement_vendor_policy__warn
+msgid "Warn — record the gap and continue"
+msgstr "تنبيه — تسجيل النقص والمتابعة"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__realestate_project__procurement_receipt_inspection__warn
+#: model:ir.model.fields.selection,name:atmta_procurement_core.selection__res_company__procurement_receipt_inspection__warn
+msgid "Warn — record the missing inspection and continue"
+msgstr "تنبيه — تسجيل الفحص الناقص والمتابعة"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_wash_basin
+msgid "Wash Basin"
+msgstr "مغسلة"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_washing_machine
+msgid "Washing Machine (8kg)"
+msgstr "غسالة ملابس (8 كجم)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_water_filter
+msgid "Water Filter Cartridge"
+msgstr "خرطوشة فلتر مياه"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_water_heater_80l
+msgid "Water Heater (Electric, 80L)"
+msgstr "سخان مياه (كهربائي، 80 لتر)"
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_res_company__procurement_late_bid_policy
+msgid ""
+"What happens when a vendor submits after the closing moment. Lateness is "
+"administrative: none of these options says anything about the technical "
+"merit of the offer, which M6 judges separately."
+msgstr ""
+"ما يحدث عندما يقدم المورد عطاءه بعد موعد الإغلاق. التأخير مسألة إدارية: لا "
+"يعبر أي من هذه الخيارات عن الجدارة الفنية للعرض، والتي يحكم عليها M6 بشكل "
+"منفصل."
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_res_company__procurement_budget_policy
+msgid ""
+"What happens when approved demand exceeds what the project has left. None "
+"disables reservation entirely; Warn records the overage and continues; "
+"Approval Required needs an authorised exception; Block refuses."
+msgstr ""
+"ما يحدث عندما يتجاوز الطلب المعتمد ما تبقى للمشروع. 'بدون رقابة' يعطل الحجز "
+"كليًا؛ و'تنبيه' يسجل التجاوز ويتابع؛ و'يتطلب اعتمادًا' يستلزم استثناءً "
+"مفوضًا؛ و'منع' يرفض."
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_res_company__procurement_po_governance
+msgid ""
+"Whether a purchase order coded to a construction project may be confirmed "
+"without a procurement authorisation behind it."
+msgstr ""
+"هل يجوز تأكيد أمر شراء مرمّز على مشروع إنشائي دون تفويض مشتريات يستند إليه."
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_res_company__procurement_vendor_policy
+msgid ""
+"Whether a vendor has to be qualified before this company will deal with "
+"them. Optional by default: an upgrade must not stop an existing supply chain"
+" that was legal the day before."
+msgstr ""
+"هل يجب تأهيل المورد قبل أن تتعامل معه هذه الشركة. اختياري افتراضيًا: لا "
+"ينبغي أن يوقف التحديث سلسلة توريد قائمة كانت نظامية في اليوم السابق."
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_res_company__procurement_addendum_ack_policy
+msgid ""
+"Whether a vendor must acknowledge an addendum before their response is "
+"valid. Optional by default, and overridable per sourcing event."
+msgstr ""
+"هل يجب على المورد الإقرار بالملحق قبل أن يصبح عطاؤه صالحًا. اختياري "
+"افتراضيًا، ويمكن تجاوزه لكل مناقصة."
+
+#. module: atmta_procurement_core
+#: model:ir.model.fields,help:atmta_procurement_core.field_res_company__procurement_receipt_inspection
+msgid ""
+"Whether material delivered against a project purchase has to be inspected "
+"before the receipt is validated. Off by default: an upgrade must not stop "
+"the loading bay on the morning it lands."
+msgstr ""
+"هل يجب فحص المواد المسلَّمة مقابل مشتريات المشروع قبل تأكيد الاستلام. معطل "
+"افتراضيًا: لا ينبغي أن يوقف التحديث منطقة التحميل في صباح يوم تطبيقه."
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_cement_white
+msgid "White Cement (50kg bag)"
+msgstr "أسمنت أبيض (كيس 50 كجم)"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_door_exterior
+msgid "Wood Door — Exterior"
+msgstr "باب خشبي — خارجي"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_door_interior
+msgid "Wood Door — Interior"
+msgstr "باب خشبي — داخلي"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_yard_sign_rent
+msgid "Yard For-Rent Sign"
+msgstr "لافتة للإيجار"
+
+#. module: atmta_procurement_core
+#: model:product.template,name:atmta_procurement_core.prod_yard_sign_sale
+msgid "Yard For-Sale Sign"
+msgstr "لافتة للبيع"
+
+#. module: atmta_procurement_core
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_core.view_company_form_procurement_sourcing
+msgid "Procurement — Sourcing & Receiving"
+msgstr "المشتريات — التوريد والاستلام"

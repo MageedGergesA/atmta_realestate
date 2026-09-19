@@ -26,6 +26,20 @@ from odoo import _, api, fields, models
 LAYERS = ('approved', 'claim', 'change', 'issue', 'risk')
 
 
+def claim_reader(Claim):
+    """The claim model these KPIs may search with.
+
+    The Control Tower's health and risk panels are shown to site users, and
+    site users may not read claims, so asking them for claim KPIs raised an
+    access error and the panels failed. How many claims are open, and which
+    change events a claim already represents, is not commercial information;
+    what the claims are worth is. So a user without read access searches as
+    superuser, and every figure built from a claim's values is withheld from
+    them as None (the dashboard shows N/A) rather than reported as zero.
+    """
+    return Claim if Claim.has_access('read') else Claim.sudo()
+
+
 class ConstructionExposure(models.AbstractModel):
     _name = 'realestate.construction.exposure'
     _description = 'Potential Commercial Exposure'
@@ -43,6 +57,10 @@ class ConstructionExposure(models.AbstractModel):
         Issue = self.env['realestate.construction.issue']
         Event = self.env['realestate.construction.change.event']
         Claim = self.env['realestate.construction.claim']
+        # See `claim_reader`: a site user's risk panel reaches this without
+        # read access to claims.
+        may_read_claims = Claim.has_access('read')
+        Claim = claim_reader(Claim)
 
         risks = Risk.search([
             ('project_id', '=', project.id),
@@ -96,7 +114,8 @@ class ConstructionExposure(models.AbstractModel):
             lambda r: r.id not in superseded_risks
             and r.state != 'materialised')
 
-        claim_amount = sum(claims.mapped('claimed_cost'))
+        claim_amount = (sum(claims.mapped('claimed_cost'))
+                        if may_read_claims else None)
         change_amount = sum(live_events.mapped('estimated_cost_impact'))
         issue_amount = sum(live_issues.mapped('estimated_cost_impact'))
         risk_amount = sum(
@@ -122,7 +141,8 @@ class ConstructionExposure(models.AbstractModel):
             # The union of the unapproved layers. Not a sum of the four
             # figures above plus their superseded ancestors.
             'potential_commercial': (claim_amount + change_amount
-                                     + issue_amount + risk_amount),
+                                     + issue_amount + risk_amount)
+            if may_read_claims else None,
 
             'counts': {
                 'risks': len(live_risks),
@@ -158,6 +178,8 @@ class ConstructionClaimKpi(models.AbstractModel):
     @api.model
     def for_project(self, project):
         Claim = self.env['realestate.construction.claim']
+        may_read_claims = Claim.has_access('read')
+        Claim = claim_reader(Claim)
         Delay = self.env['realestate.construction.delay.event']
         Risk = self.env['realestate.construction.risk']
         Issue = self.env['realestate.construction.issue']
@@ -189,11 +211,14 @@ class ConstructionClaimKpi(models.AbstractModel):
             'currency_id': project.currency_id.id,
 
             'open_claims': len(open_claims),
-            'claimed_cost': sum(open_claims.mapped('claimed_cost')),
-            'determined_cost': sum(open_claims.mapped('determined_cost')),
+            'claimed_cost': sum(open_claims.mapped('claimed_cost'))
+            if may_read_claims else None,
+            'determined_cost': sum(open_claims.mapped('determined_cost'))
+            if may_read_claims else None,
             'claims_awaiting_response': len(awaiting),
-            'average_claim_age_days': round(sum(ages) / len(ages), 1)
-            if ages else 0.0,
+            'average_claim_age_days': (round(sum(ages) / len(ages), 1)
+                                       if ages else 0.0)
+            if may_read_claims else None,
             'pending_eot_days': sum(packages.mapped('claimed_eot_days')),
             'approved_eot_days': sum(packages.mapped('approved_eot_days')),
 

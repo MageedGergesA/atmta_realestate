@@ -3,9 +3,57 @@
     <record id="view_project_form_maquette" model="ir.ui.view">
         <field name="name">realestate.project.form.maquette</field>
         <field name="model">realestate.project</field>
-        <field name="inherit_id" ref="real_estate_developer.view_project_form"/>
+        <field name="inherit_id" ref="atmta_project_core.view_project_form"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
+                <!-- The publication lifecycle (visual_config.py) had no button
+                     anywhere, so a gallery could only be published from code.
+                     The buttons are shown to Visual Publishers; the methods
+                     check the same group themselves. -->
+                <page string="Sales Gallery" name="visual_gallery">
+                    <div class="d-flex flex-wrap gap-2 mb-3"
+                         groups="real_estate_maquette.group_visual_publisher">
+                        <button name="action_visual_validate" type="object"
+                                string="Validate" class="btn-primary"
+                                invisible="visual_publication_state == 'published'"/>
+                        <button name="action_visual_publish" type="object"
+                                string="Publish" class="btn-primary"
+                                invisible="visual_publication_state not in ('ready', 'archived')"/>
+                        <button name="action_visual_unpublish" type="object"
+                                string="Unpublish" class="btn-secondary"
+                                invisible="visual_publication_state != 'published'"
+                                confirm="Take this gallery offline? Public pages and embeds stop serving it."/>
+                        <button name="action_visual_archive" type="object"
+                                string="Archive" class="btn-secondary"
+                                invisible="visual_publication_state not in ('ready', 'published')"/>
+                    </div>
+                    <group>
+                        <group string="Status">
+                            <field name="visual_publication_state" widget="badge"
+                                   decoration-success="visual_publication_state == 'published'"
+                                   decoration-info="visual_publication_state == 'ready'"
+                                   decoration-warning="visual_publication_state == 'validating'"
+                                   decoration-muted="visual_publication_state in ('draft', 'archived')"/>
+                            <field name="visual_readiness_score" widget="progressbar"/>
+                            <field name="visual_last_validated_on"/>
+                            <field name="visual_version"/>
+                            <field name="visual_published_on"/>
+                            <field name="visual_published_by_id"/>
+                        </group>
+                        <group string="Experience">
+                            <field name="visual_public_enabled" widget="boolean_toggle"/>
+                            <field name="visual_2d_enabled"/>
+                            <field name="visual_3d_enabled"/>
+                            <field name="visual_default_experience"/>
+                            <field name="visual_min_capability"/>
+                            <field name="visual_fallback_property_id"
+                                   options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                    <group string="Readiness">
+                        <field name="visual_readiness_detail" nolabel="1" colspan="2"/>
+                    </group>
+                </page>
                 <page string="3D Maquette" name="maquette">
                     <group>
                         <group>

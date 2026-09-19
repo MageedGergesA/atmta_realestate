@@ -1,0 +1,39 @@
+// M20 — treasury dashboard styling.
+//
+// Only LOGICAL properties are used for anything directional (`margin-inline`,
+// `text-align: start`). rtlcss flips physical properties automatically, so
+// hand-flipping anything here would double-flip it in Arabic. Nothing in this
+// file sets `direction` or a `dir` attribute: Odoo owns the writing direction
+// on `.o_action_manager`.
+
+.o_re_check_dashboard {
+    overflow-y: auto;
+    height: 100%;
+
+    .o_re_check_kpi {
+        cursor: pointer;
+        transition: box-shadow .15s ease-in-out, transform .15s ease-in-out;
+
+        &:hover {
+            box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .12);
+            transform: translateY(-1px);
+        }
+    }
+
+    .o_re_check_row {
+        cursor: pointer;
+    }
+
+    // Charts get an explicit height because Chart.js with
+    // `maintainAspectRatio: false` collapses to zero inside a flex parent.
+    .o_re_check_chart {
+        position: relative;
+        height: 280px;
+    }
+
+    // Wide content scrolls inside its own container so the page body never
+    // scrolls horizontally.
+    .table-responsive {
+        overflow-x: auto;
+    }
+}

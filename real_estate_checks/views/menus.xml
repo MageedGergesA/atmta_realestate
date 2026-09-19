@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--
+        Menus load AFTER every action they reference and BEFORE nothing.
+        (Developer 0.3 shipped the reverse order and a fresh install of the
+        suite failed on it; the same mistake is not repeated here.)
+    -->
+    <!-- Treasury is its own application. It used to sit inside the Rental menu,
+         which turned Rental into a container for whatever else was installed. -->
+    <menuitem id="menu_checks_root" name="Treasury"
+              sequence="45"
+              groups="real_estate_checks.group_checks_user"/>
+
+    <menuitem id="menu_checks_dashboard" name="Dashboard"
+              parent="menu_checks_root"
+              action="action_check_dashboard" sequence="5"/>
+
+    <!-- = Operations = -->
+    <menuitem id="menu_checks_operations" name="Operations"
+              parent="menu_checks_root" sequence="10"/>
+
+    <menuitem id="menu_checks_all" name="Cheques"
+              parent="menu_checks_operations"
+              action="action_realestate_check" sequence="10"/>
+
+    <menuitem id="menu_check_workbench" name="Deposit Workbench"
+              parent="menu_checks_operations"
+              action="action_open_deposit_wizard" sequence="20"
+              groups="real_estate_checks.group_checks_treasurer"/>
+
+    <menuitem id="menu_check_deposits" name="Deposit Slips"
+              parent="menu_checks_operations"
+              action="action_check_deposit" sequence="30"/>
+
+    <menuitem id="menu_check_bounces" name="Bounces"
+              parent="menu_checks_operations"
+              action="action_check_bounce" sequence="40"/>
+
+    <menuitem id="menu_check_presentations" name="Presentation Attempts"
+              parent="menu_checks_operations"
+              action="action_check_presentation" sequence="50"
+              groups="real_estate_checks.group_checks_treasurer"/>
+
+    <menuitem id="menu_check_custody" name="Custody Movements"
+              parent="menu_checks_operations"
+              action="action_check_custody" sequence="60"
+              groups="real_estate_checks.group_checks_treasurer"/>
+
+    <menuitem id="menu_check_allocations" name="Allocations"
+              parent="menu_checks_operations"
+              action="action_check_allocation" sequence="70"/>
+
+    <!-- = Reports (M25) = -->
+    <menuitem id="menu_checks_reports" name="Reports"
+              parent="menu_checks_root" sequence="20"/>
+
+    <menuitem id="menu_report_check_register" name="Check Register"
+              parent="menu_checks_reports"
+              action="action_report_check_register" sequence="10"/>
+    <menuitem id="menu_report_pdc_maturity" name="PDC Maturity"
+              parent="menu_checks_reports"
+              action="action_report_pdc_maturity" sequence="20"/>
+    <menuitem id="menu_report_deposit_register" name="Deposit Register"
+              parent="menu_checks_reports"
+              action="action_report_deposit_register" sequence="30"/>
+    <menuitem id="menu_report_cleared_register" name="Cleared Register"
+              parent="menu_checks_reports"
+              action="action_report_cleared_register" sequence="40"/>
+    <menuitem id="menu_report_bounce_register" name="Bounce Register"
+              parent="menu_checks_reports"
+              action="action_report_bounce_register" sequence="50"/>
+    <menuitem id="menu_report_replacement_register" name="Replacement Register"
+              parent="menu_checks_reports"
+              action="action_report_replacement_register" sequence="60"/>
+    <menuitem id="menu_report_check_coverage" name="PDC Coverage"
+              parent="menu_checks_reports"
+              action="action_report_check_coverage" sequence="70"/>
+    <menuitem id="menu_report_customer_pdc" name="Customer PDC Statement"
+              parent="menu_checks_reports"
+              action="action_report_customer_pdc" sequence="80"/>
+
+    <!-- = Configuration = -->
+    <menuitem id="menu_checks_config" name="Configuration"
+              parent="menu_checks_root" sequence="90"
+              groups="real_estate_checks.group_checks_manager"/>
+
+    <menuitem id="menu_check_locations" name="Custody Locations"
+              parent="menu_checks_config"
+              action="action_check_location" sequence="10"/>
+
+    <menuitem id="menu_checks_settings" name="Settings"
+              parent="menu_checks_config"
+              action="action_checks_settings" sequence="20"/>
+</odoo>

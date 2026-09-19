@@ -6,7 +6,8 @@
 ATMTA Property Operations Application
 =====================================
 
-Navigation only. Zero models, fields, ACL rows or record rules.
+Navigation, plus the Property Operations dashboard (an abstract provider on
+``atmta_dashboard``; no stored model, field, ACL row or record rule).
 
 Composes four legacy addons into the one application
 `03_TARGET_APP_ARCHITECTURE.md` calls for, without merging their code:
@@ -27,16 +28,17 @@ contract), **Scheduled Payments** (duplicate destination for
 """,
     'author': "Atmta",
     'license': 'LGPL-3',
-    'version': '18.0.0.1.0',
+    'version': '18.0.0.2.0',
     'category': 'Real Estate',
     'depends': [
         'atmta_real_estate',
         'real_estate_handover',
         'real_estate_customer_service',
         'real_estate_api',
-        'atmta_v2_pilot',
+        'atmta_dashboard',
     ],
-    'data': ['data/workspace_actions.xml', 'views/menus.xml'],
+    'uninstall_hook': 'uninstall_hook',
+    'data': ['data/workspace_actions.xml', 'views/menus.xml', 'views/dashboard_views.xml', 'data/retire_legacy_navigation.xml'],
     'installable': True,
     'application': True,
     'auto_install': False,

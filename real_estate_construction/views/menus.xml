@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <!-- Construction users only (decision 15 Sep 2026). With no group, every
+         internal user saw the app, and its Control Tower crashed for anyone
+         who may not read development projects. -->
     <menuitem id="menu_construction_root"
               name="Construction"
               web_icon="real_estate_construction,static/description/icon.png"
+              groups="real_estate_construction.group_construction_user"
               sequence="28"/>
+
+    <menuitem id="menu_construction_projects"
+              name="Projects"
+              parent="menu_construction_root"
+              action="action_construction_projects"
+              sequence="5"/>
 
     <menuitem id="menu_construction_milestones"
               name="Milestones"

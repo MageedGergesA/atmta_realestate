@@ -5,14 +5,11 @@ class RealEstatePropertyRental(models.Model):
     """Rental-specific extensions to the base property model."""
     _inherit = 'realestate.property'
 
-    contract_history_ids = fields.One2many(
-        'realestate.contract.line', 'property_id', string='Contract History',
-    )
     rental_history_ids = fields.One2many(
         'realestate.property.rental.history', 'property_id', string='Rental History',
     )
     single_contract_ids = fields.One2many(
-        'realestate.contract', 'property_id', string='Single-unit Contracts',
+        'realestate.contract', 'property_id', string='Single-Unit Leases',
     )
 
     for_rent = fields.Boolean(
@@ -26,14 +23,15 @@ class RealEstatePropertyRental(models.Model):
     ], string='Rental Status', compute='_compute_rental_status', store=True,
         help='Where this unit stands in the rental pipeline.')
 
-    @api.depends('contract_history_ids.state',
-                 'single_contract_ids.state', 'for_rent')
+    @api.depends('property_line_ids.is_blocking', 'for_rent')
     def _compute_rental_status(self):
-        ACTIVE = ('confirmed', 'invoiced', 'active')
+        # A unit is rented while an allocation reserves it: its lease is
+        # awaiting signature, active or on notice. Those are exactly the states
+        # the legacy check read as confirmed, invoiced or active, so single-unit
+        # leases read as before. Multi-unit leases used to be read from legacy
+        # line states, which nothing sets any more.
         for rec in self:
-            multi_active = rec.contract_history_ids.filtered(lambda l: l.state in ACTIVE)
-            single_active = rec.single_contract_ids.filtered(lambda c: c.state in ACTIVE)
-            if multi_active or single_active:
+            if rec.property_line_ids.filtered('is_blocking'):
                 rec.rental_status = 'rented'
             elif rec.for_rent:
                 rec.rental_status = 'for_rent'

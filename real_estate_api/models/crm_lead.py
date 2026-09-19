@@ -20,6 +20,14 @@ class CrmLead(models.Model):
         string='Interested Project',
         readonly=True, copy=False,
     )
+    # The Idempotency-Key of the submission that created the lead. It used to
+    # be appended to the description and searched back with `like`, but the
+    # description is Html: the stored value is wrapped in markup, so the
+    # search never matched and every retry created a duplicate lead.
+    realestate_api_idempotency_key = fields.Char(
+        string='API Idempotency Key',
+        readonly=True, copy=False, index=True,
+    )
     realestate_api_property_id = fields.Many2one(
         'realestate.property',
         string='Interested Property',

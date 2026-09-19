@@ -391,12 +391,19 @@ class VendorQualification(models.Model):
         self._require(('under_review', 'assessed'), _('assessed'))
         for rec in self:
             outcome = rec._evaluate()
-            rec.write({
+            rec._write_engine({
                 'state': 'assessed',
                 'result': outcome['result'],
                 'score': outcome['score'],
                 'score_explanation': outcome['explanation'],
                 'assessment_date': fields.Date.context_today(rec),
+                # M4U — who actually assessed it. The field defaulted to
+                # whoever created the record, so the maker/checker rule was
+                # comparing the approver against the person who typed the
+                # vendor in rather than against the person who reached the
+                # conclusion. Recorded at the moment the conclusion is
+                # reached, which is the only moment that knows it.
+                'assessor_id': self.env.user.id,
             })
             rec._sync_auto_conditions(outcome['soft_failures'])
 
@@ -734,6 +741,19 @@ class VendorQualification(models.Model):
                         name=rec.display_name,
                         date=rec.approved_date or rec.assessment_date,
                         fields=', '.join(sorted(touched))))
+        if 'assessor_id' in vals and not engine:
+            # M4U — the assessor is who the maker/checker rule is measured
+            # against, so it stops being editable the moment the assessment
+            # exists. Otherwise the approver's way past the rule is to put
+            # somebody else's name in the box first.
+            assessed = self.filtered(
+                lambda rec: rec.state not in ('draft', 'submitted',
+                                              'under_review'))
+            if assessed:
+                raise UserError(_(
+                    "%s has been assessed. Who assessed it is part of the "
+                    "record — reassess it rather than renaming the "
+                    "assessor.") % ', '.join(assessed.mapped('display_name')))
         return super().write(vals)
 
     def unlink(self):

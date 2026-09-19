@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!--
+        Reservation V2 surface, added as an inherited view so the original
+        form stays recognisable and the commercial layer is visibly separate.
+    -->
+    <record id="view_reservation_form_v2" model="ir.ui.view">
+        <field name="name">realestate.unit.reservation.form.v2</field>
+        <field name="model">realestate.unit.reservation</field>
+        <field name="inherit_id" ref="real_estate_developer.view_reservation_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//header" position="inside">
+                <button name="action_hold" type="object" string="Hold Unit"
+                        class="oe_highlight" invisible="state != 'draft'"/>
+                <button name="action_request_booking_payment" type="object"
+                        string="Request Booking Payment"
+                        invisible="state != 'hold' or booking_amount_required &lt;= 0"/>
+                <button name="action_extend_hold" type="object" string="Extend Hold"
+                        invisible="state not in ('hold','pending_payment')"/>
+                <button name="action_open_cancellation" type="object" string="Cancel"
+                        invisible="state in ('cancelled','rejected','expired','confirmed')"/>
+                <button name="action_reject" type="object" string="Reject"
+                        invisible="state not in ('draft','hold','pending_payment')"/>
+                <button name="action_refresh_schedule" type="object"
+                        string="Rebuild Schedule"
+                        invisible="state not in ('draft','hold') or not payment_plan_id"/>
+                <button name="action_request_approval" type="object"
+                        string="Request Approval"
+                        invisible="not approval_request_available"/>
+                <field name="approval_request_available" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//sheet" position="before">
+                <div class="alert alert-warning" role="alert"
+                     invisible="state != 'pending_payment'">
+                    Awaiting the booking amount. The unit stays held until it is
+                    received or the hold expires.
+                </div>
+            </xpath>
+
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page string="Commercial Snapshot" name="snapshot">
+                        <div class="alert alert-info" role="status"
+                             invisible="not snapshot_taken_on">
+                            These figures were frozen when the unit was held.
+                            Re-pricing the unit afterwards does not change what
+                            this buyer was quoted.
+                        </div>
+                        <group>
+                            <group string="Price as Quoted">
+                                <field name="snapshot_taken_on" readonly="1"/>
+                                <field name="price_book_id" readonly="1"/>
+                                <field name="snapshot_base_price" readonly="1"/>
+                                <field name="snapshot_premium_total" readonly="1"/>
+                                <field name="snapshot_list_price" readonly="1"/>
+                            </group>
+                            <group string="Concessions">
+                                <field name="promotion_id"
+                                       options="{'no_create': True}"
+                                       readonly="state not in ('draft','hold')"/>
+                                <field name="promotion_amount" readonly="1"/>
+                                <field name="discount_amount"
+                                       readonly="state not in ('draft','hold')"/>
+                                <field name="discount_percent" readonly="1"/>
+                                <field name="net_price" readonly="1"
+                                       class="oe_subtotal_footer_separator"/>
+                            </group>
+                        </group>
+                    </page>
+
+                    <page string="Payment Schedule" name="schedule">
+                        <group>
+                            <group>
+                                <field name="payment_plan_id"
+                                       options="{'no_create': True}"
+                                       readonly="state not in ('draft','hold')"/>
+                                <field name="payment_plan_version" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="schedule_total" readonly="1"/>
+                            </group>
+                        </group>
+                        <field name="schedule_line_ids" readonly="1">
+                            <list create="false" edit="false" delete="false">
+                                <field name="name"/>
+                                <field name="kind"/>
+                                <field name="date_due"/>
+                                <field name="percent"/>
+                                <field name="amount" sum="Total"/>
+                                <field name="currency_id" column_invisible="1"/>
+                            </list>
+                        </field>
+                    </page>
+
+                    <page string="Booking Amount" name="booking">
+                        <group>
+                            <group>
+                                <field name="booking_amount_required"/>
+                                <field name="booking_amount_received"/>
+                                <field name="booking_payment_state" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="booking_is_refundable"/>
+                                <field name="booking_counts_towards_price" readonly="1"/>
+                            </group>
+                        </group>
+                    </page>
+
+                    <page string="Hold" name="hold">
+                        <group>
+                            <group>
+                                <field name="hold_started_at" readonly="1"/>
+                                <field name="hold_duration_hours"/>
+                                <field name="hold_expiry_at" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="extension_count" readonly="1"/>
+                            </group>
+                        </group>
+                        <field name="extension_ids" readonly="1">
+                            <list create="false" edit="false" delete="false">
+                                <field name="create_date" string="Extended On"/>
+                                <field name="old_expiry"/>
+                                <field name="new_expiry"/>
+                                <field name="hours_added"/>
+                                <field name="reason"/>
+                                <field name="requested_by_id"/>
+                            </list>
+                        </field>
+                    </page>
+
+                    <page string="Cancellation" name="cancellation"
+                          invisible="state not in ('cancelled','rejected','expired')">
+                        <group>
+                            <group>
+                                <field name="cancellation_reason_code" readonly="1"/>
+                                <field name="cancelled_by_customer" readonly="1"/>
+                                <field name="cancelled_on" readonly="1"/>
+                                <field name="cancelled_by_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="refund_amount" readonly="1"/>
+                                <field name="forfeited_amount" readonly="1"/>
+                            </group>
+                        </group>
+                        <group string="Details">
+                            <field name="cancellation_note" nolabel="1" readonly="1"/>
+                        </group>
+                    </page>
+
+                    <page string="Approvals" name="approvals"
+                          invisible="not approval_request_ids">
+                        <field name="approval_request_ids" readonly="1">
+                            <list create="false" edit="false" delete="false">
+                                <field name="name"/>
+                                <field name="action_type"/>
+                                <field name="requested_value"/>
+                                <field name="approved_value"/>
+                                <field name="requested_by_id"/>
+                                <field name="approver_user_id"/>
+                                <field name="state" widget="badge"/>
+                            </list>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_reservation_list_v2" model="ir.ui.view">
+        <field name="name">realestate.unit.reservation.list.v2</field>
+        <field name="model">realestate.unit.reservation</field>
+        <field name="inherit_id" ref="real_estate_developer.view_reservation_list"/>
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <field name="net_price" optional="show"/>
+                <field name="discount_percent" optional="hide"/>
+                <field name="booking_payment_state" widget="badge" optional="show"
+                       decoration-success="booking_payment_state == 'received'"
+                       decoration-warning="booking_payment_state in ('due','partial')"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Cancellation wizard -->
+    <record id="view_reservation_cancel_form" model="ir.ui.view">
+        <field name="name">realestate.reservation.cancel.form</field>
+        <field name="model">realestate.reservation.cancel</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="reservation_id" readonly="1"/>
+                        <field name="property_id" readonly="1"/>
+                        <field name="reason_code"/>
+                        <field name="by_customer"/>
+                    </group>
+                    <group>
+                        <field name="booking_received" readonly="1"/>
+                        <field name="booking_is_refundable" readonly="1"/>
+                        <field name="refund_amount"/>
+                        <field name="forfeited_amount"/>
+                        <field name="unallocated" readonly="1"
+                               decoration-danger="unallocated != 0"/>
+                        <field name="currency_id" invisible="1"/>
+                    </group>
+                </group>
+                <group string="Details">
+                    <field name="note" nolabel="1"
+                           placeholder="What happened, in the words you would use in a dispute"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object"
+                            string="Cancel Reservation" class="btn-primary"/>
+                    <button string="Back" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Hold extensions -->
+    <record id="view_reservation_extension_list" model="ir.ui.view">
+        <field name="name">realestate.reservation.extension.list</field>
+        <field name="model">realestate.reservation.extension</field>
+        <field name="arch" type="xml">
+            <list create="false" delete="false">
+                <field name="create_date" string="Extended On"/>
+                <field name="reservation_id"/>
+                <field name="property_id" optional="show"/>
+                <field name="old_expiry"/>
+                <field name="new_expiry"/>
+                <field name="hours_added"/>
+                <field name="reason"/>
+                <field name="requested_by_id"/>
+            </list>
+        </field>
+    </record>
+
+</odoo>

@@ -19,7 +19,7 @@ class SaleInstallment(models.Model):
     ], required=True, default='installment')
 
     amount = fields.Monetary(string='Amount', required=True)
-    date_due = fields.Date(string='Due Date', required=True)
+    date_due = fields.Date(string='Due Date', required=True, index=True)
     state = fields.Selection([
         ('pending', 'Pending'),
         ('invoiced', 'Invoiced'),
@@ -38,6 +38,10 @@ class SaleInstallment(models.Model):
     currency_id = fields.Many2one(related='sale_contract_id.currency_id', store=True, readonly=True)
     partner_id = fields.Many2one(related='sale_contract_id.partner_id', store=True, readonly=True)
     property_id = fields.Many2one(related='sale_contract_id.property_id', store=True, readonly=True)
+    company_id = fields.Many2one(
+        'res.company', related='sale_contract_id.company_id', store=True,
+        readonly=True, index=True,
+    )
 
     def action_generate_invoice(self):
         for rec in self:

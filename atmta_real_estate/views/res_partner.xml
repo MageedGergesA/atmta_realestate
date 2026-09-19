@@ -1,22 +1,111 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  Tenants (Phase 4; RENTAL_UX_SPEC.md §9).
+
+  Rental's contact details used to sit in the contact form's main group for
+  every user of every app. They now live on a Rental tab shown only to rental
+  roles, with the contact's leases, outstanding obligations and deposits.
+-->
 <odoo>
     <record id="view_partner_form_inherit_real_estate" model="ir.ui.view">
         <field name="name">res.partner.form.real_estate.inherit</field>
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//group/group" position="inside">
-                <field name="id_type"/>
-                <field name="id_number"/>
-                <field name="is_lessor"/>
-                <field name="organization_type_id"/>
-                <field name="unified_number"/>
-                <field name="cr_number"/>
-                <field name="cr_date"/>
-                <field name="issued_by"/>
+            <xpath expr="//notebook" position="inside">
+                <page string="Rental" name="rental"
+                      groups="atmta_real_estate.group_rental_user,atmta_real_estate.group_realestate_readonly">
+                    <group>
+                        <group string="Identity">
+                            <field name="id_type"/>
+                            <field name="id_number"/>
+                            <field name="organization_type_id"/>
+                            <field name="unified_number"/>
+                            <field name="cr_number"/>
+                            <field name="cr_date"/>
+                            <field name="issued_by"/>
+                        </group>
+                        <group string="Tenancy">
+                            <field name="is_lessor" string="Lessor"/>
+                            <field name="is_rental_tenant" readonly="1"/>
+                            <field name="rental_current_lease_id"/>
+                            <field name="rental_balance_due" widget="monetary"/>
+                            <field name="rental_currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <separator string="Leases"/>
+                    <field name="rental_lease_ids" readonly="1">
+                        <list string="Leases"
+                              decoration-muted="lifecycle_state in ('ended', 'terminated', 'cancelled')">
+                            <field name="name" string="Lease"/>
+                            <field name="property_id" string="Unit"/>
+                            <field name="start_date" string="Start"/>
+                            <field name="end_date" string="End"/>
+                            <field name="lifecycle_state" string="Status" widget="badge"
+                                   decoration-success="lifecycle_state == 'active'"/>
+                            <field name="payment_status" string="Collection" widget="badge"
+                                   decoration-danger="payment_status == 'overdue'"/>
+                        </list>
+                    </field>
+                    <separator string="Outstanding Billing Obligations"/>
+                    <field name="rental_outstanding_obligation_ids" readonly="1">
+                        <list string="Outstanding Billing Obligations">
+                            <field name="name" string="Obligation"/>
+                            <field name="contract_id" string="Lease"/>
+                            <field name="date_due" string="Due"/>
+                            <field name="amount_residual" string="Outstanding" sum="Outstanding"/>
+                            <field name="currency_id" column_invisible="1"/>
+                        </list>
+                    </field>
+                    <separator string="Security Deposits"/>
+                    <field name="rental_deposit_ids" readonly="1">
+                        <list string="Security Deposits">
+                            <field name="name"/>
+                            <field name="contract_id" string="Lease"/>
+                            <field name="held_amount" string="Held"/>
+                            <field name="state" string="Status" widget="badge"/>
+                            <field name="currency_id" column_invisible="1"/>
+                        </list>
+                    </field>
+                </page>
             </xpath>
         </field>
     </record>
+
+    <record id="view_partner_tenant_list" model="ir.ui.view">
+        <field name="name">res.partner.list.rental.tenant</field>
+        <field name="model">res.partner</field>
+        <field name="priority">50</field>
+        <field name="arch" type="xml">
+            <list string="Tenants" create="false">
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="rental_current_lease_id" string="Current Lease"/>
+                <field name="rental_balance_due" string="Balance Due" widget="monetary"/>
+                <field name="rental_currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_rental_tenants" model="ir.actions.act_window">
+        <field name="name">Tenants</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('is_rental_tenant', '=', True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">No tenants yet</p>
+            <p>Contacts appear here once they hold a lease.</p>
+        </field>
+    </record>
+
+    <record id="action_rental_tenants_view_list" model="ir.actions.act_window.view">
+        <field name="sequence">1</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_partner_tenant_list"/>
+        <field name="act_window_id" ref="action_rental_tenants"/>
+    </record>
+
     <record id="view_organization_type_real_estate" model="ir.ui.view">
         <field name="name">organization.type.form.real_estate.inherit</field>
         <field name="model">organization.type</field>

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'ATMTA — Property Core',
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.1.0',
     'category': 'Real Estate/Core',
     'summary': 'Authoritative definition of Property and its reference data.',
     'description': """
@@ -38,12 +38,19 @@ declares them moved.
         'mail',
         # realestate.property _inherits product.template.
         'product',
-        # property.image builds video embed codes with web_editor.tools.
+        # property.image builds video embed codes with web_editor.tools, and
+        # the gallery on the property form uses html_editor's
+        # x2_many_media_viewer widget, which web_editor depends on.
         'web_editor',
+        # view_property_hierarchy is a <hierarchy> view and the form has the
+        # action_view_hierarchy button. Without this the view type does not
+        # exist and the module cannot load at all.
+        'web_hierarchy',
     ],
     'data': [
         'data/property_sequence.xml',
         'security/property_core_rules.xml',
+        'views/property_views.xml',
     ],
     'application': False,
     'installable': True,

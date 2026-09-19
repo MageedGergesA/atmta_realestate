@@ -4,18 +4,18 @@
     <record id="view_property_form_inherit_sales" model="ir.ui.view">
         <field name="name">realestate.property.form.sales</field>
         <field name="model">realestate.property</field>
-        <field name="inherit_id" ref="atmta_real_estate.view_property_form"/>
+        <field name="inherit_id" ref="atmta_property_core.view_property_form"/>
         <field name="arch" type="xml">
 
             <!-- Smart buttons -->
             <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
                 <button name="action_view_listings" type="object" class="oe_stat_button"
-                        icon="fa-tag"
+                        icon="fa-tag" groups="real_estate_brokerage.group_realestate_sales_readonly"
                         invisible="listing_count == 0">
                     <field name="listing_count" widget="statinfo" string="Listings"/>
                 </button>
                 <button name="action_view_transactions" type="object" class="oe_stat_button"
-                        icon="fa-handshake-o"
+                        icon="fa-handshake-o" groups="real_estate_brokerage.group_realestate_sales_readonly"
                         invisible="transaction_count == 0">
                     <field name="transaction_count" widget="statinfo" string="Sales"/>
                 </button>
@@ -23,7 +23,7 @@
 
             <!-- Sales tab -->
             <xpath expr="//notebook" position="inside">
-                <page string="Sales" name="sales">
+                <page string="Sales" name="sales" groups="real_estate_brokerage.group_realestate_sales_readonly">
                     <group>
                         <group string="For Sale">
                             <field name="for_sale" readonly="1" widget="boolean_toggle"/>
@@ -67,7 +67,7 @@
     <record id="view_property_list_inherit_sales" model="ir.ui.view">
         <field name="name">realestate.property.list.sales</field>
         <field name="model">realestate.property</field>
-        <field name="inherit_id" ref="atmta_real_estate.view_property_list"/>
+        <field name="inherit_id" ref="atmta_property_core.view_property_list"/>
         <field name="arch" type="xml">
             <field name="manager_id" position="after">
                 <field name="for_sale" optional="hide" widget="boolean_toggle"/>

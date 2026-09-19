@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  The unit-stock navigator on the property form.
+
+  It opens the quant(s) of a unit, which this module keeps in step with the
+  unit's state. It was part of Rental's extension of the property form; it
+  belongs with the lifecycle that maintains those quants, so every app that
+  installs this module shows it, with or without leasing.
+-->
+<odoo>
+    <record id="view_property_form_unit_stock" model="ir.ui.view">
+        <field name="name">realestate.property.form.unit.stock</field>
+        <field name="model">realestate.property</field>
+        <field name="inherit_id" ref="atmta_property_core.view_property_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button name="action_view_unit_stock" type="object" class="oe_stat_button"
+                        icon="fa-cubes" string="Stock"
+                        invisible="hierarchy_level != 'unit'"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

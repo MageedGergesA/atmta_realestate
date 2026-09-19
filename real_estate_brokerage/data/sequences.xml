@@ -37,10 +37,37 @@
         <field name="number_increment">1</field>
     </record>
 
+    <record id="seq_realestate_mandate" model="ir.sequence">
+        <field name="name">Listing Mandate</field>
+        <field name="code">realestate.listing.mandate</field>
+        <field name="prefix">MND-</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
     <record id="seq_realestate_transaction" model="ir.sequence">
         <field name="name">Property Transaction</field>
         <field name="code">realestate.transaction</field>
         <field name="prefix">TXN-</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <record id="seq_realestate_broker_agreement" model="ir.sequence">
+        <field name="name">Broker Agreement</field>
+        <field name="code">realestate.broker.agreement</field>
+        <field name="prefix">BRA-</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <record id="seq_realestate_lead_registration" model="ir.sequence">
+        <field name="name">Broker Lead Registration</field>
+        <field name="code">realestate.lead.registration</field>
+        <field name="prefix">REG-</field>
         <field name="padding">5</field>
         <field name="number_next">1</field>
         <field name="number_increment">1</field>

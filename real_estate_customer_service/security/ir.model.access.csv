@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ticket_cat_user,Category User,model_realestate_customer_ticket_category,group_service_user,1,0,0,0
+access_ticket_cat_mgr,Category Manager,model_realestate_customer_ticket_category,group_service_manager,1,1,1,1
+access_ticket_user,Ticket User,model_realestate_customer_ticket,group_service_user,1,1,1,0
+access_ticket_agent,Ticket Agent,model_realestate_customer_ticket,group_service_agent,1,1,1,0
+access_ticket_manager,Ticket Manager,model_realestate_customer_ticket,group_service_manager,1,1,1,1
+access_property_service_user,Property — Service User,atmta_property_core.model_realestate_property,group_service_user,1,0,0,0
+access_project_service_user,Project — Service User,atmta_project_core.model_realestate_project,group_service_user,1,0,0,0

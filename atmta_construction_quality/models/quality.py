@@ -72,6 +72,26 @@ INSPECTION_RESULTS = [
 #: Results that let the work proceed.
 PASSING_RESULTS = ('accepted', 'accepted_with_comments')
 
+
+def reinspection_result(env, inspection):
+    """What raising a reinspection returns.
+
+    Code, and the tests, keep the inspection record. A form button cannot do
+    anything with a record — the client just reloads the page it is on — so
+    the buttons that raise one say `re_open_reinspection` in their context and
+    get the inspection's form instead.
+    """
+    if not env.context.get('re_open_reinspection'):
+        return inspection
+    return {
+        'type': 'ir.actions.act_window',
+        'name': inspection.display_name,
+        'res_model': inspection._name,
+        'res_id': inspection.id,
+        'view_mode': 'form',
+    }
+
+
 NCR_DISPOSITIONS = [
     ('rework', 'Rework'),
     ('repair', 'Repair'),
@@ -818,8 +838,17 @@ class ConstructionInspection(models.Model):
             raise UserError(_(
                 "Record this inspection's result before reinspecting."))
         root = self.parent_inspection_id or self
+        # A second click is not a second visit. While a reinspection in this
+        # chain is still waiting for its result, that is the reinspection.
+        waiting = self.search([
+            ('parent_inspection_id', '=', root.id),
+            ('result', '=', False),
+            ('state', 'not in', ('closed', 'cancelled')),
+        ], order='id desc', limit=1)
+        if waiting:
+            return reinspection_result(self.env, waiting)
         siblings = self.search_count([('parent_inspection_id', '=', root.id)])
-        return self.create({
+        return reinspection_result(self.env, self.create({
             'project_id': self.project_id.id,
             'company_id': self.company_id.id,
             'request_id': self.request_id.id or False,
@@ -838,7 +867,7 @@ class ConstructionInspection(models.Model):
             'parent_inspection_id': root.id,
             'reinspection_sequence': siblings + 1,
             'reinspection_reason': _("Reinspection after %s") % self.name,
-        })
+        }))
 
     def action_create_observation(self):
         self.ensure_one()
@@ -1072,11 +1101,21 @@ class ConstructionQualityObservation(models.Model):
 
     def action_require_action(self):
         for rec in self:
+            # A closed or void observation is part of the record; sending it
+            # back would reopen it with nobody deciding to.
+            if rec.state != 'open':
+                raise UserError(_(
+                    "%s is no longer open. Only an open observation is sent "
+                    "back for action.") % rec.name)
             rec.state = 'action_required'
         return True
 
     def action_ready_for_verification(self):
         for rec in self:
+            if rec.state not in ('open', 'action_required'):
+                raise UserError(_(
+                    "%s is not being worked on. Only an open observation is "
+                    "put up for verification.") % rec.name)
             if not rec.corrective_action:
                 raise UserError(_(
                     "Say what was done before asking somebody to verify it."))
@@ -1463,9 +1502,11 @@ class ConstructionNCR(models.Model):
         """Verify the corrective work by inspecting it."""
         self.ensure_one()
         if self.reinspection_id:
-            return self.reinspection_id
+            return reinspection_result(self.env, self.reinspection_id)
         source = self.source_inspection_id
-        inspection = (source.action_create_reinspection() if source
+        # The record, not the form action: this method keeps it.
+        inspection = (source.with_context(re_open_reinspection=False)
+                      .action_create_reinspection() if source
                       else self.env['realestate.construction.inspection'].create({
                           'project_id': self.project_id.id,
                           'company_id': self.company_id.id,
@@ -1475,7 +1516,7 @@ class ConstructionNCR(models.Model):
                           'discipline': self.discipline,
                       }))
         self.reinspection_id = inspection
-        return inspection
+        return reinspection_result(self.env, inspection)
 
     def write(self, vals):
         """Closed evidence is not edited."""

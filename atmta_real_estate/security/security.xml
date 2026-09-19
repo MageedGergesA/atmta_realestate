@@ -1,25 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  The Rental category and the three legacy Real Estate groups.
+
+  Rental roles replace the legacy groups (rental re-architecture, decision 4; see
+  leasing_groups.xml). The legacy groups stay installed as hidden aliases: every
+  Rental role implies one, and ACL rows, menus and other modules still name
+  them. They sit in the hidden Technical category so nobody is given one
+  directly; res.users removes an alias when the role that implied it is taken
+  away (models/rental_roles.py).
+
+  noupdate: installed databases receive changes to these records through
+  migrations/0.8/post-migrate.py.
+-->
 <odoo noupdate="1">
 
     <record id="module_category_real_estate" model="ir.module.category">
-        <field name="name">Real Estate</field>
+        <field name="name">Rental</field>
         <field name="sequence">20</field>
     </record>
 
     <record id="group_realestate_readonly" model="res.groups">
-        <field name="name">Read-only</field>
-        <field name="category_id" ref="module_category_real_estate"/>
+        <field name="name">Real Estate Read-only (legacy)</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
     </record>
 
     <record id="group_realestate_user" model="res.groups">
-        <field name="name">User</field>
-        <field name="category_id" ref="module_category_real_estate"/>
+        <field name="name">Real Estate User (legacy)</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
         <field name="implied_ids" eval="[(4, ref('group_realestate_readonly'))]"/>
     </record>
 
     <record id="group_realestate_manager" model="res.groups">
-        <field name="name">Manager</field>
-        <field name="category_id" ref="module_category_real_estate"/>
+        <field name="name">Real Estate Manager (legacy)</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
         <field name="implied_ids" eval="[(4, ref('group_realestate_user'))]"/>
     </record>
 

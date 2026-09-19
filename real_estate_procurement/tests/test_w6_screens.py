@@ -16,7 +16,7 @@ requisition or a reservation.
 """
 from odoo.tests.common import HttpCase, tagged
 
-from .common import M3Common
+from .common import M3Common, groups_of
 
 
 @tagged('post_install', '-at_install', 'atmta_procurement', 'atmta_w6')
@@ -33,9 +33,9 @@ class TestWave6Screens(M3Common, HttpCase):
         self.request.action_submit()
         self.request.action_approve()
         user = self.env.ref('base.user_admin')
-        for xmlid in ('real_estate_procurement.group_procurement_manager',
-                      'atmta_real_estate.group_realestate_user'):
-            user.groups_id |= self.env.ref(xmlid)
+        user.groups_id |= groups_of(self.env, (
+            'real_estate_procurement.group_procurement_manager',
+            'atmta_real_estate.group_realestate_user'))
         self.env.flush_all()
 
     def _open(self, action_xmlid):

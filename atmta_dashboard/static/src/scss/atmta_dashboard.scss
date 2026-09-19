@@ -1,0 +1,255 @@
+// ATMTA application dashboard.
+//
+// Logical properties only (inline/block), so the screen mirrors in Arabic
+// without [dir="rtl"] overrides. Colours follow Odoo theme variables.
+
+.o_ad_dashboard {
+    --ad-gap: 1rem;
+    --ad-radius: 6px;
+    --ad-border: var(--border-color, #dee2e6);
+    --ad-surface: var(--o-view-background-color, #fff);
+    --ad-surface-muted: var(--o-gray-100, #f8f9fa);
+    --ad-text-muted: var(--o-main-text-color-light, #6b7280);
+    --ad-accent: #017e84;
+    --ad-warn-bg: #fff8f0;
+    --ad-warn-border: #f0c9a0;
+    --ad-warn-text: #a1521a;
+
+    block-size: 100%;
+    background: var(--ad-surface-muted);
+}
+
+// Odoo's `.o_action` column hides overflow; this inner box scrolls.
+.o_ad_scroll {
+    flex: 1 1 auto;
+    min-block-size: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-block: 1rem 2rem;
+    padding-inline: 1rem;
+}
+
+.o_ad_header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ad-gap);
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-block-end: 1.25rem;
+}
+
+.o_ad_header_actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.o_ad_title {
+    font-size: 1.375rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.o_ad_subtitle {
+    margin: 0.125rem 0 0;
+    font-size: 0.8125rem;
+    color: var(--ad-text-muted);
+}
+
+.o_ad_sep {
+    margin-inline: 0.4rem;
+}
+
+.o_ad_section {
+    margin-block-end: 1.75rem;
+}
+
+.o_ad_section_title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ad-text-muted);
+    margin-block-end: 0.625rem;
+}
+
+.o_ad_kpi_grid {
+    display: grid;
+    gap: var(--ad-gap);
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+
+.o_ad_kpi {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    background: var(--ad-surface);
+    border: 1px solid var(--ad-border);
+    border-radius: var(--ad-radius);
+    padding: 0.875rem 1rem;
+    min-block-size: 92px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.o_ad_kpi_label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--ad-text-muted);
+    line-height: 1.3;
+}
+
+.o_ad_kpi_hint {
+    margin-inline-start: 0.25rem;
+    cursor: help;
+    opacity: 0.55;
+}
+
+.o_ad_kpi_value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
+}
+
+.o_ad_kpi_status {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    color: var(--ad-warn-text);
+}
+
+.o_ad_kpi_drill {
+    position: absolute;
+    inset-block-start: 0.75rem;
+    inset-inline-end: 0.75rem;
+    font-size: 0.75rem;
+    opacity: 0;
+    color: var(--ad-text-muted);
+    transition: opacity 0.15s ease;
+
+    [dir="rtl"] & .fa {
+        transform: scaleX(-1);
+    }
+}
+
+.o_ad_kpi_clickable {
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+        border-color: var(--ad-accent);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+
+        .o_ad_kpi_drill {
+            opacity: 1;
+        }
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--ad-accent);
+        outline-offset: 2px;
+    }
+}
+
+.o_ad_kpi_warning {
+    background: var(--ad-warn-bg);
+    border-color: var(--ad-warn-border);
+}
+
+.o_ad_panel {
+    background: var(--ad-surface);
+    border: 1px solid var(--ad-border);
+    border-radius: var(--ad-radius);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    min-inline-size: 0;
+}
+
+.o_ad_panel_title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.o_ad_panel_subtitle {
+    margin: 0.125rem 0 0.75rem;
+    font-size: 0.75rem;
+    color: var(--ad-text-muted);
+}
+
+.o_ad_chart_grid {
+    display: grid;
+    gap: var(--ad-gap);
+    grid-template-columns: repeat(auto-fit, minmax(#{"min(380px, 100%)"}, 1fr));
+}
+
+.o_ad_chart_panel {
+    min-block-size: 300px;
+}
+
+.o_ad_chart_canvas_wrap {
+    position: relative;
+    flex: 1 1 auto;
+    min-block-size: 220px;
+    inline-size: 100%;
+}
+
+.o_ad_empty {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding-block: 2rem;
+    color: var(--ad-text-muted);
+}
+
+.o_ad_empty_icon {
+    font-size: 1.5rem;
+    opacity: 0.35;
+}
+
+.o_ad_empty_text {
+    margin: 0;
+    font-size: 0.8125rem;
+}
+
+.o_ad_state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: center;
+    padding: 3rem 1rem;
+    background: var(--ad-surface);
+    border: 1px solid var(--ad-border);
+    border-radius: var(--ad-radius);
+}
+
+.o_ad_state_icon {
+    font-size: 2rem;
+    color: var(--ad-warn-text);
+    opacity: 0.8;
+}
+
+.o_ad_state_title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.o_ad_state_text {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--ad-text-muted);
+}

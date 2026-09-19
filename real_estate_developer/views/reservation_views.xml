@@ -27,14 +27,17 @@
         <field name="arch" type="xml">
             <form>
                 <header>
+                    <!-- Booking is accepted on hold and while awaiting the
+                         booking payment (action_confirm_booking). -->
                     <button name="action_confirm_booking" type="object" string="Confirm Booking"
-                            class="oe_highlight" invisible="state != 'hold'"/>
-                    <button name="action_extend_hold" type="object" string="Extend Hold +24h"
-                            invisible="state != 'hold'"/>
+                            class="oe_highlight" invisible="state not in ('hold','pending_payment')"/>
                     <button name="action_create_sale_contract" type="object" string="Create Sale Contract"
                             class="oe_highlight" invisible="state != 'booked'"/>
-                    <button name="action_cancel" type="object" string="Cancel"
-                            invisible="state in ('confirmed','cancelled','expired')"/>
+                    <!-- Extend Hold and Cancel are offered once, by the
+                         reservation V2 view: the audited extension and the
+                         cancellation form that records refund and forfeit.
+                         The plain buttons here duplicated them, and the plain
+                         Cancel skipped the money questions. -->
                     <field name="state" widget="statusbar"
                            statusbar_visible="hold,booked,confirmed"/>
                 </header>

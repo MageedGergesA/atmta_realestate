@@ -1,109 +1,300 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  The Rental application's navigation: one tree, organised around what a leasing
+  team does rather than around models.
+
+  Rental owns this navigation (rental re-architecture, decision 1). Treasury,
+  Customer Service and the Public API are their own applications; the Property
+  Operations app no longer repeats these screens.
+
+  Child records are managed from their parent: allocations, parties, charges,
+  escalations and incentives live on the lease; deductions on the move-out.
+
+  Menu visibility is convenience, not security. Every model is protected by its
+  ACL rows and record rules, and every workflow action checks its role on the
+  server. Leases, Units, Tenants, Billing and Configuration also list the legacy
+  group at the same level as their role: every Rental role implies one, and
+  other modules still give a legacy group directly, so those users keep their
+  screens.
+
+  Occupancy and Reporting are Property Manager and above only. They explicitly
+  unlink the legacy User group and Rental User, which earlier versions linked:
+  Odoo only adds menu groups on update, so without the unlink every Leasing
+  Agent (who implies both) would keep seeing them on upgraded databases.
+-->
 <odoo>
 
-    <!-- Top-level Real Estate app -->
+    <!-- ============================================================= -->
+    <!-- Actions this navigation adds                                   -->
+    <!-- ============================================================= -->
+    <record id="action_available_units" model="ir.actions.act_window">
+        <field name="name">Available Units</field>
+        <field name="res_model">realestate.property</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="atmta_property_core.view_property_search"/>
+        <field name="domain">[('is_leasable', '=', True)]</field>
+        <field name="context">{'search_default_available_to_lease': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">No units are available to lease</p>
+            <p>Every leasable unit is occupied, reserved or out of service. Clear the
+                filters to see all units.</p>
+        </field>
+    </record>
+
+    <record id="action_available_units_view_list" model="ir.actions.act_window.view">
+        <field name="sequence">1</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_available_units_list"/>
+        <field name="act_window_id" ref="action_available_units"/>
+    </record>
+
+    <record id="action_lease_analysis" model="ir.actions.act_window">
+        <field name="name">Lease Analysis</field>
+        <field name="res_model">realestate.contract</field>
+        <field name="view_mode">pivot,graph</field>
+        <field name="context">{'search_default_current': 1}</field>
+    </record>
+
+    <record id="action_lease_types" model="ir.actions.act_window">
+        <field name="name">Lease Types</field>
+        <field name="res_model">contract.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_rental_settings" model="ir.actions.act_window">
+        <field name="name">Rental Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module': 'atmta_real_estate', 'bin_size': False}</field>
+    </record>
+
+    <!-- The Leases action opens on the lease list. Without these bindings Odoo
+         picked a kanban by name, which was the expiry board and could not create
+         a lease. -->
+    <record id="action_realestate_contract_view_list" model="ir.actions.act_window.view">
+        <field name="sequence">1</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_realestate_contract_list"/>
+        <field name="act_window_id" ref="action_realestate_contract"/>
+    </record>
+    <record id="action_realestate_contract_view_kanban" model="ir.actions.act_window.view">
+        <field name="sequence">2</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="view_realestate_contract_kanban"/>
+        <field name="act_window_id" ref="action_realestate_contract"/>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- Root                                                           -->
+    <!-- ============================================================= -->
     <menuitem id="real_estate_menu_root"
-              name="Real Estate"
+              name="Rental"
               web_icon="atmta_real_estate,static/description/icon.png"
               sequence="10"/>
 
-    <!-- Rental Dashboard (very top) -->
     <menuitem id="menu_rental_dashboard"
-              name="Dashboard"
+              name="Overview"
               parent="real_estate_menu_root"
               action="action_rental_dashboard"
               sequence="1"/>
 
-    <!-- Properties Map dashboard -->
-    <menuitem id="menu_properties_map_dashboard"
-              name="Properties Map"
-              parent="real_estate_menu_root"
-              action="action_properties_map_dashboard"
-              sequence="5"/>
-
-    <!-- Properties section -->
-    <menuitem id="menu_property_management"
-              name="Properties"
-              parent="real_estate_menu_root"
-              sequence="10"/>
-
-    <menuitem id="menu_property_list"
-              name="All Properties"
-              parent="menu_property_management"
-              action="action_property_view"
-              sequence="10"/>
-
-    <menuitem id="menu_property_types"
-              name="Property Types"
-              parent="menu_property_management"
-              action="action_property_type"
-              sequence="20"/>
-
-    <menuitem id="menu_property_history"
-              name="Rental History"
-              parent="menu_property_management"
-              action="action_property_rental_history"
-              sequence="30"/>
-
-    <!-- Contracts section -->
+    <!-- ============================================================= -->
+    <!-- Leases                                                         -->
+    <!-- ============================================================= -->
     <menuitem id="menu_contract_management"
-              name="Contracts"
+              name="Leases"
               parent="real_estate_menu_root"
-              sequence="20"/>
+              sequence="10"
+              groups="atmta_real_estate.group_rental_user,atmta_real_estate.group_realestate_readonly"/>
 
     <menuitem id="menu_contract_list"
-              name="All Contracts"
+              name="Leases"
               parent="menu_contract_management"
               action="action_realestate_contract"
               sequence="10"/>
 
-    <menuitem id="menu_contract_units"
-              name="Contract Units"
+    <menuitem id="menu_lease_expiry_board"
+              name="Expiring &amp; Renewals"
               parent="menu_contract_management"
-              action="action_contract_line"
+              action="action_lease_expiry_board"
               sequence="20"/>
 
-    <menuitem id="menu_payment_schedules"
-              name="Payment Schedules"
+    <menuitem id="menu_lease_renewals"
+              name="Renewals"
               parent="menu_contract_management"
-              action="action_contract_payment"
+              action="action_renewals"
               sequence="30"/>
 
-    <!-- Utilities (top-level under Real Estate root) -->
-    <menuitem id="menu_utilities_management"
-              name="Utilities"
-              parent="real_estate_menu_root"
-              action="action_utility_lines"
+    <menuitem id="menu_lease_amendments"
+              name="Amendments"
+              parent="menu_contract_management"
+              action="action_amendments"
               sequence="40"/>
 
-    <!-- Maintenance section -->
-    <menuitem id="menu_maintenance_management"
-              name="Maintenance"
-              parent="real_estate_menu_root"
+    <menuitem id="menu_lease_terminations"
+              name="Terminations"
+              parent="menu_contract_management"
+              action="action_terminations"
               sequence="50"/>
 
-    <menuitem id="menu_maintenance_requests"
-              name="Requests"
-              parent="menu_maintenance_management"
-              action="action_maintenance_requests"
+    <!-- ============================================================= -->
+    <!-- Units                                                          -->
+    <!-- ============================================================= -->
+    <menuitem id="menu_property_management"
+              name="Units"
+              parent="real_estate_menu_root"
+              sequence="20"
+              groups="atmta_real_estate.group_rental_user,atmta_real_estate.group_realestate_readonly"/>
+
+    <menuitem id="menu_available_units"
+              name="Available Units"
+              parent="menu_property_management"
+              action="action_available_units"
               sequence="10"/>
 
-    <!-- Configuration -->
+    <menuitem id="menu_property_list"
+              name="All Rental Units"
+              parent="menu_property_management"
+              action="action_property_view"
+              sequence="20"/>
+
+    <menuitem id="menu_properties_map_dashboard"
+              name="Map"
+              parent="menu_property_management"
+              action="action_properties_map_dashboard"
+              sequence="30"/>
+
+    <!-- ============================================================= -->
+    <!-- Tenants                                                        -->
+    <!-- ============================================================= -->
+    <menuitem id="menu_rental_tenants"
+              name="Tenants"
+              parent="real_estate_menu_root"
+              action="action_rental_tenants"
+              sequence="25"
+              groups="atmta_real_estate.group_rental_user,atmta_real_estate.group_realestate_readonly"/>
+
+    <!-- ============================================================= -->
+    <!-- Billing                                                        -->
+    <!-- ============================================================= -->
+    <menuitem id="menu_leasing_billing"
+              name="Billing"
+              parent="real_estate_menu_root"
+              sequence="30"
+              groups="atmta_real_estate.group_rental_user,atmta_real_estate.group_realestate_user"/>
+
+    <menuitem id="menu_billing_obligations"
+              name="Billing Obligations"
+              parent="menu_leasing_billing"
+              action="action_billing_obligations"
+              sequence="10"/>
+
+    <menuitem id="menu_security_deposits"
+              name="Security Deposits"
+              parent="menu_leasing_billing"
+              action="action_deposits"
+              sequence="20"/>
+
+    <!-- ============================================================= -->
+    <!-- Occupancy                                                      -->
+    <!-- ============================================================= -->
+    <menuitem id="menu_property_operations"
+              name="Occupancy"
+              parent="real_estate_menu_root"
+              sequence="40"
+              groups="atmta_real_estate.group_property_manager,-atmta_real_estate.group_realestate_user,-atmta_real_estate.group_rental_user"/>
+
+    <menuitem id="menu_move_ins"
+              name="Move-Ins"
+              parent="menu_property_operations"
+              action="action_move_ins"
+              sequence="10"/>
+
+    <menuitem id="menu_move_outs"
+              name="Move-Outs"
+              parent="menu_property_operations"
+              action="action_move_outs"
+              sequence="20"/>
+
+    <menuitem id="menu_unit_turns"
+              name="Unit Turns"
+              parent="menu_property_operations"
+              action="action_unit_turns"
+              sequence="30"/>
+
+    <!-- Kept here until a facilities module owns maintenance (audit §A.3):
+         outside the V2 pilot this is the only place it is reachable. -->
+    <menuitem id="menu_maintenance_requests"
+              name="Maintenance Requests"
+              parent="menu_property_operations"
+              action="action_maintenance_requests"
+              sequence="40"/>
+
+    <menuitem id="menu_property_meters"
+              name="Meters"
+              parent="menu_property_operations"
+              action="action_property_meters"
+              sequence="50"/>
+
+    <menuitem id="menu_meter_readings"
+              name="Meter Readings"
+              parent="menu_property_operations"
+              action="action_meter_readings"
+              sequence="60"/>
+
+    <!-- ============================================================= -->
+    <!-- Reporting                                                      -->
+    <!-- ============================================================= -->
+    <menuitem id="menu_leasing_reporting"
+              name="Reporting"
+              parent="real_estate_menu_root"
+              sequence="80"
+              groups="atmta_real_estate.group_property_manager,-atmta_real_estate.group_realestate_user,-atmta_real_estate.group_rental_user"/>
+
+    <menuitem id="menu_rent_roll"
+              name="Rent Roll"
+              parent="menu_leasing_reporting"
+              action="action_rent_roll"
+              sequence="10"/>
+
+    <menuitem id="menu_lease_analysis"
+              name="Lease Analysis"
+              parent="menu_leasing_reporting"
+              action="action_lease_analysis"
+              sequence="20"/>
+
+    <menuitem id="menu_utilities_management"
+              name="Utility Costs"
+              parent="menu_leasing_reporting"
+              action="action_utility_lines"
+              sequence="30"/>
+
+    <!-- ============================================================= -->
+    <!-- Configuration                                                  -->
+    <!-- ============================================================= -->
     <menuitem id="menu_configuration"
               name="Configuration"
               parent="real_estate_menu_root"
-              sequence="200"/>
+              sequence="200"
+              groups="atmta_real_estate.group_rental_manager,atmta_real_estate.group_realestate_manager"/>
 
-    <menuitem id="menu_payment_plans"
-              name="Payment Plans"
+    <menuitem id="menu_rental_settings"
+              name="Settings"
               parent="menu_configuration"
-              action="action_payment_plan"
+              action="action_rental_settings"
               sequence="10"/>
 
-    <menuitem id="menu_price_adjustment_rules"
-              name="Price Adjustment Rules"
+    <menuitem id="menu_lease_types"
+              name="Lease Types"
               parent="menu_configuration"
-              action="action_contract_increment_rule"
+              action="action_lease_types"
               sequence="20"/>
+
+    <menuitem id="menu_property_types"
+              name="Property Types"
+              parent="menu_configuration"
+              action="action_property_type"
+              sequence="30"/>
 
 </odoo>

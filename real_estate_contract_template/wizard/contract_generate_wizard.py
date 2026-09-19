@@ -66,6 +66,13 @@ class ContractGenerateWizard(models.TransientModel):
             'template_id': self.template_id.id,
             'target_model_id': target_model.id,
             'target_record_id': self.record_id,
+            # Stamped once, here. The document must keep saying which form it
+            # was issued from even after the template is refreshed to a new
+            # regulator version.
+            'template_kind': self.template_id.kind,
+            'template_jurisdiction': self.template_id.jurisdiction,
+            'template_language': self.template_id.language,
+            'template_version': self.template_id.form_version,
             'output_format': self.output_format,
             'file_data': encoded,
             'file_name': filename,
@@ -89,10 +96,21 @@ class ContractGenerateWizard(models.TransientModel):
             'generated': True,
         })
 
+        # Stay in the dialog. Returning an act_url closed it, which threw the
+        # user straight back to the source record with a downloaded file and no
+        # sign that a document record had been created — and left the whole
+        # `generated` half of the wizard view (the success message, the file
+        # field, "Open Document") unreachable. The file is on `output_file`,
+        # one click away, and the document is one click after that.
+        return self._reopen()
+
+    def _reopen(self):
         return {
-            'type': 'ir.actions.act_url',
-            'url': f'/web/content/realestate.contract.document/{document.id}/file_data/{filename}?download=true',
-            'target': 'self',
+            'type': 'ir.actions.act_window',
+            'res_model': self._name,
+            'res_id': self.id,
+            'view_mode': 'form',
+            'target': 'new',
         }
 
     def action_open_document(self):

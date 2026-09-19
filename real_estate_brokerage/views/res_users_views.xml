@@ -8,16 +8,174 @@
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page string="Real Estate Agent" name="realestate_agent">
+                    <!--
+                      The configuration warning. An exception raised deep in the
+                      commission path tells whoever happens to trigger it; this
+                      tells whoever can actually fix it, on the record that
+                      needs fixing.
+                    -->
+                    <div class="alert alert-warning" role="alert"
+                         invisible="not commission_share_needs_review">
+                        <strong>This agent's commission default needs
+                        review.</strong>
+                        <p class="mb-1">
+                            The stored value meant a <em>percentage of the sale
+                            price</em> in Brokerage 0.1 and means a <em>share of
+                            the agency's gross commission</em> now. It could not
+                            be converted automatically, so it has been cleared
+                            rather than left to be read the wrong way — the
+                            original is preserved below.
+                        </p>
+                        <p class="mb-0">
+                            Automatic commission allocation is blocked for this
+                            agent until a Brokerage Manager sets the new share.
+                            Selling, viewings and offers are unaffected.
+                        </p>
+                    </div>
                     <group>
-                        <group>
+                        <group name="agent_identity" string="Agent">
                             <field name="is_realestate_agent"/>
-                            <field name="agent_license_number" invisible="not is_realestate_agent"/>
-                            <field name="commission_share_default" invisible="not is_realestate_agent"/>
+                            <field name="agent_license_number"
+                                   invisible="not is_realestate_agent"/>
+                        </group>
+                        <group name="agent_commission" string="Commission"
+                               invisible="not is_realestate_agent">
+                            <field name="commission_share_default"/>
+                            <field name="commission_share_migration_state"
+                                   widget="badge"
+                                   decoration-success="commission_share_migration_state in ('safe','reviewed','already_new')"
+                                   decoration-warning="commission_share_migration_state in ('ambiguous','unused','invalid')"/>
+                            <field name="commission_share_legacy_value"
+                                   invisible="not commission_share_legacy_value"/>
+                            <field name="commission_share_needs_review"
+                                   invisible="1"/>
+                            <field name="commission_share_migration_id"
+                                   invisible="not commission_share_migration_id"
+                                   groups="real_estate_brokerage.group_realestate_sales_manager"/>
                         </group>
                     </group>
                 </page>
             </xpath>
         </field>
+    </record>
+
+    <!-- ==============================================================
+         The migration evidence
+         ============================================================== -->
+    <record id="view_commission_share_migration_list" model="ir.ui.view">
+        <field name="name">realestate.commission.share.migration.list</field>
+        <field name="model">realestate.commission.share.migration</field>
+        <field name="arch" type="xml">
+            <list decoration-success="result in ('safe','reviewed','already_new')"
+                  decoration-warning="result in ('ambiguous','unused','invalid')"
+                  create="false" edit="false" delete="false">
+                <field name="user_id"/>
+                <field name="original_value" string="Was (% of sale)"/>
+                <field name="gross_rate_used" string="Gross Rate"/>
+                <field name="migrated_value" string="Now (% of gross)"/>
+                <field name="result" widget="badge"/>
+                <field name="gross_rates_found" optional="show"/>
+                <field name="transaction_count" optional="hide"/>
+                <field name="migrated_on"/>
+                <field name="migrated_by_id" optional="hide"/>
+                <field name="reviewed_by_id" optional="show"/>
+                <field name="note" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_commission_share_migration_form" model="ir.ui.view">
+        <field name="name">realestate.commission.share.migration.form</field>
+        <field name="model">realestate.commission.share.migration</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false" delete="false">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="user_id" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Before">
+                            <field name="original_value"/>
+                            <field name="original_semantics"/>
+                            <field name="transaction_count"/>
+                            <field name="commission_count"/>
+                        </group>
+                        <group string="After">
+                            <field name="migrated_value"/>
+                            <field name="migrated_semantics"/>
+                            <field name="result" widget="badge"/>
+                        </group>
+                    </group>
+                    <group string="Conversion">
+                        <field name="gross_rate_used"/>
+                        <field name="gross_rates_found"/>
+                        <field name="conversion_basis"/>
+                        <field name="note"/>
+                    </group>
+                    <group>
+                        <group string="Migration">
+                            <field name="migrated_on"/>
+                            <field name="migrated_by_id"/>
+                            <field name="company_id"/>
+                        </group>
+                        <group string="Manual Review"
+                               invisible="not reviewed_by_id">
+                            <field name="reviewed_by_id"/>
+                            <field name="reviewed_on"/>
+                            <field name="review_note"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_commission_share_migration_search" model="ir.ui.view">
+        <field name="name">realestate.commission.share.migration.search</field>
+        <field name="model">realestate.commission.share.migration</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="user_id"/>
+                <filter name="needs_review" string="Needs Review"
+                        domain="[('result', 'in', ['ambiguous','unused','invalid'])]"/>
+                <filter name="converted" string="Converted"
+                        domain="[('result', '=', 'safe')]"/>
+                <filter name="unreviewed" string="Not Yet Reviewed"
+                        domain="[('reviewed_by_id', '=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_result" string="Result"
+                            context="{'group_by': 'result'}"/>
+                    <filter name="group_user" string="Agent"
+                            context="{'group_by': 'user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_commission_share_migration"
+            model="ir.actions.act_window">
+        <field name="name">Commission Share Migration</field>
+        <field name="res_model">realestate.commission.share.migration</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_needs_review': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No commission-share migration has been run.
+            </p>
+            <p>
+                In Brokerage 0.1 an agent's default meant a percentage of the
+                sale price; it now means a share of the agency's gross
+                commission. Run the migration before the first payout so the
+                same number does not quietly change what somebody is owed.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_users_commission_review" model="ir.actions.act_window">
+        <field name="name">Agents Needing Commission Review</field>
+        <field name="res_model">res.users</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('commission_share_needs_review', '=', True)]</field>
     </record>
 
 </odoo>

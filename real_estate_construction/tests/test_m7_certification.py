@@ -427,6 +427,26 @@ class TestOwnerBilling(CertificationCommon):
                          "Retention the owner holds is still ours to collect.")
         self.assertEqual(invoice.amount_total, 450_000.0)
 
+    def test_the_owner_billing_form_reads_with_or_without_developer(self):
+        """The web client reads every field of the form, the Sale Contract link
+        included. Without Developer that link points at Odoo's `_unknown`, so this
+        is the read that would fail if hiding it were not enough."""
+        from lxml import etree
+        billing = self._owner_billing(self.project, amount=100_000.0)
+        self.assertEqual(billing.sale_contract_available,
+                         'realestate.sale.contract' in self.env)
+        arch = etree.fromstring(billing.get_view(False, 'form')['arch'])
+        spec = {}
+        for node in arch.iter('field'):
+            if any(p.tag == 'field' for p in node.iterancestors()):
+                continue
+            field = billing._fields.get(node.get('name'))
+            if field is None:
+                continue
+            spec[field.name] = ({'fields': {'display_name': {}}}
+                                if field.type == 'many2one' else {})
+        billing.web_read(spec)
+
     def test_owner_retention_without_an_account_refuses_to_post(self):
         self.company.construction_owner_retention_account_id = False
         billing = self._owner_billing(self.project, amount=500_000.0,

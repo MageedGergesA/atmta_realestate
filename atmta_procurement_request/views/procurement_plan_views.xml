@@ -39,7 +39,7 @@
                             class="oe_highlight" invisible="state != 'review'"/>
                     <button name="action_activate" type="object" string="Activate"
                             class="oe_highlight" invisible="state != 'approved'"/>
-                    <button name="action_create_revision" type="object" string="New Revision"
+                    <button name="action_open_new_revision" type="object" string="New Revision"
                             invisible="state not in ('approved','active')"/>
                     <button name="action_close" type="object" string="Close"
                             invisible="state in ('draft','superseded','closed')"/>
@@ -107,9 +107,9 @@
                                            widget="many2one_avatar_user"/>
                                     <field name="state" widget="badge" optional="show"/>
                                     <field name="request_count" optional="hide"/>
-                                    <button name="action_create_requisition" type="object"
+                                    <button name="action_open_new_requisition" type="object"
                                             string="Raise Requisition" icon="fa-file-text-o"
-                                            invisible="state != 'planned'"/>
+                                            invisible="state != 'planned' or parent.state not in ('approved','active')"/>
                                 </list>
                             </field>
                             <group class="oe_subtotal_footer">

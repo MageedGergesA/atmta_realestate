@@ -28,7 +28,7 @@ class ContractPaymentInvoicing(models.Model):
         Invoice = self.env['account.move']
         invoices_vals = []
         for payment in payments:
-            prop = payment.contract_line_id.property_id if payment.contract_line_id else payment.contract_id.property_id
+            prop = payment.property_id or payment.contract_id.property_id
             if not prop or not prop.product_variant_id:
                 continue
             account_id = prop.categ_id.property_account_income_categ_id.id or False

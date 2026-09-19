@@ -203,6 +203,25 @@ class ProcurementPlan(models.Model):
             'state': 'superseded', 'superseded_by_id': revision.id})
         return revision
 
+    def action_open_new_revision(self):
+        """Button target: copy the plan forward and open the new revision.
+
+        Same reason as `action_open_new_requisition`: the method returns the
+        record every caller needs, and a button has to return an action or
+        the user is left looking at the superseded plan.
+        """
+        self.ensure_one()
+        revision = self.action_create_revision()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Procurement Plan'),
+            'res_model': self._name,
+            'res_id': revision.id,
+            'view_mode': 'form',
+            'views': [[False, 'form']],
+            'target': 'current',
+        }
+
     def action_close(self):
         for rec in self:
             rec.state = 'closed'
@@ -333,9 +352,22 @@ class ProcurementPlanLine(models.Model):
         for line in self:
             line.request_count = len(line.request_ids)
 
+    #: A plan a requisition may be raised from. Draft and review are a
+    #: document being written, and raising demand from one would make the
+    #: review that follows a formality about something already in flight.
+    _RAISABLE_PLAN_STATES = ('approved', 'active')
+
     def action_create_requisition(self):
         """Turn one planned item into a requisition. Still no money moves."""
         self.ensure_one()
+        if self.plan_id.state not in self._RAISABLE_PLAN_STATES:
+            raise UserError(_(
+                "%(plan)s is %(state)s. A requisition is raised from a plan "
+                "the project has agreed to, not from one somebody is still "
+                "drafting.",
+                plan=self.plan_id.name,
+                state=dict(self.plan_id._fields['state'].selection).get(
+                    self.plan_id.state, self.plan_id.state)))
         request = self.env['realestate.material.request'].create({
             'company_id': self.company_id.id,
             'project_id': self.project_id.id,
@@ -348,6 +380,26 @@ class ProcurementPlanLine(models.Model):
         })
         self.state = 'requested'
         return request
+
+    def action_open_new_requisition(self):
+        """Button target: raise the requisition and open it.
+
+        `action_create_requisition()` returns the record, which is what every
+        caller in the suite wants and what a web button cannot use — the
+        client drops anything that is not an action, so the screen stayed on
+        the plan and the requisition it had just raised was nowhere.
+        """
+        self.ensure_one()
+        request = self.action_create_requisition()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Requisition'),
+            'res_model': 'realestate.material.request',
+            'res_id': request.id,
+            'view_mode': 'form',
+            'views': [[False, 'form']],
+            'target': 'current',
+        }
 
     def _prepare_requisition_line_values(self):
         """Values for the requisition line. Construction adds the coding."""

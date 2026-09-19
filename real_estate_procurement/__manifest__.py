@@ -40,12 +40,11 @@ the records its XML IDs still point at. AD-007 — uninstall is not rollback.
     'version': '18.0.16.0.0',
     'category': 'Real Estate',
     'depends': [
-        'atmta_real_estate',
-        # `realestate.project` is defined by real_estate_developer. Every
-        # model here points at it, and M2 recorded the missing declaration as
-        # a finding; M3 adds fields to that model, so the dependency is now
-        # declared rather than relied upon.
-        'real_estate_developer',
+        # `realestate.project`: every model here points at it, and M3 adds
+        # fields to it. It was declared by `real_estate_developer` when M2 and
+        # M3 were written; it now belongs to `atmta_project_core`, which is all
+        # this module needs. Procurement uses nothing from Rental or Developer.
+        'atmta_project_core',
         'purchase',
         # M5 — native alternative RFQs live here: `purchase.order.group`,
         # `alternative_po_ids` and the compare action. Installing it also

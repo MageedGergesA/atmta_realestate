@@ -69,3 +69,21 @@
         }
     }
 }
+
+// Leaflet's layer switch draws its icon from images/layers.png and
+// layers-2x.png, which the bundled Leaflet does not ship: the button rendered
+// blank and every map load requested a missing file. Font Awesome draws it.
+.o_pmd_dashboard .leaflet-control-layers-toggle,
+.o_pmd_dashboard .leaflet-retina .leaflet-control-layers-toggle {
+    background-image: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &::before {
+        content: "\f279";        // fa-map
+        font-family: FontAwesome;
+        font-size: 1.1rem;
+        color: #333;
+    }
+}

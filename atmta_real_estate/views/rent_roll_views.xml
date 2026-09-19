@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_rent_roll_list" model="ir.ui.view">
+        <field name="name">realestate.rent.roll.list</field>
+        <field name="model">realestate.rent.roll</field>
+        <field name="arch" type="xml">
+            <list string="Rent Roll" create="false" delete="false"
+                  decoration-muted="is_vacant"
+                  decoration-danger="is_overdue"
+                  export_xlsx="1">
+                <field name="company_id" groups="base.group_multi_company" optional="show"/>
+                <field name="project_name" optional="show"/>
+                <field name="compound_name" optional="hide"/>
+                <field name="building_name" optional="show"/>
+                <field name="floor_name" optional="hide"/>
+                <field name="property_code"/>
+                <field name="unit_number" optional="show"/>
+                <field name="usage_category" optional="show"/>
+                <field name="is_vacant" optional="show"/>
+                <field name="partner_id" optional="show"/>
+                <field name="lease_reference" optional="show"/>
+                <field name="lease_start" optional="show"/>
+                <field name="lease_end" optional="show"/>
+                <field name="area_sqm" sum="Total Area" optional="show"/>
+                <field name="current_rent" sum="Current Rent"/>
+                <field name="recurring_charges" sum="Charges" optional="show"/>
+                <field name="annualized_rent" sum="Annualised Rent"/>
+                <field name="rent_per_sqm" optional="show"/>
+                <field name="deposit_held" sum="Deposits" optional="hide"/>
+                <field name="invoiced_amount" sum="Invoiced" optional="show"/>
+                <field name="paid_amount" sum="Paid" optional="show"/>
+                <field name="outstanding_amount" sum="Outstanding"/>
+                <field name="next_escalation_date" optional="show"/>
+                <field name="next_escalation_pct" optional="hide"/>
+                <field name="days_to_expiry" optional="show"/>
+                <field name="expiry_bucket" optional="hide"/>
+                <field name="renewal_state" optional="show"/>
+                <field name="lifecycle_state" optional="hide"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="is_overdue" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_rent_roll_pivot" model="ir.ui.view">
+        <field name="name">realestate.rent.roll.pivot</field>
+        <field name="model">realestate.rent.roll</field>
+        <field name="arch" type="xml">
+            <pivot string="Rent Roll" sample="0">
+                <field name="building_name" type="row"/>
+                <field name="usage_category" type="col"/>
+                <field name="annualized_rent" type="measure"/>
+                <field name="area_sqm" type="measure"/>
+                <field name="outstanding_amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_rent_roll_graph" model="ir.ui.view">
+        <field name="name">realestate.rent.roll.graph</field>
+        <field name="model">realestate.rent.roll</field>
+        <field name="arch" type="xml">
+            <graph string="Rent Roll" type="bar" sample="0">
+                <field name="building_name"/>
+                <field name="annualized_rent" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_rent_roll_search" model="ir.ui.view">
+        <field name="name">realestate.rent.roll.search</field>
+        <field name="model">realestate.rent.roll</field>
+        <field name="arch" type="xml">
+            <search string="Rent Roll">
+                <field name="property_code"/>
+                <field name="unit_number"/>
+                <field name="partner_id"/>
+                <field name="lease_reference"/>
+                <field name="building_name"/>
+                <field name="project_name"/>
+                <separator/>
+                <filter name="occupied" string="Occupied"
+                        domain="[('is_vacant', '=', False)]"/>
+                <filter name="vacant" string="Vacant"
+                        domain="[('is_vacant', '=', True)]"/>
+                <separator/>
+                <filter name="active_lease" string="Active Lease"
+                        domain="[('lifecycle_state', 'in', ('active', 'notice'))]"/>
+                <filter name="expiring_90" string="Expiring ≤ 90 Days"
+                        domain="[('days_to_expiry', '&lt;=', 90), ('days_to_expiry', '&gt;', 0)]"/>
+                <filter name="overdue" string="In Arrears"
+                        domain="[('outstanding_amount', '&gt;', 0)]"/>
+                <separator/>
+                <filter name="has_escalation" string="Escalation Scheduled"
+                        domain="[('next_escalation_date', '!=', False)]"/>
+                <group expand="1" string="Group By">
+                    <filter name="gb_company" string="Company"
+                            context="{'group_by': 'company_id'}"
+                            groups="base.group_multi_company"/>
+                    <filter name="gb_project" string="Project"
+                            context="{'group_by': 'project_name'}"/>
+                    <filter name="gb_compound" string="Compound"
+                            context="{'group_by': 'compound_name'}"/>
+                    <filter name="gb_building" string="Building"
+                            context="{'group_by': 'building_name'}"/>
+                    <filter name="gb_floor" string="Floor"
+                            context="{'group_by': 'floor_name'}"/>
+                    <filter name="gb_usage" string="Usage"
+                            context="{'group_by': 'usage_category'}"/>
+                    <filter name="gb_tenant" string="Tenant"
+                            context="{'group_by': 'partner_id'}"/>
+                    <filter name="gb_expiry" string="Expiry Bucket"
+                            context="{'group_by': 'expiry_bucket'}"/>
+                    <filter name="gb_renewal" string="Renewal Status"
+                            context="{'group_by': 'renewal_state'}"/>
+                    <filter name="gb_vacancy" string="Vacancy"
+                            context="{'group_by': 'is_vacant'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_rent_roll" model="ir.actions.act_window">
+        <field name="name">Rent Roll</field>
+        <field name="res_model">realestate.rent.roll</field>
+        <field name="view_mode">list,pivot,graph</field>
+        <field name="search_view_id" ref="view_rent_roll_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">The rent roll is empty.</p>
+            <p>Every leasable unit appears here — occupied units with their tenant
+               and rent, vacant units so the cost of vacancy is visible in the same
+               report. Use the XLSX export in the list view for board packs.</p>
+        </field>
+    </record>
+
+</odoo>

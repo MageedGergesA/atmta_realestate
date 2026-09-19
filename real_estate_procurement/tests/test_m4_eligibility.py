@@ -10,7 +10,7 @@ from datetime import timedelta
 from odoo.exceptions import UserError
 from odoo.tests.common import tagged
 
-from .common import M3Common, M4Common
+from .common import M3Common, M4Common, optional_group
 
 
 @tagged('post_install', '-at_install', 'atmta_procurement')
@@ -386,7 +386,7 @@ class TestM4PurchaseGate(M4Common):
                 # Reading the project is M3's governance compute, not M4's
                 # gate. Granted here so the test is about the email, which
                 # is the thing that used to break.
-                self.env.ref('real_estate_developer.group_dev_readonly').id])],
+                *optional_group(self.env, 'real_estate_developer.group_dev_readonly').ids])],
         })
         self.assertFalse(buyer.email)
         # A service line, so confirming does not also try to build a receipt
@@ -434,7 +434,7 @@ class TestM4PurchaseGate(M4Common):
             'groups_id': [(6, 0, [
                 self.env.ref('base.group_user').id,
                 self.env.ref('purchase.group_purchase_manager').id,
-                self.env.ref('real_estate_developer.group_dev_readonly').id])],
+                *optional_group(self.env, 'real_estate_developer.group_dev_readonly').ids])],
         })
         order = self._order(vendor, product=self._product(
             price=100.0, vendor=vendor, service=True), project=self.project)

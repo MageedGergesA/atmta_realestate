@@ -17,10 +17,33 @@
         <field name="implied_ids" eval="[(4, ref('group_dev_readonly'))]"/>
     </record>
 
-    <record id="group_dev_manager" model="res.groups">
-        <field name="name">Manager</field>
+    <!--
+        Sales Manager sits between the agent and the commercial manager: they
+        run a team's deals and approve within their authority, but pricing and
+        payment plans are not theirs to change.
+    -->
+    <record id="group_dev_sales_manager" model="res.groups">
+        <field name="name">Sales Manager</field>
         <field name="category_id" ref="module_category_real_estate_dev"/>
         <field name="implied_ids" eval="[(4, ref('group_dev_agent'))]"/>
+    </record>
+
+    <!--
+        Commercial Manager owns the masters: price books, payment plans,
+        promotions and the discount authority matrix. Deliberately separate
+        from deal-making authority — the person setting the discount ceiling
+        should not be the person selling against it.
+    -->
+    <record id="group_dev_commercial_manager" model="res.groups">
+        <field name="name">Commercial Manager</field>
+        <field name="category_id" ref="module_category_real_estate_dev"/>
+        <field name="implied_ids" eval="[(4, ref('group_dev_sales_manager'))]"/>
+    </record>
+
+    <record id="group_dev_manager" model="res.groups">
+        <field name="name">Developer Manager</field>
+        <field name="category_id" ref="module_category_real_estate_dev"/>
+        <field name="implied_ids" eval="[(4, ref('group_dev_commercial_manager'))]"/>
     </record>
 
 </odoo>

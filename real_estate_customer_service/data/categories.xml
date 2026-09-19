@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <record id="cat_maintenance" model="realestate.customer.ticket.category">
+        <field name="name">Maintenance</field>
+        <field name="default_sla_hours">24</field>
+    </record>
+    <record id="cat_billing" model="realestate.customer.ticket.category">
+        <field name="name">Billing / Invoicing</field>
+        <field name="default_sla_hours">72</field>
+    </record>
+    <record id="cat_complaint" model="realestate.customer.ticket.category">
+        <field name="name">Complaint</field>
+        <field name="default_sla_hours">48</field>
+    </record>
+    <record id="cat_warranty" model="realestate.customer.ticket.category">
+        <field name="name">Warranty Claim</field>
+        <field name="default_sla_hours">72</field>
+    </record>
+    <record id="cat_amenity" model="realestate.customer.ticket.category">
+        <field name="name">Amenity / Facility</field>
+        <field name="default_sla_hours">24</field>
+    </record>
+    <record id="cat_security" model="realestate.customer.ticket.category">
+        <field name="name">Security</field>
+        <field name="default_sla_hours">4</field>
+    </record>
+    <record id="cat_other" model="realestate.customer.ticket.category">
+        <field name="name">Other</field>
+        <field name="default_sla_hours">48</field>
+    </record>
+</odoo>

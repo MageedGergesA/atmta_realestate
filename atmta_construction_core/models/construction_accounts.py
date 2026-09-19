@@ -9,6 +9,11 @@ posting to the wrong account is worse than refusing to post.
 """
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.tools import LazyTranslate
+
+# These labels sit in a class attribute, so a plain _() would be resolved once
+# when the file is imported and every reader would get that one language.
+_lt = LazyTranslate(__name__)
 
 
 class ResCompany(models.Model):
@@ -66,11 +71,11 @@ class ConstructionAccounts(models.AbstractModel):
 
     #: field -> (label, where to set it)
     _ACCOUNTS = {
-        'construction_retention_account_id': _('Contractor Retention Account'),
-        'construction_advance_account_id': _('Contractor Advance Account'),
+        'construction_retention_account_id': _lt('Contractor Retention Account'),
+        'construction_advance_account_id': _lt('Contractor Advance Account'),
         'construction_owner_retention_account_id':
-            _('Owner Retention Receivable'),
-        'construction_owner_advance_account_id': _('Owner Advance Received'),
+            _lt('Owner Retention Receivable'),
+        'construction_owner_advance_account_id': _lt('Owner Advance Received'),
     }
 
     @api.model

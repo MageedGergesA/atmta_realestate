@@ -31,3 +31,6 @@ from . import test_m10_timezone
 from . import test_m10_migration
 from . import test_m10_multicompany
 from . import test_m10_hoot
+from . import test_menu_access
+from . import test_date_refresh
+from . import test_lifecycle_findings

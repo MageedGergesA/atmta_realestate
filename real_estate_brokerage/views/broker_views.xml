@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- M6 / M7 — brokers, their agreements, and the lead register. -->
+<odoo>
+
+    <!-- ==============================================================
+         The broker, on the partner form
+         ============================================================== -->
+    <record id="view_partner_form_broker" model="ir.ui.view">
+        <field name="name">res.partner.form.broker</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="broker" string="Broker"
+                      invisible="not is_realestate_broker"
+                      groups="real_estate_brokerage.group_realestate_sales_readonly">
+                    <group>
+                        <group string="Standing">
+                            <field name="broker_type"/>
+                            <field name="broker_state" widget="badge"
+                                   decoration-success="broker_state == 'active'"
+                                   decoration-danger="broker_state in ('suspended','terminated')"/>
+                            <field name="broker_kyc_state" widget="badge"
+                                   decoration-success="broker_kyc_state == 'verified'"
+                                   decoration-warning="broker_kyc_state != 'verified'"/>
+                            <field name="broker_kyc_note"/>
+                        </group>
+                        <group string="Licence">
+                            <field name="broker_license_number"/>
+                            <field name="broker_license_expiry"/>
+                            <field name="broker_license_expired"
+                                   invisible="not broker_license_expired"/>
+                            <field name="active_broker_agreement_id"/>
+                        </group>
+                    </group>
+                    <button name="action_activate_broker" type="object"
+                            string="Activate Broker" class="btn-primary"
+                            invisible="broker_state == 'active'"/>
+                    <button name="action_suspend_broker" type="object"
+                            string="Suspend"
+                            invisible="broker_state != 'active'"/>
+                    <field name="broker_agreement_ids" nolabel="1"
+                           context="{'default_broker_partner_id': id}">
+                        <list>
+                            <field name="name"/>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="commission_percentage"/>
+                            <field name="protection_days"/>
+                            <field name="is_exclusive"/>
+                            <field name="state" widget="badge"
+                                   decoration-success="state == 'active'"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+            <field name="category_id" position="after">
+                <field name="is_realestate_broker"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_partner_search_broker" model="ir.ui.view">
+        <field name="name">res.partner.search.broker</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <filter name="type_company" position="after">
+                <separator/>
+                <filter name="brokers" string="Brokers"
+                        domain="[('is_realestate_broker', '=', True)]"/>
+                <filter name="brokers_expired" string="Licence Expired"
+                        domain="[('is_realestate_broker', '=', True),
+                                 ('broker_license_expired', '=', True)]"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="action_broker_partner" model="ir.actions.act_window">
+        <field name="name">Brokers &amp; Channel Partners</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('is_realestate_broker', '=', True)]</field>
+        <field name="context">{'default_is_realestate_broker': True}</field>
+    </record>
+
+    <!-- ==============================================================
+         Agreements
+         ============================================================== -->
+    <record id="view_broker_agreement_list" model="ir.ui.view">
+        <field name="name">realestate.broker.agreement.list</field>
+        <field name="model">realestate.broker.agreement</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state in ('expired','terminated')">
+                <field name="name"/>
+                <field name="broker_partner_id"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="commission_percentage"/>
+                <field name="protection_days"/>
+                <field name="is_exclusive"/>
+                <field name="registration_count" string="Registrations"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"/>
+                <field name="company_id" groups="base.group_multi_company"
+                       optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_broker_agreement_form" model="ir.ui.view">
+        <field name="name">realestate.broker.agreement.form</field>
+        <field name="model">realestate.broker.agreement</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_activate" type="object"
+                            string="Activate" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_terminate" type="object"
+                            string="Terminate" confirm="Terminate this agreement?"
+                            invisible="state != 'active'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,active"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Parties">
+                            <field name="broker_partner_id"
+                                   readonly="state != 'draft'"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Period">
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="signed_on"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Terms">
+                            <field name="commission_percentage"/>
+                            <field name="commission_fixed"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="is_exclusive"/>
+                        </group>
+                        <group string="Lead Protection">
+                            <field name="protection_days"/>
+                            <field name="registration_count"/>
+                        </group>
+                    </group>
+                    <group string="Authorised Projects">
+                        <field name="allowed_project_ids" nolabel="1"
+                               widget="many2many_tags"
+                               placeholder="Leave empty for every project"/>
+                    </group>
+                    <group string="Termination"
+                           invisible="state != 'terminated'">
+                        <field name="terminated_on"/>
+                        <field name="termination_reason"/>
+                    </group>
+                    <notebook>
+                        <page string="Registrations">
+                            <field name="registration_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="customer_name"/>
+                                    <field name="project_id"/>
+                                    <field name="registered_on"/>
+                                    <field name="protected_until"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_broker_agreement" model="ir.actions.act_window">
+        <field name="name">Broker Agreements</field>
+        <field name="res_model">realestate.broker.agreement</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ==============================================================
+         Lead registrations
+         ============================================================== -->
+    <record id="view_lead_registration_list" model="ir.ui.view">
+        <field name="name">realestate.lead.registration.list</field>
+        <field name="model">realestate.lead.registration</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state in ('approved','converted')"
+                  decoration-muted="state in ('rejected','expired')">
+                <field name="name"/>
+                <field name="broker_partner_id"/>
+                <field name="customer_name"/>
+                <field name="customer_phone" optional="show"/>
+                <field name="project_id" optional="show"/>
+                <field name="registered_on"/>
+                <field name="protected_until"/>
+                <field name="state" widget="badge"/>
+                <field name="rejection_reason" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_lead_registration_form" model="ir.ui.view">
+        <field name="name">realestate.lead.registration.form</field>
+        <field name="model">realestate.lead.registration</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit" type="object"
+                            string="Submit" class="btn-primary"
+                            invisible="state not in ('draft','pending')"/>
+                    <button name="action_convert_to_opportunity" type="object"
+                            string="Convert to Opportunity" class="btn-primary"
+                            invisible="state != 'approved'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,approved,converted"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="rejection_reason != 'duplicate'">
+                        <field name="rejection_note" nolabel="1" readonly="1"/>
+                    </div>
+                    <group>
+                        <group string="Broker">
+                            <field name="broker_partner_id"/>
+                            <field name="agreement_id"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Protection">
+                            <field name="registered_on"/>
+                            <field name="approved_on"/>
+                            <field name="protected_until"/>
+                            <field name="is_protected"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Customer">
+                            <field name="customer_name"/>
+                            <field name="customer_phone"/>
+                            <field name="customer_email"/>
+                            <field name="customer_partner_id"/>
+                        </group>
+                        <group string="Interest">
+                            <field name="project_id"/>
+                            <field name="crm_lead_id"/>
+                        </group>
+                    </group>
+                    <group string="Outcome" invisible="state != 'rejected'">
+                        <field name="rejection_reason"/>
+                        <field name="colliding_registration_id"
+                               groups="real_estate_brokerage.group_realestate_sales_manager"/>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_lead_registration_search" model="ir.ui.view">
+        <field name="name">realestate.lead.registration.search</field>
+        <field name="model">realestate.lead.registration</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="customer_name"/>
+                <field name="customer_phone"/>
+                <field name="broker_partner_id"/>
+                <filter name="protected" string="Protected"
+                        domain="[('is_protected', '=', True)]"/>
+                <filter name="rejected" string="Rejected"
+                        domain="[('state', '=', 'rejected')]"/>
+                <filter name="duplicates" string="Duplicate Claims"
+                        domain="[('rejection_reason', '=', 'duplicate')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_broker" string="Broker"
+                            context="{'group_by': 'broker_partner_id'}"/>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_project" string="Project"
+                            context="{'group_by': 'project_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_lead_registration" model="ir.actions.act_window">
+        <field name="name">Lead Registrations</field>
+        <field name="res_model">realestate.lead.registration</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ==============================================================
+         Source performance (M18)
+         ============================================================== -->
+    <record id="view_utm_source_list_realestate" model="ir.ui.view">
+        <field name="name">utm.source.list.realestate</field>
+        <field name="model">utm.source</field>
+        <field name="inherit_id" ref="utm.utm_source_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="re_spend"/>
+                <field name="re_lead_count"/>
+                <field name="re_won_count"/>
+                <field name="re_cost_per_lead"/>
+                <field name="re_cost_per_deal"/>
+                <field name="re_revenue"/>
+                <field name="re_currency_id" column_invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="action_source_performance" model="ir.actions.act_window">
+        <field name="name">Source Performance</field>
+        <field name="res_model">utm.source</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

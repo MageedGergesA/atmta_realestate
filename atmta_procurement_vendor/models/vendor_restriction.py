@@ -151,8 +151,15 @@ class VendorRestriction(models.Model):
             rec.is_in_force = rec._applies_on(today)
 
     def _compute_open_orders(self):
-        """M4P — what a suspension touches, so somebody can decide about it."""
-        PO = self.env['purchase.order']
+        """M4P — what a suspension touches, so somebody can decide about it.
+
+        Counted as the system. The people who impose and lift restrictions
+        are governance roles, not buyers, and requiring purchase access to
+        open the form would make the record unreadable by the only people who
+        decide it. A count of this vendor's own open orders is what the
+        screen shows; the list behind it is still purchase's to grant.
+        """
+        PO = self.env['purchase.order'].sudo()
         for rec in self:
             rec.open_order_count = PO.search_count([
                 ('partner_id', '=', rec.partner_id.id),

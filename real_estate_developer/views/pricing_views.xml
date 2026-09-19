@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ============================ Price Book ============================ -->
+    <record id="view_price_book_list" model="ir.ui.view">
+        <field name="name">realestate.price.book.list</field>
+        <field name="model">realestate.price.book</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state == 'active'"
+                  decoration-muted="state in ('expired','archived')">
+                <field name="name"/>
+                <field name="version"/>
+                <field name="project_id"/>
+                <field name="phase_id" optional="show"/>
+                <field name="valid_from" optional="show"/>
+                <field name="valid_until" optional="show"/>
+                <field name="line_count" string="Units"/>
+                <field name="total_list_value" sum="Total"/>
+                <field name="average_price_per_sqm" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-info="state == 'approved'"
+                       decoration-warning="state == 'pending_approval'"
+                       decoration-muted="state in ('expired','archived')"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_price_book_form" model="ir.ui.view">
+        <field name="name">realestate.price.book.form</field>
+        <field name="model">realestate.price.book</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit" type="object" string="Submit for Approval"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="oe_highlight" invisible="state != 'pending_approval'"/>
+                    <button name="action_activate" type="object" string="Activate"
+                            class="oe_highlight" invisible="state != 'approved'"
+                            confirm="Activating applies these prices to every unit in the book and records the change in price history. Continue?"/>
+                    <button name="action_new_version" type="object" string="New Version"
+                            invisible="state not in ('active','expired')"/>
+                    <button name="action_archive_book" type="object" string="Archive"
+                            invisible="state not in ('expired',)"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,pending_approval,approved,active"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_lines" type="object"
+                                class="oe_stat_button" icon="fa-list">
+                            <field name="line_count" widget="statinfo" string="Units"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Active" bg_color="text-bg-success"
+                            invisible="state != 'active'"/>
+                    <widget name="web_ribbon" title="Superseded" bg_color="text-bg-secondary"
+                            invisible="state != 'expired'"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Palm Heights Launch Prices"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id" options="{'no_create': True}"
+                                   readonly="state != 'draft'"/>
+                            <field name="phase_id" options="{'no_create': True}"
+                                   readonly="state != 'draft'"/>
+                            <field name="code"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="version" readonly="1"/>
+                            <field name="previous_version_id" readonly="1"
+                                   invisible="not previous_version_id"/>
+                            <field name="valid_from" readonly="state != 'draft'"/>
+                            <field name="valid_until"/>
+                            <field name="currency_id" readonly="state != 'draft'"
+                                   groups="base.group_multi_currency"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Unit Prices" name="lines">
+                            <field name="line_ids" readonly="state != 'draft'">
+                                <list editable="bottom">
+                                    <field name="property_id" options="{'no_create': True}"/>
+                                    <field name="area_sqm" readonly="1"/>
+                                    <field name="base_mode"/>
+                                    <field name="base_amount"
+                                           column_invisible="0"
+                                           readonly="base_mode != 'amount'"/>
+                                    <field name="base_rate_sqm"
+                                           readonly="base_mode != 'per_sqm'"/>
+                                    <field name="base_price" readonly="1"/>
+                                    <field name="premium_total" readonly="1"/>
+                                    <field name="manual_adjustment"/>
+                                    <field name="adjustment_reason" optional="hide"/>
+                                    <field name="list_price" readonly="1" sum="Total"/>
+                                    <field name="price_per_sqm" readonly="1" optional="show"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Premium Rules" name="rules">
+                            <div class="alert alert-info" role="status">
+                                Rules apply to every unit in the book that matches
+                                their conditions. Leave a condition empty and it
+                                does not restrict.
+                            </div>
+                            <field name="rule_ids" readonly="state != 'draft'">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="premium_type"/>
+                                    <field name="calculation_type"/>
+                                    <field name="value"/>
+                                    <field name="phase_id" optional="show"/>
+                                    <field name="building_id" optional="hide"/>
+                                    <field name="floor_from" optional="show"/>
+                                    <field name="floor_to" optional="show"/>
+                                    <field name="area_from" optional="hide"/>
+                                    <field name="area_to" optional="hide"/>
+                                    <field name="usage_category" optional="hide"/>
+                                    <field name="active" widget="boolean_toggle"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Summary" name="summary">
+                            <group>
+                                <field name="total_list_value"/>
+                                <field name="average_price_per_sqm"/>
+                            </group>
+                            <group>
+                                <group string="Approved">
+                                    <field name="approved_by_id"/>
+                                    <field name="approved_on"/>
+                                </group>
+                                <group string="Activated">
+                                    <field name="activated_by_id"/>
+                                    <field name="activated_on"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_price_book" model="ir.actions.act_window">
+        <field name="name">Price Books</field>
+        <field name="res_model">realestate.price.book</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Price your inventory</p>
+            <p>
+                A price book is approved, activated, and then frozen. Repricing
+                creates a new version, so a deal signed six months ago can still
+                be explained from the book it was signed against.
+            </p>
+        </field>
+    </record>
+
+    <!-- ============================ Price History ========================= -->
+    <record id="view_price_history_list" model="ir.ui.view">
+        <field name="name">realestate.price.history.list</field>
+        <field name="model">realestate.price.history</field>
+        <field name="arch" type="xml">
+            <list create="false" edit="false" delete="false"
+                  decoration-success="delta &gt; 0" decoration-danger="delta &lt; 0">
+                <field name="effective_date"/>
+                <field name="property_id"/>
+                <field name="project_id" optional="show"/>
+                <field name="old_price"/>
+                <field name="new_price"/>
+                <field name="delta" sum="Net change"/>
+                <field name="delta_percent" widget="percentage" optional="show"/>
+                <field name="price_book_id" optional="show"/>
+                <field name="reason" optional="show"/>
+                <field name="changed_by_id" optional="show"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_price_history_search" model="ir.ui.view">
+        <field name="name">realestate.price.history.search</field>
+        <field name="model">realestate.price.history</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="property_id"/>
+                <field name="project_id"/>
+                <field name="price_book_id"/>
+                <filter name="increases" string="Increases" domain="[('delta','&gt;',0)]"/>
+                <filter name="decreases" string="Decreases" domain="[('delta','&lt;',0)]"/>
+                <separator/>
+                <filter name="group_project" string="Project" context="{'group_by': 'project_id'}"/>
+                <filter name="group_date" string="Effective Date" context="{'group_by': 'effective_date'}"/>
+                <filter name="group_book" string="Price Book" context="{'group_by': 'price_book_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_price_history" model="ir.actions.act_window">
+        <field name="name">Price History</field>
+        <field name="res_model">realestate.price.history</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <!-- ============================ Promotions =========================== -->
+    <record id="view_promotion_list" model="ir.ui.view">
+        <field name="name">realestate.promotion.list</field>
+        <field name="model">realestate.promotion</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state == 'active'"
+                  decoration-muted="state in ('expired','cancelled')">
+                <field name="name"/>
+                <field name="project_id" optional="show"/>
+                <field name="date_start"/>
+                <field name="date_end" optional="show"/>
+                <field name="discount_type"/>
+                <field name="discount_value"/>
+                <field name="use_count" string="Used"/>
+                <field name="max_uses" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-warning="state == 'pending_approval'"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_promotion_form" model="ir.ui.view">
+        <field name="name">realestate.promotion.form</field>
+        <field name="model">realestate.promotion</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit" type="object" string="Submit for Approval"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="oe_highlight" invisible="state != 'pending_approval'"/>
+                    <button name="action_request_approval" type="object"
+                            string="Request Approval"
+                            invisible="not approval_request_available"/>
+                    <field name="approval_request_available" invisible="1"/>
+                    <button name="action_expire" type="object" string="Expire"
+                            invisible="state != 'active'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('cancelled','expired')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,pending_approval,active"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Eid Campaign"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id" options="{'no_create': True}"/>
+                            <field name="phase_id" options="{'no_create': True}"/>
+                            <field name="code"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="discount_type"/>
+                            <field name="discount_value"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                        </group>
+                    </group>
+                    <group string="Limits">
+                        <group>
+                            <field name="max_uses"/>
+                            <field name="use_count"/>
+                            <field name="remaining_uses" invisible="not max_uses"/>
+                        </group>
+                        <group>
+                            <field name="usage_category"/>
+                            <field name="approved_by_id" readonly="1"/>
+                            <field name="approved_on" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Eligible Units" name="units">
+                            <div class="alert alert-info" role="status">
+                                Leave empty to cover every unit in the project or
+                                phase above.
+                            </div>
+                            <field name="property_ids" options="{'no_create': True}"/>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_promotion" model="ir.actions.act_window">
+        <field name="name">Promotions</field>
+        <field name="res_model">realestate.promotion</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ====================== Approval rules & requests =================== -->
+    <record id="view_approval_rule_list" model="ir.ui.view">
+        <field name="name">realestate.commercial.approval.rule.list</field>
+        <field name="model">realestate.commercial.approval.rule</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="action_type"/>
+                <field name="project_id" optional="show"/>
+                <field name="threshold_type"/>
+                <field name="min_value"/>
+                <field name="max_value"/>
+                <field name="approver_group_id"/>
+                <field name="approver_user_id" optional="show"/>
+                <field name="allow_self_approval" widget="boolean_toggle"/>
+                <field name="active" widget="boolean_toggle"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_approval_rule" model="ir.actions.act_window">
+        <field name="name">Approval Authority</field>
+        <field name="res_model">realestate.commercial.approval.rule</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Set who may authorise what</p>
+            <p>
+                Bands are configuration, not code: an agent up to 2%, a manager
+                up to 5%, a director above that. A band with no ceiling is the
+                top of the chain. Nobody approves their own request unless you
+                explicitly allow it.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_approval_request_list" model="ir.ui.view">
+        <field name="name">realestate.commercial.approval.request.list</field>
+        <field name="model">realestate.commercial.approval.request</field>
+        <field name="arch" type="xml">
+            <list decoration-warning="state == 'pending'"
+                  decoration-success="state == 'approved'"
+                  decoration-danger="state == 'rejected'">
+                <field name="name"/>
+                <field name="action_type"/>
+                <field name="document_ref"/>
+                <field name="project_id" optional="show"/>
+                <field name="requested_value"/>
+                <field name="approved_value" optional="show"/>
+                <field name="requested_by_id"/>
+                <field name="approver_user_id" optional="show"/>
+                <field name="state" widget="badge"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_approval_request_form" model="ir.ui.view">
+        <field name="name">realestate.commercial.approval.request.form</field>
+        <field name="model">realestate.commercial.approval.request</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit" type="object" string="Submit"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="oe_highlight" invisible="state != 'pending'"/>
+                    <button name="action_reject" type="object" string="Reject"
+                            invisible="state != 'pending'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state not in ('draft','pending')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,pending,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="action_type"/>
+                            <field name="document_ref" readonly="1"/>
+                            <field name="project_id"/>
+                            <field name="rule_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="requested_value"/>
+                            <field name="requested_amount"/>
+                            <field name="approved_value" readonly="state != 'pending'"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                        </group>
+                    </group>
+                    <group string="Justification">
+                        <field name="reason" nolabel="1"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="requested_by_id"/>
+                        </group>
+                        <group>
+                            <field name="approver_user_id"/>
+                            <field name="decided_on"/>
+                        </group>
+                    </group>
+                    <group string="Approver Comment" invisible="state == 'draft'">
+                        <field name="decision_note" nolabel="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_approval_request" model="ir.actions.act_window">
+        <field name="name">Approval Requests</field>
+        <field name="res_model">realestate.commercial.approval.request</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_pending': 1}</field>
+    </record>
+
+    <!-- ====================== Bulk price update wizard =================== -->
+    <record id="view_price_bulk_update_form" model="ir.ui.view">
+        <field name="name">realestate.price.bulk.update.form</field>
+        <field name="model">realestate.price.bulk.update</field>
+        <field name="arch" type="xml">
+            <form>
+                <div class="alert alert-warning" role="alert" invisible="state != 'config'">
+                    A bulk reprice always previews first. Nothing is written
+                    until you confirm the list of affected units.
+                </div>
+                <group invisible="state != 'config'">
+                    <group string="Which Units">
+                        <field name="project_id" options="{'no_create': True}"/>
+                        <field name="phase_id" options="{'no_create': True}"/>
+                        <field name="building_id" options="{'no_create': True}"/>
+                        <field name="usage_category"/>
+                        <field name="floor_from"/>
+                        <field name="floor_to"/>
+                        <field name="only_available"/>
+                    </group>
+                    <group string="Change">
+                        <field name="adjustment_type"/>
+                        <field name="adjustment_value"/>
+                        <field name="effective_date"/>
+                        <field name="reason" placeholder="Recorded on every history row"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="state" invisible="1"/>
+                    </group>
+                </group>
+                <div invisible="state != 'preview'">
+                    <group>
+                        <group>
+                            <field name="affected_count" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="total_delta" readonly="1"/>
+                        </group>
+                    </group>
+                    <field name="line_ids" readonly="1">
+                        <list decoration-success="delta &gt; 0" decoration-danger="delta &lt; 0">
+                            <field name="property_id"/>
+                            <field name="area_sqm"/>
+                            <field name="old_price"/>
+                            <field name="new_price"/>
+                            <field name="delta" sum="Net"/>
+                            <field name="delta_percent" widget="percentage"/>
+                            <field name="currency_id" column_invisible="1"/>
+                        </list>
+                    </field>
+                </div>
+                <footer>
+                    <button name="action_preview" type="object" string="Preview"
+                            class="btn-primary" invisible="state != 'config'"/>
+                    <button name="action_apply" type="object" string="Apply"
+                            class="btn-primary" invisible="state != 'preview'"
+                            confirm="This writes the new prices and records them in price history. Continue?"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_price_bulk_update" model="ir.actions.act_window">
+        <field name="name">Bulk Price Update</field>
+        <field name="res_model">realestate.price.bulk.update</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

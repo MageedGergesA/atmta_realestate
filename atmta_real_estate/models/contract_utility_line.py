@@ -4,9 +4,9 @@ from odoo.exceptions import UserError
 
 class RealEstateContractUtilityLine(models.Model):
     _name = 'realestate.contract.utility.line'
-    _description = 'Contract Utility Line'
+    _description = 'Lease Utility Line'
 
-    contract_id = fields.Many2one('realestate.contract', string="Contract", ondelete='cascade', required=True)
+    contract_id = fields.Many2one('realestate.contract', string="Lease", ondelete='cascade', required=True)
     name = fields.Char(string="Utility", required=True)
     vendor_id = fields.Many2one(
         'res.partner', string="Utility Provider",
@@ -33,7 +33,9 @@ class RealEstateContractUtilityLine(models.Model):
             move = self.env['account.move'].create({
                 'move_type': 'in_invoice',
                 'partner_id': line.vendor_id.id,
-                'invoice_date': fields.Date.today(),
+                # The user's date, as Odoo dates its own bills; UTC's is still
+                # yesterday for a few hours after midnight east of Greenwich.
+                'invoice_date': fields.Date.context_today(line),
                 'invoice_line_ids': [(0, 0, {
                     'name': f'Utility - {line.name}',
                     'quantity': 1,

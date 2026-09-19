@@ -1,0 +1,1516 @@
+# Translation of Odoo Server.
+# This file contains the Arabic translation of the following modules:
+# 	* atmta_construction_change
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:12+0000\n"
+"PO-Revision-Date: 2026-09-17 10:12+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_event.py:0
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid "%(name)s cannot be %(what)s from %(state)s."
+msgstr "لا يمكن %(what)s %(name)s من الحالة %(state)s."
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid ""
+"%(names)s have been implemented. Raise a superseding or reversing change "
+"rather than editing history."
+msgstr ""
+"تم تنفيذ %(names)s. أنشئ تغييرًا بديلًا أو عكسيًا بدلًا من تعديل السجل."
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid "%(package)s belongs to another project."
+msgstr "%(package)s تابعة لمشروع آخر."
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid ""
+"A budget transfer must net to zero — this one moves %(net)s, which is an "
+"increase wearing a transfer's name."
+msgstr ""
+"يجب أن يكون صافي تحويل الميزانية صفرًا — هذا التحويل ينقل %(net)s، وهو زيادة"
+" تحمل اسم التحويل."
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid "A change with no impact lines changes nothing."
+msgstr "التغيير الذي لا يحتوي على بنود أثر لا يغير شيئًا."
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid "A line has no cost code."
+msgstr "يوجد بند بلا رمز تكلفة."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__message_needaction
+msgid "Action Needed"
+msgstr "إجراء مطلوب"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__activity_ids
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__activity_ids
+msgid "Activities"
+msgstr "الأنشطة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "زخرفة استثناء النشاط"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__activity_state
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__source__addition
+msgid "Addition"
+msgstr "إضافة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order__related_event_ids
+msgid "Additional events consolidated into this one order."
+msgstr "أحداث إضافية مجمعة في هذا الأمر."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__age_days
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__age_days
+msgid "Age Days"
+msgstr "العمر بالأيام"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_markup__amount
+msgid "Amount"
+msgstr "المبلغ"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_approval__amount_at_decision
+msgid "Amount At Decision"
+msgstr "المبلغ عند القرار"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_event.py:0
+msgid "An event with an implemented change order cannot be cancelled."
+msgstr "لا يمكن إلغاء حدث له أمر تغيير منفذ."
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid ""
+"An implemented change cannot be cancelled. Raise a reversing change instead."
+msgstr "لا يمكن إلغاء تغيير منفذ. أنشئ تغييرًا عكسيًا بدلًا من ذلك."
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid ""
+"An implemented change cannot be withdrawn. Raise a reversing change instead."
+msgstr "لا يمكن سحب تغيير منفذ. أنشئ تغييرًا عكسيًا بدلًا من ذلك."
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid "An owner variation needs the customer it is billed to."
+msgstr "يتطلب تغيير المالك تحديد العميل الذي يفوتر له."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__approval_threshold
+msgid "Approval Threshold"
+msgstr "حد الاعتماد"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__approval_ids
+msgid "Approvals"
+msgstr "الاعتمادات"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_approval__decision__approved
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order__state__approved
+msgid "Approved"
+msgstr "معتمد"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__approved_amount
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__approved_amount
+msgid "Approved Amount"
+msgstr "المبلغ المعتمد"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__approved_budget_amount
+msgid "Approved Budget Amount"
+msgstr "مبلغ الميزانية المعتمد"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__approved_contingency_amount
+msgid "Approved Contingency Amount"
+msgstr "مبلغ الاحتياطي المعتمد"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__approved_cost_amount
+msgid "Approved Cost Amount"
+msgstr "مبلغ التكلفة المعتمد"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__approved_cost_change
+msgid "Approved Cost Change"
+msgstr "تغيير التكلفة المعتمد"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__approved_days
+msgid "Approved Days"
+msgstr "الأيام المعتمدة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__approved_revenue_amount
+msgid "Approved Revenue Amount"
+msgstr "مبلغ الإيرادات المعتمد"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__approved_revenue_change
+msgid "Approved Revenue Change"
+msgstr "تغيير الإيرادات المعتمد"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order__approved_cost_amount
+msgid "Approved impact on cost/commitment only."
+msgstr "الأثر المعتمد على التكلفة/الالتزام فقط."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order__change_margin
+msgid ""
+"Approved revenue change − approved cost change. Variation-level margin, not "
+"project profit."
+msgstr ""
+"تغيير الإيرادات المعتمد − تغيير التكلفة المعتمد. هامش على مستوى التغيير، "
+"وليس ربح المشروع."
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid "Approved: %(amount)s (gross impact %(gross)s)."
+msgstr "معتمد: %(amount)s (إجمالي الأثر %(gross)s)."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__state__assessed
+msgid "Assessed"
+msgstr "تم التقييم"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__assessed_amount
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__assessed_amount
+msgid "Assessed Amount"
+msgstr "المبلغ المقيم"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__assessment_notes
+msgid "Assessment Notes"
+msgstr "ملاحظات التقييم"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order_line__impact_side__budget
+msgid "Authorised Budget"
+msgstr "الميزانية المصرح بها"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__responsible_party__authority
+msgid "Authority"
+msgstr "الجهة الحكومية"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__source__authority_requirement
+msgid "Authority Requirement"
+msgstr "متطلب جهة حكومية"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order_markup__markup_type__bond
+msgid "Bond"
+msgstr "الضمان البنكي"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order__order_type__budget_change
+msgid "Budget Change"
+msgstr "تغيير الميزانية"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order__order_type__budget_transfer
+msgid "Budget Transfer"
+msgstr "تحويل الميزانية"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__state__cancelled
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order__state__cancelled
+msgid "Cancelled"
+msgstr "ملغى"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid "Change %(name)s is in %(company)s but its project is in %(other)s."
+msgstr ""
+"التغيير %(name)s تابع للشركة %(company)s لكن مشروعه تابع للشركة %(other)s."
+
+#. module: atmta_construction_change
+#: model:ir.model,name:atmta_construction_change.model_realestate_construction_change_approval
+msgid "Change Approval"
+msgstr "اعتماد التغيير"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__change_event_id
+msgid "Change Event"
+msgstr "حدث التغيير"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__change_margin
+msgid "Change Margin"
+msgstr "هامش التغيير"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__change_order_count
+msgid "Change Order Count"
+msgstr "عدد أوامر التغيير"
+
+#. module: atmta_construction_change
+#: model:ir.model,name:atmta_construction_change.model_realestate_construction_change_order_line
+msgid "Change Order Impact Line"
+msgstr "بند أثر أمر التغيير"
+
+#. module: atmta_construction_change
+#: model:ir.model,name:atmta_construction_change.model_realestate_construction_change_order_markup
+msgid "Change Order Markup"
+msgstr "إضافة على أمر التغيير"
+
+#. module: atmta_construction_change
+#: model:ir.model,name:atmta_construction_change.model_realestate_construction_change_order_revision
+msgid "Change Order Submission History"
+msgstr "سجل تقديمات أمر التغيير"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_event.py:0
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__change_order_ids
+msgid "Change Orders"
+msgstr "أوامر التغيير"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__state__change_required
+msgid "Change Required"
+msgstr "يتطلب تغييرًا"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_event.py:0
+msgid ""
+"Change event %(name)s is in %(company)s but its project is in %(other)s."
+msgstr ""
+"حدث التغيير %(name)s تابع للشركة %(company)s لكن مشروعه تابع للشركة "
+"%(other)s."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__source__claim_determination
+msgid "Claim Determination"
+msgstr "قرار البت في مطالبة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__state__closed
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order__state__closed
+msgid "Closed"
+msgstr "مغلق"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__closed_reason
+msgid "Closed Reason"
+msgstr "سبب الإغلاق"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_approval__comment
+msgid "Comment"
+msgstr "التعليق"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__company_id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__company_id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_markup__computation
+msgid "Computation"
+msgstr "طريقة الاحتساب"
+
+#. module: atmta_construction_change
+#: model:ir.model,name:atmta_construction_change.model_realestate_construction_change_event
+msgid "Construction Change Event"
+msgstr "حدث تغيير إنشائي"
+
+#. module: atmta_construction_change
+#: model:ir.model,name:atmta_construction_change.model_realestate_construction_change_order
+msgid "Construction Change Order"
+msgstr "أمر تغيير إنشائي"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__responsible_party__consultant
+msgid "Consultant"
+msgstr "الاستشاري"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__source__consultant_instruction
+msgid "Consultant Instruction"
+msgstr "تعليمات الاستشاري"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order_line__impact_side__contingency
+msgid "Contingency"
+msgstr "الاحتياطي"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order_markup__markup_type__contingency
+msgid "Contingency Allowance"
+msgstr "مخصص الطوارئ"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order__order_type__contingency_drawdown
+msgid "Contingency Drawdown"
+msgstr "السحب من الاحتياطي"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__contractor_id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__contractor_id
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__responsible_party__contractor
+msgid "Contractor"
+msgstr "المقاول"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__source__contractor_notice
+msgid "Contractor Notice"
+msgstr "إشعار المقاول"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__contractor_quote_amount
+msgid "Contractor Quote Amount"
+msgstr "مبلغ عرض سعر المقاول"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order__order_type__contractor_variation
+msgid "Contractor Variation"
+msgstr "تغيير المقاول"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order_line__impact_side__commitment
+msgid "Cost / Commitment"
+msgstr "التكلفة / الالتزام"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__cost_code_id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__cost_code_id
+msgid "Cost Code"
+msgstr "رمز التكلفة"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid "Cost code %(code)s is scoped to another project."
+msgstr "رمز التكلفة %(code)s مخصص لمشروع آخر."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_approval__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_markup__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_revision__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_approval__create_date
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__create_date
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__create_date
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__create_date
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_markup__create_date
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_revision__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_approval__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_markup__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_revision__currency_id
+msgid "Currency"
+msgstr "العملة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_approval__decided_on
+msgid "Decided On"
+msgstr "تاريخ القرار"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_approval__decision
+msgid "Decision"
+msgstr "القرار"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__decision_date
+msgid "Decision Date"
+msgstr "تاريخ القرار"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__source__delay
+msgid "Delay"
+msgstr "تأخير"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__description
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__description
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_markup__description
+msgid "Description"
+msgstr "الوصف"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__source__design_change
+msgid "Design Change"
+msgstr "تغيير في التصميم"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__discovered_date
+msgid "Discovered Date"
+msgstr "تاريخ الاكتشاف"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_approval__display_name
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__display_name
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__display_name
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__display_name
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_markup__display_name
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_revision__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__state__draft
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order__state__draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__state__duplicate
+msgid "Duplicate"
+msgstr "مكرر"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__effective_date
+msgid "Effective Date"
+msgstr "تاريخ السريان"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__estimated_amount
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__estimated_amount
+msgid "Estimated Amount"
+msgstr "المبلغ التقديري"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__estimated_contingency_impact
+msgid "Estimated Contingency Impact"
+msgstr "الأثر التقديري على الاحتياطي"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__estimated_cost_impact
+msgid "Estimated Cost Impact"
+msgstr "الأثر التقديري على التكلفة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__estimated_days
+msgid "Estimated Days"
+msgstr "الأيام التقديرية"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__estimated_revenue_impact
+msgid "Estimated Revenue Impact"
+msgstr "الأثر التقديري على الإيرادات"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__estimated_schedule_days
+msgid "Estimated Schedule Days"
+msgstr "الأيام التقديرية للجدول الزمني"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__event_date
+msgid "Event Date"
+msgstr "تاريخ الحدث"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order_markup__computation__fixed
+msgid "Fixed Amount"
+msgstr "مبلغ ثابت"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_event__activity_type_icon
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "أيقونة Font Awesome، مثل fa-tasks"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order__partner_id
+msgid "For an owner variation: who is paying for it."
+msgstr "لتغيير المالك: الجهة التي تتحمل تكلفته."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__gross_impact
+msgid "Gross Impact"
+msgstr "إجمالي الأثر"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__has_message
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__has_message
+msgid "Has Message"
+msgstr "يحتوي على رسالة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__priority__2
+msgid "High"
+msgstr "عالية"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_event__probability
+msgid ""
+"How likely this becomes a real change. Reporting only — an estimate is never"
+" weighted into a control figure."
+msgstr ""
+"مدى احتمال أن يصبح هذا تغييرًا فعليًا. للتقارير فقط — لا يدخل التقدير مطلقًا"
+" في أي رقم رقابي."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_approval__id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_markup__id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_revision__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__activity_exception_icon
+msgid "Icon"
+msgstr "الأيقونة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_event__activity_exception_icon
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "أيقونة للإشارة إلى نشاط استثنائي."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__state__identified
+msgid "Identified"
+msgstr "تم التحديد"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_event__message_needaction
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا كان محددًا، فهناك رسائل جديدة تتطلب انتباهك."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_event__message_has_error
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_event__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order__message_has_error
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا كان محددًا، فبعض الرسائل بها خطأ في التسليم."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__line_ids
+msgid "Impact Lines"
+msgstr "بنود الأثر"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__impact_side
+msgid "Impact Side"
+msgstr "جانب الأثر"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__implementation_date
+msgid "Implementation Date"
+msgstr "تاريخ التنفيذ"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid "Implementation skipped: this change had already been applied."
+msgstr "تم تخطي التنفيذ: هذا التغيير مطبق مسبقًا."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order__state__implemented
+msgid "Implemented"
+msgstr "منفذ"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid "Implemented impact lines are immutable. Raise a correcting change."
+msgstr "بنود الأثر المنفذة غير قابلة للتعديل. أنشئ تغييرًا تصحيحيًا."
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid ""
+"Implemented. Budget %(budget)s, commitment %(commitment)s, revenue "
+"%(revenue)s."
+msgstr ""
+"تم التنفيذ. الميزانية %(budget)s، الالتزام %(commitment)s، الإيرادات "
+"%(revenue)s."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__initiated_date
+msgid "Initiated Date"
+msgstr "تاريخ البدء"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order_markup__markup_type__insurance
+msgid "Insurance"
+msgstr "التأمين ضد المخاطر"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__source__internal_management
+msgid "Internal / Management"
+msgstr "داخلي / الإدارة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order__order_type__internal_change
+msgid "Internal Change"
+msgstr "تغيير داخلي"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__is_implemented
+msgid "Is Implemented"
+msgstr "منفذ؟"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__is_potential
+msgid "Is Potential"
+msgstr "محتمل؟"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order__markup_ids
+msgid ""
+"Kept separate from the scope. A markup buried in a unit rate cannot be "
+"negotiated, and cannot be audited."
+msgstr ""
+"تبقى منفصلة عن نطاق العمل. الإضافة المدفونة في سعر الوحدة لا يمكن التفاوض "
+"عليها ولا تدقيقها."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_approval__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_markup__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_revision__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_approval__write_date
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__write_date
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__write_date
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__write_date
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_markup__write_date
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_revision__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__location
+msgid "Location"
+msgstr "الموقع"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__priority__0
+msgid "Low"
+msgstr "منخفضة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__markup_total
+msgid "Markup Total"
+msgstr "إجمالي الإضافات"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_markup__markup_type
+msgid "Markup Type"
+msgstr "نوع الإضافة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__markup_ids
+msgid "Markups"
+msgstr "الإضافات"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "موعد نشاطي النهائي"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__source__ncr_corrective_work
+msgid "NCR Corrective Work"
+msgstr "أعمال تصحيحية لتقرير عدم مطابقة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__negotiated_amount
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__negotiated_amount
+msgid "Negotiated Amount"
+msgstr "المبلغ المتفاوض عليه"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order__state__negotiation
+msgid "Negotiation"
+msgstr "التفاوض"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_event.py:0
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid "New"
+msgstr "جديد"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "حدث التقويم للنشاط التالي"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__activity_summary
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__activity_type_id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__state__no_change
+msgid "No Change"
+msgstr "لا تغيير"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__priority__1
+msgid "Normal"
+msgstr "طبيعية"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__responsible_party__unknown
+msgid "Not Yet Determined"
+msgstr "لم تحدد بعد"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__notes
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__notes
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_revision__notes
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_event__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراء"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_event__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي بها خطأ في التسليم"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__source__omission
+msgid "Omission"
+msgstr "حذف"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_event.py:0
+msgid "Only a draft event can be identified."
+msgstr "لا يمكن تحديد إلا الحدث في حالة المسودة."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_approval__order_id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__order_id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_markup__order_id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_revision__order_id
+msgid "Order"
+msgstr "الأمر"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__order_type
+msgid "Order Type"
+msgstr "نوع الأمر"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__source__other
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order_markup__markup_type__other
+msgid "Other"
+msgstr "أخرى"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order_markup__markup_type__overhead
+msgid "Overhead"
+msgstr "المصاريف العامة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__responsible_party__owner
+msgid "Owner"
+msgstr "المالك"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__partner_id
+msgid "Owner / Customer"
+msgstr "المالك / العميل"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__source__owner_request
+msgid "Owner Request"
+msgstr "طلب المالك"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order_line__impact_side__revenue
+msgid "Owner Revenue"
+msgstr "إيرادات المالك"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order__order_type__owner_variation
+msgid "Owner Variation"
+msgstr "تغيير المالك"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__package_id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__package_id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__package_id
+msgid "Package"
+msgstr "حزمة الأعمال"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order__state__pending_approval
+msgid "Pending Approval"
+msgstr "بانتظار الاعتماد"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_markup__percentage
+msgid "Percentage"
+msgstr "نسبة مئوية"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order_markup__computation__percentage
+msgid "Percentage of Scope"
+msgstr "نسبة من نطاق العمل"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_event.py:0
+msgid ""
+"Possible duplicate of %(refs)s — same project and source document. Nothing "
+"has been merged; somebody should decide."
+msgstr ""
+"تكرار محتمل لـ %(refs)s — نفس المشروع ونفس المستند المصدر. لم يتم دمج أي "
+"شيء؛ يجب أن يتخذ أحد القرار."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__state__pricing
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order__state__pricing
+msgid "Pricing"
+msgstr "التسعير"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__priority
+msgid "Priority"
+msgstr "الأولوية"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__probability
+msgid "Probability (%)"
+msgstr "الاحتمالية (%)"
+
+#. module: atmta_construction_change
+#: model:ir.model.constraint,message:atmta_construction_change.constraint_realestate_construction_change_event_probability_range
+msgid "Probability is a percentage between 0 and 100."
+msgstr "الاحتمالية نسبة مئوية بين 0 و 100."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__source__procurement_change
+msgid "Procurement Change"
+msgstr "تغيير في المشتريات"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order_markup__markup_type__profit
+msgid "Profit"
+msgstr "الربح"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__project_id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__project_id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__project_id
+msgid "Project"
+msgstr "المشروع"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__source__issue
+msgid "Project Issue"
+msgstr "مشكلة في المشروع"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__proposed_amount
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__proposed_amount
+msgid "Proposed Amount"
+msgstr "المبلغ المقترح"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__source__quantity_change
+msgid "Quantity Change"
+msgstr "تغيير في الكمية"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__quotation_reference
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_revision__quotation_reference
+msgid "Quotation Reference"
+msgstr "مرجع عرض السعر"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__quotation_validity
+msgid "Quotation Validity"
+msgstr "صلاحية عرض السعر"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__quote_date
+msgid "Quote Date"
+msgstr "تاريخ عرض السعر"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__source__rfi
+msgid "RFI"
+msgstr "طلب معلومات"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__raised_by_id
+msgid "Raised By"
+msgstr "مقدم بواسطة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__reason
+msgid "Reason"
+msgstr "السبب"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order__approved_days
+msgid ""
+"Recorded here; M8's EOT workflow decides entitlement and moves any "
+"completion date."
+msgstr ""
+"يسجل هنا؛ ومسار تمديد المدة في M8 هو الذي يحدد الاستحقاق ويغير أي تاريخ "
+"إنجاز."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__name
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__name
+msgid "Reference"
+msgstr "المرجع"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_approval__decision__rejected
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__state__rejected
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order__state__rejected
+msgid "Rejected"
+msgstr "مرفوض"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__related_event_ids
+msgid "Related Events"
+msgstr "الأحداث المرتبطة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__requires_approval_by
+msgid "Requires Approval By"
+msgstr "يتطلب اعتماد"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__responsible_id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__responsible_id
+msgid "Responsible"
+msgstr "المسؤول"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__responsible_party
+msgid "Responsible Party"
+msgstr "الطرف المسؤول"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__activity_user_id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_approval__decision__returned
+msgid "Returned for Revision"
+msgstr "أعيد للمراجعة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__revision
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_revision__revision
+msgid "Revision"
+msgstr "المراجعة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "خطأ في إرسال الرسائل النصية القصيرة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__schedule_days
+msgid "Schedule Days"
+msgstr "أيام الجدول الزمني"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_markup__sequence
+msgid "Sequence"
+msgstr "المسلسل"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__responsible_party__shared
+msgid "Shared / Undetermined"
+msgstr "مشترك / غير محدد"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__source__site_instruction
+msgid "Site Instruction"
+msgstr "تعليمات الموقع"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__source
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__source_id
+msgid "Source"
+msgstr "المصدر"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__source_reference
+msgid "Source Document"
+msgstr "المستند المصدر"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__source_model
+msgid "Source Model"
+msgstr "النموذج المصدر"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__source__specification_change
+msgid "Specification Change"
+msgstr "تغيير في المواصفات"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__state
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__state
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__state
+msgid "State"
+msgstr "الحالة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_event__activity_state
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الحالة بناءً على الأنشطة\n"
+"متأخرة: تاريخ الاستحقاق قد مضى\n"
+"اليوم: تاريخ النشاط هو اليوم\n"
+"مخطط لها: أنشطة مستقبلية."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__revision_ids
+msgid "Submission History"
+msgstr "سجل التقديمات"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order__state__submitted
+msgid "Submitted"
+msgstr "مقدم"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid "Submitted %s"
+msgstr "تم التقديم %s"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__submitted_amount
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__submitted_amount
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_revision__submitted_amount
+msgid "Submitted Amount"
+msgstr "المبلغ المقدم"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_revision__submitted_by_id
+msgid "Submitted By"
+msgstr "مقدم بواسطة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__submitted_date
+msgid "Submitted Date"
+msgstr "تاريخ التقديم"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__submitted_days
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_revision__submitted_days
+msgid "Submitted Days"
+msgstr "الأيام المقدمة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_revision__submitted_on
+msgid "Submitted On"
+msgstr "تاريخ التقديم"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order__gross_impact
+msgid ""
+"Sum of absolute line impacts. A transfer nets to zero and is still a "
+"decision worth approving, so authority is judged on this, not on the net."
+msgstr ""
+"مجموع القيم المطلقة لأثر البنود. صافي التحويل صفر لكنه يظل قرارًا يستحق "
+"الاعتماد، لذا تحدد الصلاحية بناء على هذا المجموع وليس على الصافي."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order_markup__markup_type__supervision
+msgid "Supervision"
+msgstr "الإشراف"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order__order_type__supplier_variation
+msgid "Supplier Variation"
+msgstr "تغيير المورد"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_approval__currency_id
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order__currency_id
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order_line__currency_id
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order_markup__currency_id
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order_revision__currency_id
+msgid ""
+"The contract's currency. Control amounts are converted to the company "
+"currency for the cost report; no FX is posted."
+msgstr ""
+"عملة العقد. تحول المبالغ الرقابية إلى عملة الشركة لتقرير التكاليف؛ ولا يتم "
+"ترحيل فروقات صرف."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_event__source_reference
+msgid ""
+"The instruction, RFI or notice this came from. Used to warn about duplicates"
+" rather than to merge anything automatically."
+msgstr ""
+"التعليمات أو طلب المعلومات أو الإشعار الذي نشأ منه هذا. يستخدم للتنبيه إلى "
+"التكرارات بدلًا من دمج أي شيء تلقائيًا."
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid ""
+"This change cannot be approved yet:\n"
+"\n"
+"%s"
+msgstr ""
+"لا يمكن اعتماد هذا التغيير بعد:\n"
+"\n"
+"%s"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_event.py:0
+msgid ""
+"This event already has an approved change order. It cannot be closed as 'no "
+"change'."
+msgstr "لهذا الحدث أمر تغيير معتمد بالفعل. لا يمكن إغلاقه على أنه 'لا تغيير'."
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_event.py:0
+msgid "This event was closed without a change."
+msgstr "تم إغلاق هذا الحدث دون تغيير."
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid ""
+"This omission would reduce %(package)s to %(resulting)s, below the "
+"%(consumed)s already certified or invoiced against it. A contract cannot be "
+"worth less than what has been paid for under it — resolve the certified "
+"value first."
+msgstr ""
+"هذا الحذف سيخفض %(package)s إلى %(resulting)s، أي أقل من %(consumed)s "
+"المعتمد أو المفوتر عليها بالفعل. لا يمكن أن تقل قيمة العقد عما دفع بموجبه — "
+"عالج القيمة المعتمدة أولًا."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__title
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__title
+msgid "Title"
+msgstr "العنوان"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_event__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع النشاط الاستثنائي في السجل."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__state__under_review
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order__state__under_review
+msgid "Under Review"
+msgstr "قيد المراجعة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__source__unforeseen_condition
+msgid "Unforeseen Condition"
+msgstr "ظرف غير متوقع"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__priority__3
+msgid "Urgent"
+msgstr "عاجلة"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_approval__user_id
+msgid "User"
+msgstr "المستخدم"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_event__source__value_engineering
+msgid "Value Engineering"
+msgstr "الهندسة القيمية"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__wbs_id
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order_line__wbs_id
+msgid "WBS"
+msgstr "هيكل تجزئة العمل"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_event__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_change.field_realestate_construction_change_order__website_message_ids
+msgid "Website Messages"
+msgstr "رسائل الموقع الإلكتروني"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_event__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order__website_message_ids
+msgid "Website communication history"
+msgstr "سجل التواصل عبر الموقع الإلكتروني"
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order_line__approved_amount
+msgid ""
+"What authority granted. Written at approval from the negotiated (or "
+"submitted, or estimated) figure unless somebody set it deliberately."
+msgstr ""
+"ما منحته جهة الصلاحية. يكتب عند الاعتماد من المبلغ المتفاوض عليه (أو المقدم،"
+" أو التقديري) ما لم يحدده أحد عمدًا."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order__effective_date
+msgid ""
+"When the change takes commercial effect. Defaults to the approval date."
+msgstr "تاريخ سريان التغيير تجاريًا. الافتراضي هو تاريخ الاعتماد."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_event__event_date
+msgid ""
+"When the underlying event happened, which may be earlier than the day "
+"somebody noticed it."
+msgstr "تاريخ وقوع الحدث الأصلي، وقد يكون قبل اليوم الذي لاحظه فيه أحد."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order__change_event_id
+msgid ""
+"Where this came from. Never lost — one event may produce several orders, and"
+" several events may be consolidated into one."
+msgstr ""
+"مصدر هذا الأمر. لا يفقد أبدًا — قد ينتج عن حدث واحد عدة أوامر، وقد تجمع عدة "
+"أحداث في أمر واحد."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields,help:atmta_construction_change.field_realestate_construction_change_order_line__impact_side
+msgid ""
+"Which side of the project this line moves. A cost increase does not "
+"automatically increase the authorised budget."
+msgstr ""
+"جانب المشروع الذي يؤثر عليه هذا البند. زيادة التكلفة لا تزيد الميزانية "
+"المصرح بها تلقائيًا."
+
+#. module: atmta_construction_change
+#: model:ir.model.fields.selection,name:atmta_construction_change.selection__realestate_construction_change_order__state__withdrawn
+msgid "Withdrawn"
+msgstr "مسحوب"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid "approved"
+msgstr "اعتماد"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_event.py:0
+msgid "assessed"
+msgstr "تقييم"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid "closed"
+msgstr "إغلاق"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid "implemented"
+msgstr "تنفيذ"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_event.py:0
+msgid "marked as requiring a change"
+msgstr "تحديد الحاجة إلى تغيير في"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid "negotiated"
+msgstr "التفاوض على"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_event.py:0
+msgid "priced"
+msgstr "تسعير"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid "rejected"
+msgstr "رفض"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_event.py:0
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid "reviewed"
+msgstr "مراجعة"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid "sent for approval"
+msgstr "إرسال للاعتماد"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid "sent for pricing"
+msgstr "إرسال للتسعير"
+
+#. module: atmta_construction_change
+#. odoo-python
+#: code:addons/atmta_construction_change/models/change_order.py:0
+msgid "submitted"
+msgstr "تقديم"

@@ -51,7 +51,7 @@ function openMenu(label) {
 }
 
 registry.category("web_tour.tours").add("construction_quality_tour", {
-    url: "/odoo/action-real_estate_construction.action_itp",
+    url: "/odoo/action-atmta_construction_quality.action_itp",
     steps: () => [
         {
             content: "The ITP register lists the plan seeded for this tour",
@@ -82,7 +82,7 @@ registry.category("web_tour.tours").add("construction_quality_tour", {
             trigger: "body",
             run: () => {
                 window.location.href =
-                    "/odoo/action-real_estate_construction.action_inspection";
+                    "/odoo/action-atmta_construction_quality.action_inspection";
             },
         },
         {
@@ -110,7 +110,7 @@ registry.category("web_tour.tours").add("construction_quality_tour", {
             trigger: "body",
             run: () => {
                 window.location.href =
-                    "/odoo/action-real_estate_construction.action_ncr";
+                    "/odoo/action-atmta_construction_quality.action_ncr";
             },
         },
         {
@@ -134,7 +134,7 @@ registry.category("web_tour.tours").add("construction_quality_tour", {
             trigger: "body",
             run: () => {
                 window.location.href =
-                    "/odoo/action-real_estate_construction.action_daily_report";
+                    "/odoo/action-atmta_construction_site.action_daily_report";
             },
         },
         {

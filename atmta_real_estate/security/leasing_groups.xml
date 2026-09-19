@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Leasing role separation (Phase 27).
+
+  The pre-upgrade module had three generic groups (Read-only / User / Manager)
+  which could not express the difference between "an agent who prepares
+  proposals" and "a manager who signs off on rent and forfeits deposits".
+
+  Four leasing roles are added, each implying the one below it, plus one
+  standalone override flag:
+
+      Read-only
+        \_ Rental User          view properties, leases, obligations
+             \_ Leasing Agent   create proposals, manage prospects & renewals
+                  \_ Property Manager   activate leases, move-in/out, availability
+                       \_ Rental Manager   approve commercials, terminate,
+                                           refund/forfeit deposits
+
+  Each role implies a legacy group, so every downstream module's ACL rows keep
+  working. The legacy groups are hidden aliases (security.xml); users who held
+  one were given the matching role by migrations/0.8.
+
+  The four roles are the only groups in the Rental category, so the user form
+  shows them as one choice. The two flags live in Rental Permissions.
+
+  Accounting rights are deliberately NOT granted by any of these. A Rental
+  Manager can raise an invoice through the lease workflow, but their access to
+  account.move, journals and reconciliation is whatever Odoo Accounting gives
+  them – this module never elevates it.
+-->
+<odoo noupdate="1">
+
+    <record id="group_rental_user" model="res.groups">
+        <field name="name">Rental User</field>
+        <field name="category_id" ref="module_category_real_estate"/>
+        <field name="implied_ids"
+               eval="[(4, ref('group_realestate_readonly')), (4, ref('base.group_user'))]"/>
+        <field name="comment">View properties, leases and billing obligations.
+            Can create draft records where the access rules allow it, but cannot
+            activate a lease or move money.</field>
+    </record>
+
+    <record id="group_rental_agent" model="res.groups">
+        <field name="name">Leasing Agent</field>
+        <field name="category_id" ref="module_category_real_estate"/>
+        <field name="implied_ids" eval="[(4, ref('group_rental_user')), (4, ref('group_realestate_user'))]"/>
+        <field name="comment">Create and negotiate lease proposals, manage
+            parties, charges and incentives, prepare renewals, and generate
+            billing schedules. Cannot approve commercial terms or activate a
+            lease.</field>
+    </record>
+
+    <record id="group_property_manager" model="res.groups">
+        <field name="name">Property Manager</field>
+        <field name="category_id" ref="module_category_real_estate"/>
+        <field name="implied_ids" eval="[(4, ref('group_rental_agent'))]"/>
+        <field name="comment">Run the operational side: activate leases, manage
+            availability and overrides, move-in / move-out, unit turns, meters
+            and maintenance.</field>
+    </record>
+
+    <record id="group_rental_manager" model="res.groups">
+        <field name="name">Rental Manager</field>
+        <field name="category_id" ref="module_category_real_estate"/>
+        <field name="implied_ids" eval="[(4, ref('group_property_manager')), (4, ref('group_realestate_manager'))]"/>
+        <!-- The administrator gets the top Rental role on install, as Odoo's own
+             applications do; otherwise the Rental app is invisible to them and
+             every lease raises an access error until a role is assigned. This
+             file is noupdate: existing databases keep their role assignments
+             (migration 0.8 mapped users from the legacy groups). -->
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        <field name="comment">Approve commercial changes: lease approval, rent
+            escalations, incentives, amendments, terminations and deposit
+            refunds or forfeitures. Full access to management reporting.</field>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- Permissions granted on top of a role                           -->
+    <!-- ============================================================= -->
+    <record id="module_category_rental_permissions" model="ir.module.category">
+        <field name="name">Rental Permissions</field>
+        <field name="sequence">21</field>
+    </record>
+
+    <!--
+      Segregation-of-duties override. By default a user cannot approve a lease
+      they created themselves; small teams where one person legitimately does
+      both can be granted this. Deliberately a separate flag rather than a
+      level in the hierarchy, so granting it is a visible, auditable decision.
+    -->
+    <record id="group_rental_self_approval" model="res.groups">
+        <field name="name">Allow Self-Approval</field>
+        <field name="category_id" ref="module_category_rental_permissions"/>
+        <field name="comment">Permits approving a lease, amendment or renewal
+            that the same user created. Grant sparingly — it removes the
+            four-eyes control on commercial terms.</field>
+    </record>
+
+    <!--
+      Rental Users and Leasing Agents see their own and unassigned leases
+      (leasing_rules.xml). This flag lifts that narrowing without granting any
+      other right: company isolation still applies, and a user without a role
+      gets nothing from it.
+    -->
+    <record id="group_rental_all_portfolios" model="res.groups">
+        <field name="name">See All Portfolios</field>
+        <field name="category_id" ref="module_category_rental_permissions"/>
+        <field name="comment">Lets a Rental User or Leasing Agent see every
+            lease in their companies, not only their own and unassigned ones.
+            Property Managers and above already see every lease. Given to users
+            moved from the legacy Real Estate groups, who saw every lease
+            before.</field>
+    </record>
+
+</odoo>

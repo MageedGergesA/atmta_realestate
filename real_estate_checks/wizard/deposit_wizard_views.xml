@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_deposit_wizard_form" model="ir.ui.view">
+        <field name="name">realestate.check.deposit.wizard.form</field>
+        <field name="model">realestate.check.deposit.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Deposit Workbench">
+                <sheet>
+                    <group>
+                        <group string="Destination">
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="journal_id"/>
+                            <field name="payment_method_line_id"
+                                   options="{'no_create': True}"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                        </group>
+                        <group string="Slip">
+                            <field name="deposit_date"/>
+                            <field name="bank_slip_ref"/>
+                            <field name="horizon_days"/>
+                            <field name="check_count"/>
+                            <field name="total_amount"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="status">
+                        Confirming the slip registers one inbound payment per cheque.
+                        That records <b>money on its way</b>; cheques become
+                        <b>Cleared</b> only when Odoo reconciles those payments
+                        against a bank transaction.
+                    </div>
+                    <notebook>
+                        <page string="Selected">
+                            <field name="check_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="check_number"/>
+                                    <field name="bank_id"/>
+                                    <field name="partner_id"/>
+                                    <field name="due_date"/>
+                                    <field name="amount" sum="Total"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Eligible Today">
+                            <button name="action_select_all_eligible" type="object"
+                                    string="Select All Eligible" class="btn-secondary mb-2"/>
+                            <field name="eligible_check_ids" readonly="1">
+                                <list decoration-warning="is_overdue_for_deposit">
+                                    <field name="name"/>
+                                    <field name="check_number"/>
+                                    <field name="partner_id"/>
+                                    <field name="bank_id"/>
+                                    <field name="due_date"/>
+                                    <field name="days_to_due"/>
+                                    <field name="amount" sum="Total"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="sale_contract_id" optional="show"/>
+                                    <field name="project_id" optional="show"/>
+                                    <field name="location_id" optional="show"/>
+                                    <field name="is_overdue_for_deposit" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <button name="action_create_deposit" type="object" string="Create Deposit"
+                            class="oe_highlight"/>
+                    <button special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_open_deposit_wizard" model="ir.actions.act_window">
+        <field name="name">Deposit Workbench</field>
+        <field name="res_model">realestate.check.deposit.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="model_realestate_check"/>
+        <field name="binding_view_types">list</field>
+    </record>
+</odoo>

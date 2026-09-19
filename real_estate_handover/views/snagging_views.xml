@@ -34,7 +34,7 @@
                     <button name="action_verify" type="object" string="Verify Fix"
                             class="oe_highlight" invisible="state != 'resolved'"/>
                     <button name="action_reject" type="object" string="Reject"
-                            invisible="state in ('verified','rejected')"/>
+                            invisible="state != 'resolved'"/>
                     <button name="action_reopen" type="object" string="Reopen"
                             invisible="state not in ('resolved','verified','rejected')"/>
                     <field name="state" widget="statusbar"/>

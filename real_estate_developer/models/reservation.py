@@ -10,13 +10,20 @@ class UnitReservation(models.Model):
     _description = 'Unit Reservation / Booking'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = 'create_date desc'
+    _check_company_auto = True
 
     name = fields.Char(string='Reference', copy=False, required=True, readonly=True, default=lambda self: _('New'))
     property_id = fields.Many2one(
         'realestate.property', string='Unit', required=True, ondelete='restrict', tracking=True,
     )
-    project_id = fields.Many2one(related='property_id.project_id', store=True, readonly=True)
+    project_id = fields.Many2one(related='property_id.project_id', store=True, readonly=True, index=True)
     phase_id = fields.Many2one(related='property_id.phase_id', store=True, readonly=True)
+    # The unit decides the company. A reservation cannot belong anywhere else,
+    # so this is related-stored rather than a free field that could drift.
+    company_id = fields.Many2one(
+        'res.company', related='property_id.company_id', store=True,
+        readonly=True, index=True,
+    )
 
     partner_id = fields.Many2one('res.partner', string='Buyer', required=True, tracking=True)
     agent_id = fields.Many2one('res.users', string='Sales Agent', default=lambda self: self.env.user, tracking=True)

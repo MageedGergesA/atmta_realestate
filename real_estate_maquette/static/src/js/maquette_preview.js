@@ -16,14 +16,26 @@ export class MaquettePreview3D extends Component {
 
     setup() {
         this.orm = useService("orm");
-        this.state = useState({ projects: [], projectId: 0 });
+        this.state = useState({ projects: [], projectId: 0, loadError: "" });
         onWillStart(async () => {
-            this.state.projects = await this.orm.searchRead(
-                "realestate.project",
-                [["has_maquette", "=", true]],
-                ["id", "name", "code"],
-                { order: "name" },
-            );
+            // Project Plans is shown to every internal user, but only roles
+            // that may read development projects can list them. Anyone else
+            // got a crashed screen; they now get the reason, as on the 2D plan.
+            try {
+                this.state.projects = await this.orm.searchRead(
+                    "realestate.project",
+                    [["has_maquette", "=", true]],
+                    ["id", "name", "code"],
+                    { order: "name" },
+                );
+            } catch (err) {
+                console.warn("[maquette] Opening the 3D maquette failed", err);
+                this.state.projects = [];
+                this.state.loadError =
+                    "The 3D maquette could not be loaded. You may not have access " +
+                    "to development projects.";
+                return;
+            }
             if (this.state.projects.length) {
                 this.state.projectId = this.state.projects[0].id;
             }

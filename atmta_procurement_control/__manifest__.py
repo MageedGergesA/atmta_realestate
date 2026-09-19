@@ -32,6 +32,7 @@ acyclic. Wave 6 / AD-008.
         'security/control_rules.xml',
         'data/control_sequences.xml',
         'data/control_cron.xml',
+        'data/date_refresh_cron.xml',
         # Wave 11 — approval and control screens moved from the emptied shell.
         'views/approval_views.xml',
         'views/procurement_control_views.xml',

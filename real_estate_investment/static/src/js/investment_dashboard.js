@@ -1,7 +1,8 @@
 /** @odoo-module **/
 
 import { registry } from "@web/core/registry";
-import { Component, onMounted, onWillUnmount, useEffect, useRef, useState } from "@odoo/owl";
+import { Component, onMounted, onWillStart, onWillUnmount, useEffect, useRef, useState } from "@odoo/owl";
+import { loadBundle } from "@web/core/assets";
 import { useService } from "@web/core/utils/hooks";
 
 const FEAS_COLORS = { draft: "#6c757d", approved: "#28a745", rejected: "#dc3545", archived: "#9e9e9e" };
@@ -25,6 +26,13 @@ export class InvestmentDashboard extends Component {
     static props = ["*"];
 
     setup() {
+        // Chart.js is loaded on demand from Odoo's own `web.chartjs_lib`
+        // bundle. This dashboard previously relied on a copy that
+        // atmta_real_estate pushed into web.assets_backend for every page;
+        // that duplicate was removed in atmta_real_estate 0.4, so each
+        // consumer now loads the library itself, as Odoo's graph view does.
+        onWillStart(() => loadBundle("web.chartjs_lib"));
+
         this.orm = useService("orm");
         this.action = useService("action");
         this.mapRef = useRef("map");
@@ -80,8 +88,9 @@ export class InvestmentDashboard extends Component {
         patchLeaflet();
         if (!this.map) {
             this.map = L.map(this.mapRef.el, { center: [24.7136, 46.6753], zoom: 5, preferCanvas: true });
-            L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
-                attribution: '&copy; CARTO', maxZoom: 19, subdomains: "abcd",
+            // OpenStreetMap's own tiles: free, no API key (CARTO now requires one).
+            L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 19,
             }).addTo(this.map);
             this.cluster = L.markerClusterGroup({ chunkedLoading: true });
             this.map.addLayer(this.cluster);

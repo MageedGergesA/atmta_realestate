@@ -1,223 +1,562 @@
-from datetime import timedelta
+"""Rental dashboard (Phase 4; RENTAL_UX_SPEC.md §5).
 
-from odoo import api, fields, models
+The dashboard answers, in order: what needs my attention, how is the portfolio
+doing, and how are things trending.
+
+**One definition per tile.** ``_tile_definitions`` is the single source of what
+every number means: its model, its domain, how it is measured and who may see
+it. ``get_work`` counts from those definitions and ``action_drill`` opens the
+records from the same definitions, so a tile and the list it opens cannot
+disagree.
+
+**Today, not a stored counter.** Every date test compares the authoritative
+date (end date, due date, scheduled date) with the user's today. Move-in and
+move-out day ranges are computed in the user's timezone.
+
+**Mine or team.** In *Mine*, lease-based tiles count only leases the user is
+responsible for; *Team* counts every lease the user may see. Record rules and
+company isolation apply in both.
+
+**Roles.** A tile is sent only to the roles that act on it. Hiding a tile is
+not security: the drilldown opens an ordinary list, so ACLs and record rules
+still decide what the user sees.
+
+Occupancy is measured on leasable units only: compounds, buildings and floors
+are containers, not units that can be let.
+"""
+
+import logging
+from datetime import datetime, time, timedelta
+
+import pytz
+from dateutil.relativedelta import relativedelta
+
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
+from odoo.osv import expression
+
+from .lease_states import OCCUPYING_LIFECYCLE, OVERDUE_BUCKETS
+
+_logger = logging.getLogger(__name__)
+
+#: Lease lifecycle states that count as a running lease on the dashboard.
+LIVE_LEASES = ('active', 'notice')
+
+#: How many months of history the trend charts show.
+TREND_MONTHS = 12
+
+SCOPES = ('mine', 'team')
+
+AGENT = 'atmta_real_estate.group_rental_agent'
+PROPERTY_MANAGER = 'atmta_real_estate.group_property_manager'
+RENTAL_MANAGER = 'atmta_real_estate.group_rental_manager'
+
+#: Models whose activities count as rental work.
+RENTAL_ACTIVITY_MODELS = (
+    'realestate.contract', 'realestate.contract.renewal',
+    'realestate.contract.amendment', 'realestate.contract.termination',
+    'realestate.contract.deposit', 'realestate.move.in', 'realestate.move.out',
+    'realestate.unit.turn', 'realestate.maintenance.request',
+)
+
+MOVE_IN_OPEN = ('schedule', 'inspection')
+MOVE_OUT_OPEN = ('schedule', 'inspection', 'assessment')
+OPEN_RENEWALS = ('draft', 'proposed', 'negotiating', 'approved', 'accepted')
 
 
 class RentalDashboard(models.AbstractModel):
     _name = 'realestate.rental.dashboard'
     _description = 'Rental Dashboard data provider'
 
+    # ==================================================================
+    # Entry points
+    # ==================================================================
     @api.model
-    def get_data(self):
-        Contract = self.env['realestate.contract']
-        Payment = self.env['realestate.contract.payment']
-        Property = self.env['realestate.property']
-        Maintenance = self.env['realestate.maintenance.request']
-
-        today = fields.Date.today()
-        month_start = today.replace(day=1)
-        next_30 = today + timedelta(days=30)
-        next_60 = today + timedelta(days=60)
-        next_90 = today + timedelta(days=90)
-
-        # ---- Module is standalone — every property is rental-relevant ----
-        rental_props_set = Property.search([])
-        rental_prop_ids = rental_props_set.ids
-        prop_filter = []  # no extra filter
-
-        # ---- KPI ----
-        all_props = len(rental_prop_ids)
-        rented_props = Property.search_count([('state', '=', 'rented')])
-        available_props = Property.search_count([('state', '=', 'available')])
-        maintenance_props = Property.search_count([('state', '=', 'maintenance')])
-
-        active_contracts = Contract.search_count([('state', 'in', ('confirmed', 'invoiced', 'active'))])
-        draft_contracts = Contract.search_count([('state', '=', 'draft')])
-
-        # "Collected" = the payment's invoice is actually reconciled
-        # (state is computed from the move's payment_state).
-        paid_domain = [('state', '=', 'paid')]
-
-        paid_payments = Payment.search(paid_domain + [
-            ('date_due', '>=', month_start),
-            ('date_due', '<=', today),
-        ])
-        revenue_collected_mtd = sum(paid_payments.mapped('amount'))
-
-        expected_mtd = Payment.search([
-            ('date_due', '>=', month_start),
-            ('date_due', '<=', today),
-        ])
-        revenue_expected_mtd = sum(expected_mtd.mapped('amount'))
-
-        overdue_payments = Payment.search([
-            ('date_due', '<', today),
-            ('state', 'not in', ('paid', 'cancelled')),
-        ])
-        overdue_amount = sum(overdue_payments.mapped('amount'))
-        overdue_count = len(overdue_payments)
-
-        kpis = {
-            'occupancy_rate': round((rented_props / all_props * 100.0), 1) if all_props else 0.0,
-            'rented_count': rented_props,
-            'available_count': available_props,
-            'maintenance_count': maintenance_props,
-            'total_properties': all_props,
-            'active_contracts': active_contracts,
-            'draft_contracts': draft_contracts,
-            'revenue_collected_mtd': revenue_collected_mtd,
-            'revenue_expected_mtd': revenue_expected_mtd,
-            'collection_rate': round((revenue_collected_mtd / revenue_expected_mtd * 100.0), 1) if revenue_expected_mtd else 0.0,
-            'overdue_amount': overdue_amount,
-            'overdue_count': overdue_count,
-        }
-
-        # ---- Property state distribution (donut) ----
-        prop_state_data = {
-            'available': available_props,
-            'reserved': Property.search_count([('state', '=', 'reserved')]),
-            'rented': rented_props,
-            'maintenance': maintenance_props,
-            'inactive': Property.search_count([('state', '=', 'inactive')]),
-        }
-
-        # ---- Contract state distribution (donut) ----
-        contract_state_data = {}
-        for st in ('draft', 'confirmed', 'invoiced', 'active', 'expired', 'terminated'):
-            contract_state_data[st] = Contract.search_count([('state', '=', st)])
-
-        # ---- Revenue trend (last 6 months) ----
-        revenue_trend_labels = []
-        revenue_trend_collected = []
-        revenue_trend_expected = []
-        from dateutil.relativedelta import relativedelta
-        for i in range(5, -1, -1):
-            m_start = (today.replace(day=1) - relativedelta(months=i))
-            m_end = (m_start + relativedelta(months=1)) - timedelta(days=1)
-            revenue_trend_labels.append(m_start.strftime('%b %Y'))
-            month_payments = Payment.search([('date_due', '>=', m_start), ('date_due', '<=', m_end)])
-            collected = sum(p.amount for p in month_payments if p.state == 'paid')
-            expected = sum(month_payments.mapped('amount'))
-            revenue_trend_collected.append(round(collected, 2))
-            revenue_trend_expected.append(round(expected, 2))
-
-        # ---- Top tenants by total contracted value (any payment state) ----
-        tenant_data = {}
-        for p in Payment.search([]):
-            partner = p.contract_id.partner_id
-            if not partner:
-                continue
-            tenant_data[partner.name] = tenant_data.get(partner.name, 0.0) + p.amount
-        top_tenants = sorted(tenant_data.items(), key=lambda x: x[1], reverse=True)[:5]
-
-        # ---- Properties by city — rental-scoped ----
-        properties_by_city = {}
-        for prop in rental_props_set:
-            city = prop.city or 'Unspecified'
-            properties_by_city[city] = properties_by_city.get(city, 0) + 1
-        properties_by_city_sorted = sorted(properties_by_city.items(), key=lambda x: x[1], reverse=True)[:10]
-
-        # ---- Map data ----
-        map_props = Property.search_read(
-            ['|', ('latitude', '!=', 0), ('longitude', '!=', 0)],
-            ['id', 'name', 'property_code', 'latitude', 'longitude', 'state', 'city', 'rental_status'],
-        )
-
-        # ---- Hierarchy — include any top-level property that has rental descendants ----
-        # Roots whose subtree contains at least one rental-scoped unit.
-        rental_root_ids = set()
-        for p in rental_props_set:
-            if p.parent_path:
-                rental_root_ids.add(int(p.parent_path.split('/')[0]))
-            else:
-                rental_root_ids.add(p.id)
-        roots = Property.browse(list(rental_root_ids))
-        hierarchy = []
-        for root in roots:
-            # Only count descendants that are rental-scoped
-            children = root.child_ids.filtered(lambda c: c.id in rental_prop_ids) if root.child_ids else root.child_ids
-            hierarchy.append({
-                'id': root.id,
-                'name': root.name,
-                'property_code': root.property_code,
-                'state': root.state,
-                'rental_status': root.rental_status if 'rental_status' in root._fields else 'not_rented',
-                'hierarchy_level': root.hierarchy_level,
-                'child_count': len(children),
-                'occupied_count': len(children.filtered(lambda c: c.state == 'rented')),
-                'available_count': len(children.filtered(lambda c: c.state == 'available')),
-                'city': root.city,
-            })
-
-        # ---- Upcoming expirations ----
-        expiring_30 = Contract.search([
-            ('state', 'in', ('active', 'invoiced', 'confirmed')),
-            ('end_date', '>=', today),
-            ('end_date', '<=', next_30),
-        ], order='end_date asc', limit=20)
-        expiring_60 = Contract.search([
-            ('state', 'in', ('active', 'invoiced', 'confirmed')),
-            ('end_date', '>=', today),
-            ('end_date', '<=', next_60),
-        ])
-        expiring_90 = Contract.search([
-            ('state', 'in', ('active', 'invoiced', 'confirmed')),
-            ('end_date', '>=', today),
-            ('end_date', '<=', next_90),
-        ])
-        expirations = [{
-            'id': c.id,
-            'name': c.name,
-            'partner_name': c.partner_id.name or '',
-            'end_date': c.end_date.isoformat() if c.end_date else None,
-            'days_left': (c.end_date - today).days if c.end_date else 0,
-        } for c in expiring_30]
-
-        # ---- Overdue payments list ----
-        overdue_list = [{
-            'id': p.id,
-            'name': p.name,
-            'contract_name': p.contract_id.name or '',
-            'partner_name': p.contract_id.partner_id.name or '',
-            'date_due': p.date_due.isoformat() if p.date_due else None,
-            'days_overdue': (today - p.date_due).days if p.date_due else 0,
-            'amount': p.amount,
-        } for p in overdue_payments.sorted('date_due')[:20]]
-
-        # ---- Open maintenance ----
-        open_maintenance = Maintenance.search([
-            ('state', 'in', ('draft', 'scheduled', 'in_progress')),
-        ], order='request_date desc', limit=20)
-        maintenance_list = [{
-            'id': m.id,
-            'name': m.name,
-            'property_name': m.property_id.display_name if m.property_id else '',
-            'request_date': m.request_date.isoformat() if m.request_date else None,
-            'scheduled_date': m.scheduled_date.isoformat() if m.scheduled_date else None,
-            'state': m.state,
-        } for m in open_maintenance]
-
+    def get_work(self, scope='mine'):
+        """The tiles: My Work and Portfolio Health, for this user's roles."""
+        scope = self._check_scope(scope)
+        today = fields.Date.context_today(self)
+        definitions = self._visible_tiles(today, scope)
+        values = self._tile_values(definitions)
+        sections = []
+        for section_id, title in self._sections():
+            tiles = [self._tile_payload(tile, values[tile['key']])
+                     for tile in definitions if tile['section'] == section_id]
+            if tiles:
+                sections.append({'id': section_id, 'title': title, 'tiles': tiles})
+        company = self.env.company
         return {
-            'kpis': kpis,
-            'property_states': prop_state_data,
-            'contract_states': contract_state_data,
-            'revenue_trend': {
-                'labels': revenue_trend_labels,
-                'collected': revenue_trend_collected,
-                'expected': revenue_trend_expected,
-            },
-            'top_tenants': top_tenants,
-            'properties_by_city': properties_by_city_sorted,
-            'map_props': map_props,
-            'hierarchy': hierarchy,
-            'expirations': {
-                'list': expirations,
-                'count_30': len(expirations),
-                'count_60': len(expiring_60),
-                'count_90': len(expiring_90),
-            },
-            'overdue': overdue_list,
-            'maintenance': maintenance_list,
-            'currency': self.env.company.currency_id.symbol or '',
-            'company_id': self.env.company.id,
+            'sections': sections,
+            'scope': scope,
+            'quick_actions': self._visible_quick_actions(),
+            'currency_id': company.currency_id.id,
+            'company_id': company.id,
+            'company_name': company.display_name,
+            'as_of': today.isoformat(),
         }
+
+    @api.model
+    def get_trends(self):
+        """The charts, loaded after the tiles."""
+        today = fields.Date.context_today(self)
+        company_ids = self.env.companies.ids
+        return {
+            'charts': {
+                'billed_vs_collected': self._billed_vs_collected(today, company_ids),
+                'arrears_aging': self._arrears_aging(company_ids),
+                'expiries_by_month': self._expiries_by_month(today, company_ids),
+                'occupancy_trend': self._occupancy_trend(today, company_ids),
+            },
+            'currency_id': self.env.company.currency_id.id,
+        }
+
+    # ==================================================================
+    # Map
+    # ==================================================================
+    #: Most units the Overview's map card draws. Units → Map shows every one.
+    MAP_UNIT_LIMIT = 2000
+
+    @api.model
+    def get_map(self):
+        """Leasable units with coordinates, for the Overview's map card.
+
+        Portfolio-wide, like the charts. Read as the user, so record rules and
+        company isolation decide which units appear; units without a company
+        are left out, as they are from every tile.
+        """
+        Property = self.env['realestate.property']
+        labels = dict(Property._fields['state']._description_selection(self.env))
+        rows = Property.search_read(
+            [('is_leasable', '=', True), ('company_id', 'in', self.env.companies.ids)],
+            ['name', 'property_code', 'latitude', 'longitude', 'state'],
+            order='property_code, id')
+        units, without_coordinates = [], 0
+        for row in rows:
+            if not (row['latitude'] or row['longitude']):
+                without_coordinates += 1
+                continue
+            units.append({
+                'id': row['id'],
+                'name': row['name'],
+                'code': row['property_code'] or '',
+                'lat': row['latitude'],
+                'lng': row['longitude'],
+                'status': row['state'] or '',
+                'status_label': labels.get(row['state'], row['state'] or ''),
+            })
+        return {
+            'units': units[:self.MAP_UNIT_LIMIT],
+            'truncated': len(units) > self.MAP_UNIT_LIMIT,
+            'without_coordinates': without_coordinates,
+        }
+
+    @api.model
+    def action_open_map(self):
+        """Units → Map, the full-screen map with filters."""
+        return self.env['ir.actions.actions']._for_xml_id(
+            'atmta_real_estate.action_properties_map_dashboard')
+
+    @api.model
+    def action_open_unit(self, unit_id):
+        """Open a unit picked on the map card."""
+        unit = self.env['realestate.property'].browse(int(unit_id)).exists()
+        if not unit:
+            raise UserError(_("This unit no longer exists."))
+        unit.check_access('read')
+        return self._form_action(unit.display_name, 'realestate.property', unit.id)
+
+    # ==================================================================
+    # Tile definitions -- the single source of what each number means
+    # ==================================================================
+    @api.model
+    def _sections(self):
+        return [('work', _('My Work')), ('portfolio', _('Portfolio Health'))]
+
+    @api.model
+    def _check_scope(self, scope):
+        if scope not in SCOPES:
+            raise UserError(_("Unknown dashboard scope '%s'.") % scope)
+        return scope
+
+    @api.model
+    def _day_start_utc(self, day):
+        """Midnight of ``day`` in the user's timezone, as a naive UTC datetime."""
+        tz = pytz.timezone(self.env.user.tz or 'UTC')
+        local = tz.localize(datetime.combine(day, time.min))
+        return local.astimezone(pytz.UTC).replace(tzinfo=None)
+
+    @api.model
+    def _occupied_on(self, day, negate=False):
+        """Units a live lease physically holds on ``day``, read from the dates.
+
+        The same rule as ``realestate.contract.property.line._compute_occupancy``,
+        evaluated for ``day`` when searched, so a lease that starts or ends
+        today is counted correctly before the daily refresh has run.
+        """
+        return [('property_line_ids', 'not any' if negate else 'any', [
+            ('lifecycle_state', 'in', list(OCCUPYING_LIFECYCLE)),
+            ('start_date', '<=', day),
+            '|', ('end_date', '=', False), ('end_date', '>=', day),
+            '|', ('move_out_date', '=', False), ('move_out_date', '>', day),
+        ])]
+
+    @api.model
+    def _arrears_domain(self, company_ids):
+        return [('company_id', 'in', company_ids),
+                ('amount_residual', '>', 0),
+                ('state', '=', 'invoiced')]
+
+    @api.model
+    def _tile_definitions(self, today, scope):
+        """Every tile, before role filtering.
+
+        Each definition: ``key``, ``section``, ``label``, ``model``, ``domain``,
+        ``measure`` (``count``, ``sum:<field>`` or ``ratio:<num>/<den>``),
+        ``format``, ``groups`` (an xmlid, or None for everyone), ``warn`` (show
+        a warning when non-zero), ``hint`` and ``title`` (the drilldown's name).
+        The *Mine* restriction is already applied to ``domain``.
+        """
+        uid = self.env.uid
+        company = [('company_id', 'in', self.env.companies.ids)]
+        mine = scope == 'mine'
+
+        def lease_scope(path):
+            return [(path, '=', uid)] if mine else []
+
+        leasable = [('is_leasable', '=', True)] + company
+        live = [('lifecycle_state', 'in', list(LIVE_LEASES))]
+        week_start = self._day_start_utc(today)
+        week_end = self._day_start_utc(today + timedelta(days=7))
+        currency = self.env.company.currency_id
+
+        def expiring(days):
+            return (live + company + lease_scope('user_id')
+                    + [('end_date', '>=', today),
+                       ('end_date', '<=', today + timedelta(days=days))])
+
+        Deposit = [
+            '|', ('state', '=', 'requested'),
+            '&', ('state', 'in', ('received', 'held', 'partially_refunded')),
+            ('contract_id.lifecycle_state', 'in', ('ended', 'terminated'))]
+
+        return [
+            # ---------------- My Work ----------------
+            dict(key='leases_to_approve', section='work', label=_('Leases to Approve'),
+                 model='realestate.contract', groups=RENTAL_MANAGER, warn=True,
+                 domain=company + [('lifecycle_state', '=', 'pending_approval')]),
+            dict(key='amendments_to_approve', section='work', label=_('Amendments to Approve'),
+                 model='realestate.contract.amendment', groups=RENTAL_MANAGER, warn=True,
+                 domain=company + [('state', '=', 'proposed')]),
+            dict(key='terminations_to_approve', section='work',
+                 label=_('Terminations to Approve'),
+                 model='realestate.contract.termination', groups=RENTAL_MANAGER, warn=True,
+                 domain=company + [('state', '=', 'notice_given')]),
+            dict(key='signatures_waiting', section='work', label=_('Awaiting Signature'),
+                 model='realestate.contract', groups=AGENT,
+                 domain=company + lease_scope('user_id')
+                 + [('lifecycle_state', '=', 'pending_signature'),
+                    ('signature_status', '!=', 'signed')]),
+            dict(key='move_ins_next_7_days', section='work', label=_('Move-Ins, Next 7 Days'),
+                 model='realestate.move.in', groups=PROPERTY_MANAGER,
+                 domain=company + lease_scope('contract_id.user_id')
+                 + [('state', 'in', MOVE_IN_OPEN),
+                    ('scheduled_date', '>=', week_start), ('scheduled_date', '<', week_end)]),
+            dict(key='move_outs_next_7_days', section='work', label=_('Move-Outs, Next 7 Days'),
+                 model='realestate.move.out', groups=PROPERTY_MANAGER,
+                 domain=company + lease_scope('contract_id.user_id')
+                 + [('state', 'in', MOVE_OUT_OPEN),
+                    ('scheduled_date', '>=', week_start), ('scheduled_date', '<', week_end)]),
+            dict(key='overdue_obligations', section='work', label=_('Overdue Obligations'),
+                 model='realestate.contract.payment', groups=AGENT, warn=True,
+                 domain=self._arrears_domain(self.env.companies.ids)
+                 + lease_scope('contract_id.user_id') + [('date_due', '<', today)]),
+            dict(key='expiring_30_no_renewal', section='work',
+                 label=_('Expiring in 30 Days, No Renewal'),
+                 model='realestate.contract', groups=AGENT, warn=True,
+                 domain=expiring(30) + [('renewal_state', '=', False)]),
+            dict(key='renewals_in_progress', section='work', label=_('Renewals in Progress'),
+                 model='realestate.contract.renewal', groups=AGENT,
+                 domain=company + lease_scope('user_id') + [('state', 'in', OPEN_RENEWALS)]),
+            dict(key='notices_to_process', section='work', label=_('Leases on Notice'),
+                 model='realestate.contract', groups=PROPERTY_MANAGER,
+                 domain=company + lease_scope('user_id') + [('lifecycle_state', '=', 'notice')]),
+            dict(key='deposits_to_settle', section='work', label=_('Deposits to Settle'),
+                 model='realestate.contract.deposit', groups=PROPERTY_MANAGER,
+                 hint=_("Requested but not received, or still held on a lease that has ended."),
+                 domain=company + lease_scope('contract_id.user_id') + Deposit),
+            dict(key='my_activities', section='work', label=_('My Activities Due'),
+                 model='mail.activity', groups=None,
+                 domain=[('user_id', '=', uid), ('date_deadline', '<=', today),
+                         ('res_model', 'in', list(RENTAL_ACTIVITY_MODELS))]),
+            # ---------------- Portfolio Health ----------------
+            dict(key='available_to_lease', section='portfolio', label=_('Available to Lease'),
+                 model='realestate.property', groups=None,
+                 domain=leasable + [('is_available_for_lease', '=', True)]),
+            dict(key='occupied_units', section='portfolio', label=_('Occupied Units'),
+                 model='realestate.property', groups=None,
+                 domain=leasable + self._occupied_on(today)),
+            dict(key='occupancy_rate', section='portfolio', label=_('Occupancy'),
+                 model=None, groups=None, measure='ratio:occupied_units/leasable_units',
+                 format='percent', hint=_("Occupied units as a share of leasable units.")),
+            dict(key='active_leases', section='portfolio', label=_('Active Leases'),
+                 model='realestate.contract', groups=None,
+                 domain=live + company + lease_scope('user_id')),
+            dict(key='outstanding_rent', section='portfolio', label=_('Outstanding Rent'),
+                 model='realestate.contract.payment', groups=AGENT, warn=True,
+                 measure='sum:amount_residual', format='monetary',
+                 hint=_("Unpaid balance of invoiced obligations in %s.", currency.name),
+                 domain=self._arrears_domain(self.env.companies.ids)
+                 + lease_scope('contract_id.user_id')
+                 + [('currency_id', '=', currency.id)]),
+            dict(key='expiring_30', section='portfolio', label=_('Expiring in 30 Days'),
+                 model='realestate.contract', groups=AGENT, domain=expiring(30)),
+            dict(key='expiring_60', section='portfolio', label=_('Expiring in 60 Days'),
+                 model='realestate.contract', groups=AGENT, domain=expiring(60)),
+            dict(key='expiring_90', section='portfolio', label=_('Expiring in 90 Days'),
+                 model='realestate.contract', groups=AGENT, domain=expiring(90)),
+            dict(key='units_in_turnaround', section='portfolio', label=_('Units in Turnaround'),
+                 model='realestate.unit.turn', groups=PROPERTY_MANAGER,
+                 domain=company + [('state', 'not in', ('ready', 'cancelled'))]),
+            dict(key='out_of_service', section='portfolio', label=_('Out of Service'),
+                 model='realestate.property', groups=PROPERTY_MANAGER, warn=True,
+                 domain=leasable + [('maintenance_status', '!=', 'normal')]),
+        ]
+
+    @api.model
+    def _visible_tiles(self, today, scope):
+        user = self.env.user
+        tiles = []
+        for tile in self._tile_definitions(today, scope):
+            tile.setdefault('measure', 'count')
+            tile.setdefault('format', 'integer')
+            tile.setdefault('warn', False)
+            tile.setdefault('hint', '')
+            tile.setdefault('domain', [])
+            if tile['groups'] and not user.has_group(tile['groups']):
+                continue
+            tiles.append(tile)
+        return tiles
+
+    @api.model
+    def _tile_values(self, tiles):
+        values = {}
+        today = fields.Date.context_today(self)
+        for tile in tiles:
+            measure = tile['measure']
+            if measure == 'count':
+                values[tile['key']] = self.env[tile['model']].search_count(tile['domain'])
+            elif measure.startswith('sum:'):
+                (total,) = self.env[tile['model']]._read_group(
+                    tile['domain'], aggregates=['%s:sum' % measure[4:]])[0]
+                values[tile['key']] = total or 0.0
+        for tile in tiles:
+            if tile['measure'].startswith('ratio:'):
+                occupied = self.env['realestate.property'].search_count(
+                    [('is_leasable', '=', True), ('company_id', 'in', self.env.companies.ids)]
+                    + self._occupied_on(today))
+                leasable = self.env['realestate.property'].search_count(
+                    [('is_leasable', '=', True), ('company_id', 'in', self.env.companies.ids)])
+                values[tile['key']] = round(occupied / leasable * 100.0, 1) if leasable else 0.0
+        return values
+
+    @api.model
+    def _tile_payload(self, tile, value):
+        return {
+            'key': tile['key'],
+            'label': tile['label'],
+            'value': value,
+            'format': tile['format'],
+            'hint': tile['hint'],
+            'warning': bool(tile['warn'] and value),
+            'drill': bool(tile['model']),
+        }
+
+    # ==================================================================
+    # Quick actions
+    # ==================================================================
+    @api.model
+    def _quick_actions(self):
+        return [
+            dict(key='new_lease', label=_('New Lease'), icon='fa-plus', groups=AGENT),
+            dict(key='available_units', label=_('Find Available Unit'), icon='fa-search',
+                 groups=None),
+            dict(key='move_in', label=_('Move-In'), icon='fa-sign-in', groups=PROPERTY_MANAGER),
+            dict(key='move_out', label=_('Move-Out'), icon='fa-sign-out',
+                 groups=PROPERTY_MANAGER),
+        ]
+
+    @api.model
+    def _visible_quick_actions(self):
+        user = self.env.user
+        return [{'key': action['key'], 'label': action['label'], 'icon': action['icon']}
+                for action in self._quick_actions()
+                if not action['groups'] or user.has_group(action['groups'])]
+
+    @api.model
+    def action_quick(self, key):
+        """Open the screen behind a quick-action button."""
+        if key not in {action['key'] for action in self._visible_quick_actions()}:
+            raise UserError(_("Unknown dashboard action '%s'.") % key)
+        if key == 'available_units':
+            return self.env['ir.actions.act_window']._for_xml_id(
+                'atmta_real_estate.action_available_units')
+        model, name = {
+            'new_lease': ('realestate.contract', _('New Lease')),
+            'move_in': ('realestate.move.in', _('New Move-In')),
+            'move_out': ('realestate.move.out', _('New Move-Out')),
+        }[key]
+        return self._form_action(name, model, False)
+
+    # ==================================================================
+    # Charts
+    # ==================================================================
+    def _occupancy_trend(self, today, company_ids):
+        """Units under a live allocation at each month end, for 12 months.
+
+        Derived from the allocation date ranges rather than from a stored
+        history table, so it stays correct even for leases entered
+        retroactively.
+        """
+        Allocation = self.env['realestate.contract.property.line']
+        labels, values = [], []
+        leasable_total = self.env['realestate.property'].search_count([
+            ('is_leasable', '=', True), ('company_id', 'in', company_ids)])
+        for offset in range(TREND_MONTHS - 1, -1, -1):
+            month_start = today.replace(day=1) - relativedelta(months=offset)
+            month_end = month_start + relativedelta(months=1) - timedelta(days=1)
+            occupied = Allocation.search_count([
+                ('company_id', 'in', company_ids),
+                ('start_date', '<=', month_end),
+                '|', ('end_date', '=', False), ('end_date', '>=', month_end),
+                ('lifecycle_state', 'in', LIVE_LEASES + ('ended', 'terminated')),
+            ])
+            labels.append(month_start.strftime('%b %Y'))
+            values.append(round(occupied / leasable_total * 100.0, 1)
+                          if leasable_total else 0.0)
+        return {'labels': labels, 'occupancy_pct': values}
+
+    def _billed_vs_collected(self, today, company_ids):
+        """One grouped query for 12 months instead of 12 searches."""
+        start = today.replace(day=1) - relativedelta(months=TREND_MONTHS - 1)
+        groups = self.env['realestate.contract.payment']._read_group(
+            [('company_id', 'in', company_ids),
+             ('date_due', '>=', start),
+             ('state', '!=', 'cancelled')],
+            groupby=['date_due:month'],
+            aggregates=['amount_invoiced:sum', 'amount_paid:sum', 'amount_due:sum'])
+        by_month = {}
+        for month, invoiced, paid, due in groups:
+            if month:
+                by_month[month.strftime('%Y-%m')] = (
+                    invoiced or 0.0, paid or 0.0, due or 0.0)
+
+        labels, billed, collected, scheduled = [], [], [], []
+        for offset in range(TREND_MONTHS - 1, -1, -1):
+            month = today.replace(day=1) - relativedelta(months=offset)
+            inv, paid, due = by_month.get(month.strftime('%Y-%m'), (0.0, 0.0, 0.0))
+            labels.append(month.strftime('%b %Y'))
+            billed.append(round(inv, 2))
+            collected.append(round(paid, 2))
+            scheduled.append(round(due, 2))
+        return {'labels': labels, 'billed': billed,
+                'collected': collected, 'scheduled': scheduled}
+
+    def _arrears_aging(self, company_ids):
+        """Outstanding balance per ageing bucket, from the due dates for today.
+
+        Each bucket uses the domain its chart segment opens
+        (``action_drill_arrears_bucket``).
+        """
+        Obligation = self.env['realestate.contract.payment']
+        base = self._arrears_domain(company_ids)
+        totals = {}
+        for bucket, _label in OVERDUE_BUCKETS:
+            groups = Obligation._read_group(
+                expression.AND([base, Obligation._overdue_bucket_domain(bucket)]),
+                aggregates=['amount_residual:sum', '__count'])
+            amount, count = groups[0] if groups else (0.0, 0)
+            totals[bucket] = (amount or 0.0, count or 0)
+        return {
+            'labels': [label for _key, label in OVERDUE_BUCKETS],
+            'keys': [key for key, _label in OVERDUE_BUCKETS],
+            'amounts': [round(totals[key][0], 2) for key, _label in OVERDUE_BUCKETS],
+            'counts': [totals[key][1] for key, _label in OVERDUE_BUCKETS],
+        }
+
+    def _expiries_by_month(self, today, company_ids):
+        groups = self.env['realestate.contract']._read_group(
+            [('company_id', 'in', company_ids),
+             ('lifecycle_state', 'in', LIVE_LEASES),
+             ('end_date', '>=', today),
+             ('end_date', '<=', today + relativedelta(months=12))],
+            groupby=['end_date:month'], aggregates=['__count'])
+        by_month = {month.strftime('%Y-%m'): count
+                    for month, count in groups if month}
+        labels, counts = [], []
+        for offset in range(12):
+            month = today.replace(day=1) + relativedelta(months=offset)
+            labels.append(month.strftime('%b %Y'))
+            counts.append(by_month.get(month.strftime('%Y-%m'), 0))
+        return {'labels': labels, 'counts': counts}
+
+    # ==================================================================
+    # Actions
+    # ==================================================================
+    @api.model
+    def _list_action(self, name, res_model, domain, context=None):
+        """Build a COMPLETE ``ir.actions.act_window`` for a list drilldown.
+
+        ``views`` is mandatory: the web client maps over it unconditionally,
+        and an action assembled in a method does not get it filled in.
+        """
+        return {
+            'type': 'ir.actions.act_window',
+            'name': name,
+            'res_model': res_model,
+            'views': [(False, 'list'), (False, 'form')],
+            'view_mode': 'list,form',
+            'domain': list(domain),
+            'context': dict(context or {}),
+            'target': 'current',
+        }
+
+    @api.model
+    def _form_action(self, name, res_model, res_id, context=None):
+        """Complete act_window for opening one record, or a new one."""
+        return {
+            'type': 'ir.actions.act_window',
+            'name': name,
+            'res_model': res_model,
+            'views': [(False, 'form')],
+            'view_mode': 'form',
+            'res_id': res_id,
+            'context': dict(context or {}),
+            'target': 'current',
+        }
+
+    @api.model
+    def action_drill(self, key, scope='mine'):
+        """Open the records behind a tile, with the domain the tile counted.
+
+        Raises on an unknown or hidden key rather than opening an unfiltered
+        list: a tile that silently opens "everything" is worse than an error.
+        """
+        scope = self._check_scope(scope)
+        today = fields.Date.context_today(self)
+        tile = next((t for t in self._visible_tiles(today, scope) if t['key'] == key), None)
+        if not tile or not tile['model']:
+            raise UserError(_("Unknown dashboard drilldown '%s'.") % key)
+        return self._list_action(tile['label'], tile['model'], tile['domain'])
+
+    @api.model
+    def action_drill_arrears_bucket(self, bucket):
+        """Drilldown for one segment of the arrears-ageing chart."""
+        if bucket not in dict(OVERDUE_BUCKETS):
+            raise UserError(_("Unknown arrears bucket '%s'.") % bucket)
+        Obligation = self.env['realestate.contract.payment']
+        return self._list_action(
+            _('Arrears — %s') % dict(OVERDUE_BUCKETS)[bucket],
+            'realestate.contract.payment',
+            expression.AND([self._arrears_domain(self.env.companies.ids),
+                            Obligation._overdue_bucket_domain(bucket)]),
+        )

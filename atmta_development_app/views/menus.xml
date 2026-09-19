@@ -6,8 +6,7 @@
     <menuitem id="menu_root"
               name="Development &amp; Sales"
               web_icon="atmta_development_app,static/description/icon.png"
-              sequence="26"
-              groups="atmta_v2_pilot.group_atmta_v2_pilot"/>
+              sequence="26"/>
 
     <menuitem id="menu_overview"
               name="Overview" parent="menu_root" sequence="1"
@@ -19,6 +18,8 @@
               groups="real_estate_developer.group_dev_readonly"/>
     <menuitem id="menu_projects" name="Projects" parent="menu_projects_sec" sequence="10"
               action="real_estate_developer.action_realestate_project"/>
+    <menuitem id="menu_units" name="Units" parent="menu_projects_sec" sequence="15"
+              action="real_estate_developer.action_developer_units"/>
     <menuitem id="menu_phases" name="Phases" parent="menu_projects_sec" sequence="20"
               action="real_estate_developer.action_realestate_phase"/>
     <menuitem id="menu_unit_releases" name="Unit Releases" parent="menu_projects_sec" sequence="30"
@@ -54,6 +55,8 @@
       destination it knows is broken. Restore this menu in the wave that
       resolves the ownership question in 17_RISKS_AND_OPEN_DECISIONS.md §1.
     -->
+    <menuitem id="menu_payment_plans" name="Payment Plans" parent="menu_pricing" sequence="30"
+              action="real_estate_developer.action_payment_plan"/>
     <menuitem id="menu_price_history" name="Price History" parent="menu_pricing" sequence="40"
               action="real_estate_developer.action_price_history"/>
     <menuitem id="menu_price_bulk" name="Bulk Price Update" parent="menu_pricing" sequence="50"
@@ -84,6 +87,8 @@
          contextual to a project, not an application of its own. -->
     <menuitem id="menu_gallery" name="Sales Gallery" parent="menu_root" sequence="50"
               groups="real_estate_developer.group_dev_readonly"/>
+    <menuitem id="menu_browse_projects" name="Browse Projects" parent="menu_gallery" sequence="5"
+              action="real_estate_maquette.action_maquette_browser"/>
     <menuitem id="menu_maquette_3d" name="3D Maquette" parent="menu_gallery" sequence="10"
               action="real_estate_maquette.action_maquette_preview_3d"/>
     <menuitem id="menu_master_plan" name="2D Master Plan" parent="menu_gallery" sequence="20"

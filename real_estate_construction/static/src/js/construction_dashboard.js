@@ -92,8 +92,9 @@ export class ConstructionDashboard extends Component {
         patchLeaflet();
         if (!this.map) {
             this.map = L.map(this.mapRef.el, { center: [24.7136, 46.6753], zoom: 5, preferCanvas: true });
-            L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
-                attribution: '&copy; CARTO', maxZoom: 19, subdomains: "abcd",
+            // OpenStreetMap's own tiles: free, no API key (CARTO now requires one).
+            L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 19,
             }).addTo(this.map);
             this.cluster = L.markerClusterGroup({ chunkedLoading: true });
             this.map.addLayer(this.cluster);

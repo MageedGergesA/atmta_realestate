@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!--
+        Sequences.
+
+        0.1's three sequences are unchanged in code and prefix so existing
+        counters keep running. What is added is `company_id` handling:
+        `next_by_code` is now called `with_company(...)`, so a multi-company
+        deployment that creates a per-company sequence record gets per-company
+        numbering, and one that does not keeps the single shared counter it has
+        always had.
+    -->
+    <record id="seq_check" model="ir.sequence">
+        <field name="name">Real Estate Check</field>
+        <field name="code">realestate.check</field>
+        <field name="prefix">CHK-</field>
+        <field name="padding">6</field>
+    </record>
+    <record id="seq_deposit" model="ir.sequence">
+        <field name="name">Check Deposit Slip</field>
+        <field name="code">realestate.check.deposit</field>
+        <field name="prefix">DEP-</field>
+        <field name="padding">5</field>
+    </record>
+    <record id="seq_bounce" model="ir.sequence">
+        <field name="name">Check Bounce</field>
+        <field name="code">realestate.check.bounce</field>
+        <field name="prefix">BNC-</field>
+        <field name="padding">5</field>
+    </record>
+
+    <!--
+        The bounce penalty product.
+
+        0.1 declared this as a `product.template` and then wrote its id into
+        `account.move.line.product_id`, which is a `product.product` — a live
+        bug that bound the wrong product or none at all. The record stays a
+        template (changing the model behind an existing xml id would orphan
+        production references); what changed is that the code now reads it
+        through `res.company.check_bounce_penalty_product_id`, a
+        `product.product` field, and the post-migration points that at this
+        template's variant.
+
+        No account is set here. The product's category drives the income
+        account exactly as for any other sale — M11 forbids hard-coded
+        accounts.
+    -->
+    <record id="product_check_bounce_penalty" model="product.template">
+        <field name="name">Returned Cheque Penalty</field>
+        <field name="type">service</field>
+        <field name="sale_ok">True</field>
+        <field name="purchase_ok">False</field>
+        <field name="list_price">0.0</field>
+    </record>
+
+    <record id="product_check_bank_charge" model="product.template">
+        <field name="name">Cheque Return Bank Charge</field>
+        <field name="type">service</field>
+        <field name="sale_ok">False</field>
+        <field name="purchase_ok">True</field>
+        <field name="list_price">0.0</field>
+    </record>
+</odoo>

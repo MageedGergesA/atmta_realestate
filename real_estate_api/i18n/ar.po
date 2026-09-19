@@ -1,0 +1,1248 @@
+# Translation of Odoo Server.
+# This file contains the Arabic translation of the following modules:
+# 	* real_estate_api
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:14+0000\n"
+"PO-Revision-Date: 2026-09-17 10:14+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: real_estate_api
+#: model:res.groups,comment:real_estate_api.group_realestate_api_downloads
+msgid ""
+"\n"
+"                Grants access to the top-level (non-by-ref) download\n"
+"                endpoints: /api/v1/contracts/<id>/download,\n"
+"                /api/v1/installments/<id>/invoice,\n"
+"                /api/v1/payments/<id>/{invoice,receipt},\n"
+"                /api/v1/contracts/<id>/documents.zip.\n"
+"\n"
+"                Per-customer by-ref download endpoints stay ungated\n"
+"                (any valid API key can reach them, but each caller only\n"
+"                ever sees the partner they resolve by external_ref).\n"
+"            "
+msgstr ""
+"\n"
+"يمنح صلاحية الوصول إلى نقاط التنزيل الرئيسية (غير المعتمدة على المرجع): `/api/v1/contracts/<id>/download` و`/api/v1/installments/<id>/invoice` و`/api/v1/payments/<id>/{invoice,receipt}` و`/api/v1/contracts/<id>/documents.zip`. تبقى نقاط التنزيل حسب المرجع الخاصة بكل عميل غير مقيدة (يمكن لأي مفتاح API صالح الوصول إليها، لكن كل طالب لا يرى إلا الشريك الذي يحدده عبر external_ref).\n"
+"            "
+
+#. module: real_estate_api
+#: model:res.groups,comment:real_estate_api.group_realestate_api_user
+msgid ""
+"\n"
+"                Holders may mint API keys with scope \"real_estate_api\"\n"
+"                and call the catalog endpoints anonymously is not gated\n"
+"                by this group — but interest submission, embed token\n"
+"                minting, and admin views on captured leads ARE.\n"
+"            "
+msgstr ""
+"\n"
+"يمكن لحاملي هذه الصلاحية إنشاء مفاتيح API بالنطاق \"real_estate_api\". استدعاء نقاط الكتالوج دون مصادقة غير مقيد بهذه المجموعة — أما إرسال طلبات الاهتمام وإنشاء رموز التضمين وشاشات الإدارة الخاصة بالعملاء المحتملين المسجلين فهي مقيدة بها.\n"
+"            "
+
+#. module: real_estate_api
+#: model:res.groups,comment:real_estate_api.group_realestate_api_manager
+msgid ""
+"\n"
+"                Manage embed tokens (mint, revoke, audit) and view the\n"
+"                rate-limit counter table for diagnostics.\n"
+"            "
+msgstr ""
+"\n"
+"إدارة رموز التضمين (إنشاء، إلغاء، تدقيق) وعرض جدول عدادات حد الطلبات لأغراض التشخيص.\n"
+"            "
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/_base.py:0
+msgid "%s not found."
+msgstr "%s غير موجود."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_portal.py:0
+msgid "'%s' must be YYYY-MM-DD."
+msgstr "يجب أن تكون '%s' بالصيغة YYYY-MM-DD."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/_base.py:0
+msgid "'%s' must be an integer."
+msgstr "يجب أن تكون '%s' عددًا صحيحًا."
+
+#. module: real_estate_api
+#: model:ir.actions.report,print_report_name:real_estate_api.action_report_sale_contract
+msgid "'Contract-%s' % object.name"
+msgstr "'عقد-%s' % object.name"
+
+#. module: real_estate_api
+#: model:ir.actions.report,print_report_name:real_estate_api.action_report_partner_statement
+msgid "'Statement-%s' % (object.name or 'partner')"
+msgstr "'كشف-حساب-%s' % (object.name or 'عميل')"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_map.py:0
+msgid "'bbox' latitudes must be in [-90, 90]."
+msgstr "يجب أن تكون خطوط العرض في `bbox` ضمن [-90, 90]."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_map.py:0
+msgid "'bbox' longitudes must be in [-180, 180]."
+msgstr "يجب أن تكون خطوط الطول في `bbox` ضمن [-180, 180]."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_map.py:0
+msgid "'bbox' min must be <= max for both axes."
+msgstr ""
+"يجب أن تكون القيمة الدنيا في `bbox` أصغر من أو تساوي القيمة القصوى لكلا "
+"المحورين."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_map.py:0
+msgid "'bbox' must be 'lat_min,lng_min,lat_max,lng_max'."
+msgstr "يجب أن تكون `bbox` بالصيغة `lat_min,lng_min,lat_max,lng_max`."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_map.py:0
+msgid "'bbox' values must be floats."
+msgstr "يجب أن تكون قيم `bbox` أعدادًا عشرية."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_partners.py:0
+msgid "'country' must be a 2-letter ISO code (e.g. 'EG')."
+msgstr "يجب أن تكون `country` رمز ISO من حرفين (مثال: 'EG')."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_partners.py:0
+msgid "'external_ref' is required."
+msgstr "الحقل 'external_ref' مطلوب."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_partners.py:0
+#: code:addons/real_estate_api/controllers/api_v1_portal.py:0
+msgid "'external_ref' must be 1-128 chars of [A-Za-z0-9._:-]."
+msgstr "يجب أن تتكون 'external_ref' من 1 إلى 128 حرفًا من [A-Za-z0-9._:-]."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_map.py:0
+msgid "'hierarchy_level' must be one of compound|building|floor|unit|room."
+msgstr ""
+"يجب أن تكون `hierarchy_level` إحدى القيم "
+"`compound|building|floor|unit|room`."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+#: code:addons/real_estate_api/controllers/api_v1_portal.py:0
+msgid "'kind' must be 'sale' or 'rental'."
+msgstr "يجب أن تكون `kind` إما `sale` أو `rental`."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_interest.py:0
+#: code:addons/real_estate_api/controllers/api_v1_partners.py:0
+msgid "'name' is required."
+msgstr "الحقل `name` مطلوب."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_interest.py:0
+msgid "'partner_external_ref' must be 1-128 chars of [A-Za-z0-9._:-]."
+msgstr ""
+"يجب أن تتكون 'partner_external_ref' من 1 إلى 128 حرفًا من [A-Za-z0-9._:-]."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_embed_token.py:0
+msgid "'resource_id' must be int."
+msgstr "يجب أن تكون 'resource_id' عددًا صحيحًا."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_map.py:0
+msgid "'state' must be one of %s."
+msgstr "يجب أن تكون `state` إحدى القيم %s."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_portal.py:0
+msgid "'state' must be one of draft|invoiced|paid|cancelled."
+msgstr "يجب أن تكون `state` إحدى القيم `draft|invoiced|paid|cancelled`."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_portal.py:0
+msgid "'state' must be one of pending|invoiced|paid|cancelled."
+msgstr "يجب أن تكون `state` إحدى القيم `pending|invoiced|paid|cancelled`."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_portal.py:0
+msgid "'state' must be one of scheduled|completed|cancelled|no_show."
+msgstr ""
+"يجب أن تكون `state` إحدى القيم `scheduled|completed|cancelled|no_show`."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid "'template' must be 'std' or 'custom'."
+msgstr "يجب أن تكون `template` إما 'std' أو `custom`."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid ""
+"'template=std' is not available for contracts — no Odoo-standard real-estate"
+" contract report exists. Use 'template=custom' (the default)."
+msgstr ""
+"الخيار `template=std` غير متاح للعقود — لا يوجد تقرير عقد عقاري قياسي في "
+"Odoo. استخدم `template=custom` (الافتراضي)."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_embed_token.py:0
+msgid "'theme' must be an object."
+msgstr "يجب أن تكون `theme` كائنًا."
+
+#. module: real_estate_api
+#: model:ir.model.fields.selection,name:real_estate_api.selection__realestate_embed_token__kind__plan-2d
+msgid "2D Plan Drill"
+msgstr "التعمق في المخطط ثنائي الأبعاد"
+
+#. module: real_estate_api
+#: model:ir.model,name:real_estate_api.model_realestate_plan_region
+msgid "2D Plan Region"
+msgstr "منطقة المخطط ثنائي الأبعاد"
+
+#. module: real_estate_api
+#: model:ir.model.fields.selection,name:real_estate_api.selection__realestate_embed_token__kind__maquette-3d
+msgid "3D Maquette"
+msgstr "المجسم ثلاثي الأبعاد"
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_res_partner__realestate_api_external_ref
+#: model:ir.model.fields,field_description:real_estate_api.field_res_users__realestate_api_external_ref
+msgid "3rd-Party External Reference"
+msgstr "المرجع الخارجي للطرف الثالث"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+msgid "<em>No contracts or scheduled payments on this account.</em>"
+msgstr "<em>لا توجد عقود أو دفعات مجدولة على هذا الحساب.</em>"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "<span>Sale Contract</span>"
+msgstr "<span>عقد البيع</span>"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "<strong>Buyer</strong><br/>"
+msgstr "<strong>المشتري</strong><br/>"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "<strong>Contract Date:</strong>"
+msgstr "<strong>تاريخ العقد:</strong>"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+msgid "<strong>Customer</strong><br/>"
+msgstr "<strong>العميل</strong><br/>"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "<strong>Expected Handover:</strong>"
+msgstr "<strong>التسليم المتوقع:</strong>"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+msgid "<strong>Issued:</strong>"
+msgstr "<strong>تاريخ الإصدار:</strong>"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+msgid "<strong>Ref:</strong>"
+msgstr "<strong>المرجع:</strong>"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "<strong>Signing Date:</strong>"
+msgstr "<strong>تاريخ التوقيع:</strong>"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "<strong>Status:</strong>"
+msgstr "<strong>الحالة:</strong>"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/_base.py:0
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid "API key required."
+msgstr "مفتاح API مطلوب."
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_embed_token__allowed_origins
+msgid "Allowed Origins"
+msgstr "المصادر المسموح بها"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "Amount"
+msgstr "المبلغ"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "Area"
+msgstr "المساحة"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid "Attachment has no downloadable payload."
+msgstr "المرفق لا يحتوي على محتوى قابل للتنزيل."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid "Attachment not found."
+msgstr "المرفق غير موجود."
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "Balance Due"
+msgstr "الرصيد المستحق"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid "Brokerage not available (real_estate_brokerage not installed)."
+msgstr "الوساطة العقارية غير متاحة (الوحدة real_estate_brokerage غير مثبتة)."
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_api_ratelimit__bucket_key
+msgid "Bucket Key"
+msgstr "مفتاح الحاوية"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_catalog.py:0
+msgid "Building not found."
+msgstr "المبنى غير موجود."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/models/embed_token.py:0
+msgid "Cannot mint a 3D embed token: no GLB attached to the project."
+msgstr "لا يمكن إنشاء رمز تضمين ثلاثي الأبعاد: لا يوجد ملف GLB مرفق بالمشروع."
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_crm_lead__realestate_api_source
+msgid "Captured via Public API"
+msgstr "مسجل عبر واجهة البرمجة العامة"
+
+#. module: real_estate_api
+#: model:ir.model.fields,help:real_estate_api.field_realestate_embed_token__allowed_origins
+msgid ""
+"Comma-separated origins permitted to embed this URL. Match against the "
+"``Origin`` header. Use \"*\" only for short-lived development tokens."
+msgstr ""
+"المصادر المفصولة بفواصل المسموح لها بتضمين هذا الرابط. تتم المطابقة مع "
+"ترويسة `Origin`. لا تستخدم \"*\" إلا لرموز التطوير قصيرة الأجل."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_partners.py:0
+msgid "Concurrent write conflict on external_ref %s, please retry."
+msgstr "تعارض في الكتابة المتزامنة على external_ref %s، يرجى إعادة المحاولة."
+
+#. module: real_estate_api
+#: model:ir.model,name:real_estate_api.model_res_partner
+msgid "Contact"
+msgstr "جهة الاتصال"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+msgid "Contract"
+msgstr "العقد"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+msgid "Contract Date"
+msgstr "تاريخ العقد"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+msgid "Contract No."
+msgstr "رقم العقد"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid ""
+"Contract id %s exists as both sale and rental — add ?kind=sale or "
+"?kind=rental to disambiguate."
+msgstr ""
+"معرف العقد %s موجود كعقد بيع وعقد إيجار معًا — أضف `?kind=sale` أو "
+"`?kind=rental` لإزالة الالتباس."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid "Contract module not installed."
+msgstr "وحدة العقود غير مثبتة."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid "Contract not found."
+msgstr "العقد غير موجود."
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_api_ratelimit__count
+msgid "Count"
+msgstr "العدد"
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_api_ratelimit__create_uid
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_embed_token__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_api_ratelimit__create_date
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_embed_token__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_res_partner__realestate_api_source
+#: model:ir.model.fields,field_description:real_estate_api.field_res_users__realestate_api_source
+msgid "Created via Public API"
+msgstr "أنشئ عبر واجهة البرمجة العامة"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+msgid "Customer Statement"
+msgstr "كشف حساب العميل"
+
+#. module: real_estate_api
+#: model:ir.actions.report,name:real_estate_api.action_report_partner_statement
+msgid "Customer Statement (Real Estate)"
+msgstr "كشف حساب العميل (عقاري)"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_catalog.py:0
+msgid "Developer not found."
+msgstr "المطور العقاري غير موجود."
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_api_ratelimit__display_name
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_embed_token__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid ""
+"Downloads-group membership required for top-level (non-by-ref) endpoints."
+msgstr ""
+"العضوية في مجموعة التنزيلات مطلوبة لنقاط الوصول الرئيسية (غير المعتمدة على "
+"المرجع)."
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "Due Date"
+msgstr "تاريخ الاستحقاق"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.view_embed_token_form
+msgid "Embed Token"
+msgstr "رمز التضمين"
+
+#. module: real_estate_api
+#: model:ir.actions.act_window,name:real_estate_api.action_embed_token
+#: model:ir.ui.menu,name:real_estate_api.menu_realestate_api_embed_tokens
+#: model_terms:ir.ui.view,arch_db:real_estate_api.view_embed_token_list
+msgid "Embed Tokens"
+msgstr "رموز التضمين"
+
+#. module: real_estate_api
+#: model:ir.model.constraint,message:real_estate_api.constraint_realestate_embed_token_token_uniq
+msgid "Embed token must be unique."
+msgstr "يجب أن يكون رمز التضمين فريدًا."
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+msgid "End"
+msgstr "النهاية"
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_embed_token__expires_at
+msgid "Expires At"
+msgstr "تاريخ الانتهاء"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid "Failed to produce the requested document."
+msgstr "تعذر إنشاء المستند المطلوب."
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "Financial Terms"
+msgstr "الشروط المالية"
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_project__has_drillable_2d
+msgid "Has Drillable 2D"
+msgstr "يحتوي على مخطط ثنائي الأبعاد قابل للتعمق"
+
+#. module: real_estate_api
+#: model:ir.model.fields,help:real_estate_api.field_realestate_embed_token__name
+msgid "Human label, just for the admin list."
+msgstr "تسمية وصفية، لقائمة الإدارة فقط."
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_api_ratelimit__id
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_embed_token__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: real_estate_api
+#: model:ir.model.fields,help:real_estate_api.field_res_partner__realestate_api_external_ref
+#: model:ir.model.fields,help:real_estate_api.field_res_users__realestate_api_external_ref
+msgid ""
+"Identifier supplied by the 3rd-party website when it registered this contact"
+" via POST /api/v1/partners. Used as the upsert key on subsequent calls."
+msgstr ""
+"المعرّف الذي قدمه موقع الطرف الثالث عند تسجيل جهة الاتصال هذه عبر `POST "
+"/api/v1/partners`. يُستخدم كمفتاح للإنشاء أو التحديث في الاستدعاءات اللاحقة."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_image.py:0
+msgid "Image not available."
+msgstr "الصورة غير متاحة."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_image.py:0
+msgid "Image not exposed."
+msgstr "الصورة غير معروضة للعامة."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_image.py:0
+msgid "Image not found."
+msgstr "الصورة غير موجودة."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid "Installment not found."
+msgstr "القسط غير موجود."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+#: code:addons/real_estate_api/controllers/api_v1_portal.py:0
+msgid "Installments not available (real_estate_developer not installed)."
+msgstr "الأقساط غير متاحة (الوحدة real_estate_developer غير مثبتة)."
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_crm_lead__realestate_api_project_id
+msgid "Interested Project"
+msgstr "المشروع محل الاهتمام"
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_crm_lead__realestate_api_property_id
+msgid "Interested Property"
+msgstr "العقار محل الاهتمام"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/_base.py:0
+msgid "Internal server error."
+msgstr "خطأ داخلي في الخادم."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/_base.py:0
+msgid "Invalid API key."
+msgstr "مفتاح واجهة البرمجة غير صالح."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/_base.py:0
+msgid "Invalid JSON: %s"
+msgstr "JSON غير صالح: %s"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_interest.py:0
+#: code:addons/real_estate_api/controllers/api_v1_partners.py:0
+msgid "Invalid email format."
+msgstr "صيغة البريد الإلكتروني غير صالحة."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_interest.py:0
+#: code:addons/real_estate_api/controllers/api_v1_partners.py:0
+msgid "Invalid phone format."
+msgstr "صيغة رقم الهاتف غير صالحة."
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+msgid "Invoice"
+msgstr "الفاتورة"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "Invoice Status"
+msgstr "حالة الفاتورة"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid "Invoice is not yet paid — no receipt to render."
+msgstr "الفاتورة لم تُدفع بعد — لا يوجد إيصال لعرضه."
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "Invoiced"
+msgstr "مفوتر"
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_embed_token__is_expired
+msgid "Is Expired"
+msgstr "منتهي الصلاحية"
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_embed_token__kind
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "Kind"
+msgstr "النوع"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+msgid "Label"
+msgstr "التسمية"
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_api_ratelimit__write_uid
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_embed_token__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_api_ratelimit__write_date
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_embed_token__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_embed_token__last_used_at
+msgid "Last Used At"
+msgstr "آخر استخدام في"
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_embed_token__last_used_ip
+msgid "Last Used Ip"
+msgstr "عنوان IP لآخر استخدام"
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_embed_token__last_used_origin
+msgid "Last Used Origin"
+msgstr "مصدر آخر استخدام"
+
+#. module: real_estate_api
+#: model:ir.model,name:real_estate_api.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr "عميل محتمل/فرصة"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/_base.py:0
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid "Method not allowed."
+msgstr "الطريقة غير مسموح بها."
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_embed_token__created_by_key
+msgid "Minted By (key fingerprint)"
+msgstr "أُنشئ بواسطة (بصمة المفتاح)"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/models/embed_token.py:0
+msgid "Missing token."
+msgstr "الرمز مفقود."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_partners.py:0
+#: code:addons/real_estate_api/controllers/api_v1_portal.py:0
+msgid "No API-created partner with external_ref=%s."
+msgstr "لا يوجد شريك منشأ عبر واجهة البرمجة بالمرجع الخارجي external_ref=%s."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_interest.py:0
+msgid ""
+"No API-created partner with external_ref=%s. Create it via POST "
+"/api/v1/partners first."
+msgstr ""
+"لا يوجد شريك منشأ عبر واجهة البرمجة بالمرجع الخارجي external_ref=%s. أنشئه "
+"أولًا عبر `POST /api/v1/partners`."
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: real_estate_api
+#: model:ir.model.constraint,message:real_estate_api.constraint_realestate_api_ratelimit_bucket_window_uniq
+msgid "One counter per (bucket, window)."
+msgstr "عداد واحد لكل (فئة، نافذة زمنية)."
+
+#. module: real_estate_api
+#: model:ir.model.fields,help:real_estate_api.field_realestate_embed_token__theme_json
+msgid ""
+"Optional theme dict: {\"primary\": \"#ff5a00\", \"mode\": \"light\", "
+"\"hide\": [\"exit\", \"breadcrumbs\"], \"lang\": \"en\"}."
+msgstr ""
+"قاموس سمة اختياري: `{\"primary\": \"#ff5a00\", \"mode\": \"light\", "
+"\"hide\": [\"exit\", \"breadcrumbs\"], \"lang\": \"en\"}`."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/models/embed_token.py:0
+msgid "Origin not allowed for this embed token."
+msgstr "المصدر غير مسموح به لرمز التضمين هذا."
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+msgid "Outstanding Installments"
+msgstr "الأقساط المستحقة"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "Paid"
+msgstr "مدفوع"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+msgid "Payment"
+msgstr "الدفعة"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "Payment Plan"
+msgstr "خطة السداد"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "Payment Status"
+msgstr "حالة الدفع"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "Payment Terms"
+msgstr "شروط الدفع"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid "Payment not found."
+msgstr "الدفعة غير موجودة."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+#: code:addons/real_estate_api/controllers/api_v1_portal.py:0
+msgid "Payments not available (atmta_real_estate not installed)."
+msgstr "الدفعات غير متاحة (الوحدة atmta_real_estate غير مثبتة)."
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "Phase"
+msgstr "المرحلة"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "Project"
+msgstr "المشروع"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/models/embed_token.py:0
+msgid ""
+"Project has no 2D entry — set a master plan, a main entry property, or "
+"attach a plan image to at least one top-level property."
+msgstr ""
+"لا يوجد مدخل ثنائي الأبعاد للمشروع — حدد مخططًا عامًا أو عقارًا رئيسيًا "
+"كمدخل، أو أرفق صورة مخطط لعقار واحد على الأقل من المستوى الأعلى."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_catalog.py:0
+#: code:addons/real_estate_api/controllers/api_v1_interest.py:0
+msgid "Project not found."
+msgstr "المشروع غير موجود."
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "Property"
+msgstr "العقار"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/models/embed_token.py:0
+msgid "Property has no plan image — cannot mint a 2D embed token."
+msgstr "لا توجد صورة مخطط للعقار — لا يمكن إصدار رمز تضمين ثنائي الأبعاد."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_catalog.py:0
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid "Property not found."
+msgstr "العقار غير موجود."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_interest.py:0
+msgid "Provide at least one of 'email' or 'phone'."
+msgstr "أدخل واحدًا على الأقل من `email` أو `phone`."
+
+#. module: real_estate_api
+#: model:ir.ui.menu,name:real_estate_api.menu_realestate_api_root
+msgid "Public API"
+msgstr "واجهة البرمجة العامة"
+
+#. module: real_estate_api
+#: model:ir.model,name:real_estate_api.model_realestate_api_ratelimit
+msgid "Real Estate API Rate Limit Counter"
+msgstr "عداد حد معدل الطلبات لواجهة البرمجة العقارية"
+
+#. module: real_estate_api
+#: model:res.groups,name:real_estate_api.group_realestate_api_downloads
+msgid "Real Estate API · Downloads (top-level PDF/ZIP)"
+msgstr "واجهة البرمجة العقارية · التنزيلات (ملفات PDF/ZIP رئيسية)"
+
+#. module: real_estate_api
+#: model:res.groups,name:real_estate_api.group_realestate_api_manager
+msgid "Real Estate API · Manager"
+msgstr "واجهة البرمجة العقارية · مدير"
+
+#. module: real_estate_api
+#: model:res.groups,name:real_estate_api.group_realestate_api_user
+msgid "Real Estate API · User"
+msgstr "واجهة البرمجة العقارية · مستخدم"
+
+#. module: real_estate_api
+#: model:ir.actions.server,name:real_estate_api.cron_gc_embed_tokens_ir_actions_server
+msgid "Real Estate API: prune expired embed tokens"
+msgstr "واجهة البرمجة العقارية: حذف رموز التضمين المنتهية"
+
+#. module: real_estate_api
+#: model:ir.actions.server,name:real_estate_api.cron_gc_rate_limit_ir_actions_server
+msgid "Real Estate API: prune rate-limit windows"
+msgstr "واجهة البرمجة العقارية: حذف نوافذ حد معدل الطلبات"
+
+#. module: real_estate_api
+#: model:ir.model,name:real_estate_api.model_realestate_project
+msgid "Real Estate Development Project"
+msgstr "مشروع التطوير العقاري"
+
+#. module: real_estate_api
+#: model:ir.model,name:real_estate_api.model_realestate_embed_token
+msgid "Real Estate Embed Token"
+msgstr "رمز التضمين العقاري"
+
+#. module: real_estate_api
+#: model:ir.model,name:real_estate_api.model_realestate_property
+msgid "Real Estate Property"
+msgstr "عقار"
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_embed_token__name
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+msgid "Reference"
+msgstr "المرجع"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+msgid "Rental Contracts"
+msgstr "عقود الإيجار"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+msgid "Rental Payment Schedule"
+msgstr "جدول دفعات الإيجار"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid "Report template not installed: %s"
+msgstr "قالب التقرير غير مثبت: %s"
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_embed_token__resource_id
+msgid "Resource"
+msgstr "الموارد"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/models/embed_token.py:0
+msgid "Resource %s/%d not found."
+msgstr "المورد %s/%d غير موجود."
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_embed_token__resource_display
+msgid "Resource Display"
+msgstr "عرض المورد"
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_embed_token__resource_model
+msgid "Resource Model"
+msgstr "نموذج المورد"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/models/embed_token.py:0
+msgid "Resource model %s is not allowed for embed tokens."
+msgstr "نموذج المورد %s غير مسموح به لرموز التضمين."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/models/embed_token.py:0
+msgid "Resource model %s is not embeddable."
+msgstr "نموذج المورد %s غير قابل للتضمين."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_embed_token.py:0
+msgid "Resource not found."
+msgstr "المورد غير موجود."
+
+#. module: real_estate_api
+#: model:ir.model.fields,help:real_estate_api.field_realestate_embed_token__created_by_key
+msgid "SHA-256 fingerprint of the API key that minted this token."
+msgstr "بصمة SHA-256 لمفتاح واجهة البرمجة الذي أصدر هذا الرمز."
+
+#. module: real_estate_api
+#: model:ir.actions.report,name:real_estate_api.action_report_sale_contract
+msgid "Sale Contract"
+msgstr "عقد البيع"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+msgid "Sale Contracts"
+msgstr "عقود البيع"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "Sale Price"
+msgstr "سعر البيع"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+msgid "Start"
+msgstr "البداية"
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_partner_statement_document
+msgid "State"
+msgstr "الحالة"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid "The commission invoice is not yet posted."
+msgstr "فاتورة العمولة لم تُرحّل بعد."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid "The invoice for this record is not yet posted."
+msgstr "فاتورة هذا السجل لم تُرحّل بعد."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid "The primary invoice on this contract is not yet posted."
+msgstr "الفاتورة الرئيسية لهذا العقد لم تُرحّل بعد."
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.view_embed_token_form
+msgid "Theme Overrides"
+msgstr "تخصيصات السمة"
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_embed_token__theme_json
+msgid "Theme Overrides (JSON)"
+msgstr "تخصيصات السمة (JSON)"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid "This contract has no primary invoice attached."
+msgstr "لا توجد فاتورة رئيسية مرفقة بهذا العقد."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_catalog.py:0
+msgid "This project has no 2D plan configured."
+msgstr "لم يُهيأ مخطط ثنائي الأبعاد لهذا المشروع."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_catalog.py:0
+msgid "This project has no 3D maquette uploaded."
+msgstr "لم يُرفع مجسم ثلاثي الأبعاد لهذا المشروع."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_catalog.py:0
+msgid "This property has no 2D plan image."
+msgstr "لا توجد صورة مخطط ثنائي الأبعاد لهذا العقار."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid "This record has no invoice attached yet."
+msgstr "لا توجد فاتورة مرفقة بهذا السجل بعد."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid "This transaction has no invoice attached."
+msgstr "لا توجد فاتورة مرفقة بهذه الصفقة."
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_embed_token__token
+msgid "Token"
+msgstr "الرمز"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/models/embed_token.py:0
+msgid "Token expired."
+msgstr "انتهت صلاحية الرمز."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/models/embed_token.py:0
+msgid "Token not found."
+msgstr "الرمز غير موجود."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_interest.py:0
+msgid "Too many interest submissions. Try later."
+msgstr "طلبات اهتمام كثيرة جدًا. حاول لاحقًا."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/_base.py:0
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid "Too many requests."
+msgstr "طلبات كثيرة جدًا."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid "Transaction not found."
+msgstr "الصفقة غير موجودة."
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "Unit"
+msgstr "الوحدة"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_interest.py:0
+msgid "Unit does not belong to the given project."
+msgstr "الوحدة لا تنتمي إلى المشروع المحدد."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_interest.py:0
+msgid "Unit not available."
+msgstr "الوحدة غير متاحة."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_catalog.py:0
+msgid "Unit not found."
+msgstr "الوحدة غير موجودة."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_embed_token.py:0
+msgid "Unknown 'kind'."
+msgstr "قيمة `kind` غير معروفة."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_embed_token.py:0
+msgid "Unknown 'resource_model'."
+msgstr "قيمة `resource_model` غير معروفة."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_partners.py:0
+msgid "Unknown country code '%s'."
+msgstr "رمز الدولة '%s' غير معروف."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/models/embed_token.py:0
+msgid "Unknown embed kind: %s"
+msgstr "نوع تضمين غير معروف: %s"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_catalog.py:0
+msgid "Unknown status filter."
+msgstr "مرشح الحالة غير معروف."
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_embed_token__used_count
+msgid "Used Count"
+msgstr "عدد مرات الاستخدام"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_portal.py:0
+msgid "Viewings not available (real_estate_brokerage not installed)."
+msgstr "المعاينات غير متاحة (الوحدة real_estate_brokerage غير مثبتة)."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_interest.py:0
+msgid "Website Interest"
+msgstr "اهتمام من الموقع الإلكتروني"
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_api_ratelimit__window_seconds
+msgid "Window Seconds"
+msgstr "مدة النافذة بالثواني"
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_realestate_api_ratelimit__window_start
+msgid "Window Start"
+msgstr "بداية النافذة"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/models/embed_token.py:0
+msgid "[deleted]"
+msgstr "[محذوف]"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/models/embed_token.py:0
+msgid "allowed_origins is required."
+msgstr "الحقل allowed_origins مطلوب."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_catalog.py:0
+msgid "developer_id must be int."
+msgstr "يجب أن يكون developer_id عددًا صحيحًا."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/models/embed_token.py:0
+msgid "expires_in must be an integer (seconds)."
+msgstr "يجب أن يكون expires_in عددًا صحيحًا (بالثواني)."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/models/embed_token.py:0
+msgid "expires_in must be between 60 and 2592000 seconds."
+msgstr "يجب أن تكون قيمة expires_in بين 60 و2592000 ثانية."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_partners.py:0
+msgid ""
+"external_ref %s is already held by a non-API contact (id=%d). Pick a "
+"different ref or have an admin clear it."
+msgstr ""
+"المرجع الخارجي external_ref %s مستخدم بالفعل لجهة اتصال غير منشأة عبر واجهة "
+"البرمجة (id=%d). اختر مرجعًا مختلفًا أو اطلب من المسؤول إزالته."
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_catalog.py:0
+msgid "min_bedrooms must be an integer."
+msgstr "يجب أن يكون min_bedrooms عددًا صحيحًا."
+
+#. module: real_estate_api
+#: model_terms:ir.ui.view,arch_db:real_estate_api.report_sale_contract_document
+msgid "m²"
+msgstr "م²"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_interest.py:0
+msgid "project_id must be int."
+msgstr "يجب أن يكون project_id عددًا صحيحًا."
+
+#. module: real_estate_api
+#: model:ir.model.fields.selection,name:real_estate_api.selection__realestate_embed_token__resource_model__realestate_project
+msgid "realestate.project"
+msgstr "realestate.project"
+
+#. module: real_estate_api
+#: model:ir.model.fields.selection,name:real_estate_api.selection__realestate_embed_token__resource_model__realestate_property
+msgid "realestate.property"
+msgstr "realestate.property"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/api_v1_interest.py:0
+msgid "unit_id must be int."
+msgstr "يجب أن يكون unit_id عددًا صحيحًا."
+
+#. module: real_estate_api
+#: model:ir.model.fields,field_description:real_estate_api.field_crm_lead__realestate_api_idempotency_key
+msgid "API Idempotency Key"
+msgstr "مفتاح عدم التكرار لواجهة البرمجة"
+
+#. module: real_estate_api
+#. odoo-python
+#: code:addons/real_estate_api/controllers/_base.py:0
+#: code:addons/real_estate_api/controllers/api_v1_downloads.py:0
+msgid "This API key's user is not in the Real Estate API User group."
+msgstr "مستخدم مفتاح واجهة البرمجة هذا ليس ضمن مجموعة مستخدمي واجهة برمجة العقارات."

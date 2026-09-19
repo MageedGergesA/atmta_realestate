@@ -254,7 +254,13 @@
                         and are not readable by a technical evaluator.
                     </div>
                     <group>
-                        <field name="round_id"/>
+                        <field name="round_id" readonly="id"/>
+                        <!-- Required: the sheet scores one frozen candidate of
+                             its round. Fixed once the sheet exists, because its
+                             lines were snapshotted for that round's plan. -->
+                        <field name="candidate_id" readonly="id"
+                               domain="[('round_id', '=', round_id), ('in_technical', '=', True)]"
+                               options="{'no_create': True}"/>
                         <field name="partner_id"/>
                         <field name="evaluator_name"/>
                         <field name="weighted_total"/>
@@ -273,6 +279,77 @@
                         </list>
                     </field>
                     <field name="overall_comment" placeholder="Overall technical comment"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_commercial_analysis_form" model="ir.ui.view">
+        <field name="name">commercial.analysis.form</field>
+        <field name="model">realestate.procurement.commercial.analysis</field>
+        <field name="arch" type="xml">
+            <form string="Commercial Analysis" create="false">
+                <sheet>
+                    <div class="alert alert-info" role="alert">
+                        The raw bid is what the vendor submitted and never
+                        changes. Adjustments move the evaluated cost as soon as
+                        they are entered, and the evaluation cannot be finalised
+                        until somebody other than their author has approved
+                        them.
+                    </div>
+                    <group>
+                        <group string="Offer">
+                            <field name="candidate_id" readonly="1"/>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="round_id" readonly="1"/>
+                            <field name="raw_amount"/>
+                            <field name="raw_currency_id" invisible="1"/>
+                        </group>
+                        <group string="Evaluated">
+                            <field name="rate_date"/>
+                            <field name="rate_used"/>
+                            <field name="converted_amount"/>
+                            <field name="adjustment_total"/>
+                            <field name="evaluated_cost"/>
+                            <field name="evaluation_currency_id" invisible="1"/>
+                            <field name="review_flag"/>
+                            <field name="review_note" invisible="review_flag == 'none'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Adjustments" name="adjustments">
+                            <field name="adjustment_ids">
+                                <list editable="bottom">
+                                    <field name="adjustment_type"/>
+                                    <field name="amount"/>
+                                    <field name="signed_amount" readonly="1"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="rationale"/>
+                                    <field name="evidence_reference" optional="show"/>
+                                    <field name="entered_by_id" readonly="1"/>
+                                    <field name="approved_by_id" readonly="1"/>
+                                    <field name="approved_on" readonly="1" optional="hide"/>
+                                    <button name="action_approve" type="object"
+                                            string="Approve" icon="fa-check"
+                                            invisible="approved_by_id or not id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Leveling" name="leveling">
+                            <field name="leveling_line_ids" readonly="1">
+                                <list>
+                                    <field name="description"/>
+                                    <field name="quantity"/>
+                                    <field name="raw_unit_price"/>
+                                    <field name="raw_line_total"/>
+                                    <field name="normalised_unit_price"/>
+                                    <field name="normalised_line_total"/>
+                                    <field name="raw_currency_id" column_invisible="1"/>
+                                    <field name="evaluation_currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>

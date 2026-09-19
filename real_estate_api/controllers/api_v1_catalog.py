@@ -249,8 +249,13 @@ class CatalogApiV1(http.Controller):
                 csrf=False, save_session=False)
     @json_endpoint(methods=['GET'])
     def get_project_plan_2d(self, project_id, **kw):
-        project = request.env['realestate.project'].sudo().browse(project_id)
+        Project = request.env['realestate.project'].sudo()
+        project = Project.browse(project_id)
         not_found_if_missing(project, 'project')
+        # Same visibility as the project detail: a cancelled project's plan
+        # is not public just because it is asked for by another URL.
+        if project.state not in Project._api_public_states():
+            raise werkzeug.exceptions.NotFound(_("Project not found."))
         tree = project._to_api_plan_2d_v1()
         if tree is None:
             raise werkzeug.exceptions.NotFound(
@@ -265,6 +270,11 @@ class CatalogApiV1(http.Controller):
     def get_property_plan_2d(self, property_id, **kw):
         prop = request.env['realestate.property'].sudo().browse(property_id)
         not_found_if_missing(prop, 'property')
+        # The project detail's filter: a building of a cancelled project
+        # would otherwise publish that project's drill tree.
+        if (prop.project_id and prop.project_id.state
+                not in prop.project_id._api_public_states()):
+            raise werkzeug.exceptions.NotFound(_("Property not found."))
         tree = prop._to_api_plan_2d_v1()
         if tree is None:
             raise werkzeug.exceptions.NotFound(
@@ -279,8 +289,11 @@ class CatalogApiV1(http.Controller):
                 csrf=False, save_session=False)
     @json_endpoint(methods=['GET'])
     def get_project_maquette_3d(self, project_id, **kw):
-        project = request.env['realestate.project'].sudo().browse(project_id)
+        Project = request.env['realestate.project'].sudo()
+        project = Project.browse(project_id)
         not_found_if_missing(project, 'project')
+        if project.state not in Project._api_public_states():
+            raise werkzeug.exceptions.NotFound(_("Project not found."))
         descriptor = project._to_api_maquette_3d_v1()
         if descriptor is None:
             raise werkzeug.exceptions.NotFound(

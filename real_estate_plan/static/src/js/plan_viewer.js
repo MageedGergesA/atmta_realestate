@@ -5,15 +5,23 @@ import { Dialog } from "@web/core/dialog/dialog";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { rpc } from "@web/core/network/rpc";
+import { _t } from "@web/core/l10n/translation";
 import { CarouselDialog } from "@real_estate_maquette/js/image_carousel_dialog";
 
+// Gallery states (`visual_state`, real_estate_maquette/models/visual_states.py),
+// not the legacy `property.state`: the server sends Developer's availability
+// for units and '' for containers, which keep their region colour. Same colours
+// as the gallery's own table, so 2D, 3D and the legend agree.
 const STATE_COLORS = {
     available: "#22c55e",
-    reserved: "#f59e0b",
-    rented: "#3b82f6",
+    held: "#f59e0b",
+    reserved: "#f97316",
+    contracted: "#8b5cf6",
     sold: "#ef4444",
-    maintenance: "#a855f7",
-    inactive: "#6b7280",
+    blocked: "#64748b",
+    unreleased: "#94a3b8",
+    not_for_sale: "#cbd5e1",
+    unmapped: "#e2e8f0",
 };
 
 /**
@@ -160,6 +168,12 @@ export class PropertyPlanViewer extends Component {
         return STATE_COLORS[state] || "#94a3b8";
     }
 
+    regionFill(region) {
+        return region.target_state
+            ? this.stateColor(region.target_state)
+            : region.color || "#3b82f6";
+    }
+
     regionFillOpacity(region) {
         if (this.state.hoveredRegionId === region.id) return "0.55";
         return "0.3";
@@ -241,7 +255,7 @@ export class PropertyPlanViewer extends Component {
         try {
             const recs = await this.orm.read(
                 "realestate.property", [targetId],
-                ["display_name", "property_code", "hierarchy_level", "state",
+                ["display_name", "property_code", "hierarchy_level", "visual_state",
                  "area_sqm", "base_price", "bedroom_count", "bathroom_count",
                  "floor_number"],
             );
@@ -249,7 +263,11 @@ export class PropertyPlanViewer extends Component {
                 this.notification.add("Property not found.", { type: "warning" });
                 return;
             }
-            const rec = recs[0];
+            // Availability only means something for a unit (see STATE_COLORS).
+            const rec = {
+                ...recs[0],
+                state: recs[0].hierarchy_level === "unit" ? recs[0].visual_state : false,
+            };
             // Image gallery — property.image rows + the property's own floor_plan
             // / hero images, if any. Falls back gracefully if those fields
             // aren't present.
@@ -314,12 +332,15 @@ export class PropertyPlanViewer extends Component {
 
     stateLabel(state) {
         return ({
-            available: "Available",
-            reserved: "Reserved",
-            rented: "Rented",
-            sold: "Sold",
-            maintenance: "Maintenance",
-            inactive: "Inactive",
+            available: _t("Available"),
+            held: _t("On Hold"),
+            reserved: _t("Reserved"),
+            contracted: _t("Contracted"),
+            sold: _t("Sold"),
+            blocked: _t("Blocked"),
+            unreleased: _t("Not Yet Released"),
+            not_for_sale: _t("Not for Sale"),
+            unmapped: _t("No Commercial Data"),
         })[state] || state || "—";
     }
 

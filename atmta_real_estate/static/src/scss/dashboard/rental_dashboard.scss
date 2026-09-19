@@ -1,0 +1,579 @@
+// ---------------------------------------------------------------------------
+// Unit-status colours, shared by every map, marker, popup and legend
+// (map_tiles.js reads them). Muted to sit with the chart palette below, and
+// declared on :root because Units -> Map is not inside the dashboard.
+// ---------------------------------------------------------------------------
+:root {
+    --re-status-available: #0f7b6c;
+    --re-status-reserved: #c7892d;
+    --re-status-rented: #71639e;
+    --re-status-sold: #5b899e;
+    --re-status-maintenance: #a5757d;
+    --re-status-inactive: #adb5bd;
+}
+
+// Leaflet's marker clusters default to yellow / green / orange by size, which
+// matches no status. On our maps a cluster is just "several units here", so it
+// takes the dashboard's accent (Odoo's action teal, also --re-chart-1).
+.o_re_map_canvas,
+.o_pmd_canvas {
+    .marker-cluster-small,
+    .marker-cluster-medium,
+    .marker-cluster-large {
+        background-color: rgba(1, 126, 132, 0.22);
+
+        div {
+            background-color: #017e84;
+            color: #fff;
+            font-weight: 600;
+        }
+    }
+}
+
+// Rental Dashboard V2
+//
+// Enterprise operations styling: restrained, dense enough to scan, and built
+// on CSS *logical* properties (inline-start/end, margin-inline, padding-block)
+// so the whole thing mirrors correctly in an Arabic/RTL session without a
+// single hand-written `[dir="rtl"]` override.
+//
+// Colours resolve from Odoo theme variables where possible so dark mode and
+// custom themes are inherited rather than fought.
+
+.o_re_dashboard {
+    --re-gap: 1rem;
+    --re-radius: 6px;
+    --re-border: var(--border-color, #dee2e6);
+    --re-surface: var(--o-view-background-color, #fff);
+    --re-surface-muted: var(--o-gray-100, #f8f9fa);
+    --re-text: var(--o-main-text-color, #374151);
+    --re-text-muted: var(--o-main-text-color-light, #6b7280);
+
+    // Chart palette. Muted and distinguishable, not a rainbow.
+    --re-chart-1: #017e84;
+    --re-chart-2: #71639e;
+    --re-chart-3: #5b899e;
+    --re-chart-4: #a5757d;
+    --re-chart-warn: #b5651d;
+    --re-chart-muted: #adb5bd;
+
+    --re-warn-bg: #fff8f0;
+    --re-warn-border: #f0c9a0;
+    --re-warn-text: #a1521a;
+    --re-positive: #0f7b6c;
+
+    // Odoo styles `.o_action_manager > .o_action` as a full-height flex column
+    // with `overflow: hidden`, and that rule is more specific than this one, so
+    // `overflow-y: auto` here never took effect and the dashboard could not
+    // scroll. The root stays Odoo's column; `.o_re_scroll` below scrolls.
+    block-size: 100%;
+    background: var(--re-surface-muted);
+    color: var(--re-text);
+}
+
+.o_re_scroll {
+    flex: 1 1 auto;
+    min-block-size: 0;           // a flex child only shrinks below its content with this
+    overflow-y: auto;
+    overflow-x: hidden;          // never let a wide chart scroll the page
+    padding-block: 1rem 2rem;
+    padding-inline: 1rem;
+}
+
+// ---------------------------------------------------------------------------
+// Header
+// ---------------------------------------------------------------------------
+.o_re_header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--re-gap);
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-block-end: 1.25rem;
+}
+
+.o_re_title {
+    font-size: 1.375rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.o_re_subtitle {
+    margin: 0.125rem 0 0;
+    font-size: 0.8125rem;
+    color: var(--re-text-muted);
+}
+
+.o_re_sep {
+    margin-inline: 0.4rem;
+}
+
+// ---------------------------------------------------------------------------
+// Sections
+// ---------------------------------------------------------------------------
+.o_re_section {
+    margin-block-end: 1.75rem;
+}
+
+.o_re_section_title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--re-text-muted);
+    margin-block-end: 0.625rem;
+
+    .fa {
+        font-size: 0.875rem;
+        opacity: 0.7;
+    }
+}
+
+// ---------------------------------------------------------------------------
+// KPI grid
+// ---------------------------------------------------------------------------
+.o_re_kpi_grid {
+    display: grid;
+    gap: var(--re-gap);
+    // auto-fit keeps the row full at any width without media-query steps.
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+
+.o_re_kpi {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    background: var(--re-surface);
+    border: 1px solid var(--re-border);
+    border-radius: var(--re-radius);
+    padding: 0.875rem 1rem;
+    min-block-size: 92px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.o_re_kpi_label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--re-text-muted);
+    line-height: 1.3;
+}
+
+.o_re_kpi_hint {
+    margin-inline-start: 0.25rem;
+    cursor: help;
+    opacity: 0.55;
+}
+
+.o_re_kpi_value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.15;
+    // Large monetary values must not blow out the card.
+    overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
+}
+
+.o_re_kpi_status {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    color: var(--re-warn-text);
+}
+
+.o_re_kpi_progress {
+    margin-block-start: 0.375rem;
+    block-size: 4px;
+    border-radius: 2px;
+    background: var(--re-surface-muted);
+    overflow: hidden;
+}
+
+.o_re_kpi_progress_bar {
+    block-size: 100%;
+    background: var(--re-chart-1);
+    border-radius: inherit;
+    transition: inline-size 0.3s ease;
+}
+
+// Drill affordance: subtle until hover, so 16 arrows do not shout at once.
+.o_re_kpi_drill {
+    position: absolute;
+    inset-block-start: 0.75rem;
+    inset-inline-end: 0.75rem;   // mirrors automatically in RTL
+    font-size: 0.75rem;
+    opacity: 0;
+    color: var(--re-text-muted);
+    transition: opacity 0.15s ease;
+
+    .fa {
+        // The arrow points "forward"; flip it for RTL.
+        [dir="rtl"] & {
+            transform: scaleX(-1);
+        }
+    }
+}
+
+.o_re_kpi_clickable {
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+        border-color: var(--re-chart-1);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+
+        .o_re_kpi_drill {
+            opacity: 1;
+        }
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--re-chart-1);
+        outline-offset: 2px;
+    }
+}
+
+.o_re_kpi_warning {
+    background: var(--re-warn-bg);
+    border-color: var(--re-warn-border);
+}
+
+.o_re_kpi_positive .o_re_kpi_value {
+    color: var(--re-positive);
+}
+
+// ---------------------------------------------------------------------------
+// Panels (charts + lists)
+// ---------------------------------------------------------------------------
+.o_re_panel {
+    background: var(--re-surface);
+    border: 1px solid var(--re-border);
+    border-radius: var(--re-radius);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    min-inline-size: 0;          // lets grid children actually shrink
+}
+
+.o_re_panel_head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-block-end: 0.75rem;
+}
+
+.o_re_panel_title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.o_re_panel_subtitle {
+    margin: 0.125rem 0 0;
+    font-size: 0.75rem;
+    color: var(--re-text-muted);
+}
+
+.o_re_panel_more {
+    padding: 0;
+    font-size: 0.75rem;
+    white-space: nowrap;
+
+    .fa {
+        [dir="rtl"] & {
+            transform: scaleX(-1);
+        }
+    }
+}
+
+.o_re_chart_grid {
+    display: grid;
+    gap: var(--re-gap);
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+}
+
+.o_re_chart_panel {
+    min-block-size: 300px;
+}
+
+// Chart.js needs a bounded parent or it grows on every resize.
+.o_re_chart_canvas_wrap {
+    position: relative;
+    flex: 1 1 auto;
+    min-block-size: 220px;
+    inline-size: 100%;
+}
+
+// ---------------------------------------------------------------------------
+// Worklists
+// ---------------------------------------------------------------------------
+.o_re_list_grid {
+    display: grid;
+    gap: var(--re-gap);
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+}
+
+.o_re_table_wrap {
+    // Wide tables scroll inside their own panel, never the page.
+    overflow-x: auto;
+}
+
+.o_re_table {
+    margin: 0;
+    font-size: 0.8125rem;
+
+    th {
+        font-weight: 600;
+        font-size: 0.6875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--re-text-muted);
+        border-block-end: 1px solid var(--re-border);
+        white-space: nowrap;
+    }
+
+    td {
+        vertical-align: middle;
+        font-variant-numeric: tabular-nums;
+    }
+}
+
+.o_re_row {
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+        background: var(--re-surface-muted);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--re-chart-1);
+        outline-offset: -2px;
+    }
+}
+
+.o_re_cell_danger {
+    color: var(--re-warn-text);
+    font-weight: 600;
+}
+
+// ---------------------------------------------------------------------------
+// Empty / error states
+// ---------------------------------------------------------------------------
+.o_re_empty {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding-block: 2rem;
+    text-align: center;
+    color: var(--re-text-muted);
+}
+
+.o_re_empty_icon {
+    font-size: 1.5rem;
+    opacity: 0.35;
+}
+
+.o_re_empty_text {
+    margin: 0;
+    font-size: 0.8125rem;
+}
+
+.o_re_state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    text-align: center;
+    padding: 3rem 1rem;
+    background: var(--re-surface);
+    border: 1px solid var(--re-border);
+    border-radius: var(--re-radius);
+}
+
+.o_re_state_icon {
+    font-size: 2rem;
+    color: var(--re-warn-text);
+    opacity: 0.8;
+}
+
+.o_re_state_title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.o_re_state_text {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--re-text-muted);
+    max-inline-size: 46ch;
+}
+
+// ---------------------------------------------------------------------------
+// Loading skeleton
+// ---------------------------------------------------------------------------
+.o_re_skeleton {
+    pointer-events: none;
+}
+
+.o_re_skel_line,
+.o_re_skel_chart {
+    border-radius: 4px;
+    background: linear-gradient(
+        90deg,
+        var(--re-surface-muted) 25%,
+        rgba(0, 0, 0, 0.05) 37%,
+        var(--re-surface-muted) 63%
+    );
+    background-size: 400% 100%;
+    animation: o-re-shimmer 1.4s ease infinite;
+}
+
+.o_re_skel_label {
+    block-size: 10px;
+    inline-size: 55%;
+    margin-block-end: 0.625rem;
+}
+
+.o_re_skel_value {
+    block-size: 24px;
+    inline-size: 70%;
+}
+
+.o_re_skel_chart {
+    flex: 1 1 auto;
+    min-block-size: 200px;
+    margin-block-start: 0.5rem;
+}
+
+@keyframes o-re-shimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
+}
+
+// Respect a user's reduced-motion preference.
+@media (prefers-reduced-motion: reduce) {
+    .o_re_skel_line,
+    .o_re_skel_chart {
+        animation: none;
+    }
+    .o_re_kpi,
+    .o_re_kpi_progress_bar,
+    .o_re_kpi_drill {
+        transition: none;
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Responsive
+// ---------------------------------------------------------------------------
+// Tablet: charts drop to one column well before they become unreadable.
+@media (max-width: 991px) {
+    .o_re_chart_grid,
+    .o_re_list_grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 575px) {
+    .o_re_dashboard {
+        padding-inline: 0.75rem;
+    }
+
+    .o_re_kpi_grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .o_re_kpi_value {
+        font-size: 1.25rem;
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Phase 4: quick actions, Mine / Team, tile slots
+// ---------------------------------------------------------------------------
+.o_re_dashboard {
+    .o_re_header_actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.5rem;
+    }
+
+    .o_re_quick_actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    // The slot only carries the tile key for tests and tours; the card itself
+    // stays the grid item.
+    .o_re_kpi_slot {
+        display: contents;
+    }
+
+    @media (max-width: 767.98px) {
+        .o_re_header_actions,
+        .o_re_quick_actions {
+            justify-content: flex-start;
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Map card
+// ---------------------------------------------------------------------------
+.o_re_map_canvas,
+.o_re_map_loading {
+    position: relative;
+    block-size: 360px;
+    inline-size: 100%;
+    border-radius: var(--re-radius);
+    overflow: hidden;
+    z-index: 0;                  // keep Leaflet's panes under Odoo's dropdowns and dialogs
+}
+
+.o_re_map_loading {
+    background: var(--re-surface-muted);
+}
+
+.o_re_map_legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.75rem;
+    color: var(--re-text-muted);
+
+    li {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+    }
+}
+
+.o_re_map_dot {
+    display: inline-block;
+    inline-size: 0.625rem;
+    block-size: 0.625rem;
+    border-radius: 50%;
+}
+
+.o_re_map_count {
+    font-variant-numeric: tabular-nums;
+    color: var(--re-text);
+}

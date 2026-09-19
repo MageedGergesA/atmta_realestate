@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  M20 / M21 — the record rules Brokerage 0.1 did not have.
+
+  0.1 shipped with an `ir.model.access.csv` and *no* `ir.rule` records at all.
+  Every listing, offer, transaction and commission in the database was visible
+  to every user who held the Agent group, across every company. In a suite that
+  had just gained `company_id` columns (M21) that is not a theoretical problem:
+  Company A's confidential minimum price was readable by Company B's agent.
+
+  Two layers, in this order:
+
+    1. Multi-company — global rules, applying to everyone including managers.
+       A manager of Company A is not a manager of Company B.
+
+    2. Project scoping — Agent-group rules. An agent working Palm Heights has
+       no business reading the pipeline for a tower they cannot sell.
+       Managers are exempted by a second, permissive rule on their own group.
+
+  Rules in the *same* group are ANDed; rules in *different* groups are ORed.
+  The manager rules below are therefore genuine escapes from the agent
+  restriction, and the global company rules are ANDed with both — which is the
+  intended shape, because company isolation must not be escapable by seniority.
+-->
+<odoo noupdate="1">
+
+    <!-- ==============================================================
+         1. Multi-company isolation (global — no groups)
+         ============================================================== -->
+    <record id="rule_listing_company" model="ir.rule">
+        <field name="name">Listing: own company</field>
+        <field name="model_id" ref="model_realestate_listing"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">
+            ['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]
+        </field>
+    </record>
+
+    <record id="rule_mandate_company" model="ir.rule">
+        <field name="name">Mandate: own company</field>
+        <field name="model_id" ref="model_realestate_listing_mandate"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">
+            ['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]
+        </field>
+    </record>
+
+    <record id="rule_offer_company" model="ir.rule">
+        <field name="name">Offer: own company</field>
+        <field name="model_id" ref="model_realestate_offer"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">
+            ['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]
+        </field>
+    </record>
+
+    <record id="rule_transaction_company" model="ir.rule">
+        <field name="name">Transaction: own company</field>
+        <field name="model_id" ref="model_realestate_transaction"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">
+            ['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]
+        </field>
+    </record>
+
+    <record id="rule_commission_company" model="ir.rule">
+        <field name="name">Commission: own company</field>
+        <field name="model_id" ref="model_realestate_commission"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">
+            ['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]
+        </field>
+    </record>
+
+    <record id="rule_viewing_company" model="ir.rule">
+        <field name="name">Viewing: own company</field>
+        <field name="model_id" ref="model_realestate_viewing"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">
+            ['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]
+        </field>
+    </record>
+
+    <record id="rule_match_company" model="ir.rule">
+        <field name="name">Property match: own company</field>
+        <field name="model_id" ref="model_realestate_property_match"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">
+            ['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]
+        </field>
+    </record>
+
+    <record id="rule_broker_agreement_company" model="ir.rule">
+        <field name="name">Broker agreement: own company</field>
+        <field name="model_id" ref="model_realestate_broker_agreement"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">
+            ['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]
+        </field>
+    </record>
+
+    <record id="rule_lead_registration_company" model="ir.rule">
+        <field name="name">Lead registration: own company</field>
+        <field name="model_id" ref="model_realestate_lead_registration"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">
+            ['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]
+        </field>
+    </record>
+
+    <!-- ==============================================================
+         2. Project scoping (Agent group), with a manager escape
+
+         `re_allowed_project_ids` resolves to *every* project when the user's
+         teams place no restriction, so the same domain serves both the scoped
+         and the unscoped case without a second rule and without the empty-list
+         ambiguity that makes project scoping either useless or a lockout.
+         ============================================================== -->
+    <record id="rule_listing_project_agent" model="ir.rule">
+        <field name="name">Listing: authorised projects only</field>
+        <field name="model_id" ref="model_realestate_listing"/>
+        <field name="groups" eval="[(4, ref('group_realestate_sales_agent'))]"/>
+        <field name="domain_force">
+            ['|', ('project_id', '=', False),
+                  ('project_id', 'in', user.re_allowed_project_ids.ids)]
+        </field>
+    </record>
+
+    <record id="rule_listing_project_manager" model="ir.rule">
+        <field name="name">Listing: managers see every project</field>
+        <field name="model_id" ref="model_realestate_listing"/>
+        <field name="groups" eval="[(4, ref('group_realestate_sales_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <record id="rule_match_project_agent" model="ir.rule">
+        <field name="name">Property match: authorised projects only</field>
+        <field name="model_id" ref="model_realestate_property_match"/>
+        <field name="groups" eval="[(4, ref('group_realestate_sales_agent'))]"/>
+        <field name="domain_force">
+            ['|', ('project_id', '=', False),
+                  ('project_id', 'in', user.re_allowed_project_ids.ids)]
+        </field>
+    </record>
+
+    <record id="rule_match_project_manager" model="ir.rule">
+        <field name="name">Property match: managers see every project</field>
+        <field name="model_id" ref="model_realestate_property_match"/>
+        <field name="groups" eval="[(4, ref('group_realestate_sales_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+
+    <record id="seq_contract_deposit" model="ir.sequence">
+        <field name="name">Lease Security Deposit</field>
+        <field name="code">realestate.contract.deposit</field>
+        <field name="prefix">DEP/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_contract_renewal" model="ir.sequence">
+        <field name="name">Lease Renewal</field>
+        <field name="code">realestate.contract.renewal</field>
+        <field name="prefix">RNW/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_contract_amendment" model="ir.sequence">
+        <field name="name">Lease Amendment</field>
+        <field name="code">realestate.contract.amendment</field>
+        <field name="prefix">AMD/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_contract_termination" model="ir.sequence">
+        <field name="name">Lease Termination</field>
+        <field name="code">realestate.contract.termination</field>
+        <field name="prefix">TRM/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_move_in" model="ir.sequence">
+        <field name="name">Tenant Move-In</field>
+        <field name="code">realestate.move.in</field>
+        <field name="prefix">MVI/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_move_out" model="ir.sequence">
+        <field name="name">Tenant Move-Out</field>
+        <field name="code">realestate.move.out</field>
+        <field name="prefix">MVO/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_unit_turn" model="ir.sequence">
+        <field name="name">Unit Turn</field>
+        <field name="code">realestate.unit.turn</field>
+        <field name="prefix">TRN/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+</odoo>

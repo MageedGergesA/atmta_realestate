@@ -6,11 +6,12 @@
         <field name="arch" type="xml">
             <form string="Utility Line">
                 <header>
+                    <field name="can_post_accounting" invisible="1"/>
                     <button name="action_confirm_utility"
                             type="object"
                             string="Confirm and Create Bill"
                             class="btn-primary"
-                            invisible="state != 'draft'"/>
+                            invisible="state != 'draft' or not can_post_accounting"/>
                     <button name="action_reset_to_draft_utility"
                             type="object"
                             string="Reset To Draft"
@@ -20,7 +21,7 @@
                             type="object"
                             string="Register Payment"
                             class="btn-secondary"
-                            invisible="state != 'confirmed' or bill_paid"/>
+                            invisible="state != 'confirmed' or bill_paid or not can_post_accounting"/>
                     <field name="state"
                            widget="statusbar"
                            statusbar_visible="draft,confirmed"/>

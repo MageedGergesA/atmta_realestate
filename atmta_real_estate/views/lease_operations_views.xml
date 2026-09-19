@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ============================================================= -->
+    <!-- Lease property allocations                                     -->
+    <!-- ============================================================= -->
+    <record id="view_contract_property_line_list" model="ir.ui.view">
+        <field name="name">realestate.contract.property.line.list</field>
+        <field name="model">realestate.contract.property.line</field>
+        <field name="arch" type="xml">
+            <list string="Property Allocations" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="property_id" options="{'no_create': True}"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="area_sqm" optional="show" sum="Total Area"/>
+                <field name="allocated_rent" sum="Total Rent"/>
+                <field name="rent_per_sqm" optional="hide"/>
+                <field name="security_deposit" optional="hide"/>
+                <field name="move_in_date" optional="show"/>
+                <field name="move_out_date" optional="show"/>
+                <field name="occupancy_status" widget="badge"
+                       decoration-success="occupancy_status == 'occupied'"
+                       decoration-muted="occupancy_status == 'vacated'"/>
+                <field name="origin" optional="hide"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="company_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_contract_property_line_form" model="ir.ui.view">
+        <field name="name">realestate.contract.property.line.form</field>
+        <field name="model">realestate.contract.property.line</field>
+        <field name="arch" type="xml">
+            <form string="Property Allocation">
+                <sheet>
+                    <group>
+                        <group string="Allocation">
+                            <field name="contract_id" options="{'no_create': True}"/>
+                            <field name="property_id" options="{'no_create': True}"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="origin" readonly="1"/>
+                        </group>
+                        <group string="Commercials">
+                            <field name="allocated_rent"/>
+                            <field name="area_sqm"/>
+                            <field name="rent_per_sqm"/>
+                            <field name="security_deposit"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Physical Occupancy">
+                        <group>
+                            <field name="move_in_date"/>
+                            <field name="move_out_date"/>
+                        </group>
+                        <group>
+                            <field name="occupancy_status"/>
+                            <field name="occupies_property"/>
+                            <field name="is_blocking"/>
+                        </group>
+                    </group>
+                    <field name="notes" placeholder="Notes…"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- Lease parties                                                  -->
+    <!-- ============================================================= -->
+    <record id="view_contract_party_list" model="ir.ui.view">
+        <field name="name">realestate.contract.party.list</field>
+        <field name="model">realestate.contract.party</field>
+        <field name="arch" type="xml">
+            <list string="Parties" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="partner_id"/>
+                <field name="role"/>
+                <field name="is_primary" widget="boolean_toggle"/>
+                <field name="responsibility_pct" optional="show"/>
+                <field name="email" optional="show"/>
+                <field name="phone" optional="show"/>
+                <field name="mobile" optional="hide"/>
+                <field name="start_date" optional="hide"/>
+                <field name="end_date" optional="hide"/>
+                <field name="is_active_party" optional="hide"/>
+                <button name="action_make_primary" type="object" icon="fa-star"
+                        title="Make primary tenant" invisible="is_primary"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- Recurring charge rules                                         -->
+    <!-- ============================================================= -->
+    <record id="view_charge_rule_list" model="ir.ui.view">
+        <field name="name">realestate.contract.charge.rule.list</field>
+        <field name="model">realestate.contract.charge.rule</field>
+        <field name="arch" type="xml">
+            <list string="Recurring Charges" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="charge_category"/>
+                <field name="calculation_type"/>
+                <field name="amount" invisible="calculation_type != 'fixed'"/>
+                <field name="percentage" invisible="calculation_type != 'percentage'"/>
+                <field name="rate_per_sqm" invisible="calculation_type != 'per_sqm'"/>
+                <field name="unit_rate" invisible="calculation_type != 'meter_consumption'"/>
+                <field name="meter_type" invisible="calculation_type != 'meter_consumption'"/>
+                <field name="frequency"/>
+                <field name="custom_interval_months" invisible="frequency != 'custom'"/>
+                <field name="product_id" optional="show" options="{'no_create': True}"/>
+                <field name="tax_ids" widget="many2many_tags" optional="show"/>
+                <field name="start_date" optional="hide"/>
+                <field name="end_date" optional="hide"/>
+                <field name="property_line_id" optional="hide" options="{'no_create': True}"/>
+                <field name="prorate_partial_periods" optional="hide"/>
+                <field name="active" column_invisible="True"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="company_id" column_invisible="True"/>
+                <field name="contract_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- Rent escalations                                               -->
+    <!-- ============================================================= -->
+    <record id="view_escalation_list" model="ir.ui.view">
+        <field name="name">realestate.rent.escalation.rule.list</field>
+        <field name="model">realestate.rent.escalation.rule</field>
+        <field name="arch" type="xml">
+            <list string="Rent Escalations" editable="bottom" default_order="effective_date">
+                <field name="effective_date"/>
+                <field name="escalation_type"/>
+                <field name="percentage" invisible="escalation_type != 'percentage'"/>
+                <field name="fixed_amount" invisible="escalation_type != 'fixed'"/>
+                <field name="scheduled_amount"
+                       invisible="escalation_type not in ('scheduled_amount', 'index')"/>
+                <field name="index_basis" invisible="escalation_type != 'index'" optional="hide"/>
+                <field name="base_amount" readonly="1"/>
+                <field name="resulting_amount" readonly="1" decoration-bf="1"/>
+                <field name="increase_amount" readonly="1" optional="show"/>
+                <field name="increase_pct" readonly="1" optional="show"/>
+                <field name="notes" optional="hide"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- Incentives                                                     -->
+    <!-- ============================================================= -->
+    <record id="view_incentive_list" model="ir.ui.view">
+        <field name="name">realestate.contract.incentive.list</field>
+        <field name="model">realestate.contract.incentive</field>
+        <field name="arch" type="xml">
+            <list string="Incentives" editable="bottom">
+                <field name="name"/>
+                <field name="incentive_type"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="percentage" invisible="incentive_type != 'percent_discount'"/>
+                <field name="amount" invisible="incentive_type != 'fixed_discount'"/>
+                <field name="total_value" readonly="1" sum="Total Given Away"/>
+                <field name="property_line_id" optional="hide" options="{'no_create': True}"/>
+                <field name="reason" optional="show"/>
+                <field name="approved_by_id" optional="show" readonly="1"/>
+                <button name="action_approve" type="object" string="Approve"
+                        icon="fa-check" invisible="approved_by_id"
+                        groups="atmta_real_estate.group_rental_manager"/>
+                <field name="active" column_invisible="True"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- Billing obligations                                            -->
+    <!-- ============================================================= -->
+    <record id="view_billing_obligation_list" model="ir.ui.view">
+        <field name="name">realestate.contract.payment.obligation.list</field>
+        <field name="model">realestate.contract.payment</field>
+        <field name="arch" type="xml">
+            <list string="Billing Obligations" create="false"
+                  decoration-danger="days_overdue &gt; 0"
+                  decoration-success="state == 'paid'"
+                  decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="contract_id" optional="show"/>
+                <field name="partner_id" optional="show"/>
+                <field name="property_id" optional="hide"/>
+                <field name="period_label" string="Period"/>
+                <field name="date_due"/>
+                <field name="gross_rent" optional="hide" sum="Gross Rent"/>
+                <field name="incentive_relief" optional="hide" sum="Relief"/>
+                <field name="amount" sum="Net Rent"/>
+                <field name="charge_total" optional="hide" sum="Charges"/>
+                <field name="tax_amount" optional="hide" sum="Tax"/>
+                <field name="amount_due" optional="hide" sum="Due"/>
+                <field name="amount_paid" optional="hide" sum="Paid"/>
+                <field name="amount_residual" string="Outstanding" sum="Outstanding"/>
+                <field name="days_overdue" optional="hide"/>
+                <field name="overdue_bucket" optional="hide" widget="badge"
+                       decoration-danger="overdue_bucket in ('91_120','120_plus')"
+                       decoration-warning="overdue_bucket in ('31_60','61_90')"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'paid'"
+                       decoration-info="state == 'invoiced'"/>
+                <field name="move_id" optional="hide"/>
+                <field name="proration_note" optional="hide"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="company_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_billing_obligations" model="ir.actions.act_window">
+        <field name="name">Billing Obligations</field>
+        <field name="res_model">realestate.contract.payment</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+        <field name="context">{'search_default_outstanding': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Everything is collected</p>
+            <p>No billing obligation has an outstanding balance.</p>
+        </field>
+    </record>
+
+    <record id="view_billing_obligation_search" model="ir.ui.view">
+        <field name="name">realestate.contract.payment.obligation.search</field>
+        <field name="model">realestate.contract.payment</field>
+        <field name="arch" type="xml">
+            <search string="Billing Obligations">
+                <field name="name"/>
+                <field name="contract_id"/>
+                <field name="partner_id"/>
+                <field name="property_id"/>
+                <filter name="outstanding" string="Outstanding"
+                        domain="[('amount_residual', '&gt;', 0), ('state', '=', 'invoiced')]"/>
+                <filter name="overdue" string="Overdue"
+                        domain="[('days_overdue', '&gt;', 0)]"/>
+                <filter name="due_soon" string="Due in 14 Days"
+                        domain="[('state', 'in', ('draft', 'invoiced')), ('amount_residual', '&gt;', 0),
+                                 ('date_due', '&gt;=', context_today().strftime('%Y-%m-%d')),
+                                 ('date_due', '&lt;=', (context_today() + relativedelta(days=14)).strftime('%Y-%m-%d'))]"/>
+                <filter name="unbilled" string="Not Yet Invoiced"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="paid" string="Paid" domain="[('state', '=', 'paid')]"/>
+                <separator/>
+                <!-- Ageing is computed for today, so it is filtered rather than
+                     grouped: Odoo can only group by stored values. -->
+                <filter name="aged_1_30" string="1-30 Days Overdue"
+                        domain="[('overdue_bucket', '=', '1_30')]"/>
+                <filter name="aged_31_60" string="31-60 Days Overdue"
+                        domain="[('overdue_bucket', '=', '31_60')]"/>
+                <filter name="aged_61_90" string="61-90 Days Overdue"
+                        domain="[('overdue_bucket', '=', '61_90')]"/>
+                <filter name="aged_91_120" string="91-120 Days Overdue"
+                        domain="[('overdue_bucket', '=', '91_120')]"/>
+                <filter name="aged_120_plus" string="120+ Days Overdue"
+                        domain="[('overdue_bucket', '=', '120_plus')]"/>
+                <separator/>
+                <filter name="due_this_month" string="Due This Month"
+                        domain="[('date_due', '&gt;=', (context_today()).strftime('%Y-%m-01'))]"/>
+                <group expand="0" string="Group By">
+                    <filter name="gb_tenant" string="Tenant" context="{'group_by': 'partner_id'}"/>
+                    <filter name="gb_lease" string="Lease" context="{'group_by': 'contract_id'}"/>
+                    <filter name="gb_property" string="Property" context="{'group_by': 'property_id'}"/>
+                    <filter name="gb_due" string="Due Date" context="{'group_by': 'date_due:month'}"/>
+                    <filter name="gb_state" string="Status" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- Security deposits                                              -->
+    <!-- ============================================================= -->
+    <record id="view_deposit_list" model="ir.ui.view">
+        <field name="name">realestate.contract.deposit.list</field>
+        <field name="model">realestate.contract.deposit</field>
+        <field name="arch" type="xml">
+            <list string="Security Deposits">
+                <field name="name"/>
+                <field name="contract_id"/>
+                <field name="partner_id"/>
+                <field name="property_id" optional="show"/>
+                <field name="requested_amount" optional="hide"/>
+                <field name="received_amount" sum="Received"/>
+                <field name="held_amount" sum="Held"/>
+                <field name="refunded_amount" optional="show" sum="Refunded"/>
+                <field name="forfeited_amount" optional="hide" sum="Forfeited"/>
+                <field name="applied_amount" optional="hide" sum="Applied"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'held'"
+                       decoration-success="state == 'refunded'"
+                       decoration-danger="state == 'forfeited'"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="company_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_deposit_form" model="ir.ui.view">
+        <field name="name">realestate.contract.deposit.form</field>
+        <field name="model">realestate.contract.deposit</field>
+        <field name="arch" type="xml">
+            <form string="Security Deposit">
+                <header>
+                    <button name="action_request" type="object" string="Request"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <field name="can_post_accounting" invisible="1"/>
+                    <button name="action_register_receipt" type="object"
+                            string="Register Receipt" class="oe_highlight"
+                            invisible="state not in ('draft', 'requested') or not can_post_accounting"/>
+                    <button name="action_refund" type="object" string="Refund"
+                            invisible="state not in ('held', 'received', 'partially_refunded') or not can_post_accounting"
+                            groups="atmta_real_estate.group_rental_manager"
+                            confirm="This will post an outbound payment returning the deposit to the tenant. Continue?"/>
+                    <button name="action_forfeit" type="object" string="Forfeit"
+                            invisible="state not in ('held', 'received', 'partially_refunded') or not can_post_accounting"
+                            groups="atmta_real_estate.group_rental_manager"
+                            confirm="Forfeiting recognises the deposit as income. This is not reversible without a manual journal entry. Continue?"/>
+                    <button name="action_apply_to_arrears" type="object"
+                            string="Apply to Arrears"
+                            invisible="state not in ('held', 'received', 'partially_refunded') or not can_post_accounting"
+                            groups="atmta_real_estate.group_rental_manager"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('refunded', 'forfeited', 'applied', 'cancelled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,requested,held,refunded"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_payments" type="object"
+                                class="oe_stat_button" icon="fa-money">
+                            <field name="payment_count" widget="statinfo" string="Payments"/>
+                        </button>
+                        <button name="action_view_moves" type="object"
+                                class="oe_stat_button" icon="fa-book">
+                            <field name="move_count" widget="statinfo" string="Entries"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Lease">
+                            <field name="contract_id" options="{'no_create': True}"/>
+                            <field name="partner_id" options="{'no_create': True}"/>
+                            <field name="property_id" options="{'no_create': True}"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Amounts">
+                            <field name="requested_amount"/>
+                            <field name="received_amount"/>
+                            <field name="held_amount" decoration-bf="1"/>
+                            <field name="refunded_amount"/>
+                            <field name="forfeited_amount"/>
+                            <field name="applied_amount"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Accounting">
+                            <field name="journal_id" options="{'no_create': True}"/>
+                            <field name="deposit_account_id" options="{'no_create': True}"/>
+                        </group>
+                        <group string="Dates &amp; Approval">
+                            <field name="request_date"/>
+                            <field name="received_date"/>
+                            <field name="refund_date"/>
+                            <field name="approver_id"/>
+                            <field name="approval_date"/>
+                        </group>
+                    </group>
+                    <group string="Settlement">
+                        <field name="settlement_reason" nolabel="1"
+                               placeholder="Why was the deposit refunded in part, forfeited or applied?"/>
+                    </group>
+                    <field name="attachment_ids" widget="many2many_binary"/>
+                    <field name="notes" placeholder="Internal notes…"/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_deposit_search" model="ir.ui.view">
+        <field name="name">realestate.contract.deposit.search</field>
+        <field name="model">realestate.contract.deposit</field>
+        <field name="arch" type="xml">
+            <search string="Security Deposits">
+                <field name="name"/>
+                <field name="contract_id" string="Lease"/>
+                <field name="partner_id" string="Tenant"/>
+                <field name="property_id" string="Unit"/>
+                <filter name="needs_action" string="Needs Action"
+                        help="Requested but not received, or still held on a lease that has ended"
+                        domain="['|', ('state', '=', 'requested'),
+                                 '&amp;', ('state', 'in', ('received', 'held', 'partially_refunded')),
+                                          ('contract_id.lifecycle_state', 'in', ('ended', 'terminated'))]"/>
+                <separator/>
+                <filter name="held" string="Held" domain="[('state', 'in', ('received', 'held', 'partially_refunded'))]"/>
+                <filter name="settled" string="Settled"
+                        domain="[('state', 'in', ('refunded', 'forfeited', 'applied'))]"/>
+                <group expand="0" string="Group By">
+                    <filter name="gb_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="gb_lease" string="Lease" context="{'group_by': 'contract_id'}"/>
+                    <filter name="gb_tenant" string="Tenant" context="{'group_by': 'partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_deposits" model="ir.actions.act_window">
+        <field name="name">Security Deposits</field>
+        <field name="res_model">realestate.contract.deposit</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_needs_action': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No deposits need action</p>
+            <p>Deposits appear here when they are requested, held on an ended lease, or
+                ready to settle.</p>
+        </field>
+    </record>
+
+</odoo>

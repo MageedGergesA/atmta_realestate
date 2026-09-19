@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_sale_contract_form_checks" model="ir.ui.view">
+        <field name="name">realestate.sale.contract.form.checks</field>
+        <field name="model">realestate.sale.contract</field>
+        <field name="inherit_id" ref="real_estate_developer.view_sale_contract_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_bulk_create_checks" type="object"
+                        string="Generate Checks"
+                        groups="real_estate_checks.group_checks_user"/>
+                <button name="action_view_checks" type="object"
+                        string="View Checks"
+                        invisible="check_count == 0"/>
+                <button name="action_print_pdc_acknowledgement" type="object"
+                        string="PDC Acknowledgement"
+                        invisible="check_count == 0"
+                        help="A cheque receipt listing the instruments held. Deliberately NOT a payment receipt — no payment has been made."/>
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <!--
+                    M19 / M20 — the labels are the point.
+
+                    'Received (face value)' is paper. Only 'Cleared' is money.
+                    0.1 showed a single `check_amount_total` next to real
+                    financial figures with nothing to distinguish them, which
+                    invited exactly the reading this module must not encourage.
+                -->
+                <group string="Post-Dated Cheques (paper received — not cash collected)">
+                    <group>
+                        <field name="check_count"/>
+                        <field name="check_amount_total"/>
+                        <field name="check_amount_on_hand"/>
+                        <field name="check_amount_at_bank"/>
+                    </group>
+                    <group>
+                        <field name="check_amount_cleared"/>
+                        <field name="check_amount_bounced"/>
+                    </group>
+                    <group string="Coverage">
+                        <field name="future_obligation_amount"/>
+                        <field name="pdc_secured_amount"/>
+                        <field name="pdc_unsecured_amount"/>
+                        <field name="pdc_coverage_percent" widget="percentage"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_sale_installment_list_checks" model="ir.ui.view">
+        <field name="name">realestate.sale.installment.list.checks</field>
+        <field name="model">realestate.sale.installment</field>
+        <field name="inherit_id" ref="real_estate_developer.view_sale_installment_list"/>
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <field name="secured_by_checks_amount" optional="show"
+                       string="Secured by Cheques"/>
+                <field name="unsecured_amount" optional="hide"/>
+            </field>
+        </field>
+    </record>
+</odoo>

@@ -120,8 +120,7 @@ class Transaction(models.Model):
             if rec.transaction_type == 'brokerage' and not rec.commission_ids:
                 raise UserError(_("Add at least one commission line for a brokerage transaction before closing."))
             rec.state = 'closed'
-            if not rec.closing_date:
-                rec.closing_date = fields.Date.today()
+            rec._stamp_actual_closing_date()
             # Listing & property updates
             rec.listing_id.write({
                 'state': 'sold',
@@ -168,6 +167,27 @@ class Transaction(models.Model):
                             invoices.invoice_payment_term_id = rec.payment_term_id.id
                         self.env['realestate.account.tools'].post_moves(invoices)
                         rec.invoice_id = invoices[:1].id
+
+    def _stamp_actual_closing_date(self):
+        """At close, `closing_date` is when the deal closed, not when it was
+        expected to.
+
+        A transaction promoted from an offer starts with the buyer's proposed
+        closing date. Closing early would otherwise date the sale (and the
+        listing's `sold_date`) in the future. A past date is kept: that is a
+        close being recorded after the fact. The planned date is not lost — it
+        stays on the offer, and is noted here when it is replaced.
+        """
+        self.ensure_one()
+        today = fields.Date.today()
+        planned = self.closing_date
+        if planned and planned <= today:
+            return
+        self.closing_date = today
+        if planned:
+            self.message_post(body=_(
+                "Closed on %(today)s; the planned closing date was %(planned)s.",
+                today=today, planned=planned))
 
     def action_view_invoice(self):
         self.ensure_one()

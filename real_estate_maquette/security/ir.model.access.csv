@@ -1,9 +1,30 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_maquette_unit_picker,maquette.unit.picker,model_realestate_maquette_unit_picker,base.group_user,1,1,1,1
-access_building_region_user,realestate.building.region.user,model_realestate_building_region,base.group_user,1,0,0,0
-access_building_region_manager,realestate.building.region.manager,model_realestate_building_region,base.group_system,1,1,1,1
-access_building_preview_user,realestate.building.preview.user,model_realestate_building_preview,base.group_user,1,1,1,1
-access_building_floor_user,realestate.building.floor.user,model_realestate_building_floor,base.group_user,1,0,0,0
-access_building_floor_manager,realestate.building.floor.manager,model_realestate_building_floor,base.group_system,1,1,1,1
-access_spec_tag_user,realestate.spec.tag.user,model_realestate_spec_tag,base.group_user,1,0,0,0
-access_spec_tag_manager,realestate.spec.tag.manager,model_realestate_spec_tag,base.group_system,1,1,1,1
+access_maquette_unit_picker_viewer,unit picker viewer,model_realestate_maquette_unit_picker,group_visual_viewer,1,0,0,0
+access_maquette_unit_picker_author,unit picker author,model_realestate_maquette_unit_picker,group_visual_author,1,1,1,1
+access_building_region_viewer,master plan region viewer,model_realestate_building_region,group_visual_viewer,1,0,0,0
+access_building_region_author,master plan region author,model_realestate_building_region,group_visual_author,1,1,1,1
+access_building_region_base,master plan region read (any internal user),model_realestate_building_region,base.group_user,1,0,0,0
+access_building_preview_user,building preview dialog,model_realestate_building_preview,base.group_user,1,1,1,1
+access_building_floor_viewer,building floor viewer,model_realestate_building_floor,group_visual_viewer,1,0,0,0
+access_building_floor_author,building floor author,model_realestate_building_floor,group_visual_author,1,1,1,1
+access_building_floor_base,building floor read (any internal user),model_realestate_building_floor,base.group_user,1,0,0,0
+access_spec_tag_base,spec tag read,model_realestate_spec_tag,base.group_user,1,0,0,0
+access_spec_tag_author,spec tag author,model_realestate_spec_tag,group_visual_author,1,1,1,1
+access_visual_validation_viewer,validation report viewer,model_realestate_visual_validation,group_visual_viewer,1,0,0,0
+access_visual_validation_author,validation report author,model_realestate_visual_validation,group_visual_author,1,1,1,0
+access_visual_validation_manager,validation report manager,model_realestate_visual_validation,group_visual_manager,1,1,1,1
+access_visual_validation_issue_viewer,validation issue viewer,model_realestate_visual_validation_issue,group_visual_viewer,1,0,0,0
+access_visual_validation_issue_author,validation issue author,model_realestate_visual_validation_issue,group_visual_author,1,1,1,0
+access_visual_validation_issue_manager,validation issue manager,model_realestate_visual_validation_issue,group_visual_manager,1,1,1,1
+access_visual_migration_viewer,gallery migration viewer,model_realestate_visual_migration,group_visual_viewer,1,0,0,0
+access_visual_migration_manager,gallery migration manager,model_realestate_visual_migration,group_visual_manager,1,1,1,0
+access_visual_grant_manager,visual grant manager,model_realestate_visual_grant,group_visual_manager,1,1,1,1
+access_visual_grant_publisher,visual grant publisher,model_realestate_visual_grant,group_visual_publisher,1,0,0,0
+access_visual_unit_type_base,visual unit type read,model_realestate_visual_unit_type,base.group_user,1,0,0,0
+access_visual_unit_type_author,visual unit type author,model_realestate_visual_unit_type,group_visual_author,1,1,1,1
+access_visual_floor_template_base,floor template read,model_realestate_visual_floor_template,base.group_user,1,0,0,0
+access_visual_floor_template_author,floor template author,model_realestate_visual_floor_template,group_visual_author,1,1,1,1
+access_visual_floor_slot_base,floor slot read,model_realestate_visual_floor_template_slot,base.group_user,1,0,0,0
+access_visual_floor_slot_author,floor slot author,model_realestate_visual_floor_template_slot,group_visual_author,1,1,1,1
+access_visual_slot_map_base,slot map read,model_realestate_visual_floor_slot_map,base.group_user,1,0,0,0
+access_visual_slot_map_author,slot map author,model_realestate_visual_floor_slot_map,group_visual_author,1,1,1,1

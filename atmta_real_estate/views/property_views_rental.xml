@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  What Rental adds to the property screens.
+
+  The base views live in `atmta_property_core`, the module that owns the model,
+  so Brokerage, Developer, Handover, Maquette and Plan do not inherit from the
+  Rental app just to add a button.
+
+  Only the map is genuinely Rental's: it uses `property_map`, a widget from this
+  module's asset bundle. The unit-stock button that used to sit here moved to
+  `atmta_property_stock` together with the quant lifecycle it opens. The record
+  keeps its identifier, `view_property_form_rental_stock_map`, because installed
+  databases already hold it.
+-->
+<odoo>
+    <record id="view_property_form_rental_stock_map" model="ir.ui.view">
+        <field name="name">realestate.property.form.rental.map</field>
+        <field name="model">realestate.property</field>
+        <field name="inherit_id" ref="atmta_property_core.view_property_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='location']" position="inside">
+                <separator string="Map"/>
+                <field name="latitude" widget="property_map"
+                       options="{'longitude_field': 'longitude'}"
+                       nolabel="1" class="w-100"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

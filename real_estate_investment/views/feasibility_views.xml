@@ -54,13 +54,14 @@
                     <button name="action_generate_default_flows" type="object" string="Seed Empty Years"
                             invisible="cash_flow_ids != []"/>
                     <button name="action_pull_project_estimates" type="object" string="Pull from Project"
-                            invisible="not project_id"/>
+                            invisible="not project_id or state != 'draft'"
+                            confirm="This replaces every cash flow of this study with the project's budget and expected revenue. Continue?"/>
                     <button name="action_approve" type="object" string="Approve"
                             class="oe_highlight" invisible="state != 'draft'"/>
                     <button name="action_reject" type="object" string="Reject"
                             invisible="state != 'draft'"/>
                     <button name="action_archive_study" type="object" string="Archive"
-                            invisible="state in ('archived',)"/>
+                            invisible="state not in ('approved','rejected')"/>
                     <button name="action_reset_draft" type="object" string="Reset to Draft"
                             invisible="state == 'draft'"/>
                     <field name="state" widget="statusbar"/>
@@ -89,7 +90,7 @@
                         </group>
                         <group>
                             <field name="npv" readonly="1"/>
-                            <field name="irr" readonly="1" widget="percentage"/>
+                            <field name="irr" readonly="1"/>
                             <field name="payback_period" readonly="1"/>
                             <field name="is_positive" readonly="1" widget="boolean_toggle"/>
                         </group>

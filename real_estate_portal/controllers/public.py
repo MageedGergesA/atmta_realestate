@@ -11,9 +11,20 @@ can still read public-marketing data without leaking unrelated records.
 """
 import base64
 import json
+import logging
+from datetime import datetime
 
-from odoo import http
+from odoo import _, http
 from odoo.http import request, Response
+
+from odoo.addons.real_estate_maquette.controllers.visual_asset import (
+    remember_public_lead,
+)
+from odoo.addons.real_estate_maquette.models.visual_states import (
+    VISUAL_STATE_COUNTED_AS,
+)
+
+_logger = logging.getLogger(__name__)
 
 
 _LIST_FIELDS = ['id', 'name', 'code', 'has_master_plan_2d', 'has_maquette']
@@ -25,26 +36,52 @@ class PublicRealEstate(http.Controller):
     # Helpers
     # ------------------------------------------------------------------
     def _public_project(self, project_id):
-        """Return the project iff it exists. Visuals (2D plan, entry property,
-        3D maquette) are no longer required — projects without any of those
-        still get a portal page; the viewer tabs simply don't render.
-        Cancelled / never-active projects are still hidden."""
-        proj = request.env['realestate.project'].sudo().browse(int(project_id)).exists()
-        if not proj:
+        """Return the project iff it may genuinely be shown to the public.
+
+        Until M4.5 this asked only "does it exist and is it not cancelled",
+        and every asset route below inherited that as its entire
+        authorisation — so a sequential integer fetched a project's whole GLB.
+
+        A project is now public because somebody decided it should be
+        (`visual_public_enabled`) and published it (`visual_is_live`), which
+        are the two fields the gallery lifecycle already maintains.
+        """
+        proj = request.env['realestate.project'].sudo().browse(
+            int(project_id)).exists()
+        if not proj or proj.state == 'cancelled':
             return None
-        if proj.state == 'cancelled':
+        if not (proj.visual_public_enabled and proj.visual_is_live):
             return None
         return proj
+
+    def _public_grant(self, project, kinds=None):
+        """Mint a resource-scoped grant for a page that just passed the gate.
+
+        The page is authorised; the assets it embeds are separately
+        capability-checked. A leaked asset URL therefore expires, and cannot
+        be edited into a URL for a different project.
+        """
+        return request.env['realestate.visual.access'].sudo(
+            ).grant_for_public_project(
+                project, kinds=kinds, source='portal_page',
+                source_ref='/projects/%s' % project.id)
+
+    def _asset_url(self, kind, record_id, grant):
+        return '/visual/asset/%s/%s?t=%s' % (kind, record_id, grant.token)
 
     # ------------------------------------------------------------------
     # Pages
     # ------------------------------------------------------------------
     @http.route(['/projects'], type='http', auth='public', website=True, sitemap=True)
     def projects_index(self, **kw):
-        # List every non-cancelled project. Visuals are optional; cards
+        # Only projects that have a public page: the same three conditions
+        # `_public_project` applies. Listing every non-cancelled project sent
+        # visitors to cards that answered 404. Visuals are optional; cards
         # without an image fall back to the SCSS placeholder block.
         projects = request.env['realestate.project'].sudo().search([
             ('state', '!=', 'cancelled'),
+            ('visual_public_enabled', '=', True),
+            ('visual_is_live', '=', True),
         ], order='name')
         return request.render('real_estate_portal.public_projects_index', {
             'projects': projects,
@@ -73,38 +110,46 @@ class PublicRealEstate(http.Controller):
                 ('has_plan_image', '=', True),
             ])
         )
+        # One grant per page render, scoped to this project and the asset
+        # kinds a portal visitor legitimately needs. The template passes its
+        # token to the viewer mounts; every asset request then carries it.
+        visual_grant = self._public_grant(proj, kinds=[
+            'maquette_glb', 'maquette_hdr', 'master_plan_2d',
+            'plan_image', 'floor_plan_image', 'elevation_sheet',
+            'gallery_image',
+        ])
         return request.render('real_estate_portal.public_project_page', {
+            'visual_grant_token': visual_grant.token,
             'project': proj,
             'has_2d_entry': has_2d_entry,
             'units_total': len(units),
-            'units_available': len(units.filtered(lambda u: u.state == 'available')),
-            'units_reserved': len(units.filtered(lambda u: u.state == 'reserved')),
-            'units_sold': len(units.filtered(lambda u: u.state == 'sold')),
+            # From the gallery status, like the units the viewer colours, not
+            # the legacy `property.state` (an unreleased unit reads
+            # `available` there).
+            'units_available': len(units.filtered(
+                lambda u: u.visual_state in VISUAL_STATE_COUNTED_AS['available'])),
+            'units_reserved': len(units.filtered(
+                lambda u: u.visual_state in VISUAL_STATE_COUNTED_AS['reserved'])),
+            'units_sold': len(units.filtered(
+                lambda u: u.visual_state in VISUAL_STATE_COUNTED_AS['sold'])),
         })
 
     # ------------------------------------------------------------------
     # Data endpoints consumed by the embedded OWL viewers
     # ------------------------------------------------------------------
-    @http.route(['/projects/<int:project_id>/glb'], type='http', auth='public', csrf=False)
-    def project_glb(self, project_id, **kw):
-        proj = self._public_project(project_id)
-        if not proj or not proj.maquette_glb:
-            return Response("Not Found", status=404)
-        # Revalidate against write_date so a re-uploaded/deleted GLB isn't served
-        # stale from the visitor's (or a shared proxy's) cache of the old model.
-        etag = '"re-glb-%s-%s"' % (
-            proj.id, int(proj.write_date.timestamp()) if proj.write_date else 0)
-        if request.httprequest.headers.get('If-None-Match') == etag:
-            return Response(status=304, headers=[
-                ('ETag', etag), ('Cache-Control', 'no-cache')])
-        binary = base64.b64decode(proj.maquette_glb)
-        headers = [
-            ('Content-Type', 'model/gltf-binary'),
-            ('Content-Length', str(len(binary))),
-            ('Cache-Control', 'no-cache'),
-            ('ETag', etag),
-        ]
-        return Response(binary, headers=headers)
+    @http.route(['/projects/<int:project_id>/glb'], type='http',
+                auth='public', csrf=False)
+    def project_glb(self, project_id, t=None, **kw):
+        """Kept for URL compatibility; authorisation is the shared gate's.
+
+        Previously this streamed a project's entire 3D model to anybody who
+        could count. It now requires a grant, exactly as `/visual/asset/...`
+        does — this route simply forwards to it.
+        """
+        from odoo.addons.real_estate_maquette.controllers.visual_asset import (
+            VisualAssetController)
+        return VisualAssetController().visual_asset(
+            'maquette_glb', project_id, t=t)
 
     @http.route(['/projects/<int:project_id>/units.json'],
                 type='http', auth='public', csrf=False)
@@ -112,7 +157,12 @@ class PublicRealEstate(http.Controller):
         proj = self._public_project(project_id)
         if not proj:
             return Response("Not Found", status=404)
-        data = proj.get_maquette_units_data()
+        # `audience='public'` explicitly. The default changed to public as a
+        # fail-safe, but a public route stating its own audience is worth the
+        # eight characters: this endpoint briefly served internal list prices,
+        # unavailability reasons and commercial status to anonymous visitors
+        # because it inherited a default.
+        data = proj.get_maquette_units_data(audience='public')
         return Response(json.dumps(data), content_type='application/json')
 
     @http.route(['/projects/<int:project_id>/regions.json'],
@@ -189,6 +239,11 @@ class PublicRealEstate(http.Controller):
         prop = request.env['realestate.property'].sudo().browse(building_id).exists()
         if not prop or prop.hierarchy_level not in ('block', 'building'):
             return Response("Not Found", status=404)
+        # Only a building of a published project. This route checked the level
+        # and nothing else, so any building of any company -- unpublished
+        # projects included -- could be read by counting ids.
+        if not prop.project_id or not self._public_project(prop.project_id.id):
+            return Response("Not Found", status=404)
         sheet_url = (f'/web/image/realestate.property/{prop.id}/elevation_sheet'
                      if prop.elevation_sheet else None)
         floors = []
@@ -227,41 +282,34 @@ class PublicRealEstate(http.Controller):
         floor = request.env['realestate.building.floor'].sudo().browse(floor_id).exists()
         if not floor:
             return Response("Not Found", status=404)
+        # Only a floor of a published project, and only what the public may
+        # see. This route served any floor's units with their internal base
+        # price and raw status, the leak `units.json` was fixed for.
+        project = floor.building_id.project_id
+        if not project or not self._public_project(project.id):
+            return Response("Not Found", status=404)
         units = floor.unit_ids.sorted('property_code')
-        out = []
-        for u in units:
-            out.append({
-                'id': u.id,
-                'name': u.name or '',
-                'property_code': u.property_code or '',
-                'state': u.state or '',
-                'area_sqm': u.area_sqm or 0.0,
-                'base_price': float(u.base_price) if 'base_price' in u._fields else 0.0,
-                'has_floor_plan': bool(u.has_floor_plan_effective),
-            })
+        payload = request.env['realestate.visual.commercial'].sudo().unit_payload(
+            units, audience='public')
+        out = [{
+            'id': entry['id'],
+            'name': entry['name'],
+            'property_code': entry['property_code'],
+            'state': entry['visual_state'],
+            'area_sqm': entry['area_sqm'],
+            'base_price': entry['price'],
+            'has_floor_plan': entry['has_floor_plan'],
+        } for entry in payload]
         return Response(json.dumps(out), content_type='application/json')
 
     @http.route(['/projects/portal/property/<int:property_id>/floor_plan'],
                 type='http', auth='public', csrf=False)
-    def portal_unit_floor_plan(self, property_id, **kw):
-        """Serve a unit's floor plan image."""
-        prop = request.env['realestate.property'].sudo().browse(property_id).exists()
-        if not prop or not prop.floor_plan_image:
-            return Response("No plan", status=404)
-        # Revalidate against write_date so a re-uploaded floor plan isn't served
-        # stale from the visitor's (or a shared proxy's) cache of the old image.
-        etag = '"re-fp-%s-%s"' % (
-            prop.id, int(prop.write_date.timestamp()) if prop.write_date else 0)
-        if request.httprequest.headers.get('If-None-Match') == etag:
-            return Response(status=304, headers=[
-                ('ETag', etag), ('Cache-Control', 'no-cache')])
-        binary = base64.b64decode(prop.floor_plan_image)
-        return Response(binary, headers=[
-            ('Content-Type', 'image/png'),
-            ('Content-Length', str(len(binary))),
-            ('Cache-Control', 'no-cache'),
-            ('ETag', etag),
-        ])
+    def portal_unit_floor_plan(self, property_id, t=None, **kw):
+        """Serve a unit's floor plan, through the shared gate."""
+        from odoo.addons.real_estate_maquette.controllers.visual_asset import (
+            VisualAssetController)
+        return VisualAssetController().visual_asset(
+            'floor_plan_image', property_id, t=t)
 
     @http.route(['/projects/portal/property/<int:property_id>/images.json'],
                 type='http', auth='public', csrf=False)
@@ -269,11 +317,18 @@ class PublicRealEstate(http.Controller):
         prop = request.env['realestate.property'].sudo().browse(property_id).exists()
         if not prop:
             return Response("Not Found", status=404)
+        project = prop.project_id
+        if not project or not self._public_project(project.id):
+            return Response("Not Found", status=404)
+        grant = self._public_grant(project, kinds=['gallery_image'])
         imgs = []
         for img in prop.property_Attachment_media_ids:
+            # Not `/web/image/property.image/<id>/image_1920`: that is Odoo's
+            # own unauthenticated binary route, and handing a visitor a URL
+            # shaped like that invites editing the id.
             imgs.append({
                 'id': img.id,
-                'src': f'/web/image/property.image/{img.id}/image_1920',
+                'src': self._asset_url('gallery_image', img.id, grant),
             })
         return Response(json.dumps(imgs), content_type='application/json')
 
@@ -307,9 +362,61 @@ class PublicRealEstate(http.Controller):
             visit_str = (post.get('visit_date') or '').strip()
             vals['re_visit_requested'] = True
             if visit_str:
-                vals['re_visit_date'] = visit_str
+                # The form's `datetime-local` input posts ISO ('2026-09-20T10:30'),
+                # which the ORM's '%Y-%m-%d %H:%M:%S' parser rejected with a
+                # ValueError -- a 500 for every visitor who picked a date.
+                # Stored as entered, as before (no visitor timezone is known).
+                try:
+                    vals['re_visit_date'] = datetime.fromisoformat(
+                        visit_str).replace(tzinfo=None, microsecond=0)
+                except ValueError:
+                    return False, _("The preferred visit date is not a valid date and time.")
         lead = request.env['crm.lead'].sudo().create(vals)
+        # This session created it, so this session may later fold a shortlist
+        # onto it via `/visual/public/convert`. Nothing else may.
+        remember_public_lead(lead.id)
+        self._absorb_session_shortlist(project, lead, post, source)
         return lead, None
+
+    def _absorb_session_shortlist(self, project, lead, post, source):
+        """Fold the visitor's browser-held favourites onto the lead they just
+        created.
+
+        This is the conversion the anonymous-session rule allows: nothing was
+        written while they browsed, and this runs only because they filled in a
+        form and pressed a button. The ids are re-checked against the project
+        rather than trusted from the post — a hidden field is a value somebody
+        typed.
+
+        A failure here never breaks the enquiry. The customer's message is the
+        thing that must not be lost; a favourite that did not carry over is a
+        smaller loss than an enquiry that vanished, and it is logged.
+        """
+        raw = (post.get('shortlist') or '').strip()
+        if not raw or not lead:
+            return
+        try:
+            wanted = {int(part) for part in raw.replace(' ', '').split(',')
+                      if part.isdigit()}
+        except ValueError:
+            return
+        if not wanted:
+            return
+        units = request.env['realestate.property'].sudo().browse(
+            sorted(wanted)).exists().filtered(
+                lambda u: u.project_id.id == project.id)
+        if not units:
+            return
+        Modes = request.env.get('realestate.visual.modes')
+        if Modes is None:
+            return
+        try:
+            Modes.sudo().convert_public_session(
+                lead.id, units.ids, source='public_%s' % source)
+        except Exception:
+            _logger.warning(
+                "Could not carry a public shortlist onto lead %s", lead.id,
+                exc_info=True)
 
     def _utm_source_id(self):
         rec = request.env.ref('real_estate_portal.utm_source_re_portal',

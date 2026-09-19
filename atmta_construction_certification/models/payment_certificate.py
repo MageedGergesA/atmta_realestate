@@ -107,6 +107,11 @@ class PaymentCertificate(models.Model):
         string='Certified', tracking=True,
         compute='_compute_certified_default', store=True, readonly=False,
         help="What is certified for payment. Frozen once certified.")
+    certified_amount_set = fields.Boolean(
+        copy=False,
+        help="The certified amount was set to something other than what was "
+             "applied for. Until it is, it follows the application, so a "
+             "draft never shows a disallowance nobody made.")
     disallowed_amount = fields.Monetary(
         compute='_compute_disallowed', store=True,
         help="Claimed and not certified. The number the final account argues "
@@ -157,6 +162,8 @@ class PaymentCertificate(models.Model):
 
     vendor_bill_id = fields.Many2one(
         'account.move', string='Vendor Bill', readonly=True, copy=False)
+    vendor_bill_state = fields.Selection(
+        related='vendor_bill_id.state', string='Vendor Bill Status')
     retention_movement_id = fields.Many2one(
         'realestate.construction.retention', readonly=True, copy=False)
     retention_posted_correctly = fields.Boolean(
@@ -233,7 +240,13 @@ class PaymentCertificate(models.Model):
         history this milestone exists to protect.
         """
         for rec in self:
-            if not rec.certified_amount:
+            # It used to follow only while it was zero, so the second BOQ line
+            # added to a draft left certified at the first line's amount and
+            # showed a disallowance nobody had made. Before certification it
+            # now follows until somebody sets a different figure.
+            if not rec.certified_amount or (
+                    rec.state in ('draft', 'submitted')
+                    and not rec.certified_amount_set):
                 rec.certified_amount = rec.applied_amount
 
     @api.depends('applied_amount', 'certified_amount')
@@ -303,6 +316,18 @@ class PaymentCertificate(models.Model):
     # ------------------------------------------------------------------
     # Onchanges — convenience only. Nothing is enforced here.
     # ------------------------------------------------------------------
+    @api.onchange('certified_amount')
+    def _onchange_certified_amount(self):
+        # Typed by somebody, or moved along by the compute? Only a figure
+        # that differs from the application is somebody's decision.
+        for rec in self:
+            rec.certified_amount_set = rec._certified_differs()
+
+    def _certified_differs(self):
+        self.ensure_one()
+        return self.currency_id.compare_amounts(
+            self.certified_amount or 0.0, self.applied_amount or 0.0) != 0
+
     @api.onchange('contractor_id')
     def _onchange_contractor_id(self):
         if self.contractor_id and not self.retention_pct:
@@ -400,7 +425,15 @@ class PaymentCertificate(models.Model):
                 vals['name'] = self.env['ir.sequence'].next_by_code(
                     'realestate.construction.payment.certificate') \
                     or 'CERT-NEW'
-        return super().create(vals_list)
+            if 'certified_amount' in vals and \
+                    'certified_amount_set' not in vals:
+                # As in `write`: held until both amounts are known.
+                vals['certified_amount_set'] = True
+        records = super().create(vals_list)
+        records.filtered(lambda c: c.certified_amount_set
+                         and not c._certified_differs()
+                         ).certified_amount_set = False
+        return records
 
     def write(self, vals):
         """A certified figure is evidence. It is superseded, not edited."""
@@ -415,6 +448,15 @@ class PaymentCertificate(models.Model):
                     "with an adjustment rather than rewriting one somebody "
                     "signed and a bill was posted from.",
                     refs=', '.join(locked.mapped('name'))))
+        if 'certified_amount' in vals and 'certified_amount_set' not in vals:
+            # Held while the write runs, so lines written alongside cannot
+            # recompute the figure away; settled below once both are known.
+            vals = dict(vals, certified_amount_set=True)
+            result = super().write(vals)
+            for rec in self:
+                if not rec._certified_differs():
+                    rec.certified_amount_set = False
+            return result
         return super().write(vals)
 
     # ------------------------------------------------------------------
@@ -491,13 +533,30 @@ class PaymentCertificate(models.Model):
             boq_line = line.boq_line_id
             if not boq_line:
                 continue
+            boq = boq_line.boq_id
+            if boq._is_superseded():
+                raise UserError(_(
+                    "%(boq)s has been superseded by %(revision)s. Certify "
+                    "against the current revision.",
+                    boq=boq.display_name,
+                    revision=boq.superseded_by_id.display_name))
             authorised = boq_line.authorised_quantity
+            consumed = [('boq_line_id', '=', boq_line.id)]
+            other_revisions = boq._revision_chain() - boq
+            if other_revisions:
+                # A revision copies its lines forward, so the same work sits
+                # on a line of every revision. What was certified against any
+                # of them has been paid for once already; the lines are
+                # matched by work item.
+                consumed = ['|'] + consumed + [
+                    '&', ('boq_line_id.boq_id', 'in', other_revisions.ids),
+                    ('work_item_id', '=', boq_line.work_item_id.id)]
             others = self.env[
-                'realestate.construction.payment.certificate.line'].search([
-                    ('boq_line_id', '=', boq_line.id),
-                    ('certificate_id', '!=', self.id),
-                    ('certificate_id.state', 'in', list(COUNTED_STATES)),
-                ])
+                'realestate.construction.payment.certificate.line'].search(
+                    consumed + [
+                        ('certificate_id', '!=', self.id),
+                        ('certificate_id.state', 'in', list(COUNTED_STATES)),
+                    ])
             already = sum(others.mapped('qty'))
             if float_round_gt(already + line.qty, authorised):
                 raise UserError(_(

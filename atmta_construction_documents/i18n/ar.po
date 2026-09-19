@@ -1,0 +1,2333 @@
+# Translation of Odoo Server.
+# This file contains the Arabic translation of the following modules:
+# 	* atmta_construction_documents
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:12+0000\n"
+"PO-Revision-Date: 2026-09-17 10:12+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/document_control.py:0
+msgid ""
+"%(doc)s Rev %(rev)s has no file. Issuing a revision that nobody can open is "
+"not issuing anything."
+msgstr ""
+"المستند %(doc)s المراجعة %(rev)s ليس له ملف. إصدار مراجعة لا يستطيع أحد "
+"فتحها ليس إصدارًا لأي شيء."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/document_control.py:0
+msgid ""
+"%(refs)s have been issued. Their file and revision identity are the evidence"
+" of what was sent — record a new revision instead of editing this one."
+msgstr ""
+"تم إصدار %(refs)s. ملفاتها وهوية مراجعاتها هي الدليل على ما تم إرساله — سجل "
+"مراجعة جديدة بدلًا من تعديل هذه."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/transmittal.py:0
+msgid "%(refs)s have been sent and cannot be changed."
+msgstr "تم إرسال %(refs)s ولا يمكن تغييرها."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/submittal.py:0
+msgid ""
+"%(responded)s of %(required)s reviewers have replied. Wait for the rest, or "
+"finalise deliberately."
+msgstr ""
+"رد %(responded)s من أصل %(required)s من المراجعين. انتظر البقية، أو اعتمد "
+"النتيجة النهائية عن قصد."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/information_change_event.py:0
+msgid "%(rfi)s already has change event %(event)s."
+msgstr "طلب المعلومات %(rfi)s لديه بالفعل حدث التغيير %(event)s."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/information_change_event.py:0
+msgid "%s already has a change event."
+msgstr "%s لديه حدث تغيير بالفعل."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/submittal.py:0
+msgid "%s awaits a revised submission and cannot be closed."
+msgstr "%s بانتظار تقديم نسخة معدلة ولا يمكن إغلاقه."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/transmittal.py:0
+msgid "%s has already been sent."
+msgstr "تم إرسال %s بالفعل."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/transmittal.py:0
+msgid ""
+"%s has been sent. A transmittal is evidence that information left the "
+"building — issue another one rather than cancelling this."
+msgstr ""
+"تم إرسال %s. كتاب الإحالة دليل على أن المعلومات خرجت من الجهة — أصدر كتابًا "
+"آخر بدلًا من إلغاء هذا."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/rfi.py:0
+msgid ""
+"%s has no official response. Closing it anyway needs a stated reason — an "
+"unanswered question that quietly disappears is how disputes start."
+msgstr ""
+"لا يوجد رد رسمي على %s. إغلاقه رغم ذلك يتطلب ذكر سبب — فالسؤال الذي يختفي "
+"دون إجابة هو بداية النزاعات."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/rfi.py:0
+msgid "%s is not awaiting an answer."
+msgstr "%s ليس بانتظار إجابة."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/submittal.py:0
+msgid "%s is not in a state that can be submitted."
+msgstr "%s ليس في حالة تسمح بإرساله."
+
+#. module: atmta_construction_documents
+#: model:ir.model.constraint,message:atmta_construction_documents.constraint_realestate_construction_document_revision_code_uniq_per_document
+msgid "A document cannot have two revisions with the same code."
+msgstr "لا يمكن أن يكون للمستند مراجعتان بنفس الرمز."
+
+#. module: atmta_construction_documents
+#: model:ir.model.constraint,message:atmta_construction_documents.constraint_realestate_construction_document_number_uniq_per_project
+msgid "A document number must be unique within its project."
+msgstr "يجب أن يكون رقم المستند فريدًا داخل مشروعه."
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_rfi_form
+msgid ""
+"A potential cost impact is an indication. It changes no budget,\n"
+"                        commitment or actual — use <strong>Create Change Event</strong>\n"
+"                        to start the commercial process."
+msgstr ""
+"الأثر المحتمل على التكلفة مجرد مؤشر. لا يغير أي ميزانية أو التزام أو تكلفة "
+"فعلية — استخدم <strong>إنشاء حدث تغيير</strong> لبدء الإجراءات التجارية."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/transmittal.py:0
+msgid "A sent transmittal's contents cannot be removed."
+msgstr "لا يمكن إزالة محتويات كتاب إحالة تم إرساله."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/submittal.py:0
+msgid "A submittal closes once it has been responded to."
+msgstr "يغلق المستند المقدم للاعتماد بمجرد الرد عليه."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/submittal.py:0
+msgid "A submittal that has been responded to is part of the record."
+msgstr "المستند المقدم للاعتماد الذي تم الرد عليه أصبح جزءًا من السجل."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/transmittal.py:0
+msgid "A transmittal needs a recipient."
+msgstr "يتطلب كتاب الإحالة مستلمًا."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/transmittal.py:0
+msgid "A transmittal with no documents transmits nothing."
+msgstr "كتاب الإحالة الذي لا يحتوي على مستندات لا يحيل شيئًا."
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_document_form
+msgid "A-ARC-DRG-1001"
+msgstr "A-ARC-DRG-1001"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_transmittal__state__acknowledged
+msgid "Acknowledged"
+msgstr "تم الإقرار بالاستلام"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__acknowledged_by_id
+msgid "Acknowledged By"
+msgstr "أقر بالاستلام"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__acknowledged_date
+msgid "Acknowledged Date"
+msgstr "تاريخ الإقرار"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__acknowledgement_comments
+msgid "Acknowledgement Comments"
+msgstr "ملاحظات الإقرار بالاستلام"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__acknowledgement_overdue_days
+msgid "Acknowledgement Overdue Days"
+msgstr "أيام تأخر الإقرار بالاستلام"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__acknowledgement_required
+msgid "Acknowledgement Required"
+msgstr "الإقرار بالاستلام مطلوب"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__message_needaction
+msgid "Action Needed"
+msgstr "إجراء مطلوب"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__activity_ids
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__activity_ids
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__activity_ids
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__activity_ids
+msgid "Activities"
+msgstr "الأنشطة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "زخرفة استثناء النشاط"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__activity_state
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__activity_state
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__activity_state
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__actual_response_date
+msgid "Actual Response Date"
+msgstr "تاريخ الرد الفعلي"
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/rfi.py:0
+msgid "An RFI is answered by an official response, not by a state change."
+msgstr "يجاب عن طلب المعلومات برد رسمي، وليس بتغيير الحالة."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/rfi.py:0
+msgid "An answered RFI is part of the record and cannot be voided."
+msgstr "طلب المعلومات الذي تمت الإجابة عنه جزء من السجل ولا يمكن إبطاله."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_rfi__estimated_cost_impact
+msgid ""
+"An indication only. Nothing in the control equations reads it; creating a "
+"Change Event is what starts the commercial process."
+msgstr ""
+"مؤشر فقط. لا تقرأه معادلات الرقابة؛ إنشاء حدث تغيير هو ما يبدأ الإجراءات "
+"التجارية."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/rfi.py:0
+msgid "An issued response is part of the record. Record a new one instead."
+msgstr "الرد الصادر جزء من السجل. سجل ردًا جديدًا بدلًا من ذلك."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/document_control.py:0
+msgid ""
+"An issued revision cannot be deleted. Void it if it was raised in error — "
+"the register is a history, not a folder."
+msgstr ""
+"لا يمكن حذف مراجعة صادرة. أبطلها إن كانت قد أنشئت بالخطأ — فالسجل تاريخ وليس"
+" مجلدًا."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__state__answered
+msgid "Answered"
+msgstr "تمت الإجابة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document_revision__state__approved
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__final_response__approved
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal_review__response__approved
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal_revision__response__approved
+msgid "Approved"
+msgstr "معتمد"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__approved_by_id
+msgid "Approved By"
+msgstr "اعتمد بواسطة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__approved_on
+msgid "Approved On"
+msgstr "تاريخ الاعتماد"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__final_response__approved_as_noted
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal_review__response__approved_as_noted
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal_revision__response__approved_as_noted
+msgid "Approved as Noted"
+msgstr "معتمد مع الملاحظات المدونة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document_revision__state__approved_with_comments
+msgid "Approved with Comments"
+msgstr "معتمد مع ملاحظات"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__discipline__architectural
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__discipline__architectural
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__discipline__architectural
+msgid "Architectural"
+msgstr "معماري"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document__current_revision_code
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document_revision__revision_code
+msgid ""
+"As the project writes it — A, B, C or 00, 01, 02. Free text on purpose: "
+"revision schemes differ between companies."
+msgstr ""
+"كما يكتبه المشروع — A أو B أو C أو 00 أو 01 أو 02. نص حر عن قصد: تختلف أنظمة"
+" ترقيم المراجعات بين الشركات."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__document_type__as_built
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document_revision__purpose_of_issue__as_built
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document_revision__state__as_built
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__submittal_type__as_built
+msgid "As-Built"
+msgstr "كما هو منفذ"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__assigned_to_id
+msgid "Assigned To"
+msgstr "المكلف"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__attachment_ids
+msgid "Attachments"
+msgstr "المرفقات"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__author_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi_response__author_id
+msgid "Author"
+msgstr "المؤلف"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__ball_in_court
+msgid "Ball In Court"
+msgstr "الطرف المطالب بالإجراء"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__document_type__calculation
+msgid "Calculation"
+msgstr "طريقة الاحتساب"
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_transmittal_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal_review__state__cancelled
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_transmittal__state__cancelled
+msgid "Cancelled"
+msgstr "ملغى"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__document_type__certificate
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__submittal_type__certificate
+msgid "Certificate"
+msgstr "الشهادة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__change_event_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__change_event_id
+msgid "Change Event"
+msgstr "حدث التغيير"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__checksum
+msgid "Checksum/SHA1"
+msgstr "المجموع الاختباري/SHA1"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__discipline__civil
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__discipline__civil
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__discipline__civil
+msgid "Civil"
+msgstr "مدني"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__ball_in_court__client
+msgid "Client"
+msgstr "العميل"
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_rfi_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_submittal_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_transmittal_form
+msgid "Close"
+msgstr "إغلاق"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__state__closed
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__state__closed
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_transmittal__state__closed
+msgid "Closed"
+msgstr "مغلق"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__closed_date
+msgid "Closed Date"
+msgstr "تاريخ الإغلاق"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__closure_reason
+msgid "Closure Reason"
+msgstr "سبب الإغلاق"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_review__comments
+msgid "Comments"
+msgstr "التعليقات"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__company_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__company_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__company_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__company_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_package__company_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__company_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__company_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal_line__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__confidentiality
+msgid "Confidentiality"
+msgstr "السرية"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__cost_impact__confirmed
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__schedule_impact__confirmed
+msgid "Confirmed via Change Management"
+msgstr "مؤكد عبر إدارة التغيير"
+
+#. module: atmta_construction_documents
+#: model:ir.actions.server,name:atmta_construction_documents.cron_refresh_dates_ir_actions_server
+msgid "Construction Documents: refresh overdue flags"
+msgstr "مستندات الإنشاء: تحديث مؤشرات التأخر"
+
+#. module: atmta_construction_documents
+#: model:ir.model,name:atmta_construction_documents.model_realestate_construction_submittal
+msgid "Construction Submittal"
+msgstr "مستند إنشائي مقدم للاعتماد"
+
+#. module: atmta_construction_documents
+#: model:ir.model,name:atmta_construction_documents.model_realestate_construction_documents_refresh
+msgid "Construction documents: refresh values that depend on today's date"
+msgstr "مستندات الإنشاء: تحديث القيم المعتمدة على تاريخ اليوم"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__ball_in_court__consultant
+msgid "Consultant / Designer"
+msgstr "الاستشاري / المصمم"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__reviewer_partner_id
+msgid "Consultant / Reviewer"
+msgstr "الاستشاري / المراجع"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_submittal_review__role
+msgid "Consultant, structural engineer, client…"
+msgstr "الاستشاري، المهندس الإنشائي، العميل…"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__contractor_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__contractor_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_package__contractor_id
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__ball_in_court__contractor
+msgid "Contractor"
+msgstr "المقاول"
+
+#. module: atmta_construction_documents
+#: model:ir.model,name:atmta_construction_documents.model_realestate_construction_document
+msgid "Controlled Construction Document"
+msgstr "مستند إنشائي مضبوط"
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_document_form
+msgid "Controlled Document"
+msgstr "مستند مضبوط"
+
+#. module: atmta_construction_documents
+#: model:ir.model,name:atmta_construction_documents.model_realestate_construction_document_revision
+msgid "Controlled Document Revision"
+msgstr "مراجعة مستند مضبوط"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__document_revision_id
+msgid "Controlled Revision"
+msgstr "مراجعة مضبوطة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__copy_partner_ids
+msgid "Copied To"
+msgstr "نسخة إلى"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal_line__copies
+msgid "Copies"
+msgstr "النسخ"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__document_type__correspondence
+msgid "Correspondence"
+msgstr "مراسلات"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__cost_code_id
+msgid "Cost Code"
+msgstr "رمز التكلفة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__cost_impact
+msgid "Cost Impact"
+msgstr "الأثر على التكلفة"
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_rfi_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_submittal_form
+msgid "Create Change Event"
+msgstr "إنشاء حدث تغيير"
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_submittal_form
+msgid "Create Revision"
+msgstr "إنشاء مراجعة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__created_date
+msgid "Created Date"
+msgstr "تاريخ الإنشاء"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi_response__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_package__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_review__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal_line__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_rfi__change_event_id
+msgid "Created deliberately, never automatically."
+msgstr "ينشأ عن قصد، وليس تلقائيًا أبدًا."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__create_date
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__create_date
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__create_date
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi_response__create_date
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__create_date
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_package__create_date
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_review__create_date
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__create_date
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__create_date
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal_line__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__currency_id
+msgid "Currency"
+msgstr "العملة"
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_document_form
+msgid "Current"
+msgstr "غير متأخر"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__current_approved_revision_id
+msgid "Current Approved Revision"
+msgstr "المراجعة المعتمدة الحالية"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__current_issued_revision_id
+msgid "Current Issued Revision"
+msgstr "المراجعة الصادرة الحالية"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__current_revision_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__current_revision_id
+msgid "Current Revision"
+msgstr "المراجعة الحالية"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__current_state
+msgid "Current Status"
+msgstr "الحالة الحالية"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__days_remaining
+msgid "Days Remaining"
+msgstr "الأيام المتبقية"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__name
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__description
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_submittal_form
+msgid "Description"
+msgstr "الوصف"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__discipline
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__discipline
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__discipline
+msgid "Discipline"
+msgstr "التخصص"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__display_name
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__display_name
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__display_name
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi_response__display_name
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__display_name
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_package__display_name
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_review__display_name
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__display_name
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__display_name
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal_line__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__distribution_partner_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_submittal_form
+msgid "Distribution"
+msgstr "التوزيع"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__document_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal_line__document_id
+msgid "Document"
+msgstr "المستند"
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/document_control.py:0
+msgid "Document %(number)s is in %(company)s but its project is in %(other)s."
+msgstr ""
+"المستند %(number)s تابع للشركة %(company)s بينما مشروعه تابع للشركة "
+"%(other)s."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__document_count
+msgid "Document Count"
+msgstr "عدد المستندات"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__document_number
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__document_number
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal_line__document_number
+msgid "Document Number"
+msgstr "رقم المستند"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__owner_id
+msgid "Document Owner"
+msgstr "مالك المستند"
+
+#. module: atmta_construction_documents
+#: model:ir.actions.act_window,name:atmta_construction_documents.action_document
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_document_list
+msgid "Document Register"
+msgstr "سجل المستندات"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal_line__document_revision_id
+msgid "Document Revision"
+msgstr "مراجعة مستند"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal_line__document_title
+msgid "Document Title"
+msgstr "عنوان المستند"
+
+#. module: atmta_construction_documents
+#: model:ir.model,name:atmta_construction_documents.model_realestate_construction_transmittal
+msgid "Document Transmittal"
+msgstr "كتاب إحالة المستندات"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__document_type
+msgid "Document Type"
+msgstr "نوع المستند"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__line_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_transmittal_form
+msgid "Documents"
+msgstr "المستندات"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document_revision__state__draft
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__state__draft
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__state__draft
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal_revision__state__draft
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_transmittal__state__draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__document_type__drawing
+msgid "Drawing"
+msgstr "مخطط"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_review__due_date
+msgid "Due Date"
+msgstr "تاريخ الاستحقاق"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__discipline__electrical
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__discipline__electrical
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__discipline__electrical
+msgid "Electrical"
+msgstr "كهربائي"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__estimated_cost_impact
+msgid "Estimated Cost Impact"
+msgstr "الأثر التقديري على التكلفة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__estimated_schedule_days
+msgid "Estimated Schedule Days"
+msgstr "الأيام التقديرية للجدول الزمني"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document_revision__sequence
+msgid ""
+"Explicit order. 'Latest' means highest sequence, never highest string — '10'"
+" sorts before '9' and would quietly pick the wrong revision."
+msgstr ""
+"ترتيب صريح. 'الأحدث' تعني أعلى تسلسل، وليس أعلى قيمة نصية — فالقيمة '10' "
+"تأتي قبل '9' في الفرز النصي مما يؤدي إلى اختيار المراجعة الخاطئة دون تنبيه."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__attachment_id
+msgid "File"
+msgstr "الملف"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__file_size
+msgid "File Size"
+msgstr "حجم الملف"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__file_version
+msgid "File Version"
+msgstr "إصدار الملف"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__final_response
+msgid "Final Response"
+msgstr "الرد النهائي"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__final_response_date
+msgid "Final Response Date"
+msgstr "تاريخ الرد النهائي"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document__activity_type_icon
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_rfi__activity_type_icon
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_submittal__activity_type_icon
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_transmittal__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "أيقونة Font Awesome، مثل fa-tasks"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document_revision__purpose_of_issue__approval
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_transmittal__purpose__approval
+msgid "For Approval"
+msgstr "للاعتماد"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document_revision__purpose_of_issue__construction
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_transmittal__purpose__construction
+msgid "For Construction"
+msgstr "للتنفيذ"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document_revision__purpose_of_issue__fabrication
+msgid "For Fabrication"
+msgstr "للتصنيع"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document_revision__purpose_of_issue__information
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_transmittal__purpose__information
+msgid "For Information"
+msgstr "للعلم"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document_revision__purpose_of_issue__record
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_transmittal__purpose__record
+msgid "For Record"
+msgstr "للحفظ"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document_revision__purpose_of_issue__review
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document_revision__state__for_review
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_transmittal__purpose__review
+msgid "For Review"
+msgstr "للمراجعة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document_revision__purpose_of_issue__tender
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_transmittal__purpose__tender
+msgid "For Tender"
+msgstr "للمناقصة"
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_document_form
+msgid "Ground Floor Plan"
+msgstr "مخطط الطابق الأرضي"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__discipline__hvac
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__discipline__hvac
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__discipline__hvac
+msgid "HVAC"
+msgstr "التكييف والتهوية"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__has_message
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__has_message
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__has_message
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__has_message
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__has_message
+msgid "Has Message"
+msgstr "يحتوي على رسالة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__priority__2
+msgid "High"
+msgstr "عالية"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document__current_revision_id
+msgid "Highest sequence, whatever the revision code looks like."
+msgstr "أعلى تسلسل، بغض النظر عن شكل رمز المراجعة."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi_response__id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_package__id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_review__id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal_line__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__activity_exception_icon
+msgid "Icon"
+msgstr "الأيقونة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document__activity_exception_icon
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_rfi__activity_exception_icon
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_submittal__activity_exception_icon
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_transmittal__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "أيقونة للإشارة إلى نشاط استثنائي."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document__document_number
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document_revision__document_number
+msgid "Identifies the document across all its revisions — A-ARC-DRG-1001."
+msgstr "يعرف المستند عبر جميع مراجعاته — A-ARC-DRG-1001."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document__message_needaction
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document_revision__message_needaction
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_rfi__message_needaction
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_submittal__message_needaction
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_transmittal__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا كان محددًا، فهناك رسائل جديدة تتطلب انتباهك."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document__message_has_error
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document_revision__message_has_error
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document_revision__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_rfi__message_has_error
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_rfi__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_submittal__message_has_error
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_submittal__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_transmittal__message_has_error
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_transmittal__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا كان محددًا، فبعض الرسائل بها خطأ في التسليم."
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_rfi_form
+msgid "Impact"
+msgstr "الأثر"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__discipline__infrastructure
+msgid "Infrastructure"
+msgstr "البنية التحتية"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__discipline__interior
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__discipline__interior
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__discipline__interior
+msgid "Interior"
+msgstr "التصميم الداخلي"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__confidentiality__internal
+msgid "Internal Only"
+msgstr "داخلي فقط"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__is_acknowledgement_overdue
+msgid "Is Acknowledgement Overdue"
+msgstr "الإقرار بالاستلام متأخر"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__is_current
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__is_current
+msgid "Is Current"
+msgstr "حالي"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__is_current_approved
+msgid "Is Current Approved"
+msgstr "المعتمد الحالي"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__is_issued
+msgid "Is Issued"
+msgstr "صادر"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__is_overdue
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__is_overdue
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_review__is_overdue
+msgid "Is Overdue"
+msgstr "متأخر"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__issued_on
+msgid "Issued On"
+msgstr "تاريخ الإصدار"
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/rfi.py:0
+msgid "Issued responses cannot be deleted."
+msgstr "لا يمكن حذف الردود الصادرة."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__discipline__landscape
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__discipline__landscape
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__discipline__landscape
+msgid "Landscape"
+msgstr "تنسيق المواقع"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi_response__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_package__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_review__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal_line__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__write_date
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__write_date
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__write_date
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi_response__write_date
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__write_date
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_package__write_date
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_review__write_date
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__write_date
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__write_date
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal_line__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document__current_issued_revision_id
+msgid ""
+"Latest revision issued for construction or fabrication — what the site is "
+"actually building from."
+msgstr ""
+"أحدث مراجعة صادرة للتنفيذ أو التصنيع — وهي ما يبني عليه الموقع فعليًا."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document__current_approved_revision_id
+msgid ""
+"Latest revision that was approved. Not necessarily the latest revision, and "
+"not necessarily the one issued for construction."
+msgstr ""
+"أحدث مراجعة تم اعتمادها. ليست بالضرورة أحدث مراجعة، وليست بالضرورة المراجعة "
+"الصادرة للتنفيذ."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__location
+msgid "Location"
+msgstr "الموقع"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__priority__0
+msgid "Low"
+msgstr "منخفضة"
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_submittal_form
+msgid "Mark Required"
+msgstr "تعيين كمطلوب"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__submittal_type__material
+msgid "Material"
+msgstr "المواد"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__document_type__material_data
+msgid "Material / Product Data"
+msgstr "بيانات المواد / المنتجات"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__discipline__mechanical
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__discipline__mechanical
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__discipline__mechanical
+msgid "Mechanical"
+msgstr "ميكانيكي"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__document_type__method_statement
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__submittal_type__method_statement
+msgid "Method Statement"
+msgstr "بيان طريقة العمل"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__submittal_type__mockup
+msgid "Mock-up"
+msgstr "نموذج تجريبي"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__discipline__multi
+msgid "Multi-Discipline"
+msgstr "متعدد التخصصات"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "موعد نشاطي النهائي"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__file_name
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_package__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/rfi.py:0
+#: code:addons/atmta_construction_documents/models/submittal.py:0
+#: code:addons/atmta_construction_documents/models/transmittal.py:0
+msgid "New"
+msgstr "جديد"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "حدث التقويم للنشاط التالي"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__activity_summary
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__activity_summary
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__activity_summary
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__activity_type_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__activity_type_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__activity_type_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__ball_in_court__none
+msgid "Nobody — Closed"
+msgstr "لا أحد — مغلق"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__cost_impact__none
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__schedule_impact__none
+msgid "None"
+msgstr "لا يوجد"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__priority__1
+msgid "Normal"
+msgstr "طبيعية"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_submittal__contractor_partner_id
+msgid "Not every submitter is an Odoo user."
+msgstr "ليس كل مقدم مستند مستخدمًا في Odoo."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__notes
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__notes
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_package__notes
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal_line__notes
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_document_form
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document_revision__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_rfi__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_submittal__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_transmittal__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراء"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document_revision__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_rfi__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_submittal__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_transmittal__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي بها خطأ في التسليم"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__document_type__om_manual
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__submittal_type__om_manual
+msgid "O&M Manual"
+msgstr "دليل التشغيل والصيانة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__official_response
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_rfi_form
+msgid "Official Response"
+msgstr "الرد الرسمي"
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/rfi.py:0
+msgid "Only a draft RFI can be opened."
+msgstr "لا يمكن فتح طلب المعلومات إلا إذا كان مسودة."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/submittal.py:0
+msgid "Only a draft submittal can be required."
+msgstr "لا يمكن جعل المستند المقدم للاعتماد مطلوبًا إلا إذا كان مسودة."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/transmittal.py:0
+msgid "Only a draft transmittal can be readied."
+msgstr "لا يمكن تجهيز كتاب الإحالة إلا إذا كان مسودة."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/transmittal.py:0
+msgid "Only a sent transmittal can be acknowledged."
+msgstr "لا يمكن تأكيد استلام كتاب الإحالة إلا بعد إرساله."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/transmittal.py:0
+msgid "Only a sent transmittal closes."
+msgstr "لا يُغلق كتاب الإحالة إلا بعد إرساله."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/submittal.py:0
+msgid "Only a submitted submittal is reviewed."
+msgstr "لا تتم مراجعة المستند المقدم للاعتماد إلا بعد تقديمه."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/rfi.py:0
+msgid "Only an answered or closed RFI reopens."
+msgstr "لا يُعاد فتح طلب المعلومات إلا إذا تمت الإجابة عليه أو أُغلق."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/rfi.py:0
+msgid "Only an open RFI can go under review."
+msgstr "لا يمكن وضع طلب المعلومات قيد المراجعة إلا إذا كان مفتوحًا."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__state__open
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_rfi_form
+msgid "Open"
+msgstr "فتح"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__originating_partner_id
+msgid "Originating Organisation"
+msgstr "الجهة المُصدرة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__originator
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__ball_in_court__originator
+msgid "Originator"
+msgstr "المُنشئ"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__discipline__other
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__document_type__other
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__discipline__other
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__discipline__other
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__submittal_type__other
+msgid "Other"
+msgstr "أخرى"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__attachment_ids
+msgid "Other Attachments"
+msgstr "مرفقات أخرى"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__overdue_days
+msgid "Overdue Days"
+msgstr "أيام التأخير"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__package_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__package_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__package_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__package_id
+msgid "Package"
+msgstr "حزمة الأعمال"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal_review__state__pending
+msgid "Pending"
+msgstr "معلق"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__discipline__plumbing
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__discipline__plumbing
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__discipline__plumbing
+msgid "Plumbing"
+msgstr "السباكة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__cost_impact__potential
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__schedule_impact__potential
+msgid "Potential"
+msgstr "محتمل"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__priority
+msgid "Priority"
+msgstr "الأولوية"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__submittal_type__product_data
+msgid "Product Data"
+msgstr "بيانات المنتج"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__project_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__project_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__project_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__project_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_package__project_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__project_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__project_id
+msgid "Project"
+msgstr "المشروع"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__ball_in_court__project_manager
+msgid "Project Manager"
+msgstr "مدير المشروع"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__confidentiality__project
+msgid "Project Team"
+msgstr "فريق المشروع"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_transmittal__acknowledged_by_id
+msgid "Proof of receipt. Emphatically not technical approval."
+msgstr "إثبات استلام، وليس اعتمادًا فنيًا بأي حال."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document_revision__checksum
+msgid "Proves the bytes behind an issued revision never changed."
+msgstr "يثبت أن محتوى الملف خلف المراجعة الصادرة لم يتغير قط."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__purpose
+msgid "Purpose"
+msgstr "الغرض"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__purpose_of_issue
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal_line__purpose_of_issue
+msgid "Purpose Of Issue"
+msgstr "غرض الإصدار"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__question
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_rfi_form
+msgid "Question"
+msgstr "السؤال"
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_rfi_form
+msgid "RFI"
+msgstr "طلب معلومات"
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/rfi.py:0
+msgid "RFI %(name)s is in %(company)s but its project is in %(other)s."
+msgstr ""
+"طلب المعلومات %(name)s يتبع الشركة %(company)s بينما مشروعه يتبع %(other)s."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/information_change_event.py:0
+msgid "RFI %(number)s — %(subject)s"
+msgstr "طلب معلومات %(number)s — %(subject)s"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__name
+msgid "RFI Number"
+msgstr "رقم طلب المعلومات"
+
+#. module: atmta_construction_documents
+#: model:ir.model,name:atmta_construction_documents.model_realestate_construction_rfi_response
+msgid "RFI Response History"
+msgstr "سجل ردود طلب المعلومات"
+
+#. module: atmta_construction_documents
+#: model:ir.actions.act_window,name:atmta_construction_documents.action_rfi
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_rfi_list
+msgid "RFIs"
+msgstr "طلبات المعلومات"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__raised_by_id
+msgid "Raised By"
+msgstr "مقدم بواسطة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document__confidentiality
+msgid ""
+"Read access follows this, the project and the company — not whoever happens "
+"to be able to open a related record."
+msgstr ""
+"صلاحية القراءة تتبع هذا الحقل والمشروع والشركة — وليس أي شخص يصادف أنه "
+"يستطيع فتح سجل مرتبط."
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_transmittal_form
+msgid "Ready"
+msgstr "جاهز"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_transmittal__state__ready
+msgid "Ready to Send"
+msgstr "جاهز للإرسال"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__recipient_partner_ids
+msgid "Recipients"
+msgstr "المستلمون"
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_transmittal_form
+msgid "Record Acknowledgement"
+msgstr "تسجيل تأكيد الاستلام"
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_rfi_form
+msgid "Record Answer"
+msgstr "تسجيل الإجابة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__document_revision_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_rfi_form
+msgid "Referenced Revisions"
+msgstr "المراجعات المشار إليها"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document_revision__state__rejected
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__final_response__rejected
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal_review__response__rejected
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal_revision__response__rejected
+msgid "Rejected"
+msgstr "مرفوض"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__message
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_transmittal_form
+msgid "Remarks"
+msgstr "الملاحظات"
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_rfi_form
+msgid "Reopen"
+msgstr "إعادة فتح"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__state__reopened
+msgid "Reopened"
+msgstr "أعيد فتحه"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__document_type__report
+msgid "Report"
+msgstr "التقرير"
+
+#. module: atmta_construction_documents
+#: model:ir.model,name:atmta_construction_documents.model_realestate_construction_rfi
+msgid "Request for Information"
+msgstr "طلب معلومات"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__state__required
+msgid "Required"
+msgstr "مطلوب"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__required_approval_date
+msgid "Required Approval Date"
+msgstr "تاريخ الاعتماد المطلوب"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__required_response_date
+msgid "Required Response Date"
+msgstr "تاريخ الرد المطلوب"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__required_submission_date
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_package__required_submission_date
+msgid "Required Submission Date"
+msgstr "تاريخ التقديم المطلوب"
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_rfi_form
+msgid "Required only when closing without an answer"
+msgstr "مطلوب فقط عند الإغلاق دون إجابة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__state__responded
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal_review__state__responded
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal_revision__state__responded
+msgid "Responded"
+msgstr "تم الرد"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__responded_by_id
+msgid "Responded By"
+msgstr "تم الرد بواسطة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_package__responded_count
+msgid "Responded Count"
+msgstr "عدد الردود"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_review__responded_date
+msgid "Responded Date"
+msgstr "تاريخ الرد"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi_response__response
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_review__response
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__response
+msgid "Response"
+msgstr "الرد"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__response_approved_by_id
+msgid "Response Approved By"
+msgstr "الرد معتمد بواسطة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__response_author_id
+msgid "Response Author"
+msgstr "كاتب الرد"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__response_comments
+msgid "Response Comments"
+msgstr "تعليقات الرد"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi_response__response_date
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__response_date
+msgid "Response Date"
+msgstr "تاريخ الرد"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__response_due_date
+msgid "Response Due Date"
+msgstr "تاريخ استحقاق الرد"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__response_history_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_rfi_form
+msgid "Response History"
+msgstr "سجل الردود"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__response_requested
+msgid "Response Requested"
+msgstr "الرد المطلوب"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__response_time_days
+msgid "Response Time Days"
+msgstr "مدة الرد بالأيام"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__contractor_id
+msgid "Responsible Contractor"
+msgstr "المقاول المسؤول"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__activity_user_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__activity_user_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__activity_user_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__confidentiality__restricted
+msgid "Restricted"
+msgstr "مقيد"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__review_overdue_days
+msgid "Review Overdue Days"
+msgstr "أيام تأخير المراجعة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_review__reviewer_id
+msgid "Reviewer"
+msgstr "المراجع"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_review__reviewer_partner_id
+msgid "Reviewing Organisation"
+msgstr "الجهة المراجِعة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__review_step_ids
+msgid "Reviews"
+msgstr "المراجعات"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__reviews_complete
+msgid "Reviews Complete"
+msgstr "المراجعات المكتملة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__reviews_required
+msgid "Reviews Required"
+msgstr "المراجعات المطلوبة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__reviews_responded
+msgid "Reviews Responded"
+msgstr "المراجعات التي تم الرد عليها"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__final_response__revise_resubmit
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal_review__response__revise_resubmit
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal_revision__response__revise_resubmit
+msgid "Revise and Resubmit"
+msgstr "يُعدل ويُعاد تقديمه"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_review__revision_id
+msgid "Revision"
+msgstr "المراجعة"
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/submittal.py:0
+msgid "Revision %s already has a response. Create a new revision."
+msgstr "المراجعة %s لديها رد بالفعل. أنشئ مراجعة جديدة."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/submittal.py:0
+msgid ""
+"Revision %s has already been responded to. Create a new revision before "
+"submitting again."
+msgstr ""
+"تم الرد على المراجعة %s بالفعل. أنشئ مراجعة جديدة قبل التقديم مرة أخرى."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/submittal.py:0
+msgid ""
+"Revision %s has been reviewed. Its submission is the evidence of what was "
+"reviewed — create a new revision."
+msgstr ""
+"تمت مراجعة المراجعة %s. تقديمها هو الدليل على ما تمت مراجعته — أنشئ مراجعة "
+"جديدة."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/submittal.py:0
+msgid ""
+"Revision %s has not been responded to yet — a new revision would leave an "
+"open review nobody closed."
+msgstr ""
+"لم يتم الرد على المراجعة %s بعد — إنشاء مراجعة جديدة سيترك مراجعة مفتوحة لم "
+"يغلقها أحد."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__current_revision_code
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__revision_code
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__current_revision_code
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__revision_code
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal_line__revision_code
+msgid "Revision Code"
+msgstr "رمز المراجعة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__revision_count
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__revision_count
+msgid "Revision Count"
+msgstr "عدد المراجعات"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__revision_date
+msgid "Revision Date"
+msgstr "تاريخ المراجعة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi_response__revision_reason
+msgid "Revision Reason"
+msgstr "سبب المراجعة"
+
+#. module: atmta_construction_documents
+#: model:ir.actions.act_window,name:atmta_construction_documents.action_document_revision
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_document_revision_list
+msgid "Revision Register"
+msgstr "سجل المراجعات"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal_line__revision_status
+msgid "Revision Status"
+msgstr "حالة المراجعة"
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/document_control.py:0
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__revision_ids
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__revision_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_document_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_submittal_form
+msgid "Revisions"
+msgstr "المراجعات"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi_response__rfi_id
+msgid "Rfi"
+msgstr "طلب المعلومات"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_review__role
+msgid "Role"
+msgstr "الدور"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "خطأ في إرسال الرسائل النصية القصيرة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__submittal_type__sample
+msgid "Sample"
+msgstr "عينة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__schedule_impact
+msgid "Schedule Impact"
+msgstr "الأثر على الجدول الزمني"
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_transmittal_form
+msgid "Send"
+msgstr "إرسال"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__sender_id
+msgid "Sender"
+msgstr "المُرسل"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__sender_partner_id
+msgid "Sending Organisation"
+msgstr "الجهة المُرسلة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_transmittal__state__sent
+msgid "Sent"
+msgstr "مُرسل"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__sent_date
+msgid "Sent Date"
+msgstr "تاريخ الإرسال"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__sequence
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_review__sequence
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__sequence
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal_line__sequence
+msgid "Sequence"
+msgstr "المسلسل"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__document_type__shop_drawing
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__submittal_type__shop_drawing
+msgid "Shop Drawing"
+msgstr "مخطط تنفيذي"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal_review__state__skipped
+msgid "Skipped"
+msgstr "تم التخطي"
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_rfi_form
+msgid "Slab thickness at grid C4"
+msgstr "سماكة البلاطة عند المحور C4"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__document_type__specification
+msgid "Specification"
+msgstr "المواصفات"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__specification_reference
+msgid "Specification Reference"
+msgstr "مرجع المواصفات"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__specification_section
+msgid "Specification Section"
+msgstr "بند المواصفات"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__state
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__state
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__state
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_review__state
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__state
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__state
+msgid "State"
+msgstr "الحالة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document__activity_state
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_rfi__activity_state
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_submittal__activity_state
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_transmittal__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الحالة بناءً على الأنشطة\n"
+"متأخرة: تاريخ الاستحقاق قد مضى\n"
+"اليوم: تاريخ النشاط هو اليوم\n"
+"مخطط لها: أنشطة مستقبلية."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document__discipline__structural
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__discipline__structural
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__discipline__structural
+msgid "Structural"
+msgstr "إنشائي"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__subject
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__subject
+msgid "Subject"
+msgstr "الموضوع"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__submission_overdue_days
+msgid "Submission Overdue Days"
+msgstr "أيام تأخير التقديم"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_rfi__response_time_days
+msgid ""
+"Submission to official response, using the real dates. Never measured "
+"against today once an answer exists."
+msgstr ""
+"من التقديم حتى الرد الرسمي باستخدام التواريخ الفعلية. لا يُقاس أبدًا مقابل "
+"تاريخ اليوم بعد وجود إجابة."
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_submittal_form
+msgid "Submit"
+msgstr "إرسال"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_review__submittal_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__submittal_id
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_submittal_form
+msgid "Submittal"
+msgstr "مستند مقدم للاعتماد"
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/submittal.py:0
+msgid "Submittal %(name)s is in %(company)s but its project is in %(other)s."
+msgstr ""
+"المستند المقدم للاعتماد %(name)s يتبع الشركة %(company)s بينما مشروعه يتبع "
+"%(other)s."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/information_change_event.py:0
+msgid "Submittal %(number)s — %(title)s"
+msgstr "مستند مقدم للاعتماد %(number)s — %(title)s"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_package__submittal_count
+msgid "Submittal Count"
+msgstr "عدد المستندات المقدمة للاعتماد"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__manager_id
+msgid "Submittal Manager"
+msgstr "مدير المستندات المقدمة للاعتماد"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__name
+msgid "Submittal Number"
+msgstr "رقم المستند المقدم للاعتماد"
+
+#. module: atmta_construction_documents
+#: model:ir.model,name:atmta_construction_documents.model_realestate_construction_submittal_package
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__submittal_package_id
+msgid "Submittal Package"
+msgstr "حزمة المستندات المقدمة للاعتماد"
+
+#. module: atmta_construction_documents
+#: model:ir.model,name:atmta_construction_documents.model_realestate_construction_submittal_review
+msgid "Submittal Review Step"
+msgstr "خطوة مراجعة المستند المقدم للاعتماد"
+
+#. module: atmta_construction_documents
+#: model:ir.model,name:atmta_construction_documents.model_realestate_construction_submittal_revision
+msgid "Submittal Revision"
+msgstr "مراجعة المستند المقدم للاعتماد"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__submittal_type
+msgid "Submittal Type"
+msgstr "نوع المستند المقدم للاعتماد"
+
+#. module: atmta_construction_documents
+#: model:ir.actions.act_window,name:atmta_construction_documents.action_submittal
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_package__submittal_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_submittal_list
+msgid "Submittals"
+msgstr "المستندات المقدمة للاعتماد"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__state__submitted
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal_revision__state__submitted
+msgid "Submitted"
+msgstr "مقدم"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__submitted_date
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__submitted_date
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__submitted_date
+msgid "Submitted Date"
+msgstr "تاريخ التقديم"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal_revision__attachment_ids
+msgid "Submitted Files"
+msgstr "الملفات المقدمة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__submittal_revision_ids
+msgid "Submitted Under"
+msgstr "مقدم ضمن"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__contractor_partner_id
+msgid "Submitting Organisation"
+msgstr "الجهة المقدِّمة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document_revision__state__superseded
+msgid "Superseded"
+msgstr "مستبدل"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__superseded_by_id
+msgid "Superseded By"
+msgstr "استبدل بـ"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__superseded_on
+msgid "Superseded On"
+msgstr "تم الاستبدال في"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__supersedes_id
+msgid "Supersedes"
+msgstr "يحل محل"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__attachment_ids
+msgid "Supporting Files"
+msgstr "الملفات الداعمة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__submittal_type__technical_data
+msgid "Technical Data"
+msgstr "البيانات الفنية"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document_revision__file_version
+msgid ""
+"Technical replacements of the file *within* this formal revision, before it "
+"was issued. Correcting a title-block typo is not a new revision to the "
+"project."
+msgstr ""
+"استبدالات فنية للملف *ضمن* هذه المراجعة الرسمية قبل إصدارها. تصحيح خطأ مطبعي"
+" في إطار العنوان لا يُعد مراجعة جديدة للمشروع."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__submittal_type__test_report
+msgid "Test Report"
+msgstr "تقرير اختبار"
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_rfi_form
+msgid "The contractual answer. Comments belong in the chatter."
+msgstr "الإجابة التعاقدية. التعليقات مكانها سجل المحادثة."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_rfi__required_response_date
+msgid ""
+"The contractual date. Activities may remind; this is the date that counts."
+msgstr "التاريخ التعاقدي. قد تذكّر الأنشطة، لكن هذا هو التاريخ المعتبر."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_submittal__final_response
+msgid ""
+"The decision on the current revision. Distinct from the workflow state — "
+"'Responded / Revise and Resubmit' is a normal and meaningful combination."
+msgstr ""
+"القرار بشأن المراجعة الحالية. يختلف عن حالة سير العمل — 'تم الرد / يُعدل "
+"ويُعاد تقديمه' تركيبة طبيعية وذات معنى."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_submittal_revision__document_revision_id
+msgid ""
+"The exact registered revision under review, when the submittal concerns a "
+"controlled document."
+msgstr ""
+"المراجعة المسجلة بعينها قيد المراجعة، عندما يتعلق المستند المقدم للاعتماد "
+"بمستند خاضع للتحكم."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_rfi__document_revision_ids
+msgid ""
+"The exact revisions the question is about. A question asked about Rev B "
+"stays about Rev B when Rev C arrives."
+msgstr ""
+"المراجعات بعينها التي يتناولها السؤال. السؤال المطروح عن المراجعة B يبقى عن "
+"المراجعة B عند وصول المراجعة C."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/document_control.py:0
+msgid "The file belongs to another company."
+msgstr "الملف يتبع شركة أخرى."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document__originator
+msgid "The organisation that produced it."
+msgstr "الجهة التي أصدرته."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_transmittal_line__document_revision_id
+msgid "The revision itself, so the file is one click away."
+msgstr "المراجعة نفسها، ليكون الملف على بعد نقرة واحدة."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/submittal.py:0
+msgid "There is no revision to submit."
+msgstr "لا توجد مراجعة لتقديمها."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/document_control.py:0
+msgid ""
+"This revision has been formally transmitted and cannot be voided — issue a "
+"superseding revision instead."
+msgstr ""
+"تمت إحالة هذه المراجعة رسميًا ولا يمكن إبطالها — أصدر مراجعة بديلة بدلًا من "
+"ذلك."
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/transmittal.py:0
+msgid ""
+"This transmittal has been sent. What it recorded is the evidence — send "
+"another one for a later revision."
+msgstr ""
+"تم إرسال كتاب الإحالة هذا. ما سجله هو الدليل — أرسل كتابًا آخر لمراجعة "
+"لاحقة."
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_transmittal_form
+msgid ""
+"This transmittal records exactly what was sent. Its lines are\n"
+"                        frozen — issue another transmittal for a later revision."
+msgstr ""
+"يسجل كتاب الإحالة هذا ما أُرسل بالضبط. بنوده مجمدة — أصدر كتاب إحالة آخر "
+"لمراجعة لاحقة."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__name
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__title
+msgid "Title"
+msgstr "العنوان"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal_line__transmittal_id
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_transmittal_form
+msgid "Transmittal"
+msgstr "كتاب إحالة"
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/transmittal.py:0
+msgid ""
+"Transmittal %(name)s is in %(company)s but its project is in %(other)s."
+msgstr ""
+"كتاب الإحالة %(name)s يتبع الشركة %(company)s بينما مشروعه يتبع %(other)s."
+
+#. module: atmta_construction_documents
+#: model:ir.model,name:atmta_construction_documents.model_realestate_construction_transmittal_line
+msgid "Transmittal Line"
+msgstr "بند كتاب الإحالة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__name
+msgid "Transmittal Number"
+msgstr "رقم كتاب الإحالة"
+
+#. module: atmta_construction_documents
+#: model:ir.actions.act_window,name:atmta_construction_documents.action_transmittal
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_transmittal_list
+msgid "Transmittals"
+msgstr "كتب الإحالة"
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/transmittal.py:0
+msgid "Transmitted %(count)s document(s) to %(to)s."
+msgstr "تمت إحالة %(count)s مستند إلى %(to)s."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__transmittal_line_ids
+msgid "Transmitted In"
+msgstr "أُحيل في"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_rfi__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_submittal__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_transmittal__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع النشاط الاستثنائي في السجل."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__state__under_review
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__state__under_review
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_rfi_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_submittal_form
+msgid "Under Review"
+msgstr "قيد المراجعة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__cost_impact__unknown
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__schedule_impact__unknown
+msgid "Unknown"
+msgstr "غير معروف"
+
+#. module: atmta_construction_documents
+#. odoo-python
+#: code:addons/atmta_construction_documents/models/submittal.py:0
+msgid "Unknown review response: %s"
+msgstr "رد مراجعة غير معروف: %s"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__uploaded_by_id
+msgid "Uploaded By"
+msgstr "رُفع بواسطة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__priority__3
+msgid "Urgent"
+msgstr "عاجلة"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_document_revision__state__void
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_rfi__state__void
+#: model:ir.model.fields.selection,name:atmta_construction_documents.selection__realestate_construction_submittal__state__void
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_rfi_form
+msgid "Void"
+msgstr "ملغى"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__wbs_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__wbs_id
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__wbs_id
+msgid "WBS"
+msgstr "هيكل تجزئة العمل"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_document_revision__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_rfi__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_submittal__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_documents.field_realestate_construction_transmittal__website_message_ids
+msgid "Website Messages"
+msgstr "رسائل الموقع الإلكتروني"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document_revision__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_rfi__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_submittal__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_transmittal__website_message_ids
+msgid "Website communication history"
+msgstr "سجل التواصل عبر الموقع الإلكتروني"
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_rfi_form
+msgid "Where"
+msgstr "المكان"
+
+#. module: atmta_construction_documents
+#: model_terms:ir.ui.view,arch_db:atmta_construction_documents.view_rfi_form
+msgid "Who and When"
+msgstr "من ومتى"
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_rfi__originating_partner_id
+msgid ""
+"Who asked. Not every originator is an Odoo user — a contractor raising an "
+"RFI is a partner."
+msgstr ""
+"من طرح السؤال. ليس كل منشئ مستخدمًا في Odoo — المقاول الذي يرفع طلب معلومات "
+"هو جهة اتصال."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_rfi__ball_in_court
+msgid "Who needs to act now. The question people actually ask."
+msgstr "من يجب أن يتصرف الآن. السؤال الذي يطرحه الناس فعلًا."
+
+#. module: atmta_construction_documents
+#: model:ir.model.fields,help:atmta_construction_documents.field_realestate_construction_document_revision__purpose_of_issue
+msgid ""
+"Why it was issued — a different question from its status. A revision may be "
+"Approved *and* For Construction."
+msgstr ""
+"سبب الإصدار — وهو سؤال مختلف عن حالتها. قد تكون المراجعة معتمدة *و* للتنفيذ "
+"في آن واحد."

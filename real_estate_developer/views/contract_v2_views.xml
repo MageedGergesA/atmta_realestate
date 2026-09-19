@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_sale_contract_form_v2" model="ir.ui.view">
+        <field name="name">realestate.sale.contract.form.v2</field>
+        <field name="model">realestate.sale.contract</field>
+        <field name="inherit_id" ref="real_estate_developer.view_sale_contract_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//header" position="inside">
+                <button name="action_submit_for_approval" type="object"
+                        string="Submit for Approval" invisible="state != 'draft'"/>
+                <button name="action_send_for_signature" type="object"
+                        string="Send for Signature"
+                        invisible="state not in ('draft','pending_approval')"/>
+                <button name="action_activate" type="object" string="Activate"
+                        invisible="state != 'signed'"/>
+                <button name="action_mark_financially_cleared" type="object"
+                        string="Mark Financially Cleared"
+                        invisible="state not in ('signed','active')"/>
+            </xpath>
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_installments" type="object"
+                        class="oe_stat_button" icon="fa-calendar">
+                    <field name="installment_count" widget="statinfo"
+                           string="Instalments"/>
+                </button>
+            </xpath>
+
+            <xpath expr="//sheet" position="inside">
+                <group>
+                    <group string="Status Dimensions">
+                        <field name="signature_state"/>
+                        <field name="billing_state"/>
+                        <field name="collection_state"
+                               decoration-danger="collection_state == 'overdue'"/>
+                    </group>
+                    <group string="Financial Position">
+                        <field name="scheduled_amount"/>
+                        <field name="overdue_amount"
+                               decoration-danger="overdue_amount &gt; 0"/>
+                        <field name="next_due_date"/>
+                    </group>
+                </group>
+
+                <notebook>
+                    <page string="Instalments" name="installments">
+                        <div class="alert alert-info" role="status"
+                             invisible="installment_count">
+                            Instalments are raised when the contract is signed,
+                            from the reservation's agreed schedule or the
+                            payment plan.
+                        </div>
+                        <field name="installment_ids" readonly="1">
+                            <list decoration-danger="state == 'overdue'"
+                                  decoration-success="state == 'paid'"
+                                  decoration-muted="state == 'cancelled'">
+                                <field name="sequence" optional="hide"/>
+                                <field name="description"/>
+                                <field name="kind"/>
+                                <field name="date_due"/>
+                                <field name="percent" optional="hide"/>
+                                <field name="original_amount" optional="hide"/>
+                                <field name="adjustment_amount" optional="hide"/>
+                                <field name="current_amount" sum="Scheduled"/>
+                                <field name="invoiced_amount" optional="show"/>
+                                <field name="paid_amount" sum="Paid"/>
+                                <field name="residual_amount" sum="Outstanding"/>
+                                <field name="days_overdue" optional="hide"/>
+                                <field name="aging_bucket" optional="hide"/>
+                                <field name="move_id" optional="show"/>
+                                <field name="state" widget="badge"
+                                       decoration-success="state == 'paid'"
+                                       decoration-danger="state == 'overdue'"
+                                       decoration-warning="state == 'partially_paid'"/>
+                                <field name="currency_id" column_invisible="1"/>
+                            </list>
+                        </field>
+                    </page>
+
+                    <page string="Commercial Snapshot" name="snapshot">
+                        <div class="alert alert-info" role="status"
+                             invisible="not snapshot_taken_on">
+                            The terms as signed. A later price change does not
+                            restate them.
+                        </div>
+                        <group>
+                            <group string="Price as Signed">
+                                <field name="snapshot_taken_on" readonly="1"/>
+                                <field name="price_book_id" readonly="1"/>
+                                <field name="snapshot_base_price" readonly="1"/>
+                                <field name="snapshot_premium_total" readonly="1"/>
+                                <field name="snapshot_list_price" readonly="1"/>
+                            </group>
+                            <group string="Concessions and Credits">
+                                <field name="promotion_id" readonly="1"/>
+                                <field name="promotion_amount" readonly="1"/>
+                                <field name="discount_amount" readonly="1"/>
+                                <field name="booking_credit" readonly="1"/>
+                                <field name="payment_plan_id"
+                                       options="{'no_create': True}"
+                                       readonly="state not in ('draft','pending_approval','pending_signature')"/>
+                                <field name="payment_plan_version" readonly="1"/>
+                            </group>
+                        </group>
+                    </page>
+
+                    <page string="Parties" name="parties">
+                        <div class="alert alert-info" role="status">
+                            The buyer on the contract header is the primary
+                            party and is what other modules read. Co-buyers,
+                            guarantors and representatives go here.
+                        </div>
+                        <field name="party_ids">
+                            <list editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="partner_id"/>
+                                <field name="role"/>
+                                <field name="share"/>
+                                <field name="is_signatory"/>
+                                <field name="id_document" optional="show"/>
+                                <field name="notes" optional="hide"/>
+                            </list>
+                        </field>
+                    </page>
+
+                    <page string="Included Units" name="units">
+                        <div class="alert alert-info" role="status">
+                            The unit on the contract header stays the primary
+                            asset. Parking, storage and other accessories are
+                            listed here.
+                        </div>
+                        <field name="property_line_ids">
+                            <list editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="property_id"/>
+                                <field name="is_primary"/>
+                                <field name="amount" sum="Allocated"/>
+                                <field name="notes" optional="hide"/>
+                                <field name="currency_id" column_invisible="1"/>
+                            </list>
+                        </field>
+                    </page>
+
+                    <page string="Approvals" name="approvals"
+                          invisible="not approval_request_ids">
+                        <field name="approval_request_ids" readonly="1">
+                            <list create="false" edit="false" delete="false">
+                                <field name="name"/>
+                                <field name="action_type"/>
+                                <field name="requested_value"/>
+                                <field name="approved_value"/>
+                                <field name="requested_by_id"/>
+                                <field name="approver_user_id"/>
+                                <field name="state" widget="badge"/>
+                            </list>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_sale_contract_list_v2" model="ir.ui.view">
+        <field name="name">realestate.sale.contract.list.v2</field>
+        <field name="model">realestate.sale.contract</field>
+        <field name="inherit_id" ref="real_estate_developer.view_sale_contract_list"/>
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <field name="scheduled_amount" optional="show"/>
+                <field name="overdue_amount" optional="show"
+                       decoration-danger="overdue_amount &gt; 0"/>
+                <field name="collection_state" widget="badge" optional="show"
+                       decoration-danger="collection_state == 'overdue'"
+                       decoration-success="collection_state == 'settled'"/>
+                <field name="next_due_date" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Instalments, standalone: the receivables schedule -->
+    <record id="view_sale_installment_list_v2" model="ir.ui.view">
+        <field name="name">realestate.sale.installment.list.v2</field>
+        <field name="model">realestate.sale.installment</field>
+        <field name="inherit_id" ref="real_estate_developer.view_sale_installment_list"/>
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <field name="project_id" optional="show"/>
+                <field name="current_amount" sum="Scheduled" optional="show"/>
+                <field name="paid_amount" sum="Paid" optional="show"/>
+                <field name="residual_amount" sum="Outstanding"/>
+                <field name="days_overdue" optional="hide"/>
+                <field name="aging_bucket" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_sale_installment_search_v2" model="ir.ui.view">
+        <field name="name">realestate.sale.installment.search.v2</field>
+        <field name="model">realestate.sale.installment</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="sale_contract_id"/>
+                <field name="partner_id"/>
+                <field name="property_id"/>
+                <field name="project_id"/>
+                <filter name="outstanding" string="Outstanding"
+                        domain="[('residual_amount','&gt;',0),('state','!=','cancelled')]"/>
+                <filter name="overdue" string="Overdue"
+                        domain="[('state','=','overdue')]"/>
+                <filter name="due_30" string="Due Next 30 Days"
+                        domain="[('date_due','&gt;=', context_today().strftime('%Y-%m-%d')),
+                                 ('date_due','&lt;=', (context_today() + relativedelta(days=30)).strftime('%Y-%m-%d')),
+                                 ('residual_amount','&gt;',0)]"/>
+                <separator/>
+                <filter name="group_contract" string="Contract"
+                        context="{'group_by': 'sale_contract_id'}"/>
+                <filter name="group_project" string="Project"
+                        context="{'group_by': 'project_id'}"/>
+                <filter name="group_bucket" string="Aging"
+                        context="{'group_by': 'aging_bucket'}"/>
+                <filter name="group_due" string="Due Date"
+                        context="{'group_by': 'date_due'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_receivables_schedule" model="ir.actions.act_window">
+        <field name="name">Receivables Schedule</field>
+        <field name="res_model">realestate.sale.installment</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_sale_installment_search_v2"/>
+        <field name="context">{'search_default_outstanding': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Upcoming and overdue obligations</p>
+            <p>
+                Every commercial obligation raised by a signed contract, with
+                what has been invoiced, what has been collected, and what is
+                still owed — taken from the invoices' own residuals.
+            </p>
+        </field>
+    </record>
+
+</odoo>

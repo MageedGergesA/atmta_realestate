@@ -1,0 +1,1632 @@
+# Translation of Odoo Server.
+# This file contains the Arabic translation of the following modules:
+# 	* atmta_property_core
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 08:12+0000\n"
+"PO-Revision-Date: 2026-09-17 08:12+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__product_variant_count
+msgid "# Product Variants"
+msgstr "عدد متغيرات المنتج"
+
+#. module: atmta_property_core
+#. odoo-python
+#: code:addons/atmta_property_core/models/_base_property.py:0
+msgid ""
+"%(child)s (%(child_level)s) cannot be a child of %(parent)s "
+"(%(parent_level)s). A child's hierarchy level must be deeper than its "
+"parent's."
+msgstr ""
+"لا يمكن أن يكون %(child)s (%(child_level)s) تابعًا لـ %(parent)s "
+"(%(parent_level)s). يجب أن يكون المستوى الهرمي للعنصر التابع أعمق من مستوى "
+"العنصر الأصل."
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "<span class=\"mx-1\">·</span>"
+msgstr "<span class=\"mx-1\">·</span>"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_kanban
+msgid "<span class=\"text-muted small\">Level:</span>"
+msgstr "<span class=\"text-muted small\">المستوى:</span>"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_kanban
+msgid "<span class=\"text-muted small\">Occupancy:</span>"
+msgstr "<span class=\"text-muted small\">الإشغال:</span>"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_kanban
+msgid "<span class=\"text-muted small\">Status:</span>"
+msgstr "<span class=\"text-muted small\">الحالة:</span>"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_kanban
+msgid "<span class=\"text-muted small\">Type:</span>"
+msgstr "<span class=\"text-muted small\">النوع:</span>"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__description_sale
+msgid ""
+"A description of the Product that you want to communicate to your customers."
+" This description will be copied to every Sales Order, Delivery Order and "
+"Customer Invoice/Credit Note"
+msgstr ""
+"وصف المنتج الذي تريد إبلاغه لعملائك. سيتم نسخ هذا الوصف إلى كل أمر بيع وأمر "
+"تسليم وفاتورة عميل/إشعار دائن"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__ac_type
+msgid "AC Type"
+msgstr "نوع التكييف"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__message_needaction
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__message_needaction
+msgid "Action Needed"
+msgstr "إجراء مطلوب"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__activity_ids
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__activity_ids
+msgid "Activities"
+msgstr "الأنشطة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "زخرفة استثناء النشاط"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__activity_state
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Add Media"
+msgstr "إضافة وسائط"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Address"
+msgstr "العنوان"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__property_type__usage_category__apartment
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__usage_category__apartment
+msgid "Apartment"
+msgstr "شقة"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Area"
+msgstr "المساحة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__area_sqm
+msgid "Area (sqm)"
+msgstr "المساحة (م²)"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__attachment_ids
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Attachments"
+msgstr "المرفقات"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__property_Attachment_media_ids
+msgid "Attachments and Media"
+msgstr "المرفقات والوسائط"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__commercial_status__available
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__occupancy_state__available
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__state__available
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Available"
+msgstr "متاحة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__has_balcony
+msgid "Balcony / Terrace"
+msgstr "شرفة / تراس"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__barcode
+msgid "Barcode"
+msgstr "الباركود"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__bathroom_count
+msgid "Bathrooms"
+msgstr "دورات المياه"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__bedroom_count
+msgid "Bedrooms"
+msgstr "غرف النوم"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__commercial_status__blocked
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__maintenance_status__blocked
+msgid "Blocked"
+msgstr "محظورة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__hierarchy_level__building
+msgid "Building"
+msgstr "المبنى"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__building_no
+msgid "Building Number"
+msgstr "رقم المبنى"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Building Specs"
+msgstr "مواصفات المبنى"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_image__can_image_1024_be_zoomed
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__can_image_1024_be_zoomed
+msgid "Can Image 1024 be zoomed"
+msgstr "هل يمكن تكبير الصورة 1024"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__ac_type__cassette
+msgid "Cassette AC"
+msgstr "مكيف كاسيت"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__ac_type__central
+msgid "Central AC"
+msgstr "تكييف مركزي"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__child_count
+msgid "Child Count"
+msgstr "عدد العناصر التابعة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__city
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "City"
+msgstr "المدينة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__property_code
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Code"
+msgstr "الرمز"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__color
+msgid "Color Index"
+msgstr "مؤشر اللون"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__combo_ids
+msgid "Combo Choices"
+msgstr "خيارات الباقة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__commercial_status
+msgid "Commercial Status"
+msgstr "الحالة التجارية"
+
+#. module: atmta_property_core
+#. odoo-python
+#: code:addons/atmta_property_core/models/property_status.py:0
+msgid "Commercial status → %(status)s: %(reason)s"
+msgstr "الحالة التجارية → %(status)s: %(reason)s"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__property_type__usage_category__common_area
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__usage_category__common_area
+msgid "Common Area"
+msgstr "منطقة مشتركة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Company-Owned"
+msgstr "مملوكة للشركة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__is_internal
+msgid "Company-Owned Asset"
+msgstr "أصل مملوك للشركة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__hierarchy_level__compound
+msgid "Compound"
+msgstr "المجمع"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__construction_status
+msgid "Construction Status"
+msgstr "حالة الإنشاء"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__commercial_status__contracted
+msgid "Contracted"
+msgstr "متعاقد عليها"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__uom_category_id
+msgid ""
+"Conversion between Units of Measure can only occur if they belong to the "
+"same category. The conversion will be made based on the ratios."
+msgstr ""
+"لا يمكن التحويل بين وحدات القياس إلا إذا كانت تنتمي إلى نفس الفئة. سيتم "
+"التحويل بناءً على النسب."
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Coordinates"
+msgstr "الإحداثيات"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__standard_price
+msgid "Cost"
+msgstr "التكلفة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__cost_currency_id
+msgid "Cost Currency"
+msgstr "عملة التكلفة"
+
+#. module: atmta_property_core
+#. odoo-python
+#: code:addons/atmta_property_core/models/_base_property.py:0
+msgid ""
+"Could not allocate a free property code after %d attempts. Run "
+"env['realestate.property']._sync_property_code_sequence() to realign the "
+"sequence."
+msgstr ""
+"تعذر تخصيص رمز عقار متاح بعد %d محاولات. شغّل "
+"env['realestate.property']._sync_property_code_sequence() لإعادة ضبط "
+"التسلسل."
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__country_id
+msgid "Country"
+msgstr "الدولة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__service_tracking
+msgid "Create on Order"
+msgstr "إنشاء عند الطلب"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_image__create_uid
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__create_uid
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_usage__create_uid
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_image__create_date
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__create_date
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_usage__create_date
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__currency_id
+msgid "Currency"
+msgstr "العملة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__state
+msgid ""
+"DEPRECATED compatibility bridge, derived from the status dimensions. Kept "
+"because downstream ATMTA modules and the public API still read it. Write the"
+" dimension you own instead."
+msgstr ""
+"حقل توافق متقادم مشتق من أبعاد الحالة. تم الإبقاء عليه لأن وحدات ATMTA "
+"البرمجية التابعة وواجهة البرمجة العامة لا تزال تقرؤه. اكتب البُعد الذي تملكه"
+" بدلًا منه."
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__occupancy_state
+msgid ""
+"DEPRECATED. Mirrors the authoritative `occupancy_status` dimension; kept "
+"because downstream views still reference it."
+msgstr ""
+"متقادم. يعكس البُعد المرجعي `occupancy_status`؛ تم الإبقاء عليه لأن بعض طرق "
+"العرض اللاحقة لا تزال تشير إليه."
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__next_available_date
+msgid ""
+"Day after the last blocking lease allocation ends. Empty when the property "
+"is available now, or when a blocking allocation is open-ended."
+msgstr ""
+"اليوم التالي لانتهاء آخر تخصيص مانع للوحدة في عقد إيجار. يكون فارغًا إذا كان"
+" العقار متاحًا الآن، أو إذا كان التخصيص المانع مفتوح المدة."
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_property_type__usage_category
+msgid "Default commercial usage for properties of this type."
+msgstr "الاستخدام التجاري الافتراضي للعقارات من هذا النوع."
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__uom_id
+msgid "Default unit of measure used for all stock operations."
+msgstr "وحدة القياس الافتراضية المستخدمة في جميع عمليات المخزون."
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__uom_po_id
+msgid ""
+"Default unit of measure used for purchase orders. It must be in the same "
+"category as the default unit of measure."
+msgstr ""
+"وحدة القياس الافتراضية المستخدمة في أوامر الشراء. يجب أن تكون في نفس فئة "
+"وحدة القياس الافتراضية."
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__construction_status__delivered
+msgid "Delivered"
+msgstr "تم التسليم"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__description
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__description
+msgid "Description"
+msgstr "الوصف"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__property_notes
+msgid "Description / Notes"
+msgstr "الوصف / الملاحظات"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Dimensions & Use"
+msgstr "الأبعاد والاستخدام"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_image__display_name
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__display_name
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_usage__display_name
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__district
+msgid "District"
+msgstr "الحي"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__product_document_ids
+msgid "Documents"
+msgstr "المستندات"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__product_document_count
+msgid "Documents Count"
+msgstr "عدد المستندات"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__ac_type__ducted
+msgid "Ducted AC"
+msgstr "تكييف مخفي (دكت)"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__electricity_current_reading
+msgid "Electricity Current Reading"
+msgstr "القراءة الحالية لعداد الكهرباء"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__electricity_meter_number
+msgid "Electricity Meter Number"
+msgstr "رقم عداد الكهرباء"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_image__embed_code
+msgid "Embed Code"
+msgstr "كود التضمين"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__is_favorite
+msgid "Favorite"
+msgstr "المفضلة"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Features"
+msgstr "المزايا"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__construction_status__finishing
+msgid "Finishing"
+msgstr "التشطيب"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__hierarchy_level__floor
+msgid "Floor"
+msgstr "الطابق"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__floor_number
+msgid "Floor Number"
+msgstr "رقم الطابق"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__ac_type__floor_standing
+msgid "Floor Standing AC"
+msgstr "مكيف دولابي"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_property_type__activity_type_icon
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "أيقونة Font Awesome، مثل fa-tasks"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Free-form notes about this property…"
+msgstr "ملاحظات حرة عن هذا العقار…"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__occupancy_state__rented
+msgid "Fully Rented"
+msgstr "مؤجرة بالكامل"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__furnished_status__furnished
+msgid "Fully-furnished"
+msgstr "مفروشة بالكامل"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Furnished"
+msgstr "مفروشة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__furnished_status
+msgid "Furnished Status"
+msgstr "حالة التأثيث"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Gallery"
+msgstr "المعرض"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__gas_current_reading
+msgid "Gas Current Reading"
+msgstr "القراءة الحالية لعداد الغاز"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__gas_meter_number
+msgid "Gas Meter Number"
+msgstr "رقم عداد الغاز"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__packaging_ids
+msgid "Gives the different ways to package the same product."
+msgstr "يحدد الطرق المختلفة لتعبئة نفس المنتج."
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__sequence
+msgid "Gives the sequence order when displaying a product list"
+msgstr "يحدد ترتيب التسلسل عند عرض قائمة المنتجات"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__type
+msgid ""
+"Goods are tangible materials and merchandise you provide.\n"
+"A service is a non-material product you provide."
+msgstr ""
+"السلع هي مواد وبضائع ملموسة تقدمها.\n"
+"الخدمة منتج غير مادي تقدمه."
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Group By"
+msgstr "تجميع حسب"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__handover_status__handed_over
+msgid "Handed Over"
+msgstr "تم التسليم"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__handover_status
+msgid "Handover Status"
+msgstr "حالة التسليم"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Has Balcony"
+msgstr "بها شرفة"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Has Kitchen"
+msgstr "بها مطبخ"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__has_message
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__has_message
+msgid "Has Message"
+msgstr "يحتوي على رسالة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__commercial_status__held
+msgid "Held"
+msgstr "محتجز"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__hierarchy_level
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Hierarchy Level"
+msgstr "المستوى الهرمي"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__property_type__usage_category__hotel_room
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__usage_category__hotel_room
+msgid "Hotel Room"
+msgstr "غرفة فندقية"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_image__id
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__id
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_usage__id
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__activity_exception_icon
+msgid "Icon"
+msgstr "الأيقونة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_property_type__activity_exception_icon
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "أيقونة للإشارة إلى نشاط استثنائي."
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Identification"
+msgstr "بيانات التعريف"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_property_type__message_needaction
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا كان محددًا، فهناك رسائل جديدة تتطلب انتباهك."
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_property_type__message_has_error
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا كان محددًا، فبعض الرسائل بها خطأ في التسليم."
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__active
+msgid ""
+"If unchecked, it will allow you to hide the product without removing it."
+msgstr "إذا ألغيت تحديده، يمكنك إخفاء المنتج دون حذفه."
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_image__image_1920
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__image_1920
+msgid "Image"
+msgstr "الصورة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_image__image_1024
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__image_1024
+msgid "Image 1024"
+msgstr "صورة 1024"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_image__image_128
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__image_128
+msgid "Image 128"
+msgstr "صورة 128"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_image__image_256
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__image_256
+msgid "Image 256"
+msgstr "صورة 256"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_image__image_512
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__image_512
+msgid "Image 512"
+msgstr "صورة 512"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__state__inactive
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Inactive"
+msgstr "غير نشط"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__resale_count
+msgid ""
+"Incremented each time the property is marked for resale after being sold."
+msgstr "يزداد في كل مرة يتم فيها تحديد العقار لإعادة البيع بعد بيعه."
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__handover_status__inspection
+msgid "Inspection"
+msgstr "المعاينة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__default_code
+msgid "Internal Reference"
+msgstr "المرجع الداخلي"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__message_is_follower
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__is_furnished
+msgid "Is Furnished"
+msgstr "مفروشة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__has_configurable_attributes
+msgid "Is a configurable product"
+msgstr "منتج قابل للتهيئة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__is_product_variant
+msgid "Is a product variant"
+msgstr "متغير منتج"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__has_kitchen
+msgid "Kitchen"
+msgstr "المطبخ"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__property_type__usage_category__land_plot
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__usage_category__land_plot
+msgid "Land Plot"
+msgstr "قطعة أرض"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__landmark
+msgid "Landmark"
+msgstr "معلم مميز"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_image__write_uid
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__write_uid
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_usage__write_uid
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_image__write_date
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__write_date
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_usage__write_date
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__latitude
+msgid "Latitude"
+msgstr "خط العرض"
+
+#. module: atmta_property_core
+#. odoo-python
+#: code:addons/atmta_property_core/models/_base_property.py:0
+msgid "Latitude must be between -90 and 90."
+msgstr "يجب أن يكون خط العرض بين -90 و 90."
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Layout & Features"
+msgstr "التصميم والمزايا"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Leaves (no sub-properties)"
+msgstr "العقارات الطرفية (بدون عقارات فرعية)"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__living_room_count
+msgid "Living Rooms"
+msgstr "غرف المعيشة"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Location"
+msgstr "الموقع"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__longitude
+msgid "Longitude"
+msgstr "خط الطول"
+
+#. module: atmta_property_core
+#. odoo-python
+#: code:addons/atmta_property_core/models/_base_property.py:0
+msgid "Longitude must be between -180 and 180."
+msgstr "يجب أن يكون خط الطول بين -180 و 180."
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__maintenance_status
+msgid "Maintenance Status"
+msgstr "حالة الصيانة"
+
+#. module: atmta_property_core
+#. odoo-python
+#: code:addons/atmta_property_core/models/property_status.py:0
+msgid "Maintenance status → %(status)s: %(reason)s"
+msgstr "حالة الصيانة → %(status)s: %(reason)s"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Manager"
+msgstr "المدير"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Mark for Resale"
+msgstr "تحديد لإعادة البيع"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__company_id
+msgid ""
+"Materialised from the delegated product template so it can carry a database "
+"index and scope the uniqueness constraints. Writing it writes the product "
+"template."
+msgstr ""
+"مأخوذ من قالب المنتج المفوض بحيث يمكن فهرسته في قاعدة البيانات وتحديد نطاق "
+"قيود التفرد. الكتابة فيه تكتب في قالب المنتج."
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Media & Files"
+msgstr "الوسائط والملفات"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__message_has_error
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__message_ids
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "موعد نشاطي النهائي"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_image__name
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__name
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_usage__name
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__name
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Name"
+msgstr "الاسم"
+
+#. module: atmta_property_core
+#. odoo-python
+#: code:addons/atmta_property_core/models/_base_property.py:0
+msgid "New"
+msgstr "جديد"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__activity_summary
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__activity_type_id
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__next_available_date
+msgid "Next Available Date"
+msgstr "تاريخ الإتاحة التالي"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__maintenance_status__normal
+msgid "Normal"
+msgstr "طبيعية"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Number"
+msgstr "الرقم"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__number_of_ac
+msgid "Number Of ACs"
+msgstr "عدد المكيفات"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__number_of_elevators
+msgid "Number Of Elevators"
+msgstr "عدد المصاعد"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__number_of_floors
+msgid "Number Of Floors"
+msgstr "عدد الطوابق"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__number_of_parking_lots
+msgid "Number Of Parking Lots"
+msgstr "عدد مواقف السيارات"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__number_of_units
+msgid "Number Of Units"
+msgstr "عدد الوحدات"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_property_type__message_needaction_counter
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراء"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_property_type__message_has_error_counter
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي بها خطأ في التسليم"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__pricelist_item_count
+msgid "Number of price rules"
+msgstr "عدد قواعد الأسعار"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Occupancy"
+msgstr "الإشغال"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__occupancy_state
+msgid "Occupancy (legacy)"
+msgstr "الإشغال (القديم)"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__property_type__usage_category__office
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__usage_category__office
+msgid "Office"
+msgstr "مكتب"
+
+#. module: atmta_property_core
+#. odoo-python
+#: code:addons/atmta_property_core/models/_base_property.py:0
+msgid ""
+"Only sold properties can be marked for resale. Property '%s' is in state "
+"'%s'."
+msgstr ""
+"لا يمكن تحديد إعادة البيع إلا للعقارات المباعة. العقار '%s' في الحالة '%s'."
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__property_type__usage_category__other
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__usage_category__other
+msgid "Other"
+msgstr "أخرى"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__maintenance_status
+msgid "Owned by facilities / maintenance requests."
+msgstr "تديرها المرافق / طلبات الصيانة."
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__construction_status
+msgid "Owned by the construction module. Rental must not write this."
+msgstr "تديرها وحدة الإنشاءات. يجب ألا يكتب التأجير في هذا الحقل."
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__handover_status
+msgid "Owned by the handover module. Rental must not write this."
+msgstr "تديرها وحدة التسليم. يجب ألا يكتب التأجير في هذا الحقل."
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Owner"
+msgstr "المالك"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Ownership"
+msgstr "الملكية"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__parent_path
+msgid "Parent Path"
+msgstr "المسار الأصل"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__parent_id
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Parent Property"
+msgstr "العقار الأصل"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__property_type__usage_category__parking
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__usage_category__parking
+msgid "Parking"
+msgstr "المواقف"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__occupancy_state__partial
+msgid "Partially Rented"
+msgstr "مؤجرة جزئيًا"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__handover_status__pending
+msgid "Pending"
+msgstr "معلق"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__construction_status__planning
+msgid "Planning"
+msgstr "التخطيط"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__ac_type__portable
+msgid "Portable AC"
+msgstr "مكيف متنقل"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__hierarchy_level
+msgid ""
+"Position in the property tree. A child's level must be deeper than its "
+"parent's."
+msgstr ""
+"الموقع في شجرة العقارات. يجب أن يكون مستوى العنصر التابع أعمق من مستوى "
+"العنصر الأصل."
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__list_price
+msgid "Price at which the product is sold to customers."
+msgstr "السعر الذي يباع به المنتج للعملاء."
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__attribute_line_ids
+msgid "Product Attributes"
+msgstr "خصائص المنتج"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__categ_id
+msgid "Product Category"
+msgstr "فئة المنتج"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__packaging_ids
+msgid "Product Packages"
+msgstr "عبوات المنتج"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__product_tmpl_id
+msgid "Product Template"
+msgstr "قالب المنتج"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__product_tooltip
+msgid "Product Tooltip"
+msgstr "تلميح المنتج"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__type
+msgid "Product Type"
+msgstr "نوع المنتج"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__product_variant_id
+msgid "Product Variant"
+msgstr "متغير المنتج"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__product_variant_ids
+msgid "Products"
+msgstr "المنتجات"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__product_properties
+msgid "Properties"
+msgstr "العقارات"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_image__property_id
+msgid "Property"
+msgstr "العقار"
+
+#. module: atmta_property_core
+#. odoo-python
+#: code:addons/atmta_property_core/models/_base_property.py:0
+msgid ""
+"Property '%s' is already sold. Use 'Mark for Resale' on the property to re-"
+"open it for sale."
+msgstr ""
+"العقار '%s' مباع بالفعل. استخدم 'تحديد لإعادة البيع' في العقار لإعادة فتحه "
+"للبيع."
+
+#. module: atmta_property_core
+#. odoo-python
+#: code:addons/atmta_property_core/models/_base_property.py:0
+msgid "Property '%s' is in state '%s' and cannot be sold."
+msgstr "العقار '%s' في الحالة '%s' ولا يمكن بيعه."
+
+#. module: atmta_property_core
+#. odoo-python
+#: code:addons/atmta_property_core/models/_base_property.py:0
+msgid "Property Code '%s' already exists."
+msgstr "رمز العقار '%s' موجود بالفعل."
+
+#. module: atmta_property_core
+#. odoo-python
+#: code:addons/atmta_property_core/models/_base_property.py:0
+msgid "Property Hierarchy"
+msgstr "التسلسل الهرمي للعقارات"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_kanban
+msgid "Property Image"
+msgstr "صورة العقار"
+
+#. module: atmta_property_core
+#: model:ir.model,name:atmta_property_core.model_property_image
+msgid "Property Image / Media"
+msgstr "صورة / وسائط العقار"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__manager_id
+msgid "Property Manager"
+msgstr "مدير العقارات"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__property_number
+msgid "Property Number"
+msgstr "رقم العقار"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__owner_id
+msgid "Property Owner"
+msgstr "مالك العقار"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__property_ref
+msgid "Property Reference"
+msgstr "مرجع العقار"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__property_type_id
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Property Type"
+msgstr "نوع العقار"
+
+#. module: atmta_property_core
+#: model:ir.model,name:atmta_property_core.model_property_usage
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__property_usage_id
+msgid "Property Usage"
+msgstr "استخدام العقار"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Property name"
+msgstr "اسم العقار"
+
+#. module: atmta_property_core
+#. odoo-python
+#: code:addons/atmta_property_core/models/property_image.py:0
+msgid ""
+"Provided video URL for '%s' is not valid. Please enter a valid video URL."
+msgstr "رابط الفيديو المقدم لـ '%s' غير صالح. يرجى إدخال رابط فيديو صالح."
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__purchase_ok
+msgid "Purchase"
+msgstr "الشراء"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__description_purchase
+msgid "Purchase Description"
+msgstr "وصف الشراء"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__uom_po_id
+msgid "Purchase Unit"
+msgstr "وحدة الشراء"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__construction_status__ready
+msgid "Ready"
+msgstr "جاهز"
+
+#. module: atmta_property_core
+#: model:ir.model,name:atmta_property_core.model_realestate_property
+msgid "Real Estate Property"
+msgstr "عقار"
+
+#. module: atmta_property_core
+#: model:ir.model,name:atmta_property_core.model_property_type
+msgid "Real Estate Property Type"
+msgstr "نوع العقار"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Reference"
+msgstr "المرجع"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__state__rented
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Rented"
+msgstr "مؤجرة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__commercial_status__reserved
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__state__reserved
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Reserved"
+msgstr "محجوزة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__activity_user_id
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__property_type__usage_category__retail
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__usage_category__retail
+msgid "Retail"
+msgstr "تجزئة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__hierarchy_level__room
+msgid "Room"
+msgstr "الغرفة"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Rooms"
+msgstr "الغرف"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__sale_ok
+msgid "Sales"
+msgstr "المبيعات"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__description_sale
+msgid "Sales Description"
+msgstr "وصف المبيعات"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__list_price
+msgid "Sales Price"
+msgstr "سعر البيع"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Search Properties"
+msgstr "البحث في العقارات"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__furnished_status__semi
+msgid "Semi-furnished"
+msgstr "مفروشة جزئيًا"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_image__sequence
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__sequence
+msgid "Sequence"
+msgstr "المسلسل"
+
+#. module: atmta_property_core
+#. odoo-python
+#: code:addons/atmta_property_core/models/_base_property.py:0
+msgid ""
+"Sequence 'realestate.property.code' is missing. Upgrade the "
+"'atmta_property_core' module to install it, or create it manually under "
+"Settings → Technical → Sequences."
+msgstr ""
+"التسلسل 'realestate.property.code' غير موجود. قم بترقية الوحدة "
+"'atmta_property_core' لتثبيته، أو أنشئه يدويًا من الإعدادات → الإعدادات "
+"التقنية → التسلسلات."
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Set Inactive"
+msgstr "تعيين كغير نشط"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Set To Available"
+msgstr "تعيين كمتاحة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__handover_status__snagging
+msgid "Snagging"
+msgstr "حصر الملاحظات"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__commercial_status__sold
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__state__sold
+msgid "Sold"
+msgstr "مباعة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__ac_type__split
+msgid "Split AC"
+msgstr "مكيف سبليت"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__state_id
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "State"
+msgstr "الحالة"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Status"
+msgstr "الحالة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__state
+msgid "Status (legacy)"
+msgstr "الحالة (القديم)"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_property_type__activity_state
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الحالة بناءً على الأنشطة\n"
+"متأخرة: تاريخ الاستحقاق قد مضى\n"
+"اليوم: تاريخ النشاط هو اليوم\n"
+"مخطط لها: أنشطة مستقبلية."
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__property_type__usage_category__storage
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__usage_category__storage
+msgid "Storage"
+msgstr "مستودع تخزين"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__street_name
+msgid "Street Name"
+msgstr "اسم الشارع"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Structure"
+msgstr "الهيكل"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__child_ids
+msgid "Sub Properties"
+msgstr "العقارات الفرعية"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__sub_area
+msgid "Sub-area"
+msgstr "المنطقة الفرعية"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Sub-properties"
+msgstr "العقارات الفرعية"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__product_tag_ids
+msgid "Tags"
+msgstr "الوسوم"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "This will re-open the property for sale. Continue?"
+msgstr "سيؤدي هذا إلى إعادة طرح العقار للبيع. هل تريد المتابعة؟"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__resale_count
+msgid "Times Resold"
+msgstr "عدد مرات إعادة البيع"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Top-level"
+msgstr "المستوى الأعلى"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_property_type__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع النشاط الاستثنائي في السجل."
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_property_image__video_url
+msgid "URL of a video for showcasing your property."
+msgstr "رابط فيديو لعرض عقارك."
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__construction_status__under_construction
+msgid "Under Construction"
+msgstr "تحت الإنشاء"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__maintenance_status__maintenance
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__state__maintenance
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_search
+msgid "Under Maintenance"
+msgstr "تحت الصيانة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__furnished_status__unfurnished
+msgid "Unfurnished"
+msgstr "غير مفروشة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__hierarchy_level__unit
+msgid "Unit"
+msgstr "الوحدة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__uom_id
+msgid "Unit of Measure"
+msgstr "وحدة القياس"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__uom_name
+msgid "Unit of Measure Name"
+msgstr "اسم وحدة القياس"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__commercial_status__unreleased
+msgid "Unreleased"
+msgstr "غير مطروحة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__uom_category_id
+msgid "UoM Category"
+msgstr "فئة وحدة القياس"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__usage_category
+msgid "Usage"
+msgstr "الاستخدام"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__usage_category
+msgid "Usage Category"
+msgstr "فئة الاستخدام"
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_form
+msgid "Utility Meters"
+msgstr "عدادات الخدمات"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__ac_type__vrf
+msgid "VRF AC"
+msgstr "مكيف VRF"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__valid_product_template_attribute_line_ids
+msgid "Valid Product Attribute Lines"
+msgstr "بنود خصائص المنتج الصالحة"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__standard_price
+msgid ""
+"Value of the product (automatically computed in AVCO).\n"
+"        Used to value the product when the purchase cost is not known (e.g. inventory adjustment).\n"
+"        Used to compute margins on sale orders."
+msgstr ""
+"قيمة المنتج (تحتسب تلقائيًا بطريقة متوسط التكلفة المرجح). تستخدم لتقييم "
+"المنتج عندما تكون تكلفة الشراء غير معروفة (مثل تعديل المخزون). تستخدم "
+"لاحتساب هوامش الربح في أوامر البيع."
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__variant_seller_ids
+msgid "Variant Seller"
+msgstr "مورد المتغير"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__seller_ids
+msgid "Vendors"
+msgstr "الموردون"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_image__video_url
+msgid "Video URL"
+msgstr "رابط الفيديو"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__property_type__usage_category__villa
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__usage_category__villa
+msgid "Villa"
+msgstr "فيلا"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__volume
+msgid "Volume"
+msgstr "الحجم"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__volume_uom_name
+msgid "Volume unit of measure label"
+msgstr "تسمية وحدة قياس الحجم"
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__property_type__usage_category__warehouse
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__usage_category__warehouse
+msgid "Warehouse"
+msgstr "مستودع"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__water_current_reading
+msgid "Water Current Reading"
+msgstr "القراءة الحالية لعداد المياه"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__water_meter_number
+msgid "Water Meter Number"
+msgstr "رقم عداد المياه"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__weight
+msgid "Weight"
+msgstr "الوزن"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__weight_uom_name
+msgid "Weight unit of measure label"
+msgstr "تسمية وحدة قياس الوزن"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__usage_category
+msgid ""
+"What the property IS commercially. Independent of where it sits in the "
+"hierarchy -- a unit may be an apartment or a shop."
+msgstr ""
+"طبيعة العقار من الناحية التجارية، بصرف النظر عن موقعه في التسلسل الهرمي -- "
+"فقد تكون الوحدة شقة أو محلًا تجاريًا."
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__commercial_status
+msgid ""
+"Where the unit stands in the SALES pipeline. Owned by the developer / "
+"brokerage modules. Rental must not write this."
+msgstr ""
+"موقع الوحدة في مسار المبيعات. تتحكم فيه وحدات التطوير والوساطة، ولا يجوز "
+"لتطبيق التأجير تعديله."
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__ac_type__window
+msgid "Window AC"
+msgstr "مكيف شباك"
+
+#. module: atmta_property_core
+#. odoo-python
+#: code:addons/atmta_property_core/models/_base_property.py:0
+msgid "You cannot create a recursive property hierarchy."
+msgstr "لا يمكنك إنشاء تسلسل هرمي متكرر للعقارات."
+
+#. module: atmta_property_core
+#: model_terms:ir.ui.view,arch_db:atmta_property_core.view_property_hierarchy
+msgid "sub"
+msgstr "فرعي"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,field_description:atmta_property_core.field_property_type__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_property_core.field_realestate_property__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "حدث التقويم للنشاط التالي"
+
+#. module: atmta_property_core
+#: model:ir.model.fields,help:atmta_property_core.field_realestate_property__construction_status
+msgid "Physical readiness driven by project / phase state."
+msgstr "الجاهزية الفعلية محكومة بحالة المشروع أو المرحلة."
+
+#. module: atmta_property_core
+#: model:ir.model.fields.selection,name:atmta_property_core.selection__realestate_property__construction_status__ready
+msgid "Ready to Deliver"
+msgstr "جاهز للتسليم"

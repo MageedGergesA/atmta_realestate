@@ -4,11 +4,8 @@
 
     <menuitem id="menu_root" name="Executive"
               web_icon="atmta_executive_app,static/description/icon.png"
-              sequence="32" groups="atmta_v2_pilot.group_atmta_v2_pilot"/>
+              sequence="32"/>
 
-    <menuitem id="menu_overview" name="Suite Overview" parent="menu_root" sequence="1"
-              action="real_estate_investment.action_investment_dashboard"
-              groups="real_estate_investment.group_investment_user"/>
 
     <!-- ========================= PORTFOLIO ========================= -->
     <menuitem id="menu_portfolio" name="Portfolio" parent="menu_root" sequence="10"
@@ -33,6 +30,11 @@
 
     <!-- ========================== PLANNING ========================== -->
     <menuitem id="menu_planning" name="Planning" parent="menu_root" sequence="30"
+              groups="real_estate_investment.group_investment_user"/>
+    <!-- The investment dashboard keeps its XML ID; it now sits under Planning and
+         Suite Overview (views/dashboard_views.xml) opens the executive dashboard. -->
+    <menuitem id="menu_overview" name="Investment Dashboard" parent="menu_planning" sequence="5"
+              action="real_estate_investment.action_investment_dashboard"
               groups="real_estate_investment.group_investment_user"/>
     <menuitem id="menu_feasibility" name="Feasibility Studies" parent="menu_planning" sequence="10"
               action="real_estate_investment.action_feasibility"/>

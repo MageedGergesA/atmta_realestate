@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Rental settings.
+
+  The lease form and search that used to be layered on here by inheritance now
+  live in contract_views.xml as one design (Phase 4); only the settings page
+  remains in this file.
+-->
+<odoo>
+
+    <!-- Company leasing settings -->
+    <record id="view_res_config_settings_leasing" model="ir.ui.view">
+        <field name="name">res.config.settings.leasing</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app string="Rental" name="atmta_real_estate"
+                     logo="/atmta_real_estate/static/description/icon.png">
+                    <block title="Lease Workflow" name="re_workflow">
+                        <setting string="Require Lease Approval"
+                                 help="A lease must pass through Pending Approval before signature.">
+                            <field name="re_require_lease_approval"/>
+                        </setting>
+                        <setting string="Allow Self-Approval"
+                                 help="Let a user approve a lease they created. Off by default.">
+                            <field name="re_allow_self_approval"/>
+                        </setting>
+                        <setting string="Default Notice Period">
+                            <field name="re_notice_period_days"/> days
+                        </setting>
+                        <setting string="Auto-Expire Leases"
+                                 help="End leases automatically after their term when nothing is outstanding.">
+                            <field name="re_auto_expire_leases"/>
+                        </setting>
+                    </block>
+                    <block title="Billing" name="re_billing">
+                        <setting string="Rent Proration Method"
+                                 help="How partial billing periods are charged.">
+                            <field name="re_proration_method"/>
+                        </setting>
+                        <setting string="Default Rent Product">
+                            <field name="re_rent_product_id"/>
+                        </setting>
+                        <setting string="Automatic Rent Invoicing"
+                                 help="Let the scheduled action invoice due obligations.">
+                            <field name="re_auto_bill"/>
+                            <div invisible="not re_auto_bill">
+                                Invoice <field name="re_billing_lead_days" class="oe_inline"/>
+                                days before the due date.
+                            </div>
+                        </setting>
+                    </block>
+                    <block title="Security Deposits" name="re_deposits">
+                        <setting string="Deposit Liability Account"
+                                 help="A deposit is money owed back — it must post to a liability account, never revenue.">
+                            <field name="re_deposit_account_id"/>
+                        </setting>
+                        <setting string="Deposit Journal">
+                            <field name="re_deposit_journal_id"/>
+                        </setting>
+                        <setting string="Forfeited Deposit Income Account"
+                                 help="Where a forfeited deposit is recognised as income.">
+                            <field name="re_deposit_forfeit_income_account_id"/>
+                        </setting>
+                    </block>
+                    <block title="Renewals" name="re_renewals">
+                        <setting string="Reminder Windows"
+                                 help="Comma-separated days before expiry at which a renewal activity is raised.">
+                            <field name="re_renewal_reminder_days"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

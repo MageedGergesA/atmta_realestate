@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  M6 — Presentation Mode.
+
+  Customer-facing language, large type, no Odoo chrome inside the viewer. The
+  markup is deliberately plain: this is read across a showroom at two metres,
+  not scanned at a desk.
+-->
+<templates xml:space="preserve">
+
+<t t-name="real_estate_maquette.VisualGallery">
+    <div class="o_visual_gallery" t-att-class="{ 'o_visual_gallery_fs': state.fullscreen }">
+
+        <div t-if="state.loading" class="o_visual_gallery_splash">
+            <i class="fa fa-cube fa-3x mb-3"/>
+            <div>Preparing the gallery…</div>
+        </div>
+
+        <div t-elif="state.error" class="o_visual_gallery_splash">
+            <i class="fa fa-info-circle fa-2x mb-3"/>
+            <div t-esc="state.error"/>
+        </div>
+
+        <t t-else="">
+            <!-- Slim customer-facing bar. Not a breadcrumb. -->
+            <div class="o_visual_gallery_bar">
+                <div class="o_visual_gallery_title" t-esc="projectName"/>
+
+                <div class="o_visual_gallery_modes">
+                    <button class="o_vg_btn"
+                            t-att-class="{ active: state.experience === '3d' }"
+                            t-on-click="() => this.setExperience('3d')">
+                        3D
+                    </button>
+                    <button class="o_vg_btn"
+                            t-att-class="{ active: state.experience === '2d' }"
+                            t-on-click="() => this.setExperience('2d')">
+                        Plan
+                    </button>
+                </div>
+
+                <div class="o_visual_gallery_customer">
+                    <span t-if="hasOpportunity" class="o_vg_customer_name">
+                        <i class="fa fa-user me-1"/>
+                        <t t-esc="state.ctx.partner_name or state.ctx.crm_lead_name"/>
+                    </span>
+                    <button t-if="state.compareIds.length" class="o_vg_btn"
+                            t-on-click="openComparison">
+                        Compare (<t t-esc="state.compareIds.length"/>)
+                    </button>
+                    <button class="o_vg_btn" t-on-click="toggleFullscreen"
+                            title="Full screen">
+                        <i class="fa fa-arrows-alt"/>
+                    </button>
+                    <button class="o_vg_btn" t-on-click="exitGallery"
+                            title="Close">
+                        <i class="fa fa-times"/>
+                    </button>
+                </div>
+            </div>
+
+            <!-- The viewer. Its own capability probe and fallback chain
+                 still apply here exactly as in the backend. -->
+            <div class="o_visual_gallery_stage">
+                <MaquetteViewer t-if="state.experience === '3d' and state.projectId"
+                                t-key="'3d-' + state.projectId"
+                                projectId="state.projectId"
+                                mode="'presentation'"
+                                onUnitSelected.bind="onUnitSelected"/>
+                <MasterPlan2D t-if="state.experience === '2d' and state.projectId"
+                              t-key="'2d-' + state.projectId"
+                              projectId="state.projectId"
+                              onUnitSelected.bind="onUnitSelected"/>
+
+                <!--
+                  The customer's panel: one selection, whether it came from a
+                  mesh, a plan region or a list row, and the four things they
+                  ask for next. Every number in it is read from the server —
+                  nothing here computes a price or a schedule.
+                -->
+                <div t-if="state.selectedUnit" class="o_vg_unit_panel">
+                    <div class="o_vg_unit_head">
+                        <h2 class="o_vg_unit_name"
+                            t-esc="state.selectedUnit.name or state.selectedUnit.property_code"/>
+                        <button class="o_vg_btn" t-on-click="() => this.onUnitSelected(null)"
+                                title="Close">
+                            <i class="fa fa-times"/>
+                        </button>
+                    </div>
+
+                    <div class="o_vg_unit_facts">
+                        <div t-if="state.selectedUnit.property_code" class="o_vg_fact">
+                            <span class="o_vg_fact_label">Unit</span>
+                            <span t-esc="state.selectedUnit.property_code"/>
+                        </div>
+                        <div t-if="state.selectedUnit.area_sqm" class="o_vg_fact">
+                            <span class="o_vg_fact_label">Area</span>
+                            <span><t t-esc="state.selectedUnit.area_sqm"/> m²</span>
+                        </div>
+                        <div t-if="unitPrice" class="o_vg_fact o_vg_price">
+                            <span class="o_vg_fact_label">Price</span>
+                            <span t-esc="unitPrice"/>
+                        </div>
+                        <div class="o_vg_fact">
+                            <span class="o_vg_fact_label">Status</span>
+                            <span class="o_vg_unit_state" t-esc="unitStatus"/>
+                        </div>
+                    </div>
+
+                    <div class="o_vg_unit_actions">
+                        <button t-if="state.ctx and state.ctx.shortlist_available"
+                                class="o_vg_btn o_vg_shortlist"
+                                t-att-class="{ active: isShortlisted(state.selectedUnit) }"
+                                t-on-click="() => this.toggleShortlist(state.selectedUnit)">
+                            <i class="fa fa-heart me-1"/>
+                            <t t-if="isShortlisted(state.selectedUnit)">Saved</t>
+                            <t t-else="">Save</t>
+                        </button>
+                        <button class="o_vg_btn o_vg_compare_toggle"
+                                t-att-class="{ active: isComparing(state.selectedUnit) }"
+                                t-on-click="() => this.toggleCompare(state.selectedUnit)">
+                            <i class="fa fa-columns me-1"/>Compare
+                        </button>
+                        <button t-if="canReserve" class="o_vg_btn o_vg_reserve"
+                                t-on-click="() => this.reserveUnit(state.selectedUnit)">
+                            Reserve
+                        </button>
+                    </div>
+
+                    <!-- Payment plans, straight from Developer. -->
+                    <div class="o_vg_plans">
+                        <div t-if="state.plansLoading" class="o_vg_plans_loading text-muted">
+                            Loading payment plans…
+                        </div>
+                        <t t-elif="state.paymentPlans.length">
+                            <h3 class="o_vg_plans_title">Payment plans</h3>
+                            <div t-foreach="state.paymentPlans" t-as="plan"
+                                 t-key="plan.id" class="o_vg_plan">
+                                <div class="o_vg_plan_name" t-esc="plan.name"/>
+                                <div t-if="!plan.available"
+                                     class="o_vg_plan_unavailable text-muted"
+                                     t-esc="plan.reason"/>
+                                <div t-else="" class="o_vg_plan_terms">
+                                    <span class="o_vg_plan_down">
+                                        <t t-esc="formatMoney(plan.down_payment, plan.currency)"/> down
+                                    </span>
+                                    <span t-if="plan.installment_count" class="o_vg_plan_instalments">
+                                        · <t t-esc="plan.installment_count"/> ×
+                                        <t t-esc="formatMoney(plan.installment_amount, plan.currency)"/>
+                                    </span>
+                                    <span t-if="plan.duration_months" class="o_vg_plan_duration">
+                                        · over <t t-esc="plan.duration_months"/> months
+                                    </span>
+                                </div>
+                            </div>
+                        </t>
+                        <div t-else="" class="o_vg_plans_none text-muted">
+                            No payment plan is published for this unit.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparison overlay -->
+            <div t-if="state.comparison" class="o_visual_gallery_compare">
+                <div class="o_vg_compare_head">
+                    <h2>Comparison</h2>
+                    <button class="o_vg_btn" t-on-click="closeComparison">
+                        <i class="fa fa-times"/>
+                    </button>
+                </div>
+                <table class="o_vg_compare_table">
+                    <thead>
+                        <tr>
+                            <th/>
+                            <th t-foreach="state.comparison.units" t-as="u"
+                                t-key="u.id" t-esc="u.property_code or u.name"/>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="state.comparison.rows" t-as="row"
+                            t-key="row.key">
+                            <th t-esc="row.label"/>
+                            <td t-foreach="state.comparison.units" t-as="u"
+                                t-key="u.id"
+                                t-att-class="{ 'o_vg_best': row.best === u.id }">
+                                <t t-if="row.key === 'payment_plans'">
+                                    <t t-esc="(u.payment_plans or []).length"/> plan(s)
+                                </t>
+                                <t t-else="" t-esc="u[row.key]"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="o_vg_compare_asof">
+                    Read at <t t-esc="state.comparison.as_of"/>
+                </div>
+            </div>
+        </t>
+    </div>
+</t>
+
+</templates>

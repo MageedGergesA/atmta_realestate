@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'ATMTA — Procurement Core',
-    'version': '18.0.2.0.0',
+    'version': '18.0.2.1.0',
     'category': 'Real Estate/Procurement',
     'summary': 'Common procurement identity: policy and product classification.',
     'description': """
@@ -49,6 +49,9 @@ A floor that reaches upward is not a floor.
         'data/product_categories.xml',
         'data/products_seed.xml',
         'views/product_views.xml',
+        # Wave 11 — the policies declared here, on the company form. Without
+        # this they had no screen at all.
+        'views/company_views.xml',
         'views/product_categories_views.xml',
     ],
     'application': False,

@@ -21,20 +21,27 @@
         </field>
     </record>
 
-    <!-- Button on the rental contract -->
+    <!-- Generate Document on a lease is an occasional action: it lives in the
+         gear menu, not the lease header. -->
+    <record id="action_server_generate_lease_document" model="ir.actions.server">
+        <field name="name">Generate Document</field>
+        <field name="model_id" ref="atmta_real_estate.model_realestate_contract"/>
+        <field name="binding_model_id" ref="atmta_real_estate.model_realestate_contract"/>
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_generate_contract_document()</field>
+    </record>
+
+    <!-- Documents smart button on the lease -->
     <record id="view_realestate_contract_form_inherit_template" model="ir.ui.view">
         <field name="name">realestate.contract.form.template.button</field>
         <field name="model">realestate.contract</field>
         <field name="inherit_id" ref="atmta_real_estate.view_realestate_contract_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//header" position="inside">
-                <button name="action_generate_contract_document"
-                        type="object" string="Generate Document"
-                        class="btn-secondary"/>
-            </xpath>
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button name="action_open_generated_documents" type="object"
-                        class="oe_stat_button" icon="fa-file-text-o">
+                        class="oe_stat_button" icon="fa-file-text-o"
+                        invisible="generated_document_count == 0">
                     <field name="generated_document_count" widget="statinfo" string="Documents"/>
                 </button>
             </xpath>

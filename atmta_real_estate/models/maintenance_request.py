@@ -32,7 +32,7 @@ class MaintenanceRequest(models.Model):
 
     # --- Charge-back to tenant ---
     contract_id = fields.Many2one(
-        'realestate.contract', string="Bill to Contract", tracking=True,
+        'realestate.contract', string="Bill to Lease", tracking=True,
         help="Rental contract whose tenant should be charged for this maintenance.")
     charge_to_tenant = fields.Boolean(string="Charged to Tenant", readonly=True, copy=False)
     charge_amount = fields.Float(
@@ -48,40 +48,77 @@ class MaintenanceRequest(models.Model):
             if rec.state != 'draft':
                 raise UserError("Can only schedule from draft.")
             rec.state = 'scheduled'
+            if not rec.scheduled_date:
+                rec.scheduled_date = fields.Date.context_today(rec)
 
     def action_start_progress(self):
         for rec in self:
             rec.state = 'in_progress'
-            if rec.property_id:
-                rec.property_id.state = 'maintenance'
+            rec._apply_maintenance_block()
 
     def action_complete(self):
         for rec in self:
             rec.state = 'done'
-            if rec.property_id:
-                other_active = self.search([
-                    ('property_id', '=', rec.property_id.id),
-                    ('id', '!=', rec.id),
-                    ('state', '=', 'in_progress')
-                ])
-                if not other_active:
-                    rec.property_id.state = 'available'
+            if not rec.completion_date:
+                rec.completion_date = fields.Date.context_today(rec)
+            rec._release_maintenance_block()
 
     def action_cancel(self):
         for rec in self:
             rec.state = 'cancelled'
-            if rec.property_id:
-                other_active = self.search([
-                    ('property_id', '=', rec.property_id.id),
-                    ('id', '!=', rec.id),
-                    ('state', '=', 'in_progress')
-                ])
-                if not other_active:
-                    rec.property_id.state = 'available'
+            rec._release_maintenance_block()
+
+    # ------------------------------------------------------------------
+    # Property status -- maintenance owns ONE dimension, not the whole state
+    # ------------------------------------------------------------------
+    def _apply_maintenance_block(self):
+        """Flag the property as under maintenance.
+
+        Writes ``maintenance_status`` only. Before the Phase 2 split this wrote
+        ``state = 'maintenance'``, which destroyed the rented / reserved /sold
+        value it happened to overwrite.
+        """
+        self.ensure_one()
+        if self.property_id:
+            self.property_id._set_maintenance_status('maintenance', reason=_(
+                "Maintenance request %s started.") % self.display_name)
+
+    def _release_maintenance_block(self):
+        """Clear the maintenance flag once no request is still working on the
+        unit.
+
+        Critically, this restores ``maintenance_status`` to normal and nothing
+        else: a unit that was rented before the maintenance is still rented
+        afterwards. The pre-upgrade code set ``state = 'available'`` here,
+        silently evicting a sitting tenant from the property record.
+        """
+        self.ensure_one()
+        prop = self.property_id
+        if not prop:
+            return
+        still_working = self.search_count([
+            ('property_id', '=', prop.id),
+            ('id', '!=', self.id),
+            ('state', '=', 'in_progress'),
+        ])
+        if still_working:
+            return
+        # A unit turn is a separate, deliberate gate on re-letting; it clears
+        # its own block when the unit passes final inspection.
+        if prop.active_turn_id:
+            return
+        prop._set_maintenance_status('normal', reason=_(
+            "Maintenance request %s closed.") % self.display_name)
 
     def action_reset_to_draft(self):
         for rec in self:
+            was_in_progress = rec.state == 'in_progress'
             rec.state = 'draft'
+            # Starting the work flagged the unit as under maintenance. Back in
+            # draft nothing is being worked on, so the flag has to go too, or
+            # the unit stays blocked with no open request to clear it.
+            if was_in_progress:
+                rec._release_maintenance_block()
 
     def action_bill_to_tenant(self):
         """Charge this maintenance to the tenant: append a charge line to the
@@ -102,13 +139,13 @@ class MaintenanceRequest(models.Model):
                 ('contract_id', '=', rec.contract_id.id),
                 ('move_id', '=', False),
                 ('state', '=', 'draft'),
-                ('date_due', '>=', fields.Date.today()),
+                ('date_due', '>=', fields.Date.context_today(rec)),
             ], order='date_due asc', limit=1)
             if not payment:
                 payment = Payment.create({
                     'contract_id': rec.contract_id.id,
                     'property_id': rec.property_id.id,
-                    'date_due': fields.Date.today(),
+                    'date_due': fields.Date.context_today(rec),
                     'amount': 0.0,
                 })
 

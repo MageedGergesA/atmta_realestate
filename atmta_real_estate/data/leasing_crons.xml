@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Scheduled actions (Phase 30).
+
+  Every cron here is:
+    * idempotent   — re-running produces no duplicate work
+    * batch-safe   — bounded by an explicit limit, never "all records"
+    * multi-company safe — iterates companies and honours each one's settings
+    * retry-safe   — a failure in one company is logged and does not abort the rest
+    * timezone-safe — all comparisons are on dates, not naive datetimes
+
+  Note the deliberately unhurried intervals: none of this is time-critical, and
+  a daily job that touches a bounded slice is far safer on a large estate than
+  an hourly one that tries to touch everything.
+-->
+<odoo noupdate="1">
+
+    <record id="cron_recompute_availability" model="ir.cron">
+        <!-- Refreshes every stored value that changes when a date passes; see
+             models/calendar_refresh.py. -->
+        <field name="name">Rental: refresh date-based status</field>
+        <field name="model_id" ref="model_realestate_property"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_recompute_availability()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="cron_renewal_reminders" model="ir.cron">
+        <field name="name">Rental: raise lease renewal reminders</field>
+        <field name="model_id" ref="model_realestate_contract"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_renewal_reminders()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="cron_expire_leases" model="ir.cron">
+        <field name="name">Rental: end expired leases</field>
+        <field name="model_id" ref="model_realestate_contract"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_expire_leases()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="cron_generate_rent_invoices" model="ir.cron">
+        <field name="name">Rental: invoice due obligations</field>
+        <field name="model_id" ref="model_realestate_contract_payment"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_generate_rent_invoices()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <!--
+          Off by default. Automatic invoicing changes what lands on a customer's
+          ledger, so it is opted into per company via the "Automatic Rent
+          Invoicing" setting AND per lease via "Use Advanced Billing" — never
+          switched on for an existing database by an upgrade.
+        -->
+        <field name="active" eval="False"/>
+    </record>
+
+</odoo>

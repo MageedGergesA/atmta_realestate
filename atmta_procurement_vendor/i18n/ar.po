@@ -1,0 +1,3397 @@
+# Translation of Odoo Server.
+# This file contains the Arabic translation of the following modules:
+# 	* atmta_procurement_vendor
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:13+0000\n"
+"PO-Revision-Date: 2026-09-17 10:13+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_eligibility.py:0
+msgid ""
+"%(body)s\n"
+"(Recorded on behalf of %(user)s.)"
+msgstr ""
+"%(body)s\n"
+"(سُجل نيابة عن %(user)s.)"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid ""
+"%(name)s belongs to a decided assessment. Reassess %(qual)s to record new "
+"evidence."
+msgstr ""
+"%(name)s يتبع تقييمًا تم البت فيه. أعد تقييم %(qual)s لتسجيل أدلة جديدة."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/qualification_template.py:0
+msgid ""
+"%(name)s has been used for %(count)s assessment(s), so changing what it asks"
+" would change what those assessments meant. Use New Version — the existing "
+"ones keep pointing at this one."
+msgstr ""
+"تم استخدام %(name)s في %(count)s تقييم، لذا فإن تغيير ما يسأل عنه سيغير معنى"
+" تلك التقييمات. استخدم نسخة جديدة — تبقى التقييمات الحالية مرتبطة بهذه "
+"النسخة."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "%(name)s is %(state)s, so it cannot be %(action)s."
+msgstr "%(name)s في حالة %(state)s، لذا لا يمكن %(action)s."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid ""
+"%(name)s was decided on %(date)s. %(fields)s cannot be changed now — "
+"reassess it instead, and both records stay readable."
+msgstr ""
+"تم البت في %(name)s بتاريخ %(date)s. لا يمكن تغيير %(fields)s الآن — أعد "
+"التقييم بدلًا من ذلك، ويبقى السجلان قابلين للاطلاع."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_eligibility.py:0
+msgid "%(name)s: %(type)s in force since %(date)s — %(reason)s"
+msgstr "%(name)s: %(type)s ساري منذ %(date)s — %(reason)s"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid ""
+"%(project)s belongs to %(other)s, so %(company)s cannot endorse a vendor on "
+"it."
+msgstr ""
+"%(project)s يتبع %(other)s، لذا لا يمكن لـ %(company)s اعتماد مورد عليه."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "%(template)s belongs to %(other)s."
+msgstr "%(template)s يتبع %(other)s."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_restriction.py:0
+msgid "%(type)s in force from %(date)s. Reason: %(reason)s"
+msgstr "%(type)s ساري من %(date)s. السبب: %(reason)s"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_eligibility.py:0
+msgid "%(type)s recorded: %(reason)s"
+msgstr "تم تسجيل %(type)s: %(reason)s"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid ""
+"%(user)s assessed %(name)s, so somebody else has to approve it. Turn that "
+"off on the company if this organisation genuinely wants one person to do "
+"both."
+msgstr ""
+"قام %(user)s بتقييم %(name)s، لذا يجب أن يعتمده شخص آخر. عطّل هذا الخيار في "
+"الشركة إذا كانت المنظمة تريد فعلًا أن يقوم شخص واحد بالأمرين."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_eligibility.py:0
+msgid "%(vendor)s has no qualification for %(trade)s."
+msgstr "لا يوجد لدى %(vendor)s تأهيل في %(trade)s."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_eligibility.py:0
+msgid "%(vendor)s was assessed for %(trade)s and not qualified."
+msgstr "تم تقييم %(vendor)s في %(trade)s ولم يتأهل."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_eligibility.py:0
+msgid "%(vendor)s's assessment for %(trade)s is waiting on information."
+msgstr "تقييم %(vendor)s في %(trade)s بانتظار معلومات."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_eligibility.py:0
+msgid "%(vendor)s's qualification for %(trade)s expired on %(date)s."
+msgstr "انتهى تأهيل %(vendor)s في %(trade)s بتاريخ %(date)s."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/qualification_template.py:0
+msgid "%s already has a later version (%s)."
+msgstr "يوجد لـ %s نسخة أحدث (%s)."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/qualification_template.py:0
+msgid ""
+"%s asks nothing. Activate it once it has at least one requirement, or leave "
+"it in draft."
+msgstr ""
+"%s لا يتضمن أي سؤال. فعّله عندما يحتوي على متطلب واحد على الأقل، أو اتركه "
+"مسودة."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/qualification_template.py:0
+msgid ""
+"%s has assessments behind it. Archive it instead — deleting it would leave "
+"them describing a questionnaire that no longer exists."
+msgstr ""
+"توجد تقييمات مرتبطة بـ %s. أرشفه بدلًا من ذلك — حذفه سيجعلها تصف استبيانًا "
+"لم يعد موجودًا."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_restriction.py:0
+msgid ""
+"%s has been in force. Lift it rather than deleting it — an audit that cannot"
+" see a past suspension cannot explain the sourcing that happened around it."
+msgstr ""
+"كان %s ساريًا. ارفعه بدلًا من حذفه — التدقيق الذي لا يرى إيقافًا سابقًا لا "
+"يمكنه تفسير عمليات الطرح التي جرت حوله."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_profile.py:0
+msgid ""
+"%s is %s. Lift the restriction that put it there rather than overwriting the"
+" status — otherwise the reason disappears."
+msgstr ""
+"%s في حالة %s. ارفع القيد الذي أدى إلى ذلك بدلًا من استبدال الحالة — وإلا "
+"سيختفي السبب."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid ""
+"%s is a governance decision with a date on it. Cancel or supersede it — "
+"deleting it would make the sourcing it authorised unexplainable."
+msgstr ""
+"%s قرار حوكمة مؤرخ. ألغه أو استبدله — حذفه سيجعل عمليات الطرح التي أجازها "
+"غير قابلة للتفسير."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_restriction.py:0
+msgid "%s is already %s."
+msgstr "%s في حالة %s بالفعل."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_eligibility.py:0
+msgid "%s is marked inactive with %s."
+msgstr "%s مصنف كغير نشط بسبب %s."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_eligibility.py:0
+msgid "%s is not eligible."
+msgstr "%s غير مؤهل."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_profile.py:0
+msgid "%s is not in draft."
+msgstr "%s ليس في حالة مسودة."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_restriction.py:0
+msgid "%s is not in force."
+msgstr "%s غير ساري."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_eligibility.py:0
+msgid "%s needs this project's own endorsement, which it does not have."
+msgstr "%s يحتاج إلى اعتماد خاص بهذا المشروع، وهو غير متوفر."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_restriction.py:0
+msgid "%s would end before it started."
+msgstr "%s سينتهي قبل أن يبدأ."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/qualification_template.py:0
+msgid ""
+"'%(name)s' belongs to %(template)s, which has been used for assessments. It "
+"cannot be %(verb)s — take a new version of the template instead."
+msgstr ""
+"'%(name)s' يتبع %(template)s الذي استُخدم في تقييمات. لا يمكن %(verb)s — "
+"أنشئ نسخة جديدة من القالب بدلًا من ذلك."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/qualification_template.py:0
+msgid "'%s' is a selection with nothing to select."
+msgstr "'%s' حقل اختيار بلا خيارات."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/qualification_template.py:0
+msgid ""
+"'%s' is informational, so it has no pass or fail to block on. Make it "
+"mandatory or scored first."
+msgstr ""
+"'%s' معلوماتي، لذا لا يوجد نجاح أو رسوب يمكن الإيقاف بناءً عليه. اجعله "
+"إلزاميًا أو بدرجات أولًا."
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_partner_procurement_governance
+msgid "<span class=\"o_stat_text\">Qualifications</span>"
+msgstr "<span class=\"o_stat_text\">التأهيلات</span>"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_qualification_template_form
+msgid "<span class=\"oe_inline\"> — version </span>"
+msgstr "<span class=\"oe_inline\"> — النسخة </span>"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_qualification_template_form
+msgid ""
+"<strong>Mandatory</strong> must be answered and passed.\n"
+"                                <strong>Blocking</strong> ends the assessment as Not Qualified\n"
+"                                whatever the score says — insurance and manufacturer authorisation\n"
+"                                are the usual cases."
+msgstr ""
+"<strong>الإلزامي</strong> يجب الإجابة عليه واجتيازه. <strong>المانع</strong>"
+" ينهي التقييم بنتيجة غير مؤهل أيًا كانت الدرجة — التأمين وتفويض الشركة "
+"المصنعة هما الحالتان المعتادتان."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "A decided assessment keeps its evidence."
+msgstr "التقييم الذي تم البت فيه يحتفظ بأدلته."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_eligibility.py:0
+msgid "A mandatory document behind %s's qualification has expired."
+msgstr "انتهت صلاحية مستند إلزامي يستند إليه تأهيل %s."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid ""
+"A maximum award value of zero would mean the vendor is qualified for "
+"nothing. Say Not Qualified instead."
+msgstr ""
+"الحد الأقصى لقيمة الترسية بصفر يعني أن المورد غير مؤهل لأي شيء. اختر غير "
+"مؤهل بدلًا من ذلك."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/qualification_template.py:0
+msgid "A minimum score is a percentage between 0 and 100."
+msgstr "الحد الأدنى للدرجة نسبة مئوية بين 0 و100."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_restriction.py:0
+msgid "A project restriction has to name the project."
+msgstr "قيد المشروع يجب أن يحدد المشروع."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__is_endorsement
+msgid ""
+"A project-scoped qualification. It narrows; it never replaces the general "
+"one."
+msgstr "تأهيل خاص بمشروع. يضيّق النطاق؛ ولا يحل محل التأهيل العام أبدًا."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.constraint,message:atmta_procurement_vendor.constraint_realestate_procurement_vendor_qualification_effective_before_expiry
+msgid "A qualification cannot expire before it becomes effective."
+msgstr "لا يمكن أن ينتهي التأهيل قبل أن يصبح ساريًا."
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_category_form
+msgid ""
+"A requisition line for a product in these categories proposes this trade.\n"
+"                            The buyer may change it — the product tree says what the item is, not\n"
+"                            what a supplier is capable of."
+msgstr ""
+"بند طلب الشراء لمنتج ضمن هذه الفئات يقترح هذا التخصص. يمكن لمسؤول الشراء "
+"تغييره — شجرة المنتجات تصف ماهية الصنف، لا ما يقدر عليه المورد."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/wizard/vendor_governance_wizards.py:0
+msgid ""
+"A second current assessment for the same vendor, trade and project as %s."
+msgstr "تقييم ساري ثانٍ لنفس المورد والتخصص والمشروع مثل %s."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.constraint,message:atmta_procurement_vendor.constraint_realestate_procurement_qualification_template_code_version_uniq
+msgid "A template code and version must be unique within the company."
+msgstr "يجب أن يكون رمز القالب ونسخته فريدين داخل الشركة."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_category.py:0
+msgid "A trade cannot contain itself."
+msgstr "لا يمكن أن يحتوي التخصص على نفسه."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.constraint,message:atmta_procurement_vendor.constraint_realestate_procurement_vendor_category_code_company_uniq
+msgid "A trade code must be unique within its company."
+msgstr "يجب أن يكون رمز التخصص فريدًا داخل شركته."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_restriction.py:0
+msgid ""
+"A trade restriction has to name the trade. Leave it empty and it silently "
+"restricts everything."
+msgstr "قيد التخصص يجب أن يحدد التخصص. تركه فارغًا يقيّد كل شيء دون تنبيه."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.constraint,message:atmta_procurement_vendor.constraint_realestate_procurement_vendor_profile_partner_company_uniq
+msgid "A vendor has one governance profile per company."
+msgstr "للمورد ملف حوكمة واحد لكل شركة."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__message_needaction
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__message_needaction
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__message_needaction
+msgid "Action Needed"
+msgstr "إجراء مطلوب"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_condition__action_required
+msgid "Action Required"
+msgstr "إجراء مطلوب"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_condition__condition_type__pre_award_action
+msgid "Action Required Before Award"
+msgstr "إجراء مطلوب قبل الترسية"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_qualification_template_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_form
+msgid "Activate"
+msgstr "تفعيل"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_area__active
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__active
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_category__active
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__active
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_template__state__active
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_profile__governance_status__active
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_restriction__state__active
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_search
+msgid "Active"
+msgstr "نشط"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__active_restriction_ids
+msgid "Active Restrictions"
+msgstr "القيود السارية"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__is_in_force
+msgid "Active and inside its dates, as of today."
+msgstr "نشط وضمن تواريخه، حتى اليوم."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__activity_ids
+msgid "Activities"
+msgstr "الأنشطة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "زخرفة استثناء النشاط"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.constraint,message:atmta_procurement_vendor.constraint_realestate_procurement_qualification_area_code_company_uniq
+msgid "An area code must be unique within its company."
+msgstr "يجب أن يكون رمز المنطقة فريدًا داخل شركته."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__requirement_type
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__requirement_type
+msgid "Answer Type"
+msgstr "نوع الإجابة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_area__confidential
+msgid ""
+"Answers and documents under this heading are restricted to assessors, "
+"approvers and managers. Financial statements and reference checks are the "
+"usual reasons."
+msgstr ""
+"الإجابات والمستندات تحت هذا البند مقصورة على المقيّمين والمعتمدين والمديرين."
+" القوائم المالية والتحقق من المراجع هي الأسباب المعتادة."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_area__category_ids
+msgid "Applies To Trades"
+msgstr "ينطبق على التخصصات"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+msgid "Approve"
+msgstr "اعتماد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_qualification__state__approved
+msgid "Approved"
+msgstr "معتمد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__approver_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__approved_by_id
+msgid "Approved By"
+msgstr "اعتمد بواسطة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__approved_date
+msgid "Approved Date"
+msgstr "تاريخ الاعتماد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.actions.act_window,name:atmta_procurement_vendor.action_avl_report
+#: model:ir.model,name:atmta_procurement_vendor.model_realestate_procurement_avl_report
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_avl_report_form
+msgid "Approved Vendor List"
+msgstr "قائمة الموردين المعتمدين"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model,name:atmta_procurement_vendor.model_realestate_procurement_avl_report_line
+msgid "Approved Vendor List Line"
+msgstr "بند قائمة الموردين المعتمدين"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_audit_line__kind__approved_without_approver
+msgid "Approved Without An Approver"
+msgstr "معتمد دون معتمد"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/wizard/vendor_governance_wizards.py:0
+msgid ""
+"Approved with nobody recorded as having approved it. Almost always a "
+"migrated record — leave it, but do not treat it as evidence of a decision."
+msgstr ""
+"معتمد دون تسجيل أي شخص قام باعتماده. غالبا ما يكون سجلا مرحلا — اتركه، لكن "
+"لا تعتبره دليلا على اتخاذ قرار."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "Approved: %(result)s. Effective %(effective)s, valid until %(expiry)s."
+msgstr "معتمد: %(result)s. نافذ من %(effective)s، وصالح حتى %(expiry)s."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__area_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__area_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__area_name
+msgid "Area"
+msgstr "المساحة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report__as_of_date
+msgid "As Of"
+msgstr "بتاريخ"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+msgid "Assess"
+msgstr "تقييم"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_qualification__state__assessed
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__res_partner__procurement_vendor_class__assessed
+msgid "Assessed"
+msgstr "تم التقييم"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+msgid "Assessment"
+msgstr "التقييم"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__assessment_date
+msgid "Assessment Date"
+msgstr "تاريخ التقييم"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__qualification_ids
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__qualification_ids
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_qualification_template_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_qualification_template_list
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_form
+msgid "Assessments"
+msgstr "التقييمات"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__assessor_id
+msgid "Assessor"
+msgstr "المقيّم"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__assessor_comment
+msgid "Assessor Comment"
+msgstr "تعليق المقيّم"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_audit_line__audit_id
+msgid "Audit"
+msgstr "تدقيق"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_condition__auto_generated
+msgid "Auto Generated"
+msgstr "منشأ تلقائيا"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_restriction__restriction_type__award_suspension
+msgid "Award Suspension"
+msgstr "إيقاف الترسية"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "Below the minimum score."
+msgstr "أقل من الحد الأدنى للدرجة."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__blocking
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__blocking
+msgid "Blocking"
+msgstr "مانع"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/wizard/vendor_governance_wizards.py:0
+msgid "Blocking requirement(s) failed — %s — yet the result is %s."
+msgstr "فشلت متطلبات مانعة — %s — ومع ذلك النتيجة %s."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid ""
+"Blocking requirement(s) failed: %s. This decides the result regardless of "
+"any score."
+msgstr "فشلت متطلبات مانعة: %s. وهذا يحدد النتيجة بغض النظر عن أي درجة."
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_qualification_reject_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_restriction_lift_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_restriction_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_qualification__state__cancelled
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_restriction__state__cancelled
+msgid "Cancelled"
+msgstr "ملغى"
+
+#. module: atmta_procurement_vendor
+#: model:realestate.procurement.qualification.area,name:atmta_procurement_vendor.qual_area_certifications
+msgid "Certifications"
+msgstr "الشهادات"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_avl_report_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_audit_form
+msgid "Close"
+msgstr "إغلاق"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_area__code
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__code
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__code
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_category__code
+msgid "Code"
+msgstr "الرمز"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__selection_options
+msgid "Comma-separated, for a Selection requirement."
+msgstr "مفصولة بفواصل، لمتطلب من نوع اختيار."
+
+#. module: atmta_procurement_vendor
+#: model:realestate.procurement.qualification.area,name:atmta_procurement_vendor.qual_area_commercial
+msgid "Commercial Terms"
+msgstr "الشروط التجارية"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_area__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_condition__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_audit__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_category__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "Condition"
+msgstr "الشرط"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__condition_count
+msgid "Condition Count"
+msgstr "عدد الشروط"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_condition__condition_type
+msgid "Condition Type"
+msgstr "نوع الشرط"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report_line__conditions
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__condition_ids
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_list
+msgid "Conditions"
+msgstr "الشروط"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+msgid ""
+"Conditions are structured so they can be enforced later. A maximum\n"
+"                                award value recorded here is what M7's award check will read; a\n"
+"                                sentence in the notes is not."
+msgstr ""
+"الشروط منظمة بحيث يمكن تطبيقها لاحقا. الحد الأقصى لقيمة الترسية المسجل هنا "
+"هو ما سيقرؤه فحص الترسية في M7؛ أما جملة في الملاحظات فلا."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__confidential
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__confidential
+msgid "Confidential"
+msgstr "سري"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_area__confidential
+msgid "Confidential Evidence"
+msgstr "أدلة سرية"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_form
+msgid "Conflict Of Interest"
+msgstr "تعارض المصالح"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__conflict_review_complete
+msgid "Conflict Review Complete"
+msgstr "اكتملت مراجعة التعارض"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__conflict_review_note
+msgid "Conflict Review Note"
+msgstr "ملاحظة مراجعة التعارض"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__conflict_review_required
+msgid "Conflict Review Required"
+msgstr "تتطلب مراجعة التعارض"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_audit_line__kind__conflicting_current
+msgid "Conflicting Current Assessments"
+msgstr "تقييمات حالية متعارضة"
+
+#. module: atmta_procurement_vendor
+#: model:res.partner.category,name:atmta_procurement_vendor.tag_vendor_consultant
+msgid "Consultant"
+msgstr "الاستشاري"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model,name:atmta_procurement_vendor.model_res_partner
+msgid "Contact"
+msgstr "جهة الاتصال"
+
+#. module: atmta_procurement_vendor
+#: model:res.partner.category,name:atmta_procurement_vendor.tag_vendor_contractor
+msgid "Contractor"
+msgstr "المقاول"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_qualification_template_form
+msgid ""
+"Copies the questionnaire forward. Existing assessments keep"
+"                                   pointing at this version, so what they "
+"meant does not change."
+msgstr ""
+"ينسخ الاستبيان إلى نسخة جديدة. تظل التقييمات الحالية مرتبطة بهذه النسخة، فلا"
+" يتغير مدلولها."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report_line__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_area__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_condition__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_reject__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_restriction_lift__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_audit__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_audit_line__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_category__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_condition__auto_generated
+msgid ""
+"Created by the assessment itself from an unmet non-blocking requirement, and"
+" rebuilt whenever it is reassessed."
+msgstr ""
+"أنشأه التقييم نفسه من متطلب غير مانع لم يستوف، ويعاد بناؤه عند كل إعادة "
+"تقييم."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report_line__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_area__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_condition__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_reject__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_restriction_lift__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_audit__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_audit_line__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_category__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_condition__currency_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__currency_id
+msgid "Currency"
+msgstr "العملة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__is_current
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_search
+msgid "Current"
+msgstr "غير متأخر"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__current_qualification_ids
+msgid "Current Qualifications"
+msgstr "التأهيلات الحالية"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__value_date
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_requirement__requirement_type__date
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_response__requirement_type__date
+msgid "Date / Expiry"
+msgstr "تاريخ / انتهاء"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_condition__date_from
+msgid "Date From"
+msgstr "من تاريخ"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_condition__date_to
+msgid "Date To"
+msgstr "إلى تاريخ"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_form
+msgid "Dates"
+msgstr "التواريخ"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__days_to_expiry
+msgid "Days To Expiry"
+msgstr "الأيام المتبقية للانتهاء"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_form
+msgid "Deactivate"
+msgstr "إلغاء التفعيل"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_restriction__restriction_type__debarment
+msgid "Debarment"
+msgstr "حرمان"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__validity_months
+msgid "Default Validity (months)"
+msgstr "مدة الصلاحية الافتراضية (بالأشهر)"
+
+#. module: atmta_procurement_vendor
+#: model:realestate.procurement.qualification.area,name:atmta_procurement_vendor.qual_area_delivery
+msgid "Delivery & Logistics"
+msgstr "التوريد والخدمات اللوجستية"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_form
+msgid ""
+"Derived from approved assessments valid today. Active here is a\n"
+"                                statement about onboarding, never about a trade."
+msgstr ""
+"مستمد من التقييمات المعتمدة السارية اليوم. النشاط هنا يعبر عن التسجيل فقط، "
+"ولا يعبر أبدا عن تخصص."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__qualified_category_ids
+msgid ""
+"Derived from approved qualifications that are valid today. Read-only on "
+"purpose: a trade list somebody could tick would be a second, unevidenced "
+"answer to the same question."
+msgstr ""
+"مستمد من التأهيلات المعتمدة السارية اليوم. للقراءة فقط عن قصد: قائمة تخصصات "
+"يمكن لأي شخص تحديدها ستكون إجابة ثانية بلا دليل على السؤال نفسه."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_area__description
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__description
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_qualification_template_form
+msgid "Description"
+msgstr "الوصف"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_audit_line__detail
+msgid "Detail"
+msgstr "التفاصيل"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report_line__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_area__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_condition__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_reject__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_restriction_lift__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_audit__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_audit_line__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_category__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_requirement__requirement_type__document
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_response__requirement_type__document
+msgid "Document"
+msgstr "المستند"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__document_expiry_date
+msgid "Document Expiry"
+msgstr "انتهاء المستند"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__document_number
+msgid "Document Number"
+msgstr "رقم المستند"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__attachment_ids
+msgid "Documents"
+msgstr "المستندات"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_template__state__draft
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_profile__governance_status__draft
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_qualification__state__draft
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_restriction__state__draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__duplicate_warning
+msgid "Duplicate Warning"
+msgstr "تحذير التكرار"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_qualification_template_form
+msgid "ELEV"
+msgstr "ELEV"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__effective_date
+msgid "Effective Date"
+msgstr "تاريخ السريان"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__effective_from
+msgid "Effective From"
+msgstr "ساري اعتبارًا من"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__effective_to
+msgid "Effective To"
+msgstr "نافذ حتى"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_qualification_template_form
+msgid "Elevator Supplier Qualification"
+msgstr "تأهيل مورد المصاعد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_avl_report__as_of_date
+msgid ""
+"Eligibility is answered for this date and no other. Invitation, award and "
+"confirmation happen on different days and the answer legitimately differs "
+"between them."
+msgstr ""
+"تحدد الأهلية لهذا التاريخ فقط. تتم الدعوة والترسية والتأكيد في أيام مختلفة، "
+"وقد تختلف الإجابة بينها بشكل مشروع."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report_line__eligible
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_avl_report_form
+msgid "Eligible"
+msgstr "مؤهل للتعامل"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report__eligible_count
+msgid "Eligible Count"
+msgstr "عدد المؤهلين"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__project_id
+msgid ""
+"Empty for the general company/trade qualification. Set only for a project "
+"endorsement — the extra approval a particular development needs on top of "
+"the general one."
+msgstr ""
+"فارغ للتأهيل العام على مستوى الشركة/التخصص. يحدد فقط لاعتماد مشروع — وهو "
+"الاعتماد الإضافي الذي يحتاجه مشروع تطوير معين فوق التأهيل العام."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_area__company_id
+msgid "Empty means every company may use this heading."
+msgstr "الفراغ يعني أن جميع الشركات يمكنها استخدام هذا البند."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__project_id
+msgid ""
+"Empty means every project. Set it to restrict the vendor on one development "
+"while they carry on elsewhere."
+msgstr ""
+"الفراغ يعني جميع المشاريع. حدده لتقييد المورد في مشروع واحد مع استمرار "
+"تعامله في غيره."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__category_id
+msgid "Empty means every trade."
+msgstr "الفراغ يعني جميع التخصصات."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_area__category_ids
+msgid ""
+"Empty means the heading is relevant to any trade. This is guidance for "
+"whoever builds a template — it grants nothing."
+msgstr ""
+"الفراغ يعني أن البند يخص أي تخصص. هذا إرشاد لمن يبني القالب — ولا يمنح شيئا."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__effective_to
+msgid ""
+"Empty means until it is lifted. A temporary hold that nobody dated becomes "
+"permanent by accident, so the type suggests one."
+msgstr ""
+"الفراغ يعني حتى يرفع القيد. الإيقاف المؤقت الذي لم يحدد له تاريخ يصبح دائما "
+"عن غير قصد، لذا يقترح النوع تاريخا."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/wizard/vendor_governance_wizards.py:0
+msgid "Endorses a project belonging to %s."
+msgstr "يعتمد مشروعا تابعا لـ %s."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/wizard/vendor_governance_wizards.py:0
+msgid "Ends %(to)s, having started %(from)s."
+msgstr "ينتهي في %(to)s، وقد بدأ في %(from)s."
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.actions.act_window,help:atmta_procurement_vendor.action_vendors_unassessed
+msgid "Every supplier has been assessed."
+msgstr "تم تقييم جميع الموردين."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__value_text
+msgid "Evidence"
+msgstr "الأدلة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__duplicate_warning
+msgid ""
+"Exact matches on identifiers this database already holds. No fuzzy matching "
+"and no automatic merging — both belong to whoever owns the partner master."
+msgstr ""
+"تطابقات تامة على معرفات موجودة في قاعدة البيانات. لا مطابقة تقريبية ولا دمج "
+"تلقائي — فكلاهما من مسؤولية مالك البيانات الرئيسية لجهات الاتصال."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__is_current
+msgid ""
+"Exactly one approved qualification per vendor / company / trade / project "
+"scope carries this, enforced by a partial unique index rather than by "
+"hoping."
+msgstr ""
+"تحمل هذه الصفة تأهيل معتمد واحد فقط لكل نطاق مورد / شركة / تخصص / مشروع، "
+"ويفرض ذلك بفهرس فريد جزئي لا بالاعتماد على الأمل."
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_avl_report_form
+msgid "Excluded"
+msgstr "مستبعد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report__excluded_count
+msgid "Excluded Count"
+msgstr "عدد المستبعدين"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__res_partner__procurement_vendor_class__existing_vendor_unassessed
+msgid "Existing Vendor — Unassessed"
+msgstr "مورد حالي — غير مقيّم"
+
+#. module: atmta_procurement_vendor
+#: model:realestate.procurement.qualification.area,name:atmta_procurement_vendor.qual_area_experience
+msgid "Experience & Track Record"
+msgstr "الخبرة والسجل السابق"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_qualification__expiry_status__expired
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_qualification__state__expired
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_restriction__state__expired
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_search
+msgid "Expired"
+msgstr "منتهي"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_audit_line__kind__expired_still_current
+msgid "Expired But Still Current"
+msgstr "منتهي لكنه لا يزال حاليا"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/wizard/vendor_governance_wizards.py:0
+msgid ""
+"Expired on %s but still flagged current. The nightly job has not run; "
+"eligibility is already answering correctly."
+msgstr ""
+"انتهى في %s لكنه لا يزال معلما كحالي. لم تعمل المهمة الليلية بعد؛ والأهلية "
+"تجيب بشكل صحيح بالفعل."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "Expired on %s."
+msgstr "انتهى في %s."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__expiry_sensitive
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__expiry_sensitive
+msgid "Expires"
+msgstr "ينتهي"
+
+#. module: atmta_procurement_vendor
+#: model:ir.actions.act_window,name:atmta_procurement_vendor.action_qualification_expiring
+msgid "Expiring & Expired"
+msgstr "قاربت على الانتهاء ومنتهية"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_qualification__expiry_status__expiring
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_search
+msgid "Expiring Soon"
+msgstr "قارب على الانتهاء"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__expiry_date
+msgid "Expiry Date"
+msgstr "تاريخ الانتهاء"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+msgid "Fail verification"
+msgstr "فشل التحقق"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_response__verification__failed
+msgid "Failed Verification"
+msgstr "فشل التحقق"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__blocking
+msgid ""
+"Failing this ends the assessment as Not Qualified whatever the score says. "
+"Insurance and manufacturer authorisation are the usual cases."
+msgstr ""
+"الإخفاق في هذا ينهي التقييم بنتيجة غير مؤهل مهما كانت الدرجة. التأمين وتفويض"
+" الشركة المصنعة هما الحالتان المعتادتان."
+
+#. module: atmta_procurement_vendor
+#: model:realestate.procurement.qualification.area,name:atmta_procurement_vendor.qual_area_financial
+msgid "Financial Capacity"
+msgstr "الملاءة المالية"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_audit_line__kind
+msgid "Finding"
+msgstr "الملاحظة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_audit__finding_count
+msgid "Finding Count"
+msgstr "عدد الملاحظات"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_audit_form
+msgid ""
+"Findings, not repairs. Every one of these could be corrected automatically and\n"
+"                    none of them is: an assessment approved with nobody named on it is evidence\n"
+"                    that something happened, and silently filling in a name destroys it."
+msgstr ""
+"ملاحظات، لا إصلاحات. يمكن تصحيح كل واحدة منها تلقائيا ولا يصحح أي منها: "
+"التقييم المعتمد دون ذكر اسم المعتمد دليل على أن شيئا ما حدث، وملء الاسم بصمت"
+" يطمس هذا الدليل."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__first_approved_date
+msgid "First Approved Date"
+msgstr "تاريخ أول اعتماد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__potential_related_party
+msgid ""
+"Flagged for a conflict-of-interest look. A marker for the people who decide,"
+" not a workflow — M26 owns that."
+msgstr ""
+"معلم لمراجعة تعارض المصالح. علامة لمتخذي القرار، وليست سير عمل — فذلك من "
+"مسؤولية M26."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "أيقونة Font Awesome، مثل fa-tasks"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_condition__amount
+msgid "For a value-capped qualification. Company currency."
+msgstr "للتأهيل المحدد بسقف قيمة. بعملة الشركة."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__threshold
+msgid ""
+"For numeric requirements: the value the vendor must reach — years of "
+"experience, turnover, crew size."
+msgstr ""
+"للمتطلبات الرقمية: القيمة التي يجب أن يبلغها المورد — سنوات الخبرة، حجم "
+"المبيعات، عدد العمالة."
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_form
+msgid "Governance"
+msgstr "الحوكمة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__profile_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__profile_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_res_partner__procurement_profile_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_res_users__procurement_profile_id
+msgid "Governance Profile"
+msgstr "ملف الحوكمة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__governance_status
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_search
+msgid "Governance Status"
+msgstr "حالة الحوكمة"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_restriction_search
+msgid "Group By"
+msgstr "تجميع حسب"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+msgid "Group Recognition"
+msgstr "اعتماد المجموعة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__description
+msgid "Guidance"
+msgstr "الإرشادات"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_category_form
+msgid "HVAC Installation"
+msgstr "تركيب أنظمة التكييف والتهوية"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__has_message
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__has_message
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__has_message
+msgid "Has Message"
+msgstr "يحتوي على رسالة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__res_partner__procurement_vendor_class__has_active_purchase_history
+msgid "Has Purchase History"
+msgstr "لديه سجل مشتريات"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__res_partner__procurement_vendor_class__has_current_vendor_pricelist
+msgid "Has Vendor Price List"
+msgstr "لديه قائمة أسعار مورد"
+
+#. module: atmta_procurement_vendor
+#: model:realestate.procurement.qualification.area,name:atmta_procurement_vendor.qual_area_hse
+msgid "Health, Safety & Environment"
+msgstr "الصحة والسلامة والبيئة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_response__attachment_ids
+msgid ""
+"Held against this response, not against the partner. A user who may read the"
+" vendor does not thereby gain the vendor's financial statements."
+msgstr ""
+"محفوظ على هذه الإجابة، لا على جهة الاتصال. المستخدم الذي يمكنه الاطلاع على "
+"المورد لا يطلع بذلك على قوائمه المالية."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report__id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report_line__id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_area__id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_condition__id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_reject__id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_restriction_lift__id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_audit__id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_audit_line__id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_category__id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__activity_exception_icon
+msgid "Icon"
+msgstr "الأيقونة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "أيقونة للإشارة إلى نشاط استثنائي."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__message_needaction
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__message_needaction
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا كان محددًا، فهناك رسائل جديدة تتطلب انتباهك."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__message_has_error
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__message_has_sms_error
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__message_has_error
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__message_has_sms_error
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__message_has_error
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا كان محددًا، فبعض الرسائل بها خطأ في التسليم."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__imposed_by_id
+msgid "Imposed By"
+msgstr "فرضه"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__is_in_force
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_restriction_search
+msgid "In Force"
+msgstr "نافذ"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/wizard/vendor_governance_wizards.py:0
+msgid "In force with nobody recorded as having imposed it."
+msgstr "نافذ دون تسجيل أي شخص قام بفرضه."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_profile__governance_status__inactive
+msgid "Inactive"
+msgstr "غير نشط"
+
+#. module: atmta_procurement_vendor
+#: model:realestate.procurement.qualification.area,name:atmta_procurement_vendor.qual_area_infosec
+msgid "Information Security"
+msgstr "أمن المعلومات"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_requirement__obligation__informational
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_response__obligation__informational
+msgid "Informational"
+msgstr "للعلم فقط"
+
+#. module: atmta_procurement_vendor
+#: model:realestate.procurement.qualification.area,name:atmta_procurement_vendor.qual_area_insurance
+msgid "Insurance"
+msgstr "التأمين ضد المخاطر"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_avl_report__purpose__sourcing
+msgid "Invitation to quote"
+msgstr "دعوة لتقديم عرض سعر"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__is_answered
+msgid "Is Answered"
+msgstr "تمت الإجابة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__is_endorsement
+msgid "Is Endorsement"
+msgstr "اعتماد مشروع"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__message_is_follower
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__message_is_follower
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_res_partner__is_realestate_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_res_users__is_realestate_vendor
+msgid "Is Realestate Vendor"
+msgstr "مورد عقاري"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__is_restricted
+msgid "Is Restricted"
+msgstr "مقيد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__document_issue_date
+msgid "Issued"
+msgstr "صادر"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__issuer
+msgid "Issuer"
+msgstr "المُصدر"
+
+#. module: atmta_procurement_vendor
+#: model:res.partner.category,name:atmta_procurement_vendor.tag_vendor_landowner
+msgid "Landowner"
+msgstr "مالك الأرض"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__last_reviewed_date
+msgid "Last Reviewed Date"
+msgstr "تاريخ آخر مراجعة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report_line__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_area__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_condition__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_reject__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_restriction_lift__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_audit__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_audit_line__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_category__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report_line__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_area__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_condition__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_reject__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_restriction_lift__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_audit__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_audit_line__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_category__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_category__company_id
+msgid ""
+"Leave empty for a trade every company shares. A trade is a vocabulary, not a"
+" decision — sharing one does not share any qualification made against it."
+msgstr ""
+"اتركه فارغا لتخصص مشترك بين جميع الشركات. التخصص مصطلح وليس قرارا — ومشاركته"
+" لا تعني مشاركة أي تأهيل تم عليه."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_avl_report__category_id
+msgid ""
+"Leave empty to ask about the vendor generally rather than about one trade."
+msgstr "اتركه فارغا للسؤال عن المورد بشكل عام بدلا من تخصص واحد."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__res_partner__procurement_vendor_class__legacy_active_vendor
+msgid "Legacy Active Vendor"
+msgstr "مورد نشط قديم"
+
+#. module: atmta_procurement_vendor
+#: model:realestate.procurement.qualification.area,name:atmta_procurement_vendor.qual_area_legal
+msgid "Legal & Registration"
+msgstr "الشؤون القانونية والتسجيل"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_restriction_lift_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_restriction_form
+msgid "Lift"
+msgstr "رفع"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__lift_reason
+msgid "Lift Reason"
+msgstr "سبب الرفع"
+
+#. module: atmta_procurement_vendor
+#: model:ir.actions.act_window,name:atmta_procurement_vendor.action_restriction_lift
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_restriction_lift_form
+msgid "Lift Restriction"
+msgstr "رفع القيد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model,name:atmta_procurement_vendor.model_realestate_procurement_restriction_lift
+msgid "Lift Vendor Restriction"
+msgstr "رفع قيد المورد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_restriction__state__lifted
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_restriction_form
+msgid "Lifted"
+msgstr "مرفوع"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__lifted_by_id
+msgid "Lifted By"
+msgstr "رفعه"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__lifted_on
+msgid "Lifted On"
+msgstr "تاريخ الرفع"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_restriction_search
+msgid "Lifted or Lapsed"
+msgstr "مرفوع أو منقضي"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_restriction.py:0
+msgid "Lifted: %s"
+msgstr "رفع: %s"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_condition__condition_type__project_limited
+msgid "Limited To Projects"
+msgstr "مقصور على مشاريع"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_condition__condition_type__category_limited
+msgid "Limited To Trades"
+msgstr "مقصور على تخصصات"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_condition__condition_type__date_limited
+msgid "Limited Validity"
+msgstr "صلاحية محدودة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report__line_ids
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_audit__line_ids
+msgid "Line"
+msgstr "البند"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_requirement__obligation__mandatory
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_response__obligation__mandatory
+msgid "Mandatory"
+msgstr "إلزامي"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_audit_line__kind__mandatory_document_expired
+msgid "Mandatory Document Expired"
+msgstr "مستند إلزامي منتهي"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid ""
+"Mandatory but not blocking, so the assessment stands with this recorded "
+"against it."
+msgstr "إلزامي لكنه غير مانع، لذا يبقى التقييم قائما مع تسجيل ذلك عليه."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/wizard/vendor_governance_wizards.py:0
+msgid "Mandatory document(s) expired: %s."
+msgstr "مستندات إلزامية منتهية: %s."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__obligation
+msgid ""
+"Mandatory must be answered and passed. Scored contributes to the total. "
+"Informational is evidence and nothing else."
+msgstr ""
+"الإلزامي يجب الإجابة عنه واجتيازه. الخاضع للتقييم يسهم في المجموع. للعلم فقط"
+" هو دليل لا أكثر."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid ""
+"Mandatory requirement(s) failed without being blocking: %s. Recorded as "
+"conditions."
+msgstr "فشلت متطلبات إلزامية دون أن تكون مانعة: %s. سجلت كشروط."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "Mandatory requirement(s) unanswered: %s."
+msgstr "متطلبات إلزامية دون إجابة: %s."
+
+#. module: atmta_procurement_vendor
+#: model:res.partner.category,name:atmta_procurement_vendor.tag_vendor_marketing
+msgid "Marketing Vendor"
+msgstr "مورد تسويق"
+
+#. module: atmta_procurement_vendor
+#: model:res.partner.category,name:atmta_procurement_vendor.tag_vendor_material_supplier
+msgid "Material Supplier"
+msgstr "مورد مواد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__max_score
+msgid "Max Score"
+msgstr "الدرجة القصوى"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_condition__amount
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_condition__condition_type__max_award_value
+msgid "Maximum Award Value"
+msgstr "الحد الأقصى لقيمة الترسية"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__max_score
+msgid "Maximum Score"
+msgstr "الدرجة القصوى"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__message_has_error
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__message_has_error
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__message_ids
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__message_ids
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__min_score
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__min_score
+msgid "Minimum Score (%)"
+msgstr "الحد الأدنى للدرجة (%)"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__threshold
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__threshold
+msgid "Minimum Value"
+msgstr "القيمة الدنيا"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "Minimum required: %.2f%%"
+msgstr "الحد الأدنى المطلوب: %.2f%%"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_audit_line__model_name
+msgid "Model Name"
+msgstr "اسم النموذج"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "موعد نشاطي النهائي"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_area__name
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_condition__name
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__name
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_category__name
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__name
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid ""
+"Name the companies that recognise %s. A group qualification that does not "
+"say who it applies to applies to nobody in particular, which is worse than "
+"not having one."
+msgstr ""
+"حدد الشركات التي تعتمد %s. تأهيل المجموعة الذي لا يحدد من ينطبق عليه لا "
+"ينطبق على أحد بعينه، وهذا أسوأ من عدم وجوده."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__res_partner__procurement_vendor_class__needs_qualification
+msgid "Needs Qualification"
+msgstr "يحتاج إلى تأهيل"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_search
+msgid "Never Assessed"
+msgstr "لم يقيّم مطلقا"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+#: code:addons/atmta_procurement_vendor/models/vendor_restriction.py:0
+msgid "New"
+msgstr "جديد"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_qualification_template_form
+msgid "New Version"
+msgstr "نسخة جديدة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "حدث التقويم للنشاط التالي"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__next_review_date
+msgid "Next Review Date"
+msgstr "تاريخ المراجعة القادمة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__next_version_id
+msgid "Next Version"
+msgstr "النسخة التالية"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_qualification__expiry_status__none
+msgid "No Expiry"
+msgstr "بلا انتهاء"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/res_partner.py:0
+msgid "No supplier partners found."
+msgstr "لم يتم العثور على جهات اتصال موردين."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_eligibility.py:0
+msgid "No vendor was named."
+msgstr "لم يتم تحديد مورد."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_qualification__result__not_qualified
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_search
+msgid "Not Qualified"
+msgstr "غير مؤهل"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_response__verification__pending
+msgid "Not Verified"
+msgstr "لم يتم التحقق"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_condition__note
+msgid "Note"
+msgstr "ملاحظة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__notes
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__notes
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__notes
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_restriction_form
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__value_number
+msgid "Number"
+msgstr "الرقم"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__message_needaction_counter
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__message_needaction_counter
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراء"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__message_has_error_counter
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__message_has_error_counter
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي بها خطأ في التسليم"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_requirement__requirement_type__number
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_response__requirement_type__number
+msgid "Numeric Value"
+msgstr "قيمة رقمية"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__obligation
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__obligation
+msgid "Obligation"
+msgstr "الاستحقاق"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_template__state__obsolete
+msgid "Obsolete"
+msgstr "ملغى الاستخدام"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__is_group_wide
+msgid ""
+"Off by default and deliberately so. A group qualification is a real thing, "
+"but it has to be stated — leaving the company empty to get the same effect "
+"would expose the decision everywhere by accident."
+msgstr ""
+"معطل افتراضيا وعن قصد. تأهيل المجموعة أمر حقيقي، لكن يجب التصريح به — ترك "
+"الشركة فارغة للحصول على الأثر نفسه سيكشف القرار في كل مكان عن غير قصد."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_template__scoring_enabled
+msgid ""
+"Off means pass/fail: mandatory requirements decide the result and no "
+"percentage is computed. Not every supplier needs a number."
+msgstr ""
+"التعطيل يعني نجاح/إخفاق: المتطلبات الإلزامية تحدد النتيجة ولا تحسب نسبة "
+"مئوية. ليس كل مورد بحاجة إلى رقم."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_avl_report__include_ineligible
+msgid ""
+"On by default. A list that silently drops the suspended vendor cannot answer"
+" why they were not invited, which is the question this screen exists for."
+msgstr ""
+"مفعل افتراضيا. القائمة التي تسقط المورد الموقوف بصمت لا تستطيع الإجابة عن "
+"سبب عدم دعوته، وهو السؤال الذي وجدت هذه الشاشة من أجله."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_restriction.py:0
+msgid ""
+"Only a draft restriction can be cancelled. Lift %s instead, so the record "
+"says what happened."
+msgstr ""
+"لا يمكن إلغاء إلا القيد في حالة المسودة. ارفع %s بدلا من ذلك، ليوثق السجل ما"
+" حدث."
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_audit_form
+msgid "Open"
+msgstr "فتح"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__open_order_count
+msgid "Open Order Count"
+msgstr "عدد الطلبات المفتوحة"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_restriction_form
+msgid "Open Orders"
+msgstr "الطلبات المفتوحة"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_restriction.py:0
+msgid "Open Orders — %s"
+msgstr "الطلبات المفتوحة — %s"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_template__partner_category_ids
+msgid ""
+"Optional narrowing by the partner tags this suite already uses (Contractor, "
+"Material Supplier, Consultant …)."
+msgstr ""
+"تضييق اختياري حسب وسوم جهات الاتصال التي تستخدمها هذه المنظومة (مقاول، مورد "
+"مواد، استشاري …)."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__code
+msgid ""
+"Optional stable key. Useful when a later template version wants to be "
+"comparable with an earlier one."
+msgstr ""
+"مفتاح ثابت اختياري. مفيد عندما يراد لنسخة لاحقة من القالب أن تكون قابلة "
+"للمقارنة مع نسخة سابقة."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__selection_options
+msgid "Options"
+msgstr "الخيارات"
+
+#. module: atmta_procurement_vendor
+#: model:realestate.procurement.qualification.area,name:atmta_procurement_vendor.qual_area_other
+msgid "Other"
+msgstr "أخرى"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+msgid "Outcome"
+msgstr "النتيجة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_category__parent_path
+msgid "Parent Path"
+msgstr "المسار الأصل"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_category__parent_id
+msgid "Parent Trade"
+msgstr "التخصص الرئيسي"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__passed
+msgid "Passed"
+msgstr "ناجح"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_qualification__state__pending_approval
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_search
+msgid "Pending Approval"
+msgstr "بانتظار الاعتماد"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_search
+msgid "Pending Assessment"
+msgstr "بانتظار التقييم"
+
+#. module: atmta_procurement_vendor
+#: model:ir.actions.act_window,name:atmta_procurement_vendor.action_qualification_pending
+msgid "Pending Assessment & Approval"
+msgstr "بانتظار التقييم والاعتماد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_qualification__result__pending_information
+msgid "Pending Information"
+msgstr "بانتظار معلومات"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_eligibility.py:0
+msgid "Policy is Warn, so this is recorded and sourcing continues."
+msgstr "السياسة هي التحذير، لذا تم تسجيل ذلك ويستمر التوريد."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__potential_related_party
+msgid "Potential Related Party"
+msgstr "طرف ذو علاقة محتمل"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__previous_version_id
+msgid "Previous Version"
+msgstr "النسخة السابقة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_restriction__restriction_type__probation
+msgid "Probation"
+msgstr "فترة تجربة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_res_partner__procurement_qualification_count
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_res_users__procurement_qualification_count
+msgid "Procurement Qualification Count"
+msgstr "عدد تأهيلات المشتريات"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_res_partner__procurement_restriction_count
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_res_users__procurement_restriction_count
+msgid "Procurement Restriction Count"
+msgstr "عدد قيود المشتريات"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_res_partner__procurement_vendor_class
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_res_users__procurement_vendor_class
+msgid "Procurement Vendor Class"
+msgstr "تصنيف مورد المشتريات"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model,name:atmta_procurement_vendor.model_realestate_procurement_vendor_category
+msgid "Procurement Vendor Trade"
+msgstr "تخصص مورد المشتريات"
+
+#. module: atmta_procurement_vendor
+#: model:ir.actions.server,name:atmta_procurement_vendor.cron_expire_restrictions_ir_actions_server
+msgid "Procurement: close lapsed vendor restrictions"
+msgstr "المشتريات: إغلاق قيود الموردين المنقضية"
+
+#. module: atmta_procurement_vendor
+#: model:ir.actions.server,name:atmta_procurement_vendor.cron_expire_qualifications_ir_actions_server
+msgid "Procurement: expire lapsed vendor qualifications"
+msgstr "المشتريات: إنهاء تأهيلات الموردين المنقضية"
+
+#. module: atmta_procurement_vendor
+#: model:ir.actions.server,name:atmta_procurement_vendor.cron_classify_vendors_ir_actions_server
+msgid "Procurement: reclassify vendor population"
+msgstr "المشتريات: إعادة تصنيف الموردين"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report__project_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__project_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__project_id
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_search
+msgid "Project"
+msgstr "المشروع"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_audit_line__kind__project_company_mismatch
+msgid "Project Belongs To Another Company"
+msgstr "المشروع تابع لشركة أخرى"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_search
+msgid "Project Endorsements"
+msgstr "اعتمادات المشاريع"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_restriction__restriction_type__project_restriction
+msgid "Project Restriction"
+msgstr "قيد على مشروع"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_condition__project_ids
+msgid "Projects"
+msgstr "المشاريع"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report__purpose
+msgid "Purpose"
+msgstr "الغرض"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_restriction_form
+msgid "Put In Force"
+msgstr "تفعيل القيد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report_line__qualification_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_condition__qualification_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_reject__qualification_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__qualification_id
+msgid "Qualification"
+msgstr "التأهيل"
+
+#. module: atmta_procurement_vendor
+#: model:ir.actions.act_window,name:atmta_procurement_vendor.action_qualification_area
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_qualification_area_list
+msgid "Qualification Areas"
+msgstr "مجالات التأهيل"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model,name:atmta_procurement_vendor.model_realestate_procurement_qualification_condition
+msgid "Qualification Condition"
+msgstr "شرط التأهيل"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__qualification_count
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__qualification_count
+msgid "Qualification Count"
+msgstr "عدد التأهيلات"
+
+#. module: atmta_procurement_vendor
+#: model:ir.actions.act_window,name:atmta_procurement_vendor.action_vendor_qualification
+msgid "Qualification Register"
+msgstr "سجل التأهيل"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_qualification_template_form
+msgid "Qualification Template"
+msgstr "قالب التأهيل"
+
+#. module: atmta_procurement_vendor
+#: model:ir.actions.act_window,name:atmta_procurement_vendor.action_qualification_template
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_qualification_template_list
+msgid "Qualification Templates"
+msgstr "قوالب التأهيل"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_profile.py:0
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_res_partner__procurement_qualification_ids
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_res_users__procurement_qualification_ids
+msgid "Qualifications"
+msgstr "التأهيلات"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report_line__qualified
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_qualification__result__qualified
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_search
+msgid "Qualified"
+msgstr "مؤهل"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_audit_line__kind__blocking_failure_but_qualified
+msgid "Qualified Despite A Blocking Failure"
+msgstr "مؤهل رغم إخفاق مانع"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_form
+msgid "Qualified For"
+msgstr "مؤهل لـ"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_search
+msgid "Qualified Trade"
+msgstr "التخصص المؤهل"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__qualified_category_ids
+msgid "Qualified Trades"
+msgstr "التخصصات المؤهلة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_qualification__result__qualified_with_conditions
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_search
+msgid "Qualified With Conditions"
+msgstr "مؤهل بشروط"
+
+#. module: atmta_procurement_vendor
+#: model:realestate.procurement.qualification.area,name:atmta_procurement_vendor.qual_area_quality
+msgid "Quality"
+msgstr "الجودة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__source
+msgid "Raised From"
+msgstr "المصدر"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__reason
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_restriction_form
+msgid "Reason"
+msgstr "السبب"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+msgid "Reassess"
+msgstr "إعادة التقييم"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "Reassess a qualification that was approved. %s has not been."
+msgstr "أعد تقييم تأهيل تم اعتماده. %s لم يعتمد."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__previous_id
+msgid "Reassessment Of"
+msgstr "إعادة تقييم لـ"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_avl_report__purpose__award
+msgid "Receiving the order"
+msgstr "استلام الأمر"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__shared_company_ids
+msgid "Recognised By"
+msgstr "معتمد من"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__is_group_wide
+msgid "Recognised By Other Companies"
+msgstr "معتمد من شركات أخرى"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_audit_line__record_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_audit_line__record_ref
+msgid "Record"
+msgstr "السجل"
+
+#. module: atmta_procurement_vendor
+#: model:realestate.procurement.qualification.area,name:atmta_procurement_vendor.qual_area_references
+msgid "References"
+msgstr "المراجع"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__registration_date
+msgid "Registered"
+msgstr "تاريخ التسجيل"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_qualification_reject_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+msgid "Reject"
+msgstr "رفض"
+
+#. module: atmta_procurement_vendor
+#: model:ir.actions.act_window,name:atmta_procurement_vendor.action_qualification_reject
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_qualification_reject_form
+msgid "Reject Qualification"
+msgstr "رفض التأهيل"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model,name:atmta_procurement_vendor.model_realestate_procurement_qualification_reject
+msgid "Reject Vendor Qualification"
+msgstr "رفض تأهيل المورد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_qualification__state__rejected
+msgid "Rejected"
+msgstr "مرفوض"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "Rejected: %s"
+msgstr "مرفوض: %s"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__rejection_reason
+msgid "Rejection Reason"
+msgstr "سبب الرفض"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__weight
+msgid ""
+"Relative weight within the total. Only used when the template is scored."
+msgstr ""
+"الوزن النسبي ضمن المجموع. يستخدم فقط عندما يكون القالب خاضعا للتقييم "
+"بالدرجات."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report_line__report_id
+msgid "Report"
+msgstr "التقرير"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_form
+msgid ""
+"Reported, never merged. Merging partners belongs to whoever owns the\n"
+"                            contact master."
+msgstr ""
+"يتم الإبلاغ عنه، ولا يدمج أبدا. دمج جهات الاتصال من مسؤولية مالك البيانات "
+"الرئيسية لجهات الاتصال."
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+msgid "Request Approval"
+msgstr "طلب الاعتماد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__name
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__requirement_name
+msgid "Requirement"
+msgstr "المتطلب"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__requirement_id
+msgid "Requirement (source)"
+msgstr "المتطلب (المصدر)"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__requirement_code
+msgid "Requirement Code"
+msgstr "رمز المتطلب"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__requirement_count
+msgid "Requirement Count"
+msgstr "عدد المتطلبات"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__requirement_ids
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_qualification_template_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_qualification_template_list
+msgid "Requirements"
+msgstr "المتطلبات"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_category__product_category_ids
+msgid ""
+"Requisition lines for products in these categories will default to this "
+"trade. A suggestion only: the buyer may change it, and nothing about "
+"eligibility is derived from the product tree."
+msgstr ""
+"بنود طلبات الشراء لمنتجات هذه الفئات ستأخذ هذا التخصص افتراضيا. هذا اقتراح "
+"فقط: يمكن لمسؤول الشراء تغييره، ولا يستمد أي شيء يخص الأهلية من شجرة "
+"المنتجات."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__response_ids
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+msgid "Responses"
+msgstr "الإجابات"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_search
+msgid "Responsible"
+msgstr "المسؤول"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__responsible_id
+msgid "Responsible Buyer"
+msgstr "مسؤول الشراء"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_profile__governance_status__restricted
+msgid "Restricted"
+msgstr "مقيد"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_search
+msgid "Restricted or Suspended"
+msgstr "مقيد أو موقوف"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_restriction_lift__restriction_id
+msgid "Restriction"
+msgstr "القيد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_audit_line__kind__restriction_dates_invalid
+msgid "Restriction Dates Invalid"
+msgstr "تواريخ القيد غير صحيحة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__restriction_summary
+msgid "Restriction Summary"
+msgstr "ملخص القيود"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__restriction_type
+msgid "Restriction Type"
+msgstr "نوع القيد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_audit_line__kind__restriction_without_approver
+msgid "Restriction Without An Approver"
+msgstr "قيد دون معتمد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__restriction_ids
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_form
+msgid "Restrictions"
+msgstr "القيود"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__confidential
+msgid ""
+"Restricts the answer and its documents to assessors and above. Defaults to "
+"whatever the area says and may be overridden."
+msgstr ""
+"يقصر الإجابة ومستنداتها على المقيّمين ومن هم أعلى. القيمة الافتراضية حسب "
+"البند ويمكن تجاوزها."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__result
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_search
+msgid "Result"
+msgstr "النتيجة"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_qualification_template_form
+msgid "Retire"
+msgstr "إيقاف الاستخدام"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_search
+msgid "Review Due"
+msgstr "مستحق المراجعة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__reviewer_id
+msgid "Reviewer"
+msgstr "المراجع"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "خطأ في إرسال الرسائل النصية القصيرة"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_profile.py:0
+msgid "Same tax number or email as: %s"
+msgstr "نفس الرقم الضريبي أو البريد الإلكتروني لـ: %s"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "Say why %s is being waived."
+msgstr "وضح سبب الإعفاء من %s."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_restriction.py:0
+msgid ""
+"Say why the restriction is being lifted. It was imposed with a reason and it"
+" comes off with one."
+msgstr "وضح سبب رفع القيد. فرض بسبب ويرفع بسبب."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid ""
+"Say why. A rejection with no reason cannot be answered, appealed or learned "
+"from."
+msgstr ""
+"وضح السبب. الرفض دون سبب لا يمكن الرد عليه أو التظلم منه أو التعلم منه."
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_audit_form
+msgid "Scan"
+msgstr "فحص"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+msgid "Scope"
+msgstr "النطاق"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_category__note
+msgid "Scope Notes"
+msgstr "ملاحظات النطاق"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__score
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_requirement__requirement_type__score
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_response__requirement_type__score
+msgid "Score"
+msgstr "الدرجة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__score
+msgid "Score (%)"
+msgstr "الدرجة (%)"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__score_explanation
+msgid "Score Explanation"
+msgstr "شرح الدرجة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__scoring_enabled
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_requirement__obligation__scored
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_response__obligation__scored
+msgid "Scored"
+msgstr "بالدرجات"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/qualification_template.py:0
+msgid "Scores and weights cannot be negative."
+msgstr "لا يمكن أن تكون الدرجات والأوزان سالبة."
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+msgid "Scoring"
+msgstr "التقييم بالدرجات"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__scoring_enabled
+msgid "Scoring Enabled"
+msgstr "التقييم بالدرجات مفعل"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__value_selection
+msgid "Selected"
+msgstr "المحدد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_requirement__requirement_type__selection
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_response__requirement_type__selection
+msgid "Selection"
+msgstr "اختيار"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__selection_options
+msgid "Selection Options"
+msgstr "خيارات الاختيار"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_area__sequence
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__sequence
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__sequence
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__sequence
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_category__sequence
+msgid "Sequence"
+msgstr "المسلسل"
+
+#. module: atmta_procurement_vendor
+#: model:res.partner.category,name:atmta_procurement_vendor.tag_vendor_service
+msgid "Service Vendor"
+msgstr "مورد خدمات"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_res_partner__procurement_vendor_class
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_res_users__procurement_vendor_class
+msgid ""
+"Set by the M4 migration and by Reclassify Vendors. A description of what "
+"this database already knows about the supplier — never an approval."
+msgstr ""
+"يحدده ترحيل M4 وإعادة تصنيف الموردين. وصف لما تعرفه قاعدة البيانات مسبقا عن "
+"المورد — وليس اعتمادا أبدا."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__profile_id
+msgid ""
+"Set when the assessment is created. Deliberately not a compute: a compute "
+"that creates records runs in places nothing should be created, and this one "
+"would."
+msgstr ""
+"يحدد عند إنشاء التقييم. ليس حقلا محسوبا عن قصد: الحقل المحسوب الذي ينشئ "
+"سجلات يعمل في مواضع لا ينبغي أن ينشأ فيها شيء، وهذا الحقل سيفعل ذلك."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_category__code
+msgid "Short stable identifier."
+msgstr "معرف ثابت قصير."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report__include_ineligible
+msgid "Show Excluded Vendors"
+msgstr "إظهار الموردين المستبعدين"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_avl_report_form
+msgid "Show Vendors"
+msgstr "عرض الموردين"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__template_version
+msgid ""
+"Snapshotted at creation. Later template versions do not reach back and "
+"change what this assessment asked."
+msgstr ""
+"لقطة محفوظة عند الإنشاء. النسخ اللاحقة من القالب لا تعود لتغيير ما سأله هذا "
+"التقييم."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_restriction__restriction_type__sourcing_suspension
+msgid "Sourcing Suspension"
+msgstr "إيقاف المناقصات"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+msgid "Start Review"
+msgstr "بدء المراجعة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__state
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__state
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__state
+msgid "State"
+msgstr "الحالة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report_line__status
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report_line__status_label
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_avl_report_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_search
+msgid "Status"
+msgstr "الحالة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الحالة بناءً على الأنشطة\n"
+"متأخرة: تاريخ الاستحقاق قد مضى\n"
+"اليوم: تاريخ النشاط هو اليوم\n"
+"مخطط لها: أنشطة مستقبلية."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_category__child_ids
+msgid "Sub-trades"
+msgstr "التخصصات الفرعية"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+msgid "Submit"
+msgstr "إرسال"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_qualification__state__submitted
+msgid "Submitted"
+msgstr "مقدم"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_category_form
+msgid "Suggestion Mapping"
+msgstr "ربط الاقتراحات"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_category__product_category_ids
+msgid "Suggests For Product Categories"
+msgstr "يقترح لفئات المنتجات"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_qualification__state__superseded
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+msgid "Superseded"
+msgstr "مستبدل"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__superseded_by_id
+msgid "Superseded By"
+msgstr "استبدل بـ"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "Superseded by %s."
+msgstr "استبدل بـ %s."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_profile__governance_status__suspended
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_form
+msgid "Suspended"
+msgstr "موقوف"
+
+#. module: atmta_procurement_vendor
+#: model:realestate.procurement.qualification.area,name:atmta_procurement_vendor.qual_area_sustainability
+msgid "Sustainability"
+msgstr "الاستدامة"
+
+#. module: atmta_procurement_vendor
+#: model:realestate.procurement.qualification.area,name:atmta_procurement_vendor.qual_area_technical
+msgid "Technical Capability"
+msgstr "القدرة الفنية"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__template_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__template_id
+msgid "Template"
+msgstr "القالب"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__template_version
+msgid "Template Version"
+msgstr "إصدار القالب"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_restriction__restriction_type__temporary_hold
+msgid "Temporary Hold"
+msgstr "إيقاف مؤقت"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_requirement__requirement_type__text
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_response__requirement_type__text
+msgid "Text Evidence"
+msgstr "دليل نصي"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__score_explanation
+msgid ""
+"The arithmetic, in full. A score nobody can reproduce is not evidence of "
+"anything."
+msgstr ""
+"الحساب كاملًا. الدرجة التي لا يمكن لأحد إعادة احتسابها ليست دليلًا على شيء."
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_qualification_reject_form
+msgid ""
+"The assessment and its evidence are kept. Rejecting records a decision; it does\n"
+"                    not send the file back to draft with nothing to show for it."
+msgstr ""
+"يُحتفظ بالتقييم وأدلته. الرفض يسجل قرارًا، ولا يعيد الملف إلى مسودة دون أي "
+"أثر."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "The assessor cannot waive their own requirement."
+msgstr "لا يجوز للمقيّم الإعفاء من المتطلب الخاص به."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__shared_company_ids
+msgid "The companies that accept this decision as their own."
+msgstr "الشركات التي تعتمد هذا القرار كقرار خاص بها."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_condition__company_id
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_response__company_id
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__company_id
+msgid ""
+"The company making this decision. A qualification granted in one company has"
+" never qualified anybody in another."
+msgstr ""
+"الشركة المتخذة لهذا القرار. التأهيل الممنوح في شركة لا يؤهل أحدًا في شركة "
+"أخرى."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__vendor_ref
+msgid "The company's own supplier number, where it keeps one."
+msgstr "رقم المورد الخاص بالشركة، إن كانت تحتفظ به."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__expiry_sensitive
+msgid ""
+"The document or date behind this requirement stops being valid on its own "
+"expiry, independently of the assessment's. Only requirements marked here are"
+" re-checked at eligibility time."
+msgstr ""
+"المستند أو التاريخ الذي يستند إليه هذا المتطلب ينتهي سريانه بانتهائه الخاص، "
+"بشكل مستقل عن التقييم. لا يُعاد فحص سوى المتطلبات المحددة هنا عند التحقق من "
+"الأهلية."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__effective_date
+msgid "The first day this qualification is valid from."
+msgstr "أول يوم يسري فيه هذا التأهيل."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__expiry_date
+msgid ""
+"The last day it is valid. Empty means it does not expire — which is a "
+"decision, and shows up as one on the register."
+msgstr ""
+"آخر يوم للسريان. تركه فارغًا يعني أنه لا ينتهي — وهذا قرار، ويظهر كذلك في "
+"السجل."
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_restriction_lift_form
+msgid ""
+"The restriction stays on file as lifted, with both reasons on it. A question\n"
+"                    about last March still gets last March's answer."
+msgstr ""
+"يبقى القيد في الملف بحالة مرفوع، مع كلا السببين. أي سؤال عن شهر مارس الماضي "
+"يحصل على إجابة مارس الماضي."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__max_score
+msgid "The score a perfect answer earns."
+msgstr "الدرجة التي تحصل عليها الإجابة المثالية."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_response__partner_id
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__partner_id
+msgid "The supplier master record. M4 adds no second one."
+msgstr "السجل الرئيسي للمورد. لا يضيف M4 سجلًا ثانيًا."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_template__min_score
+msgid ""
+"The total a scored assessment must reach. Blocking requirements are checked "
+"separately and outrank it."
+msgstr ""
+"المجموع الذي يجب أن يبلغه التقييم بالدرجات. المتطلبات المانعة تُفحص بشكل "
+"منفصل ولها الأولوية عليه."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_template__category_ids
+msgid ""
+"The trades this questionnaire is written for. Empty means it may be used for"
+" any of them."
+msgstr ""
+"التخصصات التي أُعد لها هذا الاستبيان. تركه فارغًا يعني إمكانية استخدامه لأي "
+"منها."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/wizard/vendor_governance_wizards.py:0
+msgid "The vendor is archived but the qualification is current."
+msgstr "المورد مؤرشف لكن التأهيل ساري."
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_avl_report_form
+msgid ""
+"This answers who may be invited. It does not rank anybody and it does not\n"
+"                    choose: qualified is not cheapest, and comparing quotations is M6's job."
+msgstr ""
+"يحدد هذا من يجوز دعوته. لا يرتب أحدًا ولا يختار: المؤهل ليس الأرخص بالضرورة،"
+" ومقارنة عروض الأسعار من مهام M6."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_res_partner__procurement_profile_id
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_res_users__procurement_profile_id
+msgid ""
+"This company's governance record for the vendor. Computed and not stored: "
+"the profile is per company, and a stored field on a shared partner would "
+"show one company's answer to another."
+msgstr ""
+"سجل حوكمة المورد لدى هذه الشركة. محسوب وغير مخزن: الملف خاص بكل شركة، والحقل"
+" المخزن على شريك مشترك سيعرض إجابة شركة لشركة أخرى."
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.actions.act_window,help:atmta_procurement_vendor.action_vendors_unassessed
+msgid ""
+"This list is the M4 rollout worklist. A vendor appearing here has purchase\n"
+"                history, a price list or simply exists — none of which is a qualification, and\n"
+"                none of which M4 turned into one."
+msgstr ""
+"هذه القائمة هي قائمة عمل تطبيق M4. ظهور المورد هنا يعني أن لديه سجل مشتريات "
+"أو قائمة أسعار أو أنه موجود فقط — ولا شيء من ذلك يُعد تأهيلًا، ولم يحول M4 "
+"أيًا منها إلى تأهيل."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid ""
+"This template is pass/fail. No percentage is computed, and the result is "
+"decided by the mandatory requirements alone."
+msgstr ""
+"هذا القالب بنظام ناجح/راسب. لا تُحتسب نسبة مئوية، وتُحدد النتيجة بالمتطلبات "
+"الإلزامية وحدها."
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_restriction_form
+msgid ""
+"This vendor has open purchase orders. A restriction does not cancel them,\n"
+"                        reverse anything or rewrite history — those are management decisions with\n"
+"                        money attached. The button above lists what is affected."
+msgstr ""
+"لدى هذا المورد أوامر شراء مفتوحة. القيد لا يلغيها ولا يعكس أي شيء ولا يعيد "
+"كتابة السجل — فتلك قرارات إدارية مرتبطة بالمال. يعرض الزر أعلاه ما يتأثر."
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "Total: %(got).2f / %(max).2f = %(pct).2f%%"
+msgstr "المجموع: %(got).2f / %(max).2f = %(pct).2f%%"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_response__requirement_id
+msgid ""
+"Traceability only. Everything needed to read this response is copied onto "
+"it, so a deleted or re-versioned template changes nothing here."
+msgstr ""
+"للتتبع فقط. كل ما يلزم لقراءة هذه الإجابة منسوخ عليها، لذا فإن حذف القالب أو"
+" إصدار نسخة جديدة منه لا يغير شيئًا هنا."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report__category_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report_line__category_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_category__complete_name
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__category_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__category_id
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_search
+msgid "Trade"
+msgstr "الحرفة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_restriction__restriction_type__category_restriction
+msgid "Trade Restriction"
+msgstr "قيد على التخصص"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_condition__category_ids
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__category_ids
+msgid "Trades"
+msgstr "التخصصات"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_res_partner__is_realestate_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_res_users__is_realestate_vendor
+msgid "True when the partner carries any real-estate vendor tag."
+msgstr "صحيح عندما يحمل الشريك أي وسم مورد عقاري."
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_restriction_search
+msgid "Type"
+msgstr "النوع"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع النشاط الاستثنائي في السجل."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_profile__governance_status__under_review
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_qualification__state__under_review
+msgid "Under Review"
+msgstr "قيد المراجعة"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "Unmet requirement: %s"
+msgstr "متطلب غير مستوفى: %s"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_template__validity_months
+msgid ""
+"Used to propose an expiry date. Zero proposes none — an assessment with no "
+"expiry is a deliberate choice, not an accident of configuration."
+msgstr ""
+"يُستخدم لاقتراح تاريخ انتهاء. القيمة صفر لا تقترح شيئًا — التقييم بلا تاريخ "
+"انتهاء خيار مقصود، لا نتيجة عرضية للإعدادات."
+
+#. module: atmta_procurement_vendor
+#: model:res.partner.category,name:atmta_procurement_vendor.tag_vendor_utility
+msgid "Utility Provider"
+msgstr "مزود الخدمة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_qualification__expiry_status__valid
+msgid "Valid"
+msgstr "صالح"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report_line__valid_from
+msgid "Valid From"
+msgstr "ساري من"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report_line__valid_to
+msgid "Valid Until"
+msgstr "ساري حتى"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__expiry_status
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+msgid "Validity"
+msgstr "السريان"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__value_char
+msgid "Value"
+msgstr "القيمة"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_profile.py:0
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report_line__partner_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__partner_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__partner_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__partner_id
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__partner_id
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_restriction_search
+msgid "Vendor"
+msgstr "المورد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_vendor_audit_line__kind__archived_vendor
+msgid "Vendor Archived"
+msgstr "المورد مؤرشف"
+
+#. module: atmta_procurement_vendor
+#: model:ir.actions.act_window,name:atmta_procurement_vendor.action_vendor_audit
+msgid "Vendor Data Audit"
+msgstr "تدقيق بيانات الموردين"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/res_partner.py:0
+#: model:ir.actions.act_window,name:atmta_procurement_vendor.action_vendor_profile
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_list
+msgid "Vendor Governance"
+msgstr "حوكمة الموردين"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_audit_form
+msgid "Vendor Governance Audit"
+msgstr "تدقيق حوكمة الموردين"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model,name:atmta_procurement_vendor.model_realestate_procurement_vendor_audit_line
+msgid "Vendor Governance Audit Finding"
+msgstr "ملاحظة تدقيق حوكمة الموردين"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model,name:atmta_procurement_vendor.model_realestate_procurement_vendor_audit
+msgid "Vendor Governance Data Audit"
+msgstr "تدقيق بيانات حوكمة الموردين"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model,name:atmta_procurement_vendor.model_realestate_procurement_vendor_profile
+msgid "Vendor Governance Profile"
+msgstr "ملف حوكمة المورد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model,name:atmta_procurement_vendor.model_realestate_procurement_vendor_qualification
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+msgid "Vendor Qualification"
+msgstr "تأهيل المورد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model,name:atmta_procurement_vendor.model_realestate_procurement_qualification_area
+msgid "Vendor Qualification Area"
+msgstr "مجال تأهيل المورد"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_list
+msgid "Vendor Qualification Register"
+msgstr "سجل تأهيل الموردين"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model,name:atmta_procurement_vendor.model_realestate_procurement_qualification_requirement
+msgid "Vendor Qualification Requirement"
+msgstr "متطلب تأهيل المورد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model,name:atmta_procurement_vendor.model_realestate_procurement_qualification_response
+msgid "Vendor Qualification Response"
+msgstr "إجابة تأهيل المورد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model,name:atmta_procurement_vendor.model_realestate_procurement_qualification_template
+msgid "Vendor Qualification Template"
+msgstr "قالب تأهيل المورد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__vendor_ref
+msgid "Vendor Reference"
+msgstr "مرجع المورد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model,name:atmta_procurement_vendor.model_realestate_procurement_vendor_restriction
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_restriction_form
+msgid "Vendor Restriction"
+msgstr "قيد على المورد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.actions.act_window,name:atmta_procurement_vendor.action_vendor_restriction
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_restriction_list
+msgid "Vendor Restrictions"
+msgstr "القيود على الموردين"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model,name:atmta_procurement_vendor.model_realestate_procurement_vendor_eligibility
+msgid "Vendor Sourcing Eligibility"
+msgstr "أهلية المورد للمناقصات"
+
+#. module: atmta_procurement_vendor
+#: model:ir.actions.act_window,name:atmta_procurement_vendor.action_realestate_vendor_tags
+msgid "Vendor Tags"
+msgstr "وسوم الموردين"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_category_form
+msgid "Vendor Trade"
+msgstr "تخصص المورد"
+
+#. module: atmta_procurement_vendor
+#: model:ir.actions.act_window,name:atmta_procurement_vendor.action_vendor_category
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_category_list
+msgid "Vendor Trades"
+msgstr "تخصصات الموردين"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__partner_category_ids
+msgid "Vendor Types"
+msgstr "أنواع الموردين"
+
+#. module: atmta_procurement_vendor
+#: model:ir.actions.act_window,name:atmta_procurement_vendor.action_realestate_vendors
+msgid "Vendors"
+msgstr "الموردون"
+
+#. module: atmta_procurement_vendor
+#: model:ir.actions.act_window,name:atmta_procurement_vendor.action_vendors_unassessed
+msgid "Vendors Not Assessed"
+msgstr "موردون غير مقيمين"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/res_partner.py:0
+msgid "Vendors reclassified"
+msgstr "تمت إعادة تصنيف الموردين"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__verification
+msgid "Verification"
+msgstr "التحقق"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_response__verification__verified
+msgid "Verified"
+msgstr "تم التحقق"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__verified_by_id
+msgid "Verified By"
+msgstr "تم التحقق بواسطة"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__verified_on
+msgid "Verified On"
+msgstr "تاريخ التحقق"
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_qualification_form
+msgid "Verify"
+msgstr "تحقق"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_template__version
+msgid "Version"
+msgstr "الإصدار"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__exception_approved_by_id
+msgid "Waiver Approved By"
+msgstr "الإعفاء معتمد من"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__exception_reason
+msgid "Waiver Reason"
+msgstr "سبب الإعفاء"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_condition__condition_type__warning
+msgid "Warning"
+msgstr "تحذير"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__website_message_ids
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__website_message_ids
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__website_message_ids
+msgid "Website Messages"
+msgstr "رسائل الموقع الإلكتروني"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__website_message_ids
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__website_message_ids
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__website_message_ids
+msgid "Website communication history"
+msgstr "سجل التواصل عبر الموقع الإلكتروني"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_requirement__weight
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__weight
+msgid "Weight"
+msgstr "الوزن"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_avl_report_line__qualification_id
+msgid "What authorises the row. A blank one means nothing does."
+msgstr "ما الذي يجيز هذا السطر. الفارغ يعني أنه لا شيء يجيزه."
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_restriction_lift_form
+msgid "What changed."
+msgstr "ما الذي تغير."
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_restriction_form
+msgid "What happened, and what would have to change."
+msgstr "ما الذي حدث، وما الذي يجب أن يتغير."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_condition__action_required
+msgid ""
+"What has to happen before an award — a manufacturer letter, a sample "
+"approval, a site visit."
+msgstr ""
+"ما يجب أن يتم قبل الترسية — خطاب من الشركة المصنعة، أو اعتماد عينة، أو زيارة"
+" موقع."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__result
+msgid ""
+"What the assessment concluded, which is not the same question as where it is"
+" in its workflow."
+msgstr "ما انتهى إليه التقييم، وهو سؤال مختلف عن موقعه في سير العمل."
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_category_form
+msgid "What this trade covers, and what it does not."
+msgstr "ما يشمله هذا التخصص وما لا يشمله."
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_vendor_profile_form
+msgid "What was looked at, and by whom."
+msgstr "ما الذي تمت مراجعته، ومن قام بذلك."
+
+#. module: atmta_procurement_vendor
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_qualification_reject_form
+msgid "What was missing or unacceptable, and what would have to change."
+msgstr "ما الذي كان ناقصًا أو غير مقبول، وما الذي يجب أن يتغير."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_qualification__approved_date
+msgid ""
+"When the approval was actually given. Eligibility before this date is "
+"impossible however far back the effective date is typed."
+msgstr ""
+"تاريخ منح الاعتماد فعليًا. لا يمكن تحقق الأهلية قبل هذا التاريخ مهما كان "
+"تاريخ السريان المدخل قديمًا."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__next_review_date
+msgid ""
+"When this vendor's governance is due to be looked at again. Independent of "
+"any single qualification's expiry."
+msgstr ""
+"موعد المراجعة التالية لحوكمة هذا المورد. مستقل عن انتهاء أي تأهيل منفرد."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_profile__governance_status
+msgid ""
+"Where the vendor stands with Procurement as an organisation. Never a "
+"statement about any particular trade — that is what qualifications are for."
+msgstr ""
+"وضع المورد لدى المشتريات كجهة. ولا يعبر أبدًا عن أي تخصص بعينه — فهذا دور "
+"التأهيلات."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_vendor_restriction__source
+msgid ""
+"Where this came from — a quality report, a site incident, a legal notice, a "
+"client instruction."
+msgstr ""
+"مصدر هذا القيد — تقرير جودة، أو حادث في الموقع، أو إخطار قانوني، أو تعليمات "
+"من العميل."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_avl_report_line__reason
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_reject__reason
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_restriction_lift__reason
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_vendor.view_avl_report_form
+msgid "Why"
+msgstr "السبب"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,help:atmta_procurement_vendor.field_realestate_procurement_qualification_response__exception_reason
+msgid ""
+"Why this requirement was passed without being met. Named and approved, or it"
+" is not a waiver."
+msgstr ""
+"سبب اجتياز هذا المتطلب دون استيفائه. يجب أن يكون محددًا ومعتمدًا، وإلا فليس "
+"إعفاءً."
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields,field_description:atmta_procurement_vendor.field_realestate_procurement_qualification_response__value_bool
+msgid "Yes"
+msgstr "نعم"
+
+#. module: atmta_procurement_vendor
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_requirement__requirement_type__boolean
+#: model:ir.model.fields.selection,name:atmta_procurement_vendor.selection__realestate_procurement_qualification_response__requirement_type__boolean
+msgid "Yes / No"
+msgstr "نعم / لا"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_eligibility.py:0
+msgid "any trade"
+msgstr "أي تخصص"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "approved"
+msgstr "اعتماد"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "assessed"
+msgstr "تقييم"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "cancelled"
+msgstr "ملغى"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/qualification_template.py:0
+msgid "changed"
+msgstr "تم التغيير"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "further notice"
+msgstr "إشعار آخر"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "rejected"
+msgstr "رفض"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/qualification_template.py:0
+msgid "removed"
+msgstr "تمت الإزالة"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "reopened"
+msgstr "أعيد فتحه"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "reviewed"
+msgstr "مراجعة"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "sent for approval"
+msgstr "إرسال للاعتماد"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid "submitted"
+msgstr "تقديم"
+
+#. module: atmta_procurement_vendor
+#. odoo-python
+#: code:addons/atmta_procurement_vendor/models/vendor_qualification.py:0
+msgid ""
+"%s has been assessed. Who assessed it is part of the record — reassess it "
+"rather than renaming the assessor."
+msgstr "تم تقييم %s، وهوية من قام بالتقييم جزء من السجل — أعد التقييم بدلاً من تغيير اسم المقيِّم."

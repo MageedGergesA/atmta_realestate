@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ============================================================= -->
+    <!-- Move-in                                                        -->
+    <!-- ============================================================= -->
+    <record id="view_move_in_form" model="ir.ui.view">
+        <field name="name">realestate.move.in.form</field>
+        <field name="model">realestate.move.in</field>
+        <field name="arch" type="xml">
+            <form string="Move-In">
+                <header>
+                    <button name="action_start_inspection" type="object"
+                            string="Start Inspection" class="oe_highlight"
+                            invisible="state != 'schedule'"/>
+                    <button name="action_capture_meter_readings" type="object"
+                            string="Capture Meter Readings"
+                            invisible="state not in ('schedule', 'inspection')"/>
+                    <button name="action_complete" type="object" string="Complete"
+                            class="oe_highlight"
+                            invisible="state not in ('schedule', 'inspection')"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('completed', 'cancelled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="schedule,inspection,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Lease">
+                            <field name="contract_id" options="{'no_create': True}"/>
+                            <field name="partner_id"/>
+                            <field name="property_line_id" options="{'no_create': True}"/>
+                            <field name="property_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Appointment">
+                            <field name="scheduled_date"/>
+                            <field name="actual_date"/>
+                            <field name="user_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Handover Items" name="handover">
+                            <group>
+                                <group>
+                                    <field name="keys_delivered"/>
+                                    <field name="access_cards_delivered"/>
+                                    <field name="parking_remotes_delivered"/>
+                                </group>
+                                <group>
+                                    <field name="overall_condition"/>
+                                    <field name="tenant_acknowledged"/>
+                                    <field name="acknowledged_date"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Meter Readings" name="meters">
+                            <field name="reading_ids">
+                                <list editable="bottom">
+                                    <field name="meter_id" options="{'no_create': True}"/>
+                                    <field name="meter_type"/>
+                                    <field name="reading_date"/>
+                                    <field name="previous_reading"/>
+                                    <field name="current_reading"/>
+                                    <field name="consumption" readonly="1"/>
+                                    <field name="reading_kind"/>
+                                    <field name="uom_id" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Inventory" name="inventory">
+                            <field name="inventory_notes"
+                                   placeholder="Furniture, fittings and appliances present at handover…"/>
+                        </page>
+                        <page string="Pre-Existing Defects" name="defects">
+                            <div class="alert alert-info" role="status">
+                                Anything recorded here is <strong>not</strong> the
+                                tenant's responsibility at move-out. Be thorough.
+                            </div>
+                            <field name="existing_defects"
+                                   placeholder="Damage already present before the tenant moved in…"/>
+                        </page>
+                        <page string="Photos" name="photos">
+                            <field name="photo_ids" widget="many2many_binary"/>
+                        </page>
+                    </notebook>
+                    <field name="notes" placeholder="Notes…"/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_move_in_list" model="ir.ui.view">
+        <field name="name">realestate.move.in.list</field>
+        <field name="model">realestate.move.in</field>
+        <field name="arch" type="xml">
+            <list string="Move-Ins">
+                <field name="name"/>
+                <field name="contract_id"/>
+                <field name="partner_id"/>
+                <field name="property_id"/>
+                <field name="scheduled_date"/>
+                <field name="actual_date" optional="show"/>
+                <field name="overall_condition" optional="show"/>
+                <field name="tenant_acknowledged" optional="show"/>
+                <field name="user_id" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'completed'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_move_in_search" model="ir.ui.view">
+        <field name="name">realestate.move.in.search</field>
+        <field name="model">realestate.move.in</field>
+        <field name="arch" type="xml">
+            <search string="Move-Ins">
+                <field name="name"/>
+                <field name="contract_id" string="Lease"/>
+                <field name="partner_id" string="Tenant"/>
+                <field name="property_id" string="Unit"/>
+                <field name="user_id" string="Responsible"/>
+                <filter name="my_moves" string="Mine" domain="[('user_id', '=', uid)]"/>
+                <separator/>
+                <filter name="upcoming" string="Upcoming"
+                        domain="[('state', 'in', ('schedule', 'inspection')), ('scheduled_date', '&gt;=', (datetime.datetime.combine(context_today(), datetime.time(0, 0, 0)).to_utc()).strftime('%Y-%m-%d %H:%M:%S'))]"/>
+                <filter name="today" string="Today"
+                        domain="[('scheduled_date', '&gt;=', (datetime.datetime.combine(context_today(), datetime.time(0, 0, 0)).to_utc()).strftime('%Y-%m-%d %H:%M:%S')), ('scheduled_date', '&lt;', (datetime.datetime.combine(context_today() + relativedelta(days=1), datetime.time(0, 0, 0)).to_utc()).strftime('%Y-%m-%d %H:%M:%S'))]"/>
+                <filter name="next_7_days" string="Next 7 Days"
+                        domain="[('scheduled_date', '&gt;=', (datetime.datetime.combine(context_today(), datetime.time(0, 0, 0)).to_utc()).strftime('%Y-%m-%d %H:%M:%S')), ('scheduled_date', '&lt;', (datetime.datetime.combine(context_today() + relativedelta(days=7), datetime.time(0, 0, 0)).to_utc()).strftime('%Y-%m-%d %H:%M:%S'))]"/>
+                <filter name="overdue" string="Overdue"
+                        help="Still open, and scheduled before today"
+                        domain="[('state', 'in', ('schedule', 'inspection')), ('scheduled_date', '&lt;', (datetime.datetime.combine(context_today(), datetime.time(0, 0, 0)).to_utc()).strftime('%Y-%m-%d %H:%M:%S'))]"/>
+                <separator/>
+                <filter name="completed" string="Completed" domain="[('state', '=', 'completed')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="gb_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="gb_unit" string="Unit" context="{'group_by': 'property_id'}"/>
+                    <filter name="gb_day" string="Scheduled Day" context="{'group_by': 'scheduled_date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_move_in_calendar" model="ir.ui.view">
+        <field name="name">realestate.move.in.calendar</field>
+        <field name="model">realestate.move.in</field>
+        <field name="arch" type="xml">
+            <calendar string="Move-Ins" date_start="scheduled_date" color="user_id"
+                      mode="week" quick_create="0">
+                <field name="partner_id"/>
+                <field name="property_id"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="action_move_ins" model="ir.actions.act_window">
+        <field name="name">Move-Ins</field>
+        <field name="res_model">realestate.move.in</field>
+        <field name="view_mode">list,calendar,form</field>
+        <field name="context">{'search_default_upcoming': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">No upcoming move-ins</p>
+            <p>Scheduled moves appear here from their lease.</p>
+        </field>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- Move-out                                                       -->
+    <!-- ============================================================= -->
+    <record id="view_move_out_form" model="ir.ui.view">
+        <field name="name">realestate.move.out.form</field>
+        <field name="model">realestate.move.out</field>
+        <field name="arch" type="xml">
+            <form string="Move-Out">
+                <header>
+                    <button name="action_start_inspection" type="object"
+                            string="Start Inspection" class="oe_highlight"
+                            invisible="state != 'schedule'"/>
+                    <button name="action_capture_meter_readings" type="object"
+                            string="Capture Final Readings"
+                            invisible="state not in ('schedule', 'inspection')"/>
+                    <button name="action_start_assessment" type="object"
+                            string="Assess" class="oe_highlight"
+                            invisible="state != 'inspection'"/>
+                    <button name="action_complete" type="object" string="Complete"
+                            class="oe_highlight"
+                            invisible="state not in ('inspection', 'assessment')"/>
+                    <button name="action_settle_deposit" type="object"
+                            string="Settle Deposit" invisible="state != 'completed'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('completed', 'cancelled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="schedule,inspection,assessment,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_settle_deposit" type="object"
+                                class="oe_stat_button" icon="fa-shield"
+                                invisible="state != 'completed'">
+                            <span class="o_stat_text">Deposit</span>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <div class="alert alert-warning" role="status"
+                         invisible="state != 'completed'">
+                        Completing a move-out does <strong>not</strong> put the unit
+                        back on the market. It opens a unit turn
+                        (<field name="unit_turn_id" readonly="1" nolabel="1"/>),
+                        which decides when the unit is genuinely ready to lease.
+                    </div>
+                    <group>
+                        <group string="Lease">
+                            <field name="contract_id" options="{'no_create': True}"/>
+                            <field name="partner_id"/>
+                            <field name="property_line_id" options="{'no_create': True}"/>
+                            <field name="property_id"/>
+                            <field name="termination_id" options="{'no_create': True}"/>
+                            <field name="move_in_id" options="{'no_create': True}"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group string="Appointment">
+                            <field name="scheduled_date"/>
+                            <field name="actual_date"/>
+                            <field name="user_id"/>
+                            <field name="overall_condition"/>
+                            <field name="cleaning_required"/>
+                            <field name="repair_required"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Returned Items" name="returns">
+                            <group>
+                                <group>
+                                    <field name="keys_returned"/>
+                                    <field name="access_cards_returned"/>
+                                    <field name="parking_remotes_returned"/>
+                                </group>
+                                <group>
+                                    <field name="keys_missing"
+                                           decoration-danger="keys_missing &gt; 0"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Final Meter Readings" name="meters">
+                            <field name="reading_ids">
+                                <list editable="bottom">
+                                    <field name="meter_id" options="{'no_create': True}"/>
+                                    <field name="meter_type"/>
+                                    <field name="reading_date"/>
+                                    <field name="previous_reading"/>
+                                    <field name="current_reading"/>
+                                    <field name="consumption" readonly="1"/>
+                                    <field name="reading_kind"/>
+                                </list>
+                            </field>
+                            <group class="mt-3">
+                                <field name="total_consumption" readonly="1"/>
+                            </group>
+                        </page>
+                        <page string="Damages" name="damages">
+                            <field name="damages"
+                                   placeholder="Damage found, compared against the move-in condition report…"/>
+                        </page>
+                        <page string="Deductions" name="deductions">
+                            <field name="deduction_ids">
+                                <list editable="bottom">
+                                    <field name="category"/>
+                                    <field name="name"/>
+                                    <field name="amount" sum="Total"/>
+                                    <field name="is_wear_and_tear"/>
+                                    <field name="notes" optional="show"/>
+                                    <field name="currency_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                            <group class="mt-3">
+                                <group>
+                                    <field name="deduction_total" readonly="1"/>
+                                    <field name="final_charges"/>
+                                    <field name="settlement_total" readonly="1"
+                                           decoration-bf="1"/>
+                                </group>
+                                <group>
+                                    <field name="tenant_acknowledged"/>
+                                    <field name="acknowledged_date"/>
+                                </group>
+                            </group>
+                            <group string="Tenant Dispute">
+                                <field name="tenant_dispute" nolabel="1"
+                                       placeholder="Record the tenant's objection verbatim if they disagree…"/>
+                            </group>
+                        </page>
+                        <page string="Photos" name="photos">
+                            <field name="photo_ids" widget="many2many_binary"/>
+                        </page>
+                    </notebook>
+                    <field name="notes"/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_move_out_list" model="ir.ui.view">
+        <field name="name">realestate.move.out.list</field>
+        <field name="model">realestate.move.out</field>
+        <field name="arch" type="xml">
+            <list string="Move-Outs">
+                <field name="name"/>
+                <field name="contract_id"/>
+                <field name="partner_id"/>
+                <field name="property_id"/>
+                <field name="scheduled_date"/>
+                <field name="actual_date" optional="show"/>
+                <field name="overall_condition" optional="show"/>
+                <field name="deduction_total" optional="show"/>
+                <field name="unit_turn_id" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'completed'"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_move_out_search" model="ir.ui.view">
+        <field name="name">realestate.move.out.search</field>
+        <field name="model">realestate.move.out</field>
+        <field name="arch" type="xml">
+            <search string="Move-Outs">
+                <field name="name"/>
+                <field name="contract_id" string="Lease"/>
+                <field name="partner_id" string="Tenant"/>
+                <field name="property_id" string="Unit"/>
+                <field name="user_id" string="Responsible"/>
+                <filter name="my_moves" string="Mine" domain="[('user_id', '=', uid)]"/>
+                <separator/>
+                <filter name="upcoming" string="Upcoming"
+                        domain="[('state', 'in', ('schedule', 'inspection', 'assessment')), ('scheduled_date', '&gt;=', (datetime.datetime.combine(context_today(), datetime.time(0, 0, 0)).to_utc()).strftime('%Y-%m-%d %H:%M:%S'))]"/>
+                <filter name="today" string="Today"
+                        domain="[('scheduled_date', '&gt;=', (datetime.datetime.combine(context_today(), datetime.time(0, 0, 0)).to_utc()).strftime('%Y-%m-%d %H:%M:%S')), ('scheduled_date', '&lt;', (datetime.datetime.combine(context_today() + relativedelta(days=1), datetime.time(0, 0, 0)).to_utc()).strftime('%Y-%m-%d %H:%M:%S'))]"/>
+                <filter name="next_7_days" string="Next 7 Days"
+                        domain="[('scheduled_date', '&gt;=', (datetime.datetime.combine(context_today(), datetime.time(0, 0, 0)).to_utc()).strftime('%Y-%m-%d %H:%M:%S')), ('scheduled_date', '&lt;', (datetime.datetime.combine(context_today() + relativedelta(days=7), datetime.time(0, 0, 0)).to_utc()).strftime('%Y-%m-%d %H:%M:%S'))]"/>
+                <filter name="overdue" string="Overdue"
+                        help="Still open, and scheduled before today"
+                        domain="[('state', 'in', ('schedule', 'inspection', 'assessment')), ('scheduled_date', '&lt;', (datetime.datetime.combine(context_today(), datetime.time(0, 0, 0)).to_utc()).strftime('%Y-%m-%d %H:%M:%S'))]"/>
+                <separator/>
+                <filter name="completed" string="Completed" domain="[('state', '=', 'completed')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="gb_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="gb_unit" string="Unit" context="{'group_by': 'property_id'}"/>
+                    <filter name="gb_day" string="Scheduled Day" context="{'group_by': 'scheduled_date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_move_out_calendar" model="ir.ui.view">
+        <field name="name">realestate.move.out.calendar</field>
+        <field name="model">realestate.move.out</field>
+        <field name="arch" type="xml">
+            <calendar string="Move-Outs" date_start="scheduled_date" color="user_id"
+                      mode="week" quick_create="0">
+                <field name="partner_id"/>
+                <field name="property_id"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="action_move_outs" model="ir.actions.act_window">
+        <field name="name">Move-Outs</field>
+        <field name="res_model">realestate.move.out</field>
+        <field name="view_mode">list,calendar,form</field>
+        <field name="context">{'search_default_upcoming': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">No upcoming move-outs</p>
+            <p>Scheduled moves appear here from their lease.</p>
+        </field>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- Unit turn                                                      -->
+    <!-- ============================================================= -->
+    <record id="view_unit_turn_form" model="ir.ui.view">
+        <field name="name">realestate.unit.turn.form</field>
+        <field name="model">realestate.unit.turn</field>
+        <field name="arch" type="xml">
+            <form string="Unit Turn">
+                <header>
+                    <button name="action_start" type="object" string="Start Turn"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_cleaning_done" type="object"
+                            string="Cleaning Done" invisible="state != 'cleaning'"/>
+                    <button name="action_repair_done" type="object"
+                            string="Repairs Done" invisible="state != 'repair'"/>
+                    <button name="action_pass_inspection" type="object"
+                            string="Pass Inspection" class="oe_highlight"
+                            invisible="state != 'inspection' or inspection_passed"/>
+                    <button name="action_mark_ready" type="object"
+                            string="Mark Ready for Lease" class="oe_highlight"
+                            invisible="state != 'inspection'"/>
+                    <button name="action_raise_maintenance" type="object"
+                            string="Raise Maintenance"
+                            invisible="state in ('ready', 'cancelled')"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('ready', 'cancelled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,cleaning,repair,inspection,ready"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <div class="alert alert-info" role="status"
+                         invisible="state == 'ready'">
+                        This unit is <strong>out of the market</strong> until the
+                        turn completes. Marking it ready is the only thing that
+                        makes it available to lease again.
+                    </div>
+                    <group>
+                        <group string="Unit">
+                            <field name="property_id" options="{'no_create': True}"/>
+                            <field name="contract_id" options="{'no_create': True}"/>
+                            <field name="move_out_id" options="{'no_create': True}"/>
+                            <field name="termination_id" options="{'no_create': True}"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group string="Turnaround">
+                            <field name="start_date"/>
+                            <field name="target_ready_date"/>
+                            <field name="actual_ready_date"/>
+                            <field name="vacant_days"/>
+                            <field name="user_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Work Required">
+                            <field name="cleaning_required"/>
+                            <field name="cleaning_done"/>
+                            <field name="repair_required"/>
+                            <field name="repair_done"/>
+                            <field name="inspection_passed"/>
+                        </group>
+                        <group string="Cost">
+                            <field name="estimated_cost"/>
+                            <field name="actual_cost"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Maintenance" name="maintenance">
+                            <field name="maintenance_request_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="request_date"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                    <field name="notes"/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_unit_turn_list" model="ir.ui.view">
+        <field name="name">realestate.unit.turn.list</field>
+        <field name="model">realestate.unit.turn</field>
+        <field name="arch" type="xml">
+            <list string="Unit Turns" decoration-warning="vacant_days &gt; 30">
+                <field name="name"/>
+                <field name="property_id"/>
+                <field name="start_date"/>
+                <field name="target_ready_date" optional="show"/>
+                <field name="actual_ready_date" optional="show"/>
+                <field name="vacant_days"/>
+                <field name="cleaning_required" optional="hide"/>
+                <field name="repair_required" optional="hide"/>
+                <field name="user_id" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'ready'"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Without a search view the action's default "Open" filter matched
+         nothing and the list opened unfiltered. -->
+    <record id="view_unit_turn_search" model="ir.ui.view">
+        <field name="name">realestate.unit.turn.search</field>
+        <field name="model">realestate.unit.turn</field>
+        <field name="arch" type="xml">
+            <search string="Unit Turns">
+                <field name="name"/>
+                <field name="property_id" string="Unit"/>
+                <field name="contract_id" string="Lease"/>
+                <field name="user_id" string="Responsible"/>
+                <filter name="my_turns" string="Mine" domain="[('user_id', '=', uid)]"/>
+                <separator/>
+                <filter name="open" string="Open"
+                        domain="[('state', 'not in', ('ready', 'cancelled'))]"/>
+                <filter name="ready" string="Ready for Lease" domain="[('state', '=', 'ready')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="gb_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="gb_unit" string="Unit" context="{'group_by': 'property_id'}"/>
+                    <filter name="gb_user" string="Responsible" context="{'group_by': 'user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Work queue: turns move between columns through their buttons, which
+         check each step, so cards are not dragged. -->
+    <record id="view_unit_turn_kanban" model="ir.ui.view">
+        <field name="name">realestate.unit.turn.kanban</field>
+        <field name="model">realestate.unit.turn</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_small_column"
+                    quick_create="false" group_create="false" records_draggable="false">
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between">
+                            <field name="name" class="fw-bold"/>
+                            <field name="activity_ids" widget="kanban_activity"/>
+                        </div>
+                        <field name="property_id"/>
+                        <div class="text-muted">
+                            <field name="vacant_days"/> vacant days
+                        </div>
+                        <footer class="d-flex justify-content-end">
+                            <field name="user_id" widget="many2one_avatar_user"/>
+                        </footer>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_unit_turns" model="ir.actions.act_window">
+        <field name="name">Unit Turns</field>
+        <field name="res_model">realestate.unit.turn</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{'search_default_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">No units are being turned</p>
+            <p>A turn starts when a tenant moves out.</p>
+        </field>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- Meters                                                         -->
+    <!-- ============================================================= -->
+    <record id="view_property_meter_form" model="ir.ui.view">
+        <field name="name">realestate.property.meter.form</field>
+        <field name="model">realestate.property.meter</field>
+        <field name="arch" type="xml">
+            <form string="Utility Meter">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_readings" type="object"
+                                class="oe_stat_button" icon="fa-tachometer">
+                            <field name="reading_count" widget="statinfo" string="Readings"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="meter_type"/>
+                            <field name="property_id" options="{'no_create': True}"/>
+                            <field name="provider_id"/>
+                            <field name="uom_id"/>
+                        </group>
+                        <group>
+                            <field name="installation_date"/>
+                            <field name="opening_reading"/>
+                            <field name="current_reading" readonly="1"/>
+                            <field name="last_reading_date" readonly="1"/>
+                            <field name="active" widget="boolean_toggle"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Readings" name="readings">
+                            <field name="reading_ids">
+                                <list editable="bottom">
+                                    <field name="reading_date"/>
+                                    <field name="previous_reading"/>
+                                    <field name="current_reading"/>
+                                    <field name="consumption" readonly="1"/>
+                                    <field name="reading_kind"/>
+                                    <field name="user_id" optional="show"/>
+                                    <field name="source_ref" optional="show" readonly="1"/>
+                                    <field name="notes" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                    <field name="notes"/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_property_meter_list" model="ir.ui.view">
+        <field name="name">realestate.property.meter.list</field>
+        <field name="model">realestate.property.meter</field>
+        <field name="arch" type="xml">
+            <list string="Utility Meters">
+                <field name="name"/>
+                <field name="meter_type"/>
+                <field name="property_id"/>
+                <field name="provider_id" optional="show"/>
+                <field name="uom_id" optional="show"/>
+                <field name="current_reading"/>
+                <field name="last_reading_date"/>
+                <field name="reading_count" optional="hide"/>
+                <field name="active" widget="boolean_toggle" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_property_meters" model="ir.actions.act_window">
+        <field name="name">Utility Meters</field>
+        <field name="res_model">realestate.property.meter</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_meter_reading_list" model="ir.ui.view">
+        <field name="name">realestate.property.meter.reading.list</field>
+        <field name="model">realestate.property.meter.reading</field>
+        <field name="arch" type="xml">
+            <list string="Meter Readings">
+                <field name="reading_date"/>
+                <field name="meter_id"/>
+                <field name="property_id"/>
+                <field name="meter_type"/>
+                <field name="previous_reading"/>
+                <field name="current_reading"/>
+                <field name="consumption" sum="Total Consumption"/>
+                <field name="reading_kind"/>
+                <field name="user_id" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_meter_readings" model="ir.actions.act_window">
+        <field name="name">Meter Readings</field>
+        <field name="res_model">realestate.property.meter.reading</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

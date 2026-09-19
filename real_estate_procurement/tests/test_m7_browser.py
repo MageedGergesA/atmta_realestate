@@ -15,6 +15,7 @@ carries the name.
 from odoo.exceptions import UserError
 from odoo.tests.common import HttpCase, tagged
 
+from .common import optional_group
 from .test_m7_award import M7Common
 
 
@@ -36,7 +37,7 @@ class M7BrowserCommon(M7Common, HttpCase):
         admin.groups_id |= (
             self.env.ref('real_estate_procurement.group_procurement_manager')
             | self.env.ref('real_estate_procurement.group_evaluation_manager')
-            | self.env.ref('atmta_real_estate.group_realestate_user'))
+            | optional_group(self.env, 'atmta_real_estate.group_realestate_user'))
         self.env.flush_all()
         return admin
 

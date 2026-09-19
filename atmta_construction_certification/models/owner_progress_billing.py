@@ -40,6 +40,11 @@ class OwnerProgressBilling(models.Model):
         tracking=True, ondelete='set null', index=True,
         help='Customer-side contract this billing certifies against.',
     )
+    sale_contract_available = fields.Boolean(
+        compute='_compute_sale_contract_available',
+        help="Sale contracts belong to the developer application. Without it the "
+             "Sale Contract link has no model behind it (Odoo points it at "
+             "`_unknown`), so it is hidden and nothing reads through it.")
     partner_id = fields.Many2one(
         'res.partner', string='Customer', required=True, tracking=True,
         compute='_compute_partner_from_contract', store=True, readonly=False,
@@ -110,8 +115,24 @@ class OwnerProgressBilling(models.Model):
     notes = fields.Html()
 
     # ---------- Computes ----------
+    @api.model
+    def _sale_contracts_installed(self):
+        return 'realestate.sale.contract' in self.env
+
+    # The answer is about the registry, not the record. The dependency is there
+    # so that a new form computes it: with none, the onchange keeps the blank
+    # value the client starts from and the Sale Contract stays hidden until
+    # the first save.
+    @api.depends('project_id')
+    def _compute_sale_contract_available(self):
+        available = self._sale_contracts_installed()
+        for rec in self:
+            rec.sale_contract_available = available
+
     @api.depends('sale_contract_id')
     def _compute_partner_from_contract(self):
+        if not self._sale_contracts_installed():
+            return
         for rec in self:
             if rec.sale_contract_id and rec.sale_contract_id.partner_id and not rec.partner_id:
                 rec.partner_id = rec.sale_contract_id.partner_id
@@ -164,7 +185,16 @@ class OwnerProgressBilling(models.Model):
                 raise UserError(_("Set a non-zero 'This Period (%)' before certifying."))
             # Auto-fill previous cumulative from prior billings on same contract
             prior = self.search([
-                ('sale_contract_id', '=', rec.sale_contract_id.id or 0),
+                # The same customer on the same project, in the same company.
+                # A contract-less billing used to match every contract-less
+                # billing of every project and customer.
+                ('project_id', '=', rec.project_id.id),
+                ('partner_id', '=', rec.partner_id.id),
+                ('company_id', '=', rec.company_id.id),
+                # Without Developer there is no contract to group by: the same
+                # answer a billing with no contract gets.
+                ('sale_contract_id', '=',
+                 (rec.sale_contract_id.id if self._sale_contracts_installed() else False) or 0),
                 ('state', 'in', ('certified', 'invoiced', 'paid')),
                 ('id', '!=', rec.id),
             ])
@@ -188,7 +218,8 @@ class OwnerProgressBilling(models.Model):
             main_line = {
                 'name': _('%s — %.2f%% construction progress on %s') % (
                     rec.name, rec.current_certified_pct,
-                    rec.sale_contract_id.name or rec.project_id.name,
+                    (rec.sale_contract_id.name if self._sale_contracts_installed() else False)
+                    or rec.project_id.name,
                 ),
                 'quantity': 1,
                 'price_unit': rec.gross_amount,
@@ -263,11 +294,35 @@ class OwnerProgressBilling(models.Model):
                 ))
 
     def action_cancel(self):
+        """The contractor side's rule: the document does not go before its
+        entry does. A certificate refuses while its bill stands; a billing
+        refuses while its customer invoice is anything but cancelled — draft
+        included, or the invoice and its retention were left behind."""
+        Retention = self.env['realestate.construction.retention']
         for rec in self:
-            if rec.customer_invoice_id and rec.customer_invoice_id.state == 'posted':
+            invoice = rec.customer_invoice_id
+            if invoice and invoice.state != 'cancel':
                 raise UserError(_(
-                    "Cannot cancel — reverse the customer invoice first."
-                ))
+                    "%(billing)s has customer invoice %(invoice)s. Cancel it "
+                    "(or reverse it, once posted) in Accounting first.",
+                    billing=rec.name, invoice=invoice.display_name))
+            movement = rec.retention_movement_id
+            if movement and movement.movement_type == 'hold':
+                # The invoice that withheld it was cancelled, so nothing was
+                # withheld. The register is added to, not edited: the hold is
+                # answered by an equal movement against the same entry.
+                Retention.create({
+                    'project_id': movement.project_id.id,
+                    'company_id': movement.company_id.id,
+                    'side': movement.side,
+                    'partner_id': movement.partner_id.id,
+                    'currency_id': movement.currency_id.id,
+                    'movement_type': 'release',
+                    'date': fields.Date.context_today(rec),
+                    'amount': movement.amount,
+                    'move_id': invoice.id,
+                    'note': _("%s cancelled with its invoice", rec.name),
+                })
             rec.state = 'cancelled'
 
 

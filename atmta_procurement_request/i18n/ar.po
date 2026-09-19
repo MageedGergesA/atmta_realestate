@@ -1,0 +1,1965 @@
+# Translation of Odoo Server.
+# This file contains the Arabic translation of the following modules:
+# 	* atmta_procurement_request
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:13+0000\n"
+"PO-Revision-Date: 2026-09-17 10:13+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid "%(ref)s is in %(company)s but %(project)s belongs to %(other)s."
+msgstr "%(ref)s تابع لـ %(company)s لكن %(project)s يتبع %(other)s."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/procurement_plan.py:0
+msgid ""
+"%(refs)s are approved. Create a revision rather than rewriting what the "
+"project planned to buy."
+msgstr ""
+"%(refs)s معتمدة. أنشئ مراجعة بدلًا من إعادة كتابة ما خطط المشروع لشرائه."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid ""
+"%(refs)s were already submitted, so %(fields)s is part of an approved basis.\n"
+"\n"
+"Return the request to draft, or revise it with a reason — either way the change stays visible."
+msgstr ""
+"تم تقديم %(refs)s مسبقًا، لذا فإن %(fields)s جزء من أساس معتمد.\n"
+"\n"
+"أعد الطلب إلى مسودة، أو راجعه مع ذكر السبب — وفي الحالتين يبقى التغيير ظاهرًا."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid ""
+"%s has changed since this approval step was raised. The step was created "
+"against a different set of lines, quantities or amounts, and approving it "
+"now would record agreement to something nobody read. Resubmit it."
+msgstr ""
+"تغير %s منذ إنشاء خطوة الاعتماد هذه. أُنشئت الخطوة على مجموعة مختلفة من "
+"البنود أو الكميات أو المبالغ، واعتمادها الآن يعني تسجيل موافقة على شيء لم "
+"يقرأه أحد. أعد تقديمه."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid ""
+"%s has confirmed orders against it. Changing ordered demand is a purchasing "
+"change, not a requisition edit."
+msgstr ""
+"يوجد على %s أوامر مؤكدة. تغيير الطلب المأمور به تغيير في المشتريات، وليس "
+"تعديلًا لطلب الشراء."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request_line.py:0
+msgid "%s is a catalogue product, so the line needs a unit of measure."
+msgstr "%s منتج من الكتالوج، لذا يحتاج البند إلى وحدة قياس."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid "%s is already open for editing."
+msgstr "%s مفتوح للتعديل بالفعل."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/procurement_plan.py:0
+msgid "%s is not a draft plan."
+msgstr "%s ليست خطة في حالة مسودة."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/procurement_plan.py:0
+msgid "%s is not under review."
+msgstr "%s ليست قيد المراجعة."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid "%s line(s) carry no WBS."
+msgstr "%s من البنود بدون هيكل تجزئة العمل."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid "%s line(s) carry no cost code and will appear under Unassigned."
+msgstr "%s من البنود بدون رمز تكلفة وستظهر تحت غير مخصص."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid ""
+"%s line(s) have no estimate. The amount is unknown, which is not the same as"
+" zero."
+msgstr "%s من البنود بدون تقدير. المبلغ غير معروف، وهذا ليس مثل الصفر."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid "%s line(s) have no unit of measure."
+msgstr "%s من البنود بدون وحدة قياس."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid "%s line(s) say when nothing is needed on site."
+msgstr "%s من البنود لا تحدد متى تلزم في الموقع."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid "%s purchase line(s) did not keep the requisition's cost code."
+msgstr "%s من بنود الشراء لم تحتفظ برمز تكلفة طلب الشراء."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/procurement_plan.py:0
+msgid ""
+"A draft plan is edited directly. Revisions are for what was already agreed."
+msgstr ""
+"الخطة المسودة تُعدل مباشرة. المراجعات مخصصة لما تم الاتفاق عليه مسبقًا."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid "A material request must have at least one line before submission."
+msgstr "يجب أن يحتوي طلب المواد على بند واحد على الأقل قبل التقديم."
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_form
+msgid ""
+"A plan is what the project expects to procure. It reserves\n"
+"                        nothing, commits nothing and appears in no cost report — and\n"
+"                        once approved it is revised rather than rewritten, so the\n"
+"                        dates the schedule was built from survive."
+msgstr ""
+"الخطة هي ما يتوقع المشروع شراءه. لا تحجز شيئًا، ولا تلتزم بشيء، ولا تظهر في "
+"أي تقرير تكاليف — وبعد اعتمادها تُراجع بدلًا من إعادة كتابتها، لتبقى "
+"التواريخ التي بُني عليها الجدول الزمني محفوظة."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request_line__preferred_brand
+msgid ""
+"A preference, and only that. Naming a brand does not name a vendor and does "
+"not award anything."
+msgstr ""
+"تفضيل فقط لا غير. تسمية علامة تجارية لا تعني تسمية مورد ولا ترسية أي شيء."
+
+#. module: atmta_procurement_request
+#: model_terms:ir.actions.act_window,help:atmta_procurement_request.action_procurement_plan
+msgid ""
+"A procurement plan answers the questions a requisition is far too late\n"
+"            to answer: what has to be ordered this quarter, and what has a nine-month\n"
+"            lead time and therefore needed sourcing to start last month."
+msgstr ""
+"تجيب خطة المشتريات عن أسئلة يأتي طلب الشراء متأخرًا جدًا للإجابة عنها: ما "
+"الذي يجب طلبه هذا الربع، وما الذي تبلغ مدة توريده تسعة أشهر وكان يجب البدء "
+"في طرحه الشهر الماضي."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request_line.py:0
+msgid ""
+"A requisition line needs either a product or a written scope. A line that "
+"says nothing cannot be sourced."
+msgstr ""
+"يحتاج بند طلب الشراء إلى منتج أو نطاق مكتوب. البند الذي لا يذكر شيئًا لا "
+"يمكن طرحه للشراء."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request_revision.py:0
+msgid ""
+"A revision record is history. Revise the requisition again instead of "
+"editing what it used to say."
+msgstr ""
+"سجل المراجعة تاريخ. راجع طلب الشراء مرة أخرى بدلًا من تعديل ما كان يتضمنه."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__procurement_type
+msgid ""
+"A service does not arrive on a pallet and a subcontract is not bought from a"
+" catalogue. Pushing all four through identical stock expectations is how a "
+"service request waits forever for a receipt that will never exist."
+msgstr ""
+"الخدمة لا تصل على منصة نقل، والعقد من الباطن لا يُشترى من كتالوج. إخضاع "
+"الأنواع الأربعة لنفس توقعات المخزون يجعل طلب الخدمة ينتظر إلى الأبد استلامًا"
+" لن يوجد أبدًا."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__message_needaction
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__message_needaction
+msgid "Action Needed"
+msgstr "إجراء مطلوب"
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_form
+msgid "Activate"
+msgstr "تفعيل"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_procurement_plan__state__active
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_search
+msgid "Active"
+msgstr "نشط"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__activity_ids
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__activity_ids
+msgid "Activities"
+msgstr "الأنشطة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "زخرفة استثناء النشاط"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__activity_state
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid "Add at least one line before submitting."
+msgstr "أضف بندًا واحدًا على الأقل قبل التقديم."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__governance_status__legacy_confirmed_po
+msgid "Already Committed"
+msgstr "ملتزم به مسبقًا"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__legacy_status__ambiguous
+msgid "Ambiguous"
+msgstr "غير محدد بوضوح"
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/procurement_plan.py:0
+msgid "An empty plan plans nothing."
+msgstr "الخطة الفارغة لا تخطط لشيء."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__analytic_account_id
+msgid "Analytic Account"
+msgstr "الحساب التحليلي"
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_form
+msgid "Approve"
+msgstr "اعتماد"
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/procurement_plan.py:0
+msgid "Approve %s first."
+msgstr "اعتمد %s أولًا."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__state__approved
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_procurement_plan__state__approved
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_search
+msgid "Approved"
+msgstr "معتمد"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__approved_by_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__approved_by_id
+msgid "Approved By"
+msgstr "اعتمد بواسطة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__source_type__change_order
+msgid "Approved Change Order"
+msgstr "أمر تغيير معتمد"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__approval_date
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__approved_on
+msgid "Approved On"
+msgstr "تاريخ الاعتماد"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__legacy_urgent_bypass
+msgid ""
+"Approved with no approval step, on a request marked urgent — the signature "
+"of the Phase 0 behaviour M3 removed. Kept as evidence and deliberately not "
+"undone: the demand was authorised under the rules in force at the time, and "
+"retroactively un-approving it would be rewriting history to flatter the new "
+"version."
+msgstr ""
+"معتمد دون خطوة اعتماد، على طلب مصنف عاجل — وهي بصمة سلوك المرحلة 0 الذي "
+"أزاله M3. محفوظ كدليل ولم يُلغ عمدًا: فقد تم تفويض الطلب وفق القواعد السارية"
+" آنذاك، وإلغاء اعتماده بأثر رجعي يعني إعادة كتابة التاريخ لتجميل الإصدار "
+"الجديد."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__governance_status__approved_unordered
+msgid "Approved, Not Ordered"
+msgstr "معتمد، لم يُطلب"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__project_id
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request_line__project_id
+msgid "Auto-derived from the source document when applicable."
+msgstr "يُستنتج تلقائيًا من المستند المصدر عند الاقتضاء."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__source_type__boq
+msgid "BOQ"
+msgstr "جدول الكميات"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revision__basis
+msgid "Basis"
+msgstr "الأساس"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__revision
+msgid "Bumped whenever an approved or sourced basis is reopened."
+msgstr "يزداد كلما أُعيد فتح أساس معتمد أو مطروح للشراء."
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_material_request_revise_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_material_request_rfq_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__state__cancelled
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_procurement_plan_line__state__cancelled
+msgid "Cancelled"
+msgstr "ملغى"
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid ""
+"Cannot cancel — at least one linked PO is already confirmed. Cancel the PO "
+"first."
+msgstr ""
+"لا يمكن الإلغاء — يوجد أمر شراء مرتبط واحد على الأقل مؤكد بالفعل. ألغِ أمر "
+"الشراء أولًا."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid "Cannot return to draft after a PO has been created."
+msgstr "لا يمكن الإعادة إلى مسودة بعد إنشاء أمر شراء."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__category_id
+msgid "Category"
+msgstr "الفئة"
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_form
+msgid "Close"
+msgstr "إغلاق"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_procurement_plan__state__closed
+msgid "Closed"
+msgstr "مغلق"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__coding_status__coded
+msgid "Coded"
+msgstr "مرمز"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__coding_status
+msgid "Coding Status"
+msgstr "حالة الترميز"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revision__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_procurement_plan_line__strategy__competitive_tender
+msgid "Competitive Tender"
+msgstr "مناقصة تنافسية"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__source_type__construction
+msgid "Construction Works"
+msgstr "أعمال الإنشاء"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__governance_status
+msgid "Control Classification"
+msgstr "التصنيف الرقابي"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__analytic_account_id
+msgid ""
+"Cost center for spawned POs. Defaults to the project's analytic account."
+msgstr ""
+"مركز التكلفة لأوامر الشراء الناتجة. الافتراضي هو الحساب التحليلي للمشروع."
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_material_request_rfq_form
+msgid "Create RFQs"
+msgstr "إنشاء طلبات عروض الأسعار"
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+#: model:ir.model,name:atmta_procurement_request.model_realestate_material_request_rfq
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_material_request_rfq_form
+msgid "Create Requests for Quotation"
+msgstr "إنشاء طلبات عروض أسعار"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revise__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revision__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_rfq__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revise__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revision__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_rfq__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid ""
+"Creating and confirming purchase orders directly from a requisition is no longer how sourcing works.\n"
+"\n"
+"Use Create RFQs and name the vendors to enquire with. The resulting quotations are confirmed deliberately, once a vendor has been chosen — that confirmation is what commits the project's budget."
+msgstr ""
+"لم يعد إنشاء أوامر الشراء وتأكيدها مباشرة من طلب الشراء هو طريقة الطرح المعتمدة.\n"
+"\n"
+"استخدم إنشاء طلبات عروض الأسعار وحدد الموردين المراد مخاطبتهم. تُؤكد عروض الأسعار الناتجة بشكل مقصود بعد اختيار المورد — وهذا التأكيد هو ما يلزم ميزانية المشروع."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__currency_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__currency_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revision__currency_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__currency_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__currency_id
+msgid "Currency"
+msgstr "العملة"
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_search
+msgid "Current"
+msgstr "غير متأخر"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revise__current_basis
+msgid "Current Basis"
+msgstr "الأساس الحالي"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request_line__po_line_id
+msgid ""
+"DEPRECATED (M2) — the first purchase line raised from this requisition line."
+" Kept so existing records and reports keep working; `po_line_ids` is "
+"authoritative."
+msgstr ""
+"مهمل (M2) — أول بند شراء أُنشئ من بند طلب الشراء هذا. محفوظ لتستمر السجلات "
+"والتقارير الحالية في العمل؛ الحقل `po_line_ids` هو المرجع المعتمد."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__data_quality_warnings
+msgid "Data Quality Warnings"
+msgstr "تحذيرات جودة البيانات"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_procurement_plan_line__rfq_lead_days
+msgid "Days allowed between issuing the enquiry and awarding it."
+msgstr "الأيام المسموح بها بين إصدار الطلب وترسيته."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__description
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__description
+msgid "Description"
+msgstr "الوصف"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__data_quality_warnings
+msgid ""
+"Deterministic findings, in plain words. Nothing here blocks the request; it "
+"says what a reader would otherwise have to work out for themselves."
+msgstr ""
+"نتائج محددة بكلمات واضحة. لا شيء هنا يمنع الطلب؛ بل يوضح ما كان على القارئ "
+"استنتاجه بنفسه."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_procurement_plan_line__strategy__direct
+msgid "Direct Purchase"
+msgstr "شراء مباشر"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revise__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revision__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_rfq__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__state__done
+msgid "Done"
+msgstr "منجز"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__state__draft
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_procurement_plan__state__draft
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_search
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_material_request_rfq_form
+msgid ""
+"Each vendor named here receives their own draft quotation, carrying\n"
+"                    every line with its project, WBS and cost code. Nothing is committed:\n"
+"                    a quotation becomes an order only when somebody confirms it."
+msgstr ""
+"كل مورد محدد هنا يتلقى مسودة عرض سعر خاصة به، تتضمن كل البنود مع مشروعها "
+"وهيكل تجزئة العمل ورمز التكلفة. لا يتم الالتزام بشيء: يصبح عرض السعر أمرًا "
+"فقط عندما يؤكده شخص ما."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_rfq__vendor_ids
+msgid "Enquire With"
+msgstr "مخاطبة الموردين"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__procurement_type__equipment
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_procurement_plan_line__procurement_type__equipment
+msgid "Equipment"
+msgstr "المعدات"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__estimate_is_known
+msgid "Estimate Is Known"
+msgstr "التقدير معروف"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__estimated_cost
+msgid "Estimated"
+msgstr "تقديرية"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__estimated_amount
+msgid "Estimated Amount"
+msgstr "المبلغ التقديري"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__estimated_total
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revision__estimated_total
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__estimated_total
+msgid "Estimated Total"
+msgstr "الإجمالي التقديري"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__estimated_unit_cost
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__estimated_unit_cost
+msgid "Estimated Unit Cost"
+msgstr "التكلفة التقديرية للوحدة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__is_fully_coded
+msgid ""
+"Every line carries a cost code. Uncoded lines are not blocked here — they "
+"are counted, and shown as Unassigned wherever the money appears."
+msgstr ""
+"كل بند يحمل رمز تكلفة. البنود غير المرمزة لا تُمنع هنا — بل تُحصى، وتظهر تحت"
+" غير مخصص أينما ظهرت المبالغ."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request_line__estimate_is_known
+msgid ""
+"False when neither an estimate nor a catalogue price exists. The amount is "
+"then unknown, not zero — an approval matrix must read this rather than "
+"trusting a zero."
+msgstr ""
+"خطأ عندما لا يوجد تقدير ولا سعر في الكتالوج. يكون المبلغ حينها غير معروف، "
+"وليس صفرًا — ويجب على مصفوفة الاعتماد قراءة هذا بدلًا من الوثوق بالصفر."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__activity_type_icon
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_procurement_plan__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "أيقونة Font Awesome، مثل fa-tasks"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_procurement_plan_line__strategy__framework
+msgid "Framework / Blanket"
+msgstr "اتفاقية إطارية / شاملة"
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_line_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_search
+msgid "Group By"
+msgstr "تجميع حسب"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__has_data_quality_warning
+msgid "Has Data Quality Warning"
+msgstr "يوجد تحذير جودة بيانات"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__has_lead_time
+msgid "Has Lead Time"
+msgstr "له مدة توريد"
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_search
+msgid "Has Long-Lead Items"
+msgstr "يوجد بنود طويلة التوريد"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__has_message
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__has_message
+msgid "Has Message"
+msgstr "يحتوي على رسالة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revise__id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revision__id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_rfq__id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__activity_exception_icon
+msgid "Icon"
+msgstr "الأيقونة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__activity_exception_icon
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_procurement_plan__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "أيقونة للإشارة إلى نشاط استثنائي."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__message_needaction
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_procurement_plan__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا كان محددًا، فهناك رسائل جديدة تتطلب انتباهك."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__message_has_error
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__message_has_sms_error
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_procurement_plan__message_has_error
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_procurement_plan__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا كان محددًا، فبعض الرسائل بها خطأ في التسليم."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__source_type__inventory
+msgid "Inventory Replenishment"
+msgstr "تجديد المخزون"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__is_current
+msgid "Is Current"
+msgstr "حالي"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__message_is_follower
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__is_fully_coded
+msgid "Is Fully Coded"
+msgstr "مرمز بالكامل"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__is_long_lead
+msgid "Is Long Lead"
+msgstr "طويل التوريد"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__justification
+msgid "Justification"
+msgstr "المبررات"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__unit_price_hint
+msgid "Last Price"
+msgstr "آخر سعر"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revise__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revision__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_rfq__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revise__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revision__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_rfq__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request_line__unit_price_hint
+msgid "Latest seller price for hint only; the PO carries the binding price."
+msgstr "أحدث سعر للمورد للاسترشاد فقط؛ أمر الشراء يحمل السعر الملزم."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__lead_time_days
+msgid "Lead Time Days"
+msgstr "مدة التوريد بالأيام"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__legacy_status__legacy_auto_confirmed
+msgid "Legacy Auto-Confirmed"
+msgstr "مؤكد تلقائيًا (قديم)"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__legacy_self_approved
+msgid "Legacy Self-Approval"
+msgstr "اعتماد ذاتي (قديم)"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__legacy_urgent_bypass
+msgid "Legacy Urgent Bypass"
+msgstr "تجاوز عاجل (قديم)"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_procurement_plan_line__strategy__limited_tender
+msgid "Limited Tender"
+msgstr "مناقصة محدودة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__line_count
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__line_count
+msgid "Line Count"
+msgstr "عدد البنود"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__line_ids
+msgid "Lines"
+msgstr "البنود"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__lines_missing_cost_code
+msgid "Lines Missing Cost Code"
+msgstr "بنود بدون رمز تكلفة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__lines_missing_wbs
+msgid "Lines Missing Wbs"
+msgstr "بنود بدون هيكل تجزئة العمل"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__legacy_status__linked_rfq_po
+msgid "Linked Purchase Document"
+msgstr "مستند شراء مرتبط"
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_line_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_list
+msgid "Long Lead"
+msgstr "توريد طويل المدة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__long_lead_count
+msgid "Long Lead Count"
+msgstr "عدد البنود طويلة التوريد"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__source_type__maintenance
+msgid "Maintenance"
+msgstr "الصيانة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__source_type__manual
+msgid "Manual"
+msgstr "يدوي"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__procurement_type__material
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_procurement_plan_line__procurement_type__material
+msgid "Material"
+msgstr "المواد"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_purchase_order_line__re_material_request_line_id
+msgid "Material Request Line"
+msgstr "بند طلب المواد"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__message_has_error
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__message_ids
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__legacy_status
+msgid "Migration Status"
+msgstr "حالة الترحيل"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "موعد نشاطي النهائي"
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/wizard/material_request_rfq.py:0
+msgid "Name at least one vendor to enquire with."
+msgstr "حدد موردًا واحدًا على الأقل لمخاطبته."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__needed_by
+msgid "Needed By"
+msgstr "مطلوب بحلول"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__legacy_status__needs_cost_code
+msgid "Needs Cost Code"
+msgstr "يحتاج رمز تكلفة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__legacy_status__needs_project
+msgid "Needs Project"
+msgstr "يحتاج مشروعًا"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__legacy_status__needs_wbs
+msgid "Needs WBS"
+msgstr "يحتاج هيكل تجزئة العمل"
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+#: code:addons/atmta_procurement_request/models/procurement_plan.py:0
+msgid "New"
+msgstr "جديد"
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_form
+msgid "New Revision"
+msgstr "مراجعة جديدة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "حدث التقويم للنشاط التالي"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__activity_summary
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__activity_type_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__coding_status__n/a
+msgid "No Coding Installed"
+msgstr "الترميز غير مثبت"
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_line_search
+msgid "No Lead Time Known"
+msgstr "مدة التوريد غير معروفة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__governance_status__not_applicable
+msgid "No Live Demand"
+msgstr "لا يوجد طلب قائم"
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid "No project — the demand belongs to nobody's cost report."
+msgstr "بدون مشروع — الطلب لا ينتمي إلى تقرير تكاليف أي أحد."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__priority__0
+msgid "Normal"
+msgstr "طبيعية"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_procurement_plan_line__strategy__undecided
+msgid "Not Yet Decided"
+msgstr "لم يُحدد بعد"
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_line_search
+msgid "Not Yet Requested"
+msgstr "لم يُطلب بعد"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__notes
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__notes
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__notes
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__notes
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_form
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__message_needaction_counter
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_procurement_plan__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراء"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__message_has_error_counter
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_procurement_plan__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي بها خطأ في التسليم"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request_line__po_line_ids
+msgid ""
+"One requisition line may be enquired from several vendors and eventually "
+"split across several orders. The relation is one-to-many from the outset so "
+"that a future split award does not need a migration."
+msgstr ""
+"قد يُطلب عرض سعر لبند طلب الشراء الواحد من عدة موردين ثم يُقسم على عدة "
+"أوامر. العلاقة من نوع واحد إلى متعدد منذ البداية حتى لا تحتاج الترسية "
+"المجزأة مستقبلًا إلى ترحيل."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid ""
+"Only a draft or rejected requisition can be submitted. %(name)s is "
+"%(state)s."
+msgstr ""
+"يمكن تقديم طلب الشراء فقط إذا كان مسودة أو مرفوضًا. %(name)s في حالة "
+"%(state)s."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__priority
+msgid ""
+"Operational urgency, and nothing else. M3 removed the Phase 0 behaviour "
+"where marking a request urgent promoted it straight to approved — a field "
+"the requester controls decided whether the requester's own request needed "
+"approving. Urgency can add an emergency approver and shorten a lead time; it"
+" has never been able to authorise money."
+msgstr ""
+"الأولوية التشغيلية فقط لا غير. أزال M3 سلوك المرحلة 0 الذي كان فيه تصنيف "
+"الطلب عاجلًا يرفعه مباشرة إلى معتمد — أي أن حقلًا يتحكم فيه مقدم الطلب كان "
+"يقرر ما إذا كان طلبه نفسه يحتاج إلى اعتماد. يمكن للاستعجال إضافة معتمد "
+"للطوارئ وتقصير مدة التوريد؛ لكنه لم يكن قادرًا قط على تفويض صرف الأموال."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_procurement_plan_line__product_id
+msgid ""
+"Optional. A subcontract package or a conceptual line has no catalogue entry,"
+" and forcing one would invent a product."
+msgstr ""
+"اختياري. حزمة أعمال من الباطن أو بند مفاهيمي ليس لهما قيد في الكتالوج، وفرض "
+"أحدهما يعني اختلاق منتج."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__state__ordered
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_procurement_plan_line__state__ordered
+msgid "Ordered"
+msgstr "تم الطلب"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__ordered_count
+msgid "Ordered Count"
+msgstr "عدد الأوامر"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__ordered_qty
+msgid "Ordered Qty"
+msgstr "الكمية المطلوبة بأوامر"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__procurement_type__other
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__source_type__other
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_procurement_plan_line__procurement_type__other
+msgid "Other"
+msgstr "أخرى"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__po_line_id
+msgid "PO Line"
+msgstr "بند أمر الشراء"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__state__partially_ordered
+msgid "Partially Ordered"
+msgstr "مطلوب جزئيًا"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__state__partial
+msgid "Partially Received"
+msgstr "مستلم جزئيًا"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__coding_status__partial
+msgid "Partly Coded"
+msgstr "مرمز جزئيًا"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__date_from
+msgid "Period From"
+msgstr "الفترة من"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__date_to
+msgid "Period To"
+msgstr "الفترة إلى"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__plan_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__plan_id
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_line_search
+msgid "Plan"
+msgstr "الخطة"
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/procurement_plan.py:0
+msgid "Plan %(name)s is in %(company)s but its project is in %(other)s."
+msgstr "الخطة %(name)s تابعة لـ %(company)s لكن مشروعها تابع لـ %(other)s."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__plan_line_id
+msgid "Plan Line"
+msgstr "بند الخطة"
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_form
+msgid "Plan title"
+msgstr "عنوان الخطة"
+
+#. module: atmta_procurement_request
+#: model_terms:ir.actions.act_window,help:atmta_procurement_request.action_procurement_plan
+msgid "Plan what the project will buy"
+msgstr "خطط لما سيشتريه المشروع"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_procurement_plan_line__state__planned
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_line_list
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_list
+msgid "Planned"
+msgstr "مخطط"
+
+#. module: atmta_procurement_request
+#: model:ir.actions.act_window,name:atmta_procurement_request.action_procurement_plan_line
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__line_ids
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_form
+msgid "Planned Items"
+msgstr "البنود المخططة"
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_line_pivot
+msgid "Planned Procurement"
+msgstr "المشتريات المخططة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__po_count
+msgid "Po Count"
+msgstr "عدد أوامر الشراء"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__po_line_count
+msgid "Po Line Count"
+msgstr "عدد بنود أوامر الشراء"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__preferred_brand
+msgid "Preferred Brand"
+msgstr "العلامة التجارية المفضلة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__prepared_by_id
+msgid "Prepared By"
+msgstr "أعده"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__priority
+msgid "Priority"
+msgstr "الأولوية"
+
+#. module: atmta_procurement_request
+#: model:ir.model,name:atmta_procurement_request.model_realestate_procurement_plan
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__source_type__procurement_plan
+msgid "Procurement Plan"
+msgstr "خطة المشتريات"
+
+#. module: atmta_procurement_request
+#: model:ir.model,name:atmta_procurement_request.model_realestate_procurement_plan_line
+msgid "Procurement Plan Line"
+msgstr "بند خطة المشتريات"
+
+#. module: atmta_procurement_request
+#: model:ir.actions.act_window,name:atmta_procurement_request.action_procurement_plan
+msgid "Procurement Plans"
+msgstr "خطط المشتريات"
+
+#. module: atmta_procurement_request
+#: model:ir.model,name:atmta_procurement_request.model_realestate_material_request_revision
+msgid "Procurement Requisition Revision"
+msgstr "مراجعة طلب الشراء"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__strategy
+msgid "Procurement Strategy"
+msgstr "استراتيجية الشراء"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__procurement_type
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__procurement_type
+msgid "Procurement Type"
+msgstr "نوع الشراء"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__product_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__product_id
+msgid "Product"
+msgstr "المنتج"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__project_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__project_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__project_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__project_id
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_line_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_search
+msgid "Project"
+msgstr "المشروع"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__property_id
+msgid "Property"
+msgstr "العقار"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__po_line_ids
+msgid "Purchase Lines"
+msgstr "بنود أوامر الشراء"
+
+#. module: atmta_procurement_request
+#: model:ir.model,name:atmta_procurement_request.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "بند أمر الشراء"
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__purchase_order_ids
+msgid "Purchase Orders"
+msgstr "أوامر الشراء"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__qty
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__quantity
+msgid "Quantity"
+msgstr "الكمية"
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request_line.py:0
+msgid "Quantity must be greater than zero."
+msgstr "يجب أن تكون الكمية أكبر من صفر."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request_line__ordered_qty
+msgid "Quantity on confirmed orders."
+msgstr "الكمية في الأوامر المؤكدة."
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_form
+msgid "Raise Requisition"
+msgstr "إنشاء طلب شراء"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__legacy_self_approved
+msgid ""
+"Raised and approved by the same person. Same reasoning: recorded, audited, "
+"not reversed."
+msgstr "أنشأه واعتمده الشخص نفسه. وللسبب ذاته: يسجل ويخضع للتدقيق ولا يلغى."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request_revise__reason
+msgid ""
+"Read later by whoever asks why the quantity is not the one that was "
+"approved."
+msgstr "يقرؤه لاحقًا كل من يسأل لماذا تختلف الكمية عن الكمية المعتمدة."
+
+#. module: atmta_procurement_request
+#: model:ir.model,name:atmta_procurement_request.model_realestate_material_request
+msgid "Real Estate Material Request"
+msgstr "طلب مواد عقاري"
+
+#. module: atmta_procurement_request
+#: model:ir.model,name:atmta_procurement_request.model_realestate_material_request_line
+msgid "Real Estate Material Request Line"
+msgstr "بند طلب مواد عقاري"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revision__reason
+msgid "Reason"
+msgstr "السبب"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__received_qty
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__state__received
+msgid "Received"
+msgstr "المستلم"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__name
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__name
+msgid "Reference"
+msgstr "المرجع"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__state__rejected
+msgid "Rejected"
+msgstr "مرفوض"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__remaining_qty
+msgid "Remaining Qty"
+msgstr "الكمية المتبقية"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_purchase_order_line__re_material_request_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__request_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revise__request_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revision__request_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_rfq__request_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__request_ids
+msgid "Request"
+msgstr "الطلب"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__request_count
+msgid "Request Count"
+msgstr "عدد الطلبات"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__request_date
+msgid "Request Date"
+msgstr "تاريخ الطلب"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_procurement_plan_line__strategy__rfq
+msgid "Request for Quotation"
+msgstr "طلب عرض سعر"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__requested_by_id
+msgid "Requested By"
+msgstr "مقدم الطلب"
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid "Requested item"
+msgstr "الصنف المطلوب"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request_line__remaining_qty
+msgid "Requested minus ordered."
+msgstr "الكمية المطلوبة ناقص الكمية المطلوب شراؤها."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/wizard/material_request_rfq.py:0
+msgid "Requests for Quotation"
+msgstr "طلبات عروض الأسعار"
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid ""
+"Requests for quotation need the procurement sourcing capability "
+"(atmta_procurement_sourcing), which is not installed."
+msgstr ""
+"تحتاج طلبات عروض الأسعار إلى وحدة المناقصات (atmta_procurement_sourcing)، "
+"وهي غير مثبتة."
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_line_search
+msgid "Required On Site"
+msgstr "مطلوب في الموقع"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__required_on_site_date
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__required_on_site_date
+msgid "Required On Site Date"
+msgstr "تاريخ الحاجة في الموقع"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_procurement_plan_line__target_award_date
+msgid ""
+"Required on site minus the lead time. Empty when the lead time is unknown: "
+"an unknown lead time is not a lead time of zero, and defaulting it would put"
+" every long-lead item comfortably on schedule."
+msgstr ""
+"تاريخ الحاجة في الموقع ناقص مدة التوريد. يترك فارغًا إذا كانت مدة التوريد "
+"غير معروفة: فمدة التوريد المجهولة ليست مدة صفرية، وافتراضها صفرًا سيجعل كل "
+"صنف طويل التوريد يبدو ضمن الجدول الزمني بارتياح."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request_line__description
+msgid ""
+"Required when no product is given — a service, a subcontract scope or a "
+"conceptual line has no catalogue entry."
+msgstr ""
+"مطلوب عند عدم تحديد منتج — فالخدمة أو نطاق عقد الباطن أو البند المبدئي ليس "
+"له قيد في الكتالوج."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request_line__uom_id
+msgid ""
+"Required with a product, because Odoo's own quantity semantics are. A lump-"
+"sum subcontract scope has no unit, and inventing one for it would put a "
+"fictional quantity on the enquiry."
+msgstr ""
+"مطلوبة مع المنتج، لأن منطق الكميات في Odoo يتطلبها. أما نطاق عقد الباطن "
+"بمبلغ مقطوع فليس له وحدة، واختلاق وحدة له سيضع كمية وهمية في الاستفسار."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/wizard/material_request_revise.py:0
+msgid "Requisition"
+msgstr "طلب الشراء"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_procurement_plan_line__state__requested
+msgid "Requisition Raised"
+msgstr "تم إنشاء طلب الشراء"
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid "Requisition cancelled."
+msgstr "تم إلغاء طلب الشراء."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__buyer_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__buyer_id
+msgid "Responsible Buyer"
+msgstr "مسؤول الشراء"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__activity_user_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid "Returned to draft."
+msgstr "تمت الإعادة إلى مسودة."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__reviewed_by_id
+msgid "Reviewed By"
+msgstr "راجعه"
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_material_request_revise_form
+msgid "Revise"
+msgstr "مراجعة"
+
+#. module: atmta_procurement_request
+#: model:ir.model,name:atmta_procurement_request.model_realestate_material_request_revise
+msgid "Revise Procurement Requisition"
+msgstr "مراجعة طلب الشراء"
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_material_request_revise_form
+msgid "Revise Requisition"
+msgstr "مراجعة طلب الشراء"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revision__revised_by_id
+msgid "Revised By"
+msgstr "روجع بواسطة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revision__revised_on
+msgid "Revised On"
+msgstr "تاريخ المراجعة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__revision
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revision__revision
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__revision
+msgid "Revision"
+msgstr "المراجعة"
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid "Revision %(rev)s. Basis at revision %(prev)s kept: %(reason)s"
+msgstr ""
+"المراجعة %(rev)s. تم الاحتفاظ بالأساس المعتمد في المراجعة %(prev)s: "
+"%(reason)s"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__revision_count
+msgid "Revision Count"
+msgstr "عدد المراجعات"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__revision_ids
+msgid "Revision History"
+msgstr "سجل المراجعات"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__rfq_count
+msgid "Rfq Count"
+msgstr "عدد طلبات عروض الأسعار"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__rfq_lead_days
+msgid "Rfq Lead Days"
+msgstr "أيام مهلة طلب عرض السعر"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "خطأ في إرسال الرسائل النصية القصيرة"
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid ""
+"Say why the approved basis is changing. A revision without a reason is "
+"indistinguishable from an overwrite."
+msgstr ""
+"اذكر سبب تغيير الأساس المعتمد. المراجعة دون سبب لا يمكن تمييزها عن الكتابة "
+"فوق البيانات."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__sequence
+msgid "Sequence"
+msgstr "المسلسل"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__procurement_type__service
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_procurement_plan_line__procurement_type__service
+msgid "Service"
+msgstr "خدمة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_procurement_plan_line__is_long_lead
+msgid ""
+"Set explicitly, or derived when the lead time exceeds the configured "
+"threshold. No number is hard-coded here — the threshold is company "
+"configuration."
+msgstr ""
+"يحدد صراحة، أو يستنتج عندما تتجاوز مدة التوريد الحد المضبوط. لا يوجد رقم "
+"ثابت هنا — فالحد من إعدادات الشركة."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__property_id
+msgid ""
+"Set for snag/maintenance/aftermarket requests targeting a specific unit."
+msgstr ""
+"يحدد لطلبات ملاحظات الاستلام أو الصيانة أو خدمات ما بعد البيع الخاصة بوحدة "
+"معينة."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__coding_status
+msgid ""
+"Shown rather than enforced. A request the company allows to go ahead uncoded"
+" still has to appear somewhere — as Unassigned, not as an absence."
+msgstr ""
+"يعرض ولا يفرض. الطلب الذي تسمح الشركة بمضيه دون ترميز يجب أن يظهر في مكان ما"
+" — كغير مخصص، لا كغياب."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_procurement_plan_line__strategy__single_source
+msgid "Single Source"
+msgstr "مصدر وحيد"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__source_type__site_request
+msgid "Site Request"
+msgstr "طلب من الموقع"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__source_ref
+msgid "Source Document"
+msgstr "المستند المصدر"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__source_model
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__source_type
+msgid "Source Type"
+msgstr "نوع المصدر"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_purchase_order_line__re_material_request_line_id
+msgid "Source line in the material request that spawned this PO line."
+msgstr "البند المصدر في طلب المواد الذي نشأ عنه بند أمر الشراء هذا."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__state__sourcing
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_procurement_plan_line__state__sourcing
+msgid "Sourcing"
+msgstr "المناقصات"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__governance_status__sourcing_draft_rfq
+msgid "Sourcing — Draft RFQ"
+msgstr "المناقصة — طلب عرض سعر مسودة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__specification_ref
+msgid "Specification"
+msgstr "المواصفات"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__state
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__state
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__state
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_search
+msgid "State"
+msgstr "الحالة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revision__state_at_revision
+msgid "State At Revision"
+msgstr "الحالة عند المراجعة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__activity_state
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_procurement_plan__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الحالة بناءً على الأنشطة\n"
+"متأخرة: تاريخ الاستحقاق قد مضى\n"
+"اليوم: تاريخ النشاط هو اليوم\n"
+"مخطط لها: أنشطة مستقبلية."
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_line_search
+msgid "Strategy"
+msgstr "الاستراتيجية"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__procurement_type__subcontract
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_procurement_plan_line__procurement_type__subcontract
+msgid "Subcontract"
+msgstr "عقد من الباطن"
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_form
+msgid "Submit for Review"
+msgstr "إرسال للمراجعة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__state__submitted
+msgid "Submitted"
+msgstr "مقدم"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__submitted_on
+msgid "Submitted On"
+msgstr "تاريخ التقديم"
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid ""
+"Submitted as urgent. Urgency shortens lead times and raises visibility; it "
+"does not approve anything."
+msgstr ""
+"قدم كطلب عاجل. الاستعجال يقصر المهل ويزيد الظهور؛ لكنه لا يعتمد أي شيء."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__substitution_allowed
+msgid "Substitution Allowed"
+msgstr "يسمح بالبديل"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_rfq__suggested_vendor_ids
+msgid "Suggested by the Catalogue"
+msgstr "مقترح من الكتالوج"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_procurement_plan__state__superseded
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_search
+msgid "Superseded"
+msgstr "مستبدل"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__superseded_by_id
+msgid "Superseded By"
+msgstr "استبدل بـ"
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid "Superseded by revision %s: %s"
+msgstr "تم الاستبدال بالمراجعة %s: %s"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__supersedes_id
+msgid "Supersedes"
+msgstr "يحل محل"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__target_award_date
+msgid "Target Award Date"
+msgstr "تاريخ الترسية المستهدف"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__target_rfq_date
+msgid "Target Rfq Date"
+msgstr "تاريخ طلب عرض السعر المستهدف"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_procurement_plan_line__estimated_amount
+msgid "Tax-exclusive planning estimate."
+msgstr "تقدير تخطيطي غير شامل الضريبة."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_procurement_plan__estimated_total
+msgid ""
+"Tax-exclusive planning estimate. Comparable with Construction control "
+"figures, and authoritative for none of them."
+msgstr ""
+"تقدير تخطيطي غير شامل الضريبة. قابل للمقارنة مع أرقام الرقابة في المقاولات، "
+"ولا يعد مرجعًا معتمدًا لأي منها."
+
+#. module: atmta_procurement_request
+#: model:ir.model.constraint,message:atmta_procurement_request.constraint_realestate_procurement_plan_revision_uniq
+msgid "That revision of this plan already exists."
+msgstr "هذه المراجعة من الخطة موجودة بالفعل."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request_revision__basis
+msgid ""
+"The lines as they stood, in JSON: quantity, unit of measure, estimate, "
+"coding and required date. Stored as text because it must stay readable after"
+" the products, cost codes or WBS nodes it names have been renamed or "
+"archived."
+msgstr ""
+"البنود كما كانت، بصيغة JSON: الكمية ووحدة القياس والتقدير والترميز والتاريخ "
+"المطلوب. تحفظ كنص لأنها يجب أن تبقى مقروءة بعد إعادة تسمية المنتجات أو رموز "
+"التكلفة أو عناصر هيكل تجزئة العمل التي تذكرها أو أرشفتها."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/procurement_plan.py:0
+msgid "The period ends before it starts."
+msgstr "تنتهي الفترة قبل أن تبدأ."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request_line__estimated_unit_cost
+msgid ""
+"The requester's or buyer's estimate, tax-exclusive. Used for control "
+"comparison and for the approval basis; it is not a price anybody has quoted."
+msgstr ""
+"تقدير مقدم الطلب أو مسؤول الشراء، غير شامل الضريبة. يستخدم للمقارنة الرقابية"
+" ولأساس الاعتماد؛ وليس سعرًا قدمه أحد."
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_material_request_revise_form
+msgid ""
+"The requisition returns to draft and its current basis is kept as a\n"
+"                    revision, so what was approved stays readable next to what replaced it."
+msgstr ""
+"يعود طلب الشراء إلى مسودة ويحفظ أساسه الحالي كمراجعة، بحيث يبقى ما تم "
+"اعتماده مقروءًا بجانب ما حل محله."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request_line__specification_ref
+msgid ""
+"The specification clause, drawing or datasheet the line is bought against. A"
+" reference, not a copy."
+msgstr ""
+"بند المواصفات أو المخطط أو ورقة البيانات التي يشترى البند على أساسها. مرجع "
+"وليس نسخة."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__title
+msgid "Title"
+msgstr "العنوان"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_procurement_plan_line__lead_time_days
+msgid ""
+"Total procurement-to-site lead time, where it is known. Left empty when it "
+"is not — see `has_lead_time`."
+msgstr ""
+"إجمالي مدة التوريد من الشراء حتى الموقع، إن كانت معروفة. يترك فارغًا إذا لم "
+"تكن معروفة — انظر `has_lead_time`."
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_line_search
+msgid "Type"
+msgstr "النوع"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_procurement_plan__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع النشاط الاستثنائي في السجل."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__coding_status__unassigned
+msgid "Unassigned"
+msgstr "غير مخصص"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_procurement_plan__state__review
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_procurement_plan_search
+msgid "Under Review"
+msgstr "قيد المراجعة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_line__uom_id
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan_line__uom_id
+msgid "UoM"
+msgstr "وحدة القياس"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__priority__1
+msgid "Urgent"
+msgstr "عاجلة"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields.selection,name:atmta_procurement_request.selection__realestate_material_request__legacy_status__valid
+msgid "Valid"
+msgstr "صالح"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request_rfq__suggested_vendor_ids
+msgid ""
+"Vendors already listed against the requested products. A suggestion is not a"
+" shortlist and a shortlist is not an award."
+msgstr ""
+"الموردون المدرجون مسبقًا للمنتجات المطلوبة. الاقتراح ليس قائمة مختصرة، "
+"والقائمة المختصرة ليست ترسية."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request__website_message_ids
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_procurement_plan__website_message_ids
+msgid "Website Messages"
+msgstr "رسائل الموقع الإلكتروني"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__website_message_ids
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_procurement_plan__website_message_ids
+msgid "Website communication history"
+msgstr "سجل التواصل عبر الموقع الإلكتروني"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__governance_status
+msgid ""
+"What M3 could determine about this record at upgrade time. A finding, not an"
+" instruction: nothing was reserved, released, confirmed or rewritten to make"
+" a record fit one of these."
+msgstr ""
+"ما أمكن للمرحلة M3 تحديده عن هذا السجل وقت الترقية. هذه نتيجة وليست تعليمات:"
+" لم يتم حجز أو إفراج أو تأكيد أو إعادة كتابة أي شيء لجعل السجل يطابق إحدى "
+"هذه الحالات."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__legacy_status
+msgid ""
+"What the M2 migration could determine about this record. It is a finding, "
+"not an instruction, and nothing was rewritten to make a record fit a "
+"classification."
+msgstr ""
+"ما أمكن لترحيل M2 تحديده عن هذا السجل. هذه نتيجة وليست تعليمات، ولم تتم "
+"إعادة كتابة أي شيء لجعل السجل يطابق تصنيفًا."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__request_date
+msgid ""
+"When it was raised. Distinct from the date it is needed and from the date "
+"anything was ordered."
+msgstr "تاريخ إنشاء الطلب. يختلف عن تاريخ الحاجة وعن تاريخ طلب أي شيء."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_procurement_plan_line__required_on_site_date
+msgid "When the works need it in place."
+msgstr "متى تحتاجه الأعمال في مكانه."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request_line__required_on_site_date
+msgid ""
+"When the works need it on site. Deliberately not the RFQ deadline, not the "
+"order date and not the vendor's promised arrival — those are different dates"
+" and conflating them is how a late delivery looks on time."
+msgstr ""
+"متى تحتاجه الأعمال في الموقع. وهو عمدًا ليس الموعد النهائي لطلب عرض السعر، "
+"ولا تاريخ الأمر، ولا موعد الوصول الذي وعد به المورد — فهي تواريخ مختلفة، "
+"والخلط بينها هو ما يجعل التسليم المتأخر يبدو في موعده."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request_line__substitution_allowed
+msgid ""
+"Whether an equivalent may be offered. False means the vendor must quote what"
+" is asked for — and a buyer who substitutes anyway is making an engineering "
+"decision."
+msgstr ""
+"هل يجوز تقديم بديل مكافئ. القيمة \"لا\" تعني أن على المورد تسعير المطلوب "
+"تحديدًا — ومسؤول الشراء الذي يستبدل رغم ذلك يتخذ قرارًا هندسيًا."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__source_model
+msgid "Which module raised this request."
+msgstr "الوحدة التي أنشأت هذا الطلب."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__buyer_id
+msgid "Who is sourcing it. Not who asked for it."
+msgstr "من يتولى الشراء. وليس من طلبه."
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,field_description:atmta_procurement_request.field_realestate_material_request_revise__reason
+msgid "Why is the approved basis changing?"
+msgstr "لماذا يتغير الأساس المعتمد؟"
+
+#. module: atmta_procurement_request
+#: model:ir.model.fields,help:atmta_procurement_request.field_realestate_material_request__justification
+msgid "Why the project needs it. The sentence an approver reads."
+msgstr "سبب حاجة المشروع إليه. الجملة التي يقرؤها المعتمد."
+
+#. module: atmta_procurement_request
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_request.view_material_request_revise_form
+msgid "e.g. structural revision C increased the pour"
+msgstr "مثال: المراجعة الإنشائية C زادت كمية الصب"
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/procurement_plan.py:0
+msgid ""
+"%(plan)s is %(state)s. A requisition is raised from a plan the project has "
+"agreed to, not from one somebody is still drafting."
+msgstr "%(plan)s في حالة %(state)s. يُرفع طلب الشراء من خطة وافق عليها المشروع، لا من خطة ما زال أحدهم يعدّها."
+
+#. module: atmta_procurement_request
+#. odoo-python
+#: code:addons/atmta_procurement_request/models/material_request.py:0
+msgid ""
+"Revising %(name)s reopens demand that was already submitted. %(user)s does "
+"not hold a role that does that."
+msgstr "مراجعة %(name)s تعيد فتح طلب سبق تقديمه، و%(user)s لا يشغل دوراً يخوّله ذلك."

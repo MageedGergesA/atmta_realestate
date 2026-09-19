@@ -41,8 +41,10 @@
                             class="oe_highlight" invisible="state != 'certified'"/>
                     <button name="action_mark_paid" type="object" string="Mark Paid"
                             invisible="state != 'invoiced'"/>
+                    <!-- Cancelling refuses a posted vendor bill, so it is not
+                         offered on one. The refusal stays in the method. -->
                     <button name="action_cancel" type="object" string="Cancel"
-                            invisible="state in ('paid','cancelled')"/>
+                            invisible="state in ('paid','cancelled') or vendor_bill_state == 'posted'"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
@@ -95,6 +97,8 @@
                                    readonly="state not in ('draft','submitted')"/>
                             <field name="certified_amount"
                                    readonly="state not in ('draft','submitted')"/>
+                            <field name="certified_amount_set" invisible="1"/>
+                            <field name="vendor_bill_state" invisible="1"/>
                             <field name="disallowed_amount" readonly="1"/>
                             <field name="disallowance_reason"
                                    invisible="not disallowed_amount"
@@ -143,7 +147,9 @@
                                     <field name="sequence" widget="handle"/>
                                     <field name="boq_line_id"
                                            options="{'no_create': True}"
-                                           domain="[('project_id', '=', parent.project_id)]"/>
+                                           domain="[('project_id', '=', parent.project_id),
+                                                    '|', ('boq_id.superseded_by_id', '=', False),
+                                                    ('boq_id.superseded_by_id.state', 'not in', ('approved', 'locked'))]"/>
                                     <field name="work_item_id" readonly="1" optional="show"/>
                                     <field name="description"/>
                                     <field name="qty"/>

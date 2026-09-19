@@ -13,6 +13,7 @@ ALSO strip ``X-Frame-Options`` because Odoo's default ``ir.http`` adds
 import json
 import logging
 import re
+from urllib.parse import urlsplit
 
 import werkzeug.exceptions
 from markupsafe import Markup
@@ -110,6 +111,22 @@ def _embed_response(template, **values):
     return response
 
 
+def _referer_origin(referer):
+    """``scheme://host[:port]`` of a Referer, or ``''``.
+
+    A browser loading an iframe sends no ``Origin`` — only a ``Referer`` with
+    the full page URL (path and query included, trimmed to the origin only
+    under a strict referrer policy). The allow-list holds origins, so the
+    full URL never matched and every real embed was refused with a 403.
+    """
+    if not referer:
+        return ''
+    parts = urlsplit(referer)
+    if not parts.scheme or not parts.netloc:
+        return ''
+    return '%s://%s' % (parts.scheme, parts.netloc)
+
+
 def _consume_or_error(kind, token):
     """Look up token; map MissingError → 404, AccessError → 403."""
     try:
@@ -117,7 +134,8 @@ def _consume_or_error(kind, token):
             token=token,
             kind=kind,
             origin=request.httprequest.headers.get('Origin')
-                   or request.httprequest.headers.get('Referer', '').rstrip('/')
+                   or _referer_origin(
+                       request.httprequest.headers.get('Referer'))
                    or '',
             remote_ip=request.httprequest.remote_addr,
         )

@@ -5,6 +5,21 @@ from odoo.exceptions import AccessError
 from odoo.http import request
 
 
+def _gallery_state(prop):
+    """What the gallery says about a unit's availability, for colouring.
+
+    The viewer used the legacy `property.state`, which knows nothing about
+    release batches or blocks: an unreleased unit read `available` and was
+    painted green. `visual_state` is Developer's answer mapped by the maquette
+    module (both are dependencies of this one, so it is always there). Only
+    units are sold; a building or floor has no availability of its own and
+    gets '' so the viewer draws it in the region's own colour.
+    """
+    if not prop or prop.hierarchy_level != 'unit':
+        return ''
+    return prop.visual_state or ''
+
+
 class PlanController(http.Controller):
 
     @http.route(
@@ -30,7 +45,7 @@ class PlanController(http.Controller):
                 'id': r.id,
                 'target_id': r.target_property_id.id,
                 'target_name': r.target_property_id.display_name or '',
-                'target_state': r.target_state or '',
+                'target_state': _gallery_state(r.target_property_id),
                 'target_hierarchy_level': r.target_hierarchy_level or '',
                 'label': r.label or r.target_property_id.display_name or '',
                 'color': r.color or '#3b82f6',
@@ -46,7 +61,7 @@ class PlanController(http.Controller):
                     'name': c.display_name,
                     'property_code': c.property_code or '',
                     'hierarchy_level': c.hierarchy_level or '',
-                    'state': c.state or '',
+                    'state': _gallery_state(c),
                     'has_region': any(r['target_id'] == c.id for r in out),
                 }
                 for c in children
@@ -120,7 +135,7 @@ class PlanController(http.Controller):
                 'id': r.id,
                 'target_id': r.target_property_id.id,
                 'target_name': r.target_property_id.display_name or '',
-                'target_state': r.target_state or '',
+                'target_state': _gallery_state(r.target_property_id),
                 'target_hierarchy_level': r.target_hierarchy_level or '',
                 'label': r.label or r.target_property_id.display_name or '',
                 'color': r.color or '#3b82f6',
@@ -133,7 +148,7 @@ class PlanController(http.Controller):
                 'name': c.display_name,
                 'property_code': c.property_code or '',
                 'hierarchy_level': c.hierarchy_level or '',
-                'state': c.state or '',
+                'state': _gallery_state(c),
                 'has_plan_image': bool(c.plan_image),
             })
         return {
@@ -142,7 +157,7 @@ class PlanController(http.Controller):
                 'name': prop.display_name,
                 'property_code': prop.property_code or '',
                 'hierarchy_level': prop.hierarchy_level or '',
-                'state': prop.state or '',
+                'state': _gallery_state(prop),
                 'has_plan_image': bool(prop.plan_image),
                 # Sized URL (max 1920×1080) + unique query param: Odoo's image
                 # endpoint resizes on demand, caches the variant on disk, and
@@ -198,7 +213,7 @@ class PlanController(http.Controller):
                     'id': r.id,
                     'target_id': r.property_id.id,
                     'target_name': r.property_id.display_name or '',
-                    'target_state': (r.property_id.state or ''),
+                    'target_state': _gallery_state(r.property_id),
                     'target_hierarchy_level': (r.property_id.hierarchy_level or ''),
                     'label': r.label or r.property_id.display_name or '',
                     'color': r.color or '#3b82f6',
@@ -220,7 +235,7 @@ class PlanController(http.Controller):
                 'name': p.display_name,
                 'property_code': p.property_code or '',
                 'hierarchy_level': p.hierarchy_level or '',
-                'state': p.state or '',
+                'state': _gallery_state(p),
                 'has_plan_image': bool(p.plan_image),
             })
             seen_ids.add(p.id)
@@ -236,7 +251,7 @@ class PlanController(http.Controller):
                     'name': target.display_name,
                     'property_code': target.property_code or '',
                     'hierarchy_level': target.hierarchy_level or '',
-                    'state': target.state or '',
+                    'state': _gallery_state(target),
                     'has_plan_image': bool(target.plan_image),
                 })
                 seen_ids.add(target.id)

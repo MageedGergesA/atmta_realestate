@@ -56,6 +56,7 @@ data-control exceptions.
     ],
     'data': [
         'data/sequences.xml',
+        'data/date_refresh_cron.xml',
         'security/ir.model.access.csv',
         'security/construction_cost_rules.xml',
         # Wave 21 — this module's own screens, moved down from

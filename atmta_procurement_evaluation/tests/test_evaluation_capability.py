@@ -137,14 +137,29 @@ class TestEvaluationCapability(TransactionCase):
             for name in ('_check_award_surface', '_check_award_over_tender'):
                 self.assertIn(name, checks,
                               "Award did not contribute %s to the audit" % name)
-        # the receiving checks come from the module that still owns receipts
-        self.assertIn('_check_uninspected_receipt_under_policy', checks)
+        # the receiving checks come from the module that owns receipts, when it
+        # is installed (this capability is tested on its own too)
+        if Module.search_count([('name', '=', 'atmta_procurement_receipt'),
+                                ('state', '=', 'installed')]):
+            self.assertIn('_check_uninspected_receipt_under_policy', checks)
 
     def test_evaluation_declares_no_award_check_of_its_own(self):
         """Evaluation must not reach upward, even to describe."""
+        import ast
         import inspect
-        src = inspect.getsource(type(self.Audit)._audit_checks)
-        self.assertNotIn('award', src.lower(),
+        import textwrap
+        # Evaluation's own definition, whatever overrides upper capabilities add;
+        # its code, not the docstring that explains how Award extends it.
+        own = next(klass for klass in type(self.Audit).__mro__
+                   if klass.__module__.startswith('odoo.addons.atmta_procurement_evaluation.')
+                   and '_audit_checks' in vars(klass))
+        tree = ast.parse(textwrap.dedent(inspect.getsource(vars(own)['_audit_checks'])))
+        body = tree.body[0].body
+        if body and isinstance(body[0], ast.Expr) and isinstance(getattr(body[0], 'value', None), ast.Constant):
+            body = body[1:]
+        code = '\n'.join(ast.unparse(node) for node in body)
+        self.assertTrue(code)
+        self.assertNotIn('award', code.lower(),
                          "Evaluation's own check list names award")
 
     def test_the_evaluation_sequences_are_not_duplicated(self):

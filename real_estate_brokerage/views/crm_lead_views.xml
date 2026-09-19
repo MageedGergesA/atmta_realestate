@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  M1 / M8 / M9 / M19 — the real-estate half of an opportunity.
+
+  Everything Brokerage adds to `crm.lead` goes in one notebook page rather than
+  scattered through Odoo's form. An agent who knows the CRM form should still
+  recognise it; the brief on the right and the matches beside it are the two
+  things they came for.
+-->
+<odoo>
+
+    <record id="view_crm_lead_form_realestate" model="ir.ui.view">
+        <field name="name">crm.lead.form.realestate</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_run_matching" type="object"
+                        class="oe_stat_button" icon="fa-search"
+                        invisible="not re_is_realestate">
+                    <field name="match_count" widget="statinfo"
+                           string="Matches"/>
+                </button>
+            </xpath>
+
+            <xpath expr="//notebook" position="inside">
+                <page name="realestate" string="Requirements"
+                      invisible="not re_is_realestate">
+                    <group>
+                        <group name="re_intent" string="Intent">
+                            <field name="re_intent"/>
+                            <field name="re_market"/>
+                            <field name="re_urgency"/>
+                            <field name="re_target_move_date"/>
+                            <field name="re_payment_preference"/>
+                        </group>
+                        <group name="re_budget" string="Budget &amp; Size">
+                            <label for="re_budget_min" string="Budget"/>
+                            <div class="o_row">
+                                <field name="re_budget_min" nolabel="1"/>
+                                <span class="mx-1">–</span>
+                                <field name="re_budget_max" nolabel="1"/>
+                            </div>
+                            <label for="re_area_min" string="Area (sqm)"/>
+                            <div class="o_row">
+                                <field name="re_area_min" nolabel="1"/>
+                                <span class="mx-1">–</span>
+                                <field name="re_area_max" nolabel="1"/>
+                            </div>
+                            <label for="re_bedrooms_min" string="Bedrooms"/>
+                            <div class="o_row">
+                                <field name="re_bedrooms_min" nolabel="1"/>
+                                <span class="mx-1">–</span>
+                                <field name="re_bedrooms_max" nolabel="1"/>
+                            </div>
+                            <field name="re_bathrooms_min"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="re_preferences" string="Preferences">
+                            <label for="re_floor_min" string="Floor"/>
+                            <div class="o_row">
+                                <field name="re_floor_min" nolabel="1"/>
+                                <span class="mx-1">–</span>
+                                <field name="re_floor_max" nolabel="1"/>
+                            </div>
+                            <field name="re_view_preference"/>
+                            <field name="re_finishing"/>
+                            <label for="re_handover_from" string="Handover"/>
+                            <div class="o_row">
+                                <field name="re_handover_from" nolabel="1"/>
+                                <span class="mx-1">–</span>
+                                <field name="re_handover_to" nolabel="1"/>
+                            </div>
+                        </group>
+                        <group name="re_targets" string="Targets">
+                            <field name="re_project_ids" widget="many2many_tags"/>
+                            <field name="re_property_type_ids"
+                                   widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <field name="re_location_ids" nolabel="1">
+                        <list editable="bottom">
+                            <field name="city"/>
+                            <field name="state_id"/>
+                            <field name="country_id"/>
+                            <field name="note"/>
+                        </list>
+                    </field>
+                </page>
+
+                <page name="re_matches" string="Matches"
+                      invisible="not re_is_realestate">
+                    <button name="action_run_matching" type="object"
+                            string="Find Matches" class="btn-primary mb-2"
+                            icon="fa-search"/>
+                    <field name="match_ids" nolabel="1" readonly="1">
+                        <list decoration-success="shortlisted"
+                              decoration-muted="customer_response == 'rejected'">
+                            <field name="score" widget="progressbar"/>
+                            <field name="property_id"/>
+                            <field name="project_id" optional="show"/>
+                            <field name="listing_id" optional="hide"/>
+                            <field name="shortlisted" widget="boolean_toggle"/>
+                            <field name="customer_response"/>
+                            <field name="rejection_reason" optional="show"/>
+                            <field name="viewing_count" string="Viewings"
+                                   optional="hide"/>
+                        </list>
+                    </field>
+                </page>
+
+                <page name="re_origin" string="Attribution"
+                      invisible="not re_is_realestate">
+                    <group>
+                        <group string="First Touch">
+                            <field name="re_first_source_id"/>
+                            <field name="re_first_medium_id"/>
+                            <field name="re_first_campaign_id"/>
+                            <field name="re_first_seen_on"/>
+                        </group>
+                        <group string="Broker Introduction">
+                            <field name="re_broker_partner_id"/>
+                            <field name="re_registration_id"/>
+                            <field name="re_broker_protected"/>
+                        </group>
+                    </group>
+                    <group string="Response">
+                        <group>
+                            <field name="re_sla_state"
+                                   decoration-danger="re_sla_state in ('late','breached')"
+                                   decoration-success="re_sla_state == 'on_time'"
+                                   widget="badge"/>
+                            <field name="re_response_deadline"/>
+                        </group>
+                        <group>
+                            <field name="re_first_response_on"/>
+                            <field name="re_first_response_by_id"/>
+                            <field name="re_response_hours"/>
+                        </group>
+                    </group>
+                    <group string="Legacy" invisible="not re_legacy_lead_id">
+                        <field name="re_legacy_lead_id"/>
+                        <field name="re_legacy_reference"/>
+                    </group>
+                </page>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="re_is_realestate"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_list_realestate" model="ir.ui.view">
+        <field name="name">crm.lead.list.realestate</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+            <field name="stage_id" position="after">
+                <field name="re_sla_state" optional="show" widget="badge"
+                       decoration-danger="re_sla_state in ('late','breached')"
+                       decoration-success="re_sla_state == 'on_time'"/>
+                <field name="re_intent" optional="hide"/>
+                <field name="re_budget_max" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_search_realestate" model="ir.ui.view">
+        <field name="name">crm.lead.search.realestate</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+        <field name="arch" type="xml">
+            <filter name="assigned_to_me" position="after">
+                <separator/>
+                <filter name="re_realestate" string="Real Estate"
+                        domain="[('re_is_realestate', '=', True)]"/>
+                <filter name="re_sla_breached" string="Overdue Response"
+                        domain="[('re_sla_state', '=', 'breached')]"/>
+                <filter name="re_broker_introduced" string="Broker Introduced"
+                        domain="[('re_broker_partner_id', '!=', False)]"/>
+            </filter>
+        </field>
+    </record>
+
+    <!-- ==============================================================
+         Matches, in their own right
+         ============================================================== -->
+    <record id="view_property_match_list" model="ir.ui.view">
+        <field name="name">realestate.property.match.list</field>
+        <field name="model">realestate.property.match</field>
+        <field name="arch" type="xml">
+            <list decoration-success="shortlisted"
+                  decoration-muted="customer_response == 'rejected'">
+                <field name="crm_lead_id"/>
+                <field name="partner_id" optional="show"/>
+                <field name="property_id"/>
+                <field name="project_id" optional="show"/>
+                <field name="score" widget="progressbar"/>
+                <field name="shortlisted" widget="boolean_toggle"/>
+                <field name="customer_response"/>
+                <field name="rejection_reason" optional="show"/>
+                <field name="matched_on" optional="hide"/>
+                <button name="action_shortlist" type="object"
+                        icon="fa-star-o" title="Shortlist"
+                        invisible="shortlisted"/>
+                <button name="action_suggest_viewing" type="object"
+                        icon="fa-calendar-plus-o" title="Suggest Viewing"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_property_match_form" model="ir.ui.view">
+        <field name="name">realestate.property.match.form</field>
+        <field name="model">realestate.property.match</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_shortlist" type="object"
+                            string="Shortlist" class="btn-primary"
+                            invisible="shortlisted"/>
+                    <button name="action_unshortlist" type="object"
+                            string="Remove from Shortlist"
+                            invisible="not shortlisted"/>
+                    <button name="action_suggest_viewing" type="object"
+                            string="Suggest Viewing"/>
+                    <field name="customer_response" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="property_id" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="crm_lead_id" readonly="1"/>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="listing_id" readonly="1"/>
+                            <field name="project_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="score" widget="progressbar"
+                                   readonly="1"/>
+                            <field name="matched_on" readonly="1"/>
+                            <field name="shortlisted"/>
+                            <field name="rank"/>
+                            <field name="rejection_reason"
+                                   invisible="customer_response != 'rejected'"/>
+                        </group>
+                    </group>
+                    <group string="Why this scored what it did">
+                        <field name="explanation" nolabel="1" readonly="1"
+                               widget="text"/>
+                    </group>
+                    <group string="Feedback">
+                        <field name="feedback" nolabel="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Viewings">
+                            <field name="viewing_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="scheduled_at"/>
+                                    <field name="agent_id"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="outcome"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_property_match_search" model="ir.ui.view">
+        <field name="name">realestate.property.match.search</field>
+        <field name="model">realestate.property.match</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="crm_lead_id"/>
+                <field name="property_id"/>
+                <field name="partner_id"/>
+                <filter name="shortlisted" string="Shortlisted"
+                        domain="[('shortlisted', '=', True)]"/>
+                <filter name="favorites" string="Favourites"
+                        domain="[('customer_response', '=', 'favorite')]"/>
+                <filter name="not_shown" string="Not Shown Yet"
+                        domain="[('customer_response', '=', 'pending')]"/>
+                <separator/>
+                <filter name="strong" string="Score 80%+"
+                        domain="[('score', '>=', 80)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_lead" string="Opportunity"
+                            context="{'group_by': 'crm_lead_id'}"/>
+                    <filter name="group_project" string="Project"
+                            context="{'group_by': 'project_id'}"/>
+                    <filter name="group_response" string="Response"
+                            context="{'group_by': 'customer_response'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_property_match" model="ir.actions.act_window">
+        <field name="name">Property Matches</field>
+        <field name="res_model">realestate.property.match</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_property_match_search"/>
+    </record>
+
+    <record id="action_crm_lead_realestate" model="ir.actions.act_window">
+        <field name="name">Real Estate Opportunities</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">kanban,list,form,calendar,graph,pivot</field>
+        <field name="domain">[('type', '=', 'opportunity')]</field>
+        <field name="context">
+            {'search_default_re_realestate': 1, 'default_type': 'opportunity',
+             'default_re_is_realestate': True}
+        </field>
+    </record>
+
+</odoo>

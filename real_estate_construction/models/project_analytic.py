@@ -1,4 +1,5 @@
 from odoo import _, api, fields, models
+from odoo.exceptions import AccessError
 
 
 class ProjectAnalytic(models.Model):
@@ -56,6 +57,15 @@ class ProjectAnalytic(models.Model):
         return account
 
     def action_generate_analytic_account(self):
+        # The button sits on the Construction page, which only these roles
+        # see. `_get_or_create_analytic_account` writes as the system, so the
+        # page being hidden is not enough: a Developer user holds read access
+        # to the project and could still call this over RPC.
+        if not (self.env.user.has_group('atmta_roles.group_construction_site_user')
+                or self.env.user.has_group('atmta_roles.group_construction_manager')):
+            raise AccessError(_(
+                "Only Construction users can generate a project's analytic "
+                "account."))
         for rec in self:
             rec._get_or_create_analytic_account()
         return True

@@ -19,7 +19,7 @@ from running code, not from the module's own documentation:
 from odoo.exceptions import AccessError, UserError
 from odoo.tests import tagged
 
-from .common import ProcurementCommon
+from .common import ProcurementCommon, groups_of
 
 
 @tagged('post_install', '-at_install', 'atmta_procurement')
@@ -314,8 +314,7 @@ class TestQ5GovernanceBypass(ProcurementCommon):
     def _plain_user(self, login, *groups):
         return self.env['res.users'].create({
             'name': login, 'login': login,
-            'groups_id': [(6, 0, [self.env.ref('base.group_user').id] + [
-                self.env.ref(g).id for g in groups])],
+            'groups_id': [(6, 0, groups_of(self.env, ('base.group_user',) + groups).ids)],
         })
 
     def test_urgency_no_longer_decides_whether_approval_applies(self):
@@ -527,6 +526,7 @@ class TestPhase0WorthKeeping(ProcurementCommon):
     """Behaviour the redesign must not lose."""
 
     def test_a_request_records_where_the_need_came_from(self):
+        self._require_construction()
         project = self._project()
         milestone = self.env['realestate.construction.milestone'].create({
             'name': 'Structure', 'project_id': project.id,

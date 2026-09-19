@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_unit_block_list" model="ir.ui.view">
+        <field name="name">realestate.unit.block.list</field>
+        <field name="model">realestate.unit.block</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="not active">
+                <field name="property_id"/>
+                <field name="project_id" optional="show"/>
+                <field name="reason"/>
+                <field name="date_start"/>
+                <field name="date_end" optional="show"/>
+                <field name="requested_by_id" optional="show"/>
+                <field name="active" widget="boolean_toggle" string="In Force"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_unit_block_form" model="ir.ui.view">
+        <field name="name">realestate.unit.block.form</field>
+        <field name="model">realestate.unit.block</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_approve" type="object" string="Approve"
+                            invisible="approved_by_id"/>
+                    <button name="action_lift" type="object" string="Lift Block"
+                            class="oe_highlight" invisible="not active"
+                            confirm="Lifting the block returns the unit to the market. The block stays on the unit's history. Continue?"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Lifted" bg_color="text-bg-secondary"
+                            invisible="active"/>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="property_id" options="{'no_create': True}"/>
+                            <field name="project_id"/>
+                            <field name="phase_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="reason"/>
+                            <field name="date_start"/>
+                            <field name="date_end"
+                                   placeholder="Empty = indefinite, lifted explicitly"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                    </group>
+                    <group string="Details">
+                        <field name="notes" nolabel="1" placeholder="Why is this unit withheld?"/>
+                    </group>
+                    <group>
+                        <group string="Requested">
+                            <field name="requested_by_id"/>
+                            <field name="approved_by_id"/>
+                            <field name="approved_on"/>
+                        </group>
+                        <group string="Lifted" invisible="active">
+                            <field name="lifted_by_id"/>
+                            <field name="lifted_on"/>
+                            <field name="lift_reason"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_unit_block_search" model="ir.ui.view">
+        <field name="name">realestate.unit.block.search</field>
+        <field name="model">realestate.unit.block</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="property_id"/>
+                <field name="project_id"/>
+                <field name="reason"/>
+                <filter name="in_force" string="In Force" domain="[('active','=',True)]"/>
+                <filter name="lifted" string="Lifted" domain="[('active','=',False)]"/>
+                <separator/>
+                <filter name="group_reason" string="Reason" context="{'group_by': 'reason'}"/>
+                <filter name="group_project" string="Project" context="{'group_by': 'project_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_unit_block" model="ir.actions.act_window">
+        <field name="name">Commercial Blocks</field>
+        <field name="res_model">realestate.unit.block</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'active_test': False, 'search_default_in_force': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Withhold a unit from sale</p>
+            <p>
+                Model flats, units under legal review, or ones promised to a
+                specific client. A block keeps the unit's commercial status
+                intact and is lifted rather than deleted, so the history of what
+                was withheld and why survives.
+            </p>
+        </field>
+    </record>
+
+</odoo>

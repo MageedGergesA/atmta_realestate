@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_check_deposit_list" model="ir.ui.view">
+        <field name="name">realestate.check.deposit.list</field>
+        <field name="model">realestate.check.deposit</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state in ('cleared','reconciled')"
+                  decoration-warning="state=='partial'"
+                  decoration-muted="state=='cancelled'">
+                <field name="name"/>
+                <field name="deposit_date"/>
+                <field name="journal_id"/>
+                <field name="bank_slip_ref"/>
+                <field name="check_count"/>
+                <field name="total_amount" sum="Total"/>
+                <field name="total_pending" sum="Awaiting" optional="show"/>
+                <field name="total_cleared" sum="Cleared" optional="show"/>
+                <field name="total_bounced" sum="Bounced" optional="show"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="prepared_by_id" optional="hide"/>
+                <field name="confirmed_by_id" optional="hide"/>
+                <field name="batch_payment_id" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state in ('cleared','reconciled')"
+                       decoration-warning="state=='partial'"
+                       decoration-info="state=='confirmed'"
+                       decoration-muted="state=='cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_check_deposit_form" model="ir.ui.view">
+        <field name="name">realestate.check.deposit.form</field>
+        <field name="model">realestate.check.deposit</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm Deposit"
+                            invisible="state != 'draft'" class="oe_highlight"
+                            groups="real_estate_checks.group_checks_treasurer"
+                            help="Presents the batch and registers one inbound payment per cheque. This is money on its way, not money received."/>
+                    <button name="action_sync_accounting" type="object"
+                            string="Refresh from Accounting"
+                            invisible="state not in ('confirmed','partial')"
+                            groups="real_estate_checks.group_checks_treasurer"/>
+                    <button name="action_clear_all" type="object" string="Clear Matched Cheques"
+                            invisible="state not in ('confirmed','partial')" class="oe_highlight"
+                            groups="real_estate_checks.group_checks_treasurer"/>
+                    <field name="has_live_payments" invisible="1"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state not in ('draft','confirmed') or has_live_payments"
+                            groups="real_estate_checks.group_checks_treasurer"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirmed,cleared,reconciled"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_payments" type="object"
+                                class="oe_stat_button" icon="fa-money"
+                                invisible="payment_count == 0">
+                            <field name="payment_count" widget="statinfo" string="Payments"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <div class="alert alert-info" role="status"
+                         invisible="state != 'confirmed'">
+                        Presented to the bank. Each cheque carries an inbound payment;
+                        cheques become <b>Cleared</b> only when Odoo reconciles those
+                        payments against a bank transaction.
+                    </div>
+                    <group>
+                        <group>
+                            <field name="deposit_date"/>
+                            <field name="journal_id" readonly="state != 'draft'"/>
+                            <field name="payment_method_line_id"
+                                   readonly="state != 'draft'"
+                                   options="{'no_create': True}"/>
+                            <field name="available_payment_method_line_ids" invisible="1"/>
+                            <field name="bank_slip_ref"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="currency_id" groups="base.group_multi_currency"
+                                   readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="check_count"/>
+                            <field name="total_amount"/>
+                            <field name="total_pending"/>
+                            <field name="total_cleared"/>
+                            <field name="total_bounced"/>
+                            <field name="batch_payment_id" readonly="1"
+                                   invisible="not batch_payment_id"/>
+                        </group>
+                        <group string="Controls">
+                            <field name="prepared_by_id"/>
+                            <field name="confirmed_by_id"/>
+                            <field name="confirmed_on"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Checks">
+                            <field name="check_ids" readonly="state != 'draft'"
+                                   context="{'default_company_id': company_id}">
+                                <list decoration-danger="state == 'bounced'"
+                                      decoration-success="state == 'cleared'">
+                                    <field name="name"/>
+                                    <field name="check_number"/>
+                                    <field name="partner_id"/>
+                                    <field name="bank_id"/>
+                                    <field name="due_date"/>
+                                    <field name="amount" sum="Total"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="accounting_state" widget="badge"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Presentations">
+                            <field name="presentation_ids" readonly="1">
+                                <list>
+                                    <field name="check_id"/>
+                                    <field name="attempt"/>
+                                    <field name="presented_date"/>
+                                    <field name="amount"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="payment_id"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_check_deposit_search" model="ir.ui.view">
+        <field name="name">realestate.check.deposit.search</field>
+        <field name="model">realestate.check.deposit</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="journal_id"/>
+                <field name="bank_slip_ref"/>
+                <filter name="live" string="At Bank"
+                        domain="[('state','in',('confirmed','partial'))]"/>
+                <filter name="reconciled" string="Bank Reconciled"
+                        domain="[('state','=','reconciled')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_state" string="State" context="{'group_by':'state'}"/>
+                    <filter name="group_journal" string="Bank" context="{'group_by':'journal_id'}"/>
+                    <filter name="group_date" string="Deposit Month"
+                            context="{'group_by':'deposit_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_check_deposit" model="ir.actions.act_window">
+        <field name="name">Deposit Slips</field>
+        <field name="res_model">realestate.check.deposit</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_check_deposit_search"/>
+    </record>
+</odoo>

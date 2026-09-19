@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!--
+        M1 — the real-estate pipeline, as Odoo CRM stages.
+
+        Scoped to a dedicated `crm.team` on purpose. A `crm.stage` with no team
+        is GLOBAL: it appears in every pipeline in the database, including a
+        generic sales pipeline that has nothing to do with property. Adding
+        eight stages to somebody else's funnel is not an upgrade, it is
+        vandalism — so the stages belong to the Real Estate Sales team, and a
+        deployment that wants them elsewhere clears `team_id` deliberately.
+    -->
+    <record id="team_realestate_sales" model="crm.team">
+        <field name="name">Real Estate Sales</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="stage_re_new" model="crm.stage">
+        <field name="name">New</field>
+        <field name="sequence">10</field>
+        <field name="team_id" ref="team_realestate_sales"/>
+    </record>
+
+    <record id="stage_re_contacted" model="crm.stage">
+        <field name="name">Contacted</field>
+        <field name="sequence">20</field>
+        <field name="team_id" ref="team_realestate_sales"/>
+    </record>
+
+    <record id="stage_re_qualified" model="crm.stage">
+        <field name="name">Qualified</field>
+        <field name="sequence">30</field>
+        <field name="team_id" ref="team_realestate_sales"/>
+    </record>
+
+    <record id="stage_re_matching" model="crm.stage">
+        <field name="name">Matching</field>
+        <field name="sequence">40</field>
+        <field name="team_id" ref="team_realestate_sales"/>
+    </record>
+
+    <record id="stage_re_viewing" model="crm.stage">
+        <field name="name">Viewing</field>
+        <field name="sequence">50</field>
+        <field name="team_id" ref="team_realestate_sales"/>
+    </record>
+
+    <record id="stage_re_negotiation" model="crm.stage">
+        <field name="name">Negotiation</field>
+        <field name="sequence">60</field>
+        <field name="team_id" ref="team_realestate_sales"/>
+    </record>
+
+    <record id="stage_re_closing" model="crm.stage">
+        <field name="name">Reservation / Closing</field>
+        <field name="sequence">70</field>
+        <field name="team_id" ref="team_realestate_sales"/>
+    </record>
+
+    <record id="stage_re_won" model="crm.stage">
+        <field name="name">Won</field>
+        <field name="sequence">80</field>
+        <field name="is_won" eval="True"/>
+        <field name="team_id" ref="team_realestate_sales"/>
+    </record>
+
+    <!--
+        M17 — lost reasons on Odoo's own model.
+
+        The legacy `realestate.lost.reason` records are migrated onto these by
+        name; the model itself is kept for one release so existing rows stay
+        readable, but nothing new should be created there.
+    -->
+    <record id="lost_reason_re_price" model="crm.lost.reason">
+        <field name="name">Price</field>
+    </record>
+    <record id="lost_reason_re_financing" model="crm.lost.reason">
+        <field name="name">Financing Not Approved</field>
+    </record>
+    <record id="lost_reason_re_competitor" model="crm.lost.reason">
+        <field name="name">Bought from Competitor</field>
+    </record>
+    <record id="lost_reason_re_no_response" model="crm.lost.reason">
+        <field name="name">No Response</field>
+    </record>
+    <record id="lost_reason_re_location" model="crm.lost.reason">
+        <field name="name">Location</field>
+    </record>
+    <record id="lost_reason_re_product" model="crm.lost.reason">
+        <field name="name">Product Mismatch</field>
+    </record>
+    <record id="lost_reason_re_payment_plan" model="crm.lost.reason">
+        <field name="name">Payment Plan</field>
+    </record>
+    <record id="lost_reason_re_delayed" model="crm.lost.reason">
+        <field name="name">Purchase Delayed</field>
+    </record>
+    <record id="lost_reason_re_duplicate" model="crm.lost.reason">
+        <field name="name">Duplicate</field>
+    </record>
+    <record id="lost_reason_re_invalid" model="crm.lost.reason">
+        <field name="name">Invalid Lead</field>
+    </record>
+</odoo>

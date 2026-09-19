@@ -10,7 +10,7 @@ asserted here in Python around it.
 from odoo.exceptions import AccessError, UserError
 from odoo.tests.common import HttpCase, tagged
 
-from .common import M6Common
+from .common import M6Common, optional_group
 
 
 class M6BrowserCommon(M6Common, HttpCase):
@@ -34,6 +34,11 @@ class M6BrowserCommon(M6Common, HttpCase):
         winner.analysis_id.action_add_adjustment(
             adjustment_type='freight', amount=50_000.0,
             rationale='Freight to site, excluded from the quoted rate')
+        # A round does not finalise over an unapproved adjustment, and nobody
+        # approves their own: the review is a second manager's signature.
+        approver = self._evaluator('m6_adjustment_approver',
+                                   'evaluation_manager')
+        winner.analysis_id.adjustment_ids.with_user(approver).action_approve()
         round_.action_finalise()
         return round_
 
@@ -42,7 +47,7 @@ class M6BrowserCommon(M6Common, HttpCase):
         admin.groups_id |= (
             self.env.ref('real_estate_procurement.group_evaluation_manager')
             | self.env.ref('real_estate_procurement.group_procurement_manager')
-            | self.env.ref('atmta_real_estate.group_realestate_user'))
+            | optional_group(self.env, 'atmta_real_estate.group_realestate_user'))
         self.env.flush_all()
         return admin
 

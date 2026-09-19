@@ -11,6 +11,60 @@ from odoo import fields
 from odoo.tests.common import TransactionCase
 
 
+def shown_menu_ids(env, user):
+    """Ids of the menus ``user`` actually gets in the web client.
+
+    ``ir.ui.menu._visible_menu_ids`` keeps a menu with an action even when its
+    parent section is hidden; the client builds the tree from the root down,
+    so such a menu is never on screen. Only menus whose every ancestor is
+    visible count.
+
+    A copy of the Rental suite's helper: importing it from
+    ``atmta_real_estate.tests`` fails wherever Rental's code is not deployed."""
+    raw = env['ir.ui.menu'].with_user(user)._visible_menu_ids()
+    ids = set()
+    for menu in env['ir.ui.menu'].browse(raw):
+        node = menu
+        while node and node.id in raw:
+            node = node.parent_id
+        if not node:
+            ids.add(menu.id)
+    return ids
+
+
+
+def module_installed(env, name):
+    """Whether an addon is installed in the database the test runs in."""
+    return bool(env['ir.module.module'].sudo().search_count(
+        [('name', '=', name), ('state', '=', 'installed')]))
+
+
+def groups_of(env, xmlids):
+    """Resolve group identifiers, leaving out those of modules not installed.
+
+    This module no longer depends on Rental or Developer, and some tests hand a
+    user one of their groups alongside the role under test. A group is left out
+    only when its module is not installed; a missing group of an installed module
+    still raises, so a mistyped identifier is never silently ignored."""
+    groups = env['res.groups']
+    for xmlid in xmlids:
+        if module_installed(env, xmlid.split('.', 1)[0]):
+            groups |= env.ref(xmlid)
+    return groups
+
+
+
+def optional_group(env, xmlid):
+    """A security group from a module this one no longer depends on.
+
+    Some tests hand a user a Rental or Developer group alongside their own role.
+    When that module is installed this returns the group and the test behaves
+    exactly as before; when it is not, it returns an empty recordset and the test
+    runs on the access this module grants by itself. A missing group of an
+    installed module still raises."""
+    return groups_of(env, [xmlid])
+
+
 class ConstructionCommon(TransactionCase):
 
     _seq = 0

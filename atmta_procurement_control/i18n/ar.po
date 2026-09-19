@@ -1,0 +1,2184 @@
+# Translation of Odoo Server.
+# This file contains the Arabic translation of the following modules:
+# 	* atmta_procurement_control
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:13+0000\n"
+"PO-Revision-Date: 2026-09-17 10:13+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_reservation.py:0
+msgid ""
+"%(fields)s on a reservation are maintained by the control engine. Release "
+"it, or revise the requisition — either way the change stays visible."
+msgstr ""
+"%(fields)s في حجز الميزانية يديرها محرك الرقابة. أفرج عن الحجز أو راجع طلب "
+"الشراء — وفي الحالتين يبقى التغيير ظاهرًا."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_reservation.py:0
+msgid "%(label)s belongs to %(other)s, this reservation to %(company)s."
+msgstr ""
+"%(label)s تابع لـ %(other)s، بينما حجز الميزانية هذا تابع لـ %(company)s."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/material_request_control.py:0
+msgid ""
+"%(name)s cannot be approved.\n"
+"\n"
+"%(reason)s\n"
+"\n"
+"%(note)s\n"
+"\n"
+"Raise a budget exception for authority to exceed it, or a change order to fund it."
+msgstr ""
+"لا يمكن اعتماد %(name)s.\n"
+"\n"
+"%(reason)s\n"
+"\n"
+"%(note)s\n"
+"\n"
+"أنشئ استثناء ميزانية للحصول على صلاحية تجاوزها، أو أمر تغيير لتمويلها."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/material_request_control.py:0
+msgid ""
+"%(name)s exceeds what is available and this company requires that to be authorised first.\n"
+"\n"
+"%(note)s\n"
+"\n"
+"Request a budget exception; a procurement manager approves it, and then this can be approved."
+msgstr ""
+"%(name)s يتجاوز المتاح وهذه الشركة تشترط اعتماد ذلك أولًا.\n"
+"\n"
+"%(note)s\n"
+"\n"
+"اطلب استثناء ميزانية؛ يعتمده مدير المشتريات، وبعدها يمكن اعتماد هذا الطلب."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/material_request_control.py:0
+msgid ""
+"%(name)s was raised by you. Asking for something and authorising it are two "
+"roles, and this company has not chosen to let one person hold both%(limit)s."
+msgstr ""
+"%(name)s أنشأته أنت. طلب الشيء واعتماده دوران مختلفان، ولم تختر هذه الشركة "
+"السماح لشخص واحد بالجمع بينهما%(limit)s."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_reservation.py:0
+msgid ""
+"%(order)s would convert %(amount)s against %(name)s, which has %(active)s "
+"left. Converting more than was authorised is the double-count this control "
+"exists to prevent."
+msgstr ""
+"%(order)s سيحول %(amount)s مقابل %(name)s، والمتبقي فيه %(active)s. تحويل "
+"أكثر مما تم اعتماده هو الاحتساب المزدوج الذي وجدت هذه الرقابة لمنعه."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/approval_rule.py:0
+msgid "%(rule)s: %(decision)s"
+msgstr "%(rule)s: %(decision)s"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/approval_rule.py:0
+msgid "%s ends below where it starts."
+msgstr "%s ينتهي عند قيمة أقل من قيمة بدايته."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/approval_rule.py:0
+msgid "%s has already been decided."
+msgstr "تم البت في %s بالفعل."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_reservation.py:0
+msgid ""
+"%s has been part of a control position. Release or cancel it; deleting it "
+"would remove the explanation for a number somebody has already read."
+msgstr ""
+"كان %s جزءًا من موقف رقابي. قم بالإفراج عنه أو إلغائه؛ فحذفه يزيل تفسير رقم "
+"اطلع عليه أحدهم بالفعل."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_control.py:0
+msgid ""
+"%s has no baselined budget, so there is nothing authoritative to measure "
+"demand against."
+msgstr ""
+"لا توجد ميزانية معتمدة كأساس لـ %s، لذا لا يوجد مرجع موثوق لقياس الطلب عليه."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/wizard/procurement_exception_wizards.py:0
+msgid ""
+"%s is already confirmed. An exception raised afterwards would be a note, not"
+" an authorisation."
+msgstr ""
+"%s مؤكد بالفعل. أي استثناء يُرفع بعد ذلك سيكون مجرد ملاحظة وليس تفويضًا."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_reservation.py:0
+msgid "%s is not a draft reservation."
+msgstr "%s ليس حجز ميزانية في حالة مسودة."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_reservation.py:0
+msgid "%s is not active, so there is nothing to convert."
+msgstr "%s غير نشط، لذا لا يوجد ما يمكن تحويله."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_exception.py:0
+msgid "%s is not awaiting a decision."
+msgstr "%s ليس بانتظار قرار."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/approval_rule.py:0
+msgid "%s is not awaiting approval."
+msgstr "%s ليس بانتظار الاعتماد."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/approval_rule.py:0
+msgid "%s is reserved for %s."
+msgstr "%s مخصص لـ %s."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/material_request_control.py:0
+msgid ""
+"%s is reserving purchasing capacity. Revise the requisition — that releases "
+"the reservation and leaves a record of why."
+msgstr ""
+"%s يحجز من رصيد الشراء المتاح. قم بمراجعة طلب الشراء — فذلك يفرج عن الحجز "
+"ويحتفظ بسجل للسبب."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_reservation.py:0
+msgid "%s names no project, so there is no budget to reserve against."
+msgstr "لا يحدد %s أي مشروع، لذا لا توجد ميزانية يمكن الحجز منها."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_exception.py:0
+msgid "%s records a control decision. It can be superseded, not deleted."
+msgstr "يسجل %s قرارًا رقابيًا. يمكن استبداله بقرار أحدث، ولكن لا يمكن حذفه."
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_form
+msgid ""
+"<strong invisible=\"control_status != 'over_budget'\">Over budget. </strong>\n"
+"                        <strong invisible=\"control_status != 'insufficient_data'\">Control position unknown. </strong>"
+msgstr ""
+"<strong invisible=\"control_status != 'over_budget'\">تجاوز الميزانية. "
+"</strong> <strong invisible=\"control_status != 'insufficient_data'\">الموقف"
+" الرقابي غير معروف. </strong>"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_reservation.py:0
+msgid ""
+"A conversion records what a purchase order committed. It is not editable — "
+"reverse the order instead."
+msgstr ""
+"يسجل التحويل ما التزم به أمر الشراء. لا يمكن تعديله — قم بعكس الأمر بدلًا من"
+" ذلك."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_approval_step__basis_hash
+msgid ""
+"A fingerprint of the commercial basis — lines, quantities, amounts, coding, "
+"project, currency. Changing any of them invalidates the approval rather than"
+" silently inheriting it."
+msgstr ""
+"بصمة للأساس التجاري — البنود والكميات والمبالغ والترميز والمشروع والعملة. "
+"تغيير أي منها يُبطل الاعتماد بدلًا من توريثه بصمت."
+
+#. module: atmta_procurement_control
+#: model_terms:ir.actions.act_window,help:atmta_procurement_control.action_approval_rule
+msgid ""
+"A requisition needs a decision from every rule that matches it.\n"
+"            Every dimension is optional and an unset one matches everything, so\n"
+"            one row is a working configuration. Changing a rule never rewrites\n"
+"            an approval that has already been given — the steps keep their own\n"
+"            copy of the authority they were raised under."
+msgstr ""
+"يحتاج طلب الشراء إلى قرار من كل قاعدة تنطبق عليه. جميع الأبعاد اختيارية، "
+"والبعد غير المحدد ينطبق على كل شيء، لذا يكفي سطر واحد لإعداد عامل. تغيير "
+"القاعدة لا يعيد كتابة اعتماد تم منحه بالفعل — إذ تحتفظ الخطوات بنسختها "
+"الخاصة من الصلاحية التي أُنشئت بموجبها."
+
+#. module: atmta_procurement_control
+#: model_terms:ir.actions.act_window,help:atmta_procurement_control.action_procurement_reservation
+msgid ""
+"A reservation is approved demand consuming purchasing capacity\n"
+"            before anybody is owed anything. It is not a commitment, not an\n"
+"            encumbrance and not a journal entry — confirming a purchase order\n"
+"            converts it into Construction commitment, and the two never exist\n"
+"            for the same money at the same time."
+msgstr ""
+"حجز الميزانية هو طلب معتمد يستهلك رصيد الشراء المتاح قبل أن يصبح أي مبلغ "
+"مستحقًا لأحد. وهو ليس التزامًا ولا ارتباطًا ماليًا ولا قيدًا في اليومية — "
+"فتأكيد أمر الشراء يحوله إلى التزام في المقاولات، ولا يوجد الاثنان معًا "
+"للمبلغ نفسه في الوقت نفسه."
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_form
+msgid "Activate"
+msgstr "تفعيل"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_reservation.py:0
+msgid ""
+"Activating a reservation consumes a project's purchasing capacity. That is a"
+" procurement manager's decision."
+msgstr ""
+"تفعيل حجز الميزانية يستهلك من رصيد الشراء المتاح للمشروع. وهذا قرار يعود "
+"لمدير المشتريات."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_rule__active
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__amount_active
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_release__amount_active
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_list
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_search
+msgid "Active"
+msgstr "نشط"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__activity_id
+msgid "Activity"
+msgstr "النشاط"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_material_request__all_approvals_done
+msgid "All Approvals Done"
+msgstr "اكتملت جميع الاعتمادات"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_conversion__amount
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_approval_step_list
+msgid "Amount"
+msgstr "المبلغ"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_control_exception__exception_type__amount_delta
+msgid "Amount Above Approved Basis"
+msgstr "مبلغ يتجاوز الأساس المعتمد"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_control_exception_search
+msgid "Amount Above Basis"
+msgstr "مبلغ يتجاوز الأساس"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__amount_basis
+msgid "Amount Approved"
+msgstr "المبلغ المعتمد"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/approval_rule.py:0
+msgid ""
+"An approval decision cannot be deleted. Cancel the requisition, or revise it"
+" — both keep the history."
+msgstr ""
+"لا يمكن حذف قرار الاعتماد. قم بإلغاء طلب الشراء أو مراجعته — فكلاهما يحتفظ "
+"بالسجل."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/approval_rule.py:0
+msgid ""
+"An earlier approval step is still pending. Approving out of order would mean"
+" the sequence was decoration."
+msgstr ""
+"لا تزال خطوة اعتماد سابقة معلقة. الاعتماد خارج الترتيب يعني أن التسلسل مجرد "
+"شكل."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__anomaly_note
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_search
+msgid "Anomalies"
+msgstr "حالات شاذة"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_approval_rule__group_id
+msgid "Anybody in this group may take the decision."
+msgstr "يجوز لأي عضو في هذه المجموعة اتخاذ القرار."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_reservation_conversion__state__applied
+msgid "Applied"
+msgstr "مطبق"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__approval_date
+msgid "Approval Date"
+msgstr "تاريخ الاعتماد"
+
+#. module: atmta_procurement_control
+#: model:ir.actions.act_window,name:atmta_procurement_control.action_approval_register
+msgid "Approval Register"
+msgstr "سجل الاعتمادات"
+
+#. module: atmta_procurement_control
+#: model:ir.actions.act_window,name:atmta_procurement_control.action_approval_rule
+msgid "Approval Rules"
+msgstr "قواعد الاعتماد"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_material_request__approval_step_ids
+msgid "Approval Steps"
+msgstr "خطوات الاعتماد"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_approval_rule__sequence
+msgid ""
+"Approval order. Two rules with the same sequence are asked in parallel; a "
+"later sequence cannot decide before an earlier one has."
+msgstr ""
+"ترتيب الاعتماد. القاعدتان بنفس المسلسل تُطلبان بالتوازي؛ ولا يمكن لمسلسل "
+"لاحق البت قبل أن يبت المسلسل الأسبق."
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_approval_step_pivot
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_form
+msgid "Approvals"
+msgstr "الاعتمادات"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_approval_step_list
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_control_exception_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_form
+msgid "Approve"
+msgstr "اعتماد"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__approved
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_approval_step__decision__approved
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_control_exception__state__approved
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_approval_step_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_control_exception_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+msgid "Approved"
+msgstr "معتمد"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__approved_by_id
+msgid "Approved By"
+msgstr "اعتمد بواسطة"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_material_request__reservation_status
+msgid ""
+"Approved and reserved are different facts, and the lifecycle keeps them in "
+"one field each rather than inventing a state that means both."
+msgstr ""
+"الاعتماد والحجز حقيقتان مختلفتان، ودورة الحياة تحفظ كلًا منهما في حقل مستقل "
+"بدلًا من اختراع حالة تعني الاثنين معًا."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_material_request__reserved_amount
+msgid ""
+"Approved demand still consuming this project's purchasing capacity. It is "
+"not a commitment: nobody is owed it, no journal entry exists and "
+"Construction's figures are untouched."
+msgstr ""
+"طلب معتمد لا يزال يستهلك من رصيد الشراء المتاح لهذا المشروع. وهو ليس "
+"التزامًا: فلا يستحق لأحد، ولا يوجد قيد في اليومية، وأرقام المقاولات لم "
+"تتأثر."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/material_request_control.py:0
+msgid "Approved demand with no reservation, under a %s policy."
+msgstr "طلب معتمد دون حجز ميزانية، وفق سياسة %s."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/material_request_control.py:0
+msgid ""
+"Approved under a Warn policy: the demand exceeded available capacity by %s "
+"and the company's policy is to record rather than refuse."
+msgstr ""
+"اعتُمد وفق سياسة التحذير: تجاوز الطلب الرصيد المتاح بمقدار %s، وسياسة الشركة"
+" هي التسجيل بدلًا من الرفض."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/material_request_control.py:0
+msgid "Approved. %s"
+msgstr "معتمد. %s"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_rule__group_id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__group_id
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_approval_step_search
+msgid "Approver Group"
+msgstr "مجموعة المعتمدين"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_approval_step__project_id
+msgid "Auto-derived from the source document when applicable."
+msgstr "يُستنتج تلقائيًا من المستند المصدر عند الاقتضاء."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_budget_exception__available_amount
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__available_amount
+msgid "Available Amount"
+msgstr "المبلغ المتاح"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_material_request__current_step_id
+msgid "Awaiting"
+msgstr "بانتظار"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_approval_step_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+msgid "Awaiting Approval"
+msgstr "بانتظار الاعتماد"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_control_exception__state__requested
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_control_exception_search
+msgid "Awaiting Authority"
+msgstr "بانتظار صاحب الصلاحية"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+msgid "Awaiting My Approval"
+msgstr "بانتظار اعتمادي"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_form
+msgid "Back to Draft"
+msgstr "إعادة إلى مسودة"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__basis_hash
+msgid "Basis Hash"
+msgstr "بصمة الأساس"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_approval_rule__company_id
+msgid ""
+"Blank applies to every company. A rule from one company never governs "
+"another's requisition."
+msgstr ""
+"الترك فارغًا ينطبق على كل الشركات. القاعدة الخاصة بشركة لا تحكم أبدًا طلب "
+"شراء شركة أخرى."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_approval_rule__budget_status
+msgid ""
+"Blank matches any position. Set it to add an approver when the demand does "
+"not fit, or when the control position could not be established at all."
+msgstr ""
+"الترك فارغًا ينطبق على أي موقف. حدده لإضافة معتمد عندما لا يتوافق الطلب، أو "
+"عندما يتعذر تحديد الموقف الرقابي أصلًا."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_approval_rule__priority
+msgid ""
+"Blank matches both. Urgent demand may need *more* authority, never less — "
+"this dimension exists to add an emergency approver, and there is "
+"deliberately no setting that removes one."
+msgstr ""
+"الترك فارغًا ينطبق على الحالتين. قد يحتاج الطلب العاجل إلى صلاحية *أكبر* لا "
+"أقل — هذا البعد موجود لإضافة معتمد للطوارئ، ولا يوجد عمدًا أي إعداد يزيل "
+"معتمدًا."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_approval_rule__project_id
+msgid "Blank matches every project."
+msgstr "الترك فارغًا ينطبق على كل المشاريع."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_approval_rule__procurement_type
+msgid "Blank matches every type."
+msgstr "الترك فارغًا ينطبق على كل الأنواع."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_control.py:0
+msgid ""
+"Budget %(budget)s − commitment %(commitment)s − reserved %(reserved)s = "
+"%(available)s available."
+msgstr ""
+"الميزانية %(budget)s − الالتزام %(commitment)s − المحجوز %(reserved)s = "
+"%(available)s متاح."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_rule__budget_status
+msgid "Budget Status"
+msgstr "حالة الميزانية"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/wizard/procurement_exception_wizards.py:0
+msgid "Budget exception %s requested."
+msgstr "تم طلب استثناء الميزانية %s."
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+msgid "Buyer"
+msgstr "مسؤول الشراء"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_approval_step__decision__cancelled
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_reservation__state__cancelled
+msgid "Cancelled"
+msgstr "ملغى"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/material_request_control.py:0
+msgid "Cancelled, but %s of capacity is still reserved."
+msgstr "ملغى، ولكن لا يزال %s من الرصيد محجوزًا."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_material_request_line__reserved_amount
+msgid ""
+"Capacity this line is holding. Zero once it has been ordered, because the "
+"confirmed order is then the obligation."
+msgstr ""
+"الرصيد الذي يحجزه هذا البند. يصبح صفرًا بعد إصدار الأمر، لأن الأمر المؤكد "
+"يصبح حينها هو الالتزام."
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+msgid "Coding"
+msgstr "الترميز"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__comment
+msgid "Comment"
+msgstr "التعليق"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_rule__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_budget_exception__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_purchase_exception__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_conversion__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_approval_rule__min_amount
+msgid ""
+"Compared against the requisition's tax-exclusive control amount, in company "
+"currency. A USD request is converted before it is compared — comparing "
+"100,000 USD to a 100,000 EGP threshold is not a comparison."
+msgstr ""
+"يُقارن بمبلغ الرقابة غير الشامل للضريبة لطلب الشراء، بعملة الشركة. يُحوَّل "
+"الطلب بالدولار الأمريكي (USD) قبل مقارنته — فمقارنة 100,000 USD بحد 100,000 "
+"EGP ليست مقارنة."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_control.py:0
+msgid ""
+"Construction is not installed, so this system has no budget or commitment to"
+" read. Procurement will not invent one."
+msgstr ""
+"تطبيق المقاولات غير مثبت، لذا لا توجد في هذا النظام ميزانية أو التزام "
+"للقراءة. ولن تختلق المشتريات أيًا منهما."
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_form
+msgid "Control"
+msgstr "الرقابة"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__currency_id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_release__currency_id
+msgid "Control Currency"
+msgstr "عملة الرقابة"
+
+#. module: atmta_procurement_control
+#: model:ir.actions.act_window,name:atmta_procurement_control.action_control_exception
+msgid "Control Exceptions"
+msgstr "الاستثناءات الرقابية"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_material_request__control_note
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__control_note
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__control_note
+msgid "Control Note"
+msgstr "ملاحظة الرقابة"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_budget_exception__control_note
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_control_exception_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_form
+msgid "Control Position"
+msgstr "الموقف الرقابي"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_control_exception__exception_type__insufficient_data
+msgid "Control Position Unknown"
+msgstr "الموقف الرقابي غير معروف"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_material_request__control_status
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__control_status
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_search
+msgid "Control Status"
+msgstr "حالة الرقابة"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_conversion__conversion_date
+msgid "Conversion Date"
+msgstr "تاريخ التحويل"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__conversion_ids
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_form
+msgid "Conversions"
+msgstr "التحويلات"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__amount_converted
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_material_request__reservation_status__converted
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_reservation__state__converted
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_list
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_search
+msgid "Converted"
+msgstr "محول"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_material_request__converted_amount
+msgid "Converted Amount"
+msgstr "المبلغ المحول"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__converted_date
+msgid "Converted Date"
+msgstr "تاريخ التحويل"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_reservation__state
+msgid ""
+"Converted and Released are deliberately different endings. Converted means "
+"an authoritative commitment replaced it; Released means the demand stopped "
+"consuming capacity without ever becoming one."
+msgstr ""
+"المحول والمفرج عنه نهايتان مختلفتان عمدًا. المحول يعني أن التزامًا معتمدًا "
+"حل محله؛ والمفرج عنه يعني أن الطلب توقف عن استهلاك الرصيد دون أن يصبح "
+"التزامًا أبدًا."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_reservation.py:0
+msgid ""
+"Converted, but no confirmed purchase line accounts for it — the commitment "
+"it converted into cannot be found."
+msgstr ""
+"محول، ولكن لا يوجد بند شراء مؤكد يقابله — لا يمكن العثور على الالتزام الذي "
+"تحول إليه."
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_form
+msgid "Create RFQs"
+msgstr "إنشاء طلبات عروض الأسعار"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_rule__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_budget_exception__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_purchase_exception__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_conversion__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_release__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_rule__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_budget_exception__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_purchase_exception__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_conversion__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_release__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__currency_id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_budget_exception__currency_id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__currency_id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_purchase_exception__currency_id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_conversion__currency_id
+msgid "Currency"
+msgstr "العملة"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+msgid "Data Quality Warnings"
+msgstr "تحذيرات جودة البيانات"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_form
+msgid "Dates"
+msgstr "التواريخ"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_material_request__days_waiting
+msgid "Days Waiting"
+msgstr "أيام الانتظار"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_approval_step__waiting_days
+msgid ""
+"Days this step has been waiting. M3R: an approval nobody has looked at for "
+"three weeks is an operational fact, and a register that cannot show it is "
+"why people ring each other up."
+msgstr ""
+"عدد الأيام التي انتظرتها هذه الخطوة. M3R: الاعتماد الذي لم ينظر فيه أحد "
+"لثلاثة أسابيع حقيقة تشغيلية، والسجل الذي لا يُظهر ذلك هو سبب اضطرار الناس "
+"للاتصال ببعضهم."
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_control_exception_form
+msgid "Decided"
+msgstr "تم البت"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__approver_id
+msgid "Decided By"
+msgstr "بت بواسطة"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__approval_date
+msgid "Decided On"
+msgstr "تاريخ القرار"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__decision
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_approval_step_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_control_exception_form
+msgid "Decision"
+msgstr "القرار"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__decision_note
+msgid "Decision Note"
+msgstr "ملاحظة القرار"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_form
+msgid "Demand"
+msgstr "الطلب"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_control_exception__exception_type__direct_purchase
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_control_exception_search
+msgid "Direct Purchase"
+msgstr "شراء مباشر"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/wizard/procurement_exception_wizards.py:0
+msgid "Direct purchase exception %s requested."
+msgstr "تم طلب استثناء الشراء المباشر %s."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_rule__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_budget_exception__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_purchase_exception__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_conversion__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_release__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+msgid "Done"
+msgstr "منجز"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_reservation__state__draft
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_approval_rule__procurement_type__equipment
+msgid "Equipment"
+msgstr "المعدات"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_reservation__currency_id
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_reservation_release__currency_id
+msgid ""
+"Every control comparison happens in company currency, because that is the "
+"currency Construction's budget and commitment are stated in. A USD request "
+"measured against an EGP budget is not a comparison."
+msgstr ""
+"تتم كل مقارنة رقابية بعملة الشركة، لأنها العملة التي تُذكر بها ميزانية "
+"المقاولات والتزاماتها. قياس طلب بالدولار الأمريكي مقابل ميزانية بالجنيه "
+"المصري ليس مقارنة."
+
+#. module: atmta_procurement_control
+#: model_terms:ir.actions.act_window,help:atmta_procurement_control.action_control_exception
+msgid ""
+"Every control in this module can be passed. This is where the\n"
+"            passing is written down — what was exceeded, by how much, under\n"
+"            which policy, who asked and who agreed."
+msgstr ""
+"يمكن تجاوز أي ضابط رقابي في هذا التطبيق. وهنا يُوثَّق التجاوز — ما الذي تم "
+"تجاوزه، وبأي مقدار، ووفق أي سياسة، ومن طلبه ومن وافق عليه."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_reservation__purchase_order_ids
+msgid ""
+"Every order that consumed part of this reservation. Many, because a split "
+"award is two orders against one authorisation."
+msgstr ""
+"كل أمر استهلك جزءًا من حجز الميزانية هذا. قد تكون أوامر متعددة، لأن الترسية "
+"المجزأة تعني أمرين مقابل تفويض واحد."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__exception_id
+msgid "Exception"
+msgstr "الاستثناء"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_reservation__state__expired
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_search
+msgid "Expired"
+msgstr "منتهي"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_reservation.py:0
+msgid "Expired on %s and is still active."
+msgstr "انتهت صلاحيته في %s ولا يزال نشطًا."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_reservation.py:0
+msgid "Expired on %s without being sourced."
+msgstr "انتهت صلاحيته في %s دون أن يتم توريده."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__expiry_date
+msgid "Expiry Date"
+msgstr "تاريخ الانتهاء"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_rule__min_amount
+msgid "From Amount"
+msgstr "من مبلغ"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_approval_step_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_control_exception_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_search
+msgid "Group By"
+msgstr "تجميع حسب"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__has_anomaly
+msgid "Has Anomaly"
+msgstr "يوجد حالة شاذة"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_reservation__amount_converted
+msgid ""
+"How much of it has become Construction commitment. Computed from the "
+"conversion records rather than accumulated, so cancelling a purchase order "
+"gives the capacity back by reversing one row instead of by arithmetic nobody"
+" can audit."
+msgstr ""
+"مقدار ما تحول منه إلى التزام في المقاولات. يُحتسب من سجلات التحويل بدلًا من "
+"التجميع، بحيث يعيد إلغاء أمر الشراء الرصيد بعكس سطر واحد بدلًا من عمليات "
+"حسابية لا يمكن لأحد تدقيقها."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_material_request__converted_amount
+msgid ""
+"How much of the reservation has become Construction commitment through a "
+"confirmed order."
+msgstr "مقدار ما تحول من حجز الميزانية إلى التزام في المقاولات عبر أمر مؤكد."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_reservation__amount_released
+msgid "How much stopped consuming capacity without becoming a commitment."
+msgstr "المقدار الذي توقف عن استهلاك الرصيد دون أن يصبح التزامًا."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_rule__id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_budget_exception__id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_purchase_exception__id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_conversion__id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_release__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_form
+msgid "Justification"
+msgstr "المبررات"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_form
+msgid "Justification, links, supporting docs..."
+msgstr "المبررات، الروابط، المستندات الداعمة..."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_approval_step__approved
+msgid ""
+"Kept as a field because views, filters and existing integrations read it. "
+"`decision` is authoritative."
+msgstr ""
+"يُحتفظ به كحقل لأن طرق العرض والمرشحات والتكاملات القائمة تقرؤه. الحقل "
+"`decision` هو المرجع المعتمد."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_rule__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_budget_exception__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_purchase_exception__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_conversion__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_release__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_rule__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_budget_exception__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_purchase_exception__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_conversion__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_release__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__line_description
+msgid "Line Description"
+msgstr "وصف البند"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_form
+msgid "Lines"
+msgstr "البنود"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+msgid "Long Lead"
+msgstr "توريد طويل المدة"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_approval_step__activity_id
+msgid ""
+"M3Q — the worklist entry for this step, when the step names a person to "
+"assign it to. One activity, created once and closed on decision: an activity"
+" generated from a compute or a cron produces a new one every recomputation, "
+"and people stop reading a list that lies about how much work is in it."
+msgstr ""
+"M3Q — مدخل قائمة العمل لهذه الخطوة، عندما تحدد الخطوة شخصًا لإسنادها إليه. "
+"نشاط واحد يُنشأ مرة واحدة ويُغلق عند البت: النشاط المُولَّد من حقل محسوب أو "
+"مهمة مجدولة ينتج نشاطًا جديدًا عند كل إعادة احتساب، ويتوقف الناس عن قراءة "
+"قائمة تضللهم بشأن حجم العمل فيها."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_material_request__days_waiting
+msgid ""
+"M3R — how long this has been sitting with somebody. An operational number, "
+"kept on the record so a register can sort by it without a dashboard."
+msgstr ""
+"M3R — المدة التي بقي فيها هذا الطلب لدى أحدهم. رقم تشغيلي محفوظ في السجل "
+"ليتمكن السجل من الفرز حسبه دون لوحة معلومات."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_reservation__anomaly_note
+msgid ""
+"M3U findings. Stated, never auto-corrected — a control system that quietly "
+"fixes its own inconsistencies destroys the evidence that they happened."
+msgstr ""
+"نتائج M3U. تُذكر ولا تُصحح تلقائيًا أبدًا — فنظام الرقابة الذي يصلح تناقضاته"
+" بصمت يدمر الدليل على حدوثها."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_approval_rule__procurement_type__material
+msgid "Material"
+msgstr "المواد"
+
+#. module: atmta_procurement_control
+#: model:ir.actions.act_window,name:atmta_procurement_control.action_material_request
+msgid "Material Requests"
+msgstr "طلبات المواد"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.actions.act_window,help:atmta_procurement_control.action_material_request
+msgid ""
+"Material requests are the entry point for procurement across the suite.\n"
+"            They group items needed for a construction task, a handover snag, a rental\n"
+"            ticket or any other source. Approving one authorises the demand; it does\n"
+"            not commit anybody's budget. Sourcing it prepares requests for quotation\n"
+"            to vendors a buyer names, and those stay quotations until somebody\n"
+"            deliberately confirms an order."
+msgstr ""
+"طلبات المواد هي نقطة الدخول إلى المشتريات في المنظومة بأكملها. تجمع المواد "
+"اللازمة لمهمة إنشائية أو ملاحظة استلام أو تذكرة تأجير أو أي مصدر آخر. اعتماد"
+" الطلب يفوّض الطلب ولا يُلزم ميزانية أحد. وتوريده يُعد طلبات عروض أسعار "
+"للموردين الذين يحددهم مسؤول الشراء، وتبقى عروض أسعار إلى أن يؤكد أحدهم أمرًا"
+" بشكل مقصود."
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+msgid "Missing Cost Code"
+msgstr "رمز التكلفة مفقود"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+msgid "Missing WBS"
+msgstr "هيكل تجزئة العمل مفقود"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_reservation.py:0
+msgid "More has been converted than was ever reserved."
+msgstr "المبلغ المحول أكبر مما تم حجزه أصلًا."
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_approval_step_search
+msgid "My Approvals"
+msgstr "اعتماداتي"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+msgid "My Requests"
+msgstr "طلباتي"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_rule__name
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__name
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_rule__approver_user_id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__approver_user_id
+msgid "Named Approver"
+msgstr "معتمد محدد بالاسم"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_exception.py:0
+#: code:addons/atmta_procurement_control/models/procurement_reservation.py:0
+msgid "New"
+msgstr "جديد"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/wizard/procurement_exception_wizards.py:0
+msgid "No control position could be established for this requisition."
+msgstr "تعذر تحديد موقف رقابي لطلب الشراء هذا."
+
+#. module: atmta_procurement_control
+#: model_terms:ir.actions.act_window,help:atmta_procurement_control.action_control_exception
+msgid "No exceptions raised"
+msgstr "لم تُرفع أي استثناءات"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_control.py:0
+msgid "No project."
+msgstr "لا يوجد مشروع."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/material_request_control.py:0
+msgid "No purchasing capacity was reserved."
+msgstr "لم يتم حجز أي رصيد شراء."
+
+#. module: atmta_procurement_control
+#: model_terms:ir.actions.act_window,help:atmta_procurement_control.action_procurement_reservation
+msgid "No reservations yet"
+msgstr "لا توجد حجوزات ميزانية بعد"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_approval_rule__priority__0
+msgid "Normal Only"
+msgstr "العادي فقط"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_material_request__reservation_status__none
+msgid "Not Reserved"
+msgstr "غير محجوز"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__note
+msgid "Note"
+msgstr "ملاحظة"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_control_exception__state__noted
+msgid "Noted"
+msgstr "مسجل للعلم"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_control_exception__state
+msgid ""
+"Noted means nobody had to agree — the policy was Warn and this is a record "
+"of what happened. It is deliberately not called approved, because nobody "
+"approved it."
+msgstr ""
+"مسجل للعلم يعني أنه لم يكن مطلوبًا من أحد الموافقة — كانت السياسة هي التحذير"
+" وهذا سجل لما حدث. ولم يُسمَّ معتمدًا عمدًا، لأن أحدًا لم يعتمده."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__notes
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_form
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/material_request_control.py:0
+msgid "Only submitted requests can be approved."
+msgstr "لا يمكن اعتماد سوى الطلبات المرسلة."
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_company_form_procurement
+msgid ""
+"Optional is the shipped default and stays that way through an upgrade.\n"
+"                        Turning control on is a policy decision with a rollout worklist behind it —\n"
+"                        <em>Vendor Governance → Vendors Not Assessed</em> — not a side effect of\n"
+"                        installing a new version."
+msgstr ""
+"الوضع الاختياري هو الإعداد الافتراضي ويبقى كذلك عند الترقية. تفعيل الرقابة "
+"قرار سياسي تقف خلفه قائمة عمل للتطبيق — <em>حوكمة الموردين → موردون غير "
+"مقيمين</em> — وليس أثرًا جانبيًا لتثبيت إصدار جديد."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_approval_rule__max_amount
+msgid "Optional upper bound. Leave blank for no ceiling."
+msgstr "حد أعلى اختياري. اتركه فارغًا لعدم وجود سقف."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_approval_rule__approver_user_id
+msgid ""
+"Optional. When set, only this person may decide the step — the group still "
+"applies as the access right."
+msgstr ""
+"اختياري. عند تحديده، لا يجوز إلا لهذا الشخص البت في الخطوة — وتبقى المجموعة "
+"سارية كصلاحية وصول."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_purchase_exception__order_id
+msgid "Order"
+msgstr "الأمر"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_conversion__order_id
+msgid "Order Reference"
+msgstr "مرجع الأمر"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+msgid "Ordered"
+msgstr "تم الطلب"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_approval_rule__procurement_type__other
+msgid "Other"
+msgstr "أخرى"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_material_request__approval_control_status__over_budget
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_material_request__control_status__over_budget
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_approval_rule__budget_status__over_budget
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_control_exception__exception_type__over_budget
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_reservation__control_status__over_budget
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_approval_step_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_control_exception_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_search
+msgid "Over Budget"
+msgstr "تجاوز الميزانية"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_control_exception_list
+msgid "Overage"
+msgstr "التجاوز"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__overage_amount
+msgid "Overage Amount"
+msgstr "مبلغ التجاوز"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+msgid "Overdue Required Date"
+msgstr "تجاوز التاريخ المطلوب"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_form
+msgid "POs"
+msgstr "أوامر الشراء"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_material_request__reservation_status__partial
+msgid "Partly Converted"
+msgstr "محول جزئيًا"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_exception.py:0
+msgid "Passing a budget control is a manager's decision."
+msgstr "تجاوز الضابط الرقابي للميزانية قرار يعود للمدير."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_approval_step__decision__pending
+msgid "Pending"
+msgstr "معلق"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_conversion__po_line_id
+msgid "Po Line"
+msgstr "بند أمر الشراء"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__policy
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_purchase_exception__governance
+msgid "Policy"
+msgstr "السياسة"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_material_request__approval_control_status
+msgid "Position At Submission"
+msgstr "الموقف عند الإرسال"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_material_request__approval_control_status__insufficient_data
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_material_request__control_status__insufficient_data
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_approval_rule__budget_status__insufficient_data
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_reservation__control_status__insufficient_data
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_search
+msgid "Position Unknown"
+msgstr "الموقف غير معروف"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_rule__priority
+msgid "Priority"
+msgstr "الأولوية"
+
+#. module: atmta_procurement_control
+#: model:ir.model,name:atmta_procurement_control.model_realestate_procurement_approval_rule
+msgid "Procurement Approval Rule"
+msgstr "قاعدة اعتماد المشتريات"
+
+#. module: atmta_procurement_control
+#: model:ir.model,name:atmta_procurement_control.model_realestate_procurement_approval_step
+msgid "Procurement Approval Step"
+msgstr "خطوة اعتماد المشتريات"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_company_form_procurement
+msgid "Procurement Control"
+msgstr "رقابة المشتريات"
+
+#. module: atmta_procurement_control
+#: model:ir.model,name:atmta_procurement_control.model_realestate_procurement_control_exception
+msgid "Procurement Control Exception"
+msgstr "استثناء رقابي للمشتريات"
+
+#. module: atmta_procurement_control
+#: model:ir.model,name:atmta_procurement_control.model_realestate_procurement_control
+msgid "Procurement Control Position"
+msgstr "الموقف الرقابي للمشتريات"
+
+#. module: atmta_procurement_control
+#: model:ir.actions.server,name:atmta_procurement_control.cron_refresh_dates_ir_actions_server
+msgid "Procurement Control: refresh waiting days and expiry anomalies"
+msgstr "رقابة المشتريات: تحديث أيام الانتظار وحالات الانتهاء الشاذة"
+
+#. module: atmta_procurement_control
+#: model:ir.model,name:atmta_procurement_control.model_realestate_procurement_reservation
+msgid "Procurement Reservation"
+msgstr "حجز الميزانية للمشتريات"
+
+#. module: atmta_procurement_control
+#: model:ir.model,name:atmta_procurement_control.model_realestate_procurement_reservation_conversion
+msgid "Procurement Reservation Conversion"
+msgstr "تحويل حجز الميزانية للمشتريات"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_rule__procurement_type
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+msgid "Procurement Type"
+msgstr "نوع الشراء"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/approval_rule.py:0
+msgid "Procurement approval: %s"
+msgstr "اعتماد المشتريات: %s"
+
+#. module: atmta_procurement_control
+#: model:ir.model,name:atmta_procurement_control.model_realestate_procurement_control_refresh
+msgid "Procurement control: refresh values that depend on today's date"
+msgstr "رقابة المشتريات: تحديث القيم المعتمدة على تاريخ اليوم"
+
+#. module: atmta_procurement_control
+#: model:ir.actions.server,name:atmta_procurement_control.cron_expire_reservations_ir_actions_server
+msgid "Procurement: expire unsourced reservations"
+msgstr "المشتريات: إنهاء حجوزات الميزانية غير الموردة"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_rule__project_id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__project_id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__project_id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__project_id
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_approval_step_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_control_exception_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_search
+msgid "Project"
+msgstr "المشروع"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__purchase_order_id
+msgid "Purchase Order"
+msgstr "أمر شراء"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__purchase_order_ids
+msgid "Purchase Orders"
+msgstr "أوامر الشراء"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_conversion__quantity
+msgid "Quantity"
+msgstr "الكمية"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.actions.act_window,help:atmta_procurement_control.action_material_request
+msgid "Raise a new material request"
+msgstr "إنشاء طلب مواد جديد"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/material_request_control.py:0
+msgid "Raised and approved by the same person (%s)."
+msgstr "أُنشئ واعتُمد من الشخص نفسه (%s)."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__rate_date
+msgid "Rate Date"
+msgstr "تاريخ سعر الصرف"
+
+#. module: atmta_procurement_control
+#: model:ir.model,name:atmta_procurement_control.model_realestate_material_request
+msgid "Real Estate Material Request"
+msgstr "طلب مواد عقاري"
+
+#. module: atmta_procurement_control
+#: model:ir.model,name:atmta_procurement_control.model_realestate_material_request_line
+msgid "Real Estate Material Request Line"
+msgstr "بند طلب مواد عقاري"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_budget_exception__reason
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__reason
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_purchase_exception__reason
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_release__reason
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_control_exception_form
+msgid "Reason"
+msgstr "السبب"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_control_exception_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_form
+msgid "Reject"
+msgstr "رفض"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_approval_step__decision__rejected
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_control_exception__state__rejected
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_approval_step_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_control_exception_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+msgid "Rejected"
+msgstr "مرفوض"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/material_request_control.py:0
+msgid "Rejected at %(rule)s by %(user)s: %(reason)s"
+msgstr "رُفض عند %(rule)s بواسطة %(user)s: %(reason)s"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_form
+msgid "Release"
+msgstr "الإفراج"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__release_reason
+msgid "Release Reason"
+msgstr "سبب الإفراج"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_reservation.py:0
+#: model:ir.model,name:atmta_procurement_control.model_realestate_procurement_reservation_release
+msgid "Release Reservation"
+msgstr "الإفراج عن حجز الميزانية"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__amount_released
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_material_request__reservation_status__released
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_reservation__state__released
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_list
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_search
+msgid "Released"
+msgstr "مفرج عنه"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__released_date
+msgid "Released Date"
+msgstr "تاريخ الإفراج"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_reservation.py:0
+msgid ""
+"Releasing %s needs a reason. Capacity coming back with no explanation is "
+"indistinguishable from a bug."
+msgstr ""
+"الإفراج عن %s يتطلب سببًا. عودة الرصيد دون تفسير لا يمكن تمييزها عن خلل "
+"برمجي."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/wizard/procurement_exception_wizards.py:0
+msgid ""
+"Releasing a reservation returns capacity to the project without anything "
+"having been bought. A manager decides that."
+msgstr ""
+"الإفراج عن حجز الميزانية يعيد الرصيد إلى المشروع دون شراء أي شيء. والمدير هو"
+" من يقرر ذلك."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__request_id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_budget_exception__request_id
+msgid "Request"
+msgstr "الطلب"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/material_request_control.py:0
+#: model:ir.model,name:atmta_procurement_control.model_realestate_procurement_budget_exception
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_form
+msgid "Request Budget Exception"
+msgstr "طلب استثناء الميزانية"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__request_date
+msgid "Request Date"
+msgstr "تاريخ الطلب"
+
+#. module: atmta_procurement_control
+#: model:ir.model,name:atmta_procurement_control.model_realestate_procurement_purchase_exception
+msgid "Request Direct Purchase Exception"
+msgstr "طلب استثناء الشراء المباشر"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_control_exception_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_control_exception_list
+msgid "Requested"
+msgstr "المطلوب"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_budget_exception__requested_amount
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__requested_amount
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_purchase_exception__requested_amount
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__source_amount
+msgid "Requested Amount"
+msgstr "المبلغ المطلوب"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__requested_basis_amount
+msgid "Requested Basis"
+msgstr "الأساس المطلوب"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__requested_by_id
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+msgid "Requested By"
+msgstr "مقدم الطلب"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__source_currency_id
+msgid "Requested In"
+msgstr "عملة الطلب"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__requested_on
+msgid "Requested On"
+msgstr "تاريخ الطلب"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_control_exception__overage_amount
+msgid ""
+"Requested minus available. Zero when the exception is not about an amount."
+msgstr "المطلوب ناقص المتاح. صفر عندما لا يتعلق الاستثناء بمبلغ."
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_control_exception_form
+msgid "Required when refusing."
+msgstr "مطلوب عند الرفض."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__request_id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__request_id
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_approval_step_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_search
+msgid "Requisition"
+msgstr "طلب الشراء"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__request_line_id
+msgid "Requisition Line"
+msgstr "بند طلب الشراء"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/material_request_control.py:0
+msgid "Requisition rejected at %s."
+msgstr "رُفض طلب الشراء عند %s."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_conversion__reservation_id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_release__reservation_id
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+msgid "Reservation"
+msgstr "حجز الميزانية"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__reservation_date
+msgid "Reservation Date"
+msgstr "تاريخ الحجز"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_approval_step_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+msgid "Reservation Missing"
+msgstr "حجز الميزانية مفقود"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_material_request__reservation_status
+msgid "Reservation Status"
+msgstr "حالة الحجز"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/material_request_control.py:0
+#: model:ir.actions.act_window,name:atmta_procurement_control.action_procurement_reservation
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_material_request__reservation_ids
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_material_request_line__reservation_ids
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_pivot
+msgid "Reservations"
+msgstr "الحجوزات"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__amount_reserved
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_material_request__reservation_status__reserved
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_reservation__state__reserved
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_form
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_list
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_list
+msgid "Reserved"
+msgstr "محجوزة"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/material_request_control.py:0
+msgid "Reserved %s of purchasing capacity."
+msgstr "تم حجز %s من رصيد الشراء المتاح."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_material_request__reserved_amount
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_material_request_line__reserved_amount
+msgid "Reserved Amount"
+msgstr "المبلغ المحجوز"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_search
+msgid "Reserved On"
+msgstr "تاريخ الحجز"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_reservation__amount_active
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_reservation_release__amount_active
+msgid ""
+"Reserved minus converted minus released. This, and only this, is what "
+"reduces available-to-procure."
+msgstr ""
+"المحجوز ناقص المحول ناقص المفرج عنه. هذا وحده ما يُنقص الرصيد المتاح للشراء."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_conversion__reversal_reason
+msgid "Reversal Reason"
+msgstr "سبب العكس"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_reservation_conversion__state__reversed
+msgid "Reversed"
+msgstr "معكوس"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_reservation_conversion__state
+msgid ""
+"Reversed when the order that made the commitment was cancelled. The row "
+"stays: it is the record of a commitment that existed for a while, and "
+"deleting it would make the reservation's history unreadable."
+msgstr ""
+"يُعكس عند إلغاء الأمر الذي أنشأ الالتزام. ويبقى السطر: فهو سجل التزام كان "
+"قائمًا لفترة، وحذفه يجعل سجل حجز الميزانية غير مفهوم."
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_form
+msgid "Revise"
+msgstr "مراجعة"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__revision
+msgid "Revision"
+msgstr "المراجعة"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_form
+msgid "Revisions"
+msgstr "المراجعات"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__rule_id
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__rule_name
+msgid "Rule"
+msgstr "القاعدة"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_exception.py:0
+msgid "Say why it is refused. A rejection with no reason cannot be answered."
+msgstr "اذكر سبب الرفض. الرفض دون سبب لا يمكن الرد عليه."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/approval_rule.py:0
+msgid ""
+"Say why. A rejection with no reason cannot be answered, so it comes back "
+"unchanged next week."
+msgstr ""
+"اذكر السبب. الرفض دون سبب لا يمكن الرد عليه، فيعود دون تغيير في الأسبوع "
+"التالي."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_rule__sequence
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__sequence
+msgid "Sequence"
+msgstr "المسلسل"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_approval_rule__procurement_type__service
+msgid "Service"
+msgstr "خدمة"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_reservation__expiry_date
+msgid ""
+"Set from the company's expiry policy at reservation time. Blank means it "
+"does not expire, which is the default: a reservation that vanished on a date"
+" nobody chose would release real demand silently."
+msgstr ""
+"يُحدد من سياسة الانتهاء الخاصة بالشركة وقت الحجز. الترك فارغًا يعني عدم "
+"انتهاء الصلاحية، وهو الإعداد الافتراضي: فحجز يختفي في تاريخ لم يختره أحد "
+"سيُفرج عن طلب حقيقي بصمت."
+
+#. module: atmta_procurement_control
+#: model_terms:ir.actions.act_window,help:atmta_procurement_control.action_approval_rule
+msgid "Set who has to agree"
+msgstr "حدد من يجب أن يوافق"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_approval_step__decision__skipped
+msgid "Skipped"
+msgstr "تم التخطي"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+msgid "Source"
+msgstr "المصدر"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_form
+msgid "Source Amount"
+msgstr "المبلغ المصدر"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+msgid "Sourcing"
+msgstr "المناقصات"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__state
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation__state
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_reservation_conversion__state
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_control_exception_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_procurement_reservation_search
+msgid "State"
+msgstr "الحالة"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_approval_rule__procurement_type__subcontract
+msgid "Subcontract"
+msgstr "عقد من الباطن"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_form
+msgid "Submit"
+msgstr "إرسال"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+msgid "Submitted"
+msgstr "مقدم"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/material_request_control.py:0
+msgid ""
+"Switching budget control on for existing demand is a procurement manager's "
+"decision, not a side effect of an upgrade."
+msgstr ""
+"تفعيل رقابة الميزانية على الطلبات القائمة قرار يعود لمدير المشتريات، وليس "
+"أثرًا جانبيًا للترقية."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_reservation__source_amount
+msgid "Tax-exclusive, in the currency the requisition was raised in."
+msgstr "غير شامل للضريبة، بالعملة التي أُنشئ بها طلب الشراء."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_exception.py:0
+msgid ""
+"The %(label)s belongs to %(other)s and this exception to %(company)s. "
+"Authority does not cross companies."
+msgstr ""
+"%(label)s يتبع %(other)s وهذا الاستثناء يتبع %(company)s. الصلاحية لا تتعدى "
+"حدود الشركات."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_control.py:0
+msgid ""
+"The approved budget has no line for this cost code. Nothing budgeted and not"
+" yet baselined look identical from here, and they are not the same thing."
+msgstr ""
+"لا تحتوي الميزانية المعتمدة على بند لرمز التكلفة هذا. عدم وجود مبلغ في "
+"الميزانية وعدم اعتماد الأساس بعد يبدوان متطابقين من هنا، لكنهما ليسا الشيء "
+"نفسه."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_reservation__amount_reserved
+msgid ""
+"The approved, tax-exclusive amount in company currency. Rule 3: budget and "
+"commitment are compared tax-exclusive, so the reservation must be too — "
+"reserving the VAT-inclusive figure would overstate every position by the tax"
+" rate."
+msgstr ""
+"المبلغ المعتمد غير الشامل للضريبة بعملة الشركة. القاعدة 3: تُقارن الميزانية "
+"والالتزام دون الضريبة، لذا يجب أن يكون الحجز كذلك — فحجز المبلغ شاملًا ضريبة"
+" القيمة المضافة يضخم كل موقف بمقدار نسبة الضريبة."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_control_exception__control_note
+msgid ""
+"The control position as it read at the time — the sentence the approver was "
+"actually looking at."
+msgstr ""
+"الموقف الرقابي كما كان وقتها — الجملة التي كان المعتمد ينظر إليها فعلًا."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_reservation__rate_date
+msgid ""
+"The date the control rate was taken on. Kept because the same amount "
+"converts differently a month later, and a control figure whose basis date is"
+" unknown cannot be reconciled."
+msgstr ""
+"التاريخ الذي أُخذ فيه سعر صرف الرقابة. يُحتفظ به لأن المبلغ نفسه يتحول بشكل "
+"مختلف بعد شهر، ورقم الرقابة الذي لا يُعرف تاريخ أساسه لا يمكن مطابقته."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_control.py:0
+msgid ""
+"The demand carries no cost code. Control is per cost code, so this cannot be"
+" positioned against a budget line."
+msgstr ""
+"الطلب لا يحمل رمز تكلفة. الرقابة تتم لكل رمز تكلفة، لذا لا يمكن تحديد موقفه "
+"مقابل بند في الميزانية."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_control.py:0
+msgid ""
+"The demand names no project, so there is no budget to measure it against."
+msgstr "الطلب لا يحدد مشروعًا، لذا لا توجد ميزانية لقياسه عليها."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_reservation__request_line_id
+msgid ""
+"The demand this reservation is for. Cleared rather than cascaded if the line"
+" is ever removed, so the record of what was reserved survives the record of "
+"what was asked for."
+msgstr ""
+"الطلب الذي يخص حجز الميزانية هذا. يُفرَّغ بدلًا من الحذف المتتالي إذا حُذف "
+"البند، بحيث يبقى سجل ما تم حجزه بعد زوال سجل ما تم طلبه."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_reservation__requested_basis_amount
+msgid ""
+"The estimate at submission. Kept beside the approved amount so an approval "
+"that changed the number is visible rather than inferred."
+msgstr ""
+"التقدير عند الإرسال. يُحتفظ به بجانب المبلغ المعتمد بحيث يكون الاعتماد الذي "
+"غيّر الرقم ظاهرًا بدلًا من استنتاجه."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_material_request__control_status
+msgid ""
+"The live position, read from Construction every time it is asked for. "
+"Deliberately not stored: it is the difference between three numbers that "
+"move independently, and a stored copy would be wrong for as long as it took "
+"something else to change."
+msgstr ""
+"الموقف الحي، يُقرأ من المقاولات في كل مرة يُطلب فيها. لا يُخزن عمدًا: فهو "
+"الفرق بين ثلاثة أرقام تتغير باستقلالية، والنسخة المخزنة ستكون خاطئة طوال "
+"الفترة التي يستغرقها تغير شيء آخر."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_reservation__exception_id
+msgid "The over-budget evidence, where the policy produced any."
+msgstr "دليل تجاوز الميزانية، إن نتج عن السياسة أي دليل."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_control_exception__policy
+msgid ""
+"The policy in force when this was raised. Kept as text because a later "
+"configuration change must not rewrite what the rule was on the day."
+msgstr ""
+"السياسة السارية عند إنشاء هذا السجل. تُحفظ كنص لأن أي تغيير لاحق في "
+"الإعدادات يجب ألا يعيد كتابة ما كانت عليه القاعدة في ذلك اليوم."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_reservation.py:0
+msgid ""
+"The requisition is cancelled but this reservation is still consuming "
+"capacity."
+msgstr "طلب الشراء ملغى لكن هذا الحجز لا يزال يستهلك من الميزانية المتاحة."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_reservation__revision
+msgid ""
+"The requisition revision this reservation belongs to. A revision releases "
+"its predecessor and reserves again — the same demand at a later version is "
+"not the same authorisation."
+msgstr ""
+"مراجعة طلب الشراء التي ينتمي إليها هذا الحجز. المراجعة تفرج عن الحجز السابق "
+"وتحجز من جديد — فالطلب نفسه في نسخة لاحقة ليس هو التفويض نفسه."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_budget_exception__requested_amount
+msgid "The requisition's tax-exclusive control amount."
+msgstr "مبلغ الرقابة لطلب الشراء غير شامل الضريبة."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_approval_step__rule_id
+msgid ""
+"The rule that required this step. Kept for traceability; the authority "
+"itself is snapshotted on this record, so archiving the rule cannot rewrite "
+"what was required."
+msgstr ""
+"القاعدة التي استلزمت هذه الخطوة. تُحفظ لأغراض التتبع؛ أما الصلاحية نفسها "
+"فمحفوظة كلقطة على هذا السجل، لذا لا يمكن لأرشفة القاعدة أن تغيّر ما كان "
+"مطلوبًا."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_approval_step__amount_basis
+msgid ""
+"The tax-exclusive control amount this decision was taken against. If the "
+"requisition later says a different number, the decision no longer covers it."
+msgstr ""
+"مبلغ الرقابة غير شامل الضريبة الذي اتُّخذ هذا القرار على أساسه. إذا تغيّر "
+"الرقم في طلب الشراء لاحقًا، فلن يعود القرار يغطيه."
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_list
+msgid "Total"
+msgstr "الإجمالي"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_control_exception__exception_type
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_control_exception_search
+msgid "Type"
+msgstr "النوع"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_rule__max_amount
+msgid "Up To (blank = infinity)"
+msgstr "حتى (فارغ = بلا حد)"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_approval_step_search
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_search
+msgid "Urgent"
+msgstr "عاجلة"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_approval_rule__priority__1
+msgid "Urgent Only"
+msgstr "العاجل فقط"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_company_form_procurement
+msgid "Vendor Governance"
+msgstr "حوكمة الموردين"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_procurement_approval_step__waiting_days
+msgid "Waiting Days"
+msgstr "أيام الانتظار"
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_approval_step_search
+msgid "Waiting Over A Week"
+msgstr "بانتظار أكثر من أسبوع"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,field_description:atmta_procurement_control.field_realestate_material_request__waiting_since
+msgid "Waiting Since"
+msgstr "بانتظار منذ"
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_budget_exception__control_note
+msgid ""
+"What the availability service says right now. Shown rather than summarised, "
+"because 'over budget' without the numbers is not something anybody can "
+"decide against."
+msgstr ""
+"ما تشير إليه خدمة التوفر حاليًا. يُعرض كما هو دون تلخيص، لأن عبارة 'تجاوز "
+"الميزانية' دون أرقام لا يمكن لأحد أن يتخذ قرارًا بناءً عليها."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_control_exception__available_amount
+msgid "What the control position said was available at that moment."
+msgstr "المبلغ المتاح وفق وضع الرقابة في تلك اللحظة."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_reservation__control_status
+msgid ""
+"What the control position said when this was reserved. A snapshot: the "
+"project's position changes constantly and this records the one the decision "
+"was made against."
+msgstr ""
+"ما كان عليه وضع الرقابة عند الحجز. لقطة ثابتة: وضع المشروع يتغير باستمرار، "
+"وهذا يسجل الوضع الذي اتُّخذ القرار على أساسه."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_reservation__line_description
+msgid ""
+"What the line said when it was reserved. A snapshot, so the register still "
+"reads correctly after a revision."
+msgstr "وصف البند وقت الحجز. لقطة ثابتة، ليبقى السجل صحيحًا بعد أي مراجعة."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_material_request__approval_control_status
+msgid ""
+"What the position said when this went for approval. The approval matrix "
+"matched against this, so it is the figure the approvers were answering — not"
+" today's."
+msgstr ""
+"ما كان عليه الوضع عند إرسال الطلب للاعتماد. مصفوفة الاعتماد طُبقت على هذا "
+"الرقم، فهو الرقم الذي أجاب عنه المعتمدون — لا رقم اليوم."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_control_exception__requested_amount
+msgid "What was asked for, in company currency, tax-exclusive."
+msgstr "المبلغ المطلوب بعملة الشركة، غير شامل الضريبة."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_control_exception__reason
+msgid ""
+"Why the control is being passed. Required, and deliberately not defaulted: "
+"an exception whose reason reads 'exception' is worse than none, because it "
+"looks like evidence."
+msgstr ""
+"سبب تجاوز الرقابة. حقل إلزامي ولا توجد له قيمة افتراضية عمدًا: الاستثناء "
+"الذي سببه 'استثناء' أسوأ من عدم وجود سبب، لأنه يبدو كأنه دليل."
+
+#. module: atmta_procurement_control
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_control.view_material_request_form
+msgid "Why the project needs it."
+msgstr "لماذا يحتاجه المشروع."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_budget_exception__reason
+msgid ""
+"Why the project should spend past its available budget. This is the sentence"
+" the manager is agreeing to."
+msgstr ""
+"سبب إنفاق المشروع بما يتجاوز ميزانيته المتاحة. هذه هي العبارة التي يوافق "
+"عليها المدير."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_reservation_release__reason
+msgid ""
+"Why this demand no longer needs to hold the project's capacity. Capacity "
+"reappearing with no explanation is indistinguishable from a defect."
+msgstr ""
+"سبب عدم حاجة هذا الطلب إلى الاستمرار في حجز ميزانية المشروع. ظهور الميزانية "
+"مجددًا دون تفسير لا يمكن تمييزه عن الخلل."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields,help:atmta_procurement_control.field_realestate_procurement_purchase_exception__reason
+msgid ""
+"Why this is being bought without going through a requisition — an emergency,"
+" a proprietary source, an existing agreement, a petty operational need. M3 "
+"does not judge which; it records which, so that somebody can."
+msgstr ""
+"سبب الشراء دون المرور بطلب شراء — حالة طارئة، أو مصدر حصري، أو اتفاقية "
+"قائمة، أو احتياج تشغيلي بسيط. M3 لا يحكم على السبب؛ بل يسجله ليتمكن غيره من "
+"الحكم."
+
+#. module: atmta_procurement_control
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_material_request__approval_control_status__ok
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_material_request__control_status__ok
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_approval_rule__budget_status__ok
+#: model:ir.model.fields.selection,name:atmta_procurement_control.selection__realestate_procurement_reservation__control_status__ok
+msgid "Within Budget"
+msgstr "ضمن الميزانية"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/approval_rule.py:0
+msgid "You are not in %s, which is the authority this step requires."
+msgstr "لست ضمن %s، وهي الصلاحية التي تتطلبها هذه الخطوة."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/approval_rule.py:0
+msgid "You are not in %s."
+msgstr "لست ضمن %s."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/material_request_control.py:0
+msgid "You do not have permission to approve material requests."
+msgstr "ليس لديك صلاحية اعتماد طلبات المواد."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_exception.py:0
+msgid ""
+"You raised %s. Asking for an exception and granting it are two roles, and "
+"one person cannot hold both here."
+msgstr ""
+"أنت من أنشأ %s. طلب الاستثناء ومنحه دوران منفصلان، ولا يمكن لشخص واحد الجمع "
+"بينهما هنا."
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/material_request_control.py:0
+msgid "approval"
+msgstr "الاعتماد"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_exception.py:0
+#: code:addons/atmta_procurement_control/models/procurement_reservation.py:0
+msgid "project"
+msgstr "المشروع"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_exception.py:0
+msgid "purchase order"
+msgstr "أمر الشراء"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/procurement_exception.py:0
+#: code:addons/atmta_procurement_control/models/procurement_reservation.py:0
+msgid "requisition"
+msgstr "طلب الشراء"
+
+#. module: atmta_procurement_control
+#. odoo-python
+#: code:addons/atmta_procurement_control/models/material_request_control.py:0
+msgid "None of the approvals %s is still waiting for is yours to decide."
+msgstr "لا توجد ضمن الموافقات التي ما زال %s ينتظرها أي موافقة من اختصاصك."

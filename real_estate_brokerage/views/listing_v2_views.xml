@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- M3 / M4 / M11 / M12 / M13 — everything M1–M7 added to existing records. -->
+<odoo>
+
+    <!-- ==============================================================
+         Listing — inventory type, owner, mandate, publication
+         ============================================================== -->
+    <record id="view_listing_form_v2" model="ir.ui.view">
+        <field name="name">realestate.listing.form.v2</field>
+        <field name="model">realestate.listing</field>
+        <field name="inherit_id" ref="view_listing_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='property_id']" position="after">
+                <field name="inventory_type"/>
+                <field name="deal_type"/>
+                <field name="owner_partner_id"
+                       invisible="inventory_type != 'external'"
+                       required="inventory_type == 'external'"/>
+                <field name="project_id"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </xpath>
+            <xpath expr="//field[@name='list_price']" position="after">
+                <field name="minimum_price"
+                       groups="real_estate_brokerage.group_realestate_sales_manager"/>
+                <field name="commission_basis"/>
+                <field name="commission_percentage"
+                       invisible="commission_basis != 'percentage'"/>
+                <field name="commission_fixed"
+                       invisible="commission_basis != 'fixed'"/>
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <group string="Mandate &amp; Publication">
+                    <group>
+                        <field name="active_mandate_id" readonly="1"/>
+                        <field name="mandate_expiry_date" readonly="1"/>
+                        <field name="is_exclusive" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="publication_state"/>
+                        <field name="available_from"/>
+                    </group>
+                </group>
+                <field name="mandate_ids" nolabel="1"
+                       context="{'default_listing_id': id,
+                                 'default_owner_partner_id': owner_partner_id}">
+                    <list decoration-success="state == 'active'"
+                          decoration-muted="state in ('expired','terminated')">
+                        <field name="name"/>
+                        <field name="mandate_type"/>
+                        <field name="date_start"/>
+                        <field name="date_end"/>
+                        <field name="asking_price"/>
+                        <field name="commission_percentage"/>
+                        <field name="negotiation_authority"/>
+                        <field name="state" widget="badge"/>
+                    </list>
+                </field>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_listing_list_v2" model="ir.ui.view">
+        <field name="name">realestate.listing.list.v2</field>
+        <field name="model">realestate.listing</field>
+        <field name="inherit_id" ref="view_listing_list"/>
+        <field name="arch" type="xml">
+            <field name="property_id" position="after">
+                <field name="inventory_type" optional="show"/>
+                <field name="project_id" optional="hide"/>
+                <field name="is_exclusive" optional="hide"/>
+                <field name="publication_state" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_listing_search_v2" model="ir.ui.view">
+        <field name="name">realestate.listing.search.v2</field>
+        <field name="model">realestate.listing</field>
+        <field name="inherit_id" ref="view_listing_search"/>
+        <field name="arch" type="xml">
+            <filter name="featured" position="after">
+                <separator/>
+                <filter name="internal" string="Developer Inventory"
+                        domain="[('inventory_type', '=', 'internal')]"/>
+                <filter name="external" string="Third-party"
+                        domain="[('inventory_type', '=', 'external')]"/>
+                <filter name="exclusive" string="Exclusive"
+                        domain="[('is_exclusive', '=', True)]"/>
+                <filter name="mandate_expiring" string="Mandate Expiring Soon"
+                        domain="[('active_mandate_id.is_expiring_soon', '=', True)]"/>
+            </filter>
+        </field>
+    </record>
+
+    <!-- ==============================================================
+         Mandates
+         ============================================================== -->
+    <record id="view_mandate_list" model="ir.ui.view">
+        <field name="name">realestate.listing.mandate.list</field>
+        <field name="model">realestate.listing.mandate</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state == 'active'"
+                  decoration-warning="is_expiring_soon"
+                  decoration-muted="state in ('expired','terminated')">
+                <field name="name"/>
+                <field name="listing_id"/>
+                <field name="owner_partner_id"/>
+                <field name="mandate_type"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="days_to_expiry" optional="show"/>
+                <field name="asking_price"/>
+                <field name="commission_percentage"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_mandate_form" model="ir.ui.view">
+        <field name="name">realestate.listing.mandate.form</field>
+        <field name="model">realestate.listing.mandate</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_activate" type="object"
+                            string="Activate" class="btn-primary"
+                            invisible="state not in ('draft','pending_signature')"/>
+                    <button name="action_terminate" type="object"
+                            string="Terminate"
+                            invisible="state != 'active'"/>
+                    <button name="action_submit_for_signature" type="object"
+                            string="Send for Signature"
+                            invisible="state != 'draft'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state not in ('draft','pending_signature')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,active"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <div class="alert alert-info" role="alert"
+                         invisible="state != 'active'">
+                        Terms are frozen once a mandate is active. Renew or
+                        terminate and replace it rather than editing what the
+                        owner signed.
+                    </div>
+                    <group>
+                        <group string="Instruction">
+                            <field name="listing_id"
+                                   readonly="state != 'draft'"/>
+                            <field name="property_id" readonly="1"/>
+                            <field name="owner_partner_id"
+                                   readonly="state != 'draft'"/>
+                            <field name="mandate_type"
+                                   readonly="state != 'draft'"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Period">
+                            <field name="date_start"
+                                   readonly="state != 'draft'"/>
+                            <field name="date_end"/>
+                            <field name="days_to_expiry" readonly="1"/>
+                            <field name="signed_on" readonly="1"/>
+                            <field name="signed_by_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Price">
+                            <field name="asking_price"
+                                   readonly="state != 'draft'"/>
+                            <field name="minimum_price"
+                                   readonly="state != 'draft'"
+                                   groups="real_estate_brokerage.group_realestate_sales_manager"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group string="Authority">
+                            <field name="commission_basis"
+                                   readonly="state != 'draft'"/>
+                            <field name="commission_percentage"
+                                   readonly="state != 'draft'"
+                                   invisible="commission_basis != 'percentage'"/>
+                            <field name="commission_fixed"
+                                   readonly="state != 'draft'"
+                                   invisible="commission_basis != 'fixed'"/>
+                            <field name="negotiation_authority"
+                                   readonly="state != 'draft'"/>
+                            <field name="authorized_marketing"/>
+                        </group>
+                    </group>
+                    <group string="Termination"
+                           invisible="state != 'terminated'">
+                        <field name="terminated_on"/>
+                        <field name="termination_reason"/>
+                    </group>
+                    <notebook>
+                        <page string="Documents">
+                            <field name="document_ids" widget="many2many_binary"
+                                   nolabel="1"/>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_mandate" model="ir.actions.act_window">
+        <field name="name">Owner Mandates</field>
+        <field name="res_model">realestate.listing.mandate</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ==============================================================
+         Offer — negotiation, competition, approval
+         ============================================================== -->
+    <record id="view_offer_form_v2" model="ir.ui.view">
+        <field name="name">realestate.offer.form.v2</field>
+        <field name="model">realestate.offer</field>
+        <field name="inherit_id" ref="view_offer_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_approve" type="object"
+                        string="Approve (Below Floor)" class="btn-warning"
+                        invisible="approval_state != 'pending'"
+                        groups="real_estate_brokerage.group_realestate_sales_manager"/>
+                <field name="approval_state" widget="badge"
+                       invisible="approval_state == 'not_required'"
+                       decoration-warning="approval_state == 'pending'"
+                       decoration-success="approval_state == 'approved'"
+                       decoration-danger="approval_state == 'refused'"/>
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <div class="alert alert-warning" role="alert"
+                     invisible="not below_floor">
+                    This offer is below the owner's minimum and needs a
+                    manager's approval before it can be accepted.
+                </div>
+                <group string="Position">
+                    <group>
+                        <field name="initial_amount" readonly="1"/>
+                        <field name="total_movement" readonly="1"/>
+                        <field name="revision_count" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="below_floor" readonly="1"/>
+                        <field name="floor_price" readonly="1"
+                               groups="real_estate_brokerage.group_realestate_sales_manager"/>
+                        <field name="is_best_offer" readonly="1"/>
+                        <field name="competing_offer_count" readonly="1"/>
+                        <field name="company_id"
+                               groups="base.group_multi_company"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page string="Negotiation History">
+                        <field name="revision_ids" readonly="1">
+                            <list>
+                                <field name="sequence" string="Rev"/>
+                                <field name="revision_type"/>
+                                <field name="amount"/>
+                                <field name="movement"
+                                       decoration-success="movement > 0"
+                                       decoration-danger="movement &lt; 0"/>
+                                <field name="recorded_on"/>
+                                <field name="recorded_by_id"/>
+                                <field name="note"/>
+                                <field name="currency_id" column_invisible="1"/>
+                            </list>
+                        </field>
+                    </page>
+                    <page string="Competing Offers"
+                          invisible="competing_offer_count == 0">
+                        <field name="competing_offer_ids" readonly="1">
+                            <list>
+                                <field name="name"/>
+                                <field name="partner_id"/>
+                                <field name="amount"/>
+                                <field name="offer_date"/>
+                                <field name="state" widget="badge"/>
+                                <field name="currency_id" column_invisible="1"/>
+                            </list>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ==============================================================
+         Transaction — the Developer boundary, and the gross
+         ============================================================== -->
+    <record id="view_transaction_form_v2" model="ir.ui.view">
+        <field name="name">realestate.transaction.form.v2</field>
+        <field name="model">realestate.transaction</field>
+        <field name="inherit_id" ref="view_transaction_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='listing_id']" position="after">
+                <field name="inventory_type" readonly="1"/>
+                <field name="developer_contract_id"
+                       invisible="inventory_type != 'internal'"
+                       required="inventory_type == 'internal'"/>
+                <field name="crm_lead_id"/>
+                <field name="re_source_id" readonly="1"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <div class="alert alert-info" role="alert"
+                     invisible="inventory_type != 'internal'">
+                    This unit is Developer inventory. Its availability,
+                    ownership and payment schedule belong to the Developer sale
+                    contract; this transaction records the commercial
+                    relationship and the commission only.
+                </div>
+                <group string="Commission">
+                    <group>
+                        <field name="commission_gross_amount"/>
+                        <field name="commission_gross_source"/>
+                        <field name="commission_gross_note"
+                               invisible="commission_gross_source != 'manual'"/>
+                    </group>
+                    <group>
+                        <field name="commission_allocated" readonly="1"/>
+                        <field name="commission_unallocated" readonly="1"/>
+                        <field name="commission_over_allocated" readonly="1"
+                               invisible="not commission_over_allocated"/>
+                    </group>
+                </group>
+                <div class="alert alert-danger" role="alert"
+                     invisible="not commission_over_allocated">
+                    The splits come to more than the company earned on this
+                    deal. Nothing can be billed until that is corrected.
+                </div>
+                <!-- Visible before cancelling: action_cancel refuses without
+                     a reason, so the reason has to be enterable first. -->
+                <group string="Cancellation" invisible="state == 'closed'">
+                    <field name="cancellation_reason_code"
+                           readonly="state == 'cancelled'"/>
+                    <field name="cancelled_after_contract"
+                           invisible="state != 'cancelled'"/>
+                    <field name="cancelled_on"
+                           invisible="state != 'cancelled'"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_commission_list_v2" model="ir.ui.view">
+        <field name="name">realestate.commission.list.v2</field>
+        <field name="model">realestate.commission</field>
+        <field name="arch" type="xml">
+            <list editable="bottom"
+                  decoration-muted="state in ('cancelled','clawed_back')"
+                  decoration-success="state == 'paid'">
+                <field name="sequence" widget="handle"/>
+                <field name="partner_id"/>
+                <field name="role"/>
+                <field name="calculation_method"/>
+                <field name="share_percentage"
+                       column_invisible="0"/>
+                <field name="percentage" optional="hide"/>
+                <field name="fixed_amount" optional="hide"/>
+                <field name="gross_amount" readonly="1" optional="show"/>
+                <field name="amount" readonly="1"/>
+                <field name="state" widget="badge" readonly="1"/>
+                <field name="paid" readonly="1" optional="hide"/>
+                <field name="currency_id" column_invisible="1"/>
+                <button name="action_approve" type="object" icon="fa-check"
+                        title="Approve" invisible="state != 'draft'"/>
+                <button name="action_create_vendor_bill" type="object"
+                        icon="fa-file-text-o" title="Bill"
+                        invisible="state != 'approved'"/>
+            </list>
+        </field>
+    </record>
+
+    <!--
+      The inline split list predates the gross/split architecture: it showed a
+      percentage of the sale price, an amount, and a "create vendor bill"
+      button with no approval anywhere. A manager could not see what state a
+      split was in, let alone approve one, from the record that owns it.
+    -->
+    <record id="view_transaction_form_commission_lines" model="ir.ui.view">
+        <field name="name">realestate.transaction.form.commissions</field>
+        <field name="model">realestate.transaction</field>
+        <field name="inherit_id" ref="view_transaction_form_v2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='commission_ids']"
+                   position="attributes">
+                <attribute name="context">
+                    {'default_calculation_method': 'share'}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='commission_ids']/list/field[@name='calculation_method']"
+                   position="after">
+                <field name="share_percentage"
+                       invisible="calculation_method != 'share'"/>
+            </xpath>
+            <xpath expr="//field[@name='commission_ids']/list/field[@name='amount']"
+                   position="after">
+                <field name="state" widget="badge" readonly="1"
+                       decoration-success="state == 'paid'"
+                       decoration-info="state in ('approved','billed')"
+                       decoration-muted="state in ('cancelled','clawed_back')"/>
+                <field name="needs_config_review" column_invisible="1"/>
+                <field name="snapshot_amount" optional="hide" readonly="1"/>
+                <field name="snapshot_share_percentage" optional="hide"
+                       readonly="1"/>
+                <field name="share_source" optional="hide" readonly="1"/>
+                <field name="effective_date" optional="hide"/>
+            </xpath>
+            <xpath expr="//field[@name='commission_ids']/list/button[@name='action_create_vendor_bill']"
+                   position="before">
+                <button name="action_approve" type="object" icon="fa-check"
+                        title="Approve" invisible="state != 'draft'"
+                        groups="real_estate_brokerage.group_realestate_sales_manager"/>
+            </xpath>
+            <xpath expr="//field[@name='commission_ids']/list/button[@name='action_create_vendor_bill']"
+                   position="attributes">
+                <attribute name="invisible">state != 'approved'</attribute>
+            </xpath>
+            <xpath expr="//field[@name='commission_ids']/list/button[@name='action_mark_paid']"
+                   position="attributes">
+                <attribute name="invisible">state not in ('approved', 'billed')</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ==============================================================
+         Viewing — the fuller lifecycle
+         ============================================================== -->
+    <record id="view_viewing_form_v2" model="ir.ui.view">
+        <field name="name">realestate.viewing.form.v2</field>
+        <field name="model">realestate.viewing</field>
+        <field name="inherit_id" ref="view_viewing_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_schedule" type="object" string="Schedule"
+                        class="btn-primary" invisible="state != 'suggested'"/>
+                <button name="action_confirm" type="object" string="Confirm"
+                        class="btn-primary" invisible="state != 'scheduled'"/>
+            </xpath>
+            <xpath expr="//field[@name='agent_id']" position="after">
+                <field name="match_id"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="confirmed_on" readonly="1"
+                       invisible="not confirmed_on"/>
+                <field name="rescheduled_from_id" readonly="1"
+                       invisible="not rescheduled_from_id"/>
+                <field name="rescheduled_to_id" readonly="1"
+                       invisible="not rescheduled_to_id"/>
+                <field name="reschedule_count" readonly="1"
+                       invisible="reschedule_count == 0"/>
+            </xpath>
+            <xpath expr="//field[@name='feedback_rating']" position="after">
+                <field name="outcome"
+                       required="state == 'completed'"/>
+                <field name="rejection_reason"
+                       invisible="outcome != 'not_interested'"/>
+                <field name="cancel_reason" invisible="state != 'cancelled'"/>
+                <field name="cancel_note" invisible="state != 'cancelled'"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_viewing_list_v2" model="ir.ui.view">
+        <field name="name">realestate.viewing.list.v2</field>
+        <field name="model">realestate.viewing</field>
+        <field name="inherit_id" ref="view_viewing_list"/>
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <field name="outcome" optional="show"/>
+                <field name="reschedule_count" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

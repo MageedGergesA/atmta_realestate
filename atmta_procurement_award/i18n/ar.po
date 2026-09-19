@@ -1,0 +1,1527 @@
+# Translation of Odoo Server.
+# This file contains the Arabic translation of the following modules:
+# 	* atmta_procurement_award
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:13+0000\n"
+"PO-Revision-Date: 2026-09-17 10:13+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"%(count)s unawarded quotation(s) cancelled: %(names)s. The submitted bids "
+"themselves are M5 evidence and are unchanged."
+msgstr ""
+"تم إلغاء %(count)s من عروض الأسعار غير المرساة: %(names)s. العطاءات المقدمة "
+"نفسها تمثل أدلة M5 ولم تتغير."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid "%(name)s is %(state)s. Only an approved award may be issued."
+msgstr "%(name)s في حالة %(state)s. لا يمكن إصدار إلا ترسية معتمدة."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"%(name)s is recorded as a single award but names %(count)s vendors. Set the "
+"award type to split."
+msgstr ""
+"%(name)s مسجلة كترسية منفردة لكنها تسمي %(count)s موردين. اضبط نوع الترسية "
+"على مجزأة."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"%(name)s leaves part of the tender unawarded but is recorded as a %(type)s award.\n"
+"\n"
+"Set the type to partial. The difference matters: a partial award leaves demand still reserved and still needing to be bought, and the file should say that was the decision rather than an omission."
+msgstr ""
+"%(name)s تترك جزءًا من المناقصة دون ترسية لكنها مسجلة كترسية من نوع %(type)s.\n"
+"\n"
+"اضبط النوع على جزئية. الفرق مهم: الترسية الجزئية تبقي الطلب محجوزًا وما زال يحتاج إلى الشراء، ويجب أن يوضح الملف أن ذلك كان قرارًا وليس سهوًا."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"%(name)s was approved on %(when)s. Its substance cannot be edited — "
+"%(fields)s would change what was authorised after it was authorised."
+msgstr ""
+"تم اعتماد %(name)s في %(when)s. لا يمكن تعديل مضمونها — تعديل %(fields)s "
+"سيغير ما تم اعتماده بعد اعتماده."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"%(orders)s did not confirm, so nothing in this award has been issued. A "
+"part-issued award would leave the tender in a state nobody decided on."
+msgstr ""
+"لم يتم تأكيد %(orders)s، لذا لم يصدر أي شيء من هذه الترسية. الترسية المصدرة "
+"جزئيًا ستترك المناقصة في حالة لم يقررها أحد."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"%(plan)s is no longer frozen, so the ranking this award follows was produced"
+" against a basis that has since moved."
+msgstr ""
+"%(plan)s لم تعد مجمدة، لذا فإن الترتيب الذي تتبعه هذه الترسية أعد على أساس "
+"تغير منذ ذلك الحين."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"%(round)s already has a live award (%(other)s, %(state)s). Revise that one "
+"or cancel it — two live awards on one evaluation would each authorise their "
+"own orders."
+msgstr ""
+"توجد بالفعل ترسية قائمة على %(round)s (%(other)s، %(state)s). راجع تلك "
+"الترسية أو ألغها — وجود ترسيتين قائمتين على تقييم واحد يعني أن كلًا منهما "
+"ستعتمد أوامرها الخاصة."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"%(round)s is %(state)s. An award is founded on a completed evaluation — "
+"awarding against one still in progress would decide the tender before it had"
+" been judged."
+msgstr ""
+"%(round)s في حالة %(state)s. تبنى الترسية على تقييم مكتمل — والترسية بناءً "
+"على تقييم ما زال قيد التنفيذ تحسم المناقصة قبل أن يتم تقييمها."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"%(user)s is not entitled to %(what)s. An award commits a project's budget; "
+"write access to the record is not the same permission."
+msgstr ""
+"%(user)s غير مخول بـ %(what)s. الترسية تلزم ميزانية المشروع؛ وصلاحية التعديل"
+" على السجل ليست الصلاحية نفسها."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"%(vendor)s is awarded %(awarded)s of %(line)s, but only %(tendered)s was "
+"tendered. Nobody approved the difference."
+msgstr ""
+"تمت ترسية %(awarded)s من %(line)s على %(vendor)s، بينما طرح في المناقصة "
+"%(tendered)s فقط. لم يعتمد أحد هذا الفرق."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"%(vendor)s is awarded nothing, so %(order)s would confirm empty. Remove the "
+"award line instead."
+msgstr ""
+"لم تتم ترسية أي شيء على %(vendor)s، لذا سيتم تأكيد %(order)s فارغًا. احذف "
+"بند الترسية بدلًا من ذلك."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"%(vendor)s is not currently eligible to receive an award:\n"
+"\n"
+"%(reasons)s\n"
+"\n"
+"The evaluation may have been sound; the vendor's standing has changed since."
+msgstr ""
+"%(vendor)s غير مؤهل حاليًا لتلقي الترسية:\n"
+"\n"
+"%(reasons)s\n"
+"\n"
+"ربما كان التقييم سليمًا؛ لكن وضع المورد تغير منذ ذلك الحين."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"%(vendor)s's offer expired on %(date)s and was awarded anyway; confirm the "
+"vendor still stands behind it."
+msgstr ""
+"انتهت صلاحية عرض %(vendor)s في %(date)s وتمت ترسيته رغم ذلك؛ تأكد من أن "
+"المورد ما زال ملتزمًا به."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"%(vendor)s's order has no live reservation behind it; confirming it will "
+"commit against capacity that is no longer held."
+msgstr ""
+"أمر %(vendor)s لا يستند إلى حجز ميزانية قائم؛ تأكيده سيلزم مبالغ من سعة لم "
+"تعد محجوزة."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid "%(vendor)s: %(warning)s"
+msgstr "%(vendor)s: %(warning)s"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"%(vendors)s are named on this award but awarded nothing.\n"
+"\n"
+"Caught here rather than at issue: an award line with no quantity would go through approval looking like a decision and then refuse at the moment somebody expected orders to be placed. Remove the line, or give it a quantity."
+msgstr ""
+"%(vendors)s مذكورون في هذه الترسية لكن لم تتم ترسية أي شيء عليهم.\n"
+"\n"
+"تم اكتشاف ذلك هنا بدلًا من مرحلة الإصدار: بند ترسية بلا كمية سيمر عبر الاعتماد وكأنه قرار ثم يرفض في اللحظة التي يتوقع فيها أحد إصدار الأوامر. احذف البند أو حدد له كمية."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"%(vendors)s did not rank first, and awarding them needs a recorded reason.\n"
+"\n"
+"Awarding away from the ranking is permitted — the ranking is an evaluation outcome, not an instruction — but an award file that cannot say why is indistinguishable from one that had no reason."
+msgstr ""
+"%(vendors)s لم يحصلوا على المرتبة الأولى، والترسية عليهم تتطلب تسجيل سبب.\n"
+"\n"
+"الترسية خلافًا للترتيب مسموح بها — فالترتيب نتيجة تقييم وليس تعليمات — لكن ملف الترسية الذي لا يوضح السبب لا يمكن تمييزه عن ملف لم يكن له سبب."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid "%s awards nothing."
+msgstr "%s لا ترسي أي شيء."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid "%s awards the whole tender but is recorded as partial."
+msgstr "%s ترسي المناقصة بالكامل لكنها مسجلة كترسية جزئية."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid "%s evaluates a different tender."
+msgstr "%s تقيم مناقصة مختلفة."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"%s has been issued and its purchase orders are live. Cancel the orders "
+"instead — that is what reverses the commitment, and M3 already does it."
+msgstr ""
+"تم إصدار %s وأوامر الشراء الخاصة بها قائمة. ألغ الأوامر بدلًا من ذلك — فهذا "
+"ما يعكس الالتزام، وM3 يقوم بذلك بالفعل."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid "%s has not been submitted for approval."
+msgstr "لم يتم إرسال %s للاعتماد."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"%s is an approved award and purchase orders were authorised against it."
+msgstr "%s ترسية معتمدة وتم اعتماد أوامر شراء بناءً عليها."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid "%s is cancelled."
+msgstr "%s ملغاة."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"%s is issued and its orders are confirmed. Cancel the orders to reverse the "
+"commitment, then raise a new award — a revision cannot un-commit money."
+msgstr ""
+"تم إصدار %s وتأكيد أوامرها. ألغ الأوامر لعكس الالتزام، ثم أنشئ ترسية جديدة —"
+" فالمراجعة لا يمكنها إلغاء التزام مالي."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid "%s is not a draft."
+msgstr "%s ليست مسودة."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid "%s is recorded as a split award but names one vendor."
+msgstr "%s مسجلة كترسية مجزأة لكنها تسمي موردًا واحدًا."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid "%s names no purchase order to issue."
+msgstr "%s لا تحدد أي أمر شراء لإصداره."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"%s raised this award. Approving your own is not a review, and this is the "
+"one decision in the chain that commits money."
+msgstr ""
+"%s هو من أنشأ هذه الترسية. اعتمادك لما أنشأته بنفسك ليس مراجعة، وهذا هو "
+"القرار الوحيد في السلسلة الذي يلزم مبالغ مالية."
+
+#. module: atmta_procurement_award
+#: model:ir.actions.report,print_report_name:atmta_procurement_award.action_report_award
+msgid "'Award - %s' % (object.name)"
+msgstr "'الترسية - %s' % (object.name)"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid ""
+",\n"
+"                            revision"
+msgstr ""
+",\n"
+"                            المراجعة"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "1. Award"
+msgstr "1. الترسية"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "2. Awarded"
+msgstr "2. المرسى عليهم"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "3. Awarded Scope"
+msgstr "3. النطاق المرسى"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "4. Authorisation"
+msgstr "4. التفويض"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "5. Revalidated at Approval"
+msgstr "5. إعادة التحقق عند الاعتماد"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "<em>Not yet revalidated — this award has not been approved.</em>"
+msgstr "<em>لم يتم التحقق بعد — هذه الترسية لم تعتمد.</em>"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid ""
+"<strong>APPROVED, NOT YET ISSUED.</strong>\n"
+"                            Confirming the orders is what commits the budget."
+msgstr ""
+"<strong>معتمدة، لم تصدر بعد.</strong>\n"
+"                            تأكيد الأوامر هو ما يلزم الميزانية."
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid ""
+"<strong>CANCELLED.</strong> This award authorises\n"
+"                            nothing."
+msgstr ""
+"<strong>ملغاة.</strong> هذه الترسية لا تعتمد\n"
+"                            أي شيء."
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "<strong>Cancellation reason.</strong>"
+msgstr "<strong>سبب الإلغاء.</strong>"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "<strong>Company</strong>"
+msgstr "<strong>الشركة</strong>"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "<strong>Evaluation Basis</strong>"
+msgstr "<strong>أساس التقييم</strong>"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "<strong>Evaluation</strong>"
+msgstr "<strong>التقييم</strong>"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid ""
+"<strong>ISSUED.</strong> The purchase orders below\n"
+"                            are confirmed and the budget is committed."
+msgstr ""
+"<strong>صادرة.</strong> أوامر الشراء أدناه\n"
+"                            مؤكدة والميزانية ملتزم بها."
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "<strong>Justification.</strong>"
+msgstr "<strong>المبررات.</strong>"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid ""
+"<strong>NO PURCHASE IS AUTHORISED BY THIS DOCUMENT\n"
+"                        UNTIL THE ORDERS ABOVE ARE CONFIRMED.</strong>\n"
+"                        Approval authorises; confirming commits."
+msgstr ""
+"<strong>لا يعتمد هذا المستند أي عملية شراء\n"
+"                        حتى يتم تأكيد الأوامر أعلاه.</strong>\n"
+"                        الاعتماد يفوض؛ والتأكيد يلزم."
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid ""
+"<strong>Partial award.</strong> The unawarded balance of\n"
+"                        this tender remains approved demand and remains\n"
+"                        reserved against the project budget. It has not been\n"
+"                        cancelled and it still needs to be bought."
+msgstr ""
+"<strong>ترسية جزئية.</strong> الرصيد غير المرسى من\n"
+"                        هذه المناقصة يظل طلبًا معتمدًا ويظل\n"
+"                        محجوزًا مقابل ميزانية المشروع. لم يتم\n"
+"                        إلغاؤه وما زال يحتاج إلى الشراء."
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "<strong>Project</strong>"
+msgstr "<strong>المشروع</strong>"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid ""
+"<strong>RECOMMENDATION ONLY — NOT YET APPROVED.</strong>\n"
+"                            No purchase is authorised by this document."
+msgstr ""
+"<strong>توصية فقط — لم تعتمد بعد.</strong>\n"
+"                            لا يعتمد هذا المستند أي عملية شراء."
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "<strong>Reference</strong>"
+msgstr "<strong>المرجع</strong>"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "<strong>Sourcing Event</strong>"
+msgstr "<strong>المناقصة</strong>"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid ""
+"<strong>The commitment shown against this project is\n"
+"                        computed by Construction from the confirmed purchase\n"
+"                        orders.</strong> This document does not hold a\n"
+"                        commitment figure of its own, and nothing here can move\n"
+"                        one."
+msgstr ""
+"<strong>الالتزام الظاهر مقابل هذا المشروع\n"
+"                        يحسبه نظام الإنشاءات من أوامر الشراء\n"
+"                        المؤكدة.</strong> لا يحتوي هذا المستند على\n"
+"                        رقم التزام خاص به، ولا يمكن لأي شيء هنا تغييره."
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid ""
+"<strong>This award departs from the evaluation\n"
+"                        ranking.</strong> That is permitted — a ranking is an\n"
+"                        evaluation outcome, not an instruction — and the reason\n"
+"                        is recorded below."
+msgstr ""
+"<strong>هذه الترسية تخالف ترتيب\n"
+"                        التقييم.</strong> وهذا مسموح به — فالترتيب نتيجة\n"
+"                        تقييم وليس تعليمات — والسبب\n"
+"                        مسجل أدناه."
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "<strong>Total Awarded</strong>"
+msgstr "<strong>إجمالي المبلغ المرسى</strong>"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "<strong>Type</strong>"
+msgstr "<strong>النوع</strong>"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"A revised award needs a reason. Changing an authorisation without one is "
+"indistinguishable from changing it to suit the outcome."
+msgstr ""
+"الترسية المعدلة تحتاج إلى سبب. تغيير التفويض دون سبب لا يمكن تمييزه عن "
+"تغييره لتلائم النتيجة."
+
+#. module: atmta_procurement_award
+#: model:ir.model.constraint,message:atmta_procurement_award.constraint_realestate_procurement_award_allocation_line_uniq
+msgid "A tender line is awarded to a vendor once per award line."
+msgstr "يرسى بند المناقصة على المورد مرة واحدة لكل بند ترسية."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/evaluation_audit_award.py:0
+msgid ""
+"A tender purchase order is confirmed with no approved award behind it, so a "
+"commitment exists that nobody authorised."
+msgstr ""
+"تم تأكيد أمر شراء لمناقصة دون ترسية معتمدة تستند إليه، لذا يوجد التزام لم "
+"يعتمده أحد."
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__message_needaction
+msgid "Action Needed"
+msgstr "إجراء مطلوب"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_line__allocation_ids
+msgid "Allocation"
+msgstr "تخصيص الوحدة"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_allocation__amount
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_line__amount
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "Amount"
+msgstr "المبلغ"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__amount_total
+msgid "Amount Total"
+msgstr "المبلغ الإجمالي"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/evaluation_audit_award.py:0
+msgid "An award commits more quantity than the tender authorised."
+msgstr "ترسية تلزم بكمية أكبر مما اعتمدته المناقصة."
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_procurement_award_form
+msgid ""
+"An award is a <strong>decision</strong>, not a\n"
+"                        calculation. Approving it authorises the named purchase\n"
+"                        orders; <strong>confirming those orders is what\n"
+"                        commits the budget</strong>. Construction computes the\n"
+"                        commitment from the orders — nothing on this screen\n"
+"                        holds a commitment figure of its own."
+msgstr ""
+"الترسية <strong>قرار</strong>، وليست\n"
+"                        عملية حسابية. اعتمادها يفوض أوامر الشراء\n"
+"                        المحددة؛ <strong>وتأكيد تلك الأوامر هو ما\n"
+"                        يلزم الميزانية</strong>. يحسب نظام الإنشاءات\n"
+"                        الالتزام من الأوامر — ولا شيء في هذه الشاشة\n"
+"                        يحتوي على رقم التزام خاص به."
+
+#. module: atmta_procurement_award
+#: model:ir.model.constraint,message:atmta_procurement_award.constraint_realestate_procurement_award_round_revision_uniq
+msgid "An award revision is raised once per evaluation round."
+msgstr "تنشأ مراجعة الترسية مرة واحدة لكل جولة تقييم."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/evaluation_audit_award.py:0
+msgid "An award was approved by the person who raised it."
+msgstr "تم اعتماد ترسية من قبل الشخص الذي أنشأها."
+
+#. module: atmta_procurement_award
+#: model:ir.model.constraint,message:atmta_procurement_award.constraint_realestate_procurement_award_allocation_qty_positive
+msgid "An awarded quantity cannot be negative."
+msgstr "لا يمكن أن تكون الكمية المرساة سالبة."
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid ""
+"An evaluation is a photograph. These are the things that\n"
+"                    were re-checked at the moment the decision was actually\n"
+"                    taken: vendor eligibility, bid validity, that the\n"
+"                    evaluation basis was still the frozen one, and that the\n"
+"                    reserved capacity was still being held."
+msgstr ""
+"التقييم صورة لحظية. هذه هي الأمور التي\n"
+"                    أعيد التحقق منها لحظة اتخاذ القرار فعليًا:\n"
+"                    أهلية المورد، وصلاحية العطاء، وأن أساس\n"
+"                    التقييم ما زال هو الأساس المجمد، وأن\n"
+"                    السعة المحجوزة ما زالت محتجزة."
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_procurement_award_form
+msgid ""
+"An evaluation is a photograph. What was still true when the decision was "
+"actually taken is recorded here."
+msgstr ""
+"التقييم صورة لحظية. يسجل هنا ما كان لا يزال صحيحًا عند اتخاذ القرار فعليًا."
+
+#. module: atmta_procurement_award
+#: model:ir.model.constraint,message:atmta_procurement_award.constraint_realestate_procurement_award_line_candidate_uniq
+msgid "An offer is awarded once per award."
+msgstr "يرسى العرض مرة واحدة لكل ترسية."
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_procurement_award_form
+msgid "Approval"
+msgstr "الاعتماد"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_procurement_award_form
+msgid "Approve"
+msgstr "اعتماد"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields.selection,name:atmta_procurement_award.selection__realestate_procurement_award__state__approved
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "Approved"
+msgstr "معتمد"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__approved_by_id
+msgid "Approved By"
+msgstr "اعتمد بواسطة"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__approved_on
+msgid "Approved On"
+msgstr "تاريخ الاعتماد"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_allocation__award_id
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_line__award_id
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_sourcing_event__award_ids
+msgid "Award"
+msgstr "الترسية"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "Award Decision"
+msgstr "قرار الترسية"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_procurement_award_form
+msgid "Award Document"
+msgstr "مستند الترسية"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_allocation__award_line_id
+msgid "Award Line"
+msgstr "بند الترسية"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "Award Recommendation"
+msgstr "توصية الترسية"
+
+#. module: atmta_procurement_award
+#: model:ir.actions.report,name:atmta_procurement_award.action_report_award
+msgid "Award Recommendation / Decision"
+msgstr "توصية / قرار الترسية"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__award_type
+msgid "Award Type"
+msgstr "نوع الترسية"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"Award approved. The named purchase orders may now be confirmed; confirming "
+"them is what creates the commitment."
+msgstr ""
+"تم اعتماد الترسية. يمكن الآن تأكيد أوامر الشراء المحددة؛ وتأكيدها هو ما ينشئ"
+" الالتزام."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid "Award cancelled: %s"
+msgstr "تم إلغاء الترسية: %s"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"Award issued. %(count)s purchase order(s) confirmed; the reservation has "
+"converted and Construction now reads the commitment from the orders."
+msgstr ""
+"تم إصدار الترسية. تم تأكيد %(count)s من أوامر الشراء؛ وتحول حجز الميزانية "
+"إلى التزام ويقرأ نظام الإنشاءات الالتزام الآن من الأوامر."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"Award submitted for approval: %(count)s line(s), %(total)s. This is a "
+"recommendation until somebody else approves it."
+msgstr ""
+"تم إرسال الترسية للاعتماد: %(count)s بند، بإجمالي %(total)s. تبقى توصية إلى "
+"أن يعتمدها شخص آخر."
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_procurement_award_form
+msgid "Awarded"
+msgstr "تمت الترسية"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_allocation__quantity
+msgid "Awarded Qty"
+msgstr "الكمية المرساة"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_procurement_award_form
+msgid "Awarded scope"
+msgstr "النطاق المرسى"
+
+#. module: atmta_procurement_award
+#: model:ir.actions.act_window,name:atmta_procurement_award.action_procurement_award
+msgid "Awards"
+msgstr "الترسيات"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_allocation__bid_line_id
+msgid "Bid Line"
+msgstr "بند العطاء"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_line__bid_response_id
+msgid "Bid Response"
+msgstr "العطاء"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "By"
+msgstr "بواسطة"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__cancellation_reason
+msgid "Cancellation Reason"
+msgstr "سبب الإلغاء"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields.selection,name:atmta_procurement_award.selection__realestate_procurement_award__state__cancelled
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_procurement_award_form
+msgid "Cancelled"
+msgstr "ملغى"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__cancelled_by_id
+msgid "Cancelled By"
+msgstr "ألغيت بواسطة"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__cancelled_on
+msgid "Cancelled On"
+msgstr "تاريخ الإلغاء"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid "Cancelling an award needs a reason."
+msgstr "إلغاء الترسية يحتاج إلى سبب."
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_line__candidate_id
+msgid "Candidate"
+msgstr "العرض المرشح"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_procurement_award_form
+msgid "Checker"
+msgstr "المدقق"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_allocation__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_line__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/evaluation_audit_award.py:0
+msgid ""
+"Convert or release the reservation. Two control numbers for one obligation "
+"means the project's availability is wrong by that amount."
+msgstr ""
+"حول حجز الميزانية أو أفرج عنه. وجود رقمين رقابيين لالتزام واحد يعني أن "
+"المتاح في المشروع خاطئ بمقدار ذلك المبلغ."
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_allocation__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_line__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_allocation__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_line__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__currency_id
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_allocation__currency_id
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_line__currency_id
+msgid "Currency"
+msgstr "العملة"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_procurement_award_form
+msgid "Decision"
+msgstr "القرار"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/evaluation_audit_award.py:0
+msgid ""
+"Demand behind a confirmed order is still holding a reservation with nothing "
+"converted, so the same money is both reserved and committed."
+msgstr ""
+"الطلب المرتبط بأمر مؤكد ما زال يحتفظ بحجز ميزانية دون تحويل أي جزء منه، لذا "
+"فإن المبلغ نفسه محجوز وملتزم به في آن واحد."
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_allocation__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_line__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields.selection,name:atmta_procurement_award.selection__realestate_procurement_award__state__draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/evaluation_audit_award.py:0
+msgid ""
+"Establish who confirmed it and under what authority. Sourcing does not "
+"commit money; an award does."
+msgstr ""
+"حدد من قام بتأكيده وبأي صلاحية. المناقصة لا تلزم مبالغ مالية؛ الترسية هي "
+"التي تلزمها."
+
+#. module: atmta_procurement_award
+#: model:ir.model,name:atmta_procurement_award.model_realestate_procurement_evaluation_audit
+msgid "Evaluation Integrity Audit"
+msgstr "تدقيق سلامة التقييم"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "Evaluation Rank"
+msgstr "ترتيب التقييم"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_procurement_award_form
+msgid ""
+"Every invited vendor was issued an RFQ\n"
+"                                        for the whole tender, because at\n"
+"                                        invitation time nobody knew who would\n"
+"                                        win what. Trim these quantities to\n"
+"                                        split or partially award — the orders\n"
+"                                        are rewritten to match before anything\n"
+"                                        confirms."
+msgstr ""
+"صدر لكل مورد مدعو طلب عرض سعر\n"
+"                                        للمناقصة بالكامل، لأنه وقت\n"
+"                                        الدعوة لم يكن أحد يعلم من سيفوز\n"
+"                                        بماذا. خفض هذه الكميات\n"
+"                                        للترسية المجزأة أو الجزئية — وتعاد\n"
+"                                        كتابة الأوامر لتطابقها قبل تأكيد\n"
+"                                        أي شيء."
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "Followed the Ranking"
+msgstr "اتبعت الترتيب"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_procurement_award_form
+msgid "Founded on"
+msgstr "مبنية على"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__has_message
+msgid "Has Message"
+msgstr "يحتوي على رسالة"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__id
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_allocation__id
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_line__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,help:atmta_procurement_award.field_realestate_procurement_award__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا كان محددًا، فهناك رسائل جديدة تتطلب انتباهك."
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,help:atmta_procurement_award.field_realestate_procurement_award__message_has_error
+#: model:ir.model.fields,help:atmta_procurement_award.field_realestate_procurement_award__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا كان محددًا، فبعض الرسائل بها خطأ في التسليم."
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_line__is_top_ranked
+msgid "Is Top Ranked"
+msgstr "صاحب المرتبة الأولى"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_procurement_award_form
+msgid "Issue Award"
+msgstr "إصدار الترسية"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields.selection,name:atmta_procurement_award.selection__realestate_procurement_award__state__issued
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_procurement_award_form
+msgid "Issued"
+msgstr "صادر"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__issued_by_id
+msgid "Issued By"
+msgstr "جهة الإصدار"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__issued_on
+msgid "Issued On"
+msgstr "تاريخ الإصدار"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_procurement_award_form
+msgid ""
+"Issuing confirms the awarded purchase orders. That is what converts the "
+"reservation into a Construction commitment — the first irreversible step in "
+"this chain."
+msgstr ""
+"الإصدار يؤكد أوامر الشراء المرساة. وهذا ما يحول حجز الميزانية إلى التزام في "
+"الإنشاءات — وهو أول خطوة لا رجعة فيها في هذه السلسلة."
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__justification
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_procurement_award_form
+msgid "Justification"
+msgstr "المبررات"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_allocation__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_line__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_allocation__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_line__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__line_ids
+msgid "Line"
+msgstr "البند"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/evaluation_audit_award.py:0
+msgid "M6 exposes an award interface: %s. Evaluation ranks; M7 awards."
+msgstr "M6 يوفر واجهة للترسية: %s. التقييم يرتب؛ وM7 يرسي."
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_procurement_award_form
+msgid "Maker"
+msgstr "المنشئ"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"More is awarded than was tendered:\n"
+"\n"
+"%(lines)s\n"
+"\n"
+"The authorisation behind this tender does not grow because the demand was split between vendors."
+msgstr ""
+"الكمية المرساة أكبر مما طرح في المناقصة:\n"
+"\n"
+"%(lines)s\n"
+"\n"
+"التفويض الذي تستند إليه هذه المناقصة لا يزيد لمجرد أن الطلب قسم بين الموردين."
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid "New"
+msgstr "جديد"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "No"
+msgstr "لا"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__notes
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_procurement_award_form
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,help:atmta_procurement_award.field_realestate_procurement_award__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراء"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,help:atmta_procurement_award.field_realestate_procurement_award__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي بها خطأ في التسليم"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields.selection,name:atmta_procurement_award.selection__realestate_procurement_award__award_type__partial
+msgid "Partial Award — part of the tender only"
+msgstr "ترسية جزئية — جزء من المناقصة فقط"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__plan_id
+msgid "Plan"
+msgstr "الخطة"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_allocation__price_unit
+msgid "Price Unit"
+msgstr "سعر الوحدة"
+
+#. module: atmta_procurement_award
+#: model:ir.model,name:atmta_procurement_award.model_realestate_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_procurement_award_form
+msgid "Procurement Award"
+msgstr "ترسية المشتريات"
+
+#. module: atmta_procurement_award
+#: model:ir.model,name:atmta_procurement_award.model_realestate_procurement_award_allocation
+msgid "Procurement Award Allocation"
+msgstr "توزيع ترسية المشتريات"
+
+#. module: atmta_procurement_award
+#: model:ir.model,name:atmta_procurement_award.model_realestate_procurement_award_line
+msgid "Procurement Award Line"
+msgstr "بند ترسية المشتريات"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_procurement_award_list
+msgid "Procurement Awards"
+msgstr "ترسيات المشتريات"
+
+#. module: atmta_procurement_award
+#: model:ir.model,name:atmta_procurement_award.model_realestate_procurement_sourcing_event
+msgid "Procurement Sourcing Event"
+msgstr "مناقصة المشتريات"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__project_id
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_line__project_id
+msgid "Project"
+msgstr "المشروع"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_line__purchase_order_id
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "Purchase Order"
+msgstr "أمر شراء"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid ""
+"Quantities at the vendor's own bid rate. Every invited\n"
+"                    vendor was issued a request for the whole tender; the\n"
+"                    purchase orders are rewritten to these figures before they\n"
+"                    are confirmed."
+msgstr ""
+"الكميات بسعر عطاء المورد نفسه. صدر لكل مورد\n"
+"                    مدعو طلب للمناقصة بالكامل؛ وتعاد كتابة\n"
+"                    أوامر الشراء وفق هذه الأرقام قبل\n"
+"                    تأكيدها."
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "Raised"
+msgstr "أنشئت"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid ""
+"Raised and approved by two different people. The person who\n"
+"                    proposes an award does not authorise it."
+msgstr ""
+"أنشئت واعتمدت من قبل شخصين مختلفين. الشخص الذي\n"
+"                    يقترح الترسية لا يعتمدها."
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_line__rank_awarded
+msgid "Rank Awarded"
+msgstr "المرتبة المرساة"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "Rate"
+msgstr "السعر"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,help:atmta_procurement_award.field_realestate_procurement_award__award_type
+msgid ""
+"Recorded rather than inferred. A split award and a partial award are "
+"different decisions with different consequences for the demand that was not "
+"awarded, and the file should say which one was taken."
+msgstr ""
+"يسجل ولا يستنتج. الترسية المجزأة والترسية الجزئية قراران مختلفان لهما عواقب "
+"مختلفة على الطلب الذي لم تتم ترسيته، ويجب أن يوضح الملف أيهما اتخذ."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/evaluation_audit_award.py:0
+msgid "Remove it. The award decision is a separate authorised act."
+msgstr "احذفه. قرار الترسية إجراء مستقل يتطلب اعتمادًا."
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,help:atmta_procurement_award.field_realestate_procurement_award__justification
+msgid "Required when the award does not follow the ranking."
+msgstr "مطلوب عندما لا تتبع الترسية الترتيب."
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_procurement_award_form
+msgid ""
+"Required when the award does not follow the ranking. Awarding away from rank"
+" 1 is permitted — the ranking is an evaluation outcome, not an instruction —"
+" but the file has to say why."
+msgstr ""
+"مطلوب عندما لا تتبع الترسية الترتيب. الترسية على غير صاحب المرتبة 1 مسموح "
+"بها — فالترتيب نتيجة تقييم وليس تعليمات — لكن يجب أن يوضح الملف السبب."
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_procurement_award_form
+msgid "Revalidated at approval"
+msgstr "إعادة التحقق عند الاعتماد"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"Revalidated at approval: vendor eligibility, bid validity, evaluation basis "
+"and reserved capacity all still stood."
+msgstr ""
+"تمت إعادة التحقق عند الاعتماد: أهلية المورد وصلاحية العطاء وأساس التقييم "
+"والسعة المحجوزة كلها ما زالت قائمة."
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__revalidation_note
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_line__revalidation_note
+msgid "Revalidation Note"
+msgstr "ملاحظة إعادة التحقق"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__revision
+msgid "Revision"
+msgstr "المراجعة"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__revision_reason
+msgid "Revision Reason"
+msgstr "سبب المراجعة"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__round_id
+msgid "Round"
+msgstr "الجولة"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "خطأ في إرسال الرسائل النصية القصيرة"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields.selection,name:atmta_procurement_award.selection__realestate_procurement_award__award_type__single
+msgid "Single Award"
+msgstr "ترسية منفردة"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,help:atmta_procurement_award.field_realestate_procurement_award_allocation__partner_name
+#: model:ir.model.fields,help:atmta_procurement_award.field_realestate_procurement_award_line__partner_name
+msgid ""
+"Snapshotted for the same reason M6 snapshots it on the candidate: a vendor "
+"renamed afterwards must not restate who was awarded."
+msgstr ""
+"تحفظ نسخة ثابتة منه للسبب نفسه الذي يحفظه M6 على العرض المرشح: تغيير اسم "
+"المورد لاحقًا يجب ألا يغير من تمت الترسية عليه."
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__sourcing_event_id
+msgid "Sourcing Event"
+msgstr "المناقصة"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields.selection,name:atmta_procurement_award.selection__realestate_procurement_award__award_type__split
+msgid "Split Award — more than one vendor"
+msgstr "ترسية مجزأة — أكثر من مورد"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__state
+msgid "State"
+msgstr "الحالة"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "Step"
+msgstr "الخطوة"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_procurement_award_form
+msgid "Submit for Approval"
+msgstr "إرسال للاعتماد"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__submitted_by_id
+msgid "Submitted By"
+msgstr "مقدم بواسطة"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__submitted_on
+msgid "Submitted On"
+msgstr "تاريخ التقديم"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields.selection,name:atmta_procurement_award.selection__realestate_procurement_award__state__review
+msgid "Submitted for Approval"
+msgstr "مرسلة للاعتماد"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__superseded
+msgid "Superseded"
+msgstr "مستبدل"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid "Superseded by revision %(rev)s: %(reason)s"
+msgstr "حلت محلها المراجعة %(rev)s: %(reason)s"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__supersedes_id
+msgid "Supersedes"
+msgstr "يحل محل"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_allocation__sourcing_line_id
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "Tender Line"
+msgstr "بند المناقصة"
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "Tendered"
+msgstr "المطروح"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_allocation__tender_quantity
+msgid "Tendered Qty"
+msgstr "الكمية المطروحة"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/evaluation_audit_award.py:0
+msgid ""
+"The authorisation does not grow because the demand was split between "
+"vendors."
+msgstr "التفويض لا يزيد لمجرد أن الطلب قسم بين الموردين."
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,help:atmta_procurement_award.field_realestate_procurement_award_line__amount
+msgid ""
+"The awarded scope priced at the vendor's own bid. Derived rather than typed:"
+" an award amount that did not match the quantities being awarded would be a "
+"number nobody could reconcile against either the bid or the purchase order."
+msgstr ""
+"النطاق المرسى مسعرًا بعطاء المورد نفسه. يحسب ولا يدخل يدويًا: مبلغ ترسية لا "
+"يطابق الكميات المرساة سيكون رقمًا لا يمكن لأحد مطابقته مع العطاء أو أمر "
+"الشراء."
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,help:atmta_procurement_award.field_realestate_procurement_award_line__candidate_id
+msgid ""
+"The evaluated offer being awarded. Awarding points at the evaluation rather "
+"than at the vendor, so the file can always say which judgement the decision "
+"rests on."
+msgstr ""
+"العرض المقيم الذي تتم ترسيته. تشير الترسية إلى التقييم لا إلى المورد، حتى "
+"يتمكن الملف دائمًا من توضيح الحكم الذي يستند إليه القرار."
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,help:atmta_procurement_award.field_realestate_procurement_award__round_id
+msgid ""
+"The finalised evaluation this award is founded on. An award with no "
+"evaluation behind it is a purchase somebody decided to make, which is a "
+"different document with different controls."
+msgstr ""
+"التقييم النهائي الذي تستند إليه هذه الترسية. الترسية التي لا يستند إليها "
+"تقييم هي عملية شراء قرر أحد القيام بها، وهي مستند مختلف بضوابط مختلفة."
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,help:atmta_procurement_award.field_realestate_procurement_award_line__purchase_order_id
+msgid ""
+"The order this line authorises. It is the vendor's own tender RFQ — M5 "
+"created one per invitation — not a new document, so the thing that gets "
+"confirmed is the thing that was bid."
+msgstr ""
+"الأمر الذي يعتمده هذا البند. وهو طلب عرض السعر الخاص بالمورد في المناقصة — "
+"أنشأ M5 طلبًا لكل دعوة — وليس مستندًا جديدًا، لذا فإن ما يتم تأكيده هو ما "
+"قدم عليه العطاء."
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,help:atmta_procurement_award.field_realestate_procurement_award__project_id
+#: model:ir.model.fields,help:atmta_procurement_award.field_realestate_procurement_award_line__project_id
+msgid "The project whose authorised demand this event sources."
+msgstr "المشروع الذي تغطي هذه المناقصة طلبه المعتمد."
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,help:atmta_procurement_award.field_realestate_procurement_award_allocation__price_unit
+msgid ""
+"The vendor's own bid rate, snapshotted. An award does not renegotiate a "
+"price; a BAFO round does that, and it produces a new bid revision to award "
+"from."
+msgstr ""
+"سعر عطاء المورد نفسه، محفوظًا كنسخة ثابتة. الترسية لا تعيد التفاوض على "
+"السعر؛ فذلك دور جولة أفضل عرض نهائي، والتي تنتج مراجعة جديدة للعطاء تتم "
+"الترسية بناءً عليها."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"These offers were not technically responsive and cannot be awarded at any price: %s.\n"
+"\n"
+"A knockout failure is not rescuable by a decision — that is what made it a knockout."
+msgstr ""
+"هذه العروض لم تستوف المتطلبات الفنية ولا يمكن ترسيتها بأي سعر: %s.\n"
+"\n"
+"الإخفاق في معيار إقصائي لا يمكن تداركه بقرار — فهذا ما يجعله معيارًا إقصائيًا."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid ""
+"These tender lines draw on more than one approved requisition, so confirming them would commit the budget while the reservations went on holding it — the same money counted twice:\n"
+"\n"
+"%(lines)s\n"
+"\n"
+"Split the tender line, or award the requisitions separately. It is not apportioned automatically because a wrong apportionment is invisible."
+msgstr ""
+"بنود المناقصة هذه تستند إلى أكثر من طلب شراء معتمد، لذا فإن تأكيدها سيلزم الميزانية بينما تظل حجوزات الميزانية محتفظة بها — أي احتساب المبلغ نفسه مرتين:\n"
+"\n"
+"%(lines)s\n"
+"\n"
+"قسم بند المناقصة، أو قم بترسية طلبات الشراء بشكل منفصل. لا يتم التوزيع تلقائيًا لأن التوزيع الخاطئ لا يمكن ملاحظته."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/evaluation_audit_award.py:0
+msgid ""
+"This is the one decision in the chain that commits money. Establish how the "
+"second signature was bypassed."
+msgstr ""
+"هذا هو القرار الوحيد في السلسلة الذي يلزم مبالغ مالية. حدد كيف تم تجاوز "
+"التوقيع الثاني."
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_line__partner_id
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "Vendor"
+msgstr "المورد"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_allocation__partner_name
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award_line__partner_name
+msgid "Vendor (as awarded)"
+msgstr "المورد (كما في الترسية)"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,field_description:atmta_procurement_award.field_realestate_procurement_award__website_message_ids
+msgid "Website Messages"
+msgstr "رسائل الموقع الإلكتروني"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,help:atmta_procurement_award.field_realestate_procurement_award__website_message_ids
+msgid "Website communication history"
+msgstr "سجل التواصل عبر الموقع الإلكتروني"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,help:atmta_procurement_award.field_realestate_procurement_award__revalidation_note
+msgid ""
+"What the revalidation found at the moment of approval. Stored because an "
+"evaluation is a photograph and the award is taken later: this records what "
+"was still true when the decision was actually made."
+msgstr ""
+"ما توصلت إليه إعادة التحقق لحظة الاعتماد. يحفظ لأن التقييم صورة لحظية "
+"والترسية تتم لاحقًا: فهذا يسجل ما كان لا يزال صحيحًا عند اتخاذ القرار "
+"فعليًا."
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "When"
+msgstr "التاريخ"
+
+#. module: atmta_procurement_award
+#: model:ir.model.fields,help:atmta_procurement_award.field_realestate_procurement_award_line__is_top_ranked
+msgid ""
+"Whether this offer held rank 1. Stored so the award file can show the "
+"ranking it followed or departed from without recomputing it later against "
+"data that has moved."
+msgstr ""
+"ما إذا كان هذا العرض في المرتبة 1. يحفظ حتى يتمكن ملف الترسية من إظهار "
+"الترتيب الذي اتبعه أو خالفه دون إعادة حسابه لاحقًا على بيانات تغيرت."
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.report_award_document
+msgid "Yes"
+msgstr "نعم"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid "approve an award"
+msgstr "اعتماد ترسية"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid "cancel an award"
+msgstr "إلغاء ترسية"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid "issue an award"
+msgstr "إصدار ترسية"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid "issue the award document"
+msgstr "إصدار مستند الترسية"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid "raise an award"
+msgstr "إنشاء ترسية"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/procurement_award.py:0
+msgid "revise an award"
+msgstr "مراجعة ترسية"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/evaluation_round_award.py:0
+msgid ""
+"%(round)s already has a live award (%(award)s, %(state)s). Revise or cancel "
+"that one instead of starting another."
+msgstr "%(round)s لها بالفعل ترسية قائمة (%(award)s، %(state)s). راجعها أو ألغِها بدلاً من بدء ترسية أخرى."
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/evaluation_round_award.py:0
+msgid "%(round)s is %(state)s. An award is founded on a completed evaluation."
+msgstr "%(round)s في حالة %(state)s. الترسية تُبنى على تقييم مكتمل."
+
+#. module: atmta_procurement_award
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_award.view_evaluation_round_form_award
+msgid "Create Award"
+msgstr "إنشاء ترسية"
+
+#. module: atmta_procurement_award
+#. odoo-python
+#: code:addons/atmta_procurement_award/models/evaluation_round_award.py:0
+msgid "New Award"
+msgstr "ترسية جديدة"
+
+#. module: atmta_procurement_award
+#: model:ir.model,name:atmta_procurement_award.model_realestate_procurement_evaluation_round
+msgid "Procurement Evaluation Round"
+msgstr "جولة تقييم المشتريات"

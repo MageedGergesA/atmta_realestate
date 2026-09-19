@@ -26,4 +26,55 @@
         <field name="active">True</field>
     </record>
 
+    <!-- Overdue state and ageing are stored but depend on today's date. -->
+    <record id="cron_refresh_installment_aging" model="ir.cron">
+        <field name="name">Developer: Refresh installment ageing</field>
+        <field name="model_id" ref="model_realestate_sale_installment"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_refresh_installment_aging()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active">True</field>
+    </record>
+
+    <!-- Promotions whose end date has passed stop being offered. -->
+    <record id="cron_expire_promotions" model="ir.cron">
+        <field name="name">Developer: Expire promotions</field>
+        <field name="model_id" ref="model_realestate_promotion"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_expire_promotions()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active">True</field>
+    </record>
+
+    <!--
+        Time-based availability transitions.
+
+        `is_released_for_sale` and `is_available_for_sale` are stored, because
+        they are searched, grouped and drilled into constantly. A stored
+        computed field does not recompute merely because the date changed, so
+        release windows opening and blocks expiring have to be swept. Both
+        sweeps are scoped to the affected records, not the whole table.
+    -->
+    <record id="cron_refresh_release_windows" model="ir.cron">
+        <field name="name">Developer: Refresh release windows</field>
+        <field name="model_id" ref="model_realestate_unit_release_batch"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_refresh_release_windows()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="cron_refresh_block_windows" model="ir.cron">
+        <field name="name">Developer: Refresh commercial blocks</field>
+        <field name="model_id" ref="model_realestate_unit_block"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_refresh_block_windows()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active">True</field>
+    </record>
+
 </odoo>

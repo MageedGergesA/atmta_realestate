@@ -1,0 +1,153 @@
+# Translation of Odoo Server.
+# This file contains the Arabic translation of the following modules:
+# 	* real_estate_procurement
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:14+0000\n"
+"PO-Revision-Date: 2026-09-17 10:14+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: real_estate_procurement
+#: model:ir.module.category,description:real_estate_procurement.module_category_realestate_procurement
+msgid "Access to the real-estate procurement workflow."
+msgstr "الوصول إلى سير عمل المشتريات العقارية."
+
+#. module: real_estate_procurement
+#: model:res.groups,comment:real_estate_procurement.group_evaluation_commercial
+msgid "Analyses commercial offers once commercial evaluation is opened."
+msgstr "يحلل العروض المالية بمجرد فتح التقييم المالي."
+
+#. module: real_estate_procurement
+#: model:res.groups,comment:real_estate_procurement.group_procurement_approver
+msgid "Approve material requests, confirm purchase orders."
+msgstr "اعتماد طلبات المواد وتأكيد أوامر الشراء."
+
+#. module: real_estate_procurement
+#: model:res.groups,comment:real_estate_procurement.group_procurement_qualification_approver
+msgid ""
+"Approve or reject vendor qualifications and impose or lift restrictions.\n"
+"            Carries no spend authority: approving a supplier is not approving a purchase."
+msgstr ""
+"اعتماد تأهيل الموردين أو رفضه، وفرض القيود أو رفعها.\n"
+"            لا يمنح صلاحية إنفاق: اعتماد المورد ليس اعتمادًا للشراء."
+
+#. module: real_estate_procurement
+#: model:res.groups,name:real_estate_procurement.group_procurement_approver
+msgid "Approver"
+msgstr "المعتمد"
+
+#. module: real_estate_procurement
+#: model:res.groups,name:real_estate_procurement.group_procurement_user
+msgid "Buyer"
+msgstr "مسؤول الشراء"
+
+#. module: real_estate_procurement
+#: model:res.groups,name:real_estate_procurement.group_evaluation_commercial
+msgid "Commercial Evaluator"
+msgstr "مقيّم مالي"
+
+#. module: real_estate_procurement
+#: model:res.groups,name:real_estate_procurement.group_evaluation_manager
+msgid "Evaluation Manager"
+msgstr "مدير التقييم"
+
+#. module: real_estate_procurement
+#: model:res.groups,comment:real_estate_procurement.group_procurement_manager
+msgid "Full administrative access including configuration."
+msgstr "صلاحية إدارية كاملة تشمل الإعدادات."
+
+#. module: real_estate_procurement
+#: model:res.groups,name:real_estate_procurement.group_procurement_manager
+msgid "Manager"
+msgstr "المدير"
+
+#. module: real_estate_procurement
+#: model:res.groups,name:real_estate_procurement.group_procurement_inspector
+msgid "Material Inspector"
+msgstr "فاحص المواد"
+
+#. module: real_estate_procurement
+#: model:res.groups,comment:real_estate_procurement.group_procurement_user
+msgid ""
+"Process approved requisitions, prepare requests for quotation, view purchase\n"
+"            orders and vendors."
+msgstr ""
+"معالجة طلبات الشراء المعتمدة، وإعداد طلبات عروض الأسعار، وعرض أوامر\n"
+"            الشراء والموردين."
+
+#. module: real_estate_procurement
+#: model:res.groups,name:real_estate_procurement.group_procurement_qualification_approver
+msgid "Qualification Approver"
+msgstr "معتمد التأهيل"
+
+#. module: real_estate_procurement
+#: model:res.groups,name:real_estate_procurement.group_procurement_qualification_assessor
+msgid "Qualification Assessor"
+msgstr "مقيّم التأهيل"
+
+#. module: real_estate_procurement
+#: model:res.groups,comment:real_estate_procurement.group_procurement_requester
+msgid ""
+"Raise material requests for permitted projects. Deliberately grants no\n"
+"            purchasing rights: asking for materials is not the same as being able to buy them."
+msgstr ""
+"رفع طلبات المواد للمشاريع المسموح بها. لا يمنح عمدًا أي\n"
+"            صلاحيات شراء: طلب المواد ليس كالقدرة على شرائها."
+
+#. module: real_estate_procurement
+#: model:ir.module.category,name:real_estate_procurement.module_category_realestate_procurement
+msgid "Real Estate Procurement"
+msgstr "المشتريات العقارية"
+
+#. module: real_estate_procurement
+#: model:res.groups,comment:real_estate_procurement.group_procurement_inspector
+msgid ""
+"Record what arrived and what of it is fit to use. Carries no buying\n"
+"            authority and no spend authority: accepting material is not approving a purchase, and\n"
+"            the two are separated on purpose."
+msgstr ""
+"تسجيل ما تم استلامه وما يصلح للاستخدام منه. لا يمنح صلاحية شراء\n"
+"            ولا صلاحية إنفاق: قبول المواد ليس اعتمادًا للشراء، وقد\n"
+"            فصل بينهما عمدًا."
+
+#. module: real_estate_procurement
+#: model:res.groups,name:real_estate_procurement.group_procurement_requester
+msgid "Requester"
+msgstr "مقدم الطلب"
+
+#. module: real_estate_procurement
+#: model:res.groups,comment:real_estate_procurement.group_procurement_qualification_assessor
+msgid ""
+"Run vendor assessments, record and verify evidence, see confidential\n"
+"            qualification documents. Cannot approve a qualification — that is deliberately somebody\n"
+"            else, and the server checks it rather than the screen."
+msgstr ""
+"إجراء تقييمات الموردين، وتسجيل الأدلة والتحقق منها، والاطلاع على مستندات\n"
+"            التأهيل السرية. لا يمكنه اعتماد التأهيل — فذلك مسند عمدًا إلى شخص\n"
+"            آخر، ويتحقق الخادم من ذلك وليس الشاشة."
+
+#. module: real_estate_procurement
+#: model:res.groups,comment:real_estate_procurement.group_evaluation_manager
+msgid ""
+"Runs the evaluation lifecycle. Cannot rewrite a submitted sheet or a sealed "
+"bid."
+msgstr ""
+"يدير دورة حياة التقييم. لا يمكنه إعادة كتابة ورقة مقدمة أو عطاء مختوم."
+
+#. module: real_estate_procurement
+#: model:res.groups,comment:real_estate_procurement.group_evaluation_technical
+msgid "Scores technical criteria. Sees no commercial value through M6."
+msgstr "يقيم المعايير الفنية. لا يطلع على أي قيمة مالية حتى المرحلة M6."
+
+#. module: real_estate_procurement
+#: model:res.groups,name:real_estate_procurement.group_evaluation_technical
+msgid "Technical Evaluator"
+msgstr "مقيم فني"

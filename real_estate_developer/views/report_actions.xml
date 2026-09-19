@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--
+        The nine reports the specification requires.
+
+        Built as list/pivot actions over the real models with purpose-made
+        search views, not as QWeb documents. That is deliberate: a developer's
+        commercial team needs to filter, group, drill and export these, which
+        Odoo's own views do far better than a rendered PDF — and the spec is
+        explicit that standard accounting reports must not be duplicated.
+    -->
+
+    <!-- ========== 1. Unit Availability ========== -->
+    <record id="view_unit_availability_search" model="ir.ui.view">
+        <field name="name">realestate.property.search.availability</field>
+        <field name="model">realestate.property</field>
+        <field name="arch" type="xml">
+            <search string="Unit Availability">
+                <field name="name"/>
+                <field name="property_code"/>
+                <field name="project_id"/>
+                <field name="phase_id"/>
+                <filter name="for_sale" string="Available for Sale"
+                        domain="[('is_available_for_sale','=',True)]"/>
+                <filter name="released" string="Released"
+                        domain="[('is_released_for_sale','=',True)]"/>
+                <filter name="not_released" string="Not Released"
+                        domain="[('is_released_for_sale','=',False),('project_id','!=',False)]"/>
+                <filter name="blocked" string="Blocked"
+                        domain="[('active_block_id','!=',False)]"/>
+                <separator/>
+                <filter name="group_project" string="Project" context="{'group_by': 'project_id'}"/>
+                <filter name="group_phase" string="Phase" context="{'group_by': 'phase_id'}"/>
+                <filter name="group_status" string="Commercial Status" context="{'group_by': 'commercial_status'}"/>
+                <filter name="group_reason" string="Why Not Available" context="{'group_by': 'sale_unavailable_reason'}"/>
+                <filter name="group_usage" string="Usage" context="{'group_by': 'usage_category'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_unit_availability_list" model="ir.ui.view">
+        <field name="name">realestate.property.list.availability</field>
+        <field name="model">realestate.property</field>
+        <field name="arch" type="xml">
+            <list create="false" delete="false"
+                  decoration-success="is_available_for_sale"
+                  decoration-muted="not is_released_for_sale">
+                <field name="property_code"/>
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="phase_id" optional="show"/>
+                <field name="usage_category" optional="show"/>
+                <field name="area_sqm" sum="Total m²"/>
+                <field name="base_price" sum="List Value"/>
+                <field name="commercial_status" widget="badge"/>
+                <field name="is_released_for_sale"/>
+                <field name="is_available_for_sale"/>
+                <field name="sale_unavailable_reason" optional="show"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_report_unit_availability" model="ir.actions.act_window">
+        <field name="name">Unit Availability</field>
+        <field name="res_model">realestate.property</field>
+        <field name="view_mode">list,pivot,form</field>
+        <field name="search_view_id" ref="view_unit_availability_search"/>
+        <field name="domain">[('project_id', '!=', False), ('hierarchy_level', '=', 'unit')]</field>
+        <field name="context">{'search_default_group_project': 1}</field>
+    </record>
+
+    <!-- ========== 2. Price List (current sellable inventory) ========== -->
+    <record id="action_report_price_list" model="ir.actions.act_window">
+        <field name="name">Price List</field>
+        <field name="res_model">realestate.property</field>
+        <field name="view_mode">list,pivot</field>
+        <field name="search_view_id" ref="view_unit_availability_search"/>
+        <field name="domain">[('is_available_for_sale', '=', True)]</field>
+        <field name="context">{'search_default_group_project': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nothing is on the market</p>
+            <p>
+                This lists units that are actually sellable today — released,
+                unblocked, uncommitted, in a project that is selling. A unit
+                nobody has bought is not the same as a unit you are offering.
+            </p>
+        </field>
+    </record>
+
+    <!-- ========== 3. Price History ========== -->
+    <!-- action_price_history lives in pricing_views.xml -->
+
+    <!-- ========== 4. Reservation Report ========== -->
+    <record id="view_reservation_report_search" model="ir.ui.view">
+        <field name="name">realestate.unit.reservation.search.report</field>
+        <field name="model">realestate.unit.reservation</field>
+        <field name="arch" type="xml">
+            <search string="Reservations">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="property_id"/>
+                <field name="project_id"/>
+                <field name="agent_id"/>
+                <filter name="live" string="Live"
+                        domain="[('state','in',('hold','pending_payment','booked'))]"/>
+                <filter name="converted" string="Converted"
+                        domain="[('state','=','confirmed')]"/>
+                <filter name="expired" string="Expired" domain="[('state','=','expired')]"/>
+                <filter name="cancelled" string="Cancelled"
+                        domain="[('state','in',('cancelled','rejected'))]"/>
+                <separator/>
+                <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                <filter name="group_project" string="Project" context="{'group_by': 'project_id'}"/>
+                <filter name="group_agent" string="Agent" context="{'group_by': 'agent_id'}"/>
+                <filter name="group_reason" string="Cancellation Reason"
+                        context="{'group_by': 'cancellation_reason_code'}"/>
+                <filter name="group_created" string="Created" context="{'group_by': 'create_date'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_report_reservations" model="ir.actions.act_window">
+        <field name="name">Reservation Report</field>
+        <field name="res_model">realestate.unit.reservation</field>
+        <field name="view_mode">list,pivot,form</field>
+        <field name="search_view_id" ref="view_reservation_report_search"/>
+        <field name="context">{'search_default_group_state': 1}</field>
+    </record>
+
+    <!-- ========== 5. Sales Contract Register ========== -->
+    <record id="view_contract_register_search" model="ir.ui.view">
+        <field name="name">realestate.sale.contract.search.register</field>
+        <field name="model">realestate.sale.contract</field>
+        <field name="arch" type="xml">
+            <search string="Contract Register">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="property_id"/>
+                <field name="project_id"/>
+                <field name="agent_id"/>
+                <filter name="live" string="Live"
+                        domain="[('state','in',('signed','active','financially_cleared'))]"/>
+                <filter name="handed_over" string="Handed Over"
+                        domain="[('state','=','handed_over')]"/>
+                <filter name="ended" string="Cancelled / Terminated"
+                        domain="[('state','in',('cancelled','terminated'))]"/>
+                <filter name="overdue" string="In Arrears"
+                        domain="[('collection_state','=','overdue')]"/>
+                <separator/>
+                <filter name="group_state" string="Lifecycle" context="{'group_by': 'state'}"/>
+                <filter name="group_collection" string="Collection" context="{'group_by': 'collection_state'}"/>
+                <filter name="group_billing" string="Billing" context="{'group_by': 'billing_state'}"/>
+                <filter name="group_project" string="Project" context="{'group_by': 'project_id'}"/>
+                <filter name="group_signed" string="Signing Date" context="{'group_by': 'signing_date'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_report_contract_register" model="ir.actions.act_window">
+        <field name="name">Sales Contract Register</field>
+        <field name="res_model">realestate.sale.contract</field>
+        <field name="view_mode">list,pivot,form</field>
+        <field name="search_view_id" ref="view_contract_register_search"/>
+        <field name="context">{'search_default_group_state': 1}</field>
+    </record>
+
+    <!-- ========== 6. Installment Schedule (per contract) ========== -->
+    <record id="action_report_installment_schedule" model="ir.actions.act_window">
+        <field name="name">Instalment Schedule</field>
+        <field name="res_model">realestate.sale.installment</field>
+        <field name="view_mode">list,pivot,form</field>
+        <field name="search_view_id" ref="view_sale_installment_search_v2"/>
+        <field name="context">{'search_default_group_contract': 1}</field>
+    </record>
+
+    <!-- ========== 7. Receivables Schedule ========== -->
+    <!-- action_receivables_schedule lives in contract_v2_views.xml -->
+
+    <!-- ========== 8. Cancellation Register ========== -->
+    <record id="action_report_cancellations" model="ir.actions.act_window">
+        <field name="name">Cancellation Register</field>
+        <field name="res_model">realestate.unit.reservation</field>
+        <field name="view_mode">list,pivot,form</field>
+        <field name="search_view_id" ref="view_reservation_report_search"/>
+        <field name="domain">[('state', 'in', ('cancelled', 'rejected', 'expired'))]</field>
+        <field name="context">{'search_default_group_reason': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No cancellations</p>
+            <p>
+                Reservations that did not convert, with the reason, who asked,
+                and what happened to the booking money. Contract cancellations
+                are in the Amendments register.
+            </p>
+        </field>
+    </record>
+
+    <!-- ========== 9. Discount Approval Report ========== -->
+    <record id="view_approval_request_search" model="ir.ui.view">
+        <field name="name">realestate.commercial.approval.request.search</field>
+        <field name="model">realestate.commercial.approval.request</field>
+        <field name="arch" type="xml">
+            <search string="Approvals">
+                <field name="name"/>
+                <field name="requested_by_id"/>
+                <field name="approver_user_id"/>
+                <field name="project_id"/>
+                <filter name="pending" string="Pending" domain="[('state','=','pending')]"/>
+                <filter name="approved" string="Approved" domain="[('state','=','approved')]"/>
+                <filter name="rejected" string="Rejected" domain="[('state','=','rejected')]"/>
+                <filter name="discounts" string="Discounts Only"
+                        domain="[('action_type','=','discount')]"/>
+                <separator/>
+                <filter name="group_action" string="Action" context="{'group_by': 'action_type'}"/>
+                <filter name="group_requester" string="Requested By" context="{'group_by': 'requested_by_id'}"/>
+                <filter name="group_approver" string="Approved By" context="{'group_by': 'approver_user_id'}"/>
+                <filter name="group_project" string="Project" context="{'group_by': 'project_id'}"/>
+                <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_report_discount_approvals" model="ir.actions.act_window">
+        <field name="name">Discount Approval Report</field>
+        <field name="res_model">realestate.commercial.approval.request</field>
+        <field name="view_mode">list,pivot,form</field>
+        <field name="search_view_id" ref="view_approval_request_search"/>
+        <field name="context">{'search_default_discounts': 1, 'search_default_group_requester': 1}</field>
+    </record>
+
+    <!-- ========== Menus ========== -->
+    <menuitem id="menu_developer_reports" name="Reports"
+              parent="menu_developer_root" sequence="150"/>
+
+    <menuitem id="menu_report_unit_availability" name="Unit Availability"
+              parent="menu_developer_reports"
+              action="action_report_unit_availability" sequence="10"/>
+    <menuitem id="menu_report_price_list" name="Price List"
+              parent="menu_developer_reports"
+              action="action_report_price_list" sequence="20"/>
+    <menuitem id="menu_report_price_history" name="Price History"
+              parent="menu_developer_reports"
+              action="action_price_history" sequence="30"/>
+    <menuitem id="menu_report_reservations" name="Reservations"
+              parent="menu_developer_reports"
+              action="action_report_reservations" sequence="40"/>
+    <menuitem id="menu_report_contract_register" name="Contract Register"
+              parent="menu_developer_reports"
+              action="action_report_contract_register" sequence="50"/>
+    <menuitem id="menu_report_installment_schedule" name="Instalment Schedule"
+              parent="menu_developer_reports"
+              action="action_report_installment_schedule" sequence="60"/>
+    <menuitem id="menu_report_receivables" name="Receivables Schedule"
+              parent="menu_developer_reports"
+              action="action_receivables_schedule" sequence="70"/>
+    <menuitem id="menu_report_cancellations" name="Cancellation Register"
+              parent="menu_developer_reports"
+              action="action_report_cancellations" sequence="80"/>
+    <menuitem id="menu_report_discount_approvals" name="Discount Approvals"
+              parent="menu_developer_reports"
+              action="action_report_discount_approvals" sequence="90"/>
+
+</odoo>

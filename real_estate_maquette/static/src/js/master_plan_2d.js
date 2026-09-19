@@ -52,6 +52,10 @@ export class MasterPlan2D extends Component {
             projects: [],
             projectId: 0,
             regions: [],
+            // Set when loading failed. Rendered in place of the plan so the
+            // failure is stated where the customer is looking, rather than
+            // thrown into Odoo's global error dialog.
+            loadError: "",
             editMode: false,
             hoveredRegionId: null,
             // Drafting state
@@ -73,7 +77,7 @@ export class MasterPlan2D extends Component {
         // Non-reactive scratchpad for drag deltas
         this._panOrigin = null;
 
-        onWillStart(async () => {
+        onWillStart(async () => this._loadSafely("Opening the plan", async () => {
             if (this.embedded) {
                 // Embedded mode: skip the project list, lock to the given one.
                 const [proj] = await this.orm.read(
@@ -98,7 +102,7 @@ export class MasterPlan2D extends Component {
                 this.state.projectId = match ? match.id : this.state.projects[0].id;
                 await this._loadRegions();
             }
-        });
+        }));
 
         this._onMouseMove = this._onMouseMove.bind(this);
         this._onMouseUp = this._onMouseUp.bind(this);
@@ -119,6 +123,30 @@ export class MasterPlan2D extends Component {
     // ------------------------------------------------------------------
     // Data loading
     // ------------------------------------------------------------------
+    /**
+     * Load without ever raising Odoo's global error dialog.
+     *
+     * Rule 4 covers the whole gallery, not only the 3D viewer. This component
+     * is mounted inside Presentation Mode, where an uncaught RPC failure puts
+     * a red "Access Error" modal on a showroom screen in front of a customer —
+     * which is exactly the dead end the rule forbids. Failures degrade to a
+     * stated, plain-language message inside the plan; the detail goes to the
+     * console for whoever is debugging it.
+     */
+    async _loadSafely(what, run) {
+        try {
+            this.state.loadError = "";
+            return await run();
+        } catch (err) {
+            console.warn(`[maquette] ${what} failed`, err);
+            this.state.loadError = this.portalMode
+                ? "This plan is not available right now."
+                : "This plan could not be loaded. You may not have access to " +
+                  "these records, or the project has no plan yet.";
+            return null;
+        }
+    }
+
     async _loadRegions() {
         if (!this.state.projectId) {
             this.state.regions = [];
@@ -245,7 +273,8 @@ export class MasterPlan2D extends Component {
             return;
         }
         // View mode: fetch the property + open a side panel mirroring 3D's.
-        await this._selectProperty(region);
+        await this._loadSafely("Opening a unit",
+                               () => this._selectProperty(region));
     }
 
     async _fetchHierarchyLevel(propertyId) {
@@ -262,6 +291,17 @@ export class MasterPlan2D extends Component {
             ["hierarchy_level"],
         );
         return recs.length ? recs[0].hierarchy_level : null;
+    }
+
+    /**
+     * The one place the 2D selection changes, so Presentation Mode hears
+     * about a plan click exactly as it hears about a mesh click.
+     */
+    _setSelectedProperty(property) {
+        this.state.selectedProperty = property || null;
+        if (this.props.onUnitSelected) {
+            this.props.onUnitSelected(this.state.selectedProperty);
+        }
     }
 
     async _selectProperty(region) {
@@ -284,7 +324,7 @@ export class MasterPlan2D extends Component {
                 return;
             }
             const data = await res.json();
-            this.state.selectedProperty = {
+            this._setSelectedProperty({
                 id: data.id,
                 name: data.name,
                 property_code: data.property_code,
@@ -297,7 +337,7 @@ export class MasterPlan2D extends Component {
                 hierarchy_level: "",
                 region_label: region.label || "",
                 _portalImages: data.images || [],
-            };
+            });
             return;
         }
         const recs = await this.orm.searchRead(
@@ -314,7 +354,7 @@ export class MasterPlan2D extends Component {
             return;
         }
         const r = recs[0];
-        this.state.selectedProperty = {
+        this._setSelectedProperty({
             id: r.id,
             name: r.name || "",
             property_code: r.property_code || "",
@@ -326,11 +366,11 @@ export class MasterPlan2D extends Component {
             has_floor_plan: !!r.floor_plan_image,
             hierarchy_level: r.hierarchy_level || "",
             region_label: region.label || "",
-        };
+        });
     }
 
     closeSidePanel() {
-        this.state.selectedProperty = null;
+        this._setSelectedProperty(null);
     }
 
     floorPlanUrl(propertyId) {

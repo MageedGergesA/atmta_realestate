@@ -1,0 +1,707 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* atmta_procurement_receipt
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:13+0000\n"
+"PO-Revision-Date: 2026-09-17 10:13+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/vendor_bill.py:0
+msgid ""
+"  %(product)s — this bill adds %(adding)s, billed in total %(billed)s, "
+"accepted on site %(received)s"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/vendor_bill.py:0
+msgid ""
+"%(move)s bills for more than this site accepted:\n"
+"\n"
+"%(details)s\n"
+"\n"
+"Receive and inspect the rest before billing it, or ask the vendor for a corrected invoice. Material that was rejected is not billable, and posting this would put the difference into the ledger where somebody has to reverse it."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/receipt_inspection.py:0
+msgid "%(name)s is already %(state)s."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/receipt_inspection.py:0
+msgid ""
+"%(name)s rejects %(items)s with no finding recorded against them. What was "
+"wrong with an item is the one thing its line has to say."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/stock_picking.py:0
+msgid ""
+"%(picking)s delivers material to %(project)s, which requires inspection before a receipt is validated.\n"
+"\n"
+"Open the inspection, record what arrived and what of it is fit to use, then validate. Rejecting material here is not a judgement about the vendor — it is a statement about this load."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/stock_picking.py:0
+msgid ""
+"%(picking)s was inspected and nothing on it was accepted.\n"
+"\n"
+"Validating would book rejected material into stock. Cancel the receipt, or arrange the return with the vendor — either way it is a decision somebody makes, not one this screen makes for them."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/receipt_inspection.py:0
+msgid ""
+"%(product)s: %(accepted)s accepted against %(received)s delivered. Accepting"
+" more than arrived puts stock into the system that nobody delivered."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/evaluation_audit_receipt.py:0
+msgid "%d confirmed tender line(s) carry a project and no cost code."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/evaluation_audit_receipt.py:0
+msgid ""
+"%d inspection(s) rejected material that the stock ledger shows as received."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/evaluation_audit_receipt.py:0
+msgid "%d purchase line(s) are billed for more than the site accepted."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/evaluation_audit_receipt.py:0
+msgid ""
+"%d receipt(s) were validated with no inspection on a project that now "
+"requires one."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/receipt_inspection.py:0
+msgid ""
+"%s has already been recorded. An inspection result is not withdrawn; a re-"
+"inspection is a new receipt."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/receipt_inspection.py:0
+msgid "%s inspects nothing. An empty sheet is not a pass."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/receipt_inspection.py:0
+msgid ""
+"%s rejects material without saying why. The vendor is entitled to the "
+"reason, and so is whoever settles the dispute."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.constraint,message:atmta_procurement_receipt.constraint_realestate_procurement_receipt_inspection_picking_uniq
+msgid ""
+"A receipt has one inspection. Record the outcome on the existing one rather "
+"than opening a second view of the same delivery."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection_line__accepted_qty
+#: model:ir.model.fields.selection,name:atmta_procurement_receipt.selection__realestate_procurement_receipt_inspection__state__passed
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_receipt.view_receipt_inspection_list
+msgid "Accepted"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__accepted_qty
+msgid "Accepted Qty"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.constraint,message:atmta_procurement_receipt.constraint_realestate_procurement_receipt_inspection_line_accepted_not_negative
+msgid "An accepted quantity below zero is not a rejection, it is a typo."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model_terms:ir.actions.act_window,help:atmta_procurement_receipt.action_receipt_inspection
+msgid ""
+"An inspection is opened from a receipt. It records what arrived\n"
+"               and what of it is fit to use — which is not the same question as\n"
+"               whether the delivery turned up."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_receipt.view_receipt_inspection_search
+msgid "Anything Rejected"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields.selection,name:atmta_procurement_receipt.selection__realestate_procurement_receipt_inspection__state__cancelled
+msgid "Cancelled"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/receipt_inspection.py:0
+msgid "Cancelled: %s"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection_line__company_id
+msgid "Company"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__conclusion
+msgid "Conclusion"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection_line__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/evaluation_audit_receipt.py:0
+msgid ""
+"Credit the difference or record the missing receipt. Until one of the two "
+"happens the project owes money for material it never took."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection_line__received_qty
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_receipt.view_receipt_inspection_list
+msgid "Delivered"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_receipt.view_receipt_inspection_form
+msgid "Delivered Items"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,help:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection_line__rejected_qty
+msgid ""
+"Derived. Rejecting is what is left over after accepting, so the two can "
+"never be recorded as disagreeing."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model,name:atmta_procurement_receipt.model_realestate_procurement_evaluation_audit
+msgid "Evaluation Integrity Audit"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection_line__reason
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_receipt.view_receipt_inspection_form
+msgid "Finding"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,help:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__id
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection_line__id
+msgid "ID"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,help:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,help:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,help:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__message_has_error
+#: model:ir.model.fields,help:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__inspector_id
+msgid "Inspected By"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__line_ids
+msgid "Inspected Items"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__inspected_on
+msgid "Inspected On"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection_line__inspection_id
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_stock_picking__re_inspection_id
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_receipt.view_picking_form_inspection
+msgid "Inspection"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/stock_picking.py:0
+msgid ""
+"Inspection %(name)s: %(accepted)s accepted, %(rejected)s rejected. The "
+"rejected quantity is not received and is not billable."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_stock_picking__re_inspection_policy
+msgid "Inspection Policy"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_stock_picking__re_inspection_state
+msgid "Inspection Result"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model,name:atmta_procurement_receipt.model_account_move
+msgid "Journal Entry"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_receipt.view_receipt_inspection_form
+msgid "Material Inspection"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.actions.act_window,name:atmta_procurement_receipt.action_receipt_inspection
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_receipt.view_receipt_inspection_list
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_receipt.view_receipt_inspection_search
+msgid "Material Inspections"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model,name:atmta_procurement_receipt.model_realestate_procurement_receipt_inspection
+msgid "Material Receipt Inspection"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model,name:atmta_procurement_receipt.model_realestate_procurement_receipt_inspection_line
+msgid "Material Receipt Inspection Line"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/evaluation_audit_receipt.py:0
+msgid ""
+"Most will predate the policy. Those that do not are material accepted by "
+"nobody in particular."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__name
+msgid "Name"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/receipt_inspection.py:0
+msgid "New"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model_terms:ir.actions.act_window,help:atmta_procurement_receipt.action_receipt_inspection
+msgid "No material has been inspected yet."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,help:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,help:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields.selection,name:atmta_procurement_receipt.selection__stock_picking__re_inspection_policy__off
+msgid "Off — receipts are not inspected"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.constraint,message:atmta_procurement_receipt.constraint_realestate_procurement_receipt_inspection_line_move_uniq
+msgid "One line per delivered item."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields.selection,name:atmta_procurement_receipt.selection__realestate_procurement_receipt_inspection__state__partial
+msgid "Partially Accepted"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection_line__product_id
+msgid "Product"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__project_id
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_receipt.view_receipt_inspection_search
+msgid "Project"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__purchase_order_id
+msgid "Purchase Order"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__picking_id
+msgid "Receipt"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__received_qty
+msgid "Received Qty"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_receipt.view_receipt_inspection_form
+msgid "Record Result"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/receipt_inspection.py:0
+msgid ""
+"Recording an inspection result is an inspector's decision. %s does not hold "
+"that authority."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_receipt.view_receipt_inspection_form
+msgid ""
+"Recording an inspection result is final. A re-inspection is a new receipt, "
+"not an edit of this one."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields.selection,name:atmta_procurement_receipt.selection__realestate_procurement_receipt_inspection__state__failed
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_receipt.view_receipt_inspection_list
+msgid "Rejected"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__rejected_qty
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection_line__rejected_qty
+msgid "Rejected Qty"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields.selection,name:atmta_procurement_receipt.selection__stock_picking__re_inspection_policy__required
+msgid "Required — an uninspected receipt cannot be validated"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_receipt.view_receipt_inspection_search
+msgid "Result"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__state
+msgid "State"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,help:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection_line__move_id
+msgid "Stock Move"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,help:atmta_procurement_receipt.field_stock_picking__re_inspection_id
+msgid "The inspection sheet for this receipt, if one has been opened."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/evaluation_audit_receipt.py:0
+msgid ""
+"The sheet and the ledger disagree about the same delivery, and the ledger is"
+" the one that gets paid."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/evaluation_audit_receipt.py:0
+msgid ""
+"Their commitment sits under Unassigned and no bill against them can become "
+"actual cost. Code them, and the analytic distribution follows."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/vendor_bill.py:0
+msgid "This bill"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields.selection,name:atmta_procurement_receipt.selection__realestate_procurement_receipt_inspection__state__draft
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_receipt.view_receipt_inspection_search
+msgid "To Inspect"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model,name:atmta_procurement_receipt.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,help:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#. odoo-python
+#: code:addons/atmta_procurement_receipt/models/stock_picking.py:0
+msgid ""
+"Validated without a material inspection. The project's policy records the "
+"gap rather than refusing it."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__partner_id
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_receipt.view_receipt_inspection_search
+msgid "Vendor"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields.selection,name:atmta_procurement_receipt.selection__stock_picking__re_inspection_policy__warn
+msgid "Warn — record the missing inspection and continue"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,field_description:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,help:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,help:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection_line__received_qty
+msgid ""
+"What arrived. Not what was ordered — a short delivery is a delivery "
+"question, and this sheet is about condition."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_receipt.view_receipt_inspection_form
+msgid ""
+"What is accepted is what enters stock and what the\n"
+"                        requisition counts as received. Rejecting material here\n"
+"                        is a statement about this load, not a judgement about\n"
+"                        the vendor."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,help:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection_line__accepted_qty
+msgid ""
+"What may be used. This is what enters stock and what the requisition counts "
+"as received."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,help:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection__conclusion
+msgid ""
+"What was found. Required when anything is rejected — a rejection nobody can "
+"explain is a dispute waiting to happen, and the vendor is entitled to the "
+"reason."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_receipt.view_receipt_inspection_form
+msgid ""
+"What was found. Required when anything is rejected — the vendor is entitled "
+"to the reason, and so is whoever settles the dispute."
+msgstr ""
+
+#. module: atmta_procurement_receipt
+#: model:ir.model.fields,help:atmta_procurement_receipt.field_realestate_procurement_receipt_inspection_line__reason
+msgid ""
+"Why this item was rejected — damaged, wrong grade, no certificate, out of "
+"tolerance."
+msgstr ""

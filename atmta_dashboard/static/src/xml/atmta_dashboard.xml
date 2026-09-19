@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="atmta_dashboard.KpiCard">
+        <div class="o_ad_kpi"
+             t-att-class="{ 'o_ad_kpi_clickable': props.tile.drill, 'o_ad_kpi_warning': props.tile.warning }"
+             t-att-role="props.tile.drill ? 'button' : null"
+             t-att-tabindex="props.tile.drill ? 0 : null"
+             t-att-aria-label="ariaLabel"
+             t-att-data-tile="props.tile.key"
+             t-on-click="onClick"
+             t-on-keydown="onKeydown">
+            <div class="o_ad_kpi_label">
+                <span t-esc="props.tile.label"/>
+                <sup t-if="props.tile.hint" class="o_ad_kpi_hint" t-att-title="props.tile.hint">
+                    <i class="fa fa-question-circle-o" role="img" t-att-aria-label="props.tile.hint"/>
+                </sup>
+            </div>
+            <div class="o_ad_kpi_value" t-esc="formattedValue"/>
+            <div t-if="props.tile.warning" class="o_ad_kpi_status">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"/>
+                <span>Needs attention</span>
+            </div>
+            <div t-if="props.tile.drill" class="o_ad_kpi_drill" aria-hidden="true">
+                <i class="fa fa-arrow-right"/>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="atmta_dashboard.Chart">
+        <div class="o_ad_panel o_ad_chart_panel" t-att-data-chart="props.chart.key">
+            <h3 class="o_ad_panel_title" t-esc="props.chart.title"/>
+            <p t-if="props.chart.subtitle" class="o_ad_panel_subtitle" t-esc="props.chart.subtitle"/>
+            <div t-if="isEmpty" class="o_ad_empty" role="status">
+                <i class="fa fa-bar-chart o_ad_empty_icon" aria-hidden="true"/>
+                <p class="o_ad_empty_text">Nothing to show yet.</p>
+            </div>
+            <div t-else="" class="o_ad_chart_canvas_wrap">
+                <canvas t-ref="canvas" role="img" t-att-aria-label="props.chart.title"/>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="atmta_dashboard.Dashboard">
+        <div class="o_ad_dashboard o_action">
+            <div class="o_ad_scroll">
+                <header class="o_ad_header">
+                    <div>
+                        <h1 class="o_ad_title" t-esc="data.title"/>
+                        <p class="o_ad_subtitle" t-if="state.status === 'ready'">
+                            <span t-esc="data.company_name"/>
+                            <span class="o_ad_sep" aria-hidden="true">·</span>
+                            <span>As of <t t-esc="data.as_of"/></span>
+                        </p>
+                    </div>
+                    <div class="o_ad_header_actions">
+                        <t t-foreach="data.quick_actions or []" t-as="q" t-key="q.key">
+                            <button class="btn" t-att-class="q_first ? 'btn-primary' : 'btn-secondary'"
+                                    t-att-data-quick-action="q.key" t-on-click="() => this.quick(q.key)">
+                                <i t-attf-class="fa {{ q.icon }} me-1" aria-hidden="true"/>
+                                <span t-esc="q.label"/>
+                            </button>
+                        </t>
+                        <div t-if="data.supports_scope" class="btn-group" role="group" aria-label="Whose work to show">
+                            <button class="btn btn-sm" data-scope="mine"
+                                    t-att-class="state.scope === 'mine' ? 'btn-primary' : 'btn-outline-secondary'"
+                                    t-on-click="() => this.setScope('mine')">Mine</button>
+                            <button class="btn btn-sm" data-scope="team"
+                                    t-att-class="state.scope === 'team' ? 'btn-primary' : 'btn-outline-secondary'"
+                                    t-on-click="() => this.setScope('team')">Team</button>
+                        </div>
+                        <button class="btn btn-secondary o_ad_refresh" t-on-click="refresh" aria-label="Refresh the dashboard">
+                            <i class="fa fa-refresh" aria-hidden="true"/>
+                            <span class="d-none d-md-inline ms-1">Refresh</span>
+                        </button>
+                    </div>
+                </header>
+
+                <div t-if="state.status === 'error'" class="o_ad_state" role="alert">
+                    <i class="fa fa-exclamation-circle o_ad_state_icon" aria-hidden="true"/>
+                    <h2 class="o_ad_state_title">The dashboard could not be loaded</h2>
+                    <p class="o_ad_state_text" t-esc="state.error"/>
+                    <button class="btn btn-primary" t-on-click="refresh">Retry</button>
+                </div>
+
+                <t t-elif="state.status === 'ready'">
+                    <div t-if="!data.sections.length and !data.charts.length" class="o_ad_state" role="status">
+                        <i class="fa fa-lock o_ad_state_icon" aria-hidden="true"/>
+                        <h2 class="o_ad_state_title">Nothing to show</h2>
+                        <p class="o_ad_state_text">None of the figures on this dashboard are available to your role.</p>
+                    </div>
+                    <section t-foreach="data.sections" t-as="section" t-key="section.id"
+                             class="o_ad_section" t-att-data-section="section.id">
+                        <h2 class="o_ad_section_title">
+                            <i t-attf-class="fa {{ section.icon }}" aria-hidden="true"/>
+                            <span t-esc="section.title"/>
+                        </h2>
+                        <div class="o_ad_kpi_grid">
+                            <t t-foreach="section.tiles" t-as="tile" t-key="tile.key">
+                                <AtmtaKpiCard tile="tile" currencyId="data.currency_id" onDrill="(key) => this.drill(key)"/>
+                            </t>
+                        </div>
+                    </section>
+                    <section t-if="data.charts.length" class="o_ad_section" data-section="charts">
+                        <div class="o_ad_chart_grid">
+                            <t t-foreach="data.charts" t-as="chart" t-key="chart.key">
+                                <AtmtaDashboardChart chart="chart" currencyId="data.currency_id"
+                                                     onSegment="(key, index) => this.drillChart(key, index)"/>
+                            </t>
+                        </div>
+                    </section>
+                </t>
+            </div>
+        </div>
+    </t>
+
+</templates>

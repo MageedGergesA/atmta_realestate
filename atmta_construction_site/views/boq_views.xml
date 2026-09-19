@@ -155,31 +155,24 @@
                                     <field name="uom_id"/>
                                     <field name="unit_rate"/>
                                     <field name="line_amount" sum="Total"/>
-                                    <field name="certified_qty" optional="show"/>
+                                    <field name="variation_quantity" string="Variations" optional="show"/>
                                     <field name="authorised_quantity" optional="show"/>
-                                    <field name="is_over_certified" optional="hide"/>
+                                    <field name="certified_qty" optional="show"/>
                                     <field name="remaining_qty" optional="show"/>
+                                    <field name="is_over_certified" optional="hide"/>
                                     <field name="currency_id" invisible="1"/>
                                 </list>
                             </field>
-                        </page>
-                        <page string="Variations">
+                            <!-- One field node for the lines. The form used to
+                                 declare them twice, editable here and readonly
+                                 on a Variations page, which left the client two
+                                 answers to whether they may be edited. The
+                                 variation columns now sit on this list. -->
                             <p class="text-muted">
                                 Approved change orders move the authorised
                                 quantity. The original quantity stays as the
                                 contract recorded it.
                             </p>
-                            <field name="line_ids" readonly="1" nolabel="1">
-                                <list>
-                                    <field name="work_item_id"/>
-                                    <field name="quantity" string="Original"/>
-                                    <field name="variation_quantity" string="Variations"/>
-                                    <field name="authorised_quantity"/>
-                                    <field name="certified_qty"/>
-                                    <field name="remaining_qty"/>
-                                    <field name="is_over_certified" widget="boolean_toggle"/>
-                                </list>
-                            </field>
                         </page>
                         <page string="Notes">
                             <field name="notes"/>

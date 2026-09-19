@@ -55,7 +55,7 @@ Governance is consumed by those capabilities, not the other way round.
 """,
     'author': "Atmta",
     'license': 'LGPL-3',
-    'version': '18.0.3.0.0',
+    'version': '18.0.3.1.0',
     'category': 'Real Estate',
     'depends': [
         'base',
@@ -64,6 +64,11 @@ Governance is consumed by those capabilities, not the other way round.
         'purchase',
         'atmta_project_core',
         'atmta_roles',
+        # The maker/checker rule reads the company's qualification
+        # self-approval policy, which Procurement Core declares. Found by
+        # test: approving a qualification in a Vendor-only install raised
+        # AttributeError on the company.
+        'atmta_procurement_core',
     ],
     'data': [
         'security/ir.model.access.csv',

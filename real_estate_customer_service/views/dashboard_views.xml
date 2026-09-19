@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_service_dashboard" model="ir.actions.client">
+        <field name="name">Customer Service Dashboard</field>
+        <field name="tag">atmta_dashboard</field>
+        <field name="params" eval="{'provider': 'realestate.service.dashboard'}"/>
+    </record>
+
+    <menuitem id="menu_customer_service_dashboard" name="Dashboard"
+              parent="menu_customer_service_root"
+              action="action_service_dashboard" sequence="1"/>
+
+</odoo>

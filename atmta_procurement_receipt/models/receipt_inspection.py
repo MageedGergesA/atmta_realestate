@@ -147,7 +147,12 @@ class ReceiptInspection(models.Model):
             return existing
         lines = []
         for move in picking.move_ids:
-            quantity = move.product_uom_qty
+            # `quantity` is what the receipt says turned up; `product_uom_qty`
+            # is what the order asked for. Building the sheet from the second
+            # made a short delivery look like a rejection: three bags arrive
+            # against eight ordered and the sheet opened with five already
+            # rejected, in a document about condition.
+            quantity = move.quantity
             if not quantity:
                 continue
             lines.append((0, 0, {

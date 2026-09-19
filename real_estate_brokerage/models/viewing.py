@@ -79,8 +79,10 @@ class Viewing(models.Model):
 
     def action_create_offer(self):
         self.ensure_one()
-        if not self.lead_id:
-            raise UserError(_("Set a lead on the viewing first."))
+        # The CRM opportunity is the authoritative link (lead_bridge.py); the
+        # legacy lead is only a mirror and is blank for new opportunities.
+        if not self.lead_id and not self.crm_lead_id:
+            raise UserError(_("Set an opportunity on the viewing first."))
         return {
             'type': 'ir.actions.act_window',
             'name': _('Submit Offer'),
@@ -88,6 +90,7 @@ class Viewing(models.Model):
             'view_mode': 'form',
             'context': {
                 'default_listing_id': self.listing_id.id,
+                'default_crm_lead_id': self.crm_lead_id.id,
                 'default_lead_id': self.lead_id.id,
                 'default_partner_id': self.partner_id.id,
                 'default_agent_id': self.agent_id.id,

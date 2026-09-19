@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_realestate_check_list" model="ir.ui.view">
+        <field name="name">realestate.check.list</field>
+        <field name="model">realestate.check</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="state=='bounced'"
+                  decoration-success="state=='cleared'"
+                  decoration-info="state in ('deposited','in_clearing')"
+                  decoration-warning="is_overdue_for_deposit"
+                  decoration-muted="state in ('cancelled','replaced','returned')">
+                <field name="name"/>
+                <field name="check_number"/>
+                <field name="bank_id"/>
+                <field name="partner_id"/>
+                <field name="sale_contract_id" optional="show"/>
+                <field name="project_id" optional="hide"/>
+                <field name="rental_contract_id" optional="hide"/>
+                <field name="due_date"/>
+                <field name="maturity_bucket" optional="hide"/>
+                <field name="amount" sum="Face Value"/>
+                <field name="allocated_amount" sum="Allocated" optional="hide"/>
+                <field name="unapplied_amount" sum="Unapplied" optional="hide"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="location_id" optional="hide"/>
+                <field name="custodian_id" optional="hide"/>
+                <field name="deposit_id" optional="show"/>
+                <field name="accounting_state" optional="hide" widget="badge"/>
+                <field name="is_overdue_for_deposit" column_invisible="1"/>
+                <field name="state" widget="badge"
+                       decoration-success="state=='cleared'"
+                       decoration-danger="state=='bounced'"
+                       decoration-info="state in ('deposited','in_clearing')"
+                       decoration-muted="state in ('cancelled','replaced','returned')"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_realestate_check_kanban" model="ir.ui.view">
+        <field name="name">realestate.check.kanban</field>
+        <field name="model">realestate.check</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="name"/>
+                <field name="check_number"/>
+                <field name="partner_id"/>
+                <field name="due_date"/>
+                <field name="amount"/>
+                <field name="currency_id"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                            <strong><field name="name"/></strong>
+                            <div><field name="check_number"/> — <field name="partner_id"/></div>
+                            <div>Due <field name="due_date"/> — <field name="amount" widget="monetary"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_realestate_check_pivot" model="ir.ui.view">
+        <field name="name">realestate.check.pivot</field>
+        <field name="model">realestate.check</field>
+        <field name="arch" type="xml">
+            <pivot string="Cheques">
+                <field name="maturity_bucket" type="row"/>
+                <field name="state" type="col"/>
+                <field name="amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_realestate_check_graph" model="ir.ui.view">
+        <field name="name">realestate.check.graph</field>
+        <field name="model">realestate.check</field>
+        <field name="arch" type="xml">
+            <graph string="Cheques" type="bar">
+                <field name="due_date" interval="month"/>
+                <field name="amount" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_realestate_check_form" model="ir.ui.view">
+        <field name="name">realestate.check.form</field>
+        <field name="model">realestate.check</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_register" type="object" string="Register"
+                            invisible="state != 'draft'" class="oe_highlight"/>
+                    <button name="action_open_allocate_wizard" type="object"
+                            string="Allocate"
+                            invisible="state in ('cleared','cancelled','replaced','returned')"/>
+                    <button name="action_open_custody_wizard" type="object"
+                            string="Transfer Custody"
+                            invisible="state not in ('draft','registered','bounced')"
+                            groups="real_estate_checks.group_checks_treasurer"/>
+                    <button name="action_open_bounce_wizard" type="object" string="Register Bounce"
+                            invisible="state not in ('deposited','in_clearing')"
+                            groups="real_estate_checks.group_checks_treasurer"/>
+                    <button name="action_mark_cleared" type="object" string="Refresh Clearance"
+                            invisible="state not in ('deposited','in_clearing')" class="oe_highlight"
+                            groups="real_estate_checks.group_checks_treasurer"
+                            help="Reads the bank reconciliation from Accounting. It cannot mark a cheque cleared that Odoo has not confirmed."/>
+                    <button name="action_open_replacement_wizard" type="object"
+                            string="Replace"
+                            invisible="state not in ('registered','bounced')"
+                            groups="real_estate_checks.group_checks_treasurer"/>
+                    <button name="action_return_to_customer" type="object"
+                            string="Return to Customer"
+                            invisible="state not in ('draft','registered','bounced')"
+                            groups="real_estate_checks.group_checks_treasurer"/>
+                    <button name="action_back_to_draft" type="object" string="Back to Draft"
+                            invisible="state not in ('registered','cancelled')"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('cleared','deposited','in_clearing','replaced','cancelled','returned')"
+                            groups="real_estate_checks.group_checks_treasurer"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,registered,deposited,in_clearing,cleared"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_lineage" type="object"
+                                class="oe_stat_button" icon="fa-code-fork"
+                                invisible="replacement_generation == 0 and not replacement_check_id">
+                            <field name="replacement_generation" widget="statinfo"
+                                   string="Generation"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Cleared" bg_color="text-bg-success"
+                            invisible="state != 'cleared'"/>
+                    <widget name="web_ribbon" title="Bounced" bg_color="text-bg-danger"
+                            invisible="state != 'bounced'"/>
+                    <widget name="web_ribbon" title="Replaced" bg_color="text-bg-secondary"
+                            invisible="state != 'replaced'"/>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <!--
+                        M2 — the two dimensions side by side. The instrument's
+                        physical state and what Accounting says are different
+                        questions and the form does not conflate them.
+                    -->
+                    <div class="alert alert-info" role="status"
+                         invisible="state not in ('deposited','in_clearing')">
+                        This cheque is at the bank. A payment has been registered, but
+                        the money is not confirmed until Odoo reconciles it against a
+                        bank transaction.
+                    </div>
+                    <group>
+                        <group string="Cheque">
+                            <field name="check_number"/>
+                            <field name="bank_id"/>
+                            <field name="branch"
+                                   groups="real_estate_checks.group_checks_see_bank_details"/>
+                            <field name="account_number"
+                                   groups="real_estate_checks.group_checks_see_bank_details"/>
+                            <field name="partner_bank_id"
+                                   groups="real_estate_checks.group_checks_see_bank_details"/>
+                        </group>
+                        <group string="Parties">
+                            <field name="partner_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                            <field name="amount"/>
+                        </group>
+                        <group string="Dates">
+                            <field name="issue_date"/>
+                            <field name="due_date"/>
+                            <field name="received_date"/>
+                            <field name="days_to_due"/>
+                            <field name="maturity_bucket"/>
+                            <field name="is_stale" invisible="not is_stale"/>
+                        </group>
+                        <group string="Custody">
+                            <field name="custodian_id"/>
+                            <field name="location_id"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Commercial Source">
+                            <field name="sale_contract_id"/>
+                            <field name="sale_installment_id" readonly="1"
+                                   help="Mirrors the single allocation. Blank when the cheque is split across several obligations — see the Allocations tab."/>
+                            <field name="rental_contract_id"/>
+                            <field name="rental_payment_id" readonly="1"/>
+                            <field name="project_id"/>
+                            <field name="property_id"/>
+                        </group>
+                        <group string="Accounting">
+                            <field name="journal_id"/>
+                            <field name="accounting_state"/>
+                            <field name="is_bank_matched"/>
+                            <field name="payment_id" readonly="1"/>
+                            <field name="deposit_id" readonly="1"/>
+                            <field name="deposit_date" readonly="1"/>
+                            <field name="cleared_date" readonly="1"
+                                   invisible="state != 'cleared'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Allocations" name="allocations">
+                            <group>
+                                <group>
+                                    <field name="allocated_amount"/>
+                                    <field name="unapplied_amount"/>
+                                </group>
+                            </group>
+                            <field name="allocation_ids" readonly="1">
+                                <list decoration-muted="state == 'cancelled'">
+                                    <field name="obligation_kind"/>
+                                    <field name="obligation_ref"/>
+                                    <field name="obligation_due_date"/>
+                                    <field name="obligation_amount"/>
+                                    <field name="allocated_amount" sum="Allocated"/>
+                                    <field name="move_id" optional="show"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Presentations" name="presentations">
+                            <field name="presentation_ids" readonly="1">
+                                <list decoration-danger="state == 'bounced'"
+                                      decoration-success="state == 'cleared'">
+                                    <field name="attempt"/>
+                                    <field name="presented_date"/>
+                                    <field name="deposit_id"/>
+                                    <field name="journal_id"/>
+                                    <field name="amount"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="payment_id"/>
+                                    <field name="cleared_date"/>
+                                    <field name="bounced_date"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Custody History" name="custody">
+                            <field name="custody_ids" readonly="1">
+                                <list>
+                                    <field name="date"/>
+                                    <field name="reason"/>
+                                    <field name="from_custodian_id"/>
+                                    <field name="to_custodian_id"/>
+                                    <field name="from_location_id"/>
+                                    <field name="to_location_id"/>
+                                    <field name="handed_over_by_id"/>
+                                    <field name="note"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Bounces" name="bounces"
+                              invisible="bounce_count == 0">
+                            <field name="bounce_ids" readonly="1">
+                                <list decoration-danger="not resolved">
+                                    <field name="name"/>
+                                    <field name="bounce_date"/>
+                                    <field name="reason"/>
+                                    <field name="bank_charge_amount"/>
+                                    <field name="penalty_amount"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="accounting_handled"/>
+                                    <field name="requires_manual_accounting"/>
+                                    <field name="resolution" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Replacement" name="replacement"
+                              invisible="not replaces_check_id and not replacement_check_id">
+                            <group>
+                                <field name="replaces_check_id" readonly="1"/>
+                                <field name="replacement_check_id" readonly="1"/>
+                                <field name="root_check_id" readonly="1"/>
+                                <field name="replacement_generation" readonly="1"/>
+                            </group>
+                        </page>
+                        <page string="Scans" name="scans">
+                            <group>
+                                <field name="front_image" widget="image" class="oe_avatar"/>
+                                <field name="back_image" widget="image" class="oe_avatar"/>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes" placeholder="Internal treasury notes..."
+                                   groups="real_estate_checks.group_checks_see_bank_details"/>
+                        </page>
+                    </notebook>
+                    <field name="bounce_count" invisible="1"/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_realestate_check_search" model="ir.ui.view">
+        <field name="name">realestate.check.search</field>
+        <field name="model">realestate.check</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="check_number"/>
+                <field name="partner_id"/>
+                <field name="bank_id"/>
+                <field name="sale_contract_id"/>
+                <field name="project_id"/>
+                <field name="deposit_id"/>
+                <separator/>
+                <filter name="on_hand" string="On Hand"
+                        domain="[('state','in',('draft','registered'))]"/>
+                <filter name="at_bank" string="At Bank"
+                        domain="[('state','in',('deposited','in_clearing'))]"/>
+                <filter name="cleared" string="Cleared" domain="[('state','=','cleared')]"/>
+                <filter name="bounced" string="Bounced" domain="[('state','=','bounced')]"/>
+                <separator/>
+                <filter name="due_today" string="Due Today"
+                        domain="[('due_date','=', context_today().strftime('%Y-%m-%d')), ('state','in',('registered','draft'))]"/>
+                <filter name="due_this_week" string="Due Within 7 Days"
+                        domain="[('due_date','&gt;=', context_today().strftime('%Y-%m-%d')),
+                                 ('due_date','&lt;=', (context_today() + relativedelta(days=7)).strftime('%Y-%m-%d')),
+                                 ('state','in',('registered','draft'))]"/>
+                <filter name="overdue" string="Matured, Not Presented"
+                        domain="[('due_date','&lt;', context_today().strftime('%Y-%m-%d')),
+                                 ('state','in',('registered','draft'))]"/>
+                <separator/>
+                <filter name="unallocated" string="Has Unapplied Balance"
+                        domain="[('unapplied_amount','&gt;',0)]"/>
+                <filter name="awaiting_bank" string="Awaiting Bank Reconciliation"
+                        domain="[('state','in',('deposited','in_clearing')),
+                                 ('accounting_state','in',('payment_registered','in_payment'))]"/>
+                <separator/>
+                <filter name="archived" string="Archived" domain="[('active','=',False)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_state" string="State" context="{'group_by':'state'}"/>
+                    <filter name="group_accounting" string="Accounting Status"
+                            context="{'group_by':'accounting_state'}"/>
+                    <filter name="group_bucket" string="Maturity"
+                            context="{'group_by':'maturity_bucket'}"/>
+                    <filter name="group_partner" string="Drawer" context="{'group_by':'partner_id'}"/>
+                    <filter name="group_bank" string="Bank" context="{'group_by':'bank_id'}"/>
+                    <filter name="group_project" string="Project" context="{'group_by':'project_id'}"/>
+                    <filter name="group_location" string="Location" context="{'group_by':'location_id'}"/>
+                    <filter name="group_currency" string="Currency" context="{'group_by':'currency_id'}"/>
+                    <filter name="group_due" string="Due Month" context="{'group_by':'due_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_realestate_check" model="ir.actions.act_window">
+        <field name="name">Checks</field>
+        <field name="res_model">realestate.check</field>
+        <field name="view_mode">list,kanban,pivot,graph,form</field>
+        <field name="search_view_id" ref="view_realestate_check_search"/>
+    </record>
+</odoo>

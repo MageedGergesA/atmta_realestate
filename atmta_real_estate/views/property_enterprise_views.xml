@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Property form redesign (Phase 31).
+
+  Added as an INHERITED view rather than by rewriting the existing form, so the
+  pre-upgrade layout and every downstream module that extends it
+  (developer, maquette, plan, handover, brokerage) keep working untouched.
+-->
+<odoo>
+
+    <record id="view_property_form_enterprise" model="ir.ui.view">
+        <field name="name">realestate.property.form.enterprise</field>
+        <field name="model">realestate.property</field>
+        <field name="inherit_id" ref="atmta_property_core.view_property_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Start a lease from an available unit -->
+            <xpath expr="//field[@name='state'][@widget='statusbar']" position="before">
+                <button name="action_new_lease" type="object" string="New Lease"
+                        class="oe_highlight" invisible="not is_available_for_lease"
+                        groups="atmta_real_estate.group_rental_agent"/>
+            </xpath>
+
+            <!-- Status dimensions replace the single overloaded state badge -->
+            <xpath expr="//field[@name='state'][@widget='statusbar']" position="after">
+                <field name="commercial_status" widget="badge"
+                       decoration-success="commercial_status == 'available'"
+                       decoration-warning="commercial_status in ('held', 'reserved')"
+                       decoration-danger="commercial_status in ('sold', 'blocked')"/>
+                <field name="occupancy_status" widget="badge"
+                       decoration-info="occupancy_status == 'occupied'"/>
+                <field name="maintenance_status" widget="badge"
+                       decoration-danger="maintenance_status != 'normal'"/>
+                <field name="handover_status" optional="hide"/>
+                <field name="is_leasable"/>
+            </xpath>
+
+            <!-- Availability panel -->
+            <xpath expr="//field[@name='next_available_date']" position="after">
+                <field name="is_available_for_lease" widget="boolean_toggle" readonly="1"/>
+                <field name="availability_reason" readonly="1"/>
+                <field name="available_from"/>
+                <field name="available_until"/>
+                <!-- The lease itself, and so Rental's roles only: reading
+                     its name reads a realestate.contract, which no other
+                     application grants. The rest of the panel is stored on the
+                     property and stays readable to everyone who may open it. -->
+                <field name="blocking_contract_id" readonly="1"
+                       groups="atmta_real_estate.group_realestate_readonly"/>
+                <field name="availability_override"
+                       groups="atmta_real_estate.group_property_manager"/>
+                <field name="availability_override_reason"
+                       invisible="availability_override == 'none'"
+                       required="availability_override != 'none'"
+                       groups="atmta_real_estate.group_property_manager"/>
+                <field name="availability_override_uid" readonly="1"
+                       invisible="availability_override == 'none'"/>
+                <field name="availability_override_date" readonly="1"
+                       invisible="availability_override == 'none'"/>
+            </xpath>
+
+            <!-- Identifiers + usage -->
+            <xpath expr="//field[@name='property_ref']" position="after">
+                <field name="usage_category"/>
+                <field name="unit_number"/>
+                <field name="building_code"/>
+                <field name="plot_number"/>
+                <field name="developer_unit_code"/>
+                <field name="external_reference"/>
+                <field name="legacy_reference"/>
+                <field name="registration_number"/>
+                <field name="deed_number"/>
+                <field name="deed_date"/>
+                <field name="company_id" groups="base.group_multi_company"
+                       options="{'no_create': True}"/>
+            </xpath>
+
+            <!-- Smart buttons.
+
+                 Shown to the Rental roles only. Meters and unit turns are
+                 Rental's models and no other application grants read on them,
+                 so a Developer or Handover user opening this shared form used
+                 to be shown a counter it could not compute: the Developer
+                 "Units" screen raised an AccessError on
+                 realestate.property.meter before it finished loading. The node
+                 is offered to exactly the roles that can read the rows behind
+                 it: the legacy Read-only group, which every Rental role
+                 implies. -->
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button name="action_view_meters" type="object"
+                        class="oe_stat_button" icon="fa-tachometer"
+                        groups="atmta_real_estate.group_realestate_readonly">
+                    <field name="meter_count" widget="statinfo" string="Meters"/>
+                </button>
+                <button name="action_view_unit_turns" type="object"
+                        class="oe_stat_button" icon="fa-refresh"
+                        groups="atmta_real_estate.group_realestate_readonly">
+                    <field name="unit_turn_count" widget="statinfo" string="Turns"/>
+                </button>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- Meters + allocations as their own tabs.
+
+         Each page is offered to the Rental roles only, for the same reason as
+         the smart buttons above: meters, lease allocations and unit turns are
+         Rental's models, and Rental is the only application that grants read
+         on them. `groups` is applied after view inheritance, so a module that
+         extends one of these pages still resolves. -->
+    <record id="view_property_form_leasing_tabs" model="ir.ui.view">
+        <field name="name">realestate.property.form.leasing.tabs</field>
+        <field name="model">realestate.property</field>
+        <field name="inherit_id" ref="atmta_property_core.view_property_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Utility Meters" name="meters"
+                      groups="atmta_real_estate.group_realestate_readonly">
+                    <field name="meter_ids" context="{'default_property_id': id}">
+                        <list editable="bottom">
+                            <field name="meter_type"/>
+                            <field name="name"/>
+                            <field name="provider_id" optional="show"/>
+                            <field name="uom_id" optional="show"/>
+                            <field name="opening_reading"/>
+                            <field name="current_reading" readonly="1"/>
+                            <field name="last_reading_date" readonly="1"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </list>
+                    </field>
+                </page>
+                <page string="Lease History" name="lease_allocations"
+                      groups="atmta_real_estate.group_realestate_readonly">
+                    <field name="property_line_ids" readonly="1">
+                        <list>
+                            <field name="contract_id"/>
+                            <field name="partner_id"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="allocated_rent"/>
+                            <field name="move_in_date" optional="show"/>
+                            <field name="move_out_date" optional="show"/>
+                            <field name="occupancy_status"/>
+                            <field name="lifecycle_state"/>
+                            <field name="currency_id" column_invisible="True"/>
+                        </list>
+                    </field>
+                </page>
+                <page string="Unit Turns" name="unit_turns"
+                      groups="atmta_real_estate.group_realestate_readonly">
+                    <field name="unit_turn_ids" readonly="1">
+                        <list>
+                            <field name="name"/>
+                            <field name="start_date"/>
+                            <field name="actual_ready_date"/>
+                            <field name="vacant_days"/>
+                            <field name="state"/>
+                        </list>
+                    </field>
+                    <group>
+                        <field name="average_vacant_days" readonly="1"/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <!-- Available Units: what can be let right now, and a lease one click away.
+         Its own view, so the shared unit list other modules extend is untouched. -->
+    <record id="view_available_units_list" model="ir.ui.view">
+        <field name="name">realestate.property.list.available</field>
+        <field name="model">realestate.property</field>
+        <field name="priority">30</field>
+        <field name="arch" type="xml">
+            <list string="Available Units" create="false"
+                  default_order="available_from, property_code">
+                <field name="property_code" string="Unit"/>
+                <field name="name"/>
+                <field name="parent_id" string="Building"/>
+                <field name="property_type_id" string="Type" optional="show"/>
+                <field name="usage_category" string="Usage"/>
+                <field name="bedroom_count" string="Bedrooms" optional="show"/>
+                <field name="area_sqm" string="Area (m²)"/>
+                <field name="furnished_status" string="Furnished" optional="show"/>
+                <field name="available_from" string="Available From"/>
+                <field name="occupancy_status" string="Occupancy" widget="badge"
+                       decoration-info="occupancy_status == 'occupied'"/>
+                <field name="availability_reason" optional="hide"/>
+                <field name="is_available_for_lease" column_invisible="1"/>
+                <button name="action_new_lease" type="object" string="New Lease"
+                        icon="fa-plus" class="btn-link"
+                        invisible="not is_available_for_lease"
+                        groups="atmta_real_estate.group_rental_agent"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Search: the filters a leasing team actually uses -->
+    <record id="view_property_search_leasing" model="ir.ui.view">
+        <field name="name">realestate.property.search.leasing</field>
+        <field name="model">realestate.property</field>
+        <field name="inherit_id" ref="atmta_property_core.view_property_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <separator/>
+                <filter name="available_to_lease" string="Available to Lease"
+                        domain="[('is_available_for_lease', '=', True)]"/>
+                <filter name="occupied" string="Occupied"
+                        domain="[('occupancy_status', '=', 'occupied')]"/>
+                <filter name="vacant" string="Vacant"
+                        domain="[('occupancy_status', '=', 'vacant'), ('is_leasable', '=', True)]"/>
+                <filter name="out_of_service" string="Out of Service"
+                        domain="[('maintenance_status', '!=', 'normal')]"/>
+                <separator/>
+                <filter name="leasable" string="Leasable Units"
+                        domain="[('is_leasable', '=', True)]"/>
+                <separator/>
+                <filter name="available_within_30" string="Available Within 30 Days"
+                        domain="[('is_available_for_lease', '=', False),
+                                 '|',
+                                 '&amp;', ('next_available_date', '!=', False),
+                                          ('next_available_date', '&lt;=', (context_today() + relativedelta(days=30)).strftime('%Y-%m-%d')),
+                                 '&amp;', ('available_from', '&gt;', context_today().strftime('%Y-%m-%d')),
+                                          ('available_from', '&lt;=', (context_today() + relativedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <filter name="awaiting_signature" string="Awaiting Signature"
+                        help="Reserved by a lease that is waiting to be signed"
+                        domain="[('property_line_ids', 'any', [('lifecycle_state', '=', 'pending_signature')])]"/>
+                <filter name="furnished" string="Furnished"
+                        domain="[('furnished_status', 'in', ('semi', 'furnished'))]"/>
+                <group expand="0" string="Group By">
+                    <filter name="gb_building" string="Building"
+                            context="{'group_by': 'parent_id'}"/>
+                    <filter name="gb_sub_area" string="Sub-area"
+                            context="{'group_by': 'sub_area'}"/>
+                    <filter name="gb_bedrooms" string="Bedrooms"
+                            context="{'group_by': 'bedroom_count'}"/>
+                    <filter name="gb_floor" string="Floor"
+                            context="{'group_by': 'floor_number'}"/>
+                    <filter name="gb_commercial" string="Commercial Status"
+                            context="{'group_by': 'commercial_status'}"/>
+                    <filter name="gb_occupancy" string="Occupancy"
+                            context="{'group_by': 'occupancy_status'}"/>
+                    <filter name="gb_maintenance" string="Maintenance"
+                            context="{'group_by': 'maintenance_status'}"/>
+                    <filter name="gb_usage" string="Usage"
+                            context="{'group_by': 'usage_category'}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

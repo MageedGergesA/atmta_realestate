@@ -18,7 +18,7 @@ server, with the requester's identity rather than with a group membership.
 from odoo.exceptions import UserError
 from odoo.tests import tagged
 
-from .common import M3Common
+from .common import M3Common, groups_of
 
 
 @tagged('post_install', '-at_install', 'atmta_procurement')
@@ -42,10 +42,10 @@ class TestM3Approval(M3Common):
             'email': '%s@example.com' % login,
             'company_id': self.company.id,
             'company_ids': [(6, 0, [self.company.id])],
-            'groups_id': [(6, 0, [self.env.ref(xmlid).id for xmlid in (
+            'groups_id': [(6, 0, groups_of(self.env, (
                 'base.group_user', 'real_estate_developer.group_dev_readonly',
                 'real_estate_construction.group_construction_user') + groups
-            ])],
+            ).ids)],
         })
 
     def _rule(self, name, group, **kwargs):

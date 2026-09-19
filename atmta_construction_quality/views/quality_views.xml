@@ -269,6 +269,7 @@
                             string="Not Applicable"
                             invisible="result or state not in ('draft','in_progress')"/>
                     <button name="action_create_reinspection" type="object"
+                            context="{'re_open_reinspection': True}"
                             string="Raise Reinspection"
                             invisible="result in (False,'accepted','accepted_with_comments')"/>
                     <button name="action_create_observation" type="object"
@@ -488,6 +489,7 @@
                             string="Ready for Verification"
                             invisible="state != 'corrective_action'"/>
                     <button name="action_create_reinspection" type="object"
+                            context="{'re_open_reinspection': True}"
                             string="Verification Inspection"
                             invisible="state not in ('corrective_action','ready_for_verification')"/>
                     <button name="action_verify" type="object" string="Verify"

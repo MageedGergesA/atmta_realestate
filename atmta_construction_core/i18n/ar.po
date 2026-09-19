@@ -1,0 +1,522 @@
+# Translation of Odoo Server.
+# This file contains the Arabic translation of the following modules:
+# 	* atmta_construction_core
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:12+0000\n"
+"PO-Revision-Date: 2026-09-17 10:12+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: atmta_construction_core
+#. odoo-python
+#: code:addons/atmta_construction_core/models/construction_accounts.py:0
+msgid "%(account)s is not available to %(company)s."
+msgstr "%(account)s غير متاح لـ %(company)s."
+
+#. module: atmta_construction_core
+#. odoo-python
+#: code:addons/atmta_construction_core/models/construction_accounts.py:0
+msgid ""
+"%(label)s is not configured for %(company)s.\n"
+"\n"
+"Set it in Settings → Accounting → Construction. Nothing is posted until it is: a control balance in the wrong account is harder to find than one that was never written."
+msgstr ""
+"%(label)s غير مهيأ لـ %(company)s.\n"
+"\n"
+"اضبطه من الإعدادات → المحاسبة → الإنشاءات. لن يتم ترحيل أي قيد حتى يتم ذلك: رصيد حساب رقابي في حساب خاطئ أصعب في اكتشافه من رصيد لم يسجل أصلا."
+
+#. module: atmta_construction_core
+#: model_terms:ir.ui.view,arch_db:atmta_construction_core.view_construction_wbs_form
+msgid "02"
+msgstr "02"
+
+#. module: atmta_construction_core
+#: model:ir.model.constraint,message:atmta_construction_core.constraint_realestate_construction_wbs_code_uniq_per_parent
+msgid "A WBS code must be unique among its siblings on the same project."
+msgstr ""
+"يجب أن يكون رمز هيكل تجزئة العمل فريدا بين العناصر الشقيقة في المشروع نفسه."
+
+#. module: atmta_construction_core
+#. odoo-python
+#: code:addons/atmta_construction_core/models/cost_structure.py:0
+msgid "A WBS node cannot be its own ancestor."
+msgstr "لا يمكن أن تكون عقدة هيكل تجزئة العمل سلفا لنفسها."
+
+#. module: atmta_construction_core
+#. odoo-python
+#: code:addons/atmta_construction_core/models/cost_structure.py:0
+msgid "A cost code cannot roll up into itself."
+msgstr "لا يمكن تجميع رمز التكلفة ضمن نفسه."
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_cost_code__active
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_wbs__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_cost_code__analytic_account_id
+msgid "Analytic Account"
+msgstr "الحساب التحليلي"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,help:atmta_construction_core.field_res_company__construction_advance_account_id
+#: model:ir.model.fields,help:atmta_construction_core.field_res_config_settings__construction_advance_account_id
+msgid ""
+"Asset account holding advances paid to contractors until they are recovered "
+"from certificates."
+msgstr ""
+"حساب أصول يحتفظ بالدفعات المقدمة المدفوعة للمقاولين إلى أن تسترد من "
+"الشهادات."
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,help:atmta_construction_core.field_res_company__construction_owner_retention_account_id
+#: model:ir.model.fields,help:atmta_construction_core.field_res_config_settings__construction_owner_retention_account_id
+msgid ""
+"Asset account holding retention the owner withholds from our own progress "
+"billing until it is released to us."
+msgstr ""
+"حساب أصول يحتفظ بالمحتجزات التي يقتطعها المالك من فواتير الإنجاز الخاصة بنا "
+"إلى أن يفرج عنها لنا."
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_cost_code__category
+msgid "Category"
+msgstr "الفئة"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_wbs__child_ids
+msgid "Children"
+msgstr "العناصر الفرعية"
+
+#. module: atmta_construction_core
+#: model_terms:ir.ui.view,arch_db:atmta_construction_core.view_construction_cost_code_form
+msgid "Civil Subcontract"
+msgstr "عقد باطن للأعمال المدنية"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_cost_code__code
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_wbs__code
+msgid "Code"
+msgstr "الرمز"
+
+#. module: atmta_construction_core
+#: model:ir.model,name:atmta_construction_core.model_res_company
+msgid "Companies"
+msgstr "الشركات"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_cost_code__company_id
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_wbs__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: atmta_construction_core
+#: model:ir.model,name:atmta_construction_core.model_res_config_settings
+msgid "Config Settings"
+msgstr "إعدادات التهيئة"
+
+#. module: atmta_construction_core
+#: model:ir.model,name:atmta_construction_core.model_realestate_construction_analytic
+msgid "Construction Analytic Integration"
+msgstr "تكامل الحسابات التحليلية للإنشاءات"
+
+#. module: atmta_construction_core
+#: model:ir.model,name:atmta_construction_core.model_realestate_construction_accounts
+msgid "Construction Control Accounts"
+msgstr "حسابات رقابة الإنشاءات"
+
+#. module: atmta_construction_core
+#: model:ir.model,name:atmta_construction_core.model_realestate_construction_cost_code
+msgid "Construction Cost Code"
+msgstr "رمز تكلفة الإنشاء"
+
+#. module: atmta_construction_core
+#. odoo-python
+#: code:addons/atmta_construction_core/models/construction_analytic.py:0
+#: model:account.analytic.plan,name:atmta_construction_core.analytic_plan_cost_codes
+msgid "Construction Cost Codes"
+msgstr "رموز تكلفة الإنشاء"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_project__construction_member_ids
+msgid "Construction Team"
+msgstr "فريق الإنشاء"
+
+#. module: atmta_construction_core
+#: model:ir.model,name:atmta_construction_core.model_realestate_construction_wbs
+msgid "Construction WBS Node"
+msgstr "عقدة هيكل تجزئة العمل للإنشاء"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields.selection,name:atmta_construction_core.selection__realestate_construction_cost_code__category__contingency
+msgid "Contingency"
+msgstr "الاحتياطي"
+
+#. module: atmta_construction_core
+#. odoo-python
+#: code:addons/atmta_construction_core/models/construction_accounts.py:0
+#: model:ir.model.fields,field_description:atmta_construction_core.field_res_company__construction_advance_account_id
+#: model:ir.model.fields,field_description:atmta_construction_core.field_res_config_settings__construction_advance_account_id
+msgid "Contractor Advance Account"
+msgstr "حساب الدفعات المقدمة للمقاولين"
+
+#. module: atmta_construction_core
+#. odoo-python
+#: code:addons/atmta_construction_core/models/construction_accounts.py:0
+#: model:ir.model.fields,field_description:atmta_construction_core.field_res_company__construction_retention_account_id
+#: model:ir.model.fields,field_description:atmta_construction_core.field_res_config_settings__construction_retention_account_id
+msgid "Contractor Retention Account"
+msgstr "حساب محتجزات المقاولين"
+
+#. module: atmta_construction_core
+#: model_terms:ir.ui.view,arch_db:atmta_construction_core.view_construction_cost_code_form
+msgid "Cost Code"
+msgstr "رمز التكلفة"
+
+#. module: atmta_construction_core
+#: model:ir.actions.act_window,name:atmta_construction_core.action_construction_cost_code
+#: model_terms:ir.ui.view,arch_db:atmta_construction_core.view_construction_cost_code_list
+msgid "Cost Codes"
+msgstr "رموز التكلفة"
+
+#. module: atmta_construction_core
+#. odoo-python
+#: code:addons/atmta_construction_core/models/cost_structure.py:0
+msgid ""
+"Cost code %(code)s belongs to %(company)s but is scoped to a project in "
+"%(project_company)s."
+msgstr ""
+"رمز التكلفة %(code)s يتبع %(company)s لكنه مخصص لمشروع يتبع "
+"%(project_company)s."
+
+#. module: atmta_construction_core
+#: model_terms:ir.ui.view,arch_db:atmta_construction_core.view_construction_cost_code_form
+msgid "Create Analytic Account"
+msgstr "إنشاء حساب تحليلي"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_cost_code__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_wbs__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_cost_code__create_date
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_wbs__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_cost_code__description
+msgid "Description"
+msgstr "الوصف"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_cost_code__display_name
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_wbs__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,help:atmta_construction_core.field_realestate_construction_wbs__complete_code
+msgid "Dotted path from the root: 03.02.01."
+msgstr "المسار المنقط من الجذر: 03.02.01."
+
+#. module: atmta_construction_core
+#: model:ir.model.fields.selection,name:atmta_construction_core.selection__realestate_construction_cost_code__category__equipment
+msgid "Equipment"
+msgstr "المعدات"
+
+#. module: atmta_construction_core
+#: model_terms:ir.ui.view,arch_db:atmta_construction_core.view_construction_wbs_form
+msgid "Ground Floor Slabs"
+msgstr "بلاطات الطابق الأرضي"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_cost_code__id
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_wbs__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_cost_code__is_contingency
+msgid "Is Contingency"
+msgstr "احتياطي طوارئ"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_wbs__is_leaf
+msgid "Is Leaf"
+msgstr "عنصر نهائي"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields.selection,name:atmta_construction_core.selection__realestate_construction_cost_code__category__labor
+msgid "Labour"
+msgstr "العمالة"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_cost_code__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_wbs__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_cost_code__write_date
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_wbs__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,help:atmta_construction_core.field_realestate_construction_cost_code__project_id
+msgid ""
+"Leave empty for a catalogue code available to every project. Set it only for"
+" a code that genuinely belongs to one project."
+msgstr ""
+"اتركه فارغا لرمز من الدليل متاح لكل المشاريع. حدده فقط لرمز يخص مشروعا واحدا"
+" فعلا."
+
+#. module: atmta_construction_core
+#: model_terms:ir.ui.view,arch_db:atmta_construction_core.view_construction_cost_code_form
+msgid "Leave empty for a catalogue code every project may use."
+msgstr "اتركه فارغا لرمز من الدليل يمكن لكل مشروع استخدامه."
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_wbs__level
+msgid "Level"
+msgstr "المستوى"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,help:atmta_construction_core.field_res_company__construction_owner_advance_account_id
+#: model:ir.model.fields,help:atmta_construction_core.field_res_config_settings__construction_owner_advance_account_id
+msgid ""
+"Liability account holding advances received from the owner until they are "
+"recovered against progress billing."
+msgstr ""
+"حساب التزامات يحتفظ بالدفعات المقدمة المستلمة من المالك إلى أن تسترد مقابل "
+"فواتير الإنجاز."
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,help:atmta_construction_core.field_res_company__construction_retention_account_id
+#: model:ir.model.fields,help:atmta_construction_core.field_res_config_settings__construction_retention_account_id
+msgid ""
+"Liability account holding retention withheld from contractor payment "
+"certificates until it is released."
+msgstr ""
+"حساب التزامات يحتفظ بالمحتجزات المقتطعة من شهادات دفع المقاولين إلى أن يفرج "
+"عنها."
+
+#. module: atmta_construction_core
+#: model:ir.model.fields.selection,name:atmta_construction_core.selection__realestate_construction_cost_code__category__material
+msgid "Material"
+msgstr "المواد"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,help:atmta_construction_core.field_realestate_construction_cost_code__is_contingency
+msgid ""
+"Money set aside rather than allocated to scope. Drawing on it is a decision "
+"that is recorded, not a budget line that quietly grows."
+msgstr ""
+"مبلغ مجنب بدلا من تخصيصه للنطاق. السحب منه قرار يسجل، وليس بند ميزانية يتضخم"
+" بصمت."
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_cost_code__name
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_wbs__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_wbs__notes
+#: model_terms:ir.ui.view,arch_db:atmta_construction_core.view_construction_wbs_form
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,help:atmta_construction_core.field_realestate_construction_cost_code__parent_id
+msgid ""
+"Optional grouping for reporting — 'SUB' over 'SUB-CIV', 'SUB-MEP'. Budgets "
+"and costs are booked on the leaf."
+msgstr ""
+"تجميع اختياري لأغراض التقارير — 'SUB' فوق 'SUB-CIV' و'SUB-MEP'. تسجل "
+"الميزانيات والتكاليف على العنصر النهائي."
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,help:atmta_construction_core.field_realestate_construction_wbs__phase_id
+msgid "Optional. A WBS node may belong to a phase of the project."
+msgstr ""
+"اختياري. يمكن أن تنتمي عقدة هيكل تجزئة العمل إلى مرحلة من مراحل المشروع."
+
+#. module: atmta_construction_core
+#: model:ir.model.fields.selection,name:atmta_construction_core.selection__realestate_construction_cost_code__category__other
+msgid "Other"
+msgstr "أخرى"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields.selection,name:atmta_construction_core.selection__realestate_construction_cost_code__category__overhead
+msgid "Overhead & Preliminaries"
+msgstr "المصاريف العامة والأعمال التمهيدية"
+
+#. module: atmta_construction_core
+#. odoo-python
+#: code:addons/atmta_construction_core/models/construction_accounts.py:0
+#: model:ir.model.fields,field_description:atmta_construction_core.field_res_company__construction_owner_advance_account_id
+#: model:ir.model.fields,field_description:atmta_construction_core.field_res_config_settings__construction_owner_advance_account_id
+msgid "Owner Advance Received"
+msgstr "الدفعات المقدمة المستلمة من المالك"
+
+#. module: atmta_construction_core
+#. odoo-python
+#: code:addons/atmta_construction_core/models/construction_accounts.py:0
+#: model:ir.model.fields,field_description:atmta_construction_core.field_res_company__construction_owner_retention_account_id
+#: model:ir.model.fields,field_description:atmta_construction_core.field_res_config_settings__construction_owner_retention_account_id
+msgid "Owner Retention Receivable"
+msgstr "محتجزات المالك المستحقة"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,help:atmta_construction_core.field_realestate_construction_wbs__company_id
+msgid "Owning company. Inventory, pricing and deals never cross companies."
+msgstr "الشركة المالكة. المخزون والتسعير والصفقات لا تنتقل بين الشركات أبدا."
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_wbs__parent_id
+msgid "Parent"
+msgstr "الأصل"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_wbs__parent_path
+msgid "Parent Path"
+msgstr "المسار الأصل"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields.selection,name:atmta_construction_core.selection__realestate_construction_cost_code__category__permit
+msgid "Permits & Authorities"
+msgstr "التصاريح والجهات الحكومية"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_wbs__phase_id
+msgid "Phase"
+msgstr "المرحلة"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields.selection,name:atmta_construction_core.selection__realestate_construction_cost_code__category__professional
+msgid "Professional Fees"
+msgstr "الأتعاب المهنية"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_cost_code__project_id
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_wbs__project_id
+msgid "Project"
+msgstr "المشروع"
+
+#. module: atmta_construction_core
+#: model:ir.model,name:atmta_construction_core.model_realestate_project
+msgid "Real Estate Development Project"
+msgstr "مشروع التطوير العقاري"
+
+#. module: atmta_construction_core
+#. odoo-python
+#: code:addons/atmta_construction_core/models/construction_analytic.py:0
+#: model:account.analytic.plan,name:atmta_construction_core.analytic_plan_re_projects
+msgid "Real Estate Projects"
+msgstr "المشاريع العقارية"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_cost_code__parent_id
+msgid "Roll-up"
+msgstr "التجميع"
+
+#. module: atmta_construction_core
+#: model_terms:ir.ui.view,arch_db:atmta_construction_core.view_construction_cost_code_form
+msgid "SUB-CIV"
+msgstr "SUB-CIV"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_wbs__sequence
+msgid "Sequence"
+msgstr "المسلسل"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,help:atmta_construction_core.field_realestate_construction_wbs__code
+msgid ""
+"Short code, unique among siblings — '03', '02'. The full path is built from "
+"these."
+msgstr ""
+"رمز قصير فريد بين العناصر الشقيقة — '03'، '02'. يبنى المسار الكامل منها."
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_cost_code__child_ids
+msgid "Sub-codes"
+msgstr "الرموز الفرعية"
+
+#. module: atmta_construction_core
+#: model_terms:ir.ui.view,arch_db:atmta_construction_core.view_construction_wbs_form
+msgid "Sub-nodes"
+msgstr "العقد الفرعية"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields.selection,name:atmta_construction_core.selection__realestate_construction_cost_code__category__subcontract
+msgid "Subcontract"
+msgstr "عقد من الباطن"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,help:atmta_construction_core.field_realestate_construction_cost_code__analytic_account_id
+msgid ""
+"The cost-code side of every posting. Created on demand in the Construction "
+"Cost Codes plan."
+msgstr ""
+"جانب رمز التكلفة في كل قيد. ينشأ عند الحاجة ضمن خطة رموز تكلفة الإنشاء."
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,help:atmta_construction_core.field_realestate_construction_cost_code__category
+msgid "The kind of money. Scope lives on the WBS, not here."
+msgstr "نوع المبلغ. النطاق يحدد في هيكل تجزئة العمل، وليس هنا."
+
+#. module: atmta_construction_core
+#: model:ir.actions.act_window,name:atmta_construction_core.action_construction_wbs
+#: model_terms:ir.ui.view,arch_db:atmta_construction_core.view_construction_wbs_list
+msgid "WBS"
+msgstr "هيكل تجزئة العمل"
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,field_description:atmta_construction_core.field_realestate_construction_wbs__complete_code
+msgid "WBS Code"
+msgstr "رمز هيكل تجزئة العمل"
+
+#. module: atmta_construction_core
+#: model_terms:ir.ui.view,arch_db:atmta_construction_core.view_construction_wbs_form
+msgid "WBS Node"
+msgstr "عقدة هيكل تجزئة العمل"
+
+#. module: atmta_construction_core
+#. odoo-python
+#: code:addons/atmta_construction_core/models/cost_structure.py:0
+msgid ""
+"WBS node '%(child)s' belongs to %(child_project)s but its parent belongs to "
+"%(parent_project)s."
+msgstr ""
+"عقدة هيكل تجزئة العمل '%(child)s' تتبع %(child_project)s بينما العقدة الأصل "
+"تتبع %(parent_project)s."
+
+#. module: atmta_construction_core
+#: model_terms:ir.ui.view,arch_db:atmta_construction_core.view_construction_cost_code_form
+msgid "What belongs in this code, and what does not."
+msgstr "ما يندرج تحت هذا الرمز، وما لا يندرج."
+
+#. module: atmta_construction_core
+#: model:ir.model.fields,help:atmta_construction_core.field_realestate_project__construction_member_ids
+msgid ""
+"Who may see this project's construction records. Leave empty and the project"
+" stays visible to everyone in the company, exactly as before — naming "
+"anybody is what turns access control on, per project, as a deliberate act."
+msgstr ""
+"من يمكنه الاطلاع على سجلات الإنشاء لهذا المشروع. اتركه فارغا ليبقى المشروع "
+"مرئيا لكل من في الشركة كما كان سابقا — تحديد أي شخص هو ما يفعل التحكم في "
+"الوصول، لكل مشروع على حدة، كإجراء مقصود."

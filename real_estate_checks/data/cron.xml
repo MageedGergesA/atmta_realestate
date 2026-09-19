@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!--
+        M34 — scheduled jobs.
+
+        All four are idempotent, batch-safe and multi-company safe, and none
+        of them performs an irreversible accounting action. The one that
+        touches accounting at all — the reconciliation sync — only READS
+        Odoo's reconciliation state and copies the answer onto the cheque; it
+        never posts, reverses or reconciles anything itself.
+
+        `numbercall` is deliberately absent: Odoo 18 removed it.
+    -->
+    <record id="cron_check_sync_accounting" model="ir.cron">
+        <field name="name">Checks: sync clearance from bank reconciliation</field>
+        <field name="model_id" ref="model_realestate_check"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_sync_accounting()</field>
+        <field name="interval_number">6</field>
+        <field name="interval_type">hours</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="cron_check_refresh_maturity" model="ir.cron">
+        <field name="name">Checks: refresh maturity buckets</field>
+        <field name="model_id" ref="model_realestate_check"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_refresh_maturity()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="cron_check_due_soon" model="ir.cron">
+        <field name="name">Checks: flag cheques maturing soon</field>
+        <field name="model_id" ref="model_realestate_check"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_due_soon()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="cron_check_overdue_presentation" model="ir.cron">
+        <field name="name">Checks: flag matured cheques still on hand</field>
+        <field name="model_id" ref="model_realestate_check"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_overdue_presentation()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="cron_check_bounce_followup" model="ir.cron">
+        <field name="name">Checks: chase unresolved bounces</field>
+        <field name="model_id" ref="model_realestate_check_bounce"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_bounce_followup()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

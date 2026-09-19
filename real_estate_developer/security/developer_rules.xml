@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+
+    <!--
+        Multi-company record rules.
+
+        Before this file the module had ZERO ir.rule records, and no model in it
+        carried a company_id, so there was nothing to isolate on: every user saw
+        every company's projects, inventory, reservations and contracts.
+
+        The pattern matches frozen Module 1: filter on company_id being in the
+        user's allowed companies, and deliberately DO NOT admit
+        company_id = False. A record with no company would otherwise be visible
+        to everyone, which is exactly the leak this is here to close. Every
+        model below has a required or related-stored company_id, so there are no
+        company-less records to strand.
+    -->
+
+    <!--
+        Project and Phase isolation moved to `atmta_project_core`
+        (`security/project_core_rules.xml`), together with the `company_id`
+        they filter on. A module that defines a model owns the boundary around
+        it; this application keeps the rules for the Development models below,
+        which are genuinely its own.
+    -->
+
+    <record id="rule_release_batch_company" model="ir.rule">
+        <field name="name">Release Batch: multi-company</field>
+        <field name="model_id" ref="model_realestate_unit_release_batch"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_unit_block_company" model="ir.rule">
+        <field name="name">Unit Block: multi-company</field>
+        <field name="model_id" ref="model_realestate_unit_block"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_reservation_company" model="ir.rule">
+        <field name="name">Reservation: multi-company</field>
+        <field name="model_id" ref="model_realestate_unit_reservation"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_sale_contract_company" model="ir.rule">
+        <field name="name">Sale Contract: multi-company</field>
+        <field name="model_id" ref="model_realestate_sale_contract"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_sale_installment_company" model="ir.rule">
+        <field name="name">Sale Installment: multi-company</field>
+        <field name="model_id" ref="model_realestate_sale_installment"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_price_book_company" model="ir.rule">
+        <field name="name">Price Book: multi-company</field>
+        <field name="model_id" ref="model_realestate_price_book"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_price_book_line_company" model="ir.rule">
+        <field name="name">Price Book Line: multi-company</field>
+        <field name="model_id" ref="model_realestate_price_book_line"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_price_rule_company" model="ir.rule">
+        <field name="name">Price Rule: multi-company</field>
+        <field name="model_id" ref="model_realestate_price_rule"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_price_component_company" model="ir.rule">
+        <field name="name">Price Component: multi-company</field>
+        <field name="model_id" ref="model_realestate_property_price_component"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_price_history_company" model="ir.rule">
+        <field name="name">Price History: multi-company</field>
+        <field name="model_id" ref="model_realestate_price_history"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_promotion_company" model="ir.rule">
+        <field name="name">Promotion: multi-company</field>
+        <field name="model_id" ref="model_realestate_promotion"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_approval_rule_company" model="ir.rule">
+        <field name="name">Approval Rule: multi-company</field>
+        <field name="model_id" ref="model_realestate_commercial_approval_rule"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_approval_request_company" model="ir.rule">
+        <field name="name">Approval Request: multi-company</field>
+        <field name="model_id" ref="model_realestate_commercial_approval_request"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_payment_plan_company" model="ir.rule">
+        <field name="name">Payment Plan: multi-company</field>
+        <field name="model_id" ref="model_realestate_payment_plan"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_payment_plan_line_company" model="ir.rule">
+        <field name="name">Payment Plan Line: multi-company</field>
+        <field name="model_id" ref="model_realestate_payment_plan_line"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_reservation_schedule_company" model="ir.rule">
+        <field name="name">Reservation Schedule: multi-company</field>
+        <field name="model_id" ref="model_realestate_reservation_schedule_line"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_reservation_extension_company" model="ir.rule">
+        <field name="name">Reservation Extension: multi-company</field>
+        <field name="model_id" ref="model_realestate_reservation_extension"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_contract_party_company" model="ir.rule">
+        <field name="name">Contract Party: multi-company</field>
+        <field name="model_id" ref="model_realestate_sale_contract_party"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_contract_prop_line_company" model="ir.rule">
+        <field name="name">Contract Property Line: multi-company</field>
+        <field name="model_id" ref="model_realestate_sale_contract_property_line"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_amendment_company" model="ir.rule">
+        <field name="name">Amendment: multi-company</field>
+        <field name="model_id" ref="model_realestate_sale_contract_amendment"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <record id="rule_inst_adjustment_company" model="ir.rule">
+        <field name="name">Instalment Adjustment: multi-company</field>
+        <field name="model_id" ref="model_realestate_sale_installment_adjustment"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+    <!--
+        Agent scoping (Phase 46, first step).
+
+        A sales agent sees the deals they own; a manager sees everything in the
+        company. This is a non-global rule on the agent group only, so it
+        RESTRICTS agents without granting managers anything extra — non-global
+        rules of different groups are OR-ed, and the manager group has its own
+        permissive rule below.
+
+        Project-level and team-level scoping need a project↔user assignment
+        model that does not exist yet; that is Phase 46 proper.
+    -->
+    <record id="rule_reservation_agent_own" model="ir.rule">
+        <field name="name">Reservation: agent sees own deals</field>
+        <field name="model_id" ref="model_realestate_unit_reservation"/>
+        <field name="domain_force">['|', ('agent_id', '=', user.id), ('create_uid', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('group_dev_agent'))]"/>
+        <field name="global" eval="False"/>
+    </record>
+
+    <record id="rule_reservation_manager_all" model="ir.rule">
+        <field name="name">Reservation: manager sees all</field>
+        <field name="model_id" ref="model_realestate_unit_reservation"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_dev_manager'))]"/>
+        <field name="global" eval="False"/>
+    </record>
+
+    <record id="rule_sale_contract_agent_own" model="ir.rule">
+        <field name="name">Sale Contract: agent sees own deals</field>
+        <field name="model_id" ref="model_realestate_sale_contract"/>
+        <field name="domain_force">['|', ('agent_id', '=', user.id), ('create_uid', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('group_dev_agent'))]"/>
+        <field name="global" eval="False"/>
+    </record>
+
+    <record id="rule_sale_contract_manager_all" model="ir.rule">
+        <field name="name">Sale Contract: manager sees all</field>
+        <field name="model_id" ref="model_realestate_sale_contract"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_dev_manager'))]"/>
+        <field name="global" eval="False"/>
+    </record>
+
+</odoo>

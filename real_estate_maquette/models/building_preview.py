@@ -1,5 +1,7 @@
 from odoo import _, api, fields, models
 
+from .visual_states import VISUAL_STATE_COUNTED_AS
+
 
 class BuildingPreview(models.TransientModel):
     """One-shot dialog opened when a user clicks a building region on the 2D
@@ -116,13 +118,20 @@ class BuildingPreview(models.TransientModel):
             ])
             rec.unit_ids = units
 
-    @api.depends('unit_ids', 'unit_ids.state')
+    @api.depends('unit_ids', 'unit_ids.visual_state')
     def _compute_unit_stats(self):
+        # Counted from the gallery status (Developer's availability), not the
+        # legacy `property.state`: an unreleased or blocked unit reads
+        # `available` there and was counted as one.
         for rec in self:
+            states = rec.unit_ids.mapped('visual_state')
             rec.units_total = len(rec.unit_ids)
-            rec.units_available = len(rec.unit_ids.filtered(lambda u: u.state == 'available'))
-            rec.units_reserved = len(rec.unit_ids.filtered(lambda u: u.state == 'reserved'))
-            rec.units_sold = len(rec.unit_ids.filtered(lambda u: u.state == 'sold'))
+            rec.units_available = sum(
+                1 for s in states if s in VISUAL_STATE_COUNTED_AS['available'])
+            rec.units_reserved = sum(
+                1 for s in states if s in VISUAL_STATE_COUNTED_AS['reserved'])
+            rec.units_sold = sum(
+                1 for s in states if s in VISUAL_STATE_COUNTED_AS['sold'])
 
     def action_open_building(self):
         self.ensure_one()

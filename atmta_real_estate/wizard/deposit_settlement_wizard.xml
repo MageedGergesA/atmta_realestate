@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_deposit_settlement_wizard_form" model="ir.ui.view">
+        <field name="name">realestate.deposit.settlement.wizard.form</field>
+        <field name="model">realestate.deposit.settlement.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Settle Deposit">
+                <group>
+                    <group>
+                        <field name="deposit_id"/>
+                        <field name="move_out_id" invisible="not move_out_id"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="held_amount"/>
+                    </group>
+                    <group>
+                        <field name="deduction_amount"/>
+                        <field name="refund_amount"/>
+                    </group>
+                </group>
+                <field name="reason" placeholder="What was withheld, and why"/>
+                <footer>
+                    <button name="action_confirm" type="object" string="Settle"
+                            class="btn-primary"
+                            confirm="The kept amount is posted as income and the refund as an outbound payment. Continue?"/>
+                    <button special="cancel" string="Discard"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- The deposit form: one entry point for a partial settlement. The full
+         Refund and Forfeit buttons stay as they were. -->
+    <record id="view_deposit_form_settlement" model="ir.ui.view">
+        <field name="name">realestate.contract.deposit.form.settlement</field>
+        <field name="model">realestate.contract.deposit</field>
+        <field name="inherit_id" ref="atmta_real_estate.view_deposit_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_refund']" position="before">
+                <button name="action_open_settlement" type="object" string="Settle"
+                        class="oe_highlight"
+                        invisible="state not in ('held', 'received', 'partially_refunded') or not can_post_accounting"
+                        groups="atmta_real_estate.group_rental_manager"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

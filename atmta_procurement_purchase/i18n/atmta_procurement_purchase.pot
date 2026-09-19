@@ -1,0 +1,387 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* atmta_procurement_purchase
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:13+0000\n"
+"PO-Revision-Date: 2026-09-17 10:13+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: atmta_procurement_purchase
+#. odoo-python
+#: code:addons/atmta_procurement_purchase/models/purchase_order.py:0
+msgid "%(order)s belongs to %(event)s, which was cancelled."
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#. odoo-python
+#: code:addons/atmta_procurement_purchase/models/purchase_order.py:0
+msgid ""
+"%(order)s cannot be confirmed:\n"
+"\n"
+"%(reasons)s\n"
+"\n"
+"The vendor policy in force is %(policy)s. Qualify the vendor, lift the restriction, or change the policy — nothing here is overridden by confirming again."
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#. odoo-python
+#: code:addons/atmta_procurement_purchase/models/purchase_order.py:0
+msgid ""
+"%(order)s commits %(amount)s against demand approved at %(basis)s.%(tolerance)s\n"
+"\n"
+"Revise and re-approve the requisition, or have the difference authorised as an exception — the extra has not been approved by anybody yet."
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#. odoo-python
+#: code:addons/atmta_procurement_purchase/models/purchase_order.py:0
+msgid ""
+"%(order)s has %(count)s line(s) with no cost code. A governed project "
+"purchase has to say what kind of money it is, or the commitment reaches the "
+"cost report as Unassigned."
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#. odoo-python
+#: code:addons/atmta_procurement_purchase/models/purchase_order.py:0
+msgid ""
+"%(order)s is %(vendor)s's response to %(event)s, and sourcing does not commit money.\n"
+"\n"
+"Confirming it would turn a quotation into a Construction commitment without anybody having decided who won. The award decision is a separate authorised act (M7); until it exists for this tender, no tender RFQ confirms — including through the native alternative-RFQ warning."
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#. odoo-python
+#: code:addons/atmta_procurement_purchase/models/purchase_order.py:0
+msgid ""
+"%(order)s is coded to %(project)s, which allows direct purchase only with an authorised exception. %(count)s line(s) have no requisition behind them.\n"
+"\n"
+"Request a direct-purchase exception; a procurement manager decides it, and the decision stays on the record."
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#. odoo-python
+#: code:addons/atmta_procurement_purchase/models/purchase_order.py:0
+msgid ""
+"%(order)s is coded to %(project)s, which requires every project purchase to come from an approved requisition. %(count)s line(s) have none.\n"
+"\n"
+"Raise a requisition, or change the project's purchase governance if direct buying is genuinely the policy here."
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#. odoo-python
+#: code:addons/atmta_procurement_purchase/models/purchase_order.py:0
+msgid ""
+"%(order)s ordered the whole line at %(amount)s, below the %(reserved)s "
+"reserved. The difference is released rather than held against demand that no"
+" longer exists."
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#. odoo-python
+#: code:addons/atmta_procurement_purchase/models/purchase_order.py:0
+msgid ""
+"%(order)s sources %(refs)s, which %(state)s. An order cannot commit a "
+"project's budget ahead of the approval that authorised the demand."
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#. odoo-python
+#: code:addons/atmta_procurement_purchase/models/purchase_order.py:0
+msgid "%s was cancelled."
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields.selection,name:atmta_procurement_purchase.selection__purchase_order__re_sourcing_class__atmta_tender
+msgid "ATMTA Sourcing Event"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields.selection,name:atmta_procurement_purchase.selection__purchase_order__re_sourcing_class__ambiguous
+msgid "Ambiguous"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#. odoo-python
+#: code:addons/atmta_procurement_purchase/models/purchase_order.py:0
+msgid ""
+"Confirmed with vendor governance gaps recorded:\n"
+"%s"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields.selection,name:atmta_procurement_purchase.selection__purchase_order__re_governance__controlled
+msgid "Controlled"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields.selection,name:atmta_procurement_purchase.selection__purchase_order__re_governance_status__direct
+msgid "Direct Purchase"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#. odoo-python
+#: code:addons/atmta_procurement_purchase/models/purchase_order.py:0
+msgid "Direct Purchase Exception"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields,help:atmta_procurement_purchase.field_purchase_order__re_requisition_ids
+msgid ""
+"Every requisition this order sources. Many, because one order may "
+"consolidate several requests — which is exactly why the authorisation check "
+"is per line and not per order."
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields.selection,name:atmta_procurement_purchase.selection__purchase_order__re_governance_status__linked
+msgid "From Requisition"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields,field_description:atmta_procurement_purchase.field_purchase_order__re_sourcing_invitation_id
+msgid "Invitation"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields,field_description:atmta_procurement_purchase.field_purchase_order__is_realestate_po
+msgid "Is Realestate Po"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields.selection,name:atmta_procurement_purchase.selection__purchase_order__re_sourcing_class__legacy_direct_po
+msgid "Legacy Direct Purchase Order"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields.selection,name:atmta_procurement_purchase.selection__purchase_order__re_source_model__realestate_listing
+msgid "Listing"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields,help:atmta_procurement_purchase.field_purchase_order__re_governance_status
+msgid ""
+"M3AA's LEGACY_DIRECT_PO classification, kept live rather than computed once "
+"at migration: a project order raised outside Procurement is worth being able"
+" to find at any time, not only on the day of an upgrade. Existing confirmed "
+"orders keep this label and nothing else — none of them was cancelled, "
+"reversed or given a reservation."
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields.selection,name:atmta_procurement_purchase.selection__purchase_order__re_source_model__realestate_material_request
+msgid "Material Request"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#. odoo-python
+#: code:addons/atmta_procurement_purchase/models/purchase_order.py:0
+msgid "Missing source"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields.selection,name:atmta_procurement_purchase.selection__purchase_order__re_sourcing_class__native_alternative_group
+msgid "Native Alternative Group"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields.selection,name:atmta_procurement_purchase.selection__purchase_order__re_sourcing_class__purchase_agreement_native
+msgid "Native Purchase Agreement"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields.selection,name:atmta_procurement_purchase.selection__purchase_order__re_governance_status__not_project
+msgid "Not Project Coded"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields.selection,name:atmta_procurement_purchase.selection__purchase_order__re_sourcing_class__open_approved_demand_with_rfq
+msgid "Open Approved Demand with RFQ"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields.selection,name:atmta_procurement_purchase.selection__purchase_order__re_governance__optional
+msgid "Optional"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields,help:atmta_procurement_purchase.field_purchase_order__re_source_id
+msgid "Polymorphic ID into the source record."
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields,field_description:atmta_procurement_purchase.field_purchase_order__re_governance
+msgid "Procurement Governance"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields,field_description:atmta_procurement_purchase.field_purchase_order__re_governance_status
+msgid "Procurement Source"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields.selection,name:atmta_procurement_purchase.selection__purchase_order__re_source_model__realestate_project
+msgid "Project (Direct)"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields,help:atmta_procurement_purchase.field_purchase_order__re_project_id
+msgid "Project this PO is allocated to. Drives committed/budget rollups."
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields,field_description:atmta_procurement_purchase.field_purchase_order__re_exception_id
+msgid "Purchase Exception"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model,name:atmta_procurement_purchase.model_purchase_order
+msgid "Purchase Order"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model,name:atmta_procurement_purchase.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields,field_description:atmta_procurement_purchase.field_purchase_order__re_source_display
+msgid "RE Source"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields,field_description:atmta_procurement_purchase.field_purchase_order__re_source_id
+msgid "RE Source ID"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields,field_description:atmta_procurement_purchase.field_purchase_order__re_source_model
+msgid "RE Source Type"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_purchase.view_purchase_order_form_re
+msgid "Real Estate"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields,field_description:atmta_procurement_purchase.field_purchase_order__re_project_id
+msgid "Real Estate Project"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.actions.act_window,name:atmta_procurement_purchase.action_realestate_purchase_orders
+msgid "Real Estate Purchase Orders"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_purchase.view_purchase_order_form_re
+msgid "Request Purchase Exception"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields.selection,name:atmta_procurement_purchase.selection__purchase_order__re_governance__required
+msgid "Required"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields,field_description:atmta_procurement_purchase.field_purchase_order__re_requisition_ids
+msgid "Requisitions"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields,field_description:atmta_procurement_purchase.field_purchase_order__re_sourcing_class
+msgid "Sourcing Classification"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields,field_description:atmta_procurement_purchase.field_purchase_order__re_sourcing_event_id
+msgid "Sourcing Event"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields.selection,name:atmta_procurement_purchase.selection__purchase_order__re_sourcing_class__standalone_rfq
+msgid "Standalone RFQ"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields.selection,name:atmta_procurement_purchase.selection__purchase_order__re_source_model__realestate_contractor
+msgid "Subcontract"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields,field_description:atmta_procurement_purchase.field_purchase_order_line__re_sourcing_line_id
+msgid "Tender Line"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields,help:atmta_procurement_purchase.field_purchase_order__re_exception_id
+msgid ""
+"The authorised reason this order may commit without a requisition behind it."
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields,help:atmta_procurement_purchase.field_purchase_order__re_governance
+msgid ""
+"The policy this order will be judged against when somebody confirms it — the"
+" project's, or the company's where the project does not override it."
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields,help:atmta_procurement_purchase.field_purchase_order_line__re_sourcing_line_id
+msgid ""
+"The tender scope line this RFQ line was raised from. Used to line a bid "
+"snapshot up against the ask; the snapshot never reads its values from here."
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields,help:atmta_procurement_purchase.field_purchase_order__re_sourcing_event_id
+msgid ""
+"The tender this RFQ answers. Its presence is what makes the confirmation "
+"gate apply."
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields,help:atmta_procurement_purchase.field_purchase_order__is_realestate_po
+msgid "True when the PO is linked to any real-estate project or source."
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#. odoo-python
+#: code:addons/atmta_procurement_purchase/models/purchase_order.py:0
+msgid "Unknown source"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#: model:ir.model.fields,help:atmta_procurement_purchase.field_purchase_order__re_sourcing_class
+msgid ""
+"What M5's migration made of this order. A description of what is already "
+"there — never a claim that a formal tender process happened."
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#. odoo-python
+#: code:addons/atmta_procurement_purchase/models/purchase_order.py:0
+msgid "a project"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#. odoo-python
+#: code:addons/atmta_procurement_purchase/models/purchase_order.py:0
+msgid "has not been approved"
+msgstr ""
+
+#. module: atmta_procurement_purchase
+#. odoo-python
+#: code:addons/atmta_procurement_purchase/models/purchase_order.py:0
+msgid "have not been approved"
+msgstr ""

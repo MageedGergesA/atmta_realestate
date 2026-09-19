@@ -25,7 +25,7 @@
     <record id="view_property_form_inherit_rental_status" model="ir.ui.view">
         <field name="name">realestate.property.form.rental.status</field>
         <field name="model">realestate.property</field>
-        <field name="inherit_id" ref="atmta_real_estate.view_property_form"/>
+        <field name="inherit_id" ref="atmta_property_core.view_property_form"/>
         <field name="arch" type="xml">
             <xpath expr="//div[@name='status_ribbon']" position="inside">
                 <field name="rental_status" widget="badge"
@@ -39,21 +39,11 @@
     <record id="view_property_form_inherit_rental" model="ir.ui.view">
         <field name="name">realestate.property.form.rental</field>
         <field name="model">realestate.property</field>
-        <field name="inherit_id" ref="atmta_real_estate.view_property_form"/>
+        <field name="inherit_id" ref="atmta_property_core.view_property_form"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
-                <page string="Contract History">
-                    <field name="rental_history_ids" readonly="1">
-                        <list create="0" edit="0">
-                            <field name="contract_id"/>
-                            <field name="property_id"/>
-                            <field name="tenant_id"/>
-                            <field name="start_date"/>
-                            <field name="end_date"/>
-                            <field name="is_multi"/>
-                        </list>
-                    </field>
-                </page>
+                <!-- Lease history is the Lease History tab, read from allocations;
+                     the legacy rental-history copy is no longer shown. -->
                 <page string="Rental Stats">
                     <group col="2">
                         <group string="Rental History">

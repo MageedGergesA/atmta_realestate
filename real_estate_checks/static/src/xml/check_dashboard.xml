@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+<t t-name="real_estate_checks.TreasuryDashboard">
+    <!--
+        No `dir` attribute here, deliberately. Odoo establishes the writing
+        direction on `.o_action_manager`, which rtlcss rewrites to
+        `direction: rtl` for RTL languages. An explicit `dir="auto"` breaks
+        that: "auto" makes the browser guess from the first strong directional
+        character, which on a dashboard is a Latin word or a digit, so it
+        resolves to `ltr` and the whole page renders the wrong way round for
+        every Arabic user. Module 1 shipped exactly that bug and it took a real
+        browser to find it.
+    -->
+    <div class="o_re_check_dashboard o_action">
+        <div t-if="state.loading" class="o_re_check_loading p-4 text-center">
+            <i class="fa fa-circle-o-notch fa-spin fa-2x"/>
+            <div class="mt-2">Loading treasury position…</div>
+        </div>
+
+        <div t-elif="state.error" class="o_re_check_error alert alert-danger m-3" role="alert">
+            <strong>The dashboard could not be loaded.</strong>
+            <div t-esc="state.error"/>
+            <button class="btn btn-secondary mt-2" t-on-click="() => this.refresh()">
+                Try again
+            </button>
+        </div>
+
+        <div t-else="" class="o_re_check_body">
+            <div class="d-flex justify-content-between align-items-center p-3">
+                <h2 class="mb-0">PDC Treasury</h2>
+                <button class="btn btn-secondary o_re_check_refresh"
+                        t-on-click="() => this.refresh()">
+                    <i class="fa fa-refresh me-1"/>Refresh
+                </button>
+            </div>
+
+            <!--
+                M30 - never present one number across currencies. When more
+                than one is in play the dashboard says so instead of adding
+                EGP to SAR.
+            -->
+            <div t-if="state.data.currency_warning.multi_currency"
+                 class="o_re_check_currency_warning alert alert-warning mx-3" role="alert">
+                <i class="fa fa-exclamation-triangle me-1"/>
+                <t t-esc="state.data.currency_warning.message"/>
+            </div>
+
+            <div class="o_re_check_legend alert alert-info mx-3" role="status">
+                <strong>Paper is not cash.</strong>
+                Figures marked <span class="badge text-bg-secondary">Paper</span>
+                are the face value of instruments held or presented. Only figures
+                marked <span class="badge text-bg-success">Cash</span> represent
+                money the bank has honoured and Odoo has reconciled.
+            </div>
+
+            <!-- = KPI sections = -->
+            <div class="px-3" t-foreach="sections" t-as="section" t-key="section.key">
+                <h5 class="mt-3" t-esc="section.title"/>
+                <div class="row g-2">
+                    <div class="col-12 col-sm-6 col-lg-3"
+                         t-foreach="section.kpis" t-as="kpi" t-key="kpi.key">
+                        <div class="card o_re_check_kpi h-100"
+                             t-att-data-kpi="kpi.key"
+                             t-on-click="() => this.openKpi(kpi)">
+                            <div class="card-body">
+                                <div class="text-muted small o_re_check_kpi_label"
+                                     t-esc="kpi.label"/>
+                                <div class="fs-4 fw-bold o_re_check_kpi_count"
+                                     t-esc="kpi.count"/>
+                                <div class="small o_re_check_kpi_amount"
+                                     t-esc="this.formatAmount(kpi.amount)"/>
+                                <span t-attf-class="badge mt-1 o_re_check_kind {{ this.kindClass(kpi.kind) }}"
+                                      t-esc="this.kindLabel(kpi.kind)"/>
+                                <div t-if="kpi.note" class="small text-muted mt-1"
+                                     t-esc="kpi.note"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- = Risk = -->
+            <div class="px-3">
+                <h5 class="mt-3">Risk</h5>
+                <div class="row g-2">
+                    <div class="col-12 col-sm-6 col-lg-3"
+                         t-foreach="riskCards" t-as="card" t-key="card.key">
+                        <div class="card o_re_check_kpi h-100"
+                             t-att-data-kpi="card.key"
+                             t-on-click="() => this.openKpi(card)">
+                            <div class="card-body">
+                                <div class="text-muted small o_re_check_kpi_label"
+                                     t-esc="card.label"/>
+                                <div class="fs-4 fw-bold o_re_check_kpi_count"
+                                     t-esc="card.count"/>
+                                <div class="small o_re_check_kpi_amount"
+                                     t-esc="this.formatAmount(card.amount)"/>
+                                <span class="badge text-bg-secondary mt-1 o_re_check_kind">Paper</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card o_re_check_kpi h-100" data-kpi="bounce_rate">
+                            <div class="card-body">
+                                <div class="text-muted small o_re_check_kpi_label"
+                                     t-esc="state.data.risk.bounce_rate.label"/>
+                                <div class="fs-4 fw-bold o_re_check_kpi_percent"
+                                     t-esc="this.formatPercent(state.data.risk.bounce_rate.value)"/>
+                                <div class="small text-muted"
+                                     t-esc="state.data.risk.bounce_rate.basis"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- = Coverage (M19) = -->
+            <div class="px-3">
+                <h5 class="mt-3">PDC Coverage</h5>
+                <div class="row g-2">
+                    <div class="col-12 col-sm-6 col-lg-3"
+                         t-foreach="coverageCards" t-as="card" t-key="card.key">
+                        <div class="card o_re_check_kpi h-100"
+                             t-att-data-kpi="card.key"
+                             t-on-click="() => this.openKpi(card)">
+                            <div class="card-body">
+                                <div class="text-muted small o_re_check_kpi_label"
+                                     t-esc="card.label"/>
+                                <div class="fs-5 fw-bold o_re_check_kpi_amount"
+                                     t-esc="this.formatAmount(card.amount)"/>
+                                <span t-attf-class="badge mt-1 o_re_check_kind {{ this.kindClass(card.kind) }}"
+                                      t-esc="this.kindLabel(card.kind)"/>
+                                <div t-if="card.note" class="small text-muted mt-1"
+                                     t-esc="card.note"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card o_re_check_kpi h-100" data-kpi="coverage_percent">
+                            <div class="card-body">
+                                <div class="text-muted small o_re_check_kpi_label"
+                                     t-esc="state.data.coverage.coverage_percent.label"/>
+                                <div class="fs-4 fw-bold o_re_check_kpi_percent"
+                                     t-esc="this.formatPercent(state.data.coverage.coverage_percent.value)"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- = Charts = -->
+            <!--
+                The padding lives on a WRAPPER, never on the `.row` itself.
+                A Bootstrap row carries negative horizontal margins to cancel
+                its gutters; putting `p-3` on the row leaves those margins
+                outside the padding box, so the row ends up wider than its
+                parent and the whole page scrolls sideways. It overflowed by
+                exactly 8px at every viewport, which no stylesheet review
+                would have caught and a real browser found immediately.
+            -->
+            <div class="p-3">
+              <div class="row g-3">
+                <div class="col-12 col-lg-8">
+                    <div class="card h-100 o_re_check_chart_panel">
+                        <div class="card-body">
+                            <h6>Maturity Forecast</h6>
+                            <div class="small text-muted mb-2"
+                                 t-esc="state.data.charts.maturity_forecast.note"/>
+                            <div class="o_re_check_chart">
+                                <canvas t-ref="maturityChart"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <div class="card h-100 o_re_check_chart_panel">
+                        <div class="card-body">
+                            <h6>By State</h6>
+                            <div class="o_re_check_chart">
+                                <canvas t-ref="stateChart"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- = Maturity buckets (M21) = -->
+            <div class="px-3 pb-4">
+                <h5>Maturity Buckets</h5>
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover o_re_check_buckets">
+                        <thead>
+                            <tr>
+                                <th>Window</th>
+                                <th class="text-end">Cheques</th>
+                                <th class="text-end">Face Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="state.data.charts.maturity_forecast.buckets"
+                                t-as="bucket" t-key="bucket.key"
+                                class="o_re_check_row"
+                                t-att-data-bucket="bucket.key"
+                                t-on-click="() => this.openBucket(bucket)">
+                                <td t-esc="bucket.label"/>
+                                <td class="text-end o_re_check_bucket_count"
+                                    t-esc="bucket.count"/>
+                                <td class="text-end" t-esc="this.formatAmount(bucket.amount)"/>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</t>
+
+</templates>

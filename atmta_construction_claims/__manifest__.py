@@ -49,6 +49,7 @@ contribute anyway.
     # No views. The claims screens are loaded by `real_estate_construction`.
     'data': [
         'data/sequences.xml',
+        'data/date_refresh_cron.xml',
         'security/ir.model.access.csv',
         'security/construction_claims_rules.xml',
     ],

@@ -27,12 +27,17 @@
         <field name="arch" type="xml">
             <form>
                 <header>
+                    <!-- Visibility follows what each method accepts. A live
+                         contract is cancelled with Cancel Contract, which
+                         settles its instalments; action_cancel refuses it. -->
                     <button name="action_sign" type="object" string="Sign &amp; Invoice"
-                            class="oe_highlight" invisible="state != 'draft'"/>
+                            class="oe_highlight"
+                            invisible="state not in ('draft','pending_approval','pending_signature')"/>
                     <button name="action_handover" type="object" string="Hand Over"
-                            class="oe_highlight" invisible="state != 'signed'"/>
+                            class="oe_highlight"
+                            invisible="state not in ('signed','active','financially_cleared')"/>
                     <button name="action_cancel" type="object" string="Cancel"
-                            invisible="state in ('handed_over','cancelled')"/>
+                            invisible="state not in ('draft','pending_approval','pending_signature')"/>
                     <field name="state" widget="statusbar"
                            statusbar_visible="draft,signed,handed_over"/>
                 </header>

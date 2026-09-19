@@ -1,11 +1,14 @@
 from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 
 class SnaggingIssue(models.Model):
     _name = 'realestate.snagging.issue'
     _description = 'Snagging / Defect Issue'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    _order = 'severity desc, reported_date desc'
+    # Not 'severity desc': that sorts the selection keys alphabetically and
+    # lists minor before critical.
+    _order = 'severity_rank desc, reported_date desc'
 
     name = fields.Char(string='Reference', copy=False, required=True, readonly=True, default=lambda self: _('New'))
     handover_id = fields.Many2one('realestate.handover', string='Handover', ondelete='cascade')
@@ -21,6 +24,8 @@ class SnaggingIssue(models.Model):
         ('major', 'Major'),
         ('critical', 'Critical'),
     ], default='minor', required=True, tracking=True)
+    severity_rank = fields.Integer(compute='_compute_severity_rank', store=True, index=True,
+                                   help='1 = minor, 2 = major, 3 = critical. Used to sort worst first.')
     state = fields.Selection([
         ('open', 'Open'),
         ('assigned', 'Assigned'),
@@ -30,6 +35,10 @@ class SnaggingIssue(models.Model):
         ('rejected', 'Rejected'),
     ], default='open', required=True, tracking=True)
 
+    # A snag is handed to a contractor by the Handover team, so the role is
+    # given read on the contractor directory (security/ir.model.access.csv):
+    # the field is on this form and in the dashboard's snag panel, and without
+    # the right both died with an AccessError on the user's own screen.
     contractor_id = fields.Many2one('realestate.contractor', string='Assigned Contractor', tracking=True)
     reporter_id = fields.Many2one('res.users', default=lambda self: self.env.user, readonly=True)
     reported_date = fields.Date(default=fields.Date.context_today, required=True)
@@ -37,6 +46,12 @@ class SnaggingIssue(models.Model):
     resolved_date = fields.Date()
     verified_date = fields.Date()
     notes = fields.Html()
+
+    @api.depends('severity')
+    def _compute_severity_rank(self):
+        ranks = {'minor': 1, 'major': 2, 'critical': 3}
+        for rec in self:
+            rec.severity_rank = ranks.get(rec.severity, 0)
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -63,6 +78,10 @@ class SnaggingIssue(models.Model):
 
     def action_reject(self):
         for rec in self:
+            # Rejecting means turning down a reported fix; there is none
+            # before the issue is resolved.
+            if rec.state != 'resolved':
+                raise UserError(_("Only a resolved issue's fix can be rejected."))
             rec.state = 'rejected'
 
     def action_reopen(self):

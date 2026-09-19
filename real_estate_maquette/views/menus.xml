@@ -74,4 +74,25 @@
               action="action_spec_tag"
               sequence="30"
               groups="base.group_system"/>
+    <menuitem id="menu_maquette_gallery"
+              name="Sales Gallery"
+              parent="menu_maquette_root"
+              action="action_visual_gallery"
+              sequence="5"
+              groups="real_estate_maquette.group_visual_viewer"/>
+
+    <menuitem id="menu_maquette_layouts"
+              name="Layouts"
+              parent="menu_maquette_root"
+              action="action_visual_unit_type"
+              sequence="60"
+              groups="real_estate_maquette.group_visual_author"/>
+
+    <menuitem id="menu_maquette_floor_templates"
+              name="Floor Templates"
+              parent="menu_maquette_root"
+              action="action_visual_floor_template"
+              sequence="65"
+              groups="real_estate_maquette.group_visual_author"/>
+
 </odoo>

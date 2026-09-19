@@ -37,6 +37,7 @@ Requires:
     },
     'data': [
         'security/ir.model.access.csv',
+        'security/contract_template_rules.xml',
         'views/contract_template_views.xml',
         'views/contract_document_views.xml',
         'wizard/contract_generate_wizard_views.xml',

@@ -54,6 +54,7 @@ actions somebody takes, and they still are.
     # paper and riskier in fact.
     'data': [
         'data/sequences.xml',
+        'data/date_refresh_cron.xml',
         'security/ir.model.access.csv',
         'security/construction_documents_rules.xml',
         # Wave 23 — the document screens, which could come down once the

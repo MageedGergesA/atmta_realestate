@@ -1,5 +1,7 @@
 from odoo import models, fields, _, api
 from odoo.exceptions import UserError, ValidationError
+
+from .lease_states import LEGACY_TO_LIFECYCLE
 from dateutil.relativedelta import relativedelta
 import datetime
 
@@ -7,9 +9,9 @@ import datetime
 class RealEstateContract(models.Model):
     _name = 'realestate.contract'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    _description = 'Real Estate Contract'
+    _description = 'Lease'
 
-    name = fields.Char(string="Contract Reference", required=True, copy=False, readonly=False,
+    name = fields.Char(string="Lease Number", required=True, copy=False, readonly=False,
                        index='trigram',
                        default=lambda self: _('New'))
     partner_id = fields.Many2one('res.partner', string="Tenant", required=True, tracking=True)
@@ -28,12 +30,12 @@ class RealEstateContract(models.Model):
     ], string='Status', default='draft', tracking=True, readonly=True)
     notes = fields.Text(string="Terms and Conditions", tracking=True)
     # fields from the tenancy contract
-    main_contract_no = fields.Char(string='Main Contract No')
+    main_contract_no = fields.Char(string='Main Lease No')
     country_id = fields.Many2one(related='partner_id.country_id')
-    contract_type = fields.Many2one('contract.type',string='Contract Type') #
-    contract_sealing_location_id = fields.Many2one(comodel_name='res.country.state', string='Contract Sealing Location', domain="[('country_id', '=', country_id)]")
-    contract_sealing_date = fields.Date(string='Contract Sealing Date')
-    contract_no = fields.Char(string='Contract No')
+    contract_type = fields.Many2one('contract.type',string='Lease Type') #
+    contract_sealing_location_id = fields.Many2one(comodel_name='res.country.state', string='Sealing Location', domain="[('country_id', '=', country_id)]")
+    contract_sealing_date = fields.Date(string='Sealing Date')
+    contract_no = fields.Char(string='Lease No')
     lessor_rep_id = fields.Many2one('res.partner', string='Lessor Representative')
     lessor_id = fields.Many2one('res.partner', string='Lessor')
     # fields from the tenancy contract
@@ -43,7 +45,6 @@ class RealEstateContract(models.Model):
     issue_Date = fields.Date(string='Issue Date')
     # fields from the tenancy contract
     use_manual_payment = fields.Boolean(string='Generate Payment Schedule Lines')
-    line_ids = fields.One2many('realestate.contract.line', 'contract_id', string="Contract Lines")
     payment_count = fields.Integer(compute='get_payment_count', default=0)
     move_ids = fields.One2many('account.move', 'contract_id', string='Invoices')
     invoice_count = fields.Integer(compute='get_invoice_count', default=0)
@@ -58,8 +59,8 @@ class RealEstateContract(models.Model):
                                       'attachment_contract_id', 'Attachments',
                                       help="You may attach files to this template, to be added to all "
                                            "emails created from this template")
-    is_renewed = fields.Boolean(string='Is Renewed Contract')
-    old_contract_id = fields.Many2one('realestate.contract', string='Old Contract')
+    is_renewed = fields.Boolean(string='Renewal Lease')
+    old_contract_id = fields.Many2one('realestate.contract', string='Renews Lease')
     # New computed fields
     total_scheduled = fields.Monetary(
         string="Total Scheduled",
@@ -87,20 +88,14 @@ class RealEstateContract(models.Model):
     paid_utilities = fields.Monetary(string="Paid Utilities", compute='_compute_utilities')
     net_income = fields.Monetary(string="Net Income", compute='_compute_utilities')
 
-    # is_single unit contract, will diable the contract lines, and unit,price,start and end date will be on the contract level
-    is_single_property = fields.Boolean(string='Is Single Unit Contract',
+    # Single-unit lease: the unit, rent and dates live on the lease and mirror into one allocation.
+    is_single_property = fields.Boolean(string='Single-Unit Lease',
                                         default=lambda self: self.env['ir.config_parameter'].sudo().get_param(
                                             'atmta_real_estate.single_property_contract') == 'True')
-    property_id = fields.Many2one('realestate.property', string="Property")
+    property_id = fields.Many2one('realestate.property', string="Property",
+                                  domain="[('is_leasable', '=', True)]")
     property_type_id = fields.Many2one(related='property_id.property_type_id', string='Property Type', store=True)
     price = fields.Float(string="Base Rent")
-    payment_plan_ids = fields.Many2many(
-        'realestate.payment.plan',
-        'rel_contract_payment_plan',  # relation table name
-        'contract_id',  # this model's column
-        'contract_payment_plan_id',  # related model's column
-        string='Payment Plans'
-    )
     increment_rule_ids = fields.Many2many(
         'realestate.contract.increment.rule',
         'rel_contract_increment_rule_rel',
@@ -118,8 +113,8 @@ class RealEstateContract(models.Model):
         domain=[('discount', '=', True)]
     )
 
-    # is_multi unit contract, will enable the contract lines, and unit,price,start and end date will be on the contract level
-    is_multi_property = fields.Boolean(string='Is Multi Unit Contract',
+    # Multi-unit lease: units are entered as allocations on the Properties tab.
+    is_multi_property = fields.Boolean(string='Several Units',
                                        default=lambda self: self.env['ir.config_parameter'].sudo().get_param(
                                            'atmta_real_estate.multi_property_contract') == 'True')
     _sql_constraints = [('contract_name_unique', 'unique(name)', 'Contract name already exists')]
@@ -148,7 +143,6 @@ class RealEstateContract(models.Model):
         for rec in self:
             if rec.is_single_property:
                 rec.is_multi_property = False
-                rec.line_ids = False
 
     @api.onchange('is_multi_property')
     def _onchange_is_multi(self):
@@ -157,7 +151,6 @@ class RealEstateContract(models.Model):
                 rec.is_single_property = False
                 rec.discount_rule_ids = False
                 rec.increment_rule_ids = False
-                rec.payment_plan_ids = False
                 rec.property_id = False
                 rec.price = 0
 
@@ -170,26 +163,35 @@ class RealEstateContract(models.Model):
             contract.net_income = contract.total_paid - contract.paid_utilities
 
     def action_generate_payment_lines(self):
-        self.ensure_one()
-        self.action_generate_payment_schedule()
-        if self.contract_payment_ids:
-            self.state = 'ready'
-            if self.is_multi_property:
-                self.line_ids.write({'state': 'ready'})
+        """Retired with the legacy payment schedule it generated."""
+        return self.action_generate_payment_schedule()
 
     def action_reset_to_draft(self):
-        for contract in self:
-            contract.state = 'draft'
-            if self.is_multi_property:
-                contract.line_ids.write({'state': 'draft'})
+        # Reopening is a Rental Manager decision in the lifecycle engine. The
+        # legacy button let any user do it, from any state.
+        self.action_reopen_draft()
 
     def action_confirm(self):
+        """Legacy "Confirm Contract", routed through the lifecycle rules.
+
+        It used to move a proposal, or a lease awaiting approval, straight to
+        signature -- skipping the Rental Manager approval and the self-approval
+        rule. Now a lease awaiting approval is approved through
+        ``action_approve_lease``; a proposal goes to approval when the company
+        requires it, and otherwise to signature after the same role and data
+        checks the lifecycle buttons apply.
+        """
         self.ensure_one()
         if self.state != 'ready':
             raise UserError("You must generate payment lines before confirming the contract.")
-        self.state = 'confirmed'
-        if self.is_multi_property:
-            self.line_ids.write({'state': 'confirmed'})
+        if self.lifecycle_state == 'pending_approval':
+            self.action_approve_lease()
+        elif self.company_id.sudo().re_require_lease_approval:
+            self.action_submit_for_approval()
+        else:
+            self._require_group('atmta_real_estate.group_rental_agent')
+            self._validate_ready_for_proposal()
+            self._do_transition('pending_signature')
 
     def action_generate_invoices(self):
         """One sale order + one invoice for the whole lease, split into the rent
@@ -199,6 +201,19 @@ class RealEstateContract(models.Model):
             raise UserError("You must confirm the contract before generating invoices.")
         if self.invoice_id:
             raise UserError("The rent invoice has already been generated.")
+        # One billing path per lease. A lease billed per period -- by the
+        # engine, or with any obligation already invoiced -- must not also get
+        # one invoice for its whole term: that bills the same rent twice.
+        if self.use_billing_engine:
+            raise UserError(_(
+                "Lease '%s' is billed per period by the billing engine. Use "
+                "Invoice Due instead of one invoice for the whole term.",
+                self.display_name))
+        if self.contract_payment_ids.filtered('move_id'):
+            raise UserError(_(
+                "Lease '%s' already has billing obligations invoiced per period. "
+                "Invoicing its whole term now would bill that rent twice.",
+                self.display_name))
         payments = self.contract_payment_ids.sorted(lambda p: p.date_due or fields.Date.today())
         if not payments:
             raise UserError("Generate the payment schedule first.")
@@ -221,9 +236,7 @@ class RealEstateContract(models.Model):
             invoices.write({'invoice_payment_term_id': term.id, 'contract_id': self.id})
             self.env['realestate.account.tools'].post_moves(invoices)
             self.invoice_id = invoices[:1].id
-        self.state = 'invoiced'
-        if self.is_multi_property:
-            self.line_ids.write({'state': 'invoiced'})
+        self._do_transition(LEGACY_TO_LIFECYCLE['invoiced'])
 
     def _build_rent_payment_term(self, payments, total):
         """Turn the dated rent schedule into a per-contract payment term:
@@ -272,42 +285,59 @@ class RealEstateContract(models.Model):
         for contract in self:
             if contract.state != 'invoiced':
                 raise UserError("You must generate invoices before activating the contract.")
-            contract.state = 'active'
-            if contract.is_multi_property:
-                # Auto-activate lines that match contract start date
-                for line in contract.line_ids:
-                    if (
-                            line.state not in ['terminated', 'expired']
-                            and line.start_date == contract.start_date
-                    ):
-                        line.state = 'active'
-            elif contract.property_id and contract.property_id.state == 'available':
-                # Single-unit contract: flip the property to rented
-                contract.property_id.state = 'rented'
+            # The lifecycle action, not a raw transition: activation requires a
+            # signed lease with at least one unit, and the Property Manager role.
+            contract.action_activate_lease()
+            # Occupancy is no longer written here. Since the Phase 2 status
+            # split it is COMPUTED from the lease allocations, so activating a
+            # lease makes its properties occupied automatically -- and, unlike
+            # the old direct write, it cannot clobber a maintenance block or a
+            # sales-side reservation held by another module.
 
     def action_terminate(self):
-        for contract in self:
-            if contract.state not in ['confirmed', 'invoiced', 'active']:
-                raise UserError("Only confirmed, invoiced, or active contracts can be terminated.")
+        """Legacy "Terminate", routed through the termination process.
 
-            # Cancel the rent invoice if it's still a draft.
-            if contract.invoice_id and contract.invoice_id.state == 'draft':
-                contract.invoice_id.button_cancel()
-
-            # Update contract and its lines
-            contract.state = 'terminated'
-            if contract.is_multi_property:
-                contract.line_ids.filtered(lambda l: l.state != 'expired').write({'state': 'terminated'})
-            elif contract.property_id and contract.property_id.state == 'rented':
-                # Free the unit
-                contract.property_id.state = 'available'
+        A live lease (active or on notice) is terminated through a termination
+        record, so notice, settlement, credit notes, the deposit and the
+        move-out are handled; this opens that record instead of ending the lease
+        on the spot. A lease that never went live has nothing to settle, and
+        ending it is a Rental Manager decision.
+        """
+        self.ensure_one()
+        if self.state not in ['confirmed', 'invoiced', 'active']:
+            raise UserError("Only confirmed, invoiced, or active contracts can be terminated.")
+        if self.lifecycle_state in ('active', 'notice'):
+            return self.action_start_termination()
+        self._require_group('atmta_real_estate.group_rental_manager')
+        # Cancel the rent invoice if it's still a draft.
+        if self.invoice_id and self.invoice_id.state == 'draft':
+            self.invoice_id.button_cancel()
+        self._do_transition(LEGACY_TO_LIFECYCLE['terminated'])
+        # The unit is NOT marked available here. Occupancy follows the
+        # allocations automatically, and whether the unit can be re-let is
+        # the unit turn's decision -- a vacated unit that still needs
+        # cleaning or repair must not go back on the market.
 
     def check_contract_expiry(self):
-        today = fields.Date.today()
-        expired = self.search([('state', '=', 'active'), ('end_date', '<', today)])
-        expired.write({'state': 'expired'})
+        """Compatibility entry point for the retired legacy expiry job.
 
-    @api.depends('contract_payment_ids.amount',
+        The legacy scheduled action ended every lease whose legacy ``state``
+        read ``active`` once its end date passed. That included leases on
+        notice, leases with arrears and leases with a termination in progress,
+        and because it ran daily beside ``_cron_expire_leases`` it overrode
+        every safeguard that job applies.
+
+        There is now one expiry authority. The legacy cron record is gone; this
+        method stays so that any server action or script still calling it gets
+        the safeguarded behaviour rather than an error.
+        """
+        return self._cron_expire_leases()
+
+    @api.depends('contract_payment_ids.amount_due',
+                 'contract_payment_ids.amount_paid',
+                 'contract_payment_ids.amount_residual',
+                 'contract_payment_ids.state',
+                 'contract_payment_ids.payment_state',
                  'invoice_id.amount_total', 'invoice_id.amount_residual',
                  'invoice_id.payment_state', 'invoice_id.state')
     def _compute_totals(self):
@@ -320,10 +350,19 @@ class RealEstateContract(models.Model):
                 contract.total_paid = inv.amount_total - inv.amount_residual
                 contract.balance_due = inv.amount_residual
             else:
-                scheduled = sum(contract.contract_payment_ids.mapped('amount'))
-                contract.total_scheduled = scheduled
-                contract.total_paid = 0.0
-                contract.balance_due = scheduled
+                # Billed per period: each obligation already reads its money
+                # from its own invoice (tax-inclusive once posted, a forecast
+                # before). Summing base rent here ignored every payment, so a
+                # lease that had been paid showed nothing paid and its whole
+                # term still due. Cancelled obligations, and invoices reversed
+                # by a credit note (a terminated period), are neither owed nor
+                # paid.
+                obligations = contract.contract_payment_ids.filtered(
+                    lambda p: p.state != 'cancelled'
+                    and p.payment_state != 'reversed')
+                contract.total_scheduled = sum(obligations.mapped('amount_due'))
+                contract.total_paid = sum(obligations.mapped('amount_paid'))
+                contract.balance_due = sum(obligations.mapped('amount_residual'))
 
     @api.depends('contract_payment_ids')
     def get_payment_count(self):
@@ -353,18 +392,17 @@ class RealEstateContract(models.Model):
         self.ensure_one()
         return {
             'type': 'ir.actions.act_window',
-            'name': 'Scheduled Payments',
+            'name': _('Billing Obligations'),
             'res_model': 'realestate.contract.payment',
             'view_mode': 'list,form',
             'domain': [('contract_id', '=', self.id)],
             'context': {
                 'default_contract_id': self.id,
-                # 'group_by': 'contract_line_id',  # 👈 This triggers default grouping
             }, }
 
     def action_open_report_wizard(self):
         return {
-            'name': 'Contract Report',
+            'name': _('Lease Report'),
             'type': 'ir.actions.act_window',
             'res_model': 'realestate.contracts.wizard',
             'view_mode': 'form',
@@ -373,172 +411,28 @@ class RealEstateContract(models.Model):
         }
 
     def action_generate_payment_schedule(self):
-        now = datetime.datetime.now()
+        """Retired legacy payment-schedule generator.
 
-        UNIT_TO_DAYS = {
-            'day': 1,
-            'week': 7,
-            'month': 30,
-            'year': 365
-        }
-
-        UNIT_TO_RELATIVEDELTA = {
-            'day': 'days',
-            'week': 'weeks',
-            'month': 'months',
-            'year': 'years'
-        }
-
-        def apply_rules(price, months_passed, rules, is_discount=False):
-            applied_ids = []
-            total = 0.0
-            for rule in rules.filtered(
-                    lambda r: r.start_month <= months_passed and (
-                            r.duration_months == 0 or months_passed < r.start_month + r.duration_months)
-            ).sorted('priority'):
-                val = abs(rule.increase_value)
-                if rule.increase_type == 'percent':
-                    val = price * val / 100
-                if is_discount:
-                    price -= val
-                else:
-                    price += val
-                total += val
-                applied_ids.append(rule.id)
-            return price, total, applied_ids
-
-        for contract in self:
-            if contract.last_generated and contract.write_date <= contract.last_generated:
-                continue
-
-            if contract.is_multi_property:
-                if contract.last_generated:
-                    if all(line.write_date <= contract.last_generated for line in contract.line_ids):
-                        continue
-
-            # Remove previous non-invoiced payments, but keep any that carry
-            # manual charges (e.g. maintenance billed to the tenant) so they
-            # aren't silently lost on regeneration.
-            contract.contract_payment_ids.filtered(
-                lambda p: not p.move_id and not p.charge_line_ids).unlink()
-
-            payments_to_create = []
-
-            contract_lines = contract.line_ids if contract.is_multi_property else [contract]
-            for line in contract_lines:
-                plans = line.payment_plan_ids if contract.is_multi_property else contract.payment_plan_ids
-                if not plans:
-                    continue
-
-                start = line.start_date or contract.start_date
-                end = line.end_date or contract.end_date
-                current_date = start
-
-                while current_date <= end:
-                    base_price = line.price if contract.is_multi_property else contract.price
-                    delta = relativedelta(current_date, start)
-                    months_passed = delta.years * 12 + delta.months
-                    days_passed = (current_date - start).days
-
-                    valid_plans = [
-                        p for p in plans
-                        if UNIT_TO_DAYS.get(p.start_after_unit, 0) * p.start_after <= days_passed
-                    ]
-
-                    if not valid_plans:
-                        current_date += relativedelta(days=1)
-                        continue
-
-                    plan = max(valid_plans, key=lambda p: UNIT_TO_DAYS.get(p.start_after_unit, 0) * p.start_after)
-                    unit_key = UNIT_TO_RELATIVEDELTA.get(plan.unit)
-
-                    if not unit_key:
-                        raise UserError(f"Invalid interval unit '{plan.unit}' in payment plan.")
-
-                    increment_rules = line.increment_rule_ids if contract.is_multi_property else contract.increment_rule_ids
-                    discount_rules = line.discount_rule_ids if contract.is_multi_property else contract.discount_rule_ids
-
-                    # Apply increment
-                    price_with_increments, inc_total, inc_ids = apply_rules(base_price, months_passed, increment_rules)
-
-                    # Apply discount (subtracts from total)
-                    final_price, disc_total, disc_ids = apply_rules(price_with_increments, months_passed,
-                                                                    discount_rules, is_discount=True)
-
-                    search_domain = [
-                        ('contract_id', '=', contract.id),
-                        ('date_due', '=', current_date)
-                    ]
-                    if contract.is_multi_property:
-                        search_domain.append(('contract_line_id', '=', line.id))
-
-                    exists = self.env['realestate.contract.payment'].search_count(search_domain, limit=1)
-
-                    if not exists:
-                        ref = f"CNT-{contract.id}-PAY-{line.id if contract.is_multi_property else '0'}-{current_date}"
-                        payments_to_create.append({
-                            'contract_id': contract.id,
-                            'contract_line_id': line.id if contract.is_multi_property else False,
-                            'property_id': contract.property_id.id if contract.is_single_property else line.property_id.id,
-                            'date_due': current_date,
-                            # 'name': ref,
-                            'amount': final_price,
-                            'payment_plan_id': plan.id,
-                            'increase_amount': inc_total,
-                            'discount_amount': disc_total,
-                            'increment_rule_ids': [(6, 0, inc_ids)],
-                            'discount_rule_ids': [(6, 0, disc_ids)],
-                        })
-
-                    current_date += relativedelta(**{unit_key: plan.interval})
-
-            if payments_to_create:
-                self.env['realestate.contract.payment'].create(payments_to_create)
-
-            contract.last_generated = now
+        It built rows from Rental's own payment plans, which no longer exist:
+        ``realestate.payment.plan`` belongs to Development & Sales. Billing
+        schedules are generated by the billing engine.
+        """
+        raise UserError(_(
+            "The legacy payment schedule has been retired. Turn on "
+            "'Use Advanced Billing' on the lease and use Generate Billing "
+            "Schedule."))
 
     def action_create_invoices(self):
-        # Prepare all invoice data
-        invoices_to_create = []
+        """Retired legacy per-payment invoicing.
 
-        # Get all unpaid payments with prefetch
-        payments = self.env['realestate.contract.payment'].search([
-            ('contract_id', 'in', self.ids),
-            ('move_id', '=', False)
-        ])
-
-        if not payments:
-            raise UserError(_("No unpaid payments found"))
-
-        # Prepare invoice vals
-        for payment in payments:
-            prop = payment.contract_line_id.property_id if payment.contract_line_id else payment.contract_id.property_id
-            account_id = prop.categ_id.property_account_income_categ_id.id
-
-            invoices_to_create.append({
-                'move_type': 'out_invoice',
-                'partner_id': payment.contract_id.partner_id.id,
-                'contract_id': payment.contract_id.id,
-                'invoice_date': payment.date_due,
-                'payment_reference': payment.name,
-                'invoice_line_ids': payment._get_invoice_line_commands(prop, account_id),
-            })
-
-        # Batch create invoices
-        invoices = self.env['account.move'].create(invoices_to_create)
-
-        # Link payments to invoices (payment.state is computed from the move)
-        invoice_map = {
-            inv.payment_reference: inv
-            for inv in invoices
-        }
-        for payment in payments:
-            if payment.name in invoice_map:
-                payment.move_id = invoice_map[payment.name].id
-
-        # Post the freshly created invoices so they hit the ledger.
-        self.env['realestate.account.tools'].post_moves(invoices)
-        return invoices
+        It invoiced every uninvoiced payment of the lease at once, including
+        future periods, without the lease's company or currency, and without
+        checking whether the lease was already billed another way. Billing
+        obligations are invoiced through ``action_invoice_due_obligations``.
+        """
+        raise UserError(_(
+            "Per-payment invoicing has been retired. Invoice billing obligations "
+            "from the lease with Invoice Due."))
 
     def action_get_invoices(self):
         return {
@@ -574,13 +468,13 @@ class RealEstateContract(models.Model):
                     'is_multi': False,
                 })
             elif contract.is_multi_property:
-                for line in contract.line_ids.filtered(lambda l: l.property_id):
+                # Units are entered as allocations.
+                for allocation in contract.property_line_ids:
                     ContractLineHistory.create({
                         'contract_id': contract.id,
-                        'property_id': line.property_id.id,
-                        'start_date': line.start_date,
-                        'end_date': line.end_date,
-                        'contract_line_id': line.id,
+                        'property_id': allocation.property_id.id,
+                        'start_date': allocation.start_date,
+                        'end_date': allocation.end_date,
                         'is_multi': True,
                     })
 

@@ -226,8 +226,17 @@ class EvaluationRound(models.Model):
         self.ensure_one()
         Candidate = self.env['realestate.procurement.evaluation.candidate']
         event = self.sourcing_event_id
-        responses = event.bid_response_ids.filtered(
-            lambda r: r.state in ('received', 'superseded'))
+        # Bids are read as the system. The person opening the round has
+        # already passed `_assert_authority` — running the evaluation is their
+        # role — but the bid register is guarded for a different purpose: the
+        # buyer-side rule shows a buyer only the tenders they run, and a pure
+        # Evaluation Manager holds no bid access at all. Freezing through the
+        # user would silently drop every bid they cannot see and report "no
+        # administratively eligible bid" on a tender full of them. Company
+        # scope is kept explicitly, since sudo() would otherwise ignore it.
+        responses = event.sudo().bid_response_ids.filtered(
+            lambda r: r.state in ('received', 'superseded')
+            and r.company_id in self.env.companies)
         # Read through sudo: the shortlist is a restricted commercial field,
         # and freezing the candidate set must not depend on whether the person
         # who clicked is entitled to *see* it.
@@ -350,6 +359,29 @@ class EvaluationRound(models.Model):
             if missing:
                 raise UserError(_(
                     "%s offer(s) have not been normalised.") % len(missing))
+            # An adjustment moves the evaluated cost the moment it is entered,
+            # so the committee can see what it would do. It may not decide the
+            # ranking until somebody other than its author has approved it:
+            # an unreviewed "early payment discount" is otherwise the easiest
+            # way to move a vendor to rank 1. Refusing here, rather than
+            # leaving unapproved adjustments out of the cost, keeps the figure
+            # under review the figure everybody is looking at.
+            unapproved = candidates.sudo().analysis_id.adjustment_ids.filtered(
+                lambda a: not a.approved_by_id)
+            if unapproved:
+                raise UserError(_(
+                    "%(name)s has %(count)s commercial adjustment(s) nobody "
+                    "has approved:\n\n%(lines)s\n\nApprove or remove them "
+                    "before finalising — an unreviewed adjustment cannot "
+                    "decide the ranking.",
+                    name=round_.name, count=len(unapproved),
+                    lines='\n'.join(
+                        '• %s: %s %s' % (
+                            adjustment.analysis_id.partner_id.display_name,
+                            dict(adjustment._fields['adjustment_type'].selection
+                                 ).get(adjustment.adjustment_type),
+                            adjustment.amount)
+                        for adjustment in unapproved)))
             round_._score_financial(candidates)
             round_._rank(candidates)
             round_.write({

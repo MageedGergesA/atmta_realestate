@@ -1,0 +1,3598 @@
+# Translation of Odoo Server.
+# This file contains the Arabic translation of the following modules:
+# 	* real_estate_maquette
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:14+0000\n"
+"PO-Revision-Date: 2026-09-17 10:14+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_property_form_maquette
+msgid "#FF8800 (optional)"
+msgstr "#FF8800 (اختياري)"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_floor_template.py:0
+msgid ""
+"%(bad)s of %(total)s floor(s) are incomplete:\n"
+"\n"
+"%(detail)s"
+msgstr ""
+"%(bad)s من أصل %(total)s طابق/طوابق غير مكتملة:\n"
+"\n"
+"%(detail)s"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_modes.py:0
+msgid "%(broker)s's agreement does not cover %(project)s."
+msgstr "اتفاقية %(broker)s لا تشمل %(project)s."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_migration.py:0
+msgid ""
+"%(count)s critical issue(s) found. The gallery was already broken in this "
+"way; it is now offline and reported rather than silently failing in front of"
+" a customer."
+msgstr ""
+"تم العثور على %(count)s مشكلة/مشكلات حرجة. كان المعرض معطلًا بهذه الطريقة من"
+" قبل؛ وقد أصبح الآن غير متصل ومُبلغًا عنه بدلًا من أن يتعطل بصمت أمام "
+"العميل."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_migration.py:0
+msgid "%(count)s regions point at %(unit)s. A click would be ambiguous."
+msgstr "هناك %(count)s مناطق تشير إلى %(unit)s. سيكون النقر عليها ملتبسًا."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_floor_template.py:0
+msgid ""
+"%(names)s %(verb)s still assigned to %(count)s floor(s). Detach the floors "
+"first — deleting the template would leave them with no geometry and nothing "
+"to say why."
+msgstr ""
+"%(names)s %(verb)s مرتبط حتى الآن بعدد %(count)s طابق/طوابق. افصل الطوابق "
+"أولًا، فحذف القالب سيتركها بلا هندسة ودون أي توضيح للسبب."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_config.py:0
+msgid ""
+"%(project)s has %(count)s critical validation issue(s):\n"
+"\n"
+"%(issues)s"
+msgstr ""
+"لدى %(project)s عدد %(count)s مشكلة/مشكلات تحقق حرجة:\n"
+"\n"
+"%(issues)s"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_config.py:0
+msgid ""
+"%(project)s is %(state)s. Validate it first — publishing an unvalidated "
+"model is how a half-mapped tower ends up in front of a customer."
+msgstr ""
+"حالة %(project)s هي %(state)s. تحقق منه أولًا، فنشر نموذج غير متحقق منه هو "
+"ما يؤدي إلى عرض برج نصف مربوط أمام العميل."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_validation.py:0
+msgid ""
+"%(unit)s is mapped to mesh '%(mesh)s', which does not exist in the uploaded "
+"model. Clicking it does nothing."
+msgstr ""
+"%(unit)s مربوطة بالشبكة '%(mesh)s' غير الموجودة في النموذج المرفوع. النقر "
+"عليها لا يفعل شيئًا."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_floor_template.py:0
+msgid ""
+"%(unit)s is not on %(floor)s, so it cannot be mapped to one of its shapes."
+msgstr "%(unit)s ليست في %(floor)s، لذا لا يمكن ربطها بأحد أشكاله."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_unit_type.py:0
+msgid "%s has no layout to fall back to."
+msgstr "لا يوجد لدى %s مخطط بديل يُرجع إليه."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_validation.py:0
+msgid "%s materials."
+msgstr "%s مواد."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_validation.py:0
+msgid "%s mesh(es) in the model are not mapped to any unit."
+msgstr "%s شبكة/شبكات في النموذج غير مربوطة بأي وحدة."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_validation.py:0
+msgid "%s meshes. Draw-call count is the usual cause of a stuttering gallery."
+msgstr "%s شبكات. عدد استدعاءات الرسم هو السبب المعتاد لتقطع عرض المعرض."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_validation.py:0
+msgid "%s textures."
+msgstr "%s خامات."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_validation.py:0
+msgid "%s unit(s) have no mesh, so they cannot be found in 3D."
+msgstr ""
+"%s وحدة (وحدات) بدون عنصر شبكي، لذا لا يمكن العثور عليها في العرض ثلاثي "
+"الأبعاد."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_validation.py:0
+msgid ""
+"%s unit(s) have no parent, so building/floor navigation cannot reach them."
+msgstr ""
+"%s وحدة (وحدات) بدون أصل، لذا لا يمكن الوصول إليها عبر التنقل بين المباني "
+"والطوابق."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_validation.py:0
+msgid "%s unit(s) have no price."
+msgstr "%s وحدة (وحدات) بدون سعر."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/property_maquette.py:0
+msgid "%s — Images"
+msgstr "%s — الصور"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_project__visual_default_experience
+msgid ""
+"'Best Available' picks 3D, then 2D, then the unit list — according to what "
+"is published and what the device can render."
+msgstr ""
+"خيار «أفضل المتاح» يختار العرض ثلاثي الأبعاد، ثم ثنائي الأبعاد، ثم قائمة "
+"الوحدات — بحسب ما هو منشور وما يستطيع الجهاز عرضه."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid ".glb"
+msgstr "ملف .glb"
+
+#. module: real_estate_maquette
+#: model:ir.actions.client,name:real_estate_maquette.action_master_plan_2d
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__master_plan_2d
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__visual_2d_enabled
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_project__visual_default_experience__2d
+#: model:ir.ui.menu,name:real_estate_maquette.menu_master_plan_2d
+msgid "2D Master Plan"
+msgstr "المخطط العام ثنائي الأبعاد"
+
+#. module: real_estate_maquette
+#: model:ir.model,name:real_estate_maquette.model_realestate_building_region
+msgid "2D Master Plan Building Region"
+msgstr "منطقة مبنى في المخطط العام ثنائي الأبعاد"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_project__visual_min_capability__none
+msgid "2D Only"
+msgstr "ثنائي الأبعاد فقط"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_project_form_maquette
+msgid "2D Plan"
+msgstr "المخطط ثنائي الأبعاد"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__master_plan_2d_filename
+msgid "2D Plan Filename"
+msgstr "اسم ملف المخطط ثنائي الأبعاد"
+
+#. module: real_estate_maquette
+#: model:ir.actions.act_window,name:real_estate_maquette.action_building_region
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__region_ids
+#: model:ir.ui.menu,name:real_estate_maquette.menu_building_region
+msgid "2D Plan Regions"
+msgstr "مناطق المخطط ثنائي الأبعاد"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_validation.py:0
+msgid "2D is enabled but no master plan image has been uploaded."
+msgstr "العرض ثنائي الأبعاد مفعل ولكن لم يتم رفع صورة المخطط العام."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_config.py:0
+msgid "2D master plan: %s"
+msgstr "المخطط العام ثنائي الأبعاد: %s"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+msgid "3D"
+msgstr "ثلاثي الأبعاد"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_property_form_maquette
+msgid "3D Interior"
+msgstr "التصميم الداخلي ثلاثي الأبعاد"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_property__interior_glb
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__interior_glb
+msgid "3D Interior (.glb)"
+msgstr "التصميم الداخلي ثلاثي الأبعاد (.glb)"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_property_form_maquette
+msgid "3D Mapping"
+msgstr "الربط ثلاثي الأبعاد"
+
+#. module: real_estate_maquette
+#: model:ir.actions.client,name:real_estate_maquette.action_maquette_preview_3d
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__visual_3d_enabled
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_project__visual_default_experience__3d
+#: model:ir.ui.menu,name:real_estate_maquette.menu_maquette_preview_3d
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_project_form_maquette
+msgid "3D Maquette"
+msgstr "المجسم ثلاثي الأبعاد"
+
+#. module: real_estate_maquette
+#: model:ir.actions.act_window,name:real_estate_maquette.action_maquette_browser
+msgid "3D Maquettes"
+msgstr "المجسمات ثلاثية الأبعاد"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_property__maquette_mesh_name
+msgid "3D Mesh Name"
+msgstr "اسم العنصر الشبكي ثلاثي الأبعاد"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__maquette_status
+msgid "3D Status"
+msgstr "حالة العرض ثلاثي الأبعاد"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_validation.py:0
+msgid "3D is enabled for this project but no model has been uploaded."
+msgstr "العرض ثلاثي الأبعاد مفعل لهذا المشروع ولكن لم يتم رفع أي نموذج."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_config.py:0
+msgid "3D model: %s"
+msgstr "النموذج ثلاثي الأبعاد: %s"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_property_form_maquette
+msgid "<span class=\"o_stat_text\">3D Maquette</span>"
+msgstr "<span class=\"o_stat_text\">المجسم ثلاثي الأبعاد</span>"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_project_form_maquette
+msgid ""
+"<strong>How to upload:</strong>\n"
+"                        Export the building/compound from 3ds Max / Blender / Revit to\n"
+"                        <code>.glb</code> (glTF binary). Use the field above to upload it.\n"
+"                        Each unit must be a named mesh inside the GLB — name them after the unit's\n"
+"                        <code>property_code</code> for automatic mapping."
+msgstr ""
+"<strong>طريقة الرفع:</strong> صدّر المبنى/المجمع من 3ds Max / بلندر / ريفيت "
+"إلى <code>.glb</code> (GLB ثنائي). استخدم الحقل أعلاه لرفعه. يجب أن تكون كل "
+"وحدة عنصرًا شبكيًا مسمى داخل ملف GLB — سمّها باسم <code>property_code</code>"
+" الخاص بالوحدة للربط التلقائي."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_validation.py:0
+msgid "A chunk claims %s bytes past the end of the file."
+msgstr "أحد أجزاء الملف يشير إلى %s بايت بعد نهاية الملف."
+
+#. module: real_estate_maquette
+#: model:ir.model.constraint,message:real_estate_maquette.constraint_realestate_visual_unit_type_code_unique_per_project
+msgid "A layout code must be unique within its project."
+msgstr "يجب أن يكون رمز نموذج الوحدة فريدًا داخل المشروع."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/building_region.py:0
+msgid "A region needs at least 3 vertices."
+msgstr "تحتاج المنطقة إلى 3 رؤوس على الأقل."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_modes.py:0
+msgid ""
+"A shortlist becomes real only once a customer has identified themselves."
+msgstr "لا تصبح القائمة المختصرة فعلية إلا بعد أن يعرّف العميل بنفسه."
+
+#. module: real_estate_maquette
+#: model:ir.model.constraint,message:real_estate_maquette.constraint_realestate_visual_floor_slot_map_slot_unique_per_floor
+msgid "A slot can only be mapped once per floor."
+msgstr "لا يمكن ربط الخانة إلا مرة واحدة في كل طابق."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_floor_template.py:0
+msgid "A slot needs at least 3 vertices."
+msgstr "تحتاج الخانة إلى 3 رؤوس على الأقل."
+
+#. module: real_estate_maquette
+#: model:ir.model.constraint,message:real_estate_maquette.constraint_realestate_visual_floor_template_code_unique_per_project
+msgid "A template code must be unique within its project."
+msgstr "يجب أن يكون رمز القالب فريدًا داخل المشروع."
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_visual_floor_template_form
+msgid ""
+"A template holds <strong>geometry only</strong>. Each\n"
+"                        floor maps the slots to its own units, and those units\n"
+"                        remain the authority for price and availability."
+msgstr ""
+"يحتوي القالب على <strong>الأشكال الهندسية فقط</strong>. كل طابق يربط الخانات"
+" بوحداته الخاصة، وتبقى تلك الوحدات هي المرجع للسعر والتوفر."
+
+#. module: real_estate_maquette
+#: model:ir.model.constraint,message:real_estate_maquette.constraint_realestate_visual_floor_slot_map_property_unique_per_floor
+msgid "A unit can only occupy one slot on a floor."
+msgstr "لا يمكن للوحدة أن تشغل إلا خانة واحدة في الطابق."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__message_needaction
+msgid "Action Needed"
+msgstr "إجراء مطلوب"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template__active
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Add region"
+msgstr "إضافة منطقة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_property__has_floor_plan_effective
+msgid "Alias used by the Building Elevation dialog."
+msgstr "اسم بديل يستخدمه مربع حوار واجهة المبنى."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_floor_template.py:0
+msgid "All %s floor(s) are fully mapped."
+msgstr "جميع الطوابق (%s) مربوطة بالكامل."
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_building_floor_form
+msgid ""
+"All units in this building with the same\n"
+"                        <em>Floor Number</em> as the picked unit."
+msgstr ""
+"جميع الوحدات في هذا المبنى التي لها نفس <em>رقم الطابق</em> للوحدة المختارة."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_grant__allowed_origins
+msgid "Allowed Origins"
+msgstr "المصادر المسموح بها"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_visual_migration__outcome__already_migrated
+msgid "Already Migrated"
+msgstr "تم ترحيله مسبقًا"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_migration.py:0
+msgid "Already migrated; left untouched."
+msgstr "تم ترحيله مسبقًا؛ ترك دون تغيير."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_property__elevation_sheet
+msgid ""
+"Architectural elevation sheet (front + side elevations, floor plans, site "
+"plan, specs). Shown in the Building Elevation dialog when the user clicks "
+"this building on the 2D master plan."
+msgstr ""
+"لوحة الواجهات المعمارية (الواجهات الأمامية والجانبية، مخططات الطوابق، مخطط "
+"الموقع، المواصفات). تظهر في مربع حوار واجهة المبنى عند نقر المستخدم على هذا "
+"المبنى في المخطط العام ثنائي الأبعاد."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_project__visual_publication_state__archived
+msgid "Archived"
+msgstr "مؤرشف"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+msgid "Area"
+msgstr "المساحة"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_gallery.py:0
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_maquette_unit_picker__unit_area
+msgid "Area (sqm)"
+msgstr "المساحة (م²)"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_visual_unit_type_form
+msgid "Assets"
+msgstr "الملفات المرئية"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__assets_updated_by_id
+msgid "Assets Updated By"
+msgstr "الملفات المرئية حدثت بواسطة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__assets_updated_on
+msgid "Assets Updated On"
+msgstr "الملفات المرئية حدثت في"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__attachment_image_ids
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_building_preview_form
+msgid "Attached Images"
+msgstr "الصور المرفقة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: real_estate_maquette
+#: model:res.groups,name:real_estate_maquette.group_visual_author
+msgid "Author"
+msgstr "المؤلف"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Auto-match"
+msgstr "مطابقة تلقائية"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_gallery.py:0
+msgid "Availability"
+msgstr "التوفر"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_property__visual_state__available
+msgid "Available"
+msgstr "متاحة"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Base Price"
+msgstr "السعر الأساسي"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_gallery.py:0
+msgid "Bathrooms"
+msgstr "دورات المياه"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_gallery.py:0
+msgid "Bedrooms"
+msgstr "غرف النوم"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_project__visual_default_experience__auto
+msgid "Best Available"
+msgstr "أفضل المتاح"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_property__visual_state__blocked
+msgid "Blocked"
+msgstr "محظورة"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_modes.py:0
+msgid "Broker access requires the Brokerage module."
+msgstr "وصول الوسيط يتطلب وحدة الوساطة العقارية."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_modes.py:0
+msgid "Broker registration requires the Brokerage module."
+msgstr "تسجيل الوسيط يتطلب وحدة الوساطة العقارية."
+
+#. module: real_estate_maquette
+#: model:ir.ui.menu,name:real_estate_maquette.menu_maquette_browser
+msgid "Browse Projects"
+msgstr "تصفح المشاريع"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_floor__building_id
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_building_preview_form
+msgid "Building"
+msgstr "المبنى"
+
+#. module: real_estate_maquette
+#: model:ir.model,name:real_estate_maquette.model_realestate_building_floor
+msgid "Building Floor"
+msgstr "طابق المبنى"
+
+#. module: real_estate_maquette
+#: model:ir.actions.act_window,name:real_estate_maquette.action_building_floor
+#: model:ir.ui.menu,name:real_estate_maquette.menu_building_floor
+msgid "Building Floors"
+msgstr "طوابق المباني"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__maquette_glb
+msgid "Building Model (.glb)"
+msgstr "نموذج المبنى (.glb)"
+
+#. module: real_estate_maquette
+#: model:ir.actions.act_window,name:real_estate_maquette.action_building_preview
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_building_preview_form
+msgid "Building Preview"
+msgstr "معاينة المبنى"
+
+#. module: real_estate_maquette
+#: model:ir.model,name:real_estate_maquette.model_realestate_building_preview
+msgid "Building Preview Dialog"
+msgstr "مربع حوار معاينة المبنى"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_migration__building_regions
+msgid "Building Regions"
+msgstr "مناطق المباني"
+
+#. module: real_estate_maquette
+#: model:ir.model,name:real_estate_maquette.model_realestate_spec_tag
+msgid "Building Specification Tag"
+msgstr "وسم مواصفات المبنى"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Building drawing"
+msgstr "رسم المبنى"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_unit_type__version
+msgid ""
+"Bumped whenever a shared asset is replaced. Every unit using this package "
+"shows the new one, so the version is how somebody answers 'which floor plan "
+"did the customer actually see?'."
+msgstr ""
+"يزداد كلما استبدل ملف مرئي مشترك. كل وحدة تستخدم هذه الحزمة تعرض الملف "
+"الجديد، لذا فإن الإصدار هو ما يجيب عن سؤال «أي مخطط طابق رآه العميل فعلًا؟»."
+
+#. module: real_estate_maquette
+#: model:res.groups,comment:real_estate_maquette.group_visual_viewer
+msgid ""
+"Can open published galleries for projects they\n"
+"            may already see. Cannot change anything."
+msgstr ""
+"يمكنه فتح المعارض المرئية المنشورة للمشاريع التي يملك صلاحية رؤيتها. لا "
+"يمكنه تغيير أي شيء."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_building_region_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__property_type_id
+msgid "Category"
+msgstr "الفئة"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_building_region_form
+msgid ""
+"Choose which property (building, villa, block…) this spot on the master plan represents.\n"
+"                            If the property isn't tied to a project yet, it will be linked to this one automatically."
+msgstr ""
+"اختر العقار (مبنى، فيلا، بلوك…) الذي تمثله هذه البقعة في المخطط العام. إذا "
+"لم يكن العقار مرتبطًا بمشروع بعد، فسيتم ربطه بهذا المشروع تلقائيًا."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__city
+msgid "City"
+msgstr "المدينة"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_project_form_maquette
+msgid "Clear 3D Model"
+msgstr "مسح النموذج ثلاثي الأبعاد"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Click a region to edit its shape, or add a new one."
+msgstr "انقر على منطقة لتعديل شكلها، أو أضف منطقة جديدة."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Click to add points • Press"
+msgstr "انقر لإضافة النقاط • اضغط"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_building_preview_form
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_maquette_unit_picker_form
+msgid "Close"
+msgstr "إغلاق"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__property_code
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template_slot__code
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation_issue__code
+msgid "Code"
+msgstr "الرمز"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_spec_tag__color
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template_slot__color
+msgid "Color"
+msgstr "اللون"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_grant__kinds
+msgid ""
+"Comma-separated asset kinds this grant covers. A grant for a master plan "
+"does not also hand over interior models."
+msgstr ""
+"أنواع الملفات المرئية التي يشملها هذا التصريح، مفصولة بفواصل. تصريح المخطط "
+"العام لا يمنح أيضًا نماذج التصميم الداخلي."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_grant__allowed_origins
+msgid ""
+"Comma-separated origins. Empty means the grant is not origin-restricted — "
+"which is correct for a first-party portal page and wrong for a third-party "
+"embed."
+msgstr ""
+"المصادر المسموح بها مفصولة بفواصل. تركه فارغًا يعني أن التصريح غير مقيد "
+"بمصدر — وهذا صحيح لصفحة بوابة تابعة لنا وخاطئ للتضمين لدى طرف ثالث."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_floor__company_id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_region__company_id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_slot_map__company_id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template__company_id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template_slot__company_id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_grant__company_id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_migration__company_id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__company_id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__company_id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation_issue__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+msgid "Compare"
+msgstr "مقارنة"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+msgid "Compare ("
+msgstr "مقارنة ("
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_gallery.py:0
+msgid ""
+"Compare between %(low)s and %(high)s units — fewer is not a comparison and "
+"more is a spreadsheet."
+msgstr ""
+"قارن بين %(low)s و %(high)s وحدات — الأقل ليس مقارنة والأكثر جدول بيانات."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+msgid "Comparison"
+msgstr "المقارنة"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_visual_floor_template_form
+msgid "Complete"
+msgstr "إكمال"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_property__visual_state__contracted
+msgid "Contracted"
+msgstr "متعاقد عليها"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Could not load:"
+msgstr "تعذر التحميل:"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Create Listing"
+msgstr "إنشاء إعلان عقاري"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_floor__create_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__create_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_region__create_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_maquette_unit_picker__create_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_spec_tag__create_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_slot_map__create_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template__create_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template_slot__create_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_grant__create_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_migration__create_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__create_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__create_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation_issue__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_floor__create_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__create_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_region__create_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_maquette_unit_picker__create_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_spec_tag__create_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_slot_map__create_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template__create_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template_slot__create_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_grant__create_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_migration__create_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__create_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__create_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation_issue__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_visual_validation_issue__severity__critical
+msgid "Critical"
+msgstr "حرجة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_migration__critical_count
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__critical_count
+msgid "Critical Count"
+msgstr "عدد الحرجة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_maquette_unit_picker__currency_id
+msgid "Currency"
+msgstr "العملة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_maquette_unit_picker__unit_state
+msgid ""
+"DEPRECATED compatibility bridge, derived from the status dimensions. Kept "
+"because downstream ATMTA modules and the public API still read it. Write the"
+" dimension you own instead."
+msgstr ""
+"حقل توافق متقادم مشتق من أبعاد الحالة. تم الإبقاء عليه لأن وحدات ATMTA "
+"البرمجية التابعة وواجهة البرمجة العامة لا تزال تقرؤه. اكتب البُعد الذي تملكه"
+" بدلًا منه."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__maquette_default_camera
+msgid "Default Camera"
+msgstr "الكاميرا الافتراضية"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_building_region_form
+msgid "Delete"
+msgstr "حذف"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_building_region_form
+msgid "Delete this region?"
+msgstr "حذف هذه المنطقة؟"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_project__visual_min_capability
+msgid ""
+"Devices below this tier are sent straight to 2D rather than shown a 3D "
+"experience that will stutter."
+msgstr ""
+"الأجهزة الأدنى من هذه الفئة تحول مباشرة إلى العرض ثنائي الأبعاد بدلًا من عرض"
+" تجربة ثلاثية الأبعاد متقطعة."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_floor__display_name
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__display_name
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_region__display_name
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_maquette_unit_picker__display_name
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_spec_tag__display_name
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_slot_map__display_name
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template__display_name
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template_slot__display_name
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_grant__display_name
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_migration__display_name
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__display_name
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__display_name
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation_issue__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__district
+msgid "District"
+msgstr "الحي"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_project__maquette_mesh_naming_hint
+msgid ""
+"Documents how the 3D artist should name unit meshes. Defaults to "
+"\"unit_<property_code>\" — meshes named after the property's code match "
+"automatically."
+msgstr ""
+"يوضح كيف يجب على مصمم النماذج ثلاثية الأبعاد تسمية العناصر الشبكية للوحدات. "
+"القيمة الافتراضية \"unit_<property_code>\" — العناصر الشبكية المسماة برمز "
+"العقار تطابق تلقائيًا."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Done"
+msgstr "منجز"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Done editing"
+msgstr "إنهاء التعديل"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_project__visual_publication_state__draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid ""
+"Drag vertices to reshape • Right-click a vertex to remove • Click an edge "
+"dot to add."
+msgstr ""
+"اسحب الرؤوس لإعادة التشكيل • انقر بزر الفأرة الأيمن على رأس لإزالته • انقر "
+"على نقطة الضلع للإضافة."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__duplicate_mapping_count
+msgid "Duplicate Mapping Count"
+msgstr "عدد الربط المكرر"
+
+#. module: real_estate_maquette
+#: model:ir.model.constraint,message:real_estate_maquette.constraint_realestate_building_floor_unique_floor_per_building
+msgid "Each floor number can only appear once per building."
+msgstr "لا يمكن أن يظهر رقم الطابق إلا مرة واحدة في كل مبنى."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/building_region.py:0
+#: code:addons/real_estate_maquette/models/visual_floor_template.py:0
+msgid "Each vertex must be [x, y] with numeric coordinates."
+msgstr "يجب أن يكون كل رأس بالصيغة [x, y] بإحداثيات رقمية."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Edit info"
+msgstr "تعديل المعلومات"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Edit regions"
+msgstr "تعديل المناطق"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Elevation"
+msgstr "الواجهة"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_property_form_maquette
+msgid "Elevation & Floors"
+msgstr "الواجهة والطوابق"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_property__elevation_sheet
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_property_form_maquette
+msgid "Elevation Sheet"
+msgstr "لوحة الواجهات"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_property__elevation_sheet_filename
+msgid "Elevation Sheet Filename"
+msgstr "اسم ملف لوحة الواجهات"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_visual_grant__source__embed_token
+msgid "Embed Token"
+msgstr "رمز التضمين"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__maquette_env_hdr
+msgid "Environment HDR"
+msgstr "خريطة البيئة HDR"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Esc"
+msgstr "Esc"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_grant__project_id
+msgid ""
+"Every grant is scoped to one project. A grant for project A can never serve "
+"an asset belonging to project B, whatever ids the caller supplies."
+msgstr ""
+"كل تصريح مقيد بمشروع واحد. لا يمكن لتصريح المشروع A أن يقدم ملفًا تابعًا "
+"للمشروع B، مهما كانت المعرفات التي يرسلها الطالب."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_property__maquette_mesh_name
+msgid ""
+"Exact mesh name inside the project's GLB. Click \"Auto-match\" on the "
+"project to fill this in automatically from the property code."
+msgstr ""
+"الاسم الدقيق للعنصر الشبكي داخل ملف GLB الخاص بالمشروع. انقر «مطابقة "
+"تلقائية» في المشروع لتعبئته تلقائيًا من رمز العقار."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_grant__expires_at
+msgid "Expires At"
+msgstr "تاريخ الانتهاء"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__extensions_used
+msgid "Extensions Used"
+msgstr "الامتدادات المستخدمة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__visual_fallback_property_id
+msgid "Fallback Master Plan"
+msgstr "المخطط العام البديل"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_gallery.py:0
+msgid "Favourited from the %s experience."
+msgstr "أضيف إلى المفضلة من تجربة %s."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__file_bytes
+msgid "File Size (bytes)"
+msgstr "حجم الملف (بايت)"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_property_form_maquette
+msgid "Files"
+msgstr "الملفات"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_region__color
+msgid "Fill Color"
+msgstr "لون التعبئة"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Finish"
+msgstr "إنهاء"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_gallery.py:0
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_slot_map__floor_id
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_building_floor_form
+msgid "Floor"
+msgstr "الطابق"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_floor_template.py:0
+msgid ""
+"Floor %s has no polygons to lift into a template. Draw them once, then "
+"create the template from it."
+msgstr ""
+"الطابق %s لا يحتوي على مضلعات لتحويلها إلى قالب. ارسمها مرة واحدة، ثم أنشئ "
+"القالب منه."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template__floor_count
+msgid "Floor Count"
+msgstr "عدد الطوابق"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_floor__floor_number
+msgid "Floor Number"
+msgstr "رقم الطابق"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_maquette_unit_picker__floor_plan_image
+msgid "Floor Plan"
+msgstr "مخطط الطابق"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__floor_plan_image
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_property__floor_plan_image
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__floor_plan_image
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_property_form_maquette
+msgid "Floor Plan (Image)"
+msgstr "مخطط الطابق (صورة)"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_property__floor_plan_pdf
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__floor_plan_pdf
+msgid "Floor Plan (PDF)"
+msgstr "مخطط الطابق (PDF)"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template__plan_image
+msgid "Floor Plan Background"
+msgstr "خلفية مخطط الطابق"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_property__floor_plan_image_effective
+msgid "Floor Plan Image Effective"
+msgstr "صورة مخطط الطابق الفعلية"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_property__floor_plan_image_filename
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__floor_plan_image_filename
+msgid "Floor Plan Image Filename"
+msgstr "اسم ملف صورة مخطط الطابق"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_property__floor_plan_pdf_effective
+msgid "Floor Plan Pdf Effective"
+msgstr "ملف PDF لمخطط الطابق الفعلي"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_property__floor_plan_pdf_filename
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__floor_plan_pdf_filename
+msgid "Floor Plan Pdf Filename"
+msgstr "اسم ملف PDF لمخطط الطابق"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_migration__floor_rows
+msgid "Floor Rows"
+msgstr "صفوف الطوابق"
+
+#. module: real_estate_maquette
+#: model:ir.model,name:real_estate_maquette.model_realestate_visual_floor_slot_map
+msgid "Floor Slot Mapping"
+msgstr "ربط خانات الطابق"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_floor__visual_template_id
+msgid "Floor Template"
+msgstr "قالب الطابق"
+
+#. module: real_estate_maquette
+#: model:ir.actions.act_window,name:real_estate_maquette.action_visual_floor_template
+#: model:ir.ui.menu,name:real_estate_maquette.menu_maquette_floor_templates
+msgid "Floor Templates"
+msgstr "قوالب الطوابق"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Floor plan"
+msgstr "مخطط الطابق"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_config.py:0
+msgid "Floor plans: %(f)s of %(t)s"
+msgstr "مخططات الطوابق: %(f)s من %(t)s"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_property__floor_ids
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template__floor_ids
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_property_form_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_visual_floor_template_list
+msgid "Floors"
+msgstr "الطوابق"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_visual_floor_template_form
+msgid "Floors Using This"
+msgstr "الطوابق المستخدمة لهذا القالب"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_project__visual_min_capability__high
+msgid "Full 3D"
+msgstr "ثلاثي الأبعاد كامل"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+msgid "Full screen"
+msgstr "ملء الشاشة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_project__maquette_status__mapped
+msgid "Fully mapped"
+msgstr "مربوط بالكامل"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__maquette_glb_filename
+msgid "GLB Filename"
+msgstr "اسم ملف GLB"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_validation.py:0
+msgid "GLB container version %s; the bundled loader reads version 2."
+msgstr "إصدار حاوية GLB هو %s؛ أداة التحميل المضمنة تقرأ الإصدار 2."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__image_ids
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_building_preview_form
+msgid "Gallery"
+msgstr "المعرض"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__visual_publication_state
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_property__visual_state
+msgid "Gallery Status"
+msgstr "حالة المعرض المرئي"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__visual_version
+msgid "Gallery Version"
+msgstr "إصدار المعرض المرئي"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_config.py:0
+msgid ""
+"Gallery returned to draft: the visual asset changed, so the existing mapping"
+" has not been validated against it."
+msgstr ""
+"أعيد المعرض المرئي إلى مسودة: تغير الملف المرئي، لذا لم يتم التحقق من الربط "
+"الحالي مقابله."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__generator
+msgid "Generator"
+msgstr "البرنامج المنشئ"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__gltf_version
+msgid "Gltf Version"
+msgstr "إصدار GLTF"
+
+#. module: real_estate_maquette
+#: model:ir.model.constraint,message:real_estate_maquette.constraint_realestate_visual_grant_token_unique
+msgid "Grant tokens must be unique."
+msgstr "يجب أن تكون رموز التصريح فريدة."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__maquette_env_hdr_filename
+msgid "HDR Filename"
+msgstr "اسم ملف HDR"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_migration__had_camera
+msgid "Had Camera"
+msgstr "كان يحتوي على كاميرا"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_migration__had_glb
+msgid "Had Glb"
+msgstr "كان يحتوي على GLB"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_migration__had_master_plan
+msgid "Had Master Plan"
+msgstr "كان يحتوي على مخطط عام"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__has_any_image
+msgid "Has Any Image"
+msgstr "يحتوي على صورة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__has_critical
+msgid "Has Critical"
+msgstr "يحتوي على مشكلة حرجة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_property__has_elevation
+msgid "Has Elevation"
+msgstr "يحتوي على واجهة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_property__has_floor_plan_effective
+msgid "Has Floor Plan Effective"
+msgstr "يحتوي على مخطط طابق فعلي"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__has_maquette
+msgid "Has Maquette"
+msgstr "يحتوي على مجسم"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__has_master_plan_2d
+msgid "Has Master Plan 2D"
+msgstr "يحتوي على مخطط عام ثنائي الأبعاد"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__has_message
+msgid "Has Message"
+msgstr "يحتوي على رسالة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_building_region__color
+msgid "Hex color used to render the polygon overlay (semi-transparent)."
+msgstr "لون سداسي عشري يستخدم لعرض طبقة المضلع (شبه شفافة)."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_property__maquette_color_override
+msgid "Highlight Color"
+msgstr "لون التمييز"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_region__label
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template_slot__label
+msgid "Hover Label"
+msgstr "تسمية التمرير"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_floor__id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_region__id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_maquette_unit_picker__id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_spec_tag__id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_slot_map__id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template__id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template_slot__id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_grant__id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_migration__id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation_issue__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_spec_tag__icon
+msgid "Icon"
+msgstr "الأيقونة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_unit_type__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا كان محددًا، فهناك رسائل جديدة تتطلب انتباهك."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_unit_type__message_has_error
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_unit_type__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا كان محددًا، فبعض الرسائل بها خطأ في التسليم."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__hero_image
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_maquette_unit_picker__image_ids
+msgid "Image"
+msgstr "الصورة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_property__image_count
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__image_count
+msgid "Image Count"
+msgstr "عدد الصور"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_property_form_maquette
+msgid "Images"
+msgstr "الصور"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_project__visual_version
+msgid ""
+"Incremented on every publish. Used for cache-busting instead of "
+"`write_date`, which invalidated every browser's copy of a multi-megabyte "
+"model whenever anybody edited the project's phone number."
+msgstr ""
+"يزداد مع كل نشر. يستخدم لتجاوز ذاكرة التخزين المؤقت بدلًا من `write_date`، "
+"الذي كان يبطل نسخة كل متصفح من نموذج بحجم عدة ميغابايت كلما عدل أي شخص رقم "
+"هاتف المشروع."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_visual_validation_issue__severity__info
+msgid "Information"
+msgstr "المعلومات"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_property__interior_glb_effective
+msgid "Interior Glb Effective"
+msgstr "نموذج التصميم الداخلي GLB الفعلي"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_property__interior_glb_filename
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__interior_glb_filename
+msgid "Interior Glb Filename"
+msgstr "اسم ملف نموذج التصميم الداخلي GLB"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_visual_grant__source__internal
+msgid "Internal Session"
+msgstr "جلسة داخلية"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_grant__is_valid
+msgid "Is Valid"
+msgstr "صالح"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__issue_ids
+msgid "Issue"
+msgstr "المشكلة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_building_region__polygon
+msgid ""
+"JSON list of [x%, y%] points relative to the master plan image, e.g. \"[[10,"
+" 12], [40, 12], [40, 35], [10, 35]]\"."
+msgstr ""
+"قائمة JSON من النقاط [x%, y%] بالنسبة إلى صورة المخطط العام، مثل \"[[10, "
+"12], [40, 12], [40, 35], [10, 35]]\"."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_floor_template_slot__polygon
+msgid ""
+"JSON list of [x%, y%] points, exactly as `realestate.plan.region` stores "
+"them, so one renderer draws both."
+msgstr ""
+"قائمة JSON من النقاط [x%, y%]، بنفس طريقة تخزينها في "
+"`realestate.plan.region`، بحيث يرسم عارض واحد كليهما."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_project__maquette_default_camera
+msgid ""
+"JSON-encoded camera position saved from the viewer. Users land at this angle"
+" when they open the maquette."
+msgstr ""
+"موضع الكاميرا بصيغة JSON المحفوظ من العارض. يبدأ المستخدمون من هذه الزاوية "
+"عند فتح المجسم."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_spec_tag__color
+msgid "Kanban / badge color (0-11)."
+msgstr "لون كانبان / الشارة (0-11)."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_grant__kinds
+msgid "Kinds"
+msgstr "الأنواع"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_floor__write_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__write_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_region__write_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_maquette_unit_picker__write_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_spec_tag__write_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_slot_map__write_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template__write_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template_slot__write_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_grant__write_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_migration__write_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__write_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__write_uid
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation_issue__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_floor__write_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__write_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_region__write_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_maquette_unit_picker__write_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_spec_tag__write_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_slot_map__write_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template__write_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template_slot__write_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_grant__write_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_migration__write_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__write_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__write_date
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation_issue__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_grant__last_used_at
+msgid "Last Used At"
+msgstr "آخر استخدام في"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_grant__last_used_ip
+msgid "Last Used Ip"
+msgstr "عنوان IP لآخر استخدام"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_property__visual_unit_type_id
+msgid "Layout"
+msgstr "التصميم الداخلي"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_unit_type.py:0
+msgid "Layout %(name)s is in %(own)s but its project belongs to %(other)s."
+msgstr "نموذج الوحدة %(name)s ضمن %(own)s لكن مشروعه يتبع %(other)s."
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_visual_unit_type_form
+msgid "Layout B2"
+msgstr "نموذج B2"
+
+#. module: real_estate_maquette
+#: model:ir.actions.act_window,name:real_estate_maquette.action_visual_unit_type
+#: model:ir.ui.menu,name:real_estate_maquette.menu_maquette_layouts
+msgid "Layouts"
+msgstr "التصاميم"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_unit_type__project_id
+msgid ""
+"Layouts are usually project-specific. Leaving it empty makes the package "
+"available across the company, which is right for a developer that repeats a "
+"layout between towers."
+msgstr ""
+"نماذج الوحدات عادة خاصة بالمشروع. تركه فارغًا يجعل الحزمة متاحة على مستوى "
+"الشركة، وهو المناسب لمطور عقاري يكرر نموذج الوحدة بين الأبراج."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_visual_migration__outcome__legacy_valid
+msgid "Legacy — Valid, Kept Live"
+msgstr "القديم — صالح، يبقى منشورًا"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Loading building…"
+msgstr "جارٍ تحميل المبنى…"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+msgid "Loading payment plans…"
+msgstr "جارٍ تحميل خطط السداد…"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_config.py:0
+msgid "MISSING"
+msgstr "مفقود"
+
+#. module: real_estate_maquette
+#: model:res.groups,name:real_estate_maquette.group_visual_manager
+msgid "Manager"
+msgstr "المدير"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_maquette_unit_picker__mesh_name
+msgid "Map Location"
+msgstr "الموقع على الخريطة"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Mapped"
+msgstr "مربوط"
+
+#. module: real_estate_maquette
+#: model:ir.model,name:real_estate_maquette.model_realestate_maquette_unit_picker
+msgid "Maquette Unit Picker"
+msgstr "منتقي وحدات المجسم"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__description
+msgid "Marketing Description"
+msgstr "الوصف التسويقي"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__render_ids
+msgid "Marketing Renders"
+msgstr "الصور التسويقية"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Master plan"
+msgstr "المخطط العام"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Match GLB mesh names to unit property codes"
+msgstr "مطابقة أسماء العناصر الشبكية في GLB مع رموز عقارات الوحدات"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__matched_count
+msgid "Matched Count"
+msgstr "عدد المطابقات"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_migration.py:0
+msgid "Matched against the current model."
+msgstr "تمت المطابقة مع النموذج الحالي."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_migration.py:0
+msgid "Matched, and live before this release."
+msgstr "تمت المطابقة، وكان منشورًا قبل هذا الإصدار."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__material_count
+msgid "Material Count"
+msgstr "عدد الخامات"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_building_floor__company_id
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_floor_slot_map__company_id
+msgid ""
+"Materialised from the delegated product template so it can carry a database "
+"index and scope the uniqueness constraints. Writing it writes the product "
+"template."
+msgstr ""
+"مأخوذ من قالب المنتج المفوض بحيث يمكن فهرسته في قاعدة البيانات وتحديد نطاق "
+"قيود التفرد. الكتابة فيه تكتب في قالب المنتج."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_migration.py:0
+msgid ""
+"Mesh '%(mesh)s' is also claimed by %(other)s. A click would be ambiguous."
+msgstr ""
+"العنصر الشبكي '%(mesh)s' مطلوب أيضًا من %(other)s. سيكون النقر ملتبسًا."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_validation.py:0
+msgid ""
+"Mesh '%(mesh)s' is claimed by both %(a)s and %(b)s. A click would be "
+"ambiguous."
+msgstr ""
+"العنصر الشبكي '%(mesh)s' مطلوب من كل من %(a)s و %(b)s. سيكون النقر ملتبسًا."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__mesh_count
+msgid "Mesh Count"
+msgstr "عدد العناصر الشبكية"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_migration__mesh_mappings
+msgid "Mesh Mappings"
+msgstr "ربط العناصر الشبكية"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__maquette_mesh_naming_hint
+msgid "Mesh Naming Convention"
+msgstr "قاعدة تسمية العناصر الشبكية"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/property_maquette.py:0
+msgid "Mesh name '%s' is already used by another unit in project %s."
+msgstr "اسم العنصر الشبكي '%s' مستخدم بالفعل لوحدة أخرى في المشروع %s."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_config.py:0
+msgid "Meshes mapped: %(m)s of %(t)s"
+msgstr "العناصر الشبكية المربوطة: %(m)s من %(t)s"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation_issue__message
+msgid "Message"
+msgstr "الرسالة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_migration__migrated_by_id
+msgid "Migrated By"
+msgstr "رُحّل بواسطة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_migration__migrated_on
+msgid "Migrated On"
+msgstr "تاريخ الترحيل"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__visual_min_capability
+msgid "Minimum Tier for 3D"
+msgstr "الحد الأدنى للفئة للعرض ثلاثي الأبعاد"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__name
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_spec_tag__name
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template__name
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_visual_migration__outcome__needs_review
+msgid "Needs Review — Taken Offline"
+msgstr "يحتاج إلى مراجعة — تم إيقاف نشره"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_project__maquette_status__not_uploaded
+msgid "No 3D model"
+msgstr "لا يوجد نموذج ثلاثي الأبعاد"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_migration.py:0
+msgid "No 3D model and no master plan — nothing to bring across."
+msgstr "لا يوجد نموذج ثلاثي الأبعاد ولا مخطط عام — لا يوجد ما ينقل."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_property__visual_state__unmapped
+msgid "No Commercial Data"
+msgstr "لا توجد بيانات تجارية"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_visual_migration__outcome__no_assets
+msgid "No Visual Assets"
+msgstr "لا توجد ملفات مرئية"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_modes.py:0
+msgid "No active broker agreement."
+msgstr "لا توجد اتفاقية وساطة سارية."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "No elevation sheet uploaded for this building yet. Open the building's"
+msgstr "لم يتم رفع لوحة واجهات لهذا المبنى بعد. افتح"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "No floor schedule defined."
+msgstr "لم يتم تحديد جدول الطوابق."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "No images uploaded for this unit yet."
+msgstr "لم يتم رفع صور لهذه الوحدة بعد."
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_building_preview_form
+msgid ""
+"No images yet. Open the property's form\n"
+"                                → <strong>Media &amp; Files ▸ Gallery</strong> and click\n"
+"                                <strong>Add Media</strong> to upload here."
+msgstr ""
+"لا توجد صور بعد. افتح نموذج العقار → <strong>الوسائط والملفات ▸ "
+"المعرض</strong> وانقر <strong>إضافة وسائط</strong> للرفع هنا."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/unit_picker.py:0
+msgid "No map location was captured for this click."
+msgstr "لم يتم التقاط موقع على الخريطة لهذا النقر."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_migration.py:0
+msgid "No mesh named '%s' exists in the uploaded model."
+msgstr "لا يوجد عنصر شبكي باسم '%s' في النموذج المرفوع."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+msgid "No payment plan is published for this unit."
+msgstr "لا توجد خطة سداد منشورة لهذه الوحدة."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "No projects with a 2D master plan yet — upload one on a project first."
+msgstr ""
+"لا توجد مشاريع بمخطط عام ثنائي الأبعاد بعد — ارفع مخططًا في أحد المشاريع "
+"أولًا."
+
+#. module: real_estate_maquette
+#: model_terms:ir.actions.act_window,help:real_estate_maquette.action_maquette_browser
+msgid "No projects with a 3D maquette yet"
+msgstr "لا توجد مشاريع بمجسم ثلاثي الأبعاد بعد"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "No projects with a 3D maquette yet — upload a"
+msgstr "لا توجد مشاريع بمجسم ثلاثي الأبعاد بعد — ارفع"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "No units on this floor."
+msgstr "لا توجد وحدات في هذا الطابق."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "No units to show for this project yet."
+msgstr "لا توجد وحدات لعرضها لهذا المشروع بعد."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__node_count
+msgid "Node Count"
+msgstr "عدد العقد"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_property__visual_state__unreleased
+msgid "Not Yet Released"
+msgstr "لم تطرح بعد"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_property__visual_state__not_for_sale
+msgid "Not for Sale"
+msgstr "غير معروضة للبيع"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_access.py:0
+#: code:addons/real_estate_maquette/models/visual_deeplink.py:0
+#: code:addons/real_estate_maquette/models/visual_modes.py:0
+msgid "Not found."
+msgstr "غير موجود."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_migration__note
+msgid "Note"
+msgstr "ملاحظة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_spec_tag__notes
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template__notes
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__number_of_floors
+msgid "Number Of Floors"
+msgstr "عدد الطوابق"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__number_of_units
+msgid "Number Of Units"
+msgstr "عدد الوحدات"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_unit_type__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراء"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_unit_type__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي بها خطأ في التسليم"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_project__visual_public_enabled
+msgid ""
+"Off by default. A project becomes publicly embeddable because somebody "
+"decided it should, not because it happens to have a file attached."
+msgstr ""
+"معطل افتراضيًا. يصبح المشروع قابلًا للتضمين العام لأن شخصًا قرر ذلك، لا "
+"لمجرد أن لديه ملفًا مرفقًا."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_property__visual_state__held
+msgid "On Hold"
+msgstr "محجوزة مؤقتًا"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_project__visual_is_live
+msgid ""
+"One field every consumer checks, so 2D, 3D, the embed and the API cannot "
+"disagree about whether a project is live."
+msgstr ""
+"حقل واحد يتحقق منه كل مستهلك، حتى لا تختلف العروض ثنائية وثلاثية الأبعاد "
+"والتضمين وواجهة البرمجة حول ما إذا كان المشروع منشورًا."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_grant__token
+msgid "Opaque, unguessable, and never derived from a record id."
+msgstr "غير مقروء، وغير قابل للتخمين، ولا يشتق أبدًا من معرف سجل."
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_building_preview_form
+msgid "Open Building"
+msgstr "فتح المبنى"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Open Form"
+msgstr "فتح النموذج"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_building_preview_form
+msgid "Open Maquette"
+msgstr "فتح المجسم"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_maquette_unit_picker_form
+msgid "Open Unit"
+msgstr "فتح الوحدة"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Open Unit Form"
+msgstr "فتح نموذج الوحدة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__visual_default_experience
+msgid "Opens With"
+msgstr "يفتح على"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_project__visual_min_capability__medium
+msgid "Optimised 3D"
+msgstr "ثلاثي الأبعاد محسن"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_project__maquette_env_hdr
+msgid ""
+"Optional .hdr / .exr environment map for realistic reflections and sky "
+"lighting."
+msgstr "خريطة بيئة اختيارية بصيغة .hdr / .exr لانعكاسات وإضاءة سماء واقعية."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_spec_tag__icon
+msgid "Optional FontAwesome class, e.g. 'fa-paint-brush'."
+msgstr "فئة أيقونات فونت أوسم اختيارية، مثل `fa-paint-brush`."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_property__floor_plan_pdf
+msgid "Optional downloadable PDF of the floor plan."
+msgstr "ملف PDF اختياري قابل للتنزيل لمخطط الطابق."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_property__interior_glb
+msgid ""
+"Optional glTF binary of the unit interior — viewed in the \"3D Interior\" "
+"tab."
+msgstr ""
+"ملف GLB ثنائي اختياري للتصميم الداخلي للوحدة — يعرض في تبويب «التصميم "
+"الداخلي ثلاثي الأبعاد»."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_property__maquette_color_override
+msgid ""
+"Optional hex color (e.g., #FF8800) to override the default state-based color"
+" in 3D."
+msgstr ""
+"لون سداسي عشري اختياري (مثل #FF8800) لتجاوز اللون الافتراضي المعتمد على "
+"الحالة في العرض ثلاثي الأبعاد."
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_building_region_form
+msgid "Optional — defaults to the building name"
+msgstr "اختياري — القيمة الافتراضية اسم المبنى"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_migration__outcome
+msgid "Outcome"
+msgstr "النتيجة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__override_count
+msgid "Override Count"
+msgstr "عدد التجاوزات"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_visual_unit_type_list
+msgid "Overrides"
+msgstr "التجاوزات"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_migration__company_id
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_validation__company_id
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_validation_issue__company_id
+msgid "Owning company. Inventory, pricing and deals never cross companies."
+msgstr "الشركة المالكة. المخزون والتسعير والصفقات لا تنتقل بين الشركات أبدا."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_building_preview__floor_plan_image
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_maquette_unit_picker__floor_plan_image
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_property__floor_plan_image
+msgid ""
+"PNG/JPG quick-preview of the unit's floor plan — shown in the maquette side "
+"panel and the Building Elevation dialog."
+msgstr ""
+"معاينة سريعة PNG/JPG لمخطط طابق الوحدة — تظهر في اللوحة الجانبية للمجسم وفي "
+"مربع حوار واجهة المبنى."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_project__maquette_status__partial
+msgid "Partially mapped"
+msgstr "مربوط جزئيًا"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_gallery.py:0
+msgid "Payment Plans"
+msgstr "خطط السداد"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+msgid "Payment plans"
+msgstr "خطط السداد"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_maquette_unit_picker_form
+msgid "Pick a Unit"
+msgstr "اختيار وحدة"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Pick a unit on the right, then upload its"
+msgstr "اختر وحدة من اليمين، ثم ارفع"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_property_form_maquette
+msgid ""
+"Pick any unit on each floor — its\n"
+"                        <em>Floor Number</em> and <em>Usage</em> drive the\n"
+"                        row, and unit stats roll up automatically. Floor plan\n"
+"                        images are set per unit (Plans &amp; 3D ▸ Floor Plan)."
+msgstr ""
+"اختر أي وحدة في كل طابق — <em>رقم الطابق</em> و<em>الاستخدام</em> الخاصان "
+"بها يحددان الصف، وتجمع إحصاءات الوحدات تلقائيًا. تحدد صور مخططات الطوابق لكل"
+" وحدة (المخططات وثلاثي الأبعاد ▸ مخطط الطابق)."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_building_floor__unit_id
+msgid ""
+"Pick any unit on the floor — its Floor Number and Usage drive this row."
+msgstr ""
+"اختر أي وحدة في الطابق — رقم الطابق والاستخدام الخاصان بها يحددان هذا الصف."
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_building_region_form
+msgid "Pick the property"
+msgstr "اختر العقار"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_maquette_unit_picker__unit_id
+msgid "Pick the unit this part of the master plan corresponds to."
+msgstr "اختر الوحدة التي يقابلها هذا الجزء من المخطط العام."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+msgid "Plan"
+msgstr "الخطة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template__plan_image_filename
+msgid "Plan Image Filename"
+msgstr "اسم ملف صورة المخطط"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_building_region_form
+msgid "Plan Region"
+msgstr "منطقة المخطط"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_migration__plan_regions
+msgid "Plan Regions"
+msgstr "مناطق المخطط"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_property_form_maquette
+msgid "Plans & 3D"
+msgstr "المخططات وثلاثي الأبعاد"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Plans & 3D ▸ Floor Plan (Image)"
+msgstr "المخططات وثلاثي الأبعاد ▸ مخطط الطابق (صورة)"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template_slot__polygon
+msgid "Polygon"
+msgstr "المضلع"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_region__polygon
+msgid "Polygon (JSON)"
+msgstr "المضلع (JSON)"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/building_region.py:0
+#: code:addons/real_estate_maquette/models/visual_floor_template.py:0
+msgid "Polygon must be valid JSON: %s"
+msgstr "يجب أن يكون المضلع بصيغة JSON صالحة: %s"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_visual_grant__source__portal_page
+msgid "Portal Page"
+msgstr "صفحة البوابة"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+msgid "Preparing the gallery…"
+msgstr "جارٍ تجهيز المعرض المرئي…"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_modes.py:0
+msgid "Presentation mode is for internal users."
+msgstr "وضع العرض التقديمي مخصص للمستخدمين الداخليين."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_gallery.py:0
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_maquette_unit_picker__unit_price
+msgid "Price"
+msgstr "السعر"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_gallery.py:0
+msgid "Price / sqm"
+msgstr "السعر / م²"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_floor__project_id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__project_id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_region__project_id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_maquette_unit_picker__project_id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template__project_id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_grant__project_id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_migration__project_id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__project_id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__project_id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation_issue__project_id
+msgid "Project"
+msgstr "المشروع"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/property_maquette.py:0
+msgid "Project '%s' has no 3D maquette uploaded yet."
+msgstr "المشروع '%s' ليس لديه مجسم ثلاثي الأبعاد مرفوع بعد."
+
+#. module: real_estate_maquette
+#: model:ir.ui.menu,name:real_estate_maquette.menu_maquette_root
+msgid "Project Plans"
+msgstr "مخططات المشاريع"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Project:"
+msgstr "المشروع:"
+
+#. module: real_estate_maquette
+#: model:ir.actions.act_window,name:real_estate_maquette.action_visual_gallery_exit
+msgid "Projects"
+msgstr "المشاريع"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__property_id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_region__property_id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation_issue__property_id
+msgid "Property"
+msgstr "العقار"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__property_count
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__property_count
+msgid "Property Count"
+msgstr "عدد العقارات"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__property_without_mesh_count
+msgid "Property Without Mesh Count"
+msgstr "عدد العقارات بدون عنصر شبكي"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_visual_unit_type_form
+msgid "Provenance"
+msgstr "المصدر"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__visual_public_enabled
+msgid "Public Embed Allowed"
+msgstr "السماح بالتضمين العام"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_project__visual_publication_state__published
+msgid "Published"
+msgstr "منشورة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__visual_published_by_id
+msgid "Published By"
+msgstr "نشر بواسطة"
+
+#. module: real_estate_maquette
+#: model:res.groups,name:real_estate_maquette.group_visual_publisher
+msgid "Publisher"
+msgstr "الناشر"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_config.py:0
+msgid ""
+"Publishing a sales gallery is a Visual Publisher's decision. Authoring a "
+"mapping and putting it in front of a customer are deliberately different "
+"rights."
+msgstr ""
+"نشر معرض المبيعات قرار يعود إلى ناشر العرض المرئي. إعداد الربط وعرضه على "
+"العميل صلاحيتان مختلفتان عن قصد."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+msgid "Read at"
+msgstr "تمت القراءة في"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__visual_readiness_score
+msgid "Readiness (%)"
+msgstr "الجاهزية (%)"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_project__visual_publication_state__ready
+msgid "Ready"
+msgstr "جاهز"
+
+#. module: real_estate_maquette
+#: model:ir.model,name:real_estate_maquette.model_realestate_project
+msgid "Real Estate Development Project"
+msgstr "مشروع التطوير العقاري"
+
+#. module: real_estate_maquette
+#: model:ir.model,name:real_estate_maquette.model_realestate_property
+msgid "Real Estate Property"
+msgstr "عقار"
+
+#. module: real_estate_maquette
+#: model:ir.module.category,name:real_estate_maquette.module_category_realestate_visual
+msgid "Real Estate Sales Gallery"
+msgstr "معرض المبيعات العقاري"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_project__visual_min_capability__low
+msgid "Reduced 3D"
+msgstr "ثلاثي الأبعاد مبسط"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/building_region.py:0
+msgid "Region %s"
+msgstr "المنطقة %s"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__region_count
+msgid "Region Count"
+msgstr "عدد المناطق"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_modes.py:0
+msgid ""
+"Register the customer through the broker lead-registration workflow before "
+"reserving."
+msgstr "سجل العميل عبر مسار تسجيل العملاء المحتملين للوسيط قبل الحجز."
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_project_form_maquette
+msgid "Remove the GLB and reset all unit mesh mappings?"
+msgstr "حذف ملف GLB وإعادة تعيين جميع روابط مجسمات الوحدات؟"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation_issue__report_id
+msgid "Report"
+msgstr "التقرير"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Request a Viewing"
+msgstr "طلب معاينة"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+msgid "Reserve"
+msgstr "حجز"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Reserve Unit"
+msgstr "حجز الوحدة"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_property__visual_state__reserved
+msgid "Reserved"
+msgstr "محجوزة"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Reset"
+msgstr "إعادة تعيين"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Reset view"
+msgstr "إعادة تعيين العرض"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation_issue__resolved
+msgid "Resolved"
+msgstr "تمت المعالجة"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_migration.py:0
+msgid "Resolves against the current plan."
+msgstr "يتطابق مع المخطط الحالي."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_migration.py:0
+msgid "Resolves, and live before this release."
+msgstr "يتطابق، وكان منشورًا قبل هذا الإصدار."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_migration__resulting_state
+msgid "Resulting State"
+msgstr "الحالة الناتجة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_building_floor__visual_template_id
+msgid ""
+"Reuse a typical floor's geometry here. The units stay their own records; "
+"only the shapes are shared."
+msgstr ""
+"أعد استخدام أشكال طابق نموذجي هنا. تبقى الوحدات سجلات مستقلة؛ والأشكال فقط "
+"هي المشتركة."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_grant__revoked
+msgid "Revoked"
+msgstr "ملغى"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_grant__revoked_on
+msgid "Revoked On"
+msgstr "تاريخ الإلغاء"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "خطأ في إرسال الرسائل النصية القصيرة"
+
+#. module: real_estate_maquette
+#: model:ir.actions.client,name:real_estate_maquette.action_visual_gallery
+#: model:ir.ui.menu,name:real_estate_maquette.menu_maquette_gallery
+msgid "Sales Gallery"
+msgstr "معرض المبيعات"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_building_region_form
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_maquette_unit_picker_form
+msgid "Save"
+msgstr "حفظ"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Save View"
+msgstr "حفظ العرض"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Save current angle as default view"
+msgstr "حفظ الزاوية الحالية كعرض افتراضي"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Save the project once before uploading or viewing the 3D maquette."
+msgstr "احفظ المشروع مرة واحدة قبل رفع المجسم ثلاثي الأبعاد أو عرضه."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+msgid "Saved"
+msgstr "تم الحفظ"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Select a project above."
+msgstr "اختر مشروعًا أعلاه."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/unit_picker.py:0
+msgid "Select a unit first."
+msgstr "اختر وحدة أولًا."
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_maquette_unit_picker_form
+msgid "Select a unit in this project…"
+msgstr "اختر وحدة في هذا المشروع…"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Send EOI"
+msgstr "إرسال إبداء اهتمام"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_region__sequence
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template_slot__sequence
+msgid "Sequence"
+msgstr "المسلسل"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_validation_issue__resolved
+msgid ""
+"Set when a re-validation no longer finds the issue. Rows are kept rather "
+"than deleted so 'this was broken last Tuesday' remains answerable."
+msgstr ""
+"يتم تعيينه عندما لا تجد إعادة التحقق المشكلة. تُحفظ السجلات بدل حذفها ليبقى "
+"بالإمكان معرفة ما كان معطلًا في وقت سابق."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation_issue__severity
+msgid "Severity"
+msgstr "الشدة"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_unit_type.py:0
+msgid ""
+"Shared visual assets replaced — version %(version)s. %(count)s unit(s) now "
+"display the new content; no commercial data was changed."
+msgstr ""
+"تم استبدال الأصول المرئية المشتركة — الإصدار %(version)s. تعرض %(count)s "
+"وحدة الآن المحتوى الجديد؛ ولم يتم تغيير أي بيانات تجارية."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_building_region__label
+msgid "Short text shown on hover. Defaults to the building name."
+msgstr "نص قصير يظهر عند تمرير المؤشر. الافتراضي هو اسم المبنى."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_gallery.py:0
+msgid "Shortlisted from %s."
+msgstr "أضيف إلى القائمة المختصرة من %s."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_gallery.py:0
+msgid ""
+"Shortlisting needs the Brokerage module, which owns the customer's "
+"shortlist. Without it the gallery has nowhere to put a favourite that an "
+"agent would ever see again."
+msgstr ""
+"تتطلب القائمة المختصرة وحدة الوساطة العقارية، فهي التي تملك القائمة المختصرة"
+" للعميل. وبدونها لا يجد المعرض مكانًا لحفظ المفضلة بحيث يراها الوكيل لاحقًا."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_slot_map__slot_id
+msgid "Slot"
+msgstr "الموضع"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_floor_template.py:0
+msgid ""
+"Slot %(slot)s belongs to a different template than the one assigned to "
+"%(floor)s."
+msgstr ""
+"الموضع %(slot)s ينتمي إلى قالب مختلف عن القالب المعين للطابق %(floor)s."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_floor_template.py:0
+msgid "Slot %s"
+msgstr "الموضع %s"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template__slot_count
+msgid "Slot Count"
+msgstr "عدد المواضع"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_floor__visual_slot_map_ids
+msgid "Slot Mapping"
+msgstr "ربط المواضع"
+
+#. module: real_estate_maquette
+#: model:ir.model.constraint,message:real_estate_maquette.constraint_realestate_visual_floor_template_slot_code_unique_per_template
+msgid "Slot codes must be unique within a template."
+msgstr "يجب أن تكون رموز المواضع فريدة داخل القالب."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template__slot_ids
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_visual_floor_template_form
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_visual_floor_template_list
+msgid "Slots"
+msgstr "المواضع"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_property__visual_state__sold
+msgid "Sold"
+msgstr "مباعة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_grant__source
+msgid "Source"
+msgstr "المصدر"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_grant__source_ref
+msgid "Source Ref"
+msgstr "مرجع المصدر"
+
+#. module: real_estate_maquette
+#: model:ir.actions.act_window,name:real_estate_maquette.action_spec_tag
+#: model:ir.ui.menu,name:real_estate_maquette.menu_spec_tag
+msgid "Specification Tags"
+msgstr "وسوم المواصفات"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__spec_tag_ids
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_visual_unit_type_form
+msgid "Specifications"
+msgstr "المواصفات"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_property__spec_tag_ids
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_property_form_maquette
+msgid "Specifications / Finishes"
+msgstr "المواصفات / التشطيبات"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Specs & Finishes"
+msgstr "المواصفات والتشطيبات"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_maquette_unit_picker__unit_state
+msgid "Status"
+msgstr "الحالة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_building_region__company_id
+msgid ""
+"Stored related, so a region can never disagree with the project it is drawn "
+"on. Phase 0 found no company field on any visual model and no record rule "
+"anywhere."
+msgstr ""
+"حقل مرتبط مخزن، لكي لا تختلف المنطقة أبدًا عن المشروع المرسومة عليه. تبين في"
+" المرحلة 0 عدم وجود حقل شركة في أي نموذج مرئي وعدم وجود أي قاعدة سجلات."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation_issue__subject
+msgid "Subject"
+msgstr "الموضوع"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_property_form_maquette
+msgid ""
+"Tags shown on the elevation dialog sidebar (e.g.\n"
+"                        marble lobby, double glazing, smart-home)."
+msgstr ""
+"وسوم تظهر في الشريط الجانبي لنافذة الواجهة (مثل: ردهة رخامية، زجاج مزدوج، "
+"منزل ذكي)."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template_slot__template_id
+msgid "Template"
+msgstr "القالب"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_floor_template.py:0
+msgid "Template %(name)s is in %(own)s but its project belongs to %(other)s."
+msgstr "القالب %(name)s يتبع %(own)s لكن مشروعه يتبع %(other)s."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_template__code
+msgid "Template Code"
+msgstr "رمز القالب"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_floor_template.py:0
+msgid "Template Validation"
+msgstr "التحقق من القالب"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__texture_count
+msgid "Texture Count"
+msgstr "عدد الخامات"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_floor_template.py:0
+msgid "That floor has no building."
+msgstr "هذا الطابق غير مرتبط بمبنى."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_modes.py:0
+msgid "That opportunity is not available."
+msgstr "هذه الفرصة غير متاحة."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_maquette_unit_picker__mesh_name
+msgid "The 3D mesh that was clicked on the master plan."
+msgstr "المجسم ثلاثي الأبعاد الذي تم النقر عليه في المخطط العام."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_validation.py:0
+msgid "The GLB contains no JSON chunk, so it describes nothing."
+msgstr "ملف GLB لا يحتوي على جزء JSON، لذا فهو لا يصف شيئًا."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_validation.py:0
+msgid "The GLB's JSON chunk could not be read: %s"
+msgstr "تعذرت قراءة جزء JSON في ملف GLB: %s"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_unit_type__code
+msgid ""
+"The developer's own name for the layout — B2, 3BR-Corner. This is what a "
+"salesperson says out loud."
+msgstr ""
+"الاسم الذي يطلقه المطور العقاري على التصميم — B2، 3BR-زاوية. وهو ما يذكره "
+"موظف المبيعات للعميل."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_floor_template__plan_image
+msgid ""
+"The drawing the polygons sit on. Optional — a template can carry geometry "
+"for a floor whose background comes from the building."
+msgstr ""
+"المخطط الذي تُرسم عليه المضلعات. اختياري — يمكن أن يحمل القالب أشكال طابق "
+"تأتي خلفيته من المبنى."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_grant__source_ref
+msgid "The embed token or page that minted this."
+msgstr "رمز التضمين أو الصفحة التي أصدرت هذا."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_unit_type__property_type_id
+msgid ""
+"The existing category taxonomy — Apartment, Villa. Referenced, not replaced:"
+" this model is a layout's asset package, and `property.type` remains what "
+"the API, Brokerage matching and contract lines mean by 'type'."
+msgstr ""
+"تصنيف الفئات الحالي — شقة، فيلا. يشار إليه ولا يستبدل: هذا النموذج حزمة أصول"
+" لتصميم معين، ويبقى `property.type` هو ما تعنيه واجهة البرمجة ومطابقة "
+"الوساطة العقارية وبنود العقود بكلمة النوع."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_validation.py:0
+msgid ""
+"The file declares %(declared)s bytes but is %(actual)s. It may be truncated."
+msgstr ""
+"يذكر الملف أن حجمه %(declared)s بايت لكنه %(actual)s. قد يكون مقتطعًا."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_assets.py:0
+msgid ""
+"The installed Draco decoder reports Three.js revision %(found)s, but this "
+"module bundles r%(expected)s. Pairing a loader with another release's "
+"decoder does not fail cleanly — it produces corrupt geometry or a silent "
+"hang."
+msgstr ""
+"يشير مفكك ضغط دراكو المثبت إلى إصدار Three.js رقم %(found)s، بينما تتضمن هذه"
+" الوحدة الإصدار r%(expected)s. استخدام أداة تحميل مع مفكك من إصدار آخر لا "
+"يفشل بشكل واضح — بل ينتج أشكالًا تالفة أو توقفًا صامتًا."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_floor_template_slot__code
+msgid ""
+"The label a salesperson uses for this position — A, B, Corner-1. Not a "
+"property code: the same slot is a different apartment on every floor."
+msgstr ""
+"التسمية التي يستخدمها موظف المبيعات لهذا الموضع — A، B، زاوية-1. ليست رمز "
+"عقار: نفس الموضع يمثل شقة مختلفة في كل طابق."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_migration.py:0
+msgid ""
+"The mesh exists, but this project has not been validated since the gallery "
+"was upgraded."
+msgstr "المجسم موجود، لكن لم يتم التحقق من هذا المشروع منذ ترقية المعرض."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_validation_issue__subject
+msgid "The mesh name or property code the finding is about."
+msgstr "اسم المجسم أو رمز العقار الذي تخصه الملاحظة."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_validation.py:0
+msgid ""
+"The model is %(mb)s MB. Anything past %(budget)s MB will be a slow first "
+"load on a normal connection."
+msgstr ""
+"حجم النموذج %(mb)s ميجابايت. أي حجم يتجاوز %(budget)s ميجابايت سيؤدي إلى بطء"
+" التحميل الأول على اتصال عادي."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_validation.py:0
+msgid ""
+"The model requires %(ext)s, which this deployment cannot decode (%(why)s). "
+"It will fail to load in the browser."
+msgstr ""
+"يتطلب النموذج %(ext)s، ولا يمكن لهذا النظام فك ترميزه (%(why)s). سيفشل "
+"تحميله في المتصفح."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_validation.py:0
+msgid ""
+"The model requires the extension %s, which is not in the known-supported "
+"list. It may render incorrectly."
+msgstr ""
+"يتطلب النموذج الامتداد %s، وهو غير موجود في قائمة الامتدادات المدعومة "
+"المعروفة. قد يُعرض بشكل غير صحيح."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_floor_slot_map__property_id
+msgid ""
+"The physical unit this shape represents on this floor. The authority for its"
+" price, availability and everything else remains the property itself."
+msgstr ""
+"الوحدة الفعلية التي يمثلها هذا الشكل في هذا الطابق. يبقى العقار نفسه المرجع "
+"لسعرها وتوفرها وكل ما عدا ذلك."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_migration.py:0
+msgid ""
+"The project has no 2D master plan, so this region has nothing to sit on."
+msgstr ""
+"لا يحتوي المشروع على مخطط عام ثنائي الأبعاد، لذا لا توجد خلفية لهذه المنطقة."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_migration.py:0
+msgid "The project has no 3D model, so no mesh mapping on it can resolve."
+msgstr ""
+"لا يحتوي المشروع على نموذج ثلاثي الأبعاد، لذا لا يمكن مطابقة أي ربط مجسمات "
+"فيه."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_migration.py:0
+msgid ""
+"The project's 3D model could not be read, so no mesh mapping on it can "
+"resolve."
+msgstr ""
+"تعذرت قراءة النموذج ثلاثي الأبعاد للمشروع، لذا لا يمكن مطابقة أي ربط مجسمات "
+"فيه."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_building_region__property_id
+msgid ""
+"The property this region represents on the 2D master plan. Buildings, "
+"villas, blocks — any property level is fine."
+msgstr ""
+"العقار الذي تمثله هذه المنطقة على المخطط العام ثنائي الأبعاد. مبانٍ أو فلل "
+"أو مربعات — أي مستوى عقاري مقبول."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_project__visual_fallback_property_id
+msgid ""
+"The property whose 2D plan stands in when 3D cannot run (Rule 4). Usually "
+"the compound or the master-plan property."
+msgstr ""
+"العقار الذي يُستخدم مخططه ثنائي الأبعاد بديلًا عندما يتعذر تشغيل العرض ثلاثي"
+" الأبعاد (القاعدة 4). عادة ما يكون المجمع أو عقار المخطط العام."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_migration.py:0
+msgid "The region has no polygon, so it has no clickable area."
+msgstr "لا تحتوي المنطقة على مضلع، لذا ليس لها مساحة قابلة للنقر."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_migration.py:0
+msgid ""
+"The region resolves, but this project has not been validated since the "
+"gallery was upgraded."
+msgstr "المنطقة مطابقة، لكن لم يتم التحقق من هذا المشروع منذ ترقية المعرض."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_property__visual_unit_type_id
+msgid ""
+"The shared visual package for this layout. Anything set on the unit itself "
+"overrides it."
+msgstr ""
+"الحزمة المرئية المشتركة لهذا التصميم. أي قيمة تُضبط على الوحدة نفسها "
+"تتجاوزها."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_validation.py:0
+msgid "The uploaded file is %s bytes — too short to be a GLB."
+msgstr "حجم الملف المرفوع %s بايت — أصغر من أن يكون ملف GLB."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_validation.py:0
+msgid ""
+"The uploaded file is not a binary glTF: its header does not start with "
+"'glTF'. A .gltf JSON file or a .zip renamed to .glb will fail here."
+msgstr ""
+"الملف المرفوع ليس ملف `glTF` ثنائيًا: رأسه لا يبدأ بـ `glTF`. سيفشل هنا ملف "
+"JSON بامتداد `.gltf` أو ملف `.zip` أعيدت تسميته إلى `.glb`."
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_visual_unit_type_form
+msgid ""
+"This is a <strong>visual asset package</strong>. Price,\n"
+"                        availability, reservation and contract stay on each\n"
+"                        physical unit — replacing an asset here changes what\n"
+"                        units display and nothing commercial."
+msgstr ""
+"هذه <strong>حزمة أصول مرئية</strong>. يبقى السعر والتوفر والحجز والعقد على "
+"كل وحدة فعلية — استبدال أصل هنا يغير ما تعرضه الوحدات فقط ولا يغير أي شيء "
+"تجاري."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "This mesh"
+msgstr "هذا المجسم"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_assets.py:0
+msgid ""
+"This model uses Draco compression, but no Draco decoder is installed at %(path)s (missing: %(missing)s).\n"
+"\n"
+"The decoder is a compiled artefact from Google's Draco project (Apache-2.0) and is not shipped with this module. See the README in that directory for the exact files and the version they must come from. Until it is installed this model will not render in any browser."
+msgstr ""
+"يستخدم هذا النموذج ضغط دراكو، لكن لا يوجد مفكك ضغط دراكو مثبت في %(path)s (الملفات الناقصة: %(missing)s).\n"
+"\n"
+"مفكك الضغط ملف مُجمّع من مشروع دراكو التابع لجوجل (`Apache-2.0`) ولا يُشحن مع هذه الوحدة. راجع ملف التعليمات في ذلك المجلد لمعرفة الملفات المطلوبة بالضبط والإصدار الذي يجب أن تأتي منه. وإلى أن يتم تثبيته لن يُعرض هذا النموذج في أي متصفح."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_gallery.py:0
+msgid "This plan could not be prepared for this unit."
+msgstr "تعذر تجهيز هذا المخطط لهذه الوحدة."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_access.py:0
+#: code:addons/real_estate_maquette/models/visual_deeplink.py:0
+msgid "This project is not published publicly."
+msgstr "هذا المشروع غير منشور للعامة."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/property_maquette.py:0
+msgid ""
+"This unit is not linked to a project. Set a parent that belongs to a "
+"project."
+msgstr "هذه الوحدة غير مرتبطة بمشروع. حدد عقارًا أصليًا ينتمي إلى مشروع."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_grant__token
+msgid "Token"
+msgstr "الرمز"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__maquette_total_units
+msgid "Total Units"
+msgstr "إجمالي الوحدات"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_property__visual_assets_from_type
+msgid ""
+"True when this unit is showing its layout's shared assets rather than its "
+"own."
+msgstr ""
+"صحيح عندما تعرض هذه الوحدة الأصول المشتركة لتصميمها بدلًا من أصولها الخاصة."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_gallery.py:0
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_maquette_unit_picker__unit_type_id
+msgid "Type"
+msgstr "النوع"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__code
+msgid "Type Code"
+msgstr "رمز النوع"
+
+#. module: real_estate_maquette
+#: model:ir.model,name:real_estate_maquette.model_realestate_visual_floor_template_slot
+msgid "Typical Floor Slot"
+msgstr "موضع في الطابق النموذجي"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_visual_floor_template_form
+msgid "Typical Floor T01"
+msgstr "الطابق النموذجي T01"
+
+#. module: real_estate_maquette
+#: model:ir.model,name:real_estate_maquette.model_realestate_visual_floor_template
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_building_floor_form_template
+msgid "Typical Floor Template"
+msgstr "قالب الطابق النموذجي"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_floor_template.py:0
+msgid "Typical Floor — %s"
+msgstr "الطابق النموذجي — %s"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Undo"
+msgstr "تراجع"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_floor__unit_id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_maquette_unit_picker__unit_id
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_floor_slot_map__property_id
+msgid "Unit"
+msgstr "الوحدة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_project__visual_default_experience__list
+msgid "Unit List"
+msgstr "قائمة الوحدات"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__unit_ids
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__property_ids
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_building_preview_form
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_visual_unit_type_form
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_visual_unit_type_list
+msgid "Units"
+msgstr "الوحدات"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_floor__units_available
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__units_available
+msgid "Units Available"
+msgstr "الوحدات المتاحة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__maquette_unit_count
+msgid "Units Linked to 3D"
+msgstr "الوحدات المرتبطة بالمجسم ثلاثي الأبعاد"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_floor__units_reserved
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__units_reserved
+msgid "Units Reserved"
+msgstr "الوحدات المحجوزة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_floor__units_sold
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__units_sold
+msgid "Units Sold"
+msgstr "الوحدات المباعة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_floor__units_total
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_preview__units_total
+msgid "Units Total"
+msgstr "إجمالي الوحدات"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_floor__unit_ids
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_building_floor_form
+msgid "Units on this floor"
+msgstr "وحدات هذا الطابق"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_config.py:0
+msgid "Units priced: %(p)s of %(t)s"
+msgstr "الوحدات المسعرة: %(p)s من %(t)s"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_unit_type__override_count
+msgid "Units that carry their own asset instead of this package's."
+msgstr "الوحدات التي تحمل أصولها الخاصة بدلًا من أصول هذه الحزمة."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_unit_type.py:0
+msgid "Units — %s"
+msgstr "الوحدات — %s"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_access.py:0
+msgid "Unknown asset kind."
+msgstr "نوع أصل غير معروف."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_gallery.py:0
+msgid "Unknown opportunity or unit."
+msgstr "فرصة أو وحدة غير معروفة."
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_visual_floor_template_form
+msgid "Unmapped"
+msgstr "غير مرتبط"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__unmatched_mesh_count
+msgid "Unmatched Mesh Count"
+msgstr "عدد المجسمات غير المطابقة"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Upload"
+msgstr "رفع"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_project_form_maquette
+msgid "Upload Master Plan"
+msgstr "رفع المخطط العام"
+
+#. module: real_estate_maquette
+#: model_terms:ir.actions.act_window,help:real_estate_maquette.action_maquette_browser
+msgid ""
+"Upload a <code>.glb</code> file on any project to make it visible here."
+msgstr "ارفع ملف <code>.glb</code> على أي مشروع ليظهر هنا."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/project_maquette.py:0
+msgid "Upload a GLB file first."
+msgstr "ارفع ملف GLB أولًا."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_project__maquette_glb
+msgid ""
+"Upload a glTF binary (.glb) file containing the project's 3D model. Each "
+"unit must be a named mesh inside the file."
+msgstr ""
+"ارفع ملفًا ثنائيًا بصيغة GLB (`.glb`) يحتوي على النموذج ثلاثي الأبعاد "
+"للمشروع. يجب أن تكون كل وحدة مجسمًا مسمى داخل الملف."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Upload images"
+msgstr "رفع الصور"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_project_form_maquette
+msgid ""
+"Upload the 2D site / master plan (PNG/JPG). Once uploaded,\n"
+"                        the full interactive editor will appear here — draw building outlines,\n"
+"                        link each to a property, and the gallery / units of every region\n"
+"                        become available on click."
+msgstr ""
+"ارفع مخطط الموقع / المخطط العام ثنائي الأبعاد (PNG/JPG). بعد الرفع سيظهر "
+"المحرر التفاعلي الكامل هنا — ارسم حدود المباني، واربط كلًا منها بعقار، لتصبح"
+" صور ووحدات كل منطقة متاحة عند النقر."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_project__maquette_status__uploaded_no_mapping
+msgid "Uploaded, no units mapped"
+msgstr "تم الرفع، لا توجد وحدات مرتبطة"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Uploading…"
+msgstr "جارٍ الرفع…"
+
+#. module: real_estate_maquette
+#: model:res.groups,comment:real_estate_maquette.group_visual_author
+msgid ""
+"Uploads models and plans, draws polygon regions\n"
+"            and maps meshes to units. Cannot publish."
+msgstr ""
+"يرفع النماذج والمخططات، ويرسم المناطق المضلعة، ويربط المجسمات بالوحدات. لا "
+"يمكنه النشر."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_floor__property_usage_id
+msgid "Usage"
+msgstr "الاستخدام"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_grant__used_count
+msgid "Used Count"
+msgstr "عدد مرات الاستخدام"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_visual_unit_type_form
+msgid "Uses Package"
+msgstr "يستخدم الحزمة"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_visual_floor_template_form
+msgid "Validate Assignments"
+msgstr "التحقق من التعيينات"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__validated_by_id
+msgid "Validated By"
+msgstr "تم التحقق بواسطة"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__validated_on
+msgid "Validated On"
+msgstr "تاريخ التحقق"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_migration.py:0
+msgid ""
+"Validated clean%(warn)s. It was live before this release and stays live."
+msgstr ""
+"تم التحقق دون أخطاء%(warn)s. كان منشورًا قبل هذا الإصدار وسيبقى منشورًا."
+
+#. module: real_estate_maquette
+#: model:res.groups,comment:real_estate_maquette.group_visual_publisher
+msgid ""
+"Validates a gallery and makes it customer-visible.\n"
+"            The step between \"the mapping is drawn\" and \"a customer sees\n"
+"            it\"."
+msgstr ""
+"يتحقق من المعرض ويجعله مرئيًا للعملاء. وهي الخطوة بين \"اكتمال رسم الربط\" "
+"و\"رؤية العميل له\"."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_project__visual_publication_state__validating
+msgid "Validating"
+msgstr "قيد التحقق"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_migration__validation_id
+msgid "Validation"
+msgstr "التحقق"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_validation.py:0
+msgid "Validation Issues — %s"
+msgstr "مشكلات التحقق — %s"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__version
+msgid "Version"
+msgstr "الإصدار"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/building_region.py:0
+#: code:addons/real_estate_maquette/models/visual_floor_template.py:0
+msgid "Vertex coordinates must be percentages in [0, 100]."
+msgstr "يجب أن تكون إحداثيات الرؤوس نسبًا مئوية ضمن [0, 100]."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "View Images"
+msgstr "عرض الصور"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "View Images ("
+msgstr "عرض الصور ("
+
+#. module: real_estate_maquette
+#: model:res.groups,name:real_estate_maquette.group_visual_viewer
+msgid "Viewer"
+msgstr "مشاهد"
+
+#. module: real_estate_maquette
+#: model:ir.model,name:real_estate_maquette.model_realestate_visual_grant
+msgid "Visual Asset Access Grant"
+msgstr "منح صلاحية الوصول إلى الأصول المرئية"
+
+#. module: real_estate_maquette
+#: model:ir.model,name:real_estate_maquette.model_realestate_visual_access
+msgid "Visual Asset Authorisation"
+msgstr "تفويض الأصول المرئية"
+
+#. module: real_estate_maquette
+#: model:ir.model,name:real_estate_maquette.model_realestate_visual_assets
+msgid "Visual Asset Delivery Configuration"
+msgstr "إعدادات تقديم الأصول المرئية"
+
+#. module: real_estate_maquette
+#: model:ir.model,name:real_estate_maquette.model_realestate_visual_validation_issue
+msgid "Visual Asset Validation Issue"
+msgstr "مشكلة في التحقق من الأصول المرئية"
+
+#. module: real_estate_maquette
+#: model:ir.model,name:real_estate_maquette.model_realestate_visual_validation
+msgid "Visual Asset Validation Report"
+msgstr "تقرير التحقق من الأصول المرئية"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_property__visual_assets_from_type
+msgid "Visual Assets From Type"
+msgstr "الأصول المرئية من النوع"
+
+#. module: real_estate_maquette
+#: model:ir.model,name:real_estate_maquette.model_realestate_visual_commercial
+msgid "Visual Commercial Truth Service"
+msgstr "خدمة المرجع التجاري للعرض المرئي"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__visual_floorplan_count
+msgid "Visual Floorplan Count"
+msgstr "عدد المخططات المرئية للطوابق"
+
+#. module: real_estate_maquette
+#: model:ir.model,name:real_estate_maquette.model_realestate_visual_deeplink
+msgid "Visual Gallery Deep Links"
+msgstr "الروابط المباشرة لمعرض العرض المرئي"
+
+#. module: real_estate_maquette
+#: model:ir.model,name:real_estate_maquette.model_realestate_visual_migration
+msgid "Visual Gallery Migration Record"
+msgstr "سجل ترحيل معرض العرض المرئي"
+
+#. module: real_estate_maquette
+#: model:ir.model,name:real_estate_maquette.model_realestate_visual_migration_runner
+msgid "Visual Gallery Migration Runner"
+msgstr "منفذ ترحيل معرض العرض المرئي"
+
+#. module: real_estate_maquette
+#: model:ir.model,name:real_estate_maquette.model_realestate_visual_modes
+msgid "Visual Gallery Modes"
+msgstr "أوضاع معرض العرض المرئي"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__visual_is_live
+msgid "Visual Is Live"
+msgstr "العرض المرئي منشور"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__visual_last_validated_on
+msgid "Visual Last Validated On"
+msgstr "آخر تحقق من العرض المرئي في"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__visual_mapped_count
+msgid "Visual Mapped Count"
+msgstr "عدد العناصر المرتبطة مرئيًا"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_floor__visual_mapping_complete
+msgid "Visual Mapping Complete"
+msgstr "اكتمال الربط المرئي"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__visual_priced_count
+msgid "Visual Priced Count"
+msgstr "عدد الوحدات المسعرة مرئيًا"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__visual_published_on
+msgid "Visual Published On"
+msgstr "تاريخ نشر العرض المرئي"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__visual_readiness_detail
+msgid "Visual Readiness Detail"
+msgstr "تفاصيل جاهزية العرض المرئي"
+
+#. module: real_estate_maquette
+#: model:ir.model,name:real_estate_maquette.model_realestate_visual_gallery
+msgid "Visual Sales Gallery Service"
+msgstr "خدمة معرض المبيعات المرئي"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__visual_unit_count
+msgid "Visual Unit Count"
+msgstr "عدد الوحدات المرئية"
+
+#. module: real_estate_maquette
+#: model:ir.model,name:real_estate_maquette.model_realestate_visual_unit_type
+msgid "Visual Unit Type"
+msgstr "نوع الوحدة المرئي"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_project__visual_unmapped_count
+msgid "Visual Unmapped Count"
+msgstr "عدد العناصر غير المرتبطة مرئيًا"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_building_floor__visual_unmapped_slots
+msgid "Visual Unmapped Slots"
+msgstr "المواضع غير المرتبطة مرئيًا"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields.selection,name:real_estate_maquette.selection__realestate_visual_validation_issue__severity__warning
+msgid "Warning"
+msgstr "تحذير"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_migration__warning_count
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_validation__warning_count
+msgid "Warning Count"
+msgstr "عدد التحذيرات"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,field_description:real_estate_maquette.field_realestate_visual_unit_type__website_message_ids
+msgid "Website Messages"
+msgstr "رسائل الموقع الإلكتروني"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_visual_unit_type__website_message_ids
+msgid "Website communication history"
+msgstr "سجل التواصل عبر الموقع الإلكتروني"
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_property__visual_state
+msgid ""
+"What the sales gallery shows for this unit, derived from Developer's "
+"authoritative availability. Stored so filters and reports can use it; never "
+"written by hand."
+msgstr ""
+"ما يعرضه معرض المبيعات لهذه الوحدة، مستمد من بيانات التوفر المعتمدة لدى "
+"المطور العقاري. مخزن لتتمكن الفلاتر والتقارير من استخدامه؛ ولا يُكتب يدويًا "
+"أبدًا."
+
+#. module: real_estate_maquette
+#: model:ir.model.fields,help:real_estate_maquette.field_realestate_project__visual_2d_enabled
+msgid ""
+"Whether the 2D master plan is offered. Kept separate from whether an image "
+"exists: a project may have a plan uploaded and deliberately not show it yet."
+msgstr ""
+"ما إذا كان المخطط العام ثنائي الأبعاد معروضًا. منفصل عن وجود الصورة: قد يكون"
+" لدى المشروع مخطط مرفوع مع عدم عرضه عمدًا حتى الآن."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Zoom in"
+msgstr "تكبير"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "Zoom out"
+msgstr "تصغير"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_floor_template.py:0
+msgid "are"
+msgstr "هي"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "available"
+msgstr "متاحة"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+msgid "down"
+msgstr "دفعة أولى"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_property_form_maquette
+msgid "e.g., unit_A_1201 — must match a mesh in the project's GLB"
+msgstr "مثال: unit_A_1201 — يجب أن يطابق مجسمًا في ملف GLB الخاص بالمشروع"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_floor_template.py:0
+msgid "is"
+msgstr "هو"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "is not mapped to any unit."
+msgstr "غير مرتبط بأي وحدة."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+msgid "months"
+msgstr "أشهر"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+msgid "m²"
+msgstr "م²"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "on a project first."
+msgstr "في أحد المشاريع أولًا."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+msgid "plan(s)"
+msgstr "مخطط (مخططات)"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "tab and upload to"
+msgstr "ثم ارفع إلى"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "to cancel."
+msgstr "للإلغاء."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "to see it here."
+msgstr "لعرضه هنا."
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "unit"
+msgstr "وحدة"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "units"
+msgstr "وحدات"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/maquette_viewer.xml:0
+msgid "units:"
+msgstr "الوحدات:"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_assets.py:0
+msgid "unknown"
+msgstr "غير معروف"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_config.py:0
+msgid "uploaded"
+msgstr "تم الرفع"
+
+#. module: real_estate_maquette
+#. odoo-javascript
+#: code:addons/real_estate_maquette/static/src/xml/visual_gallery.xml:0
+msgid "· over"
+msgstr "· على مدى"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_config.py:0
+msgid "%(project)s is %(state)s and cannot be %(verb)s."
+msgstr "%(project)s في حالة %(state)s ولا يمكن %(verb)s."
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/building_region.py:0
+msgid ""
+"%(property)s belongs to project %(other)s and cannot be pinned on the master"
+" plan of %(project)s."
+msgstr "%(property)s يتبع مشروع %(other)s ولا يمكن تثبيته على المخطط العام لمشروع %(project)s."
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_project_form_maquette
+msgid "Archive"
+msgstr "أرشفة"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_project_form_maquette
+msgid "Experience"
+msgstr "التجربة"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_floor_template.py:0
+msgid "Install the 2D Plan application to lift a drawn floor into a template."
+msgstr "ثبّت تطبيق المخططات ثنائية الأبعاد لتحويل طابق مرسوم إلى قالب."
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_project_form_maquette
+msgid "Publish"
+msgstr "نشر"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_project_form_maquette
+msgid "Readiness"
+msgstr "الجاهزية"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_project_form_maquette
+msgid "Take this gallery offline? Public pages and embeds stop serving it."
+msgstr "هل توقف عرض هذا المعرض؟ ستتوقف الصفحات العامة وعناصر التضمين عن عرضه."
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_project_form_maquette
+msgid "Unpublish"
+msgstr "إلغاء النشر"
+
+#. module: real_estate_maquette
+#: model_terms:ir.ui.view,arch_db:real_estate_maquette.view_project_form_maquette
+msgid "Validate"
+msgstr "اعتماد"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_config.py:0
+msgid "archived"
+msgstr "أرشفته"
+
+#. module: real_estate_maquette
+#. odoo-python
+#: code:addons/real_estate_maquette/models/visual_config.py:0
+msgid "unpublished"
+msgstr "إلغاء نشره"

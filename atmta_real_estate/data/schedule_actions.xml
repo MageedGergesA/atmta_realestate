@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <record id="ir_cron_check_contract_expiry" model="ir.cron">
-        <field name="name">Check Contract Expiry</field>
-        <field name="model_id" ref="model_realestate_contract"/>
-        <field name="state">code</field>
-        <field name="code">model.check_contract_expiry()</field>
-        <field name="interval_number">1</field>
-        <field name="interval_type">days</field>
-        <field name="active">True</field>
-    </record>
-    <!--    -->
-    <record id="ir_cron_update_contract_line_status" model="ir.cron">
-        <field name="name">Update Contract Line Status</field>
-        <field name="model_id" ref="model_realestate_contract_line"/>
-        <field name="state">code</field>
-        <field name="code">model._cron_update_line_statuses()</field>
-        <field name="interval_number">1</field>
-        <field name="interval_type">days</field>
-        <field name="active">True</field>
-    </record>
+    <!--
+        The legacy "Check Contract Expiry" job used to live here. It ended leases
+        without the safeguards of `_cron_expire_leases` (company switch, notice,
+        termination in progress, arrears) and overrode them, so it was retired:
+        `data/leasing_crons.xml` holds the one lease-expiry job. Removing the
+        record deletes it from installed databases on the next module update.
+    -->
+    <!--
+        The two legacy unit-line status jobs ("Update Contract Line Status" here
+        and "Contract Line Auto Expiry") are retired too. Units are allocations,
+        whose occupancy and blocking follow the lease lifecycle; legacy line
+        states no longer drive anything.
+    -->
 
 </odoo>

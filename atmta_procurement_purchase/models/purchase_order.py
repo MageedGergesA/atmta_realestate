@@ -236,7 +236,28 @@ class PurchaseOrder(models.Model):
                 "%(order)s belongs to %(event)s, which was cancelled.",
                 order=self.display_name, event=event.name))
         if self._award_authorisation():
-            return True
+            # Approved is authority to issue, not to confirm this order by
+            # hand. Issuing trims every awarded order to the awarded scope
+            # before it confirms and closes the losing quotations; pressing
+            # Confirm on the RFQ skips both, and a partial award of 600 of
+            # 1,000 would commit all 1,000 while the award stayed "approved".
+            # `action_issue` marks the award issued inside its own transaction
+            # before confirming, so only that path gets through here.
+            if self._award_issued():
+                return True
+            awards = self.env['realestate.procurement.award.line'].sudo().search([
+                ('purchase_order_id', '=', self.id),
+                ('award_id.state', '=', 'approved'),
+            ]).award_id
+            raise UserError(_(
+                "%(order)s is authorised by %(awards)s, which is approved but "
+                "not issued.\n\nUse Issue Award on the award rather than "
+                "confirming the order here. Issuing writes the awarded "
+                "quantities onto the order before it confirms and closes the "
+                "quotations that lost; confirming directly would commit the "
+                "vendor's whole quotation instead.",
+                order=self.display_name,
+                awards=', '.join(awards.mapped('name'))))
         raise UserError(_(
             "%(order)s is %(vendor)s's response to %(event)s, and sourcing "
             "does not commit money.\n\n"
@@ -274,6 +295,17 @@ class PurchaseOrder(models.Model):
             ('award_id.state', 'in', ('approved', 'issued')),
         ], limit=1)
         return bool(line)
+
+    def _award_issued(self):
+        """Is this order named on an award that has been issued?
+
+        Read through `sudo()` for the reason `_award_authorisation` gives.
+        """
+        self.ensure_one()
+        return bool(self.env['realestate.procurement.award.line'].sudo().search([
+            ('purchase_order_id', '=', self.id),
+            ('award_id.state', '=', 'issued'),
+        ], limit=1))
 
     # ------------------------------------------------------------------
     def _is_project_coded(self):

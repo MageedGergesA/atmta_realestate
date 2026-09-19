@@ -38,11 +38,11 @@
             <form>
                 <header>
                     <button name="action_mark_completed" type="object" string="Mark Completed"
-                            class="oe_highlight" invisible="state != 'scheduled'"/>
+                            class="oe_highlight" invisible="state not in ('scheduled','confirmed')"/>
                     <button name="action_mark_no_show" type="object" string="No-show"
-                            invisible="state != 'scheduled'"/>
+                            invisible="state not in ('scheduled','confirmed')"/>
                     <button name="action_cancel" type="object" string="Cancel"
-                            invisible="state != 'scheduled'"/>
+                            invisible="state not in ('scheduled','confirmed')"/>
                     <button name="action_create_offer" type="object" string="Create Offer"
                             invisible="state != 'completed'"/>
                     <field name="state" widget="statusbar"/>
@@ -65,7 +65,7 @@
                             <field name="end_at" readonly="1"/>
                         </group>
                     </group>
-                    <group string="Feedback" invisible="state == 'scheduled'">
+                    <group string="Feedback" invisible="state == 'suggested'">
                         <field name="feedback_rating"/>
                         <field name="next_action"/>
                         <field name="feedback" nolabel="1" colspan="2"/>

@@ -1,0 +1,980 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* atmta_construction_contract
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:12+0000\n"
+"PO-Revision-Date: 2026-09-17 10:12+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: atmta_construction_contract
+#. odoo-python
+#: code:addons/atmta_construction_contract/models/contract_package.py:0
+msgid ""
+"%(contractor)s belongs to another company and cannot hold a package in "
+"%(company)s."
+msgstr ""
+
+#. module: atmta_construction_contract
+#. odoo-python
+#: code:addons/atmta_construction_contract/models/contract_package.py:0
+msgid "A completed package cannot be cancelled."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__other_time_adjustment_days
+msgid ""
+"A contractual time adjustment that is not an extension of time — a "
+"suspension agreement, a re-baselining somebody signed. It needs a reason, "
+"and it moves the current date the same way."
+msgstr ""
+
+#. module: atmta_construction_contract
+#. odoo-python
+#: code:addons/atmta_construction_contract/models/contract_package.py:0
+msgid "A package is awarded to somebody. Set the contractor."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__active
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_construction_contract_package__state__active
+msgid "Active"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__actual_completion_date
+msgid "Actual Completion Date"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__advance_pct
+msgid "Advance (%)"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__advance_amount
+msgid "Advance Amount"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__all_po_ids
+msgid "All POs"
+msgstr ""
+
+#. module: atmta_construction_contract
+#. odoo-python
+#: code:addons/atmta_construction_contract/models/contract_package.py:0
+msgid ""
+"An awarded package keeps its award. Cancel it instead — reopening would let "
+"the original value be rewritten."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__approved_eot_days
+msgid "Approved Eot Days"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__approved_variation_amount
+msgid "Approved Variations"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: atmta_construction_contract
+#. odoo-python
+#: code:addons/atmta_construction_contract/models/contract_package.py:0
+msgid ""
+"Award value must be positive — a package worth nothing commits nothing and "
+"should not be awarded."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_construction_contract_package__state__awarded
+msgid "Awarded"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__awarded_by_id
+msgid "Awarded By"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__awarded_on
+msgid "Awarded On"
+msgstr ""
+
+#. module: atmta_construction_contract
+#. odoo-python
+#: code:addons/atmta_construction_contract/models/contract_package.py:0
+msgid "Awarded to %(contractor)s at %(value)s (untaxed)."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__bill_count
+msgid "Bill Count"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__total_billed
+msgid "Billed"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_contractor__outstanding_payable
+msgid "Billed amount not yet paid."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_construction_contract_package__notice_day_basis__business
+msgid "Business Days"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_construction_contract_package__notice_day_basis__calendar
+msgid "Calendar Days"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_construction_contract_package__state__cancelled
+msgid "Cancelled"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_contractor__specialization__civil
+msgid "Civil / Structure"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__claimed_eot_days
+msgid "Claimed Eot Days"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_construction_contract_package__state__closed
+msgid "Closed"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__commitment_source
+msgid "Commitment Source"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__total_po_committed
+msgid "Committed"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__company_id
+msgid "Company"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_construction_contract_package__state__complete
+msgid "Complete"
+msgstr ""
+
+#. module: atmta_construction_contract
+#. odoo-python
+#: code:addons/atmta_construction_contract/models/contract_package.py:0
+msgid "Complete the package before closing it."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model,name:atmta_construction_contract.model_realestate_construction_contract_package
+msgid "Construction Contract Package"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model,name:atmta_construction_contract.model_realestate_contractor
+msgid "Construction Contractor"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_purchase_order__re_package_id
+msgid "Construction Package"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__contractor_id
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__name
+msgid "Contractor"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__cost_code_ids
+msgid "Cost Codes"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__create_date
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__committed_amount
+msgid "Current Commitment"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__current_completion_date
+msgid "Current Completion Date"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__current_contract_value
+msgid "Current Contract Value"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__date_start
+msgid "Date Start"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__claimed_eot_days
+msgid ""
+"Days asked for and not yet granted. Reported beside the contract date, never"
+" inside it."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__notice_period_days
+msgid ""
+"Days from awareness to the notice deadline, under THIS contract. Nothing "
+"here assumes a standard form."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__detailed_claim_period_days
+msgid ""
+"Days from notice to fully detailed particulars, where the contract sets one."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_contractor__retention_pct
+msgid ""
+"Default % withheld from every payment certificate issued to this contractor."
+" Released as a single payment after handover."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__retention_pct
+msgid "Default Retention (%)"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__retention_pct
+msgid "Defaults from the contractor when one is set."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__detailed_claim_period_days
+msgid "Detailed Claim Period Days"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__display_name
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_construction_contract_package__state__draft
+msgid "Draft"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_contractor__specialization__elevator
+msgid "Elevator"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_construction_contract_package__package_type__elevator
+msgid "Elevators"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__contact_email
+msgid "Email"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__contractor_id
+msgid "Empty while tendering. Required to award."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_contractor__specialization__facade
+msgid "Facade / Cladding"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_construction_contract_package__package_type__facade
+msgid "Façade / Cladding"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_construction_contract_package__package_type__finishes
+msgid "Finishes / Fit-Out"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_contractor__specialization__finishing
+msgid "Finishing"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_contractor__specialization__general
+msgid "General Contractor"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_construction_contract_package__package_type__hvac
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_contractor__specialization__hvac
+msgid "HVAC"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__has_message
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__notice_reminder_days
+msgid "How long before the deadline a notice counts as due soon."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__id
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__id
+msgid "ID"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__message_needaction
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_contractor__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__message_has_error
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_contractor__message_has_error
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_contractor__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_construction_contract_package__package_type__infrastructure
+msgid "Infrastructure"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_contractor__specialization__landscape
+msgid "Landscape"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_construction_contract_package__package_type__landscape
+msgid "Landscaping"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__write_date
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__license_number
+msgid "License #"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_construction_contract_package__package_type__mep
+msgid "MEP"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_contractor__specialization__mep
+msgid "MEP (Mechanical/Electrical/Plumbing)"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_construction_contract_package__package_type__civil
+msgid "Main Civil / Structure"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__title
+msgid "Main Civil Works, MEP Package…"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_contractor__contract_po_id
+msgid "Master subcontract purchase order — one line per milestone in scope."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: atmta_construction_contract
+#. odoo-python
+#: code:addons/atmta_construction_contract/models/contract_package.py:0
+msgid "New"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_construction_contract_package__commitment_source__none
+msgid "Not Committed"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__notes
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__notes
+msgid "Notes"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__notice_day_basis
+msgid "Notice Day Basis"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__notice_period_days
+msgid "Notice Period Days"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__notice_reminder_days
+msgid "Notice Reminder Days"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__notice_required
+msgid "Notice Required"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_contractor__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_contractor__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: atmta_construction_contract
+#. odoo-python
+#: code:addons/atmta_construction_contract/models/contract_package.py:0
+msgid "Only a draft or tendering package can be awarded."
+msgstr ""
+
+#. module: atmta_construction_contract
+#. odoo-python
+#: code:addons/atmta_construction_contract/models/contract_package.py:0
+msgid "Only a draft package can go to tender."
+msgstr ""
+
+#. module: atmta_construction_contract
+#. odoo-python
+#: code:addons/atmta_construction_contract/models/contract_package.py:0
+msgid "Only an active package can be substantially complete."
+msgstr ""
+
+#. module: atmta_construction_contract
+#. odoo-python
+#: code:addons/atmta_construction_contract/models/contract_package.py:0
+msgid "Only an active package can complete."
+msgstr ""
+
+#. module: atmta_construction_contract
+#. odoo-python
+#: code:addons/atmta_construction_contract/models/contract_package.py:0
+msgid "Only an awarded package becomes active."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__original_completion_date
+msgid "Original Completion Date"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__original_contract_value
+msgid "Original Contract Value"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__current_completion_date
+msgid ""
+"Original completion plus approved extensions of time plus any separately "
+"authorised adjustment. Before award it is a planning date and is typed "
+"directly."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_construction_contract_package__package_type__other
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_contractor__specialization__other
+msgid "Other"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__other_time_adjustment_days
+msgid "Other Time Adjustment Days"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__other_time_adjustment_reason
+msgid "Other Time Adjustment Reason"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__outstanding_payable
+msgid "Outstanding"
+msgstr ""
+
+#. module: atmta_construction_contract
+#. odoo-python
+#: code:addons/atmta_construction_contract/models/contract_package.py:0
+msgid "Package %(name)s is in %(company)s but its project is in %(other)s."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_construction_contract_package__commitment_source__package
+msgid "Package Contract Value"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__package_type
+msgid "Package Type"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__total_paid
+msgid "Paid"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__performance_guarantee
+msgid "Performance Guarantee"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__contact_phone
+msgid "Phone"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__po_count
+msgid "Po Count"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_construction_contract_package__package_type__professional
+msgid "Professional Services"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__project_id
+msgid "Project"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model,name:atmta_construction_contract.model_purchase_order
+msgid "Purchase Order"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__purchase_order_count
+msgid "Purchase Order Count"
+msgstr ""
+
+#. module: atmta_construction_contract
+#. odoo-python
+#: code:addons/atmta_construction_contract/models/contract_package.py:0
+#: code:addons/atmta_construction_contract/models/contractor.py:0
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__purchase_order_ids
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_construction_contract_package__commitment_source__purchase_orders
+msgid "Purchase Orders"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__rating
+msgid "Rating"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__name
+msgid "Reference"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__performance_guarantee
+msgid "Reference of the guarantee held. M7 formalises recovery."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__retention_pct
+msgid "Retention (%)"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__retention_released
+msgid "Retention Released"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__scope_description
+msgid "Scope Description"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_contractor__service_product_id
+msgid ""
+"Service product used as the line item on subcontract POs. Auto-created from "
+"the contractor name + specialization if left blank."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__original_contract_value
+msgid ""
+"Snapshotted at award, untaxed, and never recalculated. What was agreed is a "
+"fact about the past."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__original_completion_date
+msgid ""
+"Snapshotted at award. Extensions of time are added beside it (M8), never "
+"written over it."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__specialization
+msgid "Specialization"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__state
+msgid "State"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__contract_po_id
+msgid "Subcontract PO"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__service_product_id
+msgid "Subcontract Service Product"
+msgstr ""
+
+#. module: atmta_construction_contract
+#. odoo-python
+#: code:addons/atmta_construction_contract/models/contractor.py:0
+msgid "Subcontract — %s"
+msgstr ""
+
+#. module: atmta_construction_contract
+#. odoo-python
+#: code:addons/atmta_construction_contract/models/contractor.py:0
+msgid "Subcontract — %s (%s)"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__substantial_completion_date
+msgid "Substantial Completion Date"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_construction_contract_package__state__substantially_complete
+msgid "Substantially Complete"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_contractor__total_po_committed
+msgid "Sum of confirmed subcontract PO totals for this contractor."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__approved_eot_days
+msgid ""
+"Sum of implemented extensions of time. Determined-but-not-implemented days "
+"are deliberately excluded."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_contractor__total_billed
+msgid "Sum of validated vendor bills."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__substantial_completion_date
+msgid "Taking-over / substantial completion, if the contract uses one."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields.selection,name:atmta_construction_contract.selection__realestate_construction_contract_package__state__tender
+msgid "Tender / Negotiation"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__tender_value
+msgid "Tender Value"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_purchase_order__re_package_id
+msgid ""
+"The commercial package this order executes. An order that belongs to a "
+"package is *the* commitment for it — the package's own value is then a "
+"comparison, not an addition."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__wbs_ids
+msgid ""
+"The scope this package covers. Reporting only — the money is coded on the "
+"purchase orders and certificates."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__approved_variation_amount
+msgid ""
+"The sum of implemented commitment changes against this package. Derived, so "
+"every unit of it points at the change order that authorised it."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__tender_value
+msgid ""
+"The value being negotiated. Becomes the original contract value at award "
+"unless a different figure is awarded."
+msgstr ""
+
+#. module: atmta_construction_contract
+#. odoo-python
+#: code:addons/atmta_construction_contract/models/contract_package.py:0
+msgid ""
+"This package has confirmed purchase orders. Cancel those in Purchase first —"
+" cancelling the package alone would leave a commitment nobody owns."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__title
+msgid "Title"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__partner_id
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__partner_id
+msgid "Vendor"
+msgstr ""
+
+#. module: atmta_construction_contract
+#. odoo-python
+#: code:addons/atmta_construction_contract/models/contractor.py:0
+msgid "Vendor Bills"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__wbs_ids
+msgid "WBS Scope"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_construction_contract_package__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_contract.field_realestate_contractor__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_contractor__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__committed_amount
+msgid ""
+"What this package commits, following the source precedence in "
+"`commitment.py`: its purchase orders when it has any, its own contract value"
+" when it does not."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__notice_required
+msgid "Whether this contract requires notice of a claim event."
+msgstr ""
+
+#. module: atmta_construction_contract
+#: model:ir.model.fields,help:atmta_construction_contract.field_realestate_construction_contract_package__cost_code_ids
+msgid "Which cost codes this package is expected to consume."
+msgstr ""

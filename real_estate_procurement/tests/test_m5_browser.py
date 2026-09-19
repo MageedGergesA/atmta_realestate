@@ -13,7 +13,7 @@ from odoo import fields
 from odoo.exceptions import AccessError, UserError
 from odoo.tests.common import HttpCase, tagged
 
-from .common import M5Common
+from .common import M5Common, groups_of
 
 
 class M5BrowserCommon(M5Common, HttpCase):
@@ -60,8 +60,7 @@ class M5BrowserCommon(M5Common, HttpCase):
 
     def _browser_user(self, *groups):
         user = self.env.ref('base.user_admin')
-        for xmlid in groups:
-            user.groups_id |= self.env.ref(xmlid)
+        user.groups_id |= groups_of(self.env, groups)
         self.env.flush_all()
         return user
 

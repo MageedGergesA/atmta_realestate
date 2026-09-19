@@ -60,16 +60,33 @@ def _public_developer_partner(record):
     ]) > 0
 
 
+#: Visual assets, moved behind `realestate.visual.access` in M4.5-A.
+#:
+#: These were served from this route with `auth='public'`, `sudo()`,
+#: sequential integer ids and no token — a project's entire 3D model, its
+#: floor plans and its interior models were fetchable by anybody who could
+#: count. They are now redirected to `/visual/asset/...`, which requires a
+#: grant, and the mapping below exists so the old URLs keep resolving rather
+#: than breaking every published embed.
+VISUAL_ASSET_REDIRECT = {
+    ('realestate.project',  'maquette_glb'):     'maquette_glb',
+    ('realestate.project',  'maquette_env_hdr'): 'maquette_hdr',
+    ('realestate.project',  'master_plan_2d'):   'master_plan_2d',
+    ('realestate.property', 'plan_image'):       'plan_image',
+    ('realestate.property', 'floor_plan_image'): 'floor_plan_image',
+    ('realestate.property', 'elevation_sheet'):  'elevation_sheet',
+    ('realestate.property', 'interior_glb'):     'interior_glb',
+}
+
 # (model, field): (visibility-check callable taking the record)
+#
+# What remains here is ordinary marketing imagery for the public catalogue —
+# a unit photo, a gallery thumbnail, a developer logo. Those are published
+# deliberately and carry no commercial or structural information. Everything
+# that describes a building's geometry or an unlaunched unit's interior went
+# to the gated route above.
 WHITELIST = {
-    ('realestate.project',  'master_plan_2d'): _public_project,
-    ('realestate.project',  'maquette_glb'):   _public_project,
-    ('realestate.project',  'maquette_env_hdr'): _public_project,
-    ('realestate.property', 'plan_image'):     _public_property,
-    ('realestate.property', 'floor_plan_image'): _public_property,
     ('realestate.property', 'image_1920'):     _public_property,
-    ('realestate.property', 'elevation_sheet'): _public_property,
-    ('realestate.property', 'interior_glb'):   _public_property,
     ('property.image',      'image_1920'):     _public_property_image,
     ('property.image',      'image_1024'):     _public_property_image,
     ('property.image',      'image_256'):      _public_property_image,
@@ -89,6 +106,16 @@ class ImageProxyApiV1(http.Controller):
             return _apply_cors_headers(request.env, Response('', status=204))
 
         env = request.env
+
+        # Visual assets are authorised by the shared gate, never by this
+        # route's own visibility predicate.
+        kind = VISUAL_ASSET_REDIRECT.get((model, field))
+        if kind:
+            from odoo.addons.real_estate_maquette.controllers.visual_asset \
+                import VisualAssetController
+            return VisualAssetController().visual_asset(
+                kind, rec_id, t=kw.get('t'))
+
         check = WHITELIST.get((model, field))
         if not check:
             raise werkzeug.exceptions.NotFound(_("Image not exposed."))

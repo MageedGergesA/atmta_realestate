@@ -9,13 +9,12 @@ from datetime import datetime, timedelta
 class RealEstateContractPayment(models.Model):
     _name = 'realestate.contract.payment'
     _order = 'date_due ASC'
-    _description = 'Scheduled Contract Payment'
+    _description = 'Billing Obligation'
 
-    contract_id = fields.Many2one('realestate.contract', string="Contract", required=True, ondelete='cascade')
+    contract_id = fields.Many2one('realestate.contract', string="Lease", required=True, ondelete='cascade')
     is_single_property = fields.Boolean(related="contract_id.is_single_property")
     is_multi_property = fields.Boolean(related="contract_id.is_multi_property")
     partner_id = fields.Many2one(related='contract_id.partner_id', string='Tenant/Partner')
-    contract_line_id = fields.Many2one('realestate.contract.line', string="Contract Line", ondelete='cascade')
     date_due = fields.Date(string="Due Date", required=True)
     date_due_deadline = fields.Date(string="Due Date Deadline", compute="_compute_date_due_deadline", store=True)
     hijri_date_due = fields.Char(
@@ -126,11 +125,6 @@ class RealEstateContractPayment(models.Model):
     discount_amount = fields.Float(string="Discount Amount", readonly=True)
     property_id = fields.Many2one('realestate.property', string="Property")
 
-    payment_plan_id = fields.Many2one(
-        'realestate.payment.plan',
-        string="Payment Plan Rule",
-        ondelete='set null'
-    )
     increment_rule_ids = fields.Many2many(
         'realestate.contract.increment.rule',
         'rel_payment_increment_rule',

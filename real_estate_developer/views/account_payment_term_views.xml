@@ -7,7 +7,11 @@
         <field name="arch" type="xml">
             <!-- Full-width builder, placed above the Due Terms / Preview row. -->
             <xpath expr="//div[hasclass('oe_title')]" position="after">
-                <group string="Real Estate Schedule Builder">
+                <!-- Developer users only: the segments are readable by
+                     Developer read-only, and this is Odoo's own payment-term
+                     form, which accountants open too. -->
+                <group string="Real Estate Schedule Builder"
+                       groups="real_estate_developer.group_dev_readonly">
                     <field name="re_is_realestate" invisible="1"/>
                     <field name="re_segment_ids" nolabel="1" colspan="2">
                         <list editable="bottom">

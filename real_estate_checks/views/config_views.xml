@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_checks" model="ir.ui.view">
+        <field name="name">res.config.settings.form.checks</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Real Estate Checks" string="Real Estate Checks"
+                     name="real_estate_checks"
+                     groups="real_estate_checks.group_checks_manager">
+                    <block title="Presentation Policy"
+                           help="Cheque law differs by country and by house policy. Nothing here is hard-coded; the defaults are the conservative reading.">
+                        <setting help="Whether a post-dated cheque may go to the bank before its due date. Off by default: in most MENA jurisdictions presenting a PDC early is at best a discourtesy and at worst unlawful.">
+                            <field name="check_allow_early_deposit"/>
+                            <div class="content-group" invisible="not check_allow_early_deposit">
+                                <div class="mt16">
+                                    <label for="check_early_deposit_days" string="Allowed days early"/>
+                                    <field name="check_early_deposit_days" class="oe_inline"/>
+                                </div>
+                            </div>
+                        </setting>
+                        <setting string="Cheque Validity"
+                                 help="Days after the due date beyond which an instrument is treated as stale and flagged rather than presented. 0 disables the check — there is no universal legal duration and this module does not invent one.">
+                            <field name="check_stale_days"/>
+                        </setting>
+                        <setting string="Overdue Presentation Alert"
+                                 help="A matured cheque still on hand this many days later is flagged to Treasury.">
+                            <field name="check_overdue_presentation_days"/>
+                        </setting>
+                        <setting string="Due-Soon Alert"
+                                 help="How far ahead the due-soon job looks. 0 silences it for this company.">
+                            <field name="check_due_soon_days"/>
+                        </setting>
+                    </block>
+
+                    <block title="Allocation">
+                        <setting help="Strict mode: a cheque may not be presented while any part of its face value is unallocated. Off by default — a genuine consolidated cheque often arrives before the schedule it will settle.">
+                            <field name="check_require_full_allocation"/>
+                        </setting>
+                    </block>
+
+                    <block title="Segregation of Duties">
+                        <setting help="When on, whoever prepared a deposit may not also confirm it. Enforced on the server, not by hiding a button.">
+                            <field name="check_maker_checker"/>
+                            <div class="content-group" invisible="not check_maker_checker">
+                                <div class="mt16">
+                                    <label for="check_self_approve_limit"
+                                           string="Self-approval limit"/>
+                                    <field name="check_self_approve_limit" class="oe_inline"/>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
+
+                    <block title="Accounting"
+                           help="Checks never writes accounting truth. These settings only tell it which Odoo objects to use.">
+                        <setting string="Cheque Payment Method"
+                                 help="Inbound method used when a deposit is confirmed. Naming one that posts to an Outstanding Receipts account is what allows 'presented' and 'cleared' to differ at all — otherwise a cheque is treated as cash the moment it is deposited.">
+                            <field name="check_payment_method_line_id"
+                                   options="{'no_create': True}"/>
+                        </setting>
+                        <setting string="Bounce Penalty Product"
+                                 help="Service product used to invoice the customer for a returned cheque. Its product category drives the income account — no account is hard-coded.">
+                            <field name="check_bounce_penalty_product_id"
+                                   options="{'no_create': True}"/>
+                        </setting>
+                        <setting string="Bank Return-Charge Product"
+                                 help="For the fee the BANK charges us. A different thing from the penalty we charge the customer, and deliberately a different setting.">
+                            <field name="check_bank_charge_product_id"
+                                   options="{'no_create': True}"/>
+                        </setting>
+                        <setting string="Default Custody Location"
+                                 help="Where a newly registered cheque is presumed to be.">
+                            <field name="check_default_location_id"
+                                   options="{'no_create': True}"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_checks_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module': 'real_estate_checks'}</field>
+    </record>
+</odoo>

@@ -218,6 +218,20 @@ class ApprovalStep(models.Model):
         return self.request_id.approval_step_ids.filtered(
             lambda s: s.sequence < self.sequence and s.decision == 'pending')
 
+    def _may_be_decided_by(self, user):
+        """Is this step's authority one that `user` holds?
+
+        The identity half of `_check_may_decide` and nothing else: it answers
+        "is this person one of the people this step is waiting for", which is
+        what a worklist and the header button both need. Everything else the
+        check enforces — order, state, basis, separation of duties — is about
+        the moment of deciding, not about whose step it is.
+        """
+        self.ensure_one()
+        if self.approver_user_id:
+            return self.approver_user_id == user
+        return not self.group_id or self.group_id in user.groups_id
+
     def _check_may_decide(self):
         """Everything that has to be true before anybody's decision counts."""
         self.ensure_one()

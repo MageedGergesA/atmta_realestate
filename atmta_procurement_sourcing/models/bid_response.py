@@ -237,6 +237,20 @@ class BidResponse(models.Model):
         received = received_datetime or fields.Datetime.now()
         if isinstance(received, str):
             received = fields.Datetime.to_datetime(received)
+        # The receipt time decides lateness, so it is the one value a recorder
+        # could use to make a late bid on time. A submission cannot arrive
+        # before the tender it answers was issued; one "received" earlier is a
+        # typing mistake or a backdated entry, and either way not evidence.
+        # When the bid was actually keyed in stays on the record as the
+        # response's creation time.
+        if event.issue_datetime and received < event.issue_datetime:
+            raise UserError(_(
+                "%(vendor)s's submission is recorded as received on "
+                "%(received)s, before %(event)s was issued on %(issued)s. A "
+                "bid cannot answer a tender that did not exist yet.",
+                vendor=invitation.partner_id.display_name,
+                received=received, event=event.name,
+                issued=event.issue_datetime))
         previous = invitation.current_response_id
         version = invitation.version_id or event.current_version_id
         deadline = (version.effective_close_datetime

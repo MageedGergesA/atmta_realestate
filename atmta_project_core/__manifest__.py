@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'ATMTA — Project Core',
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.1.0',
     'category': 'Real Estate/Core',
     'summary': 'Authoritative definition of Project, Phase and plot boundary.',
     'description': """
@@ -31,6 +31,8 @@ declares them moved.
     'data': [
         'data/project_sequence.xml',
         'security/project_core_rules.xml',
+        'views/project_views.xml',
+        'views/phase_views.xml',
     ],
     'application': False,
     'installable': True,

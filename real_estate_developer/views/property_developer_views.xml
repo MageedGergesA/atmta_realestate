@@ -4,18 +4,18 @@
     <record id="view_property_form_inherit_developer" model="ir.ui.view">
         <field name="name">realestate.property.form.developer</field>
         <field name="model">realestate.property</field>
-        <field name="inherit_id" ref="atmta_real_estate.view_property_form"/>
+        <field name="inherit_id" ref="atmta_property_core.view_property_form"/>
         <field name="arch" type="xml">
 
             <!-- Smart buttons -->
             <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
                 <button name="action_view_reservations" type="object" class="oe_stat_button"
-                        icon="fa-bookmark"
+                        icon="fa-bookmark" groups="real_estate_developer.group_dev_readonly"
                         invisible="reservation_count == 0">
                     <field name="reservation_count" widget="statinfo" string="Reservations"/>
                 </button>
                 <button name="action_view_sale_contracts" type="object" class="oe_stat_button"
-                        icon="fa-file-text-o"
+                        icon="fa-file-text-o" groups="real_estate_developer.group_dev_readonly"
                         invisible="sale_contract_count == 0">
                     <field name="sale_contract_count" widget="statinfo" string="Sale Contracts"/>
                 </button>
@@ -45,7 +45,8 @@
             <!-- Development tab -->
             <xpath expr="//notebook" position="inside">
                 <page string="Development" name="development"
-                      invisible="hierarchy_level != 'unit'">
+                      invisible="hierarchy_level != 'unit'"
+                      groups="real_estate_developer.group_dev_readonly">
                     <group>
                         <group string="Pricing">
                             <field name="base_price"/>
@@ -80,6 +81,31 @@
                 </page>
             </xpath>
 
+        </field>
+    </record>
+
+
+    <!-- Units, as the development team sees them.
+
+         The route to units used to be the Rental app's Properties menu. With
+         Developer installable on its own that route may not exist, so the
+         developer application has its own. The views are Property Core's,
+         named explicitly so the screen is the same whether or not Rental (which
+         adds views of its own) is installed. -->
+    <record id="action_developer_units" model="ir.actions.act_window">
+        <field name="name">Units</field>
+        <field name="res_model">realestate.property</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('atmta_property_core.view_property_list')}),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('atmta_property_core.view_property_kanban')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('atmta_property_core.view_property_form')})]"/>
+        <field name="search_view_id" ref="atmta_property_core.view_property_search"/>
+        <field name="domain">[('hierarchy_level', '=', 'unit')]</field>
+        <field name="context">{'default_hierarchy_level': 'unit'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add the first unit</p>
+            <p>Units are what a project sells: each is priced, reserved, contracted and handed over from here.</p>
         </field>
     </record>
 

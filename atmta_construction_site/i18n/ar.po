@@ -1,0 +1,2344 @@
+# Translation of Odoo Server.
+# This file contains the Arabic translation of the following modules:
+# 	* atmta_construction_site
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:12+0000\n"
+"PO-Revision-Date: 2026-09-17 10:12+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_milestone_list
+msgid "# Tasks"
+msgstr "عدد المهام"
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/boq.py:0
+msgid ""
+"%(items)s belong to an approved BOQ. Raise a change order and apply a "
+"variation — an approved quantity that can be retyped is not a contract."
+msgstr ""
+"%(items)s تابعة لجدول كميات معتمد. أصدر أمر تغيير وطبق تغييرًا — الكمية "
+"المعتمدة التي يمكن إعادة كتابتها ليست عقدًا."
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/boq.py:0
+msgid ""
+"%(order)s is %(state)s. An unapproved change order does not authorise a "
+"quantity."
+msgstr "%(order)s في حالة %(state)s. أمر التغيير غير المعتمد لا يجيز كمية."
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/boq.py:0
+msgid ""
+"%(refs)s are approved. Create a revision rather than editing the quantities "
+"work is certified against."
+msgstr ""
+"%(refs)s معتمدة. أنشئ مراجعة بدلًا من تعديل الكميات التي تعتمد الأعمال على "
+"أساسها."
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/daily_report.py:0
+msgid ""
+"%(refs)s are closed site records. Amend with a reason rather than editing "
+"the day's evidence."
+msgstr ""
+"%(refs)s سجلات موقع مغلقة. عدلها مع ذكر السبب بدلًا من تعديل أدلة اليوم."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_task__completion_pct
+msgid "100 if done/skipped, 50 if in progress, 0 otherwise."
+msgstr "100 إذا كانت منجزة/متخطاة، 50 إذا كانت قيد التنفيذ، 0 خلاف ذلك."
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_milestone_form
+msgid ""
+"<i class=\"fa fa-exclamation-triangle\"/>\n"
+"                        <strong> Slipped by upstream:</strong>\n"
+"                        Earliest possible start is"
+msgstr ""
+"<i class=\"fa fa-exclamation-triangle\"/>\n"
+"                        <strong> تأخر بسبب الأعمال السابقة:</strong>\n"
+"                        أقرب تاريخ بدء ممكن هو"
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/boq.py:0
+msgid ""
+"A draft BOQ is edited directly. Revisions are for what was already agreed."
+msgstr ""
+"جدول الكميات في حالة المسودة يعدل مباشرة. المراجعات مخصصة لما تم الاتفاق "
+"عليه مسبقًا."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_daily_report__safety_notes
+msgid "A note, not an HSE module. Safety management is out of scope."
+msgstr "ملاحظة، وليست وحدة للصحة والسلامة والبيئة. إدارة السلامة خارج النطاق."
+
+#. module: atmta_construction_site
+#: model:ir.model.constraint,message:atmta_construction_site.constraint_realestate_construction_daily_report_date_shift_uniq_per_project
+msgid "A project already has a daily report for that date and shift."
+msgstr "يوجد لدى المشروع تقرير يومي لنفس التاريخ والوردية."
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/boq.py:0
+msgid "A quantity moves on somebody's authority. Name the change order."
+msgstr "تتغير الكمية بموجب صلاحية شخص ما. حدد أمر التغيير."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_boq_line_variation__new_rate
+msgid "A re-rated variation. Zero means the original rate stands."
+msgstr "تغيير بسعر معدل. الصفر يعني بقاء السعر الأصلي."
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_form
+msgid ""
+"A recorded delay is evidence, not entitlement. Extensions\n"
+"                                of time and claims are decided separately."
+msgstr ""
+"التأخير المسجل دليل وليس استحقاقًا. يتم البت في تمديد المدة والمطالبات بشكل "
+"منفصل."
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/daily_report.py:0
+msgid "A report is closed once it has been submitted."
+msgstr "يغلق التقرير بمجرد إرساله."
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/boq.py:0
+msgid ""
+"A variation is what a change order authorised. Raise another one rather than"
+" editing it."
+msgstr "التغيير هو ما أجازه أمر التغيير. أصدر تغييرًا آخر بدلًا من تعديله."
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/boq.py:0
+msgid "A variation of nothing is not a variation."
+msgstr "التغيير على لا شيء ليس تغييرًا."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_delay__category__access
+msgid "Access / Possession"
+msgstr "الوصول / الحيازة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_cost_line__cost_basis__accrual
+msgid "Accrual (not yet posted)"
+msgstr "استحقاق محاسبي (غير مرحل بعد)"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__message_needaction
+msgid "Action Needed"
+msgstr "إجراء مطلوب"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item__active
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item_category__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__activity_ids
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__activity_ids
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__activity_ids
+msgid "Activities"
+msgstr "الأنشطة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "زخرفة استثناء النشاط"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__activity_state
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__activity_state
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__actual_cost
+msgid "Actual Cost"
+msgstr "التكلفة الفعلية"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__actual_end_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__actual_end_date
+msgid "Actual End Date"
+msgstr "تاريخ النهاية الفعلي"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__actual_start_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__actual_start_date
+msgid "Actual Start Date"
+msgstr "تاريخ البداية الفعلي"
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/boq.py:0
+msgid "Add at least one line before approving."
+msgstr "أضف بندًا واحدًا على الأقل قبل الاعتماد."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delay__affected_work
+msgid "Affected Work"
+msgstr "الأعمال المتأثرة"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_form
+msgid "Amend"
+msgstr "تعديل"
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/daily_report.py:0
+msgid "Amend Daily Report"
+msgstr "تعديل التقرير اليومي"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__amended_by_id
+msgid "Amended By"
+msgstr "عدل بواسطة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__amended_on
+msgid "Amended On"
+msgstr "تاريخ التعديل"
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/daily_report.py:0
+msgid ""
+"Amending a closed site record needs a reason. This is the evidence a claim "
+"will be argued from."
+msgstr ""
+"تعديل سجل موقع مغلق يتطلب سببًا. هذا هو الدليل الذي ستبنى عليه المطالبة."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__amendment_reason
+msgid "Amendment Reason"
+msgstr "سبب التعديل"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__line_amount
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_cost_line__amount
+msgid "Amount"
+msgstr "المبلغ"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_cost_line__analytic_account_id
+msgid "Analytic Account"
+msgstr "الحساب التحليلي"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_delay__category__approval
+msgid "Approval / Inspection"
+msgstr "الاعتماد / التفتيش"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_boq_form
+msgid "Approve"
+msgstr "اعتماد"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_boq__state__approved
+msgid "Approved"
+msgstr "معتمد"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_boq_form
+msgid ""
+"Approved change orders move the authorised\n"
+"                                quantity. The original quantity stays as the\n"
+"                                contract recorded it."
+msgstr ""
+"أوامر التغيير المعتمدة تغير الكمية المعتمدة. تبقى الكمية الأصلية كما سجلها "
+"العقد."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__assignee_id
+msgid "Assignee"
+msgstr "المكلف"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__authorised_quantity
+msgid "Authorised Quantity"
+msgstr "الكمية المعتمدة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_delay__responsible_party__authority
+msgid "Authority"
+msgstr "الجهة الحكومية"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_milestone_form
+msgid "Auto-computed from tasks when tasks exist; editable otherwise."
+msgstr "تحسب تلقائيًا من المهام عند وجودها؛ وتكون قابلة للتعديل خلاف ذلك."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_labor_log__cost_line_id
+msgid "Auto-generated rollup of this labor entry."
+msgstr "ملخص تم إنشاؤه تلقائيًا لقيد العمالة هذا."
+
+#. module: atmta_construction_site
+#: model:ir.model,name:atmta_construction_site.model_realestate_boq_line
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_work__boq_line_id
+msgid "BOQ Line"
+msgstr "بند جدول الكميات"
+
+#. module: atmta_construction_site
+#: model:ir.model,name:atmta_construction_site.model_realestate_boq_line_variation
+msgid "BOQ Line Variation"
+msgstr "تغيير بند جدول الكميات"
+
+#. module: atmta_construction_site
+#: model:ir.model,name:atmta_construction_site.model_realestate_boq
+msgid "Bill of Quantities"
+msgstr "جدول الكميات"
+
+#. module: atmta_construction_site
+#: model:ir.actions.act_window,name:atmta_construction_site.action_boq
+msgid "Bills of Quantities"
+msgstr "جداول الكميات"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__is_blocked_by_delay
+msgid "Blocked by Upstream Delay"
+msgstr "متوقف بسبب تأخير سابق"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__dependent_ids
+msgid "Blocks"
+msgstr "يعيق"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__boq_id
+msgid "Boq"
+msgstr "جدول الكميات"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line_variation__boq_line_id
+msgid "Boq Line"
+msgstr "بند جدول الكميات"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__budget_amount
+msgid "Budgeted Cost"
+msgstr "التكلفة المدرجة في الميزانية"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_boq_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_milestone_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_boq__state__cancelled
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_milestone__state__cancelled
+msgid "Cancelled"
+msgstr "ملغى"
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/boq.py:0
+msgid "Cannot cancel a BOQ that already has certified quantities."
+msgstr "لا يمكن إلغاء جدول كميات يحتوي على كميات معتمدة."
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/boq.py:0
+msgid "Cannot reset a BOQ that already has certified quantities."
+msgstr "لا يمكن إعادة تعيين جدول كميات يحتوي على كميات معتمدة."
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/milestone.py:0
+msgid "Cannot start '%s' — these predecessors are not yet started: %s"
+msgstr "لا يمكن بدء '%s' — المراحل السابقة التالية لم تبدأ بعد: %s"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_labor_log__trade__carpenter
+msgid "Carpenter"
+msgstr "نجار"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_cost_line__category
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delay__category
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__category
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item__category_id
+msgid "Category"
+msgstr "الفئة"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_boq_list
+msgid "Certified"
+msgstr "المعتمد"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__certified_pct
+msgid "Certified (%)"
+msgstr "المعتمد (%)"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__certified_amount
+msgid "Certified Amount"
+msgstr "المبلغ المعتمد"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__certified_qty
+msgid "Certified Qty"
+msgstr "الكمية المعتمدة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delay__change_event_id
+msgid "Change Event"
+msgstr "حدث التغيير"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line_variation__change_order_id
+msgid "Change Order"
+msgstr "أمر تغيير"
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/milestone.py:0
+msgid "Circular dependency detected on milestone '%s'."
+msgstr "تم اكتشاف اعتماد دائري في المرحلة الرئيسية '%s'."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_report__weather_condition__clear
+msgid "Clear"
+msgstr "مسح"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_delay__category__client
+msgid "Client Instruction"
+msgstr "تعليمات العميل"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_form
+msgid "Close"
+msgstr "إغلاق"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_report__state__closed
+msgid "Closed"
+msgstr "مغلق"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_report__weather_condition__cloudy
+msgid "Cloudy"
+msgstr "غائم"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item__code
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item_category__code
+msgid "Code"
+msgstr "الرمز"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__company_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__company_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line_variation__company_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delay__company_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delivery__company_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_equipment__company_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__company_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_work__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_milestone__state__completed
+msgid "Completed"
+msgstr "مكتمل"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__completion_percentage
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__completion_pct
+msgid "Completion (%)"
+msgstr "نسبة الإنجاز (%)"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__completion_from_tasks
+msgid "Completion from Tasks"
+msgstr "الإنجاز من المهام"
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/milestone.py:0
+msgid "Completion must be between 0 and 100."
+msgstr "يجب أن تكون نسبة الإنجاز بين 0 و100."
+
+#. module: atmta_construction_site
+#: model:ir.model,name:atmta_construction_site.model_realestate_construction_cost_line
+msgid "Construction Cost Line"
+msgstr "بند تكلفة الإنشاء"
+
+#. module: atmta_construction_site
+#: model:ir.model,name:atmta_construction_site.model_realestate_construction_milestone
+msgid "Construction Milestone"
+msgstr "مرحلة رئيسية للإنشاء"
+
+#. module: atmta_construction_site
+#: model:ir.actions.server,name:atmta_construction_site.cron_refresh_dates_ir_actions_server
+msgid "Construction Site: mark milestones delayed"
+msgstr "موقع الإنشاء: تحديد المراحل الرئيسية المتأخرة"
+
+#. module: atmta_construction_site
+#: model:ir.model,name:atmta_construction_site.model_realestate_construction_task
+msgid "Construction Task (under a milestone)"
+msgstr "مهمة إنشاء (ضمن مرحلة رئيسية)"
+
+#. module: atmta_construction_site
+#: model:ir.model,name:atmta_construction_site.model_realestate_work_item
+msgid "Construction Work Item"
+msgstr "بند عمل إنشائي"
+
+#. module: atmta_construction_site
+#: model:ir.model,name:atmta_construction_site.model_realestate_construction_site_refresh
+msgid "Construction site: refresh values that depend on today's date"
+msgstr "موقع الإنشاء: تحديث القيم المعتمدة على تاريخ اليوم"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_delay__responsible_party__consultant
+msgid "Consultant"
+msgstr "الاستشاري"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__contractor_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_cost_line__contractor_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_equipment__contractor_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_work__contractor_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__contractor_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__contractor_id
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_delay__responsible_party__contractor
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_equipment__owner__contractor
+msgid "Contractor"
+msgstr "المقاول"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_milestone_form
+msgid "Cost"
+msgstr "التكلفة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_cost_line__cost_basis
+msgid "Cost Basis"
+msgstr "أساس التكلفة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__cost_code_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_work__cost_code_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__cost_code_id
+msgid "Cost Code"
+msgstr "رمز التكلفة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__cost_line_id
+msgid "Cost Line"
+msgstr "بند التكلفة"
+
+#. module: atmta_construction_site
+#: model:ir.actions.act_window,name:atmta_construction_site.action_cost_line
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__cost_line_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_milestone_form
+msgid "Cost Lines"
+msgstr "بنود التكلفة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_cost_line__analytic_account_id
+msgid ""
+"Cost center this line posts to. Defaults to the project's analytic account."
+msgstr ""
+"مركز التكلفة الذي يرحل إليه هذا البند. الافتراضي هو الحساب التحليلي للمشروع."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_cost_line__counts_as_actual
+msgid "Counts As Actual"
+msgstr "يحتسب كتكلفة فعلية"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_boq_form
+msgid "Create Material Request"
+msgstr "إنشاء طلب مواد"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_boq_form
+msgid "Create Revision"
+msgstr "إنشاء مراجعة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line_variation__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_cost_line__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delay__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delivery__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_equipment__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_work__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item_category__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__create_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__create_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line_variation__create_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_cost_line__create_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delay__create_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delivery__create_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_equipment__create_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__create_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_work__create_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__create_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__create_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__create_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item__create_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item_category__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__workers
+msgid "Crew Size"
+msgstr "حجم الطاقم"
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/labor_log.py:0
+msgid "Crew size, hours and rate must be non-negative."
+msgstr "يجب ألا تكون قيم حجم الطاقم والساعات والسعر سالبة."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line_variation__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_cost_line__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item__currency_id
+msgid "Currency"
+msgstr "العملة"
+
+#. module: atmta_construction_site
+#: model:ir.model,name:atmta_construction_site.model_realestate_construction_labor_log
+msgid "Daily Labor Log"
+msgstr "سجل العمالة اليومي"
+
+#. module: atmta_construction_site
+#: model:ir.actions.act_window,name:atmta_construction_site.action_labor_log
+msgid "Daily Labor Logs"
+msgstr "سجلات العمالة اليومية"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__daily_report_id
+msgid "Daily Report"
+msgstr "التقرير اليومي"
+
+#. module: atmta_construction_site
+#: model:ir.model,name:atmta_construction_site.model_realestate_construction_daily_delay
+msgid "Daily Report — Delay"
+msgstr "التقرير اليومي — التأخير"
+
+#. module: atmta_construction_site
+#: model:ir.model,name:atmta_construction_site.model_realestate_construction_daily_delivery
+msgid "Daily Report — Delivery"
+msgstr "التقرير اليومي — التوريدات"
+
+#. module: atmta_construction_site
+#: model:ir.model,name:atmta_construction_site.model_realestate_construction_daily_equipment
+msgid "Daily Report — Equipment"
+msgstr "التقرير اليومي — المعدات"
+
+#. module: atmta_construction_site
+#: model:ir.model,name:atmta_construction_site.model_realestate_construction_daily_work
+msgid "Daily Report — Work Performed"
+msgstr "التقرير اليومي — الأعمال المنفذة"
+
+#. module: atmta_construction_site
+#: model:ir.model,name:atmta_construction_site.model_realestate_construction_daily_report
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_form
+msgid "Daily Site Report"
+msgstr "تقرير الموقع اليومي"
+
+#. module: atmta_construction_site
+#: model:ir.actions.act_window,name:atmta_construction_site.action_daily_report
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_list
+msgid "Daily Site Reports"
+msgstr "تقارير الموقع اليومية"
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/daily_report.py:0
+msgid ""
+"Daily report %(name)s is in %(company)s but its project is in %(other)s."
+msgstr ""
+"التقرير اليومي %(name)s تابع لـ %(company)s لكن مشروعه تابع لـ %(other)s."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_cost_line__date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__date
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_report__shift__day
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_labor_log__shift__day
+msgid "Day"
+msgstr "نهاري"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_form
+msgid "Days"
+msgstr "الأيام"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_milestone__delay_days
+msgid "Days the expected start has slipped because of predecessor delays."
+msgstr "عدد الأيام التي تأخر فيها البدء المتوقع بسبب تأخر المراحل السابقة."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item__default_rate
+msgid "Default Rate"
+msgstr "السعر الافتراضي"
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/daily_report.py:0
+msgid "Delay"
+msgstr "تأخير"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__delay_days
+msgid "Delay (days)"
+msgstr "التأخير (أيام)"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delay__delay_event_id
+msgid "Delay Event"
+msgstr "حدث تأخير"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_list
+msgid "Delay days"
+msgstr "أيام التأخير"
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/daily_report.py:0
+msgid "Delay on %(date)s — %(category)s"
+msgstr "تأخير بتاريخ %(date)s — %(category)s"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_milestone__state__delayed
+msgid "Delayed"
+msgstr "متأخرة"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_form
+msgid "Delays"
+msgstr "التأخيرات"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__delay_ids
+msgid "Delays & Disruptions"
+msgstr "التأخيرات والتعطلات"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__delivery_line_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_form
+msgid "Deliveries"
+msgstr "التوريدات"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_milestone_form
+msgid "Dependencies"
+msgstr "الاعتماديات"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__dependency_ids
+msgid "Depends On"
+msgstr "يعتمد على"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__description
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_cost_line__name
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delay__description
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delivery__description
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_work__description
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item__description
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_cost_line_form
+msgid "Description"
+msgstr "الوصف"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_delay__category__design
+msgid "Design / Information"
+msgstr "التصميم / المعلومات"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__display_name
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__display_name
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line_variation__display_name
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_cost_line__display_name
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delay__display_name
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delivery__display_name
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_equipment__display_name
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__display_name
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_work__display_name
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__display_name
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__display_name
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__display_name
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item__display_name
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item_category__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_task__state__done
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_construction_task_form
+msgid "Done"
+msgstr "منجز"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_boq__state__draft
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_report__state__draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__earliest_possible_start
+msgid "Earliest Possible Start"
+msgstr "أقرب تاريخ بدء ممكن"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_labor_log__trade__electrician
+msgid "Electrician"
+msgstr "كهربائي"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delay__end_datetime
+msgid "End Datetime"
+msgstr "تاريخ ووقت النهاية"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_equipment__name
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__equipment_line_ids
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_cost_line__category__equipment
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_form
+msgid "Equipment"
+msgstr "المعدات"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_delay__category__equipment
+msgid "Equipment Breakdown"
+msgstr "تعطل المعدات"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_equipment__equipment_type
+msgid "Equipment Type"
+msgstr "نوع المعدة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_cost_line__cost_basis__estimate
+msgid "Estimate / Informational"
+msgstr "تقديري / للعلم"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delay__estimated_days
+msgid "Estimated Days"
+msgstr "الأيام التقديرية"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_milestone__category__excavation
+msgid "Excavation"
+msgstr "الحفر"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__expected_end_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__expected_end_date
+msgid "Expected End Date"
+msgstr "تاريخ النهاية المتوقع"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__expected_start_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__expected_start_date
+msgid "Expected Start Date"
+msgstr "تاريخ البداية المتوقع"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_report__weather_condition__extreme_heat
+msgid "Extreme Heat"
+msgstr "حرارة شديدة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_milestone__category__facade
+msgid "Facade"
+msgstr "الواجهات"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_cost_line__counts_as_actual
+msgid "False for everything the ledger already knows about."
+msgstr "غير محدد لكل ما هو مسجل مسبقًا في دفتر الأستاذ."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_labor_log__trade__finisher
+msgid "Finisher"
+msgstr "عامل تشطيب"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_milestone__category__finishing
+msgid "Finishing"
+msgstr "التشطيب"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_report__weather_condition__fog
+msgid "Fog"
+msgstr "ضباب"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_boq__activity_type_icon
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_daily_report__activity_type_icon
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_milestone__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "أيقونة Font Awesome، مثل fa-tasks"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_labor_log__trade__foreman
+msgid "Foreman"
+msgstr "مراقب عمال"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_milestone__category__foundation
+msgid "Foundation"
+msgstr "الأساسات"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_daily_report__labor_summary_snapshot
+msgid ""
+"Frozen at closure. Editing a labour log afterwards must not change what this"
+" day's evidence says."
+msgstr ""
+"يجمد عند الإغلاق. تعديل سجل العمالة بعد ذلك يجب ألا يغير ما تقوله أدلة هذا "
+"اليوم."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_report__shift__both
+msgid "Full Day"
+msgstr "يوم كامل"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_milestone__category__handover_prep
+msgid "Handover Preparation"
+msgstr "التجهيز للتسليم"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__has_message
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__has_message
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__has_message
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__has_message
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__has_message
+msgid "Has Message"
+msgstr "يحتوي على رسالة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_labor_log__trade__helper
+msgid "Helper"
+msgstr "عامل مساعد"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_report__weather_condition__wind
+msgid "High Wind"
+msgstr "رياح شديدة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_equipment__owner__hired
+msgid "Hired"
+msgstr "مستأجرة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__hourly_rate
+msgid "Hourly Rate"
+msgstr "سعر الساعة"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_list
+msgid "Hours"
+msgstr "الساعات"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__hours
+msgid "Hours per Worker"
+msgstr "الساعات لكل عامل"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line_variation__id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_cost_line__id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delay__id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delivery__id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_equipment__id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_work__id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item__id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item_category__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__activity_exception_icon
+msgid "Icon"
+msgstr "الأيقونة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_boq__activity_exception_icon
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_daily_report__activity_exception_icon
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_milestone__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "أيقونة للإشارة إلى نشاط استثنائي."
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_form
+msgid "Idle"
+msgstr "متوقفة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_equipment__idle_hours
+msgid "Idle Hours"
+msgstr "ساعات التوقف"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_boq__message_needaction
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_daily_report__message_needaction
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_labor_log__message_needaction
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_milestone__message_needaction
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_task__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا كان محددًا، فهناك رسائل جديدة تتطلب انتباهك."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_boq__message_has_error
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_boq__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_daily_report__message_has_error
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_daily_report__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_labor_log__message_has_error
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_labor_log__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_milestone__message_has_error
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_milestone__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_task__message_has_error
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_task__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا كان محددًا، فبعض الرسائل بها خطأ في التسليم."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_milestone__state__in_progress
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_task__state__in_progress
+msgid "In Progress"
+msgstr "قيد التنفيذ"
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/boq.py:0
+msgid "Install real_estate_procurement to use this."
+msgstr "ثبت الوحدة real_estate_procurement لاستخدام هذه الميزة."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__is_over_certified
+msgid "Is Over Certified"
+msgstr "معتمد بما يتجاوز الكمية"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_cost_line__category__labor
+msgid "Labor"
+msgstr "العمالة"
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/labor_log.py:0
+msgid "Labor %(trade)s — %(w)d × %(h)s h"
+msgstr "عمالة %(trade)s — %(w)d × %(h)s ساعة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__contractor_id
+msgid "Labor Provider"
+msgstr "مورد العمالة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__labor_summary_snapshot
+msgid "Labor Summary Snapshot"
+msgstr "لقطة ملخص العمالة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__labor_log_ids
+msgid "Labour Records"
+msgstr "سجلات العمالة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_milestone__category__landscape
+msgid "Landscape"
+msgstr "تنسيق المواقع"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line_variation__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_cost_line__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delay__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delivery__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_equipment__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_work__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item_category__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__write_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__write_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line_variation__write_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_cost_line__write_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delay__write_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delivery__write_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_equipment__write_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__write_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_work__write_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__write_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__write_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__write_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item__write_date
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item_category__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_milestone__earliest_possible_start
+msgid "Latest end date among predecessors. Cannot start before this date."
+msgstr "آخر تاريخ نهاية بين المراحل السابقة. لا يمكن البدء قبل هذا التاريخ."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_cost_line__cost_basis__ledger_backed
+msgid "Ledger-Backed (posted in Accounting)"
+msgstr "مقيدة في دفتر الأستاذ (تم ترحيلها في المحاسبة)"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_cost_line__cost_basis__legacy
+msgid "Legacy — Needs Classification"
+msgstr "القديم — يحتاج إلى تصنيف"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__line_count
+msgid "Line Count"
+msgstr "عدد البنود"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__line_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_boq_form
+msgid "Lines"
+msgstr "البنود"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_equipment__location
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_work__location
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__location
+msgid "Location"
+msgstr "الموقع"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_boq_form
+msgid "Lock"
+msgstr "قفل"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_boq__state__locked
+msgid "Locked"
+msgstr "مقفل"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_labor_log__trade__mep
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_milestone__category__mep
+msgid "MEP"
+msgstr "الأعمال الكهروميكانيكية"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_form
+msgid "Manpower"
+msgstr "القوى العاملة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_delay__category__manpower
+msgid "Manpower Shortage"
+msgstr "نقص القوى العاملة"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_milestone_form
+msgid "Mark Complete"
+msgstr "تحديد كمكتمل"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_labor_log__trade__mason
+msgid "Mason"
+msgstr "بناء"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_milestone__category__masonry
+msgid "Masonry"
+msgstr "أعمال البناء"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_cost_line__category__material
+msgid "Material"
+msgstr "المواد"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__product_id
+msgid "Material Product"
+msgstr "منتج المواد"
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/boq.py:0
+msgid "Material Request"
+msgstr "طلب مواد"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_delay__category__material
+msgid "Material Shortage"
+msgstr "نقص المواد"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__milestone_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_cost_line__milestone_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__name
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__milestone_id
+msgid "Milestone"
+msgstr "المرحلة الرئيسية"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_milestone_form
+msgid "Milestone name"
+msgstr "اسم المرحلة الرئيسية"
+
+#. module: atmta_construction_site
+#: model:ir.actions.act_window,name:atmta_construction_site.action_milestone
+msgid "Milestones"
+msgstr "المراحل الرئيسية"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_milestone__dependency_ids
+msgid ""
+"Milestones that must finish (or be in progress) before this one can start."
+msgstr ""
+"المراحل الرئيسية التي يجب أن تنتهي (أو تكون قيد التنفيذ) قبل أن تبدأ هذه "
+"المرحلة."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_boq_line__is_over_certified
+msgid ""
+"More has been certified than is authorised. Phase 0 hid this by flooring the"
+" remaining quantity at zero."
+msgstr ""
+"تم اعتماد كمية أكبر من المصرح بها. كانت المرحلة 0 تخفي ذلك بجعل الحد الأدنى "
+"للكمية المتبقية صفرًا."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "موعد نشاطي النهائي"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item__name
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item_category__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_delay__responsible_party__neutral
+msgid "Neutral Event"
+msgstr "حدث محايد"
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/boq.py:0
+#: code:addons/atmta_construction_site/models/daily_report.py:0
+#: code:addons/atmta_construction_site/models/labor_log.py:0
+msgid "New"
+msgstr "جديد"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line_variation__new_rate
+msgid "New Rate"
+msgstr "السعر الجديد"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "حدث التقويم للنشاط التالي"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__activity_summary
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__activity_summary
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__activity_type_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__activity_type_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_report__shift__night
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_labor_log__shift__night
+msgid "Night"
+msgstr "ليلي"
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/boq.py:0
+msgid ""
+"No BOQ line has a linked product. Map products on your work items first."
+msgstr ""
+"لا يوجد بند في جدول الكميات مرتبط بمنتج. اربط المنتجات ببنود العمل أولًا."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_delay__responsible_party__unknown
+msgid "Not Determined"
+msgstr "غير محدد"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_milestone__state__not_started
+msgid "Not Started"
+msgstr "لم يبدأ"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__notes
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_cost_line__notes
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__notes
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__notes
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__notes
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_boq_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_milestone_form
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_boq__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_daily_report__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_labor_log__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_milestone__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_task__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراء"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_boq__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_daily_report__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_labor_log__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_milestone__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_task__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي بها خطأ في التسليم"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_daily_delay__estimated_days
+msgid "Observed lost time. An observation, not an entitlement."
+msgstr "الوقت الضائع المرصود. هو ملاحظة وليس استحقاقًا."
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/daily_report.py:0
+msgid "Only a closed report needs amending."
+msgstr "لا يلزم تعديل إلا التقرير المغلق."
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/daily_report.py:0
+msgid "Only a draft report can be submitted."
+msgstr "لا يمكن إرسال إلا التقرير في حالة المسودة."
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/daily_report.py:0
+msgid "Only a submitted report can be reviewed."
+msgstr "لا يمكن مراجعة إلا التقرير المرسل."
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/boq.py:0
+msgid "Only approved BOQs can be locked."
+msgstr "لا يمكن قفل إلا جداول الكميات المعتمدة."
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/boq.py:0
+msgid "Only draft BOQs can be approved."
+msgstr "لا يمكن اعتماد إلا جداول الكميات في حالة المسودة."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_labor_log__trade__operator
+msgid "Operator"
+msgstr "مشغل معدات"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_boq_line__product_id
+msgid "Optional. When set, this line can feed the material request loop."
+msgstr "اختياري. عند تحديده يمكن لهذا البند أن يغذي دورة طلبات المواد."
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_boq_form
+msgid "Original"
+msgstr "الأصلية"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_boq_line__authorised_quantity
+msgid ""
+"Original quantity plus approved variations. This — not the original quantity"
+" — is what may be certified."
+msgstr ""
+"الكمية الأصلية مضافًا إليها التغييرات المعتمدة. هذه الكمية — لا الكمية "
+"الأصلية — هي ما يجوز اعتماده."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_cost_line__category__other
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_delay__category__other
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_report__weather_condition__other
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_labor_log__trade__other
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_milestone__category__other
+msgid "Other"
+msgstr "أخرى"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__overall_notes
+msgid "Overall Notes"
+msgstr "ملاحظات عامة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_boq_line__description
+msgid "Overrides work item name when set."
+msgstr "يحل محل اسم بند العمل عند تحديده."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_equipment__owner__owned
+msgid "Owned"
+msgstr "مملوكة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_equipment__owner
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_delay__responsible_party__owner
+msgid "Owner"
+msgstr "المالك"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_labor_log__trade__painter
+msgid "Painter"
+msgstr "دهان"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item_category__parent_id
+msgid "Parent"
+msgstr "الأصل"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item_category__parent_path
+msgid "Parent Path"
+msgstr "المسار الأصل"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_task__state__pending
+msgid "Pending"
+msgstr "معلق"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_cost_line__category__permit
+msgid "Permit / Fee"
+msgstr "تصريح / رسوم"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__phase_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_cost_line__phase_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__phase_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__phase_id
+msgid "Phase"
+msgstr "المرحلة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__attachment_ids
+msgid "Photos"
+msgstr "الصور"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_labor_log__trade__plumber
+msgid "Plumber"
+msgstr "سباك"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_boq_line_variation__quantity_delta
+msgid "Positive adds authorised quantity, negative omits it."
+msgstr "القيمة الموجبة تضيف إلى الكمية المصرح بها، والسالبة تحذف منها."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__prepared_by_id
+msgid "Prepared By"
+msgstr "أعده"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delivery__product_id
+msgid "Product"
+msgstr "المنتج"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_daily_work__quantity
+msgid ""
+"Production observed today. Certification is a separate process with its own "
+"controls — this figure never certifies anything."
+msgstr ""
+"الإنتاج المرصود اليوم. اعتماد الأعمال عملية مستقلة لها ضوابطها الخاصة — هذا "
+"الرقم لا يعتمد أي شيء."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_work__progress_note
+msgid "Progress Note"
+msgstr "ملاحظة التقدم"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__project_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__project_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_cost_line__project_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delay__project_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__project_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_work__project_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__project_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__project_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__project_id
+msgid "Project"
+msgstr "المشروع"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delivery__purchase_order_id
+msgid "Purchase Order"
+msgstr "أمر شراء"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__quality_notes
+msgid "Quality Notes"
+msgstr "ملاحظات الجودة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__quantity
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delivery__quantity
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_work__quantity
+msgid "Quantity"
+msgstr "الكمية"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line_variation__quantity_delta
+msgid "Quantity Delta"
+msgstr "فرق الكمية"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_boq_line__variation_quantity
+msgid "Quantity added or removed by approved change orders."
+msgstr "الكمية المضافة أو المحذوفة بموجب أوامر التغيير المعتمدة."
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/boq.py:0
+msgid "Quantity and rate must be non-negative."
+msgstr "يجب ألا تكون الكمية والسعر بقيم سالبة."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_report__weather_condition__rain
+msgid "Rain"
+msgstr "مطر"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line_variation__reason
+msgid "Reason"
+msgstr "السبب"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delivery__picking_id
+msgid "Receipt"
+msgstr "الاستلام"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__name
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__name
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__name
+msgid "Reference"
+msgstr "المرجع"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_daily_work__boq_line_id
+msgid ""
+"Reference only. Certified quantity is M7's, through payment certificates."
+msgstr "للمرجع فقط. الكمية المعتمدة تتبع M7 من خلال شهادات الدفع."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_daily_delivery__picking_id
+msgid ""
+"Reference to Inventory's receipt. The received quantity is Inventory's; this"
+" line records that it turned up."
+msgstr ""
+"مرجع إلى إيصال الاستلام في المخزون. الكمية المستلمة تتبع المخزون؛ وهذا البند"
+" يسجل فقط أنها وصلت."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_work_item__default_rate
+msgid "Reference unit rate. Individual BOQ lines can override."
+msgstr "سعر الوحدة المرجعي. يمكن لبنود جدول الكميات الفردية تجاوزه."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_task__weight
+msgid "Relative weight inside the milestone (used for completion roll-up)."
+msgstr "الوزن النسبي داخل المرحلة الرئيسية (يستخدم في تجميع نسبة الإنجاز)."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__remaining_qty
+msgid "Remaining Qty"
+msgstr "الكمية المتبقية"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delivery__remarks
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_equipment__remarks
+msgid "Remarks"
+msgstr "الملاحظات"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_construction_task_form
+msgid "Reopen"
+msgstr "إعادة فتح"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delay__report_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delivery__report_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_equipment__report_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_work__report_id
+msgid "Report"
+msgstr "التقرير"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__report_date
+msgid "Report Date"
+msgstr "تاريخ التقرير"
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/daily_report.py:0
+msgid "Report amended: %s"
+msgstr "تم تعديل التقرير: %s"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_boq_form
+msgid "Reset to Draft"
+msgstr "إعادة إلى مسودة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delay__responsible_party
+msgid "Responsible Party"
+msgstr "الطرف المسؤول"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__activity_user_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__activity_user_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_form
+msgid "Review"
+msgstr "مراجعة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_report__state__reviewed
+msgid "Reviewed"
+msgstr "تمت المراجعة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__reviewed_by_id
+msgid "Reviewed By"
+msgstr "راجعه"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__reviewed_on
+msgid "Reviewed On"
+msgstr "تاريخ المراجعة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__revision
+msgid "Revision"
+msgstr "المراجعة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "خطأ في إرسال الرسائل النصية القصيرة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__safety_notes
+msgid "Safety Notes"
+msgstr "ملاحظات السلامة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_report__weather_condition__sandstorm
+msgid "Sandstorm"
+msgstr "عاصفة رملية"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_boq__contractor_id
+msgid "Scope owner. Leave blank for a design-side BOQ not yet awarded."
+msgstr "مالك النطاق. اتركه فارغًا لجدول كميات خاص بالتصميم لم تتم ترسيته بعد."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__sequence
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delivery__sequence
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_equipment__sequence
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_work__sequence
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__sequence
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__sequence
+msgid "Sequence"
+msgstr "المسلسل"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_milestone__weight
+msgid "Share of project / phase progress this milestone represents."
+msgstr "حصة هذه المرحلة الرئيسية من تقدم المشروع / المرحلة."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__shift
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__shift
+msgid "Shift"
+msgstr "الوردية"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_work_item__code
+msgid "Short code (e.g. CIV-EXC-BULK)."
+msgstr "رمز مختصر (مثال: CIV-EXC-BULK)."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_work_item_category__code
+msgid "Short code for BOQ display (e.g. CIV-EXC-001)."
+msgstr "رمز مختصر للعرض في جدول الكميات (مثال: CIV-EXC-001)."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__site_conditions
+msgid "Site Conditions"
+msgstr "ظروف الموقع"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_construction_task_form
+msgid "Skip"
+msgstr "تخطي"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_task__state__skipped
+msgid "Skipped"
+msgstr "تم التخطي"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_daily_delay__responsible_party
+msgid ""
+"Somebody's view on the day. Entitlement is decided later, by people, under "
+"the contract."
+msgstr ""
+"رأي شخص ما في ذلك اليوم. يتم تحديد الاستحقاق لاحقًا من قبل الأشخاص المعنيين "
+"وفق العقد."
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_construction_task_form
+msgid "Start"
+msgstr "البداية"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delay__start_datetime
+msgid "Start Datetime"
+msgstr "تاريخ ووقت البداية"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_milestone_form
+msgid "Start Work"
+msgstr "بدء العمل"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__state
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__state
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__state
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__state
+msgid "State"
+msgstr "الحالة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_boq__activity_state
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_daily_report__activity_state
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_milestone__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الحالة بناءً على الأنشطة\n"
+"متأخرة: تاريخ الاستحقاق قد مضى\n"
+"اليوم: تاريخ النشاط هو اليوم\n"
+"مخطط لها: أنشطة مستقبلية."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_labor_log__trade__steel_fixer
+msgid "Steel Fixer"
+msgstr "حداد تسليح"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_report__weather_condition__storm
+msgid "Storm"
+msgstr "عاصفة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_milestone__category__structure
+msgid "Structure"
+msgstr "الهيكل"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_cost_line__category__subcontract
+msgid "Subcontract"
+msgstr "عقد من الباطن"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_form
+msgid "Submit"
+msgstr "إرسال"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_report__state__submitted
+msgid "Submitted"
+msgstr "مقدم"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__superseded_by_id
+msgid "Superseded By"
+msgstr "استبدل بـ"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__supersedes_id
+msgid "Supersedes"
+msgstr "يحل محل"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delivery__partner_id
+msgid "Supplier"
+msgstr "المورد"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_work__task_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__task_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__name
+msgid "Task"
+msgstr "المهمة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__task_count
+msgid "Task Count"
+msgstr "عدد المهام"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__task_done_count
+msgid "Task Done Count"
+msgstr "عدد المهام المنجزة"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_construction_task_form
+msgid "Task name"
+msgstr "اسم المهمة"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_construction_task_form
+msgid "Task notes..."
+msgstr "ملاحظات المهمة..."
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/construction_task.py:0
+msgid "Task weight cannot be negative."
+msgstr "لا يمكن أن يكون وزن المهمة سالبًا."
+
+#. module: atmta_construction_site
+#: model:ir.actions.act_window,name:atmta_construction_site.action_construction_task
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__task_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_milestone_form
+msgid "Tasks"
+msgstr "المهام"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__temperature_max
+msgid "Temperature Max"
+msgstr "درجة الحرارة العظمى"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__temperature_min
+msgid "Temperature Min"
+msgstr "درجة الحرارة الصغرى"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_daily_report__labor_log_ids
+msgid ""
+"The authoritative manpower records for the day. This report summarises them;"
+" it does not keep a second headcount."
+msgstr ""
+"السجلات المعتمدة للعمالة في اليوم. هذا التقرير يلخصها ولا يحتفظ بعدد ثانٍ "
+"للعاملين."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_labor_log__daily_report_id
+msgid ""
+"The day's report this labour belongs to. The log stays the authoritative "
+"record; the report summarises it."
+msgstr ""
+"تقرير اليوم الذي تنتمي إليه هذه العمالة. يبقى السجل هو المرجع المعتمد، "
+"والتقرير يلخصه."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_daily_delay__delay_event_id
+msgid ""
+"The delay event this day's record is evidence of. One event runs for weeks "
+"and collects a daily record for each of them — that is contemporaneous "
+"evidence, not three separate delays."
+msgstr ""
+"حدث التأخير الذي يعد سجل هذا اليوم دليلًا عليه. قد يستمر الحدث الواحد "
+"لأسابيع ويجمع سجلًا يوميًا لكل يوم منها — وهذا دليل معاصر، وليس ثلاثة "
+"تأخيرات منفصلة."
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/daily_report.py:0
+msgid "This delay already has a change event."
+msgstr "هذا التأخير لديه حدث تغيير بالفعل."
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_form
+msgid ""
+"This is a closed site record. It is the evidence a delay claim\n"
+"                        would be argued from — amend it with a reason, never quietly."
+msgstr ""
+"هذا سجل موقع مغلق. وهو الدليل الذي تبنى عليه مطالبة التأخير — عدّله مع ذكر "
+"السبب، وليس بصمت."
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/daily_report.py:0
+msgid "This record already belongs to %s."
+msgstr "هذا السجل ينتمي بالفعل إلى %s."
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_boq_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_boq_list
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_cost_line_list
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_milestone_form
+msgid "Total"
+msgstr "الإجمالي"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__total_amount
+msgid "Total Amount"
+msgstr "المبلغ الإجمالي"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__total_certified
+msgid "Total Certified"
+msgstr "إجمالي المعتمد"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__total_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_labor_log_list
+msgid "Total Cost"
+msgstr "التكلفة الإجمالية"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__total_delay_days
+msgid "Total Delay Days"
+msgstr "إجمالي أيام التأخير"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__total_hours
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_labor_log_list
+msgid "Total Hours"
+msgstr "إجمالي الساعات"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__total_labor_hours
+msgid "Total Labor Hours"
+msgstr "إجمالي ساعات العمالة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__total_workers
+msgid "Total Workers"
+msgstr "إجمالي العمال"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_form
+msgid "Totals"
+msgstr "الإجماليات"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_work__trade
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__trade
+msgid "Trade"
+msgstr "الحرفة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_boq__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_daily_report__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_milestone__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع النشاط الاستثنائي في السجل."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__unit_rate
+msgid "Unit Rate"
+msgstr "سعر الوحدة"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_work_item__uom_id
+msgid "Unit of Measure"
+msgstr "وحدة القياس"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__uom_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delivery__uom_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_work__uom_id
+msgid "UoM"
+msgstr "وحدة القياس"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_delay__category__utility
+msgid "Utilities / Authority"
+msgstr "المرافق / الجهات الحكومية"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__cost_variance
+msgid "Variance"
+msgstr "الانحراف"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__variation_ids
+msgid "Variation"
+msgstr "تغيير"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__variation_quantity
+msgid "Variation Quantity"
+msgstr "كمية التغيير"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_boq_form
+msgid "Variations"
+msgstr "التغييرات"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_cost_line__vendor_bill_id
+msgid "Vendor Bill"
+msgstr "فاتورة المورد"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__visitors
+msgid "Visitors"
+msgstr "الزوار"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__wbs_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_delay__wbs_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_work__wbs_id
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__wbs_id
+msgid "WBS"
+msgstr "هيكل تجزئة العمل"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields.selection,name:atmta_construction_site.selection__realestate_construction_daily_delay__category__weather
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_form
+msgid "Weather"
+msgstr "الطقس"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__weather_condition
+msgid "Weather Condition"
+msgstr "حالة الطقس"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__weather_notes
+msgid "Weather Notes"
+msgstr "ملاحظات الطقس"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__weather_stopped_work
+msgid "Weather Stopped Work"
+msgstr "توقف العمل بسبب الطقس"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__website_message_ids
+msgid "Website Messages"
+msgstr "رسائل الموقع الإلكتروني"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_boq__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_daily_report__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_labor_log__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_milestone__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_task__website_message_ids
+msgid "Website communication history"
+msgstr "سجل التواصل عبر الموقع الإلكتروني"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_task__weight
+msgid "Weight"
+msgstr "الوزن"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_milestone__weight
+msgid "Weight (%)"
+msgstr "الوزن (%)"
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/milestone.py:0
+msgid "Weight must be between 0 and 100."
+msgstr "يجب أن يكون الوزن بين 0 و100."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_milestone__completion_from_tasks
+msgid ""
+"Weighted task completion. Used as the milestone completion when tasks exist."
+msgstr ""
+"نسبة إنجاز المهام الموزونة. تستخدم كنسبة إنجاز المرحلة الرئيسية عند وجود "
+"مهام."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,help:atmta_construction_site.field_realestate_construction_cost_line__cost_basis
+msgid ""
+"What kind of number this is.\n"
+"\n"
+"• Ledger-backed: the money is already in Accounting, so this row is a reference and must never be added to actual cost again.\n"
+"• Accrual: real cost incurred with no accounting document yet — reported beside ledger actuals, never inside them.\n"
+"• Estimate: informational only.\n"
+"• Legacy: classified by nobody yet, and excluded from control totals until a human decides."
+msgstr ""
+"نوع هذا الرقم.\n"
+"\n"
+"• مستند إلى الدفاتر: المبلغ مسجل بالفعل في المحاسبة، لذا فهذا السطر مرجع فقط ويجب ألا يضاف إلى التكلفة الفعلية مرة أخرى.\n"
+"• مستحق: تكلفة فعلية متكبدة لا يوجد لها مستند محاسبي بعد — تعرض بجانب الفعلي المسجل في الدفاتر، ولا تدخل ضمنه أبدًا.\n"
+"• تقديري: للعلم فقط.\n"
+"• القديم: لم يصنفه أحد بعد، ويستبعد من إجماليات الرقابة حتى يقرر شخص بشأنه."
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_boq_line__work_item_id
+msgid "Work Item"
+msgstr "بند عمل"
+
+#. module: atmta_construction_site
+#: model:ir.actions.act_window,name:atmta_construction_site.action_work_item_category
+msgid "Work Item Categories"
+msgstr "فئات بنود العمل"
+
+#. module: atmta_construction_site
+#: model:ir.model,name:atmta_construction_site.model_realestate_work_item_category
+msgid "Work Item Category"
+msgstr "فئة بند العمل"
+
+#. module: atmta_construction_site
+#: model:ir.actions.act_window,name:atmta_construction_site.action_work_item
+msgid "Work Items"
+msgstr "بنود العمل"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_report__work_line_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_form
+msgid "Work Performed"
+msgstr "الأعمال المنفذة"
+
+#. module: atmta_construction_site
+#: model:ir.model.constraint,message:atmta_construction_site.constraint_realestate_work_item_code_uniq
+msgid "Work item code must be unique."
+msgstr "يجب أن يكون رمز بند العمل فريدًا."
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_list
+msgid "Workers"
+msgstr "العمال"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_daily_report_form
+msgid "Working"
+msgstr "جارٍ العمل"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_daily_equipment__working_hours
+msgid "Working Hours"
+msgstr "ساعات العمل"
+
+#. module: atmta_construction_site
+#: model:ir.model.fields,field_description:atmta_construction_site.field_realestate_construction_labor_log__milestone_id
+msgid "Workorder / Milestone"
+msgstr "أمر العمل / المرحلة الرئيسية"
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_milestone_form
+msgid "day(s) after the expected start."
+msgstr "يوم (أيام) بعد البداية المتوقعة."
+
+#. module: atmta_construction_site
+#: model_terms:ir.ui.view,arch_db:atmta_construction_site.view_milestone_form
+msgid "— that's"
+msgstr "— أي"
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/boq.py:0
+msgid ""
+"%(boq)s has already been revised as %(revision)s. Continue from that "
+"revision."
+msgstr "تمت مراجعة %(boq)s بالفعل تحت رقم %(revision)s. تابع من تلك المراجعة."
+
+#. module: atmta_construction_site
+#. odoo-python
+#: code:addons/atmta_construction_site/models/boq.py:0
+msgid "%(name)s (Rev %(revision)s)"
+msgstr "%(name)s (مراجعة %(revision)s)"

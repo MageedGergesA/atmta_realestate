@@ -16,16 +16,24 @@ Manages off-plan and finished-property developer sales:
 """,
     'author': "Atmta",
     'license': 'LGPL-3',
-    'version': '0.4',
+    'version': '0.5',
     'category': 'Real Estate',
     'depends': [
+        'atmta_property_core',
+        'atmta_property_stock',
+        'atmta_account_tools',
         # Declares realestate.project / realestate.phase /
         # realestate.project.boundary.point. Listed first because this
         # module extends all three, and because the dependency is what
         # guarantees Project Core is loaded before the migration below
         # hands the model identifiers over to it.
         'atmta_project_core',
-        'atmta_real_estate',
+        # Sale contracts and installments are sale orders and order lines.
+        # `sale` used to arrive through the Rental app; it is declared now that
+        # Developer installs without leasing.
+        'sale',
+        # Sale contracts mirror onto a bridge sale order.
+        'atmta_sale_bridge',
         'mail',
         'account',
         'stock',
@@ -33,6 +41,7 @@ Manages off-plan and finished-property developer sales:
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',
+        'security/developer_rules.xml',
         'data/sequences.xml',
         'data/cron.xml',
         'views/account_payment_term_views.xml',
@@ -42,8 +51,21 @@ Manages off-plan and finished-property developer sales:
         'views/sale_contract_views.xml',
         'views/sale_installment_views.xml',
         'views/property_developer_views.xml',
-        'views/res_partner_developer_views.xml',
+        'views/commercial_views.xml',
+        'views/unit_release_views.xml',
+        'views/unit_block_views.xml',
+        'views/pricing_views.xml',
+        'views/payment_plan_views.xml',
+        'views/reservation_v2_views.xml',
+        'views/contract_v2_views.xml',
+        'views/amendment_views.xml',
+        # `menus.xml` defines `menu_developer_root`; `report_actions.xml` hangs
+        # the Reports submenu off it, so menus must load first. The reverse
+        # order happens to survive an *upgrade* (the root menu already exists
+        # in the database) but breaks a fresh install.
         'views/menus.xml',
+        'views/report_actions.xml',
+        'views/res_partner_developer_views.xml',
         'views/developer_dashboard_views.xml',
     ],
     'assets': {

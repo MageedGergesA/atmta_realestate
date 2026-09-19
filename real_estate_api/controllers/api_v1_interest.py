@@ -98,7 +98,13 @@ class InterestApiV1(http.Controller):
                 raise werkzeug.exceptions.BadRequest(_("unit_id must be int."))
             prop = env['realestate.property'].sudo().browse(unit_id)
             not_found_if_missing(prop, 'unit')
-            if prop.state not in ('available', 'reserved'):
+            # The legacy `state` knows nothing about release or contracts: an
+            # unreleased unit reads 'available' and a contracted one
+            # 'reserved'. The gallery's `visual_state`, derived from
+            # Developer's authoritative availability, does. A unit on the
+            # market, or held/reserved but not yet contracted, still takes an
+            # enquiry, as before.
+            if prop.visual_state not in ('available', 'held', 'reserved'):
                 raise werkzeug.exceptions.NotFound(_("Unit not available."))
             # If a project is also given, cross-check consistency.
             if project and prop.project_id and prop.project_id.id != project.id:
@@ -124,9 +130,13 @@ class InterestApiV1(http.Controller):
         idemp_key = request.httprequest.headers.get('Idempotency-Key') or ''
         idemp_key = idemp_key.strip()[:64]
         if idemp_key:
+            # Same key + same email is the same logical submission (see the
+            # API documentation). Scoping by email also keeps a guessed key
+            # from echoing back somebody else's lead reference.
             existing = env['crm.lead'].sudo().search([
                 ('realestate_api_source', '=', True),
-                ('description', 'like', f"\nIdempotency-Key: {idemp_key}\n"),
+                ('realestate_api_idempotency_key', '=', idemp_key),
+                ('email_from', '=', email or False),
             ], limit=1)
             if existing:
                 return json_response(
@@ -145,8 +155,6 @@ class InterestApiV1(http.Controller):
         lead_name = " — ".join(p for p in title_parts if p)
 
         description = message or ''
-        if idemp_key:
-            description = (description + f"\nIdempotency-Key: {idemp_key}\n").strip()
 
         vals = {
             'name': lead_name[:255],
@@ -155,6 +163,7 @@ class InterestApiV1(http.Controller):
             'phone': phone or False,
             'description': description,
             'realestate_api_source': True,
+            'realestate_api_idempotency_key': idemp_key or False,
             'realestate_api_project_id': project.id if project else False,
             'realestate_api_property_id': prop.id if prop else False,
             # Attach to the synced partner when provided so sales sees

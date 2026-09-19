@@ -98,7 +98,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <t t-foreach="property.contract_history_ids" t-as="line">
+                                    <t t-foreach="property.property_line_ids" t-as="line">
                                         <tr>
                                             <td style="padding: 6px; border: 1px solid #ddd; text-align: center;">
                                                 <t t-esc="line.contract_id.name"/>
@@ -113,7 +113,7 @@
                                                 <t t-esc="line.end_date"/>
                                             </td>
                                             <td style="padding: 6px; border: 1px solid #ddd; text-align: center;">
-                                                <t t-esc="line.state"/>
+                                                <span t-field="line.lifecycle_state"/>
                                             </td>
                                         </tr>
 <!--  row header color                                      #02594f-->

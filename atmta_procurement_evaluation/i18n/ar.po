@@ -1,0 +1,3506 @@
+# Translation of Odoo Server.
+# This file contains the Arabic translation of the following modules:
+# 	* atmta_procurement_evaluation
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:13+0000\n"
+"PO-Revision-Date: 2026-09-17 10:13+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid ""
+"%(count)s evaluation sheet(s) are still in draft. Finalising now would "
+"consolidate scores nobody has submitted."
+msgstr ""
+"لا تزال %(count)s ورقة تقييم في حالة مسودة. الاعتماد النهائي الآن سيجمع "
+"درجات لم يقدمها أحد."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_candidate.py:0
+msgid ""
+"%(evaluator)s submitted this evaluation on %(when)s. It is their opinion on "
+"the record — reopen it with a reason instead of rewriting it."
+msgstr ""
+"قدّم %(evaluator)s هذا التقييم في %(when)s. إنه رأيه المسجل — أعد فتحه مع "
+"ذكر السبب بدلًا من إعادة كتابته."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_candidate.py:0
+msgid "%(evaluator)s's sheet for %(vendor)s reopened by %(user)s: %(reason)s"
+msgstr ""
+"أعاد %(user)s فتح ورقة تقييم %(evaluator)s للمورد %(vendor)s: %(reason)s"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_plan.py:0
+msgid ""
+"%(name)s belongs to a frozen evaluation basis. Changing it now would change "
+"how offers already being scored are judged."
+msgstr ""
+"%(name)s ينتمي إلى أساس تقييم مجمّد. تغييره الآن سيغير طريقة الحكم على "
+"العروض التي يجري تقييمها بالفعل."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid ""
+"%(name)s is already at %(state)s. Evaluation does not step backwards — "
+"reopening the technical stage after prices are visible is exactly what "
+"staging prevents. Use a controlled reopen with a reason, or a new round."
+msgstr ""
+"%(name)s في مرحلة %(state)s بالفعل. التقييم لا يعود إلى الخلف — فإعادة فتح "
+"المرحلة الفنية بعد ظهور الأسعار هو بالضبط ما يمنعه التقييم المرحلي. استخدم "
+"إعادة فتح مضبوطة مع ذكر السبب، أو جولة جديدة."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_candidate.py:0
+msgid "%(name)s is scored out of %(max)s."
+msgstr "الدرجة القصوى لـ %(name)s هي %(max)s."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_plan.py:0
+msgid ""
+"%(name)s was frozen on %(when)s. Its basis cannot be edited — %(fields)s "
+"would change how offers already under evaluation are judged. Raise a "
+"revision instead."
+msgstr ""
+"تم تجميد %(name)s في %(when)s. لا يمكن تعديل أساسه — فتعديل %(fields)s سيغير"
+" طريقة الحكم على العروض الجاري تقييمها. أنشئ مراجعة بدلًا من ذلك."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid ""
+"%(plan)s is not frozen. Scoring against a basis that can still change is not"
+" evaluation."
+msgstr ""
+"%(plan)s غير مجمدة. منح الدرجات وفق أساس لا يزال قابلًا للتغيير ليس تقييمًا."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/wizard/evaluation_audit_wizard.py:0
+msgid ""
+"%(rounds)s evaluation round(s) audited. %(critical)s critical, %(high)s high, %(medium)s medium, %(low)s low.\n"
+"\n"
+"Nothing has been changed. Every finding below is a question for a person to answer — correcting one automatically would remove the evidence that it happened."
+msgstr ""
+"تم تدقيق %(rounds)s جولة تقييم. %(critical)s حرجة، %(high)s عالية، %(medium)s متوسطة، %(low)s منخفضة.\n"
+"\n"
+"لم يتم تغيير أي شيء. كل ملاحظة أدناه سؤال يجب أن يجيب عنه شخص — فتصحيحها تلقائيًا سيزيل الدليل على وقوعها."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_candidate.py:0
+msgid ""
+"%(user)s has an unresolved conflict-of-interest declaration on this round, "
+"so their scores cannot be recorded."
+msgstr ""
+"لدى %(user)s إقرار تعارض مصالح لم يُحسم في هذه الجولة، لذلك لا يمكن تسجيل "
+"درجاته."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid ""
+"%(user)s is not entitled to %(what)s on %(name)s. Running an evaluation is "
+"the Evaluation Manager's role; write access to the record is not the same "
+"permission."
+msgstr ""
+"لا يحق لـ %(user)s تنفيذ %(what)s على %(name)s. إدارة التقييم من صلاحيات "
+"مدير التقييم؛ وصلاحية الكتابة على السجل ليست الصلاحية نفسها."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_plan.py:0
+msgid ""
+"%(user)s is not entitled to %(what)s. The methodology decides how every "
+"offer is judged; write access to the draft is not the same permission."
+msgstr ""
+"لا يحق لـ %(user)s تنفيذ %(what)s. المنهجية تحدد طريقة الحكم على كل عرض؛ "
+"وصلاحية الكتابة على المسودة ليست الصلاحية نفسها."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/commercial_analysis.py:0
+msgid "%s belongs to a finalised evaluation."
+msgstr "%s يتبع تقييمًا تم اعتماده نهائيًا."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_candidate.py:0
+msgid ""
+"%s belongs to a finalised evaluation. Reopen the round with a reason if it "
+"genuinely has to change."
+msgstr ""
+"%s يتبع تقييمًا تم اعتماده نهائيًا. أعد فتح الجولة مع ذكر السبب إذا كان "
+"التغيير ضروريًا فعلًا."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_plan.py:0
+msgid "%s belongs to a frozen evaluation basis."
+msgstr "%s يتبع أساس تقييم مجمدًا."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "%s declared this conflict. Clearing your own is not a review."
+msgstr "%s هو من أقر بهذا التعارض. حسم تعارضك بنفسك ليس مراجعة."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid ""
+"%s did not pass technical evaluation and cannot be invited to re-offer."
+msgstr "%s لم يجتز التقييم الفني ولا يمكن دعوته لتقديم عرض جديد."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "%s does not allow a best and final offer."
+msgstr "%s لا تسمح بتقديم أفضل عرض نهائي."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/commercial_analysis.py:0
+msgid "%s entered this adjustment. Approving your own is not a review."
+msgstr "%s هو من أدخل هذا التعديل. اعتماد تعديلك بنفسك ليس مراجعة."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/wizard/evaluation_audit_wizard.py:0
+msgid ""
+"%s evaluation round(s) audited. No findings.\n"
+"\n"
+"Seventeen checks ran and none of them matched."
+msgstr ""
+"تم تدقيق %s جولة تقييم. لا توجد ملاحظات.\n"
+"\n"
+"تم تنفيذ سبعة عشر فحصًا ولم يتطابق أي منها."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "%s has no administratively eligible bid to evaluate."
+msgstr "لا يوجد لدى %s عطاء مؤهل إداريًا للتقييم."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_plan.py:0
+msgid ""
+"%s has no criteria. An evaluation with no declared basis is an opinion."
+msgstr "لا توجد معايير في %s. التقييم بلا أساس معلن مجرد رأي."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "%s has not been through commercial evaluation."
+msgstr "%s لم يخضع للتقييم المالي."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_plan.py:0
+msgid "%s is a frozen evaluation basis and offers were judged against it."
+msgstr "%s أساس تقييم مجمد وقد تم الحكم على العروض وفقه."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_plan.py:0
+msgid ""
+"%s is a mandatory criterion, so it cannot carry a weight. Passing it is not "
+"worth points; failing it ends the bid."
+msgstr ""
+"%s معيار إلزامي، لذلك لا يمكن أن يحمل وزنًا. اجتيازه لا يمنح درجات؛ وعدم "
+"اجتيازه ينهي العطاء."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_plan.py:0
+msgid ""
+"%s is already being evaluated against. Cancel or complete the round before "
+"revising the basis — rewriting the rules mid-evaluation is what the freeze "
+"exists to prevent."
+msgstr ""
+"يجري التقييم وفق %s بالفعل. ألغِ الجولة أو أكملها قبل مراجعة الأساس — فإعادة"
+" كتابة القواعد أثناء التقييم هي ما وُجد التجميد لمنعه."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_plan.py:0
+msgid "%s is already frozen."
+msgstr "%s مجمد بالفعل."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "%s is cancelled."
+msgstr "%s ملغاة."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/commercial_analysis.py:0
+#: code:addons/atmta_procurement_evaluation/models/evaluation_deviation.py:0
+msgid "%s is finalised."
+msgstr "%s معتمد نهائيًا."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid ""
+"%s is finalised. A completed evaluation is evidence that the offers were "
+"judged; cancel it and the file no longer records what was decided. Raise a "
+"new round instead."
+msgstr ""
+"%s معتمد نهائيًا. التقييم المكتمل دليل على أن العروض قد تم الحكم عليها؛ "
+"وإلغاؤه يعني أن الملف لن يسجل ما تقرر. أنشئ جولة جديدة بدلًا من ذلك."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/commercial_analysis.py:0
+msgid ""
+"%s is finalised. Flagging an offer for review after the evaluation closed "
+"re-characterises it after the fact."
+msgstr ""
+"%s معتمد نهائيًا. وضع علامة مراجعة على عرض بعد إغلاق التقييم يعيد توصيفه "
+"بأثر رجعي."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/commercial_analysis.py:0
+msgid "%s is finalised. Its commercial basis cannot be recalculated."
+msgstr "%s معتمد نهائيًا. لا يمكن إعادة احتساب أساسه المالي."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/commercial_analysis.py:0
+msgid ""
+"%s is finalised; its adjustments were approved, or not, before the ranking "
+"was struck."
+msgstr ""
+"%s معتمد نهائيًا؛ وقد تم البت في اعتماد تعديلاته أو رفضها قبل تحديد الترتيب."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid ""
+"%s is not finalised. An evaluation report issued mid-evaluation would state "
+"a result that has not been reached."
+msgstr ""
+"%s غير معتمد نهائيًا. إصدار تقرير تقييم أثناء التقييم سيعلن نتيجة لم يتم "
+"التوصل إليها بعد."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_candidate.py:0
+msgid "%s is not on the evaluation committee for this round."
+msgstr "%s ليس عضوًا في لجنة التقييم لهذه الجولة."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid ""
+"%s is still open for bidding. Evaluating before the deadline would judge the"
+" vendors who happened to be early."
+msgstr ""
+"%s لا تزال مفتوحة لتقديم العطاءات. التقييم قبل الموعد النهائي يعني الحكم على"
+" الموردين الذين صادف أنهم قدموا مبكرًا."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "%s offer(s) have not been normalised."
+msgstr "لم يتم توحيد أساس %s عرض/عروض."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.actions.report,print_report_name:atmta_procurement_evaluation.action_report_evaluation
+msgid "'Evaluation Report - %s' % (object.name)"
+msgstr "'تقرير التقييم - %s' % (object.name)"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "(revision"
+msgstr "(المراجعة"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid ""
+",\n"
+"                            revision"
+msgstr ""
+",\n"
+"                            المراجعة"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "1. Evaluation"
+msgstr "1. التقييم"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "2. Evaluation Committee"
+msgstr "2. لجنة التقييم"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "3. Candidate Basis"
+msgstr "3. أساس المرشحين"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "4. Technical Evaluation"
+msgstr "4. التقييم الفني"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "5. Commercial Evaluation"
+msgstr "5. التقييم المالي"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "6. Final Evaluation"
+msgstr "6. التقييم النهائي"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "7. Deviations"
+msgstr "7. الانحرافات"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "8. Audit Trail"
+msgstr "8. سجل التدقيق"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid ""
+"<em>No committee member was recorded\n"
+"                                against this round.</em>"
+msgstr "<em>لم يتم تسجيل أي عضو لجنة لهذه الجولة.</em>"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "<strong>Basis frozen</strong>"
+msgstr "<strong>تجميد الأساس</strong>"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid ""
+"<strong>Commercial adjustments, itemised.</strong>\n"
+"                           The raw bid above is what the vendor submitted and is\n"
+"                           unchanged by any of these."
+msgstr ""
+"<strong>التعديلات المالية مفصلة بندًا بندًا.</strong> العطاء الأصلي أعلاه هو"
+" ما قدمه المورد ولا يتغير بأي منها."
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "<strong>Commercial opened</strong>"
+msgstr "<strong>فتح التقييم المالي</strong>"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid ""
+"<strong>Committee result.</strong>\n"
+"                   Consolidated as"
+msgstr "<strong>نتيجة اللجنة.</strong> موحدة بطريقة"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "<strong>Company</strong>"
+msgstr "<strong>الشركة</strong>"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid ""
+"<strong>Criteria.</strong>\n"
+"                    Threshold"
+msgstr "<strong>المعايير.</strong> الحد الأدنى"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid ""
+"<strong>EVALUATION RESULT ONLY. NO AWARD IS CREATED BY\n"
+"                    THIS REPORT.</strong>\n"
+"                    Deciding whether to act on this evaluation is a separate,\n"
+"                    separately authorised act. Nothing in this document\n"
+"                    commits budget, creates a purchase order or selects a\n"
+"                    supplier."
+msgstr ""
+"<strong>نتيجة تقييم فقط. لا ينشئ هذا التقرير أي ترسية.</strong> قرار التصرف "
+"بناءً على هذا التقييم إجراء منفصل يتطلب تفويضًا مستقلًا. لا يوجد في هذا "
+"المستند ما يلتزم بميزانية أو ينشئ أمر شراء أو يختار موردًا."
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid ""
+"<strong>EVALUATION RESULT ONLY.</strong>\n"
+"                        No award is created by this report and no purchase is\n"
+"                        authorised by it."
+msgstr ""
+"<strong>نتيجة تقييم فقط.</strong> لا ينشئ هذا التقرير أي ترسية ولا يفوض بأي "
+"عملية شراء."
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "<strong>Evaluation Currency</strong>"
+msgstr "<strong>عملة التقييم</strong>"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "<strong>Evaluation Plan</strong>"
+msgstr "<strong>خطة التقييم</strong>"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "<strong>Evaluation Round</strong>"
+msgstr "<strong>جولة التقييم</strong>"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "<strong>Evaluation finalised</strong>"
+msgstr "<strong>اعتماد التقييم نهائيًا</strong>"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "<strong>Finalised</strong>"
+msgstr "<strong>معتمد نهائيًا</strong>"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "<strong>Follows</strong>"
+msgstr "<strong>تالية لـ</strong>"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "<strong>Method</strong>"
+msgstr "<strong>الطريقة</strong>"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "<strong>No offer was technically responsive.</strong>"
+msgstr "<strong>لم يكن أي عرض مستجيبًا فنيًا.</strong>"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "<strong>Project</strong>"
+msgstr "<strong>المشروع</strong>"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid ""
+"<strong>Rank 1 is an evaluation outcome, not an\n"
+"                            award.</strong>\n"
+"                            It records which offer evaluated best under the\n"
+"                            frozen basis above. It authorises no purchase,\n"
+"                            creates no commitment and selects no supplier."
+msgstr ""
+"<strong>المرتبة 1 نتيجة تقييم وليست ترسية.</strong> وهي تسجل العرض الذي حصل "
+"على أفضل تقييم وفق الأساس المجمد أعلاه. ولا تفوض بأي شراء ولا تنشئ أي التزام"
+" ولا تختار أي مورد."
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "<strong>Revision reason</strong>"
+msgstr "<strong>سبب المراجعة</strong>"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "<strong>Sourcing Event</strong>"
+msgstr "<strong>المناقصة</strong>"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "<strong>Status</strong>"
+msgstr "<strong>الحالة</strong>"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "<strong>Technical finalised</strong>"
+msgstr "<strong>اعتماد التقييم الفني نهائيًا</strong>"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "<strong>Technical opened</strong>"
+msgstr "<strong>فتح التقييم الفني</strong>"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "<strong>Tender Version</strong>"
+msgstr "<strong>إصدار المناقصة</strong>"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid ""
+"<strong>This evaluation ties at rank 1.</strong>\n"
+"                            A tie is an outcome, not a result: it has been\n"
+"                            flagged for a decision rather than broken."
+msgstr ""
+"<strong>هذا التقييم فيه تعادل في المرتبة 1.</strong> التعادل حصيلة وليس "
+"نتيجة: لذلك تم تمييزه لاتخاذ قرار بشأنه بدلًا من كسره."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid "A BAFO is a new revision. The first offer stays."
+msgstr "أفضل عرض نهائي هو مراجعة جديدة. يبقى العرض الأول كما هو."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "A best and final offer follows a completed evaluation."
+msgstr "يأتي أفضل عرض نهائي بعد اكتمال التقييم."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid ""
+"A best and final offer needs a recorded reason. Asking selected vendors to "
+"re-price without one is a preference with no evidence behind it."
+msgstr ""
+"يتطلب أفضل عرض نهائي سببًا مسجلًا. مطالبة موردين مختارين بإعادة التسعير دون "
+"سبب تفضيل لا يستند إلى أي دليل."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.constraint,message:atmta_procurement_evaluation.constraint_realestate_procurement_evaluation_candidate_bid_uniq
+msgid "A bid appears once in an evaluation round."
+msgstr "يظهر العطاء مرة واحدة في جولة التقييم."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid "A bid appears twice in one evaluation round."
+msgstr "يظهر عطاء مرتين في جولة تقييم واحدة."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid ""
+"A bid that failed a mandatory criterion is recorded as technically "
+"responsive."
+msgstr "عطاء لم يجتز معيارًا إلزاميًا مسجل على أنه مستجيب فنيًا."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.constraint,message:atmta_procurement_evaluation.constraint_realestate_procurement_commercial_analysis_candidate_uniq
+msgid "A candidate has one commercial analysis per round."
+msgstr "للمرشح تحليل مالي واحد لكل جولة."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid "A candidate in a finalised evaluation was modified after finalisation."
+msgstr "تم تعديل مرشح في تقييم معتمد نهائيًا بعد اعتماده."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_plan.py:0
+msgid "A combined score needs rated technical criteria."
+msgstr "تتطلب الدرجة المجمعة معايير فنية بالدرجات."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid ""
+"A commercial adjustment moves an evaluated cost with no recorded reason."
+msgstr "تعديل مالي يغير تكلفة مقيّمة دون سبب مسجل."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/commercial_analysis.py:0
+msgid ""
+"A commercial adjustment needs a rationale. An unexplained figure moving a "
+"vendor up or down the ranking is the one thing an evaluation file cannot "
+"survive."
+msgstr ""
+"يتطلب التعديل المالي مبررًا. رقم غير مبرر يرفع موردًا أو يخفضه في الترتيب هو"
+" الشيء الوحيد الذي لا يصمد أمامه ملف التقييم."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation__is_consensus
+msgid ""
+"A committee consensus sheet. It sits beside the individual sheets and never replaces them.\n"
+"\n"
+"The explicit default matters: an unwritten boolean is stored as NULL, and PostgreSQL does not consider two NULLs equal — so the unique index below silently permitted duplicate sheets until `test_c3_an_evaluator_cannot_hold_two_sheets_for_one_bid` showed that it did."
+msgstr ""
+"ورقة إجماع اللجنة. توجد إلى جانب الأوراق الفردية ولا تحل محلها أبدًا.\n"
+"\n"
+"القيمة الافتراضية الصريحة مهمة: فالقيمة المنطقية غير المكتوبة تُخزن على أنها NULL، وقاعدة البيانات لا تعتبر قيمتي NULL متساويتين — لذلك سمح الفهرس الفريد أدناه بأوراق مكررة دون تنبيه إلى أن أثبت الاختبار `test_c3_an_evaluator_cannot_hold_two_sheets_for_one_bid` ذلك."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid ""
+"A committee member has not declared whether they have a conflict of "
+"interest."
+msgstr "عضو في اللجنة لم يقر بوجود تعارض مصالح لديه أو عدمه."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.constraint,message:atmta_procurement_evaluation.constraint_realestate_procurement_evaluation_assignment_member_uniq
+msgid "A committee member holds each role once per round."
+msgstr "يشغل عضو اللجنة كل دور مرة واحدة في كل جولة."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid ""
+"A conflict-of-interest declaration is %(member)s's own statement. %(user)s "
+"cannot make it for them."
+msgstr ""
+"إقرار تعارض المصالح بيان شخصي من %(member)s. لا يمكن لـ %(user)s تقديمه "
+"نيابة عنه."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid ""
+"A converted offer carries no frozen rate or rate date, so its evaluated "
+"value cannot be reproduced."
+msgstr ""
+"عرض محوَّل لا يحمل سعر صرف مجمدًا أو تاريخ سعر، لذلك لا يمكن إعادة إنتاج "
+"قيمته المقيّمة."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid "A criterion was modified after its evaluation basis was frozen."
+msgstr "تم تعديل معيار بعد تجميد أساس تقييمه."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "A declared conflict needs its details."
+msgstr "يتطلب التعارض المعلن تفاصيله."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_plan__rate_date_basis__fixed
+msgid "A fixed date"
+msgstr "تاريخ محدد"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid "A knockout failure is not rescuable. Re-consolidate the round."
+msgstr "عدم اجتياز معيار إقصائي لا يمكن تداركه. أعد توحيد نتائج الجولة."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__criterion_type
+msgid ""
+"A mandatory criterion is pass or fail and carries no weight: failing it "
+"makes the bid non-responsive whatever else it scores. A rated criterion "
+"contributes its weighted score."
+msgstr ""
+"المعيار الإلزامي يكون اجتيازًا أو عدم اجتياز ولا يحمل وزنًا: عدم اجتيازه "
+"يجعل العطاء غير مستجيب مهما كانت درجاته الأخرى. أما المعيار بالدرجات فيساهم "
+"بدرجته الموزونة."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_candidate.py:0
+msgid "A mandatory failure ends a vendor's bid, so it needs a reason: %s"
+msgstr "عدم اجتياز معيار إلزامي ينهي عطاء المورد، لذلك يتطلب سببًا: %s"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_plan.py:0
+msgid "A negative weight or maximum score on %s."
+msgstr "وزن أو درجة قصوى سالبة في %s."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid ""
+"A plan's rated criteria do not come to 100%, so its scores mean something "
+"nobody declared."
+msgstr ""
+"المعايير بالدرجات في إحدى الخطط لا يبلغ مجموعها 100%، لذلك تعني درجاتها "
+"شيئًا لم يعلنه أحد."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_plan.py:0
+msgid ""
+"A revised evaluation basis needs a reason. Changing the rules without one is"
+" indistinguishable from changing them to suit the offers."
+msgstr ""
+"يتطلب أساس التقييم المُراجع سببًا. تغيير القواعد دون سبب لا يمكن تمييزه عن "
+"تغييرها لتناسب العروض."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid "A submitted evaluation sheet was modified after submission."
+msgstr "تم تعديل ورقة تقييم مقدمة بعد تقديمها."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid ""
+"A submitted score belongs to an evaluator with an unresolved declared "
+"conflict."
+msgstr "درجة مقدمة تعود إلى مقيّم لديه تعارض معلن لم يُحسم."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid "A technically non-responsive bid holds a competitive rank."
+msgstr "عطاء غير مستجيب فنيًا يحتل مرتبة تنافسية."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid "A tie at rank 1 is not reported as requiring a decision."
+msgstr "لم يتم الإبلاغ عن التعادل في المرتبة 1 على أنه يتطلب قرارًا."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid "A tie is an outcome, not a winner."
+msgstr "التعادل حصيلة وليس فائزًا."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_deviation__state__accepted
+msgid "Accepted for Evaluation"
+msgstr "مقبول للتقييم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__message_needaction
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__message_needaction
+msgid "Action Needed"
+msgstr "إجراء مطلوب"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__adjustment_ids
+msgid "Adjustment"
+msgstr "التعديل"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__adjustment_total
+msgid "Adjustment Total"
+msgstr "إجمالي التعديلات"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_adjustment__adjustment_type
+msgid "Adjustment Type"
+msgstr "نوع التعديل"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Adjustments"
+msgstr "التعديلات"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__administrative_status
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Administrative Status"
+msgstr "الحالة الإدارية"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "Administratively not evaluable."
+msgstr "غير قابل للتقييم إداريًا."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/wizard/evaluation_audit_wizard.py:0
+msgid "All evaluations in %s"
+msgstr "جميع التقييمات في %s"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_plan__bafo_policy__all_responsive
+msgid "All technically responsive bidders"
+msgstr "جميع مقدمي العطاءات المستجيبين فنيًا"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__allow_partial_bids
+msgid "Allow Partial Bids"
+msgstr "السماح بالعطاءات الجزئية"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_adjustment__amount
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Amount"
+msgstr "المبلغ"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid ""
+"An evaluated cost differs from the submitted bid with no adjustment and no "
+"currency conversion to explain it."
+msgstr "تختلف تكلفة مقيّمة عن العطاء المقدم دون تعديل أو تحويل عملة يفسر ذلك."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_plan.py:0
+msgid "An evaluation currency is required."
+msgstr "عملة التقييم مطلوبة."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.constraint,message:atmta_procurement_evaluation.constraint_realestate_procurement_evaluation_plan_revision_uniq
+msgid "An evaluation plan revision is issued once per sourcing event."
+msgstr "تصدر مراجعة خطة التقييم مرة واحدة لكل مناقصة."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid "An evaluation round uses a plan from another company."
+msgstr "جولة تقييم تستخدم خطة من شركة أخرى."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.constraint,message:atmta_procurement_evaluation.constraint_realestate_procurement_technical_evaluation_sheet_uniq
+msgid "An evaluator has one sheet per bid in a round."
+msgstr "للمقيّم ورقة واحدة لكل عطاء في الجولة."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid "An initial offer was rewritten by a best-and-final round."
+msgstr "تمت إعادة كتابة عرض أولي بواسطة جولة أفضل عرض نهائي."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__minimum_score
+msgid ""
+"An optional per-criterion floor. A bid below it is non-responsive even if "
+"its total passes the overall threshold."
+msgstr ""
+"حد أدنى اختياري لكل معيار. العطاء الذي يقل عنه يعد غير مستجيب حتى لو اجتاز "
+"مجموعه الحد الأدنى العام."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_adjustment__analysis_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__analysis_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__analysis_id
+msgid "Analysis"
+msgstr "التحليل"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_adjustment__approved_by_id
+msgid "Approved By"
+msgstr "اعتمد بواسطة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_adjustment__approved_on
+msgid "Approved On"
+msgstr "تاريخ الاعتماد"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_assignment__assigned_by_id
+msgid "Assigned By"
+msgstr "كُلف بواسطة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_assignment__assigned_on
+msgid "Assigned On"
+msgstr "تاريخ التكليف"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__assignment_ids
+msgid "Assignment"
+msgstr "التكليف"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_plan__committee_mode__average
+msgid "Average of submitted evaluator scores"
+msgstr "متوسط درجات المقيّمين المقدمة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__invited_partner_ids
+msgid "BAFO Shortlist"
+msgstr "القائمة المختصرة لأفضل عرض نهائي"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__bafo_policy
+msgid "Bafo Policy"
+msgstr "سياسة أفضل عرض نهائي"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_plan_form
+msgid "Basis"
+msgstr "الأساس"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_candidate.py:0
+msgid "Below the declared minimum on: %s"
+msgstr "أقل من الحد الأدنى المعلن في: %s"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_round__round_type__bafo
+msgid "Best and Final Offer"
+msgstr "أفضل عرض نهائي"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "Best and final offer round %(name)s opened for %(vendors)s: %(reason)s"
+msgstr "تم فتح جولة أفضل عرض نهائي %(name)s للموردين %(vendors)s: %(reason)s"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Bid"
+msgstr "العطاء"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.actions.report,name:atmta_procurement_evaluation.action_report_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Bid Evaluation Report"
+msgstr "تقرير تقييم العطاءات"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model,name:atmta_procurement_evaluation.model_realestate_procurement_leveling_line
+msgid "Bid Leveling Line"
+msgstr "بند موازنة العطاءات"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__bid_line_id
+msgid "Bid Line"
+msgstr "بند العطاء"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__bid_response_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__bid_response_id
+msgid "Bid Response"
+msgstr "العطاء"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_assignment__conflict_status__blocked
+msgid "Blocked"
+msgstr "محظورة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_round__state__cancelled
+msgid "Cancelled"
+msgstr "ملغى"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "Cancelling an evaluation needs a reason."
+msgstr "إلغاء التقييم يتطلب سببًا."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__candidate_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__candidate_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__candidate_ids
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation__candidate_id
+msgid "Candidate"
+msgstr "العرض المرشح"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_round_form
+msgid "Candidates"
+msgstr "المرشحون"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__category
+msgid "Category"
+msgstr "الفئة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_deviation__state__clarified
+msgid "Clarified"
+msgstr "تم الاستيضاح"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid ""
+"Clear or uphold the conflict. Do not leave the score standing while the "
+"question is open."
+msgstr "احسم التعارض أو أيده. لا تترك الدرجة قائمة بينما المسألة مفتوحة."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_assignment__cleared_by_id
+msgid "Cleared By"
+msgstr "حُسم بواسطة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_assignment__cleared_on
+msgid "Cleared On"
+msgstr "تاريخ الحسم"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_audit_wizard_form
+msgid "Close"
+msgstr "إغلاق"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_deviation.py:0
+msgid "Closing a deviation needs the decision that closed it."
+msgstr "إغلاق الانحراف يتطلب القرار الذي أغلقه."
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Combined"
+msgstr "المجمعة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__combined_score
+msgid "Combined Score"
+msgstr "الدرجة المجمعة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_deviation__deviation_type__commercial
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_round_form
+msgid "Commercial"
+msgstr "التجاري"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__commercial_candidate_ids
+msgid "Commercial Candidates"
+msgstr "المرشحون للتقييم المالي"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model,name:atmta_procurement_evaluation.model_realestate_procurement_commercial_adjustment
+msgid "Commercial Evaluation Adjustment"
+msgstr "تعديل التقييم المالي"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model,name:atmta_procurement_evaluation.model_realestate_procurement_commercial_analysis
+msgid "Commercial Evaluation Analysis"
+msgstr "تحليل التقييم المالي"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_assignment__role__commercial_evaluator
+msgid "Commercial Evaluator"
+msgstr "مقيّم مالي"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_round__state__commercial_final
+msgid "Commercial Final"
+msgstr "التقييم المالي نهائي"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__commercial_finalised_on
+msgid "Commercial Finalised On"
+msgstr "تاريخ اعتماد التقييم المالي نهائيًا"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_assignment__role__commercial_lead
+msgid "Commercial Lead"
+msgstr "رئيس التقييم المالي"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_round__state__commercial_open
+msgid "Commercial Open"
+msgstr "التقييم المالي مفتوح"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__commercial_opened_by_id
+msgid "Commercial Opened By"
+msgstr "فُتح التقييم المالي بواسطة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__commercial_opened_on
+msgid "Commercial Opened On"
+msgstr "تاريخ فتح التقييم المالي"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__commercial_weight
+msgid "Commercial Weight (%)"
+msgstr "الوزن المالي (%)"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "Commercial evaluation is not open."
+msgstr "التقييم المالي غير مفتوح."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid ""
+"Commercial evaluation opened for %(ok)s offer(s); %(out)s excluded and named"
+" in the record."
+msgstr ""
+"تم فتح التقييم المالي لعدد %(ok)s عرض/عروض؛ واستُبعد %(out)s مع ذكرها بالاسم"
+" في السجل."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid ""
+"Commercial evaluation opens after the technical result is final. Opening "
+"prices first is how a technical opinion starts following a number."
+msgstr ""
+"يُفتح التقييم المالي بعد أن تصبح النتيجة الفنية نهائية. فتح الأسعار أولًا هو"
+" ما يجعل الرأي الفني يبدأ بالانقياد وراء رقم."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_commercial_adjustment__adjustment_type__commissioning
+msgid "Commissioning"
+msgstr "التشغيل التجريبي"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_round_form
+msgid "Committee"
+msgstr "اللجنة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__committee_mode
+msgid "Committee Mode"
+msgstr "طريقة عمل اللجنة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_plan__committee_mode__consensus
+msgid "Committee consensus, recorded separately"
+msgstr "إجماع اللجنة، مسجل بشكل منفصل"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_adjustment__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_assignment__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_wizard__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation__company_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation_line__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_assignment__conflict_status__cleared
+msgid "Conflict Cleared"
+msgstr "تم حسم التعارض"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_assignment__conflict_status__declared
+msgid "Conflict Declared"
+msgstr "تم الإقرار بتعارض"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_assignment__conflict_status
+msgid "Conflict Status"
+msgstr "حالة التعارض"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Conflict of Interest"
+msgstr "تعارض المصالح"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__consensus_note
+msgid "Consensus Note"
+msgstr "ملاحظة الإجماع"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_technical_evaluation__state__consolidated
+msgid "Consolidated"
+msgstr "موحد"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__converted_amount
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Converted"
+msgstr "محول"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid "Correct the company or the plan."
+msgstr "صحح الشركة أو الخطة."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_adjustment__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_assignment__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_finding__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_wizard__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation__create_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation_line__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_adjustment__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_assignment__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_finding__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_wizard__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation__create_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation_line__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_plan_form
+msgid "Criteria"
+msgstr "المعايير"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__criterion_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__criterion_ids
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation_line__criterion_id
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Criterion"
+msgstr "المعيار"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation_line__criterion_name
+msgid "Criterion Name"
+msgstr "اسم المعيار"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__criterion_type
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation_line__criterion_type
+msgid "Criterion Type"
+msgstr "نوع المعيار"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_audit_finding__severity__critical
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_audit_wizard_form
+msgid "Critical"
+msgstr "حرجة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_wizard__critical_count
+msgid "Critical Count"
+msgstr "عدد الحرجة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_assignment__declaration
+msgid "Declaration"
+msgstr "الإقرار"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Declared"
+msgstr "تم الإقرار"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_assignment__declared_on
+msgid "Declared On"
+msgstr "تاريخ الإقرار"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__sourcing_version_id
+msgid "Declared With Tender Version"
+msgstr "أُقرت مع إصدار المناقصة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_assignment__conflict_status__none
+msgid "Declared — No Conflict"
+msgstr "تم الإقرار — لا يوجد تعارض"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_commercial_adjustment__adjustment_type__delivery
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_deviation__deviation_type__delivery
+msgid "Delivery"
+msgstr "التسليم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__description
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__description
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__description
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Description"
+msgstr "الوصف"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__deviation_ids
+msgid "Deviation"
+msgstr "الانحراف"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation_line__deviation_note
+msgid "Deviation Note"
+msgstr "ملاحظة الانحراف"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__deviation_type
+msgid "Deviation Type"
+msgstr "نوع الانحراف"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_round_form
+msgid "Deviations"
+msgstr "الانحرافات"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_adjustment__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_assignment__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_finding__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_wizard__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation__display_name
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation_line__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_plan__state__draft
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_round__state__draft
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_technical_evaluation__state__draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid "Either the tie is real and must be flagged, or the ranking is wrong."
+msgstr "إما أن التعادل حقيقي ويجب تمييزه، أو أن الترتيب خاطئ."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_adjustment__entered_by_id
+msgid "Entered By"
+msgstr "أُدخل بواسطة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_adjustment__entered_on
+msgid "Entered On"
+msgstr "تاريخ الإدخال"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid ""
+"Establish what changed and when. Offers were scored against the basis as it "
+"stood at freeze."
+msgstr ""
+"حدد ما الذي تغير ومتى. تم منح درجات العروض وفق الأساس كما كان عند التجميد."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid ""
+"Establish what changed. A submitted sheet is the evaluator's opinion on the "
+"record; a correction is a reopen with a reason, not an edit."
+msgstr ""
+"حدد ما الذي تغير. الورقة المقدمة هي رأي المقيّم المسجل؛ والتصحيح يكون بإعادة"
+" الفتح مع ذكر السبب، لا بالتعديل."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__evaluated_cost
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Evaluated Cost"
+msgstr "التكلفة المقيّمة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_commercial_adjustment__adjustment_type__discount
+msgid "Evaluated Discount"
+msgstr "الخصم المقيّم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model,name:atmta_procurement_evaluation.model_realestate_procurement_evaluation_candidate
+msgid "Evaluation Candidate"
+msgstr "مرشح التقييم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model,name:atmta_procurement_evaluation.model_realestate_procurement_evaluation_assignment
+msgid "Evaluation Committee Assignment"
+msgstr "تكليف لجنة التقييم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model,name:atmta_procurement_evaluation.model_realestate_procurement_evaluation_criterion
+msgid "Evaluation Criterion"
+msgstr "معيار التقييم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_adjustment__currency_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__evaluation_currency_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__evaluation_currency_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__evaluation_currency_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__evaluation_currency_id
+msgid "Evaluation Currency"
+msgstr "عملة التقييم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model,name:atmta_procurement_evaluation.model_realestate_procurement_evaluation_deviation
+msgid "Evaluation Deviation"
+msgstr "انحراف التقييم"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/wizard/evaluation_audit_wizard.py:0
+#: model:ir.actions.act_window,name:atmta_procurement_evaluation.action_evaluation_audit_wizard
+#: model:ir.model,name:atmta_procurement_evaluation.model_realestate_procurement_evaluation_audit
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_audit_wizard_form
+msgid "Evaluation Integrity Audit"
+msgstr "تدقيق سلامة التقييم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model,name:atmta_procurement_evaluation.model_realestate_procurement_evaluation_audit_finding
+msgid "Evaluation Integrity Finding"
+msgstr "ملاحظة سلامة التقييم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_assignment__role__evaluation_manager
+msgid "Evaluation Manager"
+msgstr "مدير التقييم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__evaluation_method
+msgid "Evaluation Method"
+msgstr "طريقة التقييم"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_plan_form
+msgid "Evaluation Plan"
+msgstr "خطة التقييم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.actions.act_window,name:atmta_procurement_evaluation.action_evaluation_plan
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_plan_list
+msgid "Evaluation Plans"
+msgstr "خطط التقييم"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_round_form
+msgid "Evaluation Report"
+msgstr "تقرير التقييم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_sourcing_event__evaluation_round_ids
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_round_form
+msgid "Evaluation Round"
+msgstr "جولة التقييم"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_round_list
+msgid "Evaluation Rounds"
+msgstr "جولات التقييم"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_plan.py:0
+msgid ""
+"Evaluation basis frozen: %(method)s, %(currency)s at the %(basis)s rate."
+msgstr ""
+"تم تجميد أساس التقييم: %(method)s، بعملة %(currency)s وفق سعر %(basis)s."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid ""
+"Evaluation finalised. This is an evaluation result and not an award: no "
+"purchase is authorised by it."
+msgstr ""
+"تم اعتماد التقييم نهائيًا. هذه نتيجة تقييم وليست ترسية: لا يفوض بها أي شراء."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.actions.act_window,name:atmta_procurement_evaluation.action_evaluation_round
+msgid "Evaluations"
+msgstr "التقييمات"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_wizard__company_id
+msgid ""
+"Evaluations are audited one company at a time, because that is the boundary "
+"the record rules draw."
+msgstr ""
+"يتم تدقيق التقييمات لكل شركة على حدة، لأن هذا هو الحد الذي ترسمه قواعد "
+"السجلات."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation__evaluator_id
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Evaluator"
+msgstr "المقيّم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation__evaluator_name
+msgid "Evaluator Name"
+msgstr "اسم المقيّم"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Evaluator Spread"
+msgstr "تباين درجات المقيّمين"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid ""
+"Every difference between what was offered and what it is evaluated at must "
+"be itemised."
+msgstr "يجب تفصيل كل فرق بين ما تم عرضه والقيمة التي يُقيَّم بها بندًا بندًا."
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid ""
+"Every offer converted on one declared date at the rate\n"
+"                        in force on that date, stored with the analysis. A rate\n"
+"                        published afterwards changes nothing here."
+msgstr ""
+"حُولت جميع العروض في تاريخ واحد معلن وفق سعر الصرف السائد في ذلك التاريخ، "
+"وحُفظ مع التحليل. أي سعر يُنشر لاحقًا لا يغير شيئًا هنا."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__evaluation_currency_id
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__evaluation_currency_id
+msgid ""
+"Every offer is compared in this currency. Frozen with the plan so that a "
+"later change of company currency cannot re-rank a finished evaluation."
+msgstr ""
+"تتم مقارنة جميع العروض بهذه العملة. تُجمد مع الخطة حتى لا يؤدي تغيير عملة "
+"الشركة لاحقًا إلى إعادة ترتيب تقييم منتهي."
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Evidence"
+msgstr "الأدلة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__evidence_expected
+msgid "Evidence Expected"
+msgstr "الدليل المتوقع"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_adjustment__evidence_reference
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation_line__evidence_reference
+msgid "Evidence Reference"
+msgstr "مرجع الدليل"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Excluded Because"
+msgstr "سبب الاستبعاد"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__exclusion_reason
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__exclusion_reason
+msgid "Exclusion Reason"
+msgstr "سبب الاستبعاد"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_technical_evaluation_line__result__fail
+msgid "Fail"
+msgstr "فشل"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_candidate.py:0
+msgid "Failed mandatory criteria: %s"
+msgstr "معايير إلزامية لم يتم اجتيازها: %s"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_round_form
+msgid "Finalise Evaluation"
+msgstr "اعتماد التقييم نهائيًا"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_round_form
+msgid "Finalise Technical"
+msgstr "اعتماد التقييم الفني نهائيًا"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_round__state__finalised
+msgid "Finalised"
+msgstr "معتمد نهائيًا"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__finalised_by_id
+msgid "Finalised By"
+msgstr "اعتُمد نهائيًا بواسطة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__finalised_on
+msgid "Finalised On"
+msgstr "تاريخ الاعتماد النهائي"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Financial"
+msgstr "مالية"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__financial_formula
+msgid "Financial Formula"
+msgstr "المعادلة المالية"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__financial_score
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__financial_score
+msgid "Financial Score"
+msgstr "الدرجة المالية"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_wizard__finding_ids
+msgid "Finding"
+msgstr "الملاحظة"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_audit_wizard_form
+msgid "Findings"
+msgstr "النتائج"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_audit_wizard_form
+msgid "Findings by Severity"
+msgstr "الملاحظات حسب الخطورة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_plan__tie_rule__flag
+msgid "Flag the tie for a decision"
+msgstr "تمييز التعادل لاتخاذ قرار"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__category
+msgid ""
+"Free grouping — methodology, capability, programme, quality. Deliberately "
+"not a fixed list: the categories that matter differ between a pump package "
+"and a curtain-wall subcontract."
+msgstr ""
+"تصنيف حر — المنهجية، القدرات، البرنامج الزمني، الجودة. ليس قائمة ثابتة عن "
+"قصد: فالفئات المهمة تختلف بين حزمة مضخات وعقد من الباطن للواجهات الزجاجية."
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_plan_form
+msgid "Freeze Basis"
+msgstr "تجميد الأساس"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_commercial_adjustment__adjustment_type__freight
+msgid "Freight"
+msgstr "الشحن"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_plan__state__frozen
+msgid "Frozen"
+msgstr "مجمد"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__frozen_by_id
+msgid "Frozen By"
+msgstr "جمده"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__frozen_on
+msgid "Frozen On"
+msgstr "تاريخ التجميد"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__has_message
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__has_message
+msgid "Has Message"
+msgstr "يحتوي على رسالة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_audit_finding__severity__high
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_audit_wizard_form
+msgid "High"
+msgstr "عالية"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_wizard__high_count
+msgid "High Count"
+msgstr "عدد الملاحظات العالية"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__financial_formula
+msgid ""
+"How an evaluated cost becomes a score. The lowest-ratio method is common but"
+" it is not a law of procurement, so it is chosen here rather than assumed."
+msgstr ""
+"طريقة تحويل التكلفة المقيمة إلى درجة. طريقة أدنى نسبة شائعة لكنها ليست قاعدة"
+" ملزمة في المشتريات، لذلك يتم اختيارها هنا بدلا من افتراضها."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_adjustment__id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_assignment__id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_finding__id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_wizard__id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation__id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation_line__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__message_needaction
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا كان محددًا، فهناك رسائل جديدة تتطلب انتباهك."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__message_has_error
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__message_has_sms_error
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__message_has_error
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا كان محددًا، فبعض الرسائل بها خطأ في التسليم."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__in_commercial
+msgid "In Commercial"
+msgstr "في التقييم المالي"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "In Evaluation"
+msgstr "قيد التقييم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_plan__state__review
+msgid "In Review"
+msgstr "قيد المراجعة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__in_technical
+msgid "In Technical"
+msgstr "في التقييم الفني"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_plan__state__in_use
+msgid "In Use"
+msgstr "قيد الاستخدام"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_round__round_type__initial
+msgid "Initial Evaluation"
+msgstr "التقييم الأولي"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_commercial_adjustment__adjustment_type__installation
+msgid "Installation"
+msgstr "التركيب"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_commercial_adjustment__adjustment_type__insurance
+msgid "Insurance"
+msgstr "التأمين ضد المخاطر"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__invitation_id
+msgid "Invitation"
+msgstr "الدعوة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation__is_consensus
+msgid "Is Consensus"
+msgstr "تقييم توافقي"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__message_is_follower
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__is_included
+msgid "Is Included"
+msgstr "مشمول"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__is_tied
+msgid "Is Tied"
+msgstr "متعادل"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_finding__key
+msgid "Key"
+msgstr "المفتاح"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation__knockout_failed
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Knockout Failed"
+msgstr "لم يجتز المعيار الإقصائي"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_adjustment__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_assignment__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_finding__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_wizard__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation__write_uid
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation_line__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_adjustment__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_assignment__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_finding__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_wizard__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation__write_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation_line__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_audit_wizard_form
+msgid "Leave empty to audit every evaluation in the company"
+msgstr "اتركه فارغا لتدقيق جميع التقييمات في الشركة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_wizard__round_id
+msgid "Leave empty to audit every evaluation in the company."
+msgstr "اتركه فارغا لتدقيق جميع التقييمات في الشركة."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__leveling_line_ids
+msgid "Leveling Line"
+msgstr "بند موازنة العروض"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_commercial_adjustment__adjustment_type__lifecycle
+msgid "Lifecycle Cost"
+msgstr "تكلفة دورة الحياة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation__line_ids
+msgid "Line"
+msgstr "البند"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_audit_finding__severity__low
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_audit_wizard_form
+msgid "Low"
+msgstr "منخفضة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_wizard__low_count
+msgid "Low Count"
+msgstr "عدد الملاحظات المنخفضة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_plan__tie_rule__lowest_cost
+msgid "Lowest evaluated cost breaks the tie"
+msgstr "أدنى تكلفة مقيمة تحسم التعادل"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_plan__financial_formula__lowest_cost_only
+msgid "Lowest evaluated cost wins (no financial score)"
+msgstr "أدنى تكلفة مقيمة تفوز (بدون درجة مالية)"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_plan__financial_formula__lowest_ratio
+msgid "Lowest evaluated cost ÷ this cost × 100"
+msgstr "أدنى تكلفة مقيمة ÷ هذه التكلفة × 100"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_criterion__criterion_type__mandatory
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_technical_evaluation_line__criterion_type__mandatory
+msgid "Mandatory / Knockout"
+msgstr "إلزامي / إقصائي"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Material"
+msgstr "المواد"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__is_material
+msgid "Material Deviation"
+msgstr "انحراف جوهري"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__max_score
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation_line__max_score
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Max Score"
+msgstr "الدرجة القصوى"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_audit_finding__severity__medium
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_audit_wizard_form
+msgid "Medium"
+msgstr "متوسطة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_wizard__medium_count
+msgid "Medium Count"
+msgstr "عدد الملاحظات المتوسطة"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Member"
+msgstr "العضو"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__message_has_error
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__message_ids
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Minimum"
+msgstr "الحد الأدنى"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__minimum_score
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation_line__minimum_score
+msgid "Minimum Score"
+msgstr "الحد الأدنى للدرجة"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_plan_form
+msgid "Money"
+msgstr "المبالغ"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.actions.act_window,name:atmta_procurement_evaluation.action_technical_evaluation
+msgid "My Technical Evaluations"
+msgstr "تقييماتي الفنية"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__name
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__name
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__name
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "Name the vendors invited to re-offer."
+msgstr "حدد الموردين المدعوين لإعادة تقديم العروض."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_deviation.py:0
+#: code:addons/atmta_procurement_evaluation/models/evaluation_plan.py:0
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "New"
+msgstr "جديد"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "No"
+msgstr "لا"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_round__result_status__no_responsive_bid
+msgid "No Responsive Bid"
+msgstr "لا يوجد عطاء مستوف للمتطلبات"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_candidate.py:0
+msgid "No evaluator submitted a sheet for this bid."
+msgstr "لم يقدم أي مقيم ورقة تقييم لهذا العطاء."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_commercial_analysis__review_flag__none
+msgid "None"
+msgstr "لا يوجد"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_round_form
+msgid "Normalise Offers"
+msgstr "توحيد أسس العروض"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__normalised_by_id
+msgid "Normalised By"
+msgstr "وحد الأسس بواسطة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__normalised_line_total
+msgid "Normalised Line Total"
+msgstr "إجمالي البند بعد التوحيد"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__normalised_on
+msgid "Normalised On"
+msgstr "تاريخ التوحيد"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__normalised_unit_price
+msgid "Normalised Unit Price"
+msgstr "سعر الوحدة بعد التوحيد"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_assignment__conflict_status__undeclared
+msgid "Not Declared"
+msgstr "لم يتم الإفصاح"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_candidate__technical_result__not_evaluated
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_technical_evaluation_line__result__not_evaluated
+msgid "Not Evaluated"
+msgstr "لم يقيم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_plan__bafo_policy__not_allowed
+msgid "Not allowed"
+msgstr "غير مسموح"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__notes
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__notes
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "Nothing is declared to clear."
+msgstr "لا يوجد إفصاح لإلغائه."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__message_needaction_counter
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراء"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__message_has_error_counter
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي بها خطأ في التسليم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_assignment__role__observer
+msgid "Observer"
+msgstr "مراقب"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid "Only responsive offers are ranked."
+msgstr "يتم ترتيب العروض المستوفية للمتطلبات فقط."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_deviation__state__open
+msgid "Open"
+msgstr "فتح"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_round_form
+msgid "Open Commercial"
+msgstr "فتح التقييم المالي"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_round_form
+msgid "Open Technical"
+msgstr "فتح التقييم الفني"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_deviation__deviation_type__other
+msgid "Other"
+msgstr "أخرى"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_commercial_adjustment__adjustment_type__other
+msgid "Other (rationale required)"
+msgstr "أخرى (يلزم ذكر المبرر)"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation__overall_comment
+msgid "Overall Comment"
+msgstr "التعليق العام"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_technical_evaluation_form
+msgid "Overall technical comment"
+msgstr "التعليق الفني العام"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_technical_evaluation_line__result__pass
+msgid "Pass"
+msgstr "ناجح"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_plan__evaluation_method__pass_fail_lowest
+msgid "Pass/Fail, then lowest evaluated cost"
+msgstr "ناجح/راسب، ثم أدنى تكلفة مقيمة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_commercial_adjustment__adjustment_type__payment_terms
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_deviation__deviation_type__payment_terms
+msgid "Payment Terms"
+msgstr "شروط الدفع"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_candidate__technical_result__pending
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_round__result_status__pending
+msgid "Pending"
+msgstr "معلق"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__weight
+msgid ""
+"Percentage of the technical component. Rated criteria must come to 100% "
+"before the plan will freeze."
+msgstr ""
+"نسبة المكون الفني. يجب أن يبلغ مجموع المعايير المقيمة بالدرجات 100% قبل "
+"تجميد الخطة."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__plan_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__plan_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__plan_id
+msgid "Plan"
+msgstr "الخطة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_commercial_adjustment__amount
+msgid "Positive adds to the evaluated cost, negative reduces it."
+msgstr "القيمة الموجبة تضاف إلى التكلفة المقيمة، والسالبة تخفضها."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__previous_round_id
+msgid "Previous Round"
+msgstr "الجولة السابقة"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid "Prices were opened before the technical result was final."
+msgstr "تم فتح الأسعار قبل أن تصبح النتيجة الفنية نهائية."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model,name:atmta_procurement_evaluation.model_realestate_procurement_evaluation_plan
+msgid "Procurement Evaluation Plan"
+msgstr "خطة تقييم المشتريات"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model,name:atmta_procurement_evaluation.model_realestate_procurement_evaluation_round
+msgid "Procurement Evaluation Round"
+msgstr "جولة تقييم المشتريات"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model,name:atmta_procurement_evaluation.model_realestate_procurement_sourcing_event
+msgid "Procurement Sourcing Event"
+msgstr "مناقصة المشتريات"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__project_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__project_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__project_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__project_id
+msgid "Project"
+msgstr "المشروع"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_deviation__deviation_type__qualification
+msgid "Qualification Clarification"
+msgstr "استيضاح بشأن التأهيل"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__quantity
+msgid "Quantity"
+msgstr "الكمية"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid "Raise a plan revision with corrected weights. Do not rescale silently."
+msgstr "قدم مراجعة للخطة بأوزان مصححة. لا تعد توزيع الأوزان دون إعلان."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__raised_by_id
+msgid "Raised By"
+msgstr "مقدم بواسطة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__raised_on
+msgid "Raised On"
+msgstr "تاريخ الإثارة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__rank
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Rank"
+msgstr "الترتيب"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_round__result_status__ranked
+msgid "Ranked"
+msgstr "مرتب"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Rate"
+msgstr "السعر"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__rate_date
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__rate_date
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Rate Date"
+msgstr "تاريخ سعر الصرف"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__rate_date_basis
+msgid "Rate Date Basis"
+msgstr "أساس تاريخ سعر الصرف"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__rate_source
+msgid "Rate Source"
+msgstr "مصدر سعر الصرف"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__rate_used
+msgid "Rate Used"
+msgstr "سعر الصرف المستخدم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_criterion__criterion_type__rated
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_technical_evaluation_line__criterion_type__rated
+msgid "Rated"
+msgstr "مقيم بالدرجات"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__rated_weight_total
+msgid "Rated Weight Total"
+msgstr "إجمالي أوزان المعايير المقيمة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_plan__evaluation_method__rated_combined
+msgid "Rated technical and commercial, combined score"
+msgstr "تقييم فني ومالي بالدرجات، بدرجة مجمعة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_adjustment__rationale
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation_line__rationale
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Rationale"
+msgstr "المبرر"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__raw_amount
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Raw Bid (as submitted)"
+msgstr "العطاء الأصلي (كما قدم)"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__raw_currency_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__raw_currency_id
+msgid "Raw Currency"
+msgstr "العملة الأصلية"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__raw_line_total
+msgid "Raw Line Total"
+msgstr "إجمالي البند الأصلي"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__raw_unit_price
+msgid "Raw Unit Price"
+msgstr "سعر الوحدة الأصلي"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid ""
+"Re-normalise before finalising, or the ranking depends on whatever the rate "
+"is on the day somebody asks."
+msgstr ""
+"أعد توحيد الأسس قبل الاعتماد النهائي، وإلا فسيعتمد الترتيب على سعر الصرف في "
+"اليوم الذي يستفسر فيه أحدهم."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_audit_wizard__state__draft
+msgid "Ready"
+msgstr "جاهز"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Reason"
+msgstr "السبب"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_finding__record_count
+msgid "Record Count"
+msgstr "عدد السجلات"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid ""
+"Record the declaration. An evaluation whose evaluators never declared is "
+"challengeable on that ground alone."
+msgstr ""
+"سجل الإفصاح. التقييم الذي لم يفصح مقيموه يمكن الطعن فيه لهذا السبب وحده."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid "Record why, or remove it."
+msgstr "سجل السبب، أو احذفه."
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_audit_wizard_form
+msgid "Records"
+msgstr "السجلات"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Reference"
+msgstr "المرجع"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_finding__references
+msgid "References"
+msgstr "المراجع"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_deviation__state__rejected
+msgid "Rejected"
+msgstr "مرفوض"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_finding__remediation
+msgid "Remediation"
+msgstr "الإجراء التصحيحي"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__reopen_reason
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation__reopen_reason
+msgid "Reopen Reason"
+msgstr "سبب إعادة الفتح"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_technical_evaluation__state__reopened
+msgid "Reopened"
+msgstr "أعيد فتحه"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation__reopened_by_id
+msgid "Reopened By"
+msgstr "أعيد فتحه بواسطة"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_candidate.py:0
+msgid "Reopening a submitted evaluation is an Evaluation Manager's decision."
+msgstr "إعادة فتح تقييم مقدم هي قرار مدير التقييم."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_candidate.py:0
+msgid "Reopening a submitted evaluation needs a reason."
+msgstr "إعادة فتح تقييم مقدم تتطلب ذكر سبب."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_audit_wizard__state__done
+msgid "Reported"
+msgstr "تم إصدار التقرير"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__resolution
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Resolution"
+msgstr "الحل"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_deviation__state__resolved
+msgid "Resolved"
+msgstr "تمت المعالجة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__resolved_by_id
+msgid "Resolved By"
+msgstr "عالجه"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__resolved_on
+msgid "Resolved On"
+msgstr "تاريخ الحل"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Responsiveness"
+msgstr "استيفاء المتطلبات"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid ""
+"Restore the field groups, and keep `rank` out of `_order` — ordering by it "
+"hands over the ranking with nothing read."
+msgstr ""
+"استعد مجموعات صلاحيات الحقول، وأبق `rank` خارج `_order` — لأن الترتيب حسبه "
+"يكشف الترتيب دون قراءة أي شيء."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation_line__result
+msgid "Result"
+msgstr "النتيجة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__result_status
+msgid "Result Status"
+msgstr "حالة النتيجة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__review_flag
+msgid "Review Flag"
+msgstr "مؤشر المراجعة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__review_note
+msgid "Review Note"
+msgstr "ملاحظة المراجعة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_commercial_analysis__review_flag__review_required
+msgid "Review Required"
+msgstr "تتطلب المراجعة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__revision
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_plan_form
+msgid "Revision"
+msgstr "المراجعة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__revision_reason
+msgid "Revision Reason"
+msgstr "سبب المراجعة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_assignment__role
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Role"
+msgstr "الدور"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__round_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_assignment__round_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__round_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__round_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__round_ids
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__round_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation__round_id
+msgid "Round"
+msgstr "الجولة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_wizard__round_count
+msgid "Round Count"
+msgstr "عدد الجولات"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__round_type
+msgid "Round Type"
+msgstr "نوع الجولة"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_audit_wizard_form
+msgid "Rounds Audited"
+msgstr "الجولات المدققة"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_audit_wizard_form
+msgid "Run Again"
+msgstr "التشغيل مرة أخرى"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_audit_wizard_form
+msgid "Run Audit"
+msgstr "تشغيل التدقيق"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_wizard__run_on
+msgid "Run On"
+msgstr "تاريخ التشغيل"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model,name:atmta_procurement_evaluation.model_realestate_procurement_evaluation_audit_wizard
+msgid "Run the Evaluation Integrity Audit"
+msgstr "تشغيل تدقيق سلامة التقييم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "خطأ في إرسال الرسائل النصية القصيرة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_wizard__scope
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_deviation__deviation_type__scope
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_audit_wizard_form
+msgid "Scope"
+msgstr "النطاق"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation_line__score
+msgid "Score"
+msgstr "الدرجة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__score_spread
+msgid "Score Spread"
+msgstr "تباين الدرجات"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__scoring_guidance
+msgid "Scoring Guidance"
+msgstr "إرشادات التقييم"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid "Scoring took place against a basis that was never frozen."
+msgstr "تم التقييم على أساس لم يجمد قط."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_plan__bafo_policy__selective
+msgid "Selective, with a recorded reason"
+msgstr "انتقائي، مع تسجيل السبب"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__sequence
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation_line__sequence
+msgid "Sequence"
+msgstr "المسلسل"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__review_flag
+msgid ""
+"Set when an offer sits materially away from its peers. It is a prompt to "
+"look, never a disqualification and never an accusation."
+msgstr ""
+"يتم تعيينه عندما يبتعد عرض بشكل جوهري عن نظرائه. وهو دعوة للتحقق، وليس "
+"استبعادا ولا اتهاما."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_finding__severity
+msgid "Severity"
+msgstr "الشدة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_finding__severity_sequence
+msgid "Severity Sequence"
+msgstr "تسلسل الخطورة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__sheet_ids
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__sheet_ids
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation_line__sheet_id
+msgid "Sheet"
+msgstr "ورقة التقييم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_commercial_adjustment__adjustment_type__shipping
+msgid "Shipping"
+msgstr "الشحن والتوصيل"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__shortlist_reason
+msgid "Shortlist Reason"
+msgstr "سبب القائمة المختصرة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_adjustment__signed_amount
+msgid "Signed Amount"
+msgstr "المبلغ بالإشارة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_wizard__round_id
+msgid "Single Round"
+msgstr "جولة واحدة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__sourcing_event_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__sourcing_event_id
+msgid "Sourcing Event"
+msgstr "المناقصة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__sourcing_line_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__sourcing_line_id
+msgid "Sourcing Line"
+msgstr "بند المناقصة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__sourcing_version_id
+msgid "Sourcing Version"
+msgstr "إصدار المناقصة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_wizard__state
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__state
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__state
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__state
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation__state
+msgid "State"
+msgstr "الحالة"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Status"
+msgstr "الحالة"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_technical_evaluation_form
+msgid "Submit Evaluation"
+msgstr "تقديم التقييم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_technical_evaluation__state__submitted
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Submitted"
+msgstr "مقدم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation__submitted_on
+msgid "Submitted On"
+msgstr "تاريخ التقديم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_finding__summary
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_wizard__summary
+msgid "Summary"
+msgstr "الملخص"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_plan__state__superseded
+msgid "Superseded"
+msgstr "مستبدل"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_plan.py:0
+msgid "Superseded by revision %(rev)s: %(reason)s"
+msgstr "حلت محلها المراجعة %(rev)s: %(reason)s"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__supersedes_id
+msgid "Supersedes"
+msgstr "يحل محل"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_deviation__deviation_type__technical
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Technical"
+msgstr "الفني"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_plan.py:0
+msgid ""
+"Technical %(tech)s%% and commercial %(comm)s%% come to %(total)s%%. They "
+"must come to 100%%: scaling them for you would be choosing a methodology on "
+"your behalf."
+msgstr ""
+"مجموع الوزن الفني %(tech)s%% والمالي %(comm)s%% يبلغ %(total)s%%. يجب أن "
+"يبلغ المجموع 100%%: تعديلهما نيابة عنك يعني اختيار منهجية بالنيابة عنك."
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_technical_evaluation_form
+msgid "Technical Evaluation"
+msgstr "التقييم الفني"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model,name:atmta_procurement_evaluation.model_realestate_procurement_technical_evaluation_line
+msgid "Technical Evaluation Line"
+msgstr "بند التقييم الفني"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model,name:atmta_procurement_evaluation.model_realestate_procurement_technical_evaluation
+msgid "Technical Evaluation Sheet"
+msgstr "ورقة التقييم الفني"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_assignment__role__technical_evaluator
+msgid "Technical Evaluator"
+msgstr "مقيم فني"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_round__state__technical_final
+msgid "Technical Final"
+msgstr "التقييم الفني نهائي"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__technical_finalised_on
+msgid "Technical Finalised On"
+msgstr "تاريخ اعتماد التقييم الفني النهائي"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_assignment__role__technical_lead
+msgid "Technical Lead"
+msgstr "رئيس التقييم الفني"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_round__state__technical_open
+msgid "Technical Open"
+msgstr "التقييم الفني مفتوح"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__technical_opened_by_id
+msgid "Technical Opened By"
+msgstr "فتح التقييم الفني بواسطة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__technical_opened_on
+msgid "Technical Opened On"
+msgstr "تاريخ فتح التقييم الفني"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__technical_result
+msgid "Technical Result"
+msgstr "النتيجة الفنية"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__technical_result_reason
+msgid "Technical Result Reason"
+msgstr "سبب النتيجة الفنية"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__technical_score
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Technical Score"
+msgstr "الدرجة الفنية"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_round_form
+msgid "Technical Sheets"
+msgstr "أوراق التقييم الفني"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__technical_threshold
+msgid "Technical Threshold (%)"
+msgstr "الحد الأدنى الفني (%)"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__technical_weight
+msgid "Technical Weight (%)"
+msgstr "الوزن الفني (%)"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid ""
+"Technical evaluation finalised: %(ok)s responsive of %(all)s evaluated."
+msgstr ""
+"تم اعتماد التقييم الفني نهائيا: %(ok)s مستوف للمتطلبات من أصل %(all)s تم "
+"تقييمها."
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_technical_evaluation_form
+msgid ""
+"Technical evaluation only. Commercial values are not shown here\n"
+"                        and are not readable by a technical evaluator."
+msgstr ""
+"تقييم فني فقط. القيم المالية لا تظهر هنا ولا يمكن للمقيم الفني قراءتها."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "Technical evaluation opened with %s candidate(s)."
+msgstr "تم فتح التقييم الفني بعدد %s من المرشحين."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_candidate.py:0
+msgid ""
+"Technical score %(score)s is below the declared threshold of %(threshold)s."
+msgstr ""
+"الدرجة الفنية %(score)s أقل من الحد الأدنى المعلن البالغ %(threshold)s."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_candidate__technical_result__non_responsive
+msgid "Technically Non-Responsive"
+msgstr "غير مستوف فنيا"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_candidate__technical_result__responsive
+msgid "Technically Responsive"
+msgstr "مستوف فنيا"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__tender_requirement
+msgid "Tender Requirement"
+msgstr "متطلب المناقصة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_plan__rate_date_basis__tender_close
+msgid "Tender closing date"
+msgstr "تاريخ إغلاق المناقصة"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_plan__rate_date_basis__issue_date
+msgid "Tender issue date"
+msgstr "تاريخ طرح المناقصة"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid ""
+"The basis must be settled before evaluators see the offers. This evaluation "
+"cannot be defended."
+msgstr ""
+"يجب تثبيت أساس التقييم قبل أن يطلع المقيمون على العروض. لا يمكن الدفاع عن "
+"هذا التقييم."
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid ""
+"The candidate set as frozen when technical evaluation\n"
+"                    opened. Vendor names are those recorded at that moment."
+msgstr ""
+"مجموعة المرشحين كما جمدت عند فتح التقييم الفني. أسماء الموردين هي المسجلة في"
+" تلك اللحظة."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid ""
+"The commercial outcome is not restricted: %s. A technical evaluator can read"
+" the ranking."
+msgstr "النتيجة المالية غير مقيدة: %s. يمكن للمقيم الفني قراءة الترتيب."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_candidate.py:0
+msgid ""
+"The commercial outcome of this evaluation (%(fields)s) is not available to this account.\n"
+"\n"
+"Filtering, sorting or grouping by them answers the same question as reading them: which offer came first. Technical evaluation is kept blind to that on purpose."
+msgstr ""
+"النتيجة المالية لهذا التقييم (%(fields)s) غير متاحة لهذا الحساب.\n"
+"\n"
+"التصفية أو الفرز أو التجميع حسبها يجيب عن السؤال نفسه الذي تجيب عنه قراءتها: أي عرض جاء أولا. ويبقى التقييم الفني معزولا عن ذلك عن قصد."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__rate_used
+msgid ""
+"The conversion rate in force on the declared date, stored so the evaluation "
+"cannot be re-derived from a later rate."
+msgstr ""
+"سعر التحويل الساري في التاريخ المعلن، ويحفظ حتى لا يمكن إعادة احتساب التقييم"
+" بسعر لاحق."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid ""
+"The evaluation integrity audit reports on every evaluation in the company "
+"and names the bids and vendors involved. Running it is an Evaluation "
+"Manager's or Procurement Manager's action."
+msgstr ""
+"يصدر تدقيق سلامة التقييم تقريرا عن جميع التقييمات في الشركة ويذكر العطاءات "
+"والموردين المعنيين. تشغيله من صلاحيات مدير التقييم أو مدير المشتريات."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__score_spread
+msgid ""
+"The gap between the highest and lowest evaluator on this bid. Published "
+"rather than averaged away: two evaluators at 9 and 3 are not a 6, they are a"
+" disagreement the committee should see."
+msgstr ""
+"الفرق بين أعلى وأدنى مقيم في هذا العطاء. يتم نشره بدلا من إخفائه بالمتوسط: "
+"مقيمان أعطيا 9 و3 لا يساويان 6، بل هما خلاف يجب أن تراه اللجنة."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__sourcing_version_id
+msgid ""
+"The issued tender version this basis was declared with, where company policy"
+" requires criteria to have been disclosed. Left empty for a tender issued "
+"before the plan existed — a legacy gap that is recorded rather than back-"
+"dated."
+msgstr ""
+"إصدار المناقصة المطروح الذي أعلن هذا الأساس معه، حيث تتطلب سياسة الشركة "
+"الإفصاح عن المعايير. يترك فارغا للمناقصة المطروحة قبل وجود الخطة — وهي فجوة "
+"قديمة يتم تسجيلها بدلا من تأريخها بأثر رجعي."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__technical_threshold
+msgid ""
+"The minimum weighted technical score a bid must reach to be technically "
+"responsive. Zero means no threshold — which is a decision, not an absence of"
+" one."
+msgstr ""
+"الحد الأدنى للدرجة الفنية الموزونة التي يجب أن يبلغها العطاء ليكون مستوفيا "
+"فنيا. الصفر يعني عدم وجود حد أدنى — وهذا قرار، وليس غيابا للقرار."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__is_material
+msgid ""
+"The offer departs from the tender basis in a way that changes what is being "
+"compared. Material deviations are surfaced on the evaluation report rather "
+"than left inside a score."
+msgstr ""
+"يخرج العرض عن أساس المناقصة بطريقة تغير ما تتم مقارنته. تظهر الانحرافات "
+"الجوهرية في تقرير التقييم بدلا من إخفائها داخل الدرجة."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "The offer is %s."
+msgstr "العرض %s."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__result_status
+msgid ""
+"The outcome of the evaluation. None of these values is an award: they "
+"describe what the offers came to, not what the company has decided to do "
+"about it."
+msgstr ""
+"نتيجة التقييم. لا تمثل أي من هذه القيم ترسية: فهي تصف ما انتهت إليه العروض، "
+"لا ما قررت الشركة فعله بشأنها."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__project_id
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__project_id
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__project_id
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__project_id
+msgid "The project whose authorised demand this event sources."
+msgstr "المشروع الذي تغطي هذه المناقصة طلبه المعتمد."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid ""
+"The ranking was published from these records. Establish what changed and "
+"when."
+msgstr "تم نشر الترتيب بناء على هذه السجلات. حدد ما الذي تغير ومتى."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_plan.py:0
+msgid "The rate basis is a fixed date and no date is set."
+msgstr "أساس سعر الصرف تاريخ ثابت ولم يتم تحديد أي تاريخ."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_plan.py:0
+msgid ""
+"The rated criteria weights come to %(total)s%%, not 100%%. Correct them — "
+"they will not be normalised silently, because a criterion nobody meant to "
+"weight at 12.5%% would then decide the tender."
+msgstr ""
+"مجموع أوزان المعايير المقيمة بالدرجات يبلغ %(total)s%%، وليس 100%%. صححها — "
+"لن يتم توحيدها دون إعلان، لأن معيارا لم يقصد أحد أن يكون وزنه 12.5%% سيحسم "
+"المناقصة حينئذ."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_finding__references
+msgid ""
+"The records the finding is about, named so it can be followed up. Capped by "
+"the audit itself rather than listed in full."
+msgstr ""
+"السجلات التي تتعلق بها الملاحظة، مذكورة بالاسم لتسهيل متابعتها. عددها محدود "
+"من قبل التدقيق نفسه بدلا من سردها كاملة."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__scoring_guidance
+msgid ""
+"The score bands this criterion is judged by, in the plan's own words. No "
+"band set is shipped as a default: 5 = 'meets requirement' is one "
+"organisation's convention, not a fact."
+msgstr ""
+"نطاقات الدرجات التي يقاس بها هذا المعيار، بصياغة الخطة نفسها. لا توجد مجموعة"
+" نطاقات افتراضية: 5 = 'يستوفي المتطلب' هو عرف لدى جهة ما، وليس حقيقة."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid ""
+"The staging exists so a technical opinion cannot follow a number. This "
+"round's technical result is compromised."
+msgstr ""
+"المراحل موجودة حتى لا يتبع الرأي الفني رقما. النتيجة الفنية لهذه الجولة "
+"مطعون في سلامتها."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid "The unique index should prevent this; a hit means it is missing."
+msgstr "يفترض أن يمنع الفهرس الفريد ذلك؛ وجود حالة يعني أنه مفقود."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "The vendor %s."
+msgstr "المورد %s."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__partner_name
+msgid ""
+"The vendor's name at the moment this candidate was entered into the evaluation.\n"
+"\n"
+"Snapshotted rather than read live, and `partner_id` is a related field all the way back to `res.partner`: a vendor renamed after the event — a merger, a change of legal name — would otherwise silently restate who the committee actually evaluated, on a document whose whole purpose is to say exactly that."
+msgstr ""
+"اسم المورد لحظة إدخال هذا المرشح في التقييم.\n"
+"\n"
+"يحفظ كلقطة ثابتة بدلا من قراءته مباشرة، لأن `partner_id` حقل مرتبط يعود إلى `res.partner`: فالمورد الذي يتغير اسمه بعد الحدث — بسبب اندماج أو تغيير الاسم القانوني — سيعيد دون إعلان تحديد من قيمته اللجنة فعلا، في مستند غرضه الأساسي هو توضيح ذلك تحديدا."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/wizard/evaluation_audit_wizard.py:0
+msgid ""
+"There are no evaluation rounds in scope, so there was nothing to audit. That"
+" is not the same as a clean result."
+msgstr ""
+"لا توجد جولات تقييم ضمن النطاق، لذلك لم يكن هناك ما يتم تدقيقه. وهذا لا يعني"
+" أن النتيجة سليمة."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/commercial_analysis.py:0
+msgid ""
+"There is no exchange rate for %(from_currency)s → %(to_currency)s on %(rate_date)s.\n"
+"\n"
+"Odoo's own lookup would fall back to 1.00 here, which would compare a %(from_currency)s offer against %(to_currency)s ones at par and hand it the tender. Publish the rate for the declared date, or change the plan's rate basis — the evaluation will not guess."
+msgstr ""
+"لا يوجد سعر صرف من %(from_currency)s → %(to_currency)s بتاريخ %(rate_date)s.\n"
+"\n"
+"البحث الافتراضي في Odoo سيستخدم 1.00 هنا، مما يعني مقارنة عرض بعملة %(from_currency)s بالعروض بعملة %(to_currency)s بالتساوي ومنحه المناقصة. انشر سعر الصرف للتاريخ المعلن، أو غير أساس سعر الصرف في الخطة — لن يخمن التقييم."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_candidate.py:0
+msgid "These criteria have no result yet: %s"
+msgstr "هذه المعايير ليس لها نتيجة بعد: %s"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_plan.py:0
+msgid ""
+"These rated criteria have no maximum score, so nothing can be scored against"
+" them: %s"
+msgstr ""
+"هذه المعايير المقيمة بالدرجات ليس لها درجة قصوى، لذا لا يمكن التقييم وفقها: "
+"%s"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_audit_wizard_form
+msgid ""
+"This audit <strong>reports</strong> and never repairs.\n"
+"                    Every finding is a question for a person to answer —\n"
+"                    correcting one automatically would remove the evidence\n"
+"                    that it ever happened."
+msgstr ""
+"هذا التدقيق <strong>يصدر تقريرا</strong> ولا يصلح أبدا. كل ملاحظة سؤال يجب "
+"أن يجيب عنه شخص — وتصحيحها تلقائيا يزيل الدليل على أنها حدثت أصلا."
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_plan_form
+msgid ""
+"This basis is frozen. Criteria, weights, currency and rate basis\n"
+"                        can no longer be edited — raise a revision instead."
+msgstr ""
+"هذا الأساس مجمد. لم يعد من الممكن تعديل المعايير والأوزان والعملة وأساس سعر "
+"الصرف — قدم مراجعة بدلا من ذلك."
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_round_form
+msgid ""
+"This is an evaluation result, not an award. No purchase is\n"
+"                        authorised by it: a tender RFQ still refuses to confirm."
+msgstr ""
+"هذه نتيجة تقييم، وليست ترسية. لا تجيز أي عملية شراء: ولا يزال طلب عرض السعر "
+"الخاص بالمناقصة يرفض التأكيد."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_candidate.py:0
+msgid "This line belongs to a submitted evaluation sheet."
+msgstr "هذا البند يتبع ورقة تقييم مقدمة."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_candidate.py:0
+msgid ""
+"This sheet is %(evaluator)s's evaluation. %(user)s cannot submit it on their"
+" behalf."
+msgstr ""
+"هذه الورقة هي تقييم %(evaluator)s. لا يمكن لـ %(user)s تقديمها بالنيابة عنه."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_candidate.py:0
+msgid "This sheet is already submitted."
+msgstr "تم تقديم هذه الورقة مسبقا."
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_plan_form
+msgid "Thresholds"
+msgstr "الحدود الدنيا"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__tie_rule
+msgid "Tie Rule"
+msgstr "قاعدة التعادل"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_round__result_status__tie_requires_decision
+msgid "Tie — Requires a Decision"
+msgstr "تعادل — يتطلب قرارا"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Tied"
+msgstr "متعادل"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_audit.py:0
+msgid "Two offers hold rank 1 and neither is marked as tied."
+msgstr "عرضان يحملان الترتيب 1 ولم يتم تمييز أي منهما كمتعادل."
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Type"
+msgstr "النوع"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__rate_date
+msgid "Used when the basis is a fixed date."
+msgstr "يستخدم عندما يكون الأساس تاريخا ثابتا."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_assignment__user_id
+msgid "User"
+msgstr "المستخدم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_assignment__user_name
+msgid "User Name"
+msgstr "اسم المستخدم"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_commercial_analysis__partner_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__partner_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__partner_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_leveling_line__partner_id
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation__partner_id
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Vendor"
+msgstr "المورد"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_candidate__partner_name
+msgid "Vendor (as evaluated)"
+msgstr "المورد (كما تم تقييمه)"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_commercial_adjustment__adjustment_type__warranty
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_deviation__deviation_type__warranty
+msgid "Warranty"
+msgstr "الضمان"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__website_message_ids
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__website_message_ids
+msgid "Website Messages"
+msgstr "رسائل الموقع الإلكتروني"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__website_message_ids
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_round__website_message_ids
+msgid "Website communication history"
+msgstr "سجل التواصل عبر الموقع الإلكتروني"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__weight
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation_line__weight
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_plan_form
+msgid "Weight"
+msgstr "الوزن"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Weight %"
+msgstr "الوزن %"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation__weighted_total
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Weighted Total"
+msgstr "الإجمالي الموزون"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_evaluation_plan_form
+msgid "Weighting"
+msgstr "الأوزان"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_criterion__evidence_expected
+msgid ""
+"What a bidder was told to submit against this. Recorded so an evaluator "
+"marks the absence of evidence rather than inferring it."
+msgstr ""
+"ما طلب من مقدم العطاء تقديمه لهذا المعيار. يسجل حتى يثبت المقيم غياب الدليل "
+"بدلا من استنتاجه."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_deviation__tender_requirement
+msgid ""
+"What the tender asked for, quoted so the comparison is legible without "
+"opening three other documents."
+msgstr ""
+"ما طلبته المناقصة، مقتبسا لتكون المقارنة واضحة دون فتح ثلاثة مستندات أخرى."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__tie_rule
+msgid ""
+"What to do when two offers evaluate identically. Defaults to flagging: "
+"breaking a tie by database id or vendor name invents a winner nobody chose."
+msgstr ""
+"ما يجب فعله عندما يتساوى تقييم عرضين. الافتراضي هو التمييز بعلامة: حسم "
+"التعادل بمعرف قاعدة البيانات أو اسم المورد يخترع فائزا لم يختره أحد."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_technical_evaluation_line__evidence_reference
+msgid ""
+"Where in the submission the evaluator found the evidence. Referenced, never "
+"copied — the submission is the evidence."
+msgstr ""
+"موضع الدليل في العطاء المقدم الذي وجده المقيم. يشار إليه ولا ينسخ أبدا — "
+"فالعطاء المقدم هو الدليل."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__allow_partial_bids
+msgid "Whether an offer missing tender lines can still be evaluated."
+msgstr "ما إذا كان يمكن تقييم عرض ينقصه بعض بنود المناقصة."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,help:atmta_procurement_evaluation.field_realestate_procurement_evaluation_plan__rate_date_basis
+msgid ""
+"Which day's exchange rate every offer is converted at. One day for all of "
+"them: converting each bid at the date it happened to arrive would rank "
+"vendors on the currency market rather than on their offers."
+msgstr ""
+"سعر صرف أي يوم تحول به جميع العروض. يوم واحد لها جميعا: فتحويل كل عطاء "
+"بتاريخ وصوله سيرتب الموردين حسب سوق العملات لا حسب عروضهم."
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields.selection,name:atmta_procurement_evaluation.selection__realestate_procurement_evaluation_candidate__technical_result__withdrawn
+msgid "Withdrawn"
+msgstr "مسحوب"
+
+#. module: atmta_procurement_evaluation
+#: model:ir.model.fields,field_description:atmta_procurement_evaluation.field_realestate_procurement_evaluation_audit_finding__wizard_id
+msgid "Wizard"
+msgstr "المعالج"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "Yes"
+msgstr "نعم"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "by"
+msgstr "بواسطة"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "cancel an evaluation round"
+msgstr "إلغاء جولة تقييم"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "clear a conflict-of-interest declaration"
+msgstr "إلغاء إفصاح عن تعارض المصالح"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "finalise technical evaluation"
+msgstr "اعتماد التقييم الفني نهائيا"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "finalise the evaluation"
+msgstr "اعتماد التقييم نهائيا"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_plan.py:0
+msgid "freeze an evaluation basis"
+msgstr "تجميد أساس التقييم"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "issue the evaluation report"
+msgstr "إصدار تقرير التقييم"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "normalise offers"
+msgstr "توحيد أسس العروض"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "open a best and final offer round"
+msgstr "فتح جولة أفضل عرض نهائي"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "open commercial evaluation"
+msgstr "فتح التقييم المالي"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid "open technical evaluation"
+msgstr "فتح التقييم الفني"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/commercial_analysis.py:0
+msgid "res.currency rate on %s"
+msgstr "سعر res.currency بتاريخ %s"
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_plan.py:0
+msgid "revise an evaluation basis"
+msgstr "مراجعة أساس التقييم"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.report_evaluation_document
+msgid "— this is a best and final offer round."
+msgstr "— هذه جولة أفضل عرض نهائي."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/evaluation_round.py:0
+msgid ""
+"%(name)s has %(count)s commercial adjustment(s) nobody has approved:\n"
+"\n"
+"%(lines)s\n"
+"\n"
+"Approve or remove them before finalising — an unreviewed adjustment cannot decide the ranking."
+msgstr "%(name)s بها %(count)s تسوية تجارية لم يعتمدها أحد:\n\n%(lines)s\n\nاعتمدها أو احذفها قبل الاعتماد النهائي — لا يجوز لتسوية غير مراجَعة أن تحدد الترتيب."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/commercial_analysis.py:0
+msgid ""
+"%s is approved. Remove it and enter a new adjustment instead, so the new "
+"figure is reviewed too."
+msgstr "%s معتمدة. احذفها وأدخل تسوية جديدة بدلاً من تعديلها، حتى تُراجَع القيمة الجديدة أيضاً."
+
+#. module: atmta_procurement_evaluation
+#. odoo-python
+#: code:addons/atmta_procurement_evaluation/models/commercial_analysis.py:0
+msgid ""
+"%s is finalised; its commercial adjustments were settled before the ranking "
+"was struck."
+msgstr "%s معتمدة نهائياً؛ وقد حُسمت تسوياتها التجارية قبل تحديد الترتيب."
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_commercial_analysis_form
+msgid "Approve"
+msgstr "اعتماد"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_commercial_analysis_form
+msgid "Commercial Analysis"
+msgstr "التحليل التجاري"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_commercial_analysis_form
+msgid "Evaluated"
+msgstr "مقيَّم"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_commercial_analysis_form
+msgid "Leveling"
+msgstr "التسوية المقارنة"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_commercial_analysis_form
+msgid "Offer"
+msgstr "العرض"
+
+#. module: atmta_procurement_evaluation
+#: model_terms:ir.ui.view,arch_db:atmta_procurement_evaluation.view_commercial_analysis_form
+msgid ""
+"The raw bid is what the vendor submitted and never\n"
+"                        changes. Adjustments move the evaluated cost as soon as\n"
+"                        they are entered, and the evaluation cannot be finalised\n"
+"                        until somebody other than their author has approved\n"
+"                        them."
+msgstr "العرض الخام هو ما قدّمه المورّد ولا يتغير أبداً. أما التسويات فتحرّك التكلفة المقيَّمة فور إدخالها، ولا يمكن اعتماد التقييم نهائياً حتى يعتمدها شخص غير الذي أدخلها."

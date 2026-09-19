@@ -40,7 +40,9 @@
                             <field name="project_id" readonly="1"/>
                         </group>
                         <group string="Decision">
-                            <field name="award_type"/>
+                            <!-- Decided while drafting; submitting puts it up
+                                 for approval with the scope it describes. -->
+                            <field name="award_type" readonly="state != 'draft'"/>
                             <field name="amount_total"/>
                             <field name="currency_id" invisible="1"/>
                             <field name="company_id" groups="base.group_multi_company"/>
@@ -147,6 +149,20 @@
                        decoration-warning="state == 'review'"/>
                 <field name="currency_id" column_invisible="1"/>
             </list>
+        </field>
+    </record>
+
+    <record id="view_evaluation_round_form_award" model="ir.ui.view">
+        <field name="name">evaluation.round.form.award</field>
+        <field name="model">realestate.procurement.evaluation.round</field>
+        <field name="inherit_id" ref="atmta_procurement_evaluation.view_evaluation_round_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='action_finalise']" position="after">
+                <button name="action_create_award" type="object"
+                        string="Create Award" class="btn-primary"
+                        invisible="state != 'finalised'"
+                        groups="atmta_roles.group_procurement_buyer,atmta_roles.group_procurement_manager"/>
+            </xpath>
         </field>
     </record>
 

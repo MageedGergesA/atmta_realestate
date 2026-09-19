@@ -10,7 +10,6 @@
                 <field name="label" optional="hide"/>
                 <field name="contract_id" optional="show"/>
                 <field name="partner_id" optional="show"/>
-                <field name="contract_line_id" invisible="not is_multi_property" optional="hide"/>
                 <field name="property_id" optional="show"/>
                 <field name="date_due" optional="show"/>
                 <field name="amount" sum="Total Base Amount" optional="show"/>
@@ -24,7 +23,6 @@
                        decoration-warning="move_state == 'draft'"
                        decoration-danger="move_state == 'cancel'"
                 />
-                <field name="payment_plan_id" optional="hide"/>
                 <field name="increment_rule_ids" widget="many2many_tags" optional="hide"/>
                 <field name="discount_rule_ids" widget="many2many_tags" optional="hide"/>
                 <field name="increase_amount" sum="Total Increase Amount" optional="hide"/>
@@ -38,7 +36,7 @@
         <field name="name">realestate.contract.payment.form</field>
         <field name="model">realestate.contract.payment</field>
         <field name="arch" type="xml">
-            <form string="Payment Schedule">
+            <form string="Billing Obligation">
                 <header>
                     <field name="state" widget="statusbar"/>
                 </header>
@@ -50,18 +48,20 @@
                         <!--                        <hr/>-->
                     </div>
                     <group>
-                        <group string="Contract Info" col="2" style="border-right:1px solid #f5f5f5;">
+                        <group string="Lease" col="2" style="border-right:1px solid #f5f5f5;">
                             <field name="label"/>
                             <field name="contract_id"/>
                             <field name="partner_id"/>
-                            <field name="contract_line_id" invisible="not is_multi_property"/>
                             <field name="property_id"/>
                         </group>
 
-                        <group string="Pricing Rules &amp; Schedule" col="2">
-                            <field name="payment_plan_id"/>
-                            <field name="increment_rule_ids" widget="many2many_tags"/>
-                            <field name="discount_rule_ids" widget="many2many_tags"/>
+                        <!-- Retired legacy price rules (batch 4 carried them over to rent
+                             escalations and incentives). Kept visible only on obligations
+                             that still record them, as history. -->
+                        <group name="legacy_price_rules" string="Legacy Price Rules" col="2"
+                               invisible="not increment_rule_ids and not discount_rule_ids">
+                            <field name="increment_rule_ids" widget="many2many_tags" readonly="1"/>
+                            <field name="discount_rule_ids" widget="many2many_tags" readonly="1"/>
                         </group>
 
                         <group string="Schedule Details" col="2" style="border-right:1px solid #f5f5f5;">
@@ -100,9 +100,9 @@
         <field name="name">realestate.contract.payment.pivot</field>
         <field name="model">realestate.contract.payment</field>
         <field name="arch" type="xml">
-            <pivot string="Scheduled Payments">
+            <pivot string="Billing Obligations">
                 <field name="contract_id" type="row"/>
-                <field name="contract_line_id" type="row"/>
+                <field name="property_id" type="row"/>
                 <field name="date_due" type="col"/>
                 <field name="state" type="col"/>
                 <field name="amount" type="measure"/>
@@ -116,7 +116,7 @@
         <field name="name">realestate.contract.payment.search</field>
         <field name="model">realestate.contract.payment</field>
         <field name="arch" type="xml">
-            <search string="Contract Payments">
+            <search string="Billing Obligations">
                 <!-- Quick Search Fields -->
                 <field name="name" string="Reference"/>
                 <field name="label" string="Label"/>
@@ -130,8 +130,6 @@
                 <field name="move_state"/>
                 <field name="discount_amount"/>
                 <field name="increase_amount"/>
-                <field name="payment_plan_id"/>
-                <field name="contract_line_id"/>
 
                 <!-- Filters -->
                 <filter name="draft" string="Unpaid" domain="[('state', '=', 'draft')]"/>
@@ -156,9 +154,6 @@
                     <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
                     <filter name="group_invoice_state" string="Invoice State" context="{'group_by': 'move_state'}"/>
                     <filter name="group_due_date" string="Due Date" context="{'group_by': 'date_due'}"/>
-                    <filter name="group_plan" string="Payment Plan" context="{'group_by': 'payment_plan_id'}"/>
-                    <filter name="group_contract_line" string="Contract Line"
-                            context="{'group_by': 'contract_line_id'}"/>
                 </group>
             </search>
         </field>
@@ -168,7 +163,7 @@
         <field name="name">realestate.contract.payment.calendar</field>
         <field name="model">realestate.contract.payment</field>
         <field name="arch" type="xml">
-            <calendar string="Scheduled Payments" date_start="date_due" color="state" mode="month" create="0" edit="0">
+            <calendar string="Billing Obligations" date_start="date_due" color="state" mode="month" create="0" edit="0">
                 <field name="name"/>
                 <field name="amount"/>
                 <field name="partner_id"/>
@@ -177,7 +172,7 @@
     </record>
 
     <record id="action_contract_payment" model="ir.actions.act_window">
-        <field name="name">Scheduled Payments</field>
+        <field name="name">Billing Obligations</field>
         <field name="res_model">realestate.contract.payment</field>
         <field name="view_mode">list,form,calendar,pivot</field>
     </record>

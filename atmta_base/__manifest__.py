@@ -24,9 +24,10 @@ cross-suite and dependency-neutral, and each failed:
   the foundation depend on `account` and pull the accounting stack under every
   ATMTA module.
 
-See `03_ATMTA_BASE_SCOPE.md` in the Wave 4 evidence package. Re-homing the
-accounting helper is a real question for a later wave; it is not this one's,
-because this module exists to be the floor.
+See `03_ATMTA_BASE_SCOPE.md` in the Wave 4 evidence package. The accounting
+helper was re-homed on 15 Sep 2026: it now lives in `atmta_account_tools`, the
+smallest module that may depend on `account`, so Developer, Brokerage and
+Construction reach it without the Rental app. The floor stays model-free.
 
 No models, no menus, no actions, no ACLs, no record rules, no business data.
 """,

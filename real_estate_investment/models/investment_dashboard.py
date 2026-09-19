@@ -9,7 +9,12 @@ class InvestmentDashboard(models.AbstractModel):
     def get_data(self):
         Feasibility = self.env['realestate.investment.feasibility']
         Scenario = self.env['realestate.investment.scenario']
-        Project = self.env['realestate.project']
+        # An Investment Analyst has no right on realestate.project (that
+        # belongs to the development apps). The studies' project labels are
+        # read with sudo -- the study form shows the same name -- but the map,
+        # which lists every project with its coordinates, is only built for
+        # users who may read projects themselves.
+        can_read_projects = self.env['realestate.project'].has_access('read')
 
         # ---- KPIs ----
         total_studies = Feasibility.search_count([])
@@ -48,7 +53,7 @@ class InvestmentDashboard(models.AbstractModel):
 
         # ---- NPV / IRR distribution per study (top 10 by NPV) ----
         ranked = studies.sorted(key=lambda s: s.npv, reverse=True)[:10]
-        npv_labels = [(s.project_id.name or s.name) for s in ranked]
+        npv_labels = [(s.project_id.sudo().name or s.name) for s in ranked]
         npv_values = [round(s.npv, 2) for s in ranked]
         irr_values = [round(s.irr, 2) for s in ranked]
 
@@ -89,7 +94,7 @@ class InvestmentDashboard(models.AbstractModel):
 
         # ---- Map: project locations with their study's NPV color ----
         map_projs = []
-        for p in Project.search([]):
+        for p in (self.env['realestate.project'].search([]) if can_read_projects else []):
             if not (p.latitude or p.longitude): continue
             study = Feasibility.search([('project_id', '=', p.id)], limit=1)
             map_projs.append({
@@ -105,7 +110,7 @@ class InvestmentDashboard(models.AbstractModel):
         top_recs = studies.sorted(key=lambda s: s.npv, reverse=True)[:10]
         top_list = [{
             'id': s.id, 'name': s.name,
-            'project': s.project_id.name or '',
+            'project': s.project_id.sudo().name or '',
             'npv': s.npv, 'irr': s.irr,
             'payback': s.payback_period,
             'state': s.state, 'is_positive': s.is_positive,
@@ -115,7 +120,7 @@ class InvestmentDashboard(models.AbstractModel):
         bottom_recs = studies.filtered(lambda s: s.npv < 0).sorted(key=lambda s: s.npv)[:10]
         bottom_list = [{
             'id': s.id, 'name': s.name,
-            'project': s.project_id.name or '',
+            'project': s.project_id.sudo().name or '',
             'npv': s.npv, 'irr': s.irr,
             'state': s.state,
         } for s in bottom_recs]
@@ -125,7 +130,7 @@ class InvestmentDashboard(models.AbstractModel):
         scen_list = [{
             'id': s.id, 'name': s.name,
             'study': s.feasibility_id.name or '',
-            'project': s.feasibility_id.project_id.name or '',
+            'project': s.feasibility_id.project_id.sudo().name or '',
             'type': s.scenario_type,
             'npv': s.npv, 'irr': s.irr, 'is_positive': s.is_positive,
         } for s in recent_scen]

@@ -1,4 +1,5 @@
 from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 
 def _calc_npv(rate, flows):
@@ -48,17 +49,25 @@ def _calc_irr(flows, max_iter=200, tol=1e-7):
 
 
 def _calc_payback(flows):
-    """Payback period in periods (fractional). Returns None if never recovered."""
+    """Payback period in periods (fractional). Returns None if never recovered.
+
+    Payback is the moment the cumulative flow climbs from negative back to
+    zero. Interpolating from a cumulative that was already positive gave a
+    negative period (e.g. [+100, +100] -> -1.0). A study that is never under
+    water has nothing to pay back: 0.
+    """
     cumulative = 0.0
+    was_negative = False
     for t, cf in enumerate(flows):
         prev = cumulative
         cumulative += cf
-        if cumulative >= 0 and t > 0:
-            # Linear interpolation within the period
-            if cf:
-                return (t - 1) + (-prev / cf)
-            return float(t)
-    return None
+        if cumulative < 0:
+            was_negative = True
+        elif t > 0 and prev < 0:
+            # Linear interpolation within the period; cf > 0 here since the
+            # cumulative went from negative to non-negative.
+            return (t - 1) + (-prev / cf)
+    return None if was_negative else 0.0
 
 
 class Feasibility(models.Model):
@@ -100,7 +109,7 @@ class Feasibility(models.Model):
     net_undiscounted = fields.Monetary(compute='_compute_metrics', store=True)
     npv = fields.Monetary(string='NPV', compute='_compute_metrics', store=True)
     irr = fields.Float(string='IRR (%)', compute='_compute_metrics', store=True,
-                       help='Internal Rate of Return (decimal e.g. 0.12 = 12%)')
+                       help='Internal Rate of Return, in percent (e.g. 12.0 = 12%).')
     payback_period = fields.Float(string='Payback (years)', compute='_compute_metrics', store=True)
     is_positive = fields.Boolean(string='Positive NPV', compute='_compute_metrics', store=True)
 
@@ -160,6 +169,10 @@ class Feasibility(models.Model):
         """Seed cash flows from the linked project: budget as Year 0 outflow,
         expected revenue split evenly across remaining years."""
         for rec in self:
+            # This replaces every cash flow. On an approved/rejected/archived
+            # study that silently rewrote the figures the decision was taken on.
+            if rec.state != 'draft':
+                raise UserError(_("Cash flows can only be pulled from the project on a draft study."))
             if not rec.project_id:
                 continue
             rec.cash_flow_ids.unlink()
@@ -183,12 +196,19 @@ class Feasibility(models.Model):
             rec.cash_flow_ids = lines
 
     def action_approve(self):
+        if self.filtered(lambda s: s.state != 'draft'):
+            raise UserError(_("Only a draft study can be approved."))
         self.write({'state': 'approved'})
 
     def action_reject(self):
+        if self.filtered(lambda s: s.state != 'draft'):
+            raise UserError(_("Only a draft study can be rejected."))
         self.write({'state': 'rejected'})
 
     def action_archive_study(self):
+        # A study is archived once decided; a draft is reset or decided first.
+        if self.filtered(lambda s: s.state not in ('approved', 'rejected')):
+            raise UserError(_("Only an approved or rejected study can be archived."))
         self.write({'state': 'archived'})
 
     def action_reset_draft(self):

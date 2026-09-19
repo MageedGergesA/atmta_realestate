@@ -1,0 +1,1474 @@
+# Translation of Odoo Server.
+# This file contains the Arabic translation of the following modules:
+# 	* real_estate_contract_template
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:14+0000\n"
+"PO-Revision-Date: 2026-09-17 10:14+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_placeholder_autofill_wizard_form
+msgid ""
+"<b>Done.</b> The template's .docx has been rewritten with Jinja\n"
+"                               placeholders. The previous version was replaced in the template\n"
+"                               record — re-generate any contract to see the new placeholders\n"
+"                               take effect."
+msgstr ""
+"<b>تم.</b> أُعيدت كتابة ملف DOCX الخاص بالقالب باستخدام عناصر نائبة بصيغة "
+"Jinja. استُبدلت النسخة السابقة في سجل القالب — أعد إنشاء أي عقد لترى أثر "
+"العناصر النائبة الجديدة."
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_placeholder_autofill_wizard_form
+msgid ""
+"<b>How it works:</b> mark the words you want to replace in your\n"
+"                               .docx with square brackets, e.g.\n"
+"                               <code>[Customer Name]</code>, <code>[Unit Number]</code>,\n"
+"                               <code>[Total Amount]</code>, <code>[اسم العميل]</code>."
+msgstr ""
+"<b>طريقة العمل:</b> ضع الكلمات التي تريد استبدالها في ملف DOCX بين أقواس "
+"مربعة، مثل <code>[اسم العميل]</code>، <code>[رقم الوحدة]</code>، "
+"<code>[المبلغ الإجمالي]</code>، <code>[اسم العميل]</code>."
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_form
+msgid "<b>Placeholders use Jinja2 syntax inside Word.</b>"
+msgstr "<b>تستخدم العناصر النائبة صيغة Jinja2 داخل مستند وورد.</b>"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_form
+msgid "<span class=\"o_stat_text\">Source Record</span>"
+msgstr "<span class=\"o_stat_text\">السجل المصدر</span>"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_placeholder_autofill_wizard_form
+msgid "Accept All ≥75% Confidence"
+msgstr "قبول الكل بثقة ≥75%"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_line__accepted
+msgid "Accepted"
+msgstr "مقبول"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__message_needaction
+msgid "Action Needed"
+msgstr "إجراء مطلوب"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_form
+msgid "Activate"
+msgstr "تفعيل"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__activated_on
+msgid "Activated On"
+msgstr "تاريخ التفعيل"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_template__active
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_document__state__active
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_search
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_search
+msgid "Active"
+msgstr "نشط"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__activity_ids
+msgid "Activities"
+msgstr "الأنشطة"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "زخرفة استثناء النشاط"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_placeholder_autofill_wizard__state__applied
+msgid "Applied"
+msgstr "مطبق"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_wizard__applied_count
+msgid "Applied Count"
+msgstr "عدد المطبق"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_placeholder_autofill_wizard_form
+msgid "Apply Mappings"
+msgstr "تطبيق الربط"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_form
+msgid "Approve"
+msgstr "اعتماد"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_document__state__approved
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_search
+msgid "Approved"
+msgstr "معتمد"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__approved_on
+msgid "Approved On"
+msgstr "تاريخ الاعتماد"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__approver_id
+msgid "Approver"
+msgstr "المعتمد"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_template__language__ar
+msgid "Arabic"
+msgstr "العربية"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_form
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_search
+msgid "Archived"
+msgstr "مؤرشف"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: real_estate_contract_template
+#: model:ir.model,name:real_estate_contract_template.model_realestate_placeholder_autofill_line
+msgid "Auto-Fill Mapping Line"
+msgstr "بند ربط التعبئة التلقائية"
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template.py:0
+#: model:ir.model,name:real_estate_contract_template.model_realestate_placeholder_autofill_wizard
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_form
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_placeholder_autofill_wizard_form
+msgid "Auto-Fill Placeholders"
+msgstr "التعبئة التلقائية للعناصر النائبة"
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template.py:0
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_placeholder_catalog_wizard_form
+msgid "Available Placeholders"
+msgstr "العناصر النائبة المتاحة"
+
+#. module: real_estate_contract_template
+#: model:ir.model,name:real_estate_contract_template.model_realestate_placeholder_catalog_wizard
+msgid "Available Placeholders for a Template"
+msgstr "العناصر النائبة المتاحة للقالب"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_template__language__bilingual
+msgid "Bilingual (Arabic + English)"
+msgstr "ثنائي اللغة (عربي + إنجليزي)"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_search
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_search
+msgid "Brokerage"
+msgstr "الوساطة العقارية"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_template__kind__brokerage
+msgid "Brokerage / Listing"
+msgstr "الوساطة العقارية / إعلان عقاري"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_form
+msgid ""
+"Built-in context variables: <code>record</code> (alias <code>doc</code>),\n"
+"                                   <code>company</code>, <code>user</code>, <code>today</code>, <code>now</code>,\n"
+"                                   <code>jurisdiction</code>, <code>language</code>,\n"
+"                                   <code>template_version</code>."
+msgstr ""
+"متغيرات السياق المدمجة: <code>record</code> (والاسم البديل "
+"<code>doc</code>)، <code>company</code>، <code>user</code>، "
+"<code>today</code>، <code>now</code>، <code>jurisdiction</code>، "
+"<code>language</code>، <code>template_version</code>."
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_document__state__cancelled
+msgid "Cancelled"
+msgstr "ملغى"
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_document.py:0
+msgid "Cannot cancel a document that has already been Signed."
+msgstr "لا يمكن إلغاء مستند تم توقيعه بالفعل."
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_placeholder_autofill_wizard_form
+msgid ""
+"Click <b>Scan Document</b>. The system reads every bracketed token,\n"
+"                               fuzzy-matches it to the chosen model's fields, and shows you a\n"
+"                               review screen where you can accept or override each suggestion."
+msgstr ""
+"انقر <b>فحص المستند</b>. يقرأ النظام كل رمز بين أقواس، ويطابقه تقريبيًا مع "
+"حقول النموذج المختار، ثم يعرض شاشة مراجعة يمكنك فيها قبول كل اقتراح أو "
+"تعديله."
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_generate_wizard_form
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_placeholder_autofill_wizard_form
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_placeholder_catalog_wizard_form
+msgid "Close"
+msgstr "إغلاق"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_template__code
+msgid "Code"
+msgstr "الرمز"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__company_id
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_template__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_form
+msgid ""
+"Conditional: <code>{% if record.state == 'signed' %}…{% endif %}</code>"
+msgstr "شرطي: <code>{% if record.state == 'signed' %}…{% endif %}</code>"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_line__confidence
+msgid "Confidence"
+msgstr "درجة الثقة"
+
+#. module: real_estate_contract_template
+#: model:ir.model,name:real_estate_contract_template.model_realestate_contractor
+msgid "Construction Contractor"
+msgstr "مقاول الإنشاء"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_template__kind__subcontract
+msgid "Construction Subcontract"
+msgstr "عقد إنشاءات من الباطن"
+
+#. module: real_estate_contract_template
+#: model:ir.actions.act_window,name:real_estate_contract_template.action_contract_template
+#: model:ir.ui.menu,name:real_estate_contract_template.menu_contract_templates
+msgid "Contract Templates"
+msgstr "قوالب العقود"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_placeholder_catalog_wizard_form
+msgid "Copy any placeholder below and paste it into your .docx template."
+msgstr "انسخ أي عنصر نائب أدناه والصقه في قالب DOCX الخاص بك."
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__create_uid
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_generate_wizard__create_uid
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_template__create_uid
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_line__create_uid
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_wizard__create_uid
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_catalog_line__create_uid
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_catalog_wizard__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__create_date
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_generate_wizard__create_date
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_template__create_date
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_line__create_date
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_wizard__create_date
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_catalog_line__create_date
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_catalog_wizard__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_template__docx_template_filename
+msgid "DOCX Filename"
+msgstr "اسم ملف DOCX"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_template__docx_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_form
+msgid "DOCX Template"
+msgstr "قالب DOCX"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_form
+msgid ""
+"Date format: <code>{{ record.contract_date.strftime('%d/%m/%Y') }}</code>"
+msgstr ""
+"تنسيق التاريخ: <code>{{ record.contract_date.strftime('%d/%m/%Y') }}</code>"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__display_name
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_generate_wizard__display_name
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_template__display_name
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_line__display_name
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_wizard__display_name
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_catalog_line__display_name
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_catalog_wizard__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_generate_wizard__document_id
+msgid "Document"
+msgstr "المستند"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_generate_wizard_form
+msgid ""
+"Document created in <b>Draft</b> state and attached to the source record.\n"
+"                               Open it to advance through the review / approval / signature lifecycle."
+msgstr ""
+"أُنشئ المستند بحالة <b>مسودة</b> وأُرفق بالسجل المصدر. افتحه لتنقله عبر "
+"مراحل المراجعة / الاعتماد / التوقيع."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_document.py:0
+msgid "Document must be Approved or Sent for Signature first."
+msgstr "يجب أن يكون المستند معتمدًا أو مرسلًا للتوقيع أولًا."
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract__generated_document_count
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_generate_mixin__generated_document_count
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contractor__generated_document_count
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_sale_contract__generated_document_count
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_transaction__generated_document_count
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contractor_form_inherit_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_realestate_contract_form_inherit_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_sale_contract_form_inherit_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_transaction_form_inherit_template
+msgid "Documents"
+msgstr "المستندات"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_form
+msgid "Download"
+msgstr "تنزيل"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_document__state__draft
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_search
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_placeholder_autofill_wizard_form
+msgid ""
+"Edit <b>Placeholder</b> directly to override the suggestion\n"
+"                               (use the Catalog button on the template form for the full list of\n"
+"                               valid Jinja expressions). Untick <b>Accepted</b> to leave a token as\n"
+"                               <code>[Token]</code> in the final document."
+msgstr ""
+"عدّل <b>العنصر النائب</b> مباشرة لتجاوز الاقتراح (استخدم زر الكتالوج في "
+"نموذج القالب للاطلاع على القائمة الكاملة لتعبيرات Jinja الصالحة). ألغِ تحديد"
+" <b>مقبول</b> لإبقاء الرمز كما هو <code>[الرمز]</code> في المستند النهائي."
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_template__jurisdiction__eg
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_search
+msgid "Egypt"
+msgstr "مصر"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_template__language__en
+msgid "English"
+msgstr "الإنجليزية"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_document__state__expired
+msgid "Expired"
+msgstr "منتهي"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__expiry_date
+msgid "Expiry Date"
+msgstr "تاريخ الانتهاء"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_catalog_line__field_type
+msgid "Field Type"
+msgstr "نوع الحقل"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_form
+msgid "File"
+msgstr "الملف"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__file_data
+msgid "File Data"
+msgstr "بيانات الملف"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__file_name
+msgid "File Name"
+msgstr "اسم الملف"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__file_size
+msgid "File Size"
+msgstr "حجم الملف"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,help:real_estate_contract_template.field_realestate_contract_document__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "أيقونة Font Awesome، مثل fa-tasks"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__template_version
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_generate_wizard__template_version
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_template__form_version
+msgid "Form Version"
+msgstr "إصدار النموذج"
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/wizard/placeholder_autofill_wizard.py:0
+msgid "Found %s token(s)."
+msgstr "تم العثور على %s رمز."
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_generate_wizard_form
+msgid "Generate"
+msgstr "إنشاء"
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template_inherit.py:0
+#: model:ir.model,name:real_estate_contract_template.model_realestate_contract_generate_wizard
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_generate_wizard_form
+msgid "Generate Contract Document"
+msgstr "إنشاء مستند العقد"
+
+#. module: real_estate_contract_template
+#: model:ir.model,name:real_estate_contract_template.model_realestate_contract_generate_mixin
+msgid "Generate Contract Document Mixin"
+msgstr "مكون إنشاء مستند العقد"
+
+#. module: real_estate_contract_template
+#: model:ir.actions.server,name:real_estate_contract_template.action_server_generate_lease_document
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contractor_form_inherit_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_sale_contract_form_inherit_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_transaction_form_inherit_template
+msgid "Generate Document"
+msgstr "إنشاء المستند"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_generate_wizard__generated
+msgid "Generated"
+msgstr "تم الإنشاء"
+
+#. module: real_estate_contract_template
+#: model:ir.model,name:real_estate_contract_template.model_realestate_contract_document
+msgid "Generated Contract Document"
+msgstr "مستند العقد المُنشأ"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_form
+msgid "Generated Document"
+msgstr "المستند المُنشأ"
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template_inherit.py:0
+#: model:ir.actions.act_window,name:real_estate_contract_template.action_contract_document
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_list
+msgid "Generated Documents"
+msgstr "المستندات المنشأة"
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/wizard/contract_generate_wizard.py:0
+msgid "Generated contract document: %(name)s (v%(ver)s, %(fmt)s)"
+msgstr "تم إنشاء مستند العقد: %(name)s (الإصدار %(ver)s، %(fmt)s)"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_template__jurisdiction__generic
+msgid "Generic / Pan-MENA"
+msgstr "عام / الشرق الأوسط وشمال أفريقيا"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_catalog_line__group
+msgid "Group"
+msgstr "المجموعة"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_search
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_search
+msgid "Group By"
+msgstr "تجميع حسب"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__has_message
+msgid "Has Message"
+msgstr "يحتوي على رسالة"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_catalog_line__help_text
+msgid "Help"
+msgstr "مساعدة"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__id
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_generate_wizard__id
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_template__id
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_line__id
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_wizard__id
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_catalog_line__id
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_catalog_wizard__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__activity_exception_icon
+msgid "Icon"
+msgstr "الأيقونة"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,help:real_estate_contract_template.field_realestate_contract_document__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "أيقونة للإشارة إلى نشاط استثنائي."
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,help:real_estate_contract_template.field_realestate_contract_document__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا كان محددًا، فهناك رسائل جديدة تتطلب انتباهك."
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,help:real_estate_contract_template.field_realestate_contract_document__message_has_error
+#: model:ir.model.fields,help:real_estate_contract_template.field_realestate_contract_document__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا كان محددًا، فبعض الرسائل بها خطأ في التسليم."
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_form
+msgid ""
+"Inline loop: <code>{% for p in record.partner_ids %}{{ p.name }}{% endfor "
+"%}</code>"
+msgstr ""
+"حلقة مضمنة: <code>{% for p in record.partner_ids %}{{ p.name }}{% endfor "
+"%}</code>"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,help:real_estate_contract_template.field_realestate_contract_template__notes
+msgid ""
+"Internal notes — instructions for the user, placeholder reference, etc."
+msgstr "ملاحظات داخلية — تعليمات للمستخدم، مرجع العناصر النائبة، إلخ."
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_form
+msgid ""
+"Jump to the list of records this template can render against — then click "
+"Generate Document from the record itself."
+msgstr ""
+"الانتقال إلى قائمة السجلات التي يمكن إنشاء هذا القالب لها — ثم انقر إنشاء "
+"المستند من السجل نفسه."
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__template_jurisdiction
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_generate_wizard__template_jurisdiction
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_template__jurisdiction
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_search
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_search
+msgid "Jurisdiction"
+msgstr "النطاق القانوني"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__template_kind
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_generate_wizard__template_kind
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_template__kind
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_search
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_search
+msgid "Kind"
+msgstr "النوع"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_catalog_line__label
+msgid "Label"
+msgstr "التسمية"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__template_language
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_generate_wizard__template_language
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_template__language
+msgid "Language"
+msgstr "اللغة"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__write_uid
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_generate_wizard__write_uid
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_template__write_uid
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_line__write_uid
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_wizard__write_uid
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_catalog_line__write_uid
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_catalog_wizard__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__write_date
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_generate_wizard__write_date
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_template__write_date
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_line__write_date
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_wizard__write_date
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_catalog_line__write_date
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_catalog_wizard__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_template__last_used
+msgid "Last Used"
+msgstr "آخر استخدام"
+
+#. module: real_estate_contract_template
+#: model:ir.model,name:real_estate_contract_template.model_realestate_contract
+msgid "Lease"
+msgstr "عقد الإيجار"
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template.py:0
+msgid "LibreOffice PDF conversion failed (exit %s)."
+msgstr "فشل تحويل PDF عبر LibreOffice (رمز الخروج %s)."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template.py:0
+msgid ""
+"LibreOffice is not installed on the server. Install it to enable PDF export "
+"(apt install libreoffice)."
+msgstr ""
+"برنامج LibreOffice غير مثبت على الخادم. ثبّته لتفعيل التصدير إلى PDF (apt "
+"install libreoffice)."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template.py:0
+msgid "LibreOffice ran but produced no PDF output."
+msgstr "تم تشغيل LibreOffice لكنه لم ينتج ملف PDF."
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_form
+msgid "Lifecycle"
+msgstr "دورة الحياة"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_wizard__line_ids
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_catalog_wizard__line_ids
+msgid "Line"
+msgstr "البند"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_form
+msgid "Mark Expired"
+msgstr "تحديد كمنتهي الصلاحية"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_form
+msgid "Mark Signed"
+msgstr "تأكيد التوقيع"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__target_model_name
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_template__target_model_name
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_wizard__target_model_name
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_catalog_wizard__target_model_name
+msgid "Model"
+msgstr "النموذج"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "موعد نشاطي النهائي"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__name
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_template__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_wizard__new_docx
+msgid "New Docx"
+msgstr "ملف DOCX الجديد"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_wizard__new_docx_filename
+msgid "New Docx Filename"
+msgstr "اسم ملف DOCX الجديد"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "حدث التقويم للنشاط التالي"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/wizard/placeholder_autofill_wizard.py:0
+msgid ""
+"No bracketed tokens [Like This] were found in the document. Mark the words "
+"you want to template — e.g. write [Customer Name] where the customer name "
+"should appear."
+msgstr ""
+"لم يُعثر على رموز بين أقواس [مثل هذا] في المستند. حدد الكلمات التي تريد "
+"تحويلها إلى قالب — مثلًا اكتب [اسم العميل] حيث يجب أن يظهر اسم العميل."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template_inherit.py:0
+msgid ""
+"No contract template targets %s yet. Create one under Real Estate → "
+"Configuration → Contract Templates."
+msgstr ""
+"لا يوجد قالب عقد يستهدف %s حتى الآن. أنشئ قالبًا من العقارات ← الإعدادات ← "
+"قوالب العقود."
+
+#. module: real_estate_contract_template
+#: model_terms:ir.actions.act_window,help:real_estate_contract_template.action_contract_template
+msgid "No contract templates yet."
+msgstr "لا توجد قوالب عقود بعد."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/wizard/contract_generate_wizard.py:0
+msgid "No document to open."
+msgstr "لا يوجد مستند لفتحه."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/wizard/placeholder_autofill_wizard.py:0
+msgid "No mappings accepted — nothing to rewrite."
+msgstr "لم يُقبل أي ربط — لا شيء لإعادة كتابته."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template.py:0
+msgid "No record to render against."
+msgstr "لا يوجد سجل لإنشاء المستند منه."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/wizard/contract_generate_wizard.py:0
+msgid "No source record selected."
+msgstr "لم يتم اختيار سجل مصدر."
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_template__notes
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_form
+msgid "Notes / Placeholder Reference"
+msgstr "الملاحظات / مرجع العناصر النائبة"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,help:real_estate_contract_template.field_realestate_contract_document__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراء"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,help:real_estate_contract_template.field_realestate_contract_document__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي بها خطأ في التسليم"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_template__kind__sale
+msgid "Off-plan / Unit Sale"
+msgstr "على الخارطة / بيع وحدة"
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_document.py:0
+msgid "Only Active or Signed documents can be marked Expired."
+msgstr "لا يمكن تحديد المستند كمنتهي الصلاحية إلا إذا كان ساريًا أو موقعًا."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_document.py:0
+msgid "Only Approved documents can be sent for signature."
+msgstr "لا يمكن إرسال المستندات للتوقيع إلا إذا كانت معتمدة."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_document.py:0
+msgid "Only Draft documents can be submitted for review."
+msgstr "لا يمكن إرسال المستندات للمراجعة إلا إذا كانت مسودة."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_document.py:0
+msgid "Only Signed documents can be activated."
+msgstr "لا يمكن تفعيل المستندات إلا إذا كانت موقعة."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_document.py:0
+msgid "Only Under Review or Cancelled documents can be reset to Draft."
+msgstr "لا يمكن إعادة المستندات إلى مسودة إلا إذا كانت قيد المراجعة أو ملغاة."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_document.py:0
+msgid "Only documents Under Review can be approved."
+msgstr "لا يمكن اعتماد المستندات إلا إذا كانت قيد المراجعة."
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_generate_wizard_form
+msgid "Open Document"
+msgstr "فتح المستند"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_form
+msgid "Open Target Records"
+msgstr "فتح السجلات المستهدفة"
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template.py:0
+msgid "Open a %s and click \"Generate Document\""
+msgstr "افتح %s وانقر \"إنشاء المستند\""
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_template__kind__other
+msgid "Other"
+msgstr "أخرى"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_generate_wizard__output_file
+msgid "Output File"
+msgstr "ملف المخرجات"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_generate_wizard__output_filename
+msgid "Output Filename"
+msgstr "اسم ملف المخرجات"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__output_format
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_generate_wizard__output_format
+msgid "Output Format"
+msgstr "صيغة المخرجات"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_document__output_format__pdf
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_generate_wizard__output_format__pdf
+msgid "PDF"
+msgstr "PDF"
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template.py:0
+msgid "PDF conversion timed out after 120s."
+msgstr "انتهت مهلة تحويل PDF بعد 120 ثانية."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template.py:0
+msgid "Pick a target model first."
+msgstr "اختر النموذج المستهدف أولًا."
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_line__mapped_jinja
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_catalog_line__jinja
+msgid "Placeholder"
+msgstr "العنصر النائب"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_form
+msgid "Placeholder Catalog"
+msgstr "كتالوج العناصر النائبة"
+
+#. module: real_estate_contract_template
+#: model:ir.model,name:real_estate_contract_template.model_realestate_placeholder_catalog_line
+msgid "Placeholder Catalog Line"
+msgstr "بند كتالوج العناصر النائبة"
+
+#. module: real_estate_contract_template
+#: model:ir.model,name:real_estate_contract_template.model_realestate_sale_contract
+msgid "Property Sale Contract"
+msgstr "عقد بيع العقار"
+
+#. module: real_estate_contract_template
+#: model:ir.model,name:real_estate_contract_template.model_realestate_transaction
+msgid "Property Sale Transaction"
+msgstr "صفقة بيع عقار"
+
+#. module: real_estate_contract_template
+#: model:ir.model,name:real_estate_contract_template.model_realestate_contract_template
+msgid "Real Estate Contract Template"
+msgstr "قالب عقد عقاري"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_generate_wizard__record_id
+msgid "Record"
+msgstr "السجل"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_generate_wizard__record_display
+msgid "Record Display"
+msgstr "عرض السجل"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_search
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_search
+msgid "Rental"
+msgstr "التأجير"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_template__kind__rental
+msgid "Rental / Lease"
+msgstr "التأجير / عقد الإيجار"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_form
+msgid "Reset to Draft"
+msgstr "إعادة إلى مسودة"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_placeholder_autofill_wizard__state__review
+msgid "Review"
+msgstr "مراجعة"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__reviewer_id
+msgid "Reviewer"
+msgstr "المراجع"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "خطأ في إرسال الرسائل النصية القصيرة"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_search
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_search
+msgid "Sale"
+msgstr "البيع"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_template__jurisdiction__sa
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_search
+msgid "Saudi Arabia"
+msgstr "المملكة العربية السعودية"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_placeholder_autofill_wizard__state__scan
+msgid "Scan"
+msgstr "فحص"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_placeholder_autofill_wizard_form
+msgid "Scan Document"
+msgstr "فحص المستند"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_wizard__scan_summary
+msgid "Scan Summary"
+msgstr "ملخص الفحص"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_form
+msgid ""
+"Scan the uploaded .docx for [Bracketed Tokens] and replace them with Jinja "
+"placeholders matched against the target model's fields."
+msgstr ""
+"فحص ملف DOCX المرفوع بحثًا عن [الرموز بين الأقواس] واستبدالها بعناصر نائبة "
+"بصيغة Jinja مطابقة لحقول النموذج المستهدف."
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_form
+msgid "Send for Signature"
+msgstr "إرسال للتوقيع"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_document__state__sent_for_signature
+msgid "Sent for Signature"
+msgstr "مرسل للتوقيع"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_catalog_line__sequence
+msgid "Sequence"
+msgstr "المسلسل"
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/wizard/placeholder_autofill_wizard.py:0
+msgid "Set a target model on the template first."
+msgstr "حدد النموذج المستهدف في القالب أولًا."
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,help:real_estate_contract_template.field_realestate_contract_template__code
+msgid "Short identifier, e.g. sale-egypt-bilingual-v1."
+msgstr "معرّف مختصر، مثل sale-egypt-bilingual-v1."
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_form
+msgid ""
+"Show every {{ record.field }} expression available on the chosen target "
+"model."
+msgstr ""
+"عرض كل تعبيرات {{ record.field }} المتاحة في النموذج المستهدف المختار."
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_document__state__signed
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_search
+msgid "Signed"
+msgstr "موقع"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__signed_on
+msgid "Signed On"
+msgstr "تاريخ التوقيع"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_form
+msgid "Simple field: <code>{{ record.partner_id.name }}</code>"
+msgstr "حقل بسيط: <code>{{ record.partner_id.name }}</code>"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_form
+msgid "Source"
+msgstr "المصدر"
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/wizard/contract_generate_wizard.py:0
+msgid "Source record %s(%s) not found."
+msgstr "السجل المصدر %s(%s) غير موجود."
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,help:real_estate_contract_template.field_realestate_contract_document__template_version
+#: model:ir.model.fields,help:real_estate_contract_template.field_realestate_contract_generate_wizard__template_version
+#: model:ir.model.fields,help:real_estate_contract_template.field_realestate_contract_template__form_version
+msgid ""
+"Stamped onto every generated contract so regulator-form refreshes don't "
+"break previously-issued documents."
+msgstr ""
+"يُختم على كل عقد يتم إنشاؤه حتى لا تؤثر تحديثات نماذج الجهات التنظيمية على "
+"المستندات الصادرة سابقًا."
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__state
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_wizard__state
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_search
+msgid "State"
+msgstr "الحالة"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,help:real_estate_contract_template.field_realestate_contract_document__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الحالة بناءً على الأنشطة\n"
+"متأخرة: تاريخ الاستحقاق قد مضى\n"
+"اليوم: تاريخ النشاط هو اليوم\n"
+"مخطط لها: أنشطة مستقبلية."
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_search
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_search
+msgid "Subcontract"
+msgstr "عقد من الباطن"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_form
+msgid "Submit for Review"
+msgstr "إرسال للمراجعة"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_line__suggested_jinja
+msgid "Suggested Jinja"
+msgstr "تعبير Jinja المقترح"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_line__suggested_label
+msgid "Suggested Label"
+msgstr "التسمية المقترحة"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_form
+msgid ""
+"Table row repeat (inside a Word table): <code>{%tr for line in "
+"record.installment_line_ids %}</code> … <code>{%tr endfor %}</code>"
+msgstr ""
+"تكرار صف الجدول (داخل جدول وورد): <code>{%tr for line in "
+"record.installment_line_ids %}</code> … <code>{%tr endfor %}</code>"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__target_display
+msgid "Target Display"
+msgstr "عرض الهدف"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__target_model_id
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_template__target_model_id
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_wizard__target_model_id
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_catalog_wizard__target_model_id
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_search
+msgid "Target Model"
+msgstr "النموذج المستهدف"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_generate_wizard__target_model_name
+msgid "Target Model Name"
+msgstr "اسم النموذج المستهدف"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__target_record_id
+msgid "Target Record"
+msgstr "السجل المستهدف"
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/wizard/placeholder_autofill_wizard.py:0
+msgid "Target model %s has no exposable fields."
+msgstr "النموذج المستهدف %s لا يحتوي على حقول قابلة للعرض."
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__template_id
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_generate_wizard__template_id
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_wizard__template_id
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_catalog_wizard__template_id
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_form
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_search
+msgid "Template"
+msgstr "القالب"
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template.py:0
+msgid "Template '%(tpl)s' targets %(expected)s but was called on %(actual)s."
+msgstr "القالب '%(tpl)s' يستهدف %(expected)s لكنه استُدعي على %(actual)s."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template.py:0
+msgid "Template '%s' has no DOCX file attached."
+msgstr "القالب '%s' لا يحتوي على ملف DOCX مرفق."
+
+#. module: real_estate_contract_template
+#: model:ir.model.constraint,message:real_estate_contract_template.constraint_realestate_contract_template_code_company_unique
+msgid "Template code must be unique per company."
+msgstr "يجب أن يكون رمز القالب فريدًا لكل شركة."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template.py:0
+msgid "Template file must be a .docx (got %s)."
+msgstr "يجب أن يكون ملف القالب بصيغة DOCX (تم استلام %s)."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template.py:0
+msgid "Template render failed: %s"
+msgstr "فشل إنشاء القالب: %s"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,help:real_estate_contract_template.field_realestate_placeholder_autofill_line__mapped_jinja
+msgid "The Jinja expression that will replace [Token] in the document."
+msgstr "تعبير Jinja الذي سيحل محل [الرمز] في المستند."
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,help:real_estate_contract_template.field_realestate_contract_template__target_model_id
+#: model:ir.model.fields,help:real_estate_contract_template.field_realestate_placeholder_autofill_wizard__target_model_id
+msgid ""
+"The Odoo model this template renders against (e.g. "
+"realestate.sale.contract)."
+msgstr ""
+"نموذج Odoo الذي يُنشأ هذا القالب بناءً عليه (مثل realestate.sale.contract)."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template.py:0
+msgid ""
+"The Python package 'docxtpl' is not installed. Run: pip install docxtpl"
+msgstr "حزمة Python المسماة 'docxtpl' غير مثبتة. نفّذ: pip install docxtpl"
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_document.py:0
+msgid "This document has no file attached."
+msgstr "لا يوجد ملف مرفق بهذا المستند."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_document.py:0
+msgid "This document has no linked source record."
+msgstr "لا يوجد سجل مصدر مرتبط بهذا المستند."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template.py:0
+msgid "This template has no target model."
+msgstr "لا يوجد نموذج مستهدف لهذا القالب."
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_line__token
+msgid "Token"
+msgstr "الرمز"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,help:real_estate_contract_template.field_realestate_contract_document__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع النشاط الاستثنائي في السجل."
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_template__jurisdiction__ae_abudhabi
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_search
+msgid "UAE — Abu Dhabi"
+msgstr "الإمارات — أبوظبي"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_template__jurisdiction__ae_dubai
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_search
+msgid "UAE — Dubai"
+msgstr "الإمارات — دبي"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_document__state__under_review
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_search
+msgid "Under Review"
+msgstr "قيد المراجعة"
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template.py:0
+msgid "Unknown output format: %s"
+msgstr "صيغة مخرجات غير معروفة: %s"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_wizard__unmapped_count
+msgid "Unmapped Count"
+msgstr "عدد غير المربوط"
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template.py:0
+#: code:addons/real_estate_contract_template/wizard/placeholder_autofill_wizard.py:0
+msgid "Upload a .docx on the template first."
+msgstr "ارفع ملف DOCX على القالب أولًا."
+
+#. module: real_estate_contract_template
+#: model_terms:ir.actions.act_window,help:real_estate_contract_template.action_contract_template
+msgid ""
+"Upload a <b>.docx</b> file with Jinja2 placeholders to generate\n"
+"               Word or PDF contracts from any real estate record."
+msgstr ""
+"ارفع ملف <b>DOCX</b> يحتوي على عناصر نائبة بصيغة Jinja2 لإنشاء عقود وورد أو "
+"PDF من أي سجل عقاري."
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_form
+msgid "Usage"
+msgstr "الاستخدام"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_template__use_count
+msgid "Use Count"
+msgstr "عدد مرات الاستخدام"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__version
+msgid "Version"
+msgstr "الإصدار"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__website_message_ids
+msgid "Website Messages"
+msgstr "رسائل الموقع الإلكتروني"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,help:real_estate_contract_template.field_realestate_contract_document__website_message_ids
+msgid "Website communication history"
+msgstr "سجل التواصل عبر الموقع الإلكتروني"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_autofill_line__wizard_id
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_placeholder_catalog_line__wizard_id
+msgid "Wizard"
+msgstr "المعالج"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_document__output_format__docx
+#: model:ir.model.fields.selection,name:real_estate_contract_template.selection__realestate_contract_generate_wizard__output_format__docx
+msgid "Word (.docx)"
+msgstr "مستند وورد (.docx)"
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_template_form
+msgid "e.g. Egypt — Sale (Bilingual) v1"
+msgstr "مثال: مصر — بيع (ثنائي اللغة) v1"
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_document.py:0
+msgid ""
+"%(doc)s has been signed: %(fields)s can no longer be changed. Generate a new"
+" version instead."
+msgstr "تم توقيع %(doc)s: لم يعد بالإمكان تغيير %(fields)s. أصدر نسخة جديدة بدلاً من ذلك."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_document.py:0
+msgid ""
+"Approving or activating a contract document is a Real Estate Manager's "
+"decision."
+msgstr "اعتماد مستند العقد أو تفعيله قرار يخص مدير العقارات."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_document.py:0
+msgid "Document '%s' must keep its generated file."
+msgstr "يجب أن يحتفظ المستند «%s» بالملف المُولَّد الخاص به."
+
+#. module: real_estate_contract_template
+#: model_terms:ir.ui.view,arch_db:real_estate_contract_template.view_contract_document_form
+msgid "File Size (bytes)"
+msgstr "حجم الملف (بايت)"
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template.py:0
+msgid ""
+"Template '%(tpl)s' uses a placeholder that does not exist on %(model)s: %(err)s\n"
+"\n"
+"Fix the placeholder in the .docx — a typo must not silently drop a clause or an amount from a contract."
+msgstr "يستخدم القالب «%(tpl)s» حقلاً نائباً غير موجود في %(model)s: %(err)s\n\nصحّح الحقل النائب داخل ملف ‎.docx‎ — يجب ألا يؤدي خطأ إملائي إلى إسقاط بند أو مبلغ من العقد دون أن يلاحظ أحد."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template.py:0
+msgid "Template '%s' is archived and can no longer issue documents."
+msgstr "القالب «%s» مؤرشف ولم يعد بإمكانه إصدار مستندات."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template.py:0
+msgid "Template '%s' must keep a .docx file attached."
+msgstr "يجب أن يظل ملف ‎.docx‎ مرفقاً بالقالب «%s»."
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__template_jurisdiction
+msgid "Template Jurisdiction"
+msgstr "النطاق القانوني للقالب"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__template_kind
+msgid "Template Kind"
+msgstr "نوع القالب"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__template_language
+msgid "Template Language"
+msgstr "لغة القالب"
+
+#. module: real_estate_contract_template
+#: model:ir.model.fields,field_description:real_estate_contract_template.field_realestate_contract_document__template_version
+msgid "Template Version"
+msgstr "إصدار القالب"
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_document.py:0
+msgid ""
+"The source record this document was generated from (%(model)s, id %(rid)s) "
+"no longer exists."
+msgstr "السجل المصدر الذي وُلّد منه هذا المستند (%(model)s، المعرّف %(rid)s) لم يعد موجوداً."
+
+#. module: real_estate_contract_template
+#. odoo-python
+#: code:addons/real_estate_contract_template/models/contract_template.py:0
+msgid ""
+"fmt_money needs a currency: %s has no currency field, so pass one — {{ "
+"value|fmt_money(company.currency_id) }}."
+msgstr "الدالة fmt_money تحتاج إلى عملة: لا يحتوي %s على حقل عملة، لذا مرّر واحدة — ‎{{ value|fmt_money(company.currency_id) }}‎."

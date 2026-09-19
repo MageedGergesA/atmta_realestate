@@ -1,3 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_realestate_plan_region_user,realestate.plan.region user,model_realestate_plan_region,base.group_user,1,1,1,1
-access_realestate_plan_region_manager,realestate.plan.region manager,model_realestate_plan_region,atmta_real_estate.group_realestate_manager,1,1,1,1
+access_realestate_plan_region_base,plan region read (any internal user),model_realestate_plan_region,base.group_user,1,0,0,0
+access_realestate_plan_region_viewer,plan region viewer,model_realestate_plan_region,real_estate_maquette.group_visual_viewer,1,0,0,0
+access_realestate_plan_region_author,plan region author,model_realestate_plan_region,real_estate_maquette.group_visual_author,1,1,1,1
+access_realestate_plan_region_manager,plan region manager,model_realestate_plan_region,real_estate_maquette.group_visual_manager,1,1,1,1

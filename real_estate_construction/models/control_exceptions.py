@@ -75,7 +75,12 @@ class ConstructionExceptions(models.AbstractModel):
         domain = [('order_id.re_project_id', '=', project.id),
                   ('order_id.state', 'in', ('purchase', 'done')),
                   ('re_cost_code_id', '=', False)]
-        count = self.env['purchase.order.line'].search_count(domain)
+        # The panel is shown to every Construction user, most of whom hold no
+        # Purchase rights. Only a count leaves this method, so it is taken
+        # with sudo; the company clause restores the scoping the record rules
+        # would have applied. Opening the lines still needs Purchase rights.
+        count = self.env['purchase.order.line'].sudo().search_count(
+            domain + [('company_id', 'in', self.env.companies.ids)])
         return self._entry(
             'uncoded_po_lines', 'financial', count,
             _("%s committed purchase line(s) carry no cost code, so their "

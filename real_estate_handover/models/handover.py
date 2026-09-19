@@ -1,7 +1,12 @@
-from datetime import timedelta
+from dateutil.relativedelta import relativedelta
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
+
+
+#: Contract states `realestate.sale.contract.action_handover` accepts. A
+#: handover can only be scheduled for, and only hands over, a contract in one.
+HANDOVER_CONTRACT_STATES = ('signed', 'active', 'financially_cleared')
 
 
 class Handover(models.Model):
@@ -11,7 +16,9 @@ class Handover(models.Model):
     _order = 'scheduled_date desc, id desc'
 
     name = fields.Char(string='Reference', copy=False, required=True, readonly=True, default=lambda self: _('New'))
-    sale_contract_id = fields.Many2one('realestate.sale.contract', string='Sale Contract', required=True, ondelete='cascade', tracking=True)
+    sale_contract_id = fields.Many2one(
+        'realestate.sale.contract', string='Sale Contract', required=True, ondelete='cascade', tracking=True,
+        domain=[('state', 'in', HANDOVER_CONTRACT_STATES)])
     property_id = fields.Many2one(related='sale_contract_id.property_id', store=True, readonly=True)
     partner_id = fields.Many2one(related='sale_contract_id.partner_id', store=True, readonly=True, string='Buyer')
     project_id = fields.Many2one(related='property_id.project_id', store=True, readonly=True)
@@ -58,6 +65,34 @@ class Handover(models.Model):
                 lambda i: i.state in ('open', 'assigned', 'in_progress')
             ))
 
+    @api.constrains('sale_contract_id')
+    def _check_contract_is_handover_able(self):
+        # Only a live contract can be handed over: a draft one has no buyer
+        # commitment yet, and completing its handover used to transfer the
+        # unit anyway. Checked when the contract is chosen, not afterwards --
+        # completion itself moves the contract on to 'handed_over'.
+        for rec in self:
+            if rec.sale_contract_id.state not in HANDOVER_CONTRACT_STATES:
+                raise ValidationError(_(
+                    "Contract %(contract)s is %(state)s. A handover can only be scheduled "
+                    "for a signed, active or financially cleared contract.",
+                    contract=rec.sale_contract_id.display_name, state=rec.sale_contract_id.state))
+
+    @api.constrains('sale_contract_id', 'state')
+    def _check_one_handover_per_contract(self):
+        # A unit is handed over once. A cancelled handover does not count, so
+        # a missed appointment can be rescheduled.
+        for rec in self.filtered(lambda h: h.state != 'cancelled'):
+            others = self.search_count([
+                ('id', '!=', rec.id),
+                ('sale_contract_id', '=', rec.sale_contract_id.id),
+                ('state', '!=', 'cancelled'),
+            ])
+            if others:
+                raise ValidationError(_(
+                    "Contract %s already has a handover. Cancel it before scheduling another.",
+                    rec.sale_contract_id.display_name))
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
@@ -87,12 +122,24 @@ class Handover(models.Model):
 
     def action_mark_snagging(self):
         for rec in self:
+            if rec.state != 'inspection':
+                raise UserError(_("Snagging can only be marked during inspection."))
             rec.state = 'snagging'
 
     def action_complete(self):
         for rec in self:
+            if rec.state not in ('inspection', 'snagging'):
+                raise UserError(_("A handover can only be completed after inspection."))
             if rec.open_snagging_count:
                 raise UserError(_("Resolve all open snagging issues before completing the handover."))
+            # open_snagging_count stops at in-progress work. A fix the
+            # contractor reports (resolved) or one QA turned down (rejected)
+            # is not a defect cleared either: only a verified fix is.
+            unverified = rec.snagging_issue_ids.filtered(lambda i: i.state != 'verified')
+            if unverified:
+                raise UserError(_(
+                    "Every snagging issue must be verified before completing the handover. "
+                    "Not verified: %s", ', '.join(unverified.mapped('name'))))
             unfinished = rec.checklist_item_ids.filtered(lambda i: i.status not in ('done', 'skipped'))
             if unfinished:
                 raise UserError(_("All checklist items must be completed or skipped before completion."))
@@ -103,14 +150,19 @@ class Handover(models.Model):
                 'sale_contract_id': rec.sale_contract_id.id,
                 'property_id': rec.property_id.id,
                 'start_date': start,
-                'end_date': start + timedelta(days=30 * rec.warranty_period_months),
+                # Calendar months: 30-day months made a 12-month warranty 5 days short.
+                'end_date': start + relativedelta(months=rec.warranty_period_months),
                 'period_months': rec.warranty_period_months,
             })
             rec.warranty_id = warranty.id
-            # Mark sale contract handed over
-            if rec.sale_contract_id.state == 'signed':
+            # Mark sale contract handed over. Every state the contract's own
+            # action_handover accepts, not only 'signed': an activated or
+            # financially cleared contract stayed live after its handover.
+            if rec.sale_contract_id.state in HANDOVER_CONTRACT_STATES:
                 rec.sale_contract_id.action_handover()
 
     def action_cancel(self):
         for rec in self:
+            if rec.state in ('completed', 'cancelled'):
+                raise UserError(_("A completed or cancelled handover cannot be cancelled."))
             rec.state = 'cancelled'

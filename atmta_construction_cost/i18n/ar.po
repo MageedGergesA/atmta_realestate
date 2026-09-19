@@ -1,0 +1,3562 @@
+# Translation of Odoo Server.
+# This file contains the Arabic translation of the following modules:
+# 	* atmta_construction_cost
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:12+0000\n"
+"PO-Revision-Date: 2026-09-17 10:12+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/change_impact.py:0
+msgid "%(amount)s of gross change needs %(role)s approval."
+msgstr "التغيير الإجمالي بمبلغ %(amount)s يتطلب اعتماد %(role)s."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget_migration.py:0
+msgid ""
+"%(count)s BOQ line(s) had no cost code and were not carried over: %(items)s."
+" Map them on the BOQ and regenerate — a budget line nobody can classify "
+"cannot be controlled."
+msgstr ""
+"%(count)s سطر (أسطر) من جدول الكميات بدون رمز تكلفة ولم يتم نقلها: "
+"%(items)s. اربطها في جدول الكميات وأعد التوليد — بند الميزانية الذي لا يمكن "
+"تصنيفه لا يمكن ضبطه."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"%(count)s BOQ line(s) on this cost code have no rate. Forecasting the rest "
+"would report part of the work as all of it."
+msgstr ""
+"%(count)s سطر (أسطر) من جدول الكميات على رمز التكلفة هذا بدون سعر. التوقع "
+"للباقي سيعرض جزءا من الأعمال على أنه كلها."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid ""
+"%(fields)s cannot change on a baselined budget (%(names)s). Create a "
+"revision instead — the approved figure is the record of a decision, not a "
+"draft."
+msgstr ""
+"لا يمكن تغيير %(fields)s في ميزانية معتمدة كخط أساس (%(names)s). أنشئ مراجعة"
+" بدلا من ذلك — الرقم المعتمد سجل لقرار، وليس مسودة."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "%(label)s must sit on the configured 1–%(max)s scale."
+msgstr "يجب أن يكون %(label)s ضمن المقياس المهيأ 1–%(max)s."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "%(name)s already materialised into %(issue)s."
+msgstr "تحول %(name)s بالفعل إلى %(issue)s."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "%(periods)s period(s) at %(rate)s."
+msgstr "%(periods)s فترة (فترات) بمعدل %(rate)s."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"%(project)s already has an approved forecast for %(date)s (%(name)s). "
+"Supersede it rather than approving a second one for the same period."
+msgstr ""
+"لدى %(project)s توقع معتمد بالفعل بتاريخ %(date)s (%(name)s). استبدله بدلا "
+"من اعتماد توقع ثان للفترة نفسها."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid ""
+"%(project)s is already baselined on %(budget)s. Supersede that baseline "
+"rather than adding a second one — two current budgets is the same as none."
+msgstr ""
+"تم اعتماد خط الأساس لـ %(project)s بالفعل على %(budget)s. استبدل خط الأساس "
+"ذلك بدلا من إضافة خط أساس ثان — وجود ميزانيتين حاليتين يعادل عدم وجود أي "
+"منهما."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "%(user)s included this risk in forecast exposure at %(amount)s."
+msgstr "أدرج %(user)s هذا الخطر ضمن تعرض التوقع بمبلغ %(amount)s."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "%s already has a change event."
+msgstr "%s لديه حدث تغيير بالفعل."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "%s already has a delay event."
+msgstr "%s لديه حدث تأخير بالفعل."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid ""
+"%s came true. Close the issue it became; the risk stays as the record that "
+"it was foreseen."
+msgstr ""
+"%s تحقق. أغلق المشكلة التي تحول إليها؛ ويبقى الخطر سجلا على أنه كان متوقعا."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "%s has a manual ETC with no basis."
+msgstr "%s لديه تكلفة متبقية حتى الإنجاز يدوية دون أساس."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "%s has no forecast method."
+msgstr "%s ليس له طريقة توقع."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "%s has no recorded resolution. A due date passing is not a resolution."
+msgstr "%s ليس له حل مسجل. مرور تاريخ الاستحقاق ليس حلا."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "%s is in a different currency from the forecast."
+msgstr "%s بعملة مختلفة عن عملة التوقع."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "%s is overridden without a reason."
+msgstr "%s تم تجاوز قيمته دون سبب."
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid ""
+".\n"
+"                        These figures are frozen — later accounting does not change them."
+msgstr ""
+".\n"
+"                        هذه الأرقام مجمدة — المحاسبة اللاحقة لا تغيرها."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid ""
+"A baselined budget cannot be cancelled — it is what the project was "
+"authorised to spend."
+msgstr "لا يمكن إلغاء ميزانية معتمدة كخط أساس — فهي ما صرح للمشروع بإنفاقه."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid ""
+"A baselined budget cannot be deleted. Supersede it with a revision; the "
+"history is the reason it exists."
+msgstr ""
+"لا يمكن حذف ميزانية معتمدة كخط أساس. استبدلها بمراجعة؛ فالسجل التاريخي هو "
+"سبب وجودها."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid "A baselined budget cannot be reopened."
+msgstr "لا يمكن إعادة فتح ميزانية معتمدة كخط أساس."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/change_impact.py:0
+msgid ""
+"A budget change is a record of a decision. Correct it with another change, "
+"not by editing this one."
+msgstr "تغيير الميزانية سجل لقرار. صححه بتغيير آخر، وليس بتعديل هذا التغيير."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid ""
+"A budget is approved by somebody other than the person who prepared it. Ask "
+"a Commercial Manager, or set `real_estate_construction.allow_self_approval` "
+"if this company genuinely has one person doing both."
+msgstr ""
+"تعتمد الميزانية من شخص غير الذي أعدها. اطلب ذلك من مدير تجاري، أو فعل "
+"`real_estate_construction.allow_self_approval` إذا كان شخص واحد في هذه "
+"الشركة يقوم بالمهمتين فعلا."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid "A budget with no lines authorises nothing."
+msgstr "الميزانية التي لا تحتوي على بنود لا تعتمد شيئا."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/change_impact.py:0
+msgid ""
+"A commitment change records what was approved. Correct it with another "
+"change."
+msgstr "تغيير الالتزام يسجل ما تم اعتماده. صححه بتغيير آخر."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__include_in_forecast
+msgid ""
+"A cost controller's explicit decision. Nothing adds a risk to the forecast "
+"on its own — a probability-weighted number that wanders into an approved EAC"
+" is a forecast nobody signed."
+msgstr ""
+"قرار صريح من مراقب التكاليف. لا شيء يضيف خطرا إلى التوقع تلقائيا — الرقم "
+"المرجح بالاحتمالات الذي يتسلل إلى تكلفة متوقعة عند الإنجاز معتمدة هو توقع لم"
+" يوقعه أحد."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"A forecast is approved by somebody other than the person who prepared it."
+msgstr "يعتمد التوقع من شخص غير الذي أعده."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "A forecast with no lines forecasts nothing."
+msgstr "التوقع الذي لا يحتوي على بنود لا يتوقع شيئا."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid "A line cannot be removed from a baselined budget."
+msgstr "لا يمكن حذف بند من ميزانية معتمدة كخط أساس."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "A manual estimate needs a stated basis."
+msgstr "التقدير اليدوي يحتاج إلى أساس موضح."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid ""
+"A mitigation strategy with no plan and no actions is a hope. Record what "
+"will actually be done."
+msgstr ""
+"استراتيجية التخفيف التي لا تتضمن خطة ولا إجراءات مجرد أمنية. سجل ما سيتم "
+"فعله فعلا."
+
+#. module: atmta_construction_cost
+#: model:ir.model.constraint,message:atmta_construction_cost.constraint_realestate_construction_budget_version_uniq_per_project
+msgid "A project cannot have two budgets with the same version number."
+msgstr "لا يمكن أن يكون للمشروع ميزانيتان بنفس رقم الإصدار."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__response_strategy__accept
+msgid "Accept"
+msgstr "قبول"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__category__access
+msgid "Access"
+msgstr "الوصول إلى الموقع"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__name
+msgid "Action"
+msgstr "الإجراء"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__message_needaction
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__message_needaction
+msgid "Action Needed"
+msgstr "إجراء مطلوب"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__state__actioning
+msgid "Actioning"
+msgstr "قيد المعالجة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__action_ids
+msgid "Actions"
+msgstr "الإجراءات"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Activate"
+msgstr "تفعيل"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__activity_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__activity_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__activity_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__activity_ids
+msgid "Activities"
+msgstr "الأنشطة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__activity_exception_decoration
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "زخرفة استثناء النشاط"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__activity_state
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__activity_state
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__activity_state
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__activity_type_icon
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_list
+msgid "Actual"
+msgstr "فعلية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__actual_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__actual_cost
+msgid "Actual Cost"
+msgstr "التكلفة الفعلية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_actual_cost
+msgid "Actual Cost (Ledger)"
+msgstr "التكلفة الفعلية (الدفاتر)"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__actual_exceeds_commitment
+msgid "Actual Exceeds Commitment"
+msgstr "التكلفة الفعلية تتجاوز الالتزام"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_report.py:0
+msgid ""
+"Actual cost is understated by %(amount)s: retention on %(count)s posted "
+"certificate(s) was booked as a negative expense line rather than a retention"
+" liability. The posted entries are not rewritten; Finance reclassification "
+"is required. See IMPLEMENTATION_REPORT.md §Retention."
+msgstr ""
+"التكلفة الفعلية أقل من حقيقتها بمقدار %(amount)s: المحتجزات على %(count)s من"
+" شهادات الدفع المرحّلة سُجّلت كبند مصروف سالب بدلًا من التزام محتجزات. لا "
+"يُعاد تحرير القيود المرحّلة؛ ويلزم أن تعيد الإدارة المالية تصنيفها. راجع "
+"IMPLEMENTATION_REPORT.md §المحتجزات."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"Actual cost on this code cannot be attributed to its commitment, so "
+"remaining commitment is unknown. Use a manual estimate rather than guessing."
+msgstr ""
+"لا يمكن نسب التكلفة الفعلية على هذا الرمز إلى الالتزام الخاص به، لذا فإن "
+"الالتزام المتبقي غير معروف. استخدم تقديرًا يدويًا بدلًا من التخمين."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__actual_amount
+msgid "Actual to Date"
+msgstr "الفعلي حتى تاريخه"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Actuals and commitments refreshed."
+msgstr "تم تحديث التكاليف الفعلية والالتزامات."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__adjustment_total
+msgid "Adjustment Total"
+msgstr "إجمالي التعديلات"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__adjustment_type
+msgid "Adjustment Type"
+msgstr "نوع التعديل"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__age_days
+msgid "Age Days"
+msgstr "العمر بالأيام"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__amount
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__amount
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__amount
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__amount
+msgid "Amount"
+msgstr "المبلغ"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__amount_mode
+msgid "Amount Mode"
+msgstr "طريقة احتساب المبلغ"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "An approved forecast cannot be reopened."
+msgstr "لا يمكن إعادة فتح توقع معتمد."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"An approved forecast is a record of what was believed on %(date)s. Create a "
+"new forecast rather than refreshing this one."
+msgstr ""
+"التوقع المعتمد سجل لما كان متوقعًا في %(date)s. أنشئ توقعًا جديدًا بدلًا من "
+"تحديث هذا التوقع."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"An approved forecast is history. Supersede it with a later one instead of "
+"cancelling it."
+msgstr ""
+"التوقع المعتمد أصبح سجلًا تاريخيًا. استبدله بتوقع لاحق بدلًا من إلغائه."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__management_rating
+msgid ""
+"An explicit human rating, which overrides the arithmetic on the register "
+"when set."
+msgstr "تقييم بشري صريح، يتجاوز الحساب الآلي في السجل عند تحديده."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "Analytic postings"
+msgstr "القيود التحليلية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_adjustment__adjustment_type__anticipated_variation
+msgid "Anticipated Variation"
+msgstr "تغيير متوقع"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Approve"
+msgstr "اعتماد"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid ""
+"Approve the revision first. A baseline is not withdrawn until there is "
+"something to put in its place."
+msgstr "اعتمد المراجعة أولًا. لا يُسحب خط الأساس حتى يوجد ما يحل محله."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget__state__approved
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast__state__approved
+msgid "Approved"
+msgstr "معتمد"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__approved_change_amount
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__approved_budget_changes
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__approved_budget_changes
+msgid "Approved Budget Changes"
+msgstr "تغييرات الميزانية المعتمدة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__approved_by_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__approved_by_id
+msgid "Approved By"
+msgstr "اعتمد بواسطة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__approved_change_amount
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__change_line_ids
+msgid "Approved Changes"
+msgstr "التغييرات المعتمدة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__approved_commitment_changes
+msgid "Approved Commitment Changes"
+msgstr "تغييرات الالتزام المعتمدة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__approved_on
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__approved_on
+msgid "Approved On"
+msgstr "تاريخ الاعتماد"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__approved_change_amount
+msgid ""
+"Approved changes since baseline. M4's change control writes these; until "
+"then they are zero, which is the truth."
+msgstr ""
+"التغييرات المعتمدة منذ خط الأساس. تسجلها وحدة التحكم في التغيير (M4)؛ وحتى "
+"ذلك الحين تبقى صفرًا، وهذه هي الحقيقة."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "Approved forecast lines"
+msgstr "بنود التوقع المعتمدة"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Approved on"
+msgstr "تاريخ الاعتماد"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"Approved. EAC %(eac)s against a current budget of %(budget)s (variance "
+"%(variance)s). Coverage %(coverage).1f%%."
+msgstr ""
+"تم الاعتماد. التكلفة المتوقعة عند الإنجاز %(eac)s مقابل ميزانية حالية قدرها "
+"%(budget)s (الفرق %(variance)s). التغطية %(coverage).1f%%."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__as_of_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__as_of_date
+msgid "As Of Date"
+msgstr "حتى تاريخ"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__state__assessed
+msgid "Assessed"
+msgstr "تم التقييم"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Assumed to finish at budget."
+msgstr "يفترض الإنجاز ضمن الميزانية."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__attachment_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__attachment_ids
+msgid "Attachment"
+msgstr "المرفق"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__message_attachment_count
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__authority
+msgid "Authority / Permitting"
+msgstr "الجهات الحكومية / التصاريح"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__category__authority
+msgid "Authority Approval"
+msgstr "موافقة الجهات الحكومية"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Available"
+msgstr "متاحة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__available_before_commitment
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__available_before_commitment
+msgid "Available Before Commitment"
+msgstr "المتاح قبل الالتزام"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__response_strategy__avoid
+msgid "Avoid"
+msgstr "تجنب"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Award"
+msgstr "الترسية"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+msgid "Baseline"
+msgstr "خط الأساس"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__baseline_date
+msgid "Baseline Date"
+msgstr "تاريخ خط الأساس"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "Baseline budget lines"
+msgstr "بنود ميزانية خط الأساس"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget__state__baselined
+msgid "Baselined"
+msgstr "معتمدة كخط أساس"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid "Baselined: original budget %(amount)s."
+msgstr "تم اعتمادها كخط أساس: الميزانية الأصلية %(amount)s."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__version
+msgid ""
+"Baselines are numbered. Revision 2 supersedes revision 1; revision 1 is "
+"still readable, which is the point."
+msgstr ""
+"خطوط الأساس مرقمة. المراجعة 2 تحل محل المراجعة 1؛ وتبقى المراجعة 1 قابلة "
+"للاطلاع، وهذا هو المقصود."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__manual_reason
+msgid "Basis / Reason"
+msgstr "الأساس / السبب"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__state__blocked
+msgid "Blocked"
+msgstr "محظورة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__budget_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__budget_id
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Budget"
+msgstr "الميزانية"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid ""
+"Budget %(name)s is in %(company)s but %(project)s belongs to "
+"%(project_company)s."
+msgstr ""
+"الميزانية %(name)s تابعة للشركة %(company)s بينما المشروع %(project)s يتبع "
+"الشركة %(project_company)s."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_available_before_commitment
+msgid "Budget Available Before Commitment"
+msgstr "الميزانية المتاحة قبل الالتزام"
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_budget_change_line
+msgid "Budget Change Line"
+msgstr "بند تغيير الميزانية"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Budget Changes"
+msgstr "تغييرات الميزانية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__budget_line_id
+msgid "Budget Line"
+msgstr "بند الميزانية"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_report.py:0
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__line_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+msgid "Budget Lines"
+msgstr "بنود الميزانية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__budget_remaining_vs_actual
+msgid "Budget Remaining Vs Actual"
+msgstr "الميزانية المتبقية مقابل الفعلي"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_budget_remaining_vs_actual
+msgid "Budget Remaining vs Actual"
+msgstr "الميزانية المتبقية مقابل الفعلي"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/change_impact.py:0
+msgid ""
+"Budget changes cannot be deleted — they are why the current budget is what "
+"it is."
+msgstr ""
+"لا يمكن حذف تغييرات الميزانية، فهي سبب وصول الميزانية الحالية إلى قيمتها."
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Budget lines"
+msgstr "بنود الميزانية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__is_unawarded
+msgid "Budgeted scope with no commitment yet."
+msgstr "نطاق مدرج في الميزانية دون التزام حتى الآن."
+
+#. module: atmta_construction_cost
+#: model:ir.actions.act_window,name:atmta_construction_cost.action_construction_budget
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__construction_budget_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_list
+msgid "Budgets"
+msgstr "الميزانيات"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__currency_id
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget_change_line__currency_id
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget_line__currency_id
+msgid ""
+"Budgets are held in one currency. Foreign-currency commitments are converted"
+" for control comparison, never re-accounted."
+msgstr ""
+"تُحفظ الميزانيات بعملة واحدة. تُحوّل الالتزامات بالعملات الأجنبية لأغراض "
+"المقارنة الرقابية، ولا يُعاد قيدها محاسبيًا أبدًا."
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "By Cost Code"
+msgstr "حسب رمز التكلفة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__calculated_etc
+msgid "Calculated ETC"
+msgstr "التكلفة المتبقية المحسوبة"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget__state__cancelled
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast__state__cancelled
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__state__cancelled
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk_action__state__cancelled
+msgid "Cancelled"
+msgstr "ملغى"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__category
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__category
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__category
+msgid "Category"
+msgstr "الفئة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__cause
+msgid "Cause"
+msgstr "السبب"
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_change_authority
+msgid "Change Approval Authority"
+msgstr "صلاحية اعتماد التغيير"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__change_event_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__change_event_id
+msgid "Change Event"
+msgstr "حدث التغيير"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__change_event_ids
+msgid "Change Events"
+msgstr "أحداث التغيير"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__change_order_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__change_order_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__change_order_id
+msgid "Change Order"
+msgstr "أمر تغيير"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__change_type
+msgid "Change Type"
+msgstr "نوع التغيير"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_list
+msgid "Changes"
+msgstr "التغييرات"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "Choose how %s is being responded to."
+msgstr "اختر طريقة الاستجابة لـ %s."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__claim_id
+msgid "Claim"
+msgstr "المطالبة"
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_claim_kpi
+msgid "Claims, Delay, Risk and Issue KPIs"
+msgstr "مؤشرات أداء المطالبات والتأخير والمخاطر والمشكلات"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Close"
+msgstr "إغلاق"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__state__closed
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__state__closed
+msgid "Closed"
+msgstr "مغلق"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__closure_reason
+msgid "Closure Reason"
+msgstr "سبب الإغلاق"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__comment
+msgid "Comment"
+msgstr "التعليق"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__commercial
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Commercial"
+msgstr "التجاري"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__category__commercial
+msgid "Commercial Blocker"
+msgstr "عائق تجاري"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Commitment"
+msgstr "الالتزام"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Commitment & Actual"
+msgstr "الالتزام والفعلي"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Commitment & Terms"
+msgstr "الالتزام والشروط"
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_commitment_change
+msgid "Commitment Change"
+msgstr "تغيير الالتزام"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_report.py:0
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Commitment Detail"
+msgstr "تفاصيل الالتزام"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid ""
+"Commitment and Actual are two views of the same money and are\n"
+"                        never added together. ETC and EAC are blank until forecasting\n"
+"                        exists."
+msgstr ""
+"الالتزام والفعلي منظوران لنفس الأموال ولا يُجمعان معًا أبدًا. تبقى التكلفة "
+"المتبقية المتوقعة والتكلفة المتوقعة عند الإنجاز فارغتين حتى يتوفر التوقع."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/change_impact.py:0
+msgid ""
+"Commitment changes cannot be deleted — they are why the current commitment "
+"is what it is."
+msgstr "لا يمكن حذف تغييرات الالتزام، فهي سبب وصول الالتزام الحالي إلى قيمته."
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Commitment detail"
+msgstr "تفاصيل الالتزام"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__committed_remaining
+msgid ""
+"Commitment left to spend, where actual cost can be attributed to that same "
+"commitment."
+msgstr ""
+"الالتزام المتبقي للصرف، حيث يمكن نسب التكلفة الفعلية إلى الالتزام نفسه."
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Commitments exceed the current budget on this project."
+msgstr "الالتزامات تتجاوز الميزانية الحالية في هذا المشروع."
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_list
+msgid "Committed"
+msgstr "الملتزم به"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__committed_remaining
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__committed_remaining
+msgid "Committed Remaining"
+msgstr "الالتزام المتبقي"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__committed_remaining_known
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__committed_remaining_known
+msgid "Committed Remaining Known"
+msgstr "الالتزام المتبقي معروف"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__company_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__company_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__company_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__company_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__company_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__company_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__company_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__company_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__company_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__company_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_cost_report__forecast_state__complete
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_project__ctrl_forecast_state__complete
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Complete"
+msgstr "إكمال"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__completed_on
+msgid "Completed On"
+msgstr "تاريخ الإنجاز"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__consequence
+msgid "Consequence"
+msgstr "العاقبة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__construction
+msgid "Construction"
+msgstr "الإنشاءات"
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_budget
+msgid "Construction Budget"
+msgstr "ميزانية الإنشاء"
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_budget_line
+msgid "Construction Budget Line"
+msgstr "بند ميزانية الإنشاء"
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_commitment
+msgid "Construction Commitment Engine"
+msgstr "محرك التزامات الإنشاء"
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_forecast
+msgid "Construction Cost Forecast"
+msgstr "توقع تكلفة الإنشاء"
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_cost_report
+msgid "Construction Cost Report"
+msgstr "تقرير تكلفة الإنشاء"
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_cost_report_line
+msgid "Construction Cost Report Line"
+msgstr "بند تقرير تكلفة الإنشاء"
+
+#. module: atmta_construction_cost
+#: model:ir.actions.server,name:atmta_construction_cost.cron_refresh_dates_ir_actions_server
+msgid "Construction Cost: refresh overdue issues and risk actions"
+msgstr "تكلفة الإنشاء: تحديث المشكلات المتأخرة وإجراءات المخاطر"
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_forecast_line
+msgid "Construction Forecast Line"
+msgstr "بند توقع الإنشاء"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__escalation_level__construction_manager
+msgid "Construction Manager"
+msgstr "مدير الإنشاء"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/change_impact.py:0
+msgid "Construction Manager (above all thresholds)"
+msgstr "مدير الإنشاء (فوق جميع الحدود)"
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_controls
+msgid "Construction Project Controls"
+msgstr "ضوابط مشروع الإنشاء"
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_cost_refresh
+msgid "Construction cost: refresh values that depend on today's date"
+msgstr "تكلفة الإنشاء: تحديث القيم المعتمدة على تاريخ اليوم"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__contingency_amount
+msgid "Contingency"
+msgstr "الاحتياطي"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget_change_line__change_type__contingency_drawdown
+msgid "Contingency Drawdown"
+msgstr "السحب من الاحتياطي"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Contract Package"
+msgstr "حزمة الأعمال التعاقدية"
+
+#. module: atmta_construction_cost
+#: model:ir.actions.act_window,name:atmta_construction_cost.action_construction_package
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__construction_package_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_list
+msgid "Contract Packages"
+msgstr "حزم الأعمال التعاقدية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__converted_by_order_id
+msgid "Converted By Order"
+msgstr "حُوّل بواسطة الأمر"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__converted_to_change_order
+msgid "Converted To Change Order"
+msgstr "حُوّل إلى أمر تغيير"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__cost_code_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__cost_code_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__cost_code_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__cost_code_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__cost_code_label
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__cost_code_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__cost_code_id
+msgid "Cost Code"
+msgstr "رمز التكلفة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__line_ids
+msgid "Cost Codes"
+msgstr "رموز التكلفة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__cost_exposure_likely
+msgid "Cost Exposure"
+msgstr "التعرض للتكلفة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__cost_exposure_max
+msgid "Cost Exposure Max"
+msgstr "الحد الأقصى للتعرض للتكلفة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__cost_exposure_min
+msgid "Cost Exposure Min"
+msgstr "الحد الأدنى للتعرض للتكلفة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__cost_impact_score
+msgid "Cost Impact Score"
+msgstr "درجة الأثر على التكلفة"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Cost Report"
+msgstr "تقرير التكلفة"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Cost Report —"
+msgstr "تقرير التكلفة —"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_report.py:0
+msgid "Cost Report — %s"
+msgstr "تقرير التكلفة — %s"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid "Cost code %(code)s is scoped to another project."
+msgstr "رمز التكلفة %(code)s مخصص لمشروع آخر."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__forecast_coverage
+msgid "Coverage (%)"
+msgstr "التغطية (%)"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+msgid "Create Revision"
+msgstr "إنشاء مراجعة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__created_by_id
+msgid "Created By"
+msgstr "أنشئ بواسطة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__create_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__create_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__priority__critical
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__management_rating__critical
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__severity__critical
+msgid "Critical"
+msgstr "حرجة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__currency_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__currency_id
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__currency
+msgid "Currency"
+msgstr "العملة"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_list
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_list
+msgid "Current"
+msgstr "غير متأخر"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__current_amount
+msgid "Current Amount"
+msgstr "المبلغ الحالي"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__current_amount
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__current_budget
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__current_budget
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__current_budget
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_current_budget
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_list
+msgid "Current Budget"
+msgstr "الميزانية الحالية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_cost_report_line__budget_remaining_vs_actual
+msgid ""
+"Current Budget − Actual. What is left before the money is actually spent. A "
+"different question from the column beside it."
+msgstr ""
+"الميزانية الحالية − الفعلي. ما تبقى قبل صرف الأموال فعليًا. وهو سؤال مختلف "
+"عن العمود المجاور."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_cost_report_line__available_before_commitment
+msgid "Current Budget − Current Commitment. What is left to commit."
+msgstr "الميزانية الحالية − الالتزام الحالي. ما تبقى للالتزام به."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_cost_report_line__forecast_variance
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__total_forecast_variance
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__forecast_variance
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_project__ctrl_forecast_variance
+msgid "Current Budget − EAC. Positive is favourable."
+msgstr ""
+"الميزانية الحالية − التكلفة المتوقعة عند الإنجاز. القيمة الموجبة إيجابية."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__current_commitment
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__current_commitment
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__commitment_amount
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_current_commitment
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Current Commitment"
+msgstr "الالتزام الحالي"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget_change_line__change_type__decrease
+msgid "Decrease"
+msgstr "تخفيض"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_adjustment__adjustment_type__delay
+msgid "Delay"
+msgstr "تأخير"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__delay_event_id
+msgid "Delay Event"
+msgstr "حدث تأخير"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget__source__legacy
+msgid "Derived from Legacy Data"
+msgstr "مشتقة من البيانات القديمة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__description
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__description
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__description
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__description
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__description
+msgid "Description"
+msgstr "الوصف"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__design
+msgid "Design"
+msgstr "التصميم"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__category__design_coordination
+msgid "Design Coordination"
+msgstr "تنسيق التصميم"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__display_name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk_action__state__done
+msgid "Done"
+msgstr "منجز"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget__state__draft
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast__state__draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__due_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__due_date
+msgid "Due Date"
+msgstr "تاريخ الاستحقاق"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__eac_amount
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__eac_amount
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_eac
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_list
+msgid "EAC"
+msgstr "التكلفة المتوقعة عند الإنجاز"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_eac_movement
+msgid "EAC Movement"
+msgstr "تغير التكلفة المتوقعة عند الإنجاز"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__etc_amount
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__etc_amount
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_list
+msgid "ETC"
+msgstr "التكلفة المتبقية المتوقعة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__uncommitted_etc
+msgid "ETC beyond what is committed — scope still to be procured."
+msgstr ""
+"التكلفة المتبقية المتوقعة بما يتجاوز الملتزم به — نطاق لم يتم شراؤه بعد."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__eac_exceeds_budget
+msgid "Eac Exceeds Budget"
+msgstr "التكلفة المتوقعة عند الإنجاز تتجاوز الميزانية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__eac_is_complete
+msgid "Eac Is Complete"
+msgstr "التكلفة المتوقعة عند الإنجاز مكتملة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__eac_movement
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__eac_movement
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__eac_movement
+msgid "Eac Movement"
+msgstr "تغير التكلفة المتوقعة عند الإنجاز"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk_action__effectiveness__effective
+msgid "Effective"
+msgstr "فعال"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__effective_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__effective_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__effective_date
+msgid "Effective Date"
+msgstr "تاريخ السريان"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__effectiveness
+msgid "Effectiveness"
+msgstr "الفعالية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__environmental
+msgid "Environmental"
+msgstr "بيئية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__escalated_on
+msgid "Escalated On"
+msgstr "تاريخ التصعيد"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "Escalated issue %s"
+msgstr "تم تصعيد المشكلة %s"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__escalation_level
+msgid "Escalation Level"
+msgstr "مستوى التصعيد"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__estimated_cost_impact
+msgid "Estimated Cost Impact"
+msgstr "الأثر التقديري على التكلفة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__escalation_level__executive
+msgid "Executive"
+msgstr "الإدارة التنفيذية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__response_strategy__exploit
+msgid "Exploit (Opportunity)"
+msgstr "استغلال (فرصة)"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_adjustment__adjustment_type__fx
+msgid "FX Assumption"
+msgstr "افتراض سعر الصرف"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__committed_remaining_known
+msgid ""
+"False means unknown, which is not the same as zero. The report shows N/A "
+"rather than a number nobody can stand behind."
+msgstr ""
+"القيمة خطأ تعني غير معروف، وهذا يختلف عن الصفر. يعرض التقرير «غير متاح» "
+"بدلًا من رقم لا يمكن لأحد الاعتماد عليه."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_cost_report_line__committed_remaining_known
+msgid ""
+"False means unknown, which the report shows as N/A rather than as zero."
+msgstr "القيمة خطأ تعني غير معروف، ويعرضها التقرير «غير متاح» بدلًا من صفر."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__has_etc
+msgid ""
+"False when nothing has produced an estimate. Distinguishes 'no forecast' "
+"from 'a forecast of zero'."
+msgstr ""
+"خطأ عندما لا يوجد ما أنتج تقديرًا. يميز بين «لا يوجد توقع» و«توقع بقيمة "
+"صفر»."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_cost_report_line__has_forecast
+msgid ""
+"False when the latest approved forecast does not cover this cost code. The "
+"amounts below are then meaningless."
+msgstr ""
+"خطأ عندما لا يغطي آخر توقع معتمد رمز التكلفة هذا. وتكون المبالغ أدناه حينئذ "
+"بلا معنى."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__eac_is_complete
+msgid ""
+"False while any line is missing a forecast. A partial total is shown, and is"
+" never labelled authoritative."
+msgstr ""
+"خطأ طالما يوجد بند بلا توقع. يُعرض إجمالي جزئي، ولا يوصف أبدًا بأنه نهائي."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__financial
+msgid "Financial"
+msgstr "مالية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_line__method__finish_at_budget
+msgid "Finish at Budget"
+msgstr "الإنجاز ضمن الميزانية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__message_follower_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__message_partner_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__activity_type_icon
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__activity_type_icon
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_issue__activity_type_icon
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "أيقونة Font Awesome، مثل fa-tasks"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__periods_remaining
+msgid "For time-based costs: how many periods of the rate remain."
+msgstr "للتكاليف الزمنية: عدد الفترات المتبقية من المعدل."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__forecast_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__forecast_id
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Forecast"
+msgstr "التوقع"
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_forecast_adjustment
+msgid "Forecast Adjustment"
+msgstr "تعديل التوقع"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__adjustment_ids
+msgid "Forecast Adjustments"
+msgstr "تعديلات التوقع"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_forecast_age_days
+msgid "Forecast Age (days)"
+msgstr "عمر التوقع (بالأيام)"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_forecast_date
+msgid "Forecast As Of"
+msgstr "التوقع حتى تاريخ"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__forecast_coverage
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_forecast_coverage
+msgid "Forecast Coverage (%)"
+msgstr "تغطية التوقع (%)"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__forecast_date
+msgid "Forecast Date"
+msgstr "تاريخ التوقع"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__forecast_is_stale
+msgid "Forecast Is Stale"
+msgstr "التوقع قديم"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__forecast_line_id
+msgid "Forecast Line"
+msgstr "بند التوقع"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__line_ids
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Forecast Lines"
+msgstr "بنود التوقع"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__forecast_method
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__method
+msgid "Forecast Method"
+msgstr "طريقة التوقع"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__forecast_quantity
+msgid "Forecast Quantity"
+msgstr "الكمية المتوقعة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_forecast_is_stale
+msgid "Forecast Stale"
+msgstr "التوقع قديم"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__forecast_state
+msgid "Forecast State"
+msgstr "حالة التوقع"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__forecast_status
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_forecast_state
+msgid "Forecast Status"
+msgstr "حالة التوقع"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__forecast_unit_rate
+msgid "Forecast Unit Rate"
+msgstr "سعر الوحدة المتوقع"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__forecast_id
+msgid "Forecast Used"
+msgstr "التوقع المستخدم"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__forecast_variance
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__forecast_variance
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_forecast_variance
+msgid "Forecast Variance"
+msgstr "انحراف التوقع"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__adjustment_total
+msgid ""
+"Forecast-only. Adjustments never touch budget, commitment or the ledger."
+msgstr ""
+"للتوقع فقط. التعديلات لا تمس الميزانية أو الالتزام أو دفتر الأستاذ أبدًا."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_line__forecast_status__forecasted
+msgid "Forecasted"
+msgstr "تم التوقع"
+
+#. module: atmta_construction_cost
+#: model:ir.actions.act_window,name:atmta_construction_cost.action_construction_forecast
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_list
+msgid "Forecasts"
+msgstr "التوقعات"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_project__ctrl_eac
+msgid ""
+"From the latest approved forecast. Blank when none exists — a zero would "
+"read as 'this project will cost nothing more'."
+msgstr ""
+"من آخر توقع معتمد. تبقى فارغة عند عدم وجوده — فالصفر يُفهم على أن «هذا "
+"المشروع لن يكلف شيئًا إضافيًا»."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget__source__boq
+msgid "Generated from a BOQ"
+msgstr "مولدة من جدول الكميات"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Go to Tender"
+msgstr "الانتقال إلى المناقصة"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Governance"
+msgstr "الحوكمة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_cost_report_line__eac_movement
+msgid "Growth in expected cost since the previous approved forecast."
+msgstr "الزيادة في التكلفة المتوقعة منذ التوقع المعتمد السابق."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__has_etc
+msgid "Has Etc"
+msgstr "يوجد تقدير للتكلفة المتبقية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__has_forecast
+msgid "Has Forecast"
+msgstr "يوجد توقع"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__has_message
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__has_message
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__has_message
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__has_message
+msgid "Has Message"
+msgstr "يحتوي على رسالة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__has_mitigation
+msgid "Has Mitigation"
+msgstr "توجد خطة تخفيف"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__priority__high
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__management_rating__high
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__severity__high
+msgid "High"
+msgstr "عالية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__activity_exception_icon
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__activity_exception_icon
+msgid "Icon"
+msgstr "الأيقونة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__activity_exception_icon
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__activity_exception_icon
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_issue__activity_exception_icon
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "أيقونة للإشارة إلى نشاط استثنائي."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__state__identified
+msgid "Identified"
+msgstr "تم التحديد"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__identified_by_id
+msgid "Identified By"
+msgstr "حُدد بواسطة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__identified_on
+msgid "Identified On"
+msgstr "تاريخ التحديد"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__message_needaction
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__message_needaction
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_issue__message_needaction
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا كان محددًا، فهناك رسائل جديدة تتطلب انتباهك."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__message_has_error
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__message_has_error
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_issue__message_has_error
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_issue__message_has_sms_error
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__message_has_error
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا كان محددًا، فبعض الرسائل بها خطأ في التسليم."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__impact
+msgid "Impact"
+msgstr "الأثر"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "Implemented budget changes"
+msgstr "تغييرات الميزانية المنفذة"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "Implemented commitment changes"
+msgstr "تغييرات الالتزام المنفذة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk_action__state__in_progress
+msgid "In Progress"
+msgstr "قيد التنفيذ"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__include_in_forecast
+msgid "Include In Forecast"
+msgstr "تضمين في التوقع"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_cost_report__forecast_state__incomplete
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_project__ctrl_forecast_state__incomplete
+msgid "Incomplete"
+msgstr "غير مكتمل"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget_change_line__change_type__increase
+msgid "Increase"
+msgstr "الزيادة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk_action__effectiveness__ineffective
+msgid "Ineffective"
+msgstr "غير فعال"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_adjustment__adjustment_type__inflation
+msgid "Inflation"
+msgstr "التضخم"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__inherent_score
+msgid "Inherent Score"
+msgstr "الدرجة الأصلية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_line__forecast_status__insufficient_data
+msgid "Insufficient Source Data"
+msgstr "بيانات المصدر غير كافية"
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_cost_sheet
+msgid "Integrated Construction Cost Sheet"
+msgstr "كشف تكلفة الإنشاء المتكامل"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__interface
+msgid "Interface"
+msgstr "الواجهات البينية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__is_contingency
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__is_contingency
+msgid "Is Contingency"
+msgstr "احتياطي طوارئ"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__message_is_follower
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__is_overdue
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__is_overdue
+msgid "Is Overdue"
+msgstr "متأخر"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__is_overridden
+msgid "Is Overridden"
+msgstr "تم تجاوزه يدويًا"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__is_unawarded
+msgid "Is Unawarded"
+msgstr "غير مرسى"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__issue_id
+msgid "Issue"
+msgstr "المشكلة"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "Issue %(name)s is in %(company)s but its project is in %(other)s."
+msgstr ""
+"المشكلة %(name)s تابعة للشركة %(company)s بينما مشروعها يتبع الشركة "
+"%(other)s."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "Issue %(ref)s — %(title)s"
+msgstr "المشكلة %(ref)s — %(title)s"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__write_uid
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__write_date
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_forecast_id
+msgid "Latest Approved Forecast"
+msgstr "آخر توقع معتمد"
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_budget_migration
+msgid "Legacy Budget Classification"
+msgstr "تصنيف الميزانية القديمة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_adjustment__line_id
+msgid "Line"
+msgstr "البند"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__line_count
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__line_count
+msgid "Line Count"
+msgstr "عدد البنود"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__line_count_forecasted
+msgid "Line Count Forecasted"
+msgstr "عدد البنود المتوقعة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__line_count_insufficient
+msgid "Line Count Insufficient"
+msgstr "عدد البنود غير الكافية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__line_count_missing
+msgid "Line Count Missing"
+msgstr "عدد البنود الناقصة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__priority__low
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__management_rating__low
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__severity__low
+msgid "Low"
+msgstr "منخفضة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget_line__amount_mode__lumpsum
+msgid "Lump Sum"
+msgstr "مبلغ مقطوع"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Main Civil Works"
+msgstr "الأعمال المدنية الرئيسية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_adjustment__adjustment_type__management
+msgid "Management Adjustment"
+msgstr "تعديل إداري"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__management_rating
+msgid "Management Rating"
+msgstr "تقييم الإدارة"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Management override."
+msgstr "تجاوز من الإدارة."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__override_etc
+msgid "Management's number when it differs from the method's."
+msgstr "رقم الإدارة عندما يختلف عن رقم الطريقة."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__manual_etc
+msgid "Manual ETC"
+msgstr "التكلفة المتبقية اليدوية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_line__method__manual
+msgid "Manual Estimate"
+msgstr "تقدير يدوي"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Manual estimate."
+msgstr "تقدير يدوي."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__period_label
+msgid "March 2027. A label, not a rule — month-end is not assumed."
+msgstr "مارس 2027. تسمية وليست قاعدة — لا يُفترض نهاية الشهر."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Marked as needing no forecast."
+msgstr "تم تعليمه على أنه لا يحتاج إلى توقع."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__market
+msgid "Market"
+msgstr "السوق"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_adjustment__adjustment_type__market_rate
+msgid "Market Rate"
+msgstr "سعر السوق"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__state__materialised
+msgid "Materialised"
+msgstr "تحققت"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__materialised_on
+msgid "Materialised On"
+msgstr "تاريخ التحقق"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__materialised_snapshot
+msgid "Materialised Snapshot"
+msgstr "لقطة التحقق"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "Materialised into %(issue)s. %(reason)s"
+msgstr "تحققت وأصبحت المشكلة %(issue)s. %(reason)s"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__priority__medium
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__management_rating__medium
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__severity__medium
+msgid "Medium"
+msgstr "متوسطة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__message_has_error
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__message_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_line__forecast_status__missing
+msgid "Missing Forecast"
+msgstr "التوقع مفقود"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__response_strategy__mitigate
+msgid "Mitigate"
+msgstr "تخفيف"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__mitigation_due_date
+msgid "Mitigation Due Date"
+msgstr "تاريخ استحقاق التخفيف"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__mitigation_owner_id
+msgid "Mitigation Owner"
+msgstr "مسؤول التخفيف"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__mitigation_plan
+msgid "Mitigation Plan"
+msgstr "خطة التخفيف"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget_line__is_contingency
+msgid ""
+"Money set aside rather than allocated to scope. Drawing on it is a decision "
+"that is recorded, not a budget line that quietly grows."
+msgstr ""
+"مبلغ مجنب بدلا من تخصيصه للنطاق. السحب منه قرار يسجل، وليس بند ميزانية يتضخم"
+" بصمت."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__state__monitoring
+msgid "Monitoring"
+msgstr "المتابعة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__my_activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "موعد نشاطي النهائي"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Negative periods or rates are not a forecast."
+msgstr "الفترات أو المعدلات السالبة لا تُعد توقعًا."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "New"
+msgstr "جديد"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__activity_calendar_event_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "حدث التقويم للنشاط التالي"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__activity_date_deadline
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__activity_summary
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__activity_summary
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__activity_summary
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__activity_type_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__activity_type_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__activity_type_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"No BOQ line on this cost code has an authorised quantity to forecast from."
+msgstr ""
+"لا يوجد بند في جدول الكميات على رمز التكلفة هذا له كمية معتمدة يمكن التوقع "
+"بناءً عليها."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_cost_report__forecast_state__none
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_project__ctrl_forecast_state__none
+msgid "No Forecast"
+msgstr "لا يوجد توقع"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_line__forecast_status__not_required
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_line__method__not_required
+msgid "No Forecast Required"
+msgstr "لا يلزم توقع"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "No approved forecast line for this cost code."
+msgstr "لا يوجد بند توقع معتمد لرمز التكلفة هذا."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "No cost code — see the data-quality worklist"
+msgstr "بدون رمز تكلفة — راجع قائمة عمل جودة البيانات"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"No cost has been posted yet, so performance cannot be measured from it."
+msgstr "لم تُرحّل أي تكلفة بعد، لذا لا يمكن قياس الأداء بناءً عليها."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "No forecast method has been chosen."
+msgstr "لم يتم اختيار طريقة توقع."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__escalation_level__none
+msgid "None"
+msgstr "لا يوجد"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk_action__effectiveness__unknown
+msgid "Not Yet Known"
+msgstr "غير معروف بعد"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget_line__amount_mode
+msgid ""
+"Not every cost has a sensible quantity. Forcing one produces a rate of 1 × "
+"the amount, which teaches nobody anything."
+msgstr ""
+"ليست كل تكلفة لها كمية منطقية. وفرض كمية ينتج سعرًا يساوي 1 × المبلغ، وهذا "
+"لا يفيد أحدًا بشيء."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__notes
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__notes
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__notes
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__notes
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"Nothing is committed against this code, so there is no remaining commitment "
+"to forecast from."
+msgstr ""
+"لا يوجد التزام على هذا الرمز، لذا لا يوجد التزام متبقٍ يمكن التوقع بناءً "
+"عليه."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__message_needaction_counter
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__message_has_error_counter
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_issue__message_needaction_counter
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراء"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_issue__message_has_error_counter
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي بها خطأ في التسليم"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_project__ctrl_forecast_is_stale
+msgid ""
+"Older than the configured forecast interval "
+"(`real_estate_construction.forecast_interval_days`, default 35)."
+msgstr ""
+"أقدم من فترة التوقع المحددة "
+"(`real_estate_construction.forecast_interval_days`، الافتراضي 35)."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__probability
+msgid "On the company's configured scale (1–5 by default)."
+msgstr "وفق المقياس المحدد للشركة (1–5 افتراضيًا)."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid "Only a baseline can be superseded."
+msgstr "لا يمكن استبدال إلا خط الأساس."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid "Only a budget under review can be approved."
+msgstr "لا يمكن اعتماد إلا ميزانية قيد المراجعة."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid "Only a draft budget can be submitted."
+msgstr "لا يمكن إرسال إلا ميزانية في حالة مسودة."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Only a draft forecast can be submitted."
+msgstr "لا يمكن إرسال إلا توقع في حالة مسودة."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Only a forecast under review can be approved."
+msgstr "لا يمكن اعتماد إلا توقع قيد المراجعة."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget_migration.py:0
+msgid ""
+"Only an approved BOQ can seed a budget. A draft BOQ is a working document."
+msgstr ""
+"لا يمكن إنشاء ميزانية إلا من جدول كميات معتمد. جدول الكميات المسودة مستند "
+"عمل."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid "Only an approved budget can be baselined."
+msgstr "لا يمكن اعتماد ميزانية كخط أساس إلا إذا كانت معتمدة."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid "Only the current baseline can be revised."
+msgstr "لا يمكن مراجعة إلا خط الأساس الحالي."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__state__open
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk_action__state__open
+msgid "Open"
+msgstr "فتح"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__open_action_count
+msgid "Open Action Count"
+msgstr "عدد الإجراءات المفتوحة"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "Open change events"
+msgstr "أحداث التغيير المفتوحة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__opened_on
+msgid "Opened On"
+msgstr "تاريخ الفتح"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Orders"
+msgstr "الأوامر"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_list
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_list
+msgid "Original"
+msgstr "الأصلية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__original_amount
+msgid "Original Amount"
+msgstr "المبلغ الأصلي"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__original_amount
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__original_budget
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__original_budget
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_original_budget
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Original Budget"
+msgstr "الميزانية الأصلية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__original_commitment
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Original Commitment"
+msgstr "الالتزام الأصلي"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_adjustment__adjustment_type__other
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__category__other
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__other
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__response_strategy__other
+msgid "Other"
+msgstr "أخرى"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Outturn"
+msgstr "التكلفة النهائية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__over_committed
+msgid "Over Committed"
+msgstr "تجاوز الالتزام"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_over_committed
+msgid "Over-committed"
+msgstr "تجاوز الالتزام"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__overall_impact
+msgid "Overall Impact"
+msgstr "الأثر الإجمالي"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__overdue_action_count
+msgid "Overdue Action Count"
+msgstr "عدد الإجراءات المتأخرة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__overridden_by_id
+msgid "Overridden By"
+msgstr "تم التجاوز بواسطة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__override_date
+msgid "Override Date"
+msgstr "تاريخ التجاوز"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__override_etc
+msgid "Override ETC"
+msgstr "تجاوز التكلفة المتبقية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__override_reason
+msgid "Override Reason"
+msgstr "سبب التجاوز"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__owner_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__owner_id
+msgid "Owner"
+msgstr "المالك"
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_revenue_change
+msgid "Owner Revenue Change"
+msgstr "تغيير إيرادات المالك"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_commitment_change__company_id
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_cost_report__company_id
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_revenue_change__company_id
+msgid "Owning company. Inventory, pricing and deals never cross companies."
+msgstr "الشركة المالكة. المخزون والتسعير والصفقات لا تنتقل بين الشركات أبدا."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__package_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__package_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__package_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__package_id
+msgid "Package"
+msgstr "حزمة الأعمال"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk_action__effectiveness__partial
+msgid "Partially Effective"
+msgstr "فعال جزئيًا"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__partner_id
+msgid "Partner"
+msgstr "الشريك"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "Payment certificates"
+msgstr "شهادات الدفع"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_line__method__percent_complete
+msgid "Performance (% Complete)"
+msgstr "الأداء (% الإنجاز)"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Performance: %(actual)s at %(pct).1f%% complete."
+msgstr "الأداء: %(actual)s عند نسبة إنجاز %(pct).1f%%."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__period_label
+msgid "Period Label"
+msgstr "تسمية الفترة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__periods_remaining
+msgid "Periods Remaining"
+msgstr "الفترات المتبقية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__progress_pct
+msgid "Physical completion, for the performance method."
+msgstr "نسبة الإنجاز الفعلي، لطريقة الأداء."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_adjustment__amount
+msgid "Positive increases the forecast. Negative records an expected saving."
+msgstr "القيمة الموجبة تزيد التوقع. والقيمة السالبة تسجل وفرًا متوقعًا."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_report.py:0
+msgid "Posted Cost"
+msgstr "التكلفة المرحلة"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Posted Cost to %s"
+msgstr "التكلفة المرحلة حتى %s"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Posted cost"
+msgstr "التكلفة المرحلة"
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_exposure
+msgid "Potential Commercial Exposure"
+msgstr "التعرض التجاري المحتمل"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/exposure.py:0
+msgid ""
+"Potential commercial exposure %(amount)s across %(claims)s claim(s), "
+"%(events)s change event(s), %(issues)s issue(s) and %(risks)s carried "
+"risk(s). Each underlying event is counted once, at the furthest stage it has"
+" reached. Authorised change is not included — it is in the budget."
+msgstr ""
+"التعرض التجاري المحتمل %(amount)s موزع على %(claims)s مطالبة، و%(events)s "
+"حدث تغيير، و%(issues)s مشكلة، و%(risks)s خطر قائم. يحتسب كل حدث أساسي مرة "
+"واحدة فقط، عند أبعد مرحلة وصل إليها. التغيير المعتمد غير مشمول — فهو ضمن "
+"الميزانية."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__prepared_by_id
+msgid "Prepared By"
+msgstr "أعده"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget__source__manual
+msgid "Prepared Manually"
+msgstr "معد يدويًا"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_project__ctrl_previous_eac
+msgid "Previous EAC"
+msgstr "التكلفة المتوقعة عند الإنجاز السابقة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__previous_eac
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__previous_eac
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__previous_eac
+msgid "Previous Eac"
+msgstr "التكلفة المتوقعة عند الإنجاز السابقة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__previous_forecast_id
+msgid "Previous Forecast"
+msgstr "التوقع السابق"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__priority
+msgid "Priority"
+msgstr "الأولوية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__probability
+msgid "Probability"
+msgstr "الاحتمالية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__procurement
+msgid "Procurement"
+msgstr "المشتريات"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_adjustment__adjustment_type__productivity
+msgid "Productivity"
+msgstr "الإنتاجية"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Programme"
+msgstr "البرنامج الزمني"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__progress_pct
+msgid "Progress (%)"
+msgstr "نسبة الإنجاز (%)"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Progress above 100% is not a measurement."
+msgstr "نسبة الإنجاز التي تتجاوز 100% ليست قياسًا صحيحًا."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"Progress of zero cannot forecast an outturn — dividing by it says the "
+"project costs infinity."
+msgstr ""
+"لا يمكن لنسبة إنجاز صفرية أن تتوقع التكلفة النهائية — فالقسمة عليها تعني أن "
+"تكلفة المشروع لا نهائية."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__project_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__project_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__project_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__project_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__project_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__project_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__project_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__project_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__project_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_revenue_change__project_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__project_id
+msgid "Project"
+msgstr "المشروع"
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_issue
+msgid "Project Issue"
+msgstr "مشكلة في المشروع"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__escalation_level__project_manager
+msgid "Project Manager"
+msgstr "مدير المشروع"
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_risk
+msgid "Project Risk"
+msgstr "خطر المشروع"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__purchase_order_id
+msgid "Purchase Order"
+msgstr "أمر شراء"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Purchase Orders"
+msgstr "أوامر الشراء"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "Purchase order lines"
+msgstr "بنود أوامر الشراء"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "Putting a risk into the forecast is a cost controller's decision."
+msgstr "إدراج الخطر في التوقع قرار يعود إلى مراقب التكاليف."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__quality
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Quality"
+msgstr "الجودة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__category__quality
+msgid "Quality (see NCR)"
+msgstr "الجودة (انظر تقرير عدم المطابقة)"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__quality_impact_score
+msgid "Quality Impact Score"
+msgstr "درجة الأثر على الجودة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__quantity
+msgid "Quantity"
+msgstr "الكمية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget_line__amount_mode__quantity
+msgid "Quantity × Rate"
+msgstr "الكمية × السعر"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget_line__original_amount
+msgid "Quantity × rate in quantity mode; typed directly for a lump sum."
+msgstr "الكمية × السعر في وضع الكميات؛ ويُدخل مباشرة في حالة المبلغ المقطوع."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__period_rate
+msgid "Rate per Period"
+msgstr "المعدل لكل فترة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__state__ready_to_close
+msgid "Ready to Close"
+msgstr "جاهز للإغلاق"
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_project
+msgid "Real Estate Development Project"
+msgstr "مشروع التطوير العقاري"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "Record what resolved %s."
+msgstr "سجل ما الذي أدى إلى حل %s."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk_action__effectiveness
+msgid ""
+"Recorded after the fact. A mitigation nobody reviewed is a mitigation nobody"
+" knows worked."
+msgstr ""
+"يسجل بعد وقوع الحدث. إجراء التخفيف الذي لم يراجعه أحد لا يعرف أحد إن كان قد "
+"نجح."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__name
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__name
+msgid "Reference"
+msgstr "المرجع"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__package_id
+msgid ""
+"Reference only. Lines stay cost-code based so a package spanning several "
+"codes cannot be counted twice."
+msgstr ""
+"للمرجعية فقط. تبقى البنود مبنية على رموز التكلفة حتى لا تحتسب حزمة الأعمال "
+"الممتدة على عدة رموز مرتين."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__reflected_in_purchase_order
+msgid "Reflected In Purchase Order"
+msgstr "منعكس في أمر الشراء"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Refresh Actuals & Commitments"
+msgstr "تحديث التكاليف الفعلية والالتزامات"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_line__method__remaining_boq
+msgid "Remaining BOQ Quantity"
+msgstr "كمية جدول الكميات المتبقية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_line__method__remaining_commitment
+msgid "Remaining Commitment"
+msgstr "الالتزام المتبقي"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Remaining authorised BOQ quantity at contract rates."
+msgstr "كمية جدول الكميات المعتمدة المتبقية بأسعار العقد."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Remaining commitment."
+msgstr "الالتزام المتبقي."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__budget_remaining_vs_actual
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_cost_report_form
+msgid "Remaining vs Actual"
+msgstr "المتبقي مقابل الفعلي"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report_line__report_id
+msgid "Report"
+msgstr "التقرير"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Reset to Draft"
+msgstr "إعادة إلى مسودة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__residual_impact
+msgid "Residual Impact"
+msgstr "الأثر المتبقي"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__residual_probability
+msgid "Residual Probability"
+msgstr "الاحتمالية المتبقية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__residual_score
+msgid "Residual Score"
+msgstr "الدرجة المتبقية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__resolution
+msgid "Resolution"
+msgstr "الحل"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__resolved_on
+msgid "Resolved On"
+msgstr "تاريخ الحل"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__category__resource
+msgid "Resource"
+msgstr "الموارد"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__state__response_planned
+msgid "Response Planned"
+msgstr "تم تخطيط الاستجابة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__response_strategy
+msgid "Response Strategy"
+msgstr "استراتيجية الاستجابة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__responsible_id
+msgid "Responsible"
+msgstr "المسؤول"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__responsible_party
+msgid "Responsible Party"
+msgstr "الطرف المسؤول"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__activity_user_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__activity_user_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__activity_user_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_retention_disclosure
+msgid "Retention Treatment Disclosure"
+msgstr "الإفصاح عن معالجة المحتجزات"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__retention_warning
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__retention_warning
+msgid "Retention Warning"
+msgstr "تحذير المحتجزات"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "Retention register"
+msgstr "سجل المحتجزات"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/change_impact.py:0
+msgid "Revenue changes are records, not drafts."
+msgstr "تغييرات الإيرادات سجلات نهائية وليست مسودات."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/change_impact.py:0
+msgid "Revenue changes cannot be deleted."
+msgstr "لا يمكن حذف تغييرات الإيرادات."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__review_date
+msgid "Review Date"
+msgstr "تاريخ المراجعة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__reviewed_by_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__reviewed_by_id
+msgid "Reviewed By"
+msgstr "راجعه"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__risk_id
+msgid "Risk"
+msgstr "الخطر"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "Risk %(name)s is in %(company)s but its project is in %(other)s."
+msgstr ""
+"الخطر %(name)s تابع للشركة %(company)s بينما مشروعه تابع للشركة %(other)s."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_adjustment__adjustment_type__risk
+msgid "Risk Allowance"
+msgstr "مخصص المخاطر"
+
+#. module: atmta_construction_cost
+#: model:ir.model,name:atmta_construction_cost.model_realestate_construction_risk_action
+msgid "Risk Mitigation Action"
+msgstr "إجراء تخفيف الخطر"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__owner_id
+msgid "Risk Owner"
+msgstr "مالك الخطر"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__message_has_sms_error
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "خطأ في إرسال الرسائل النصية القصيرة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__schedule
+msgid "Schedule"
+msgstr "جدولة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__category__schedule
+msgid "Schedule Constraint"
+msgstr "قيد الجدول الزمني"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__schedule_exposure_days
+msgid "Schedule Exposure Days"
+msgstr "أيام التعرض في الجدول الزمني"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__schedule_impact_score
+msgid "Schedule Impact Score"
+msgstr "درجة الأثر على الجدول الزمني"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Scope"
+msgstr "النطاق"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__severity
+msgid "Severity"
+msgstr "الشدة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__forecast_coverage
+msgid ""
+"Share of forecastable lines that actually carry an estimate, weighted by "
+"current budget where there is one."
+msgstr ""
+"نسبة البنود القابلة للتوقع التي تحمل تقديرًا فعليًا، مرجحة بالميزانية "
+"الحالية حيثما وجدت."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__category__interface
+msgid "Site Interface"
+msgstr "التداخل مع الموقع"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__source
+msgid "Source"
+msgstr "المصدر"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__source_boq_id
+msgid "Source BOQ"
+msgstr "جدول الكميات المصدر"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__source_delay_event_id
+msgid "Source Delay Event"
+msgstr "حدث التأخير المصدر"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__source_ncr_id
+msgid "Source Ncr"
+msgstr "تقرير عدم المطابقة المصدر"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__source_rfi_id
+msgid "Source Rfi"
+msgstr "طلب المعلومات المصدر"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__source_risk_id
+msgid "Source Risk"
+msgstr "الخطر المصدر"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__stakeholder
+msgid "Stakeholder"
+msgstr "أصحاب المصلحة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_cost_report__forecast_state__stale
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_project__ctrl_forecast_state__stale
+msgid "Stale"
+msgstr "قديم"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__state
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__state
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__state
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__state
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__state
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__state
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk_action__state
+msgid "State"
+msgstr "الحالة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__status_reason
+msgid "Status Reason"
+msgstr "سبب الحالة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__activity_state
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__activity_state
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_issue__activity_state
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الحالة بناءً على الأنشطة\n"
+"متأخرة: تاريخ الاستحقاق قد مضى\n"
+"اليوم: تاريخ النشاط هو اليوم\n"
+"مخطط لها: أنشطة مستقبلية."
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid "Submit"
+msgstr "إرسال"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+msgid "Submit for Review"
+msgstr "إرسال للمراجعة"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Substantially Complete"
+msgstr "منجز جوهريا"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+msgid "Supersede"
+msgstr "استبدال"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget__state__superseded
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast__state__superseded
+msgid "Superseded"
+msgstr "مستبدل"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__superseded_by_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__superseded_by_id
+msgid "Superseded By"
+msgstr "استبدل بـ"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__supersedes_id
+msgid "Supersedes"
+msgstr "يحل محل"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__category__supplier
+msgid "Supplier Failure"
+msgstr "إخفاق المورد"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__category__supply_chain
+msgid "Supply Chain"
+msgstr "سلسلة الإمداد"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__source_boq_id
+msgid ""
+"The BOQ this budget was drafted from. A BOQ valuation is not automatically "
+"an approved budget — somebody reviewed it."
+msgstr ""
+"جدول الكميات الذي أعدت منه هذه الميزانية. تقييم جدول الكميات ليس ميزانية "
+"معتمدة تلقائيًا — لا بد أن يراجعه أحد."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__previous_forecast_id
+msgid "The approved forecast this one follows, for the movement bridge."
+msgstr "التوقع المعتمد الذي يلي هذا التوقع، لجسر الحركة."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget_change_line__budget_line_id
+msgid ""
+"The baselined line this change moves. Empty when the change adds a cost code"
+" the baseline never had — which is legitimate and is reported as an addition"
+" rather than forced onto an unrelated line."
+msgstr ""
+"بند خط الأساس الذي يحركه هذا التغيير. يكون فارغًا عندما يضيف التغيير رمز "
+"تكلفة لم يكن في خط الأساس — وهذا مشروع ويظهر في التقارير كإضافة بدلًا من "
+"فرضه على بند غير مرتبط."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_commitment_change__currency_id
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_revenue_change__currency_id
+msgid ""
+"The contract's currency. Control amounts are converted to the company "
+"currency for the cost report; no FX is posted."
+msgstr ""
+"عملة العقد. تحول المبالغ الرقابية إلى عملة الشركة لتقرير التكاليف؛ ولا يتم "
+"ترحيل فروقات صرف."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__currency_id
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_adjustment__currency_id
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__currency_id
+msgid ""
+"The control currency. Foreign-currency sources are converted for comparison;"
+" nothing here re-accounts FX."
+msgstr ""
+"عملة الرقابة. تحول المصادر بالعملات الأجنبية لأغراض المقارنة؛ ولا يعاد هنا "
+"احتساب فروق العملات محاسبيًا."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__as_of_date
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__as_of_date
+msgid ""
+"The cutoff. Actual counts postings on or before this date, so a bill posted "
+"afterwards cannot rewrite this forecast."
+msgstr ""
+"تاريخ القطع. تحتسب التكلفة الفعلية من القيود المرحلة في هذا التاريخ أو قبله،"
+" فلا يمكن لفاتورة مرحلة لاحقًا أن تغير هذا التوقع."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__issue_id
+msgid "The issue this risk became, when it came true."
+msgstr "المشكلة التي تحول إليها هذا الخطر عندما وقع."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid ""
+"The money on a baselined budget cannot be edited. Create a revision, or "
+"record an approved change — 'change 5M to 6M' on an approved line leaves no "
+"record that it was ever 5M."
+msgstr ""
+"لا يمكن تعديل المبالغ في ميزانية معتمدة كخط أساس. أنشئ مراجعة، أو سجل "
+"تغييرًا معتمدًا — فتعديل 5M إلى 6M مباشرة في بند معتمد لا يترك أي أثر على "
+"أنه كان 5M."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__contingency_amount
+msgid ""
+"The part of the budget held against cost codes marked as contingency — money"
+" set aside rather than allocated to scope."
+msgstr ""
+"جزء الميزانية المحتجز مقابل رموز التكلفة المصنفة كاحتياطي طوارئ — أموال "
+"مجنبة بدلًا من تخصيصها للنطاق."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_adjustment__change_event_id
+msgid ""
+"The potential change this allowance anticipates. When that change is "
+"approved and implemented, the allowance is marked converted so the next "
+"forecast does not count the same money twice."
+msgstr ""
+"التغيير المحتمل الذي يتحسب له هذا المخصص. عند اعتماد هذا التغيير وتنفيذه، "
+"يعلم المخصص كمحول حتى لا يحتسب التوقع التالي المبلغ نفسه مرتين."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget_line__approved_change_amount
+msgid ""
+"The sum of implemented budget changes against this cost code. A derived "
+"number, not a typed one — every unit of it points at the change order that "
+"authorised it."
+msgstr ""
+"مجموع تغييرات الميزانية المنفذة على رمز التكلفة هذا. رقم محتسب وليس مدخلًا "
+"يدويًا — كل جزء منه يشير إلى أمر التغيير الذي اعتمده."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__original_amount
+msgid "The sum of the baselined lines. Frozen once baselined."
+msgstr "مجموع بنود خط الأساس. يجمد بعد اعتماده كخط أساس."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__overall_impact
+msgid ""
+"The worst of the impact dimensions, because a risk that is catastrophic for "
+"time and trivial for cost is a severe risk."
+msgstr ""
+"أسوأ أبعاد الأثر، لأن الخطر الكارثي على الوقت والضئيل على التكلفة يعد خطرًا "
+"جسيمًا."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__eac_movement
+msgid ""
+"This EAC minus the previous approved EAC. Positive means the expected cost "
+"has grown, which is adverse."
+msgstr ""
+"التكلفة المتوقعة عند الإنجاز الحالية ناقص السابقة المعتمدة. القيمة الموجبة "
+"تعني أن التكلفة المتوقعة زادت، وهذا غير مواتٍ."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"This forecast cannot be approved yet:\n"
+"\n"
+"%s"
+msgstr ""
+"لا يمكن اعتماد هذا التوقع بعد:\n"
+"\n"
+"%s"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+msgid ""
+"This forecast does not cover every cost code. The total EAC\n"
+"                        below is partial and must not be quoted as the project's\n"
+"                        expected cost."
+msgstr ""
+"لا يغطي هذا التوقع جميع رموز التكلفة. إجمالي التكلفة المتوقعة عند الإنجاز "
+"أدناه جزئي ولا يجوز اعتماده كتكلفة متوقعة للمشروع."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid ""
+"This forecast was approved on %(date)s and cannot be changed. Create a new "
+"forecast — the history is the point."
+msgstr ""
+"تم اعتماد هذا التوقع في %(date)s ولا يمكن تغييره. أنشئ توقعًا جديدًا — "
+"فالغاية هي الاحتفاظ بالسجل التاريخي."
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_budget_form
+msgid ""
+"This is the project's current baseline. Its figures cannot be\n"
+"                        edited — create a revision, or record an approved change."
+msgstr ""
+"هذا هو خط الأساس الحالي للمشروع. لا يمكن تعديل أرقامه — أنشئ مراجعة، أو سجل "
+"تغييرًا معتمدًا."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_line__method__date_range
+msgid "Time-Based (Remaining Periods)"
+msgstr "زمني (الفترات المتبقية)"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__title
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__title
+msgid "Title"
+msgstr "العنوان"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__total_actual
+msgid "Total Actual"
+msgstr "إجمالي التكلفة الفعلية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__total_commitment
+msgid "Total Commitment"
+msgstr "إجمالي الالتزام"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__total_current_budget
+msgid "Total Current Budget"
+msgstr "إجمالي الميزانية الحالية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__total_eac
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__total_eac
+msgid "Total Eac"
+msgstr "إجمالي التكلفة المتوقعة عند الإنجاز"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__total_etc
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__total_etc
+msgid "Total Etc"
+msgstr "إجمالي التكلفة المتبقية للإنجاز"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_cost_report__total_forecast_variance
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__total_forecast_variance
+msgid "Total Forecast Variance"
+msgstr "إجمالي انحراف التوقع"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_risk__response_strategy__transfer
+msgid "Transfer"
+msgstr "تحويل"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget_change_line__change_type__transfer_in
+msgid "Transfer In"
+msgstr "تحويل وارد"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget_change_line__change_type__transfer_out
+msgid "Transfer Out"
+msgstr "تحويل صادر"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__trigger
+msgid "Trigger"
+msgstr "المؤشر"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_adjustment__converted_to_change_order
+msgid ""
+"True once the anticipated change became a real approved one. The allowance "
+"stays on the historical forecast that recorded it — that is what was "
+"believed at the time — and is not carried into the next one."
+msgstr ""
+"تصبح صحيحة بمجرد أن يصبح التغيير المتوقع تغييرًا معتمدًا فعليًا. يبقى المخصص"
+" في التوقع التاريخي الذي سجله — فهو ما كان متوقعًا في حينه — ولا ينقل إلى "
+"التوقع التالي."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_commitment_change__reflected_in_purchase_order
+msgid ""
+"True once the linked purchase order has been amended to include this change."
+" The commitment engine then reads the order and ignores this record, so the "
+"same money is counted once — the M2 source-precedence rule, extended to "
+"variations."
+msgstr ""
+"تصبح صحيحة بمجرد تعديل أمر الشراء المرتبط ليشمل هذا التغيير. عندها يقرأ محرك"
+" الالتزامات الأمر ويتجاهل هذا السجل، فيحتسب المبلغ مرة واحدة — وهي قاعدة "
+"أولوية المصدر M2 ممتدة لتشمل التغييرات."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_issue__activity_exception_decoration
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع النشاط الاستثنائي في السجل."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/cost_sheet.py:0
+msgid "Unassigned"
+msgstr "غير مخصص"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast_adjustment__adjustment_type__unawarded_scope
+msgid "Unawarded Scope"
+msgstr "نطاق غير مرسى"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__uncommitted_etc
+msgid "Uncommitted Etc"
+msgstr "التكلفة المتبقية للإنجاز غير الملتزم بها"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_budget__state__review
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_forecast__state__review
+msgid "Under Review"
+msgstr "قيد المراجعة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__unit_rate
+msgid "Unit Rate"
+msgstr "سعر الوحدة"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/forecast.py:0
+msgid "Unknown forecast method."
+msgstr "طريقة توقع غير معروفة."
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_form
+msgid "Untaxed"
+msgstr "غير شامل الضريبة"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__uom_id
+msgid "UoM"
+msgstr "وحدة القياس"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields.selection,name:atmta_construction_cost.selection__realestate_construction_issue__category__utility
+msgid "Utility / Obstruction"
+msgstr "المرافق / العوائق"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_form
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_forecast_list
+msgid "Variance"
+msgstr "الانحراف"
+
+#. module: atmta_construction_cost
+#: model_terms:ir.ui.view,arch_db:atmta_construction_cost.view_construction_package_list
+msgid "Variations"
+msgstr "التغييرات"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__version
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__version
+msgid "Version"
+msgstr "الإصدار"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_line__wbs_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast_line__wbs_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__wbs_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__wbs_id
+msgid "WBS"
+msgstr "هيكل تجزئة العمل"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/budget.py:0
+msgid "WBS %(wbs)s belongs to another project."
+msgstr "هيكل تجزئة العمل %(wbs)s تابع لمشروع آخر."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget_change_line__wbs_id
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_commitment_change__wbs_id
+msgid "Wbs"
+msgstr "هيكل تجزئة العمل"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_budget__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_forecast__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_issue__website_message_ids
+#: model:ir.model.fields,field_description:atmta_construction_cost.field_realestate_construction_risk__website_message_ids
+msgid "Website Messages"
+msgstr "رسائل الموقع الإلكتروني"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_issue__website_message_ids
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__website_message_ids
+msgid "Website communication history"
+msgstr "سجل التواصل عبر الموقع الإلكتروني"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_issue__estimated_cost_impact
+msgid ""
+"What it might cost. Not a cost, not a commitment, and not authorisation for "
+"either."
+msgstr "ما قد يكلفه. ليس تكلفة ولا التزامًا ولا اعتمادًا لأي منهما."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__consequence
+msgid "What it would do if it did."
+msgstr "ما الذي سيحدثه إن وقع."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget_line__cost_code_id
+msgid ""
+"What kind of money. Required — an amount nobody can classify cannot be "
+"controlled."
+msgstr "نوع المبلغ. إلزامي — فالمبلغ الذي لا يمكن تصنيفه لا يمكن ضبطه."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_forecast_line__calculated_etc
+msgid "What the method produced, kept even when overridden."
+msgstr "ما أنتجته الطريقة، ويحتفظ به حتى عند تجاوزه."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__materialised_snapshot
+msgid ""
+"What the risk said at the moment it came true — the answer to 'did we see "
+"this coming?'."
+msgstr "ما كان الخطر يقوله لحظة وقوعه — الإجابة عن سؤال 'هل توقعنا هذا؟'."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__trigger
+msgid "What would tell us it is happening."
+msgstr "ما الذي سينبهنا إلى أنه يحدث."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_budget_line__wbs_id
+msgid "Where in the works. Optional for a project-level allowance."
+msgstr "الموضع ضمن الأعمال. اختياري للمخصص على مستوى المشروع."
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__cause
+msgid "Why it might happen."
+msgstr "سبب احتمال حدوثه."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/change_impact.py:0
+msgid ""
+"You raised this change and cannot also approve it. Ask somebody with the "
+"authority, or set a self-approval limit if this company genuinely works that"
+" way."
+msgstr ""
+"أنت من أنشأ هذا التغيير ولا يمكنك اعتماده أيضًا. اطلب ذلك من شخص يملك "
+"الصلاحية، أو حدد حدًا للاعتماد الذاتي إذا كانت هذه الشركة تعمل بهذه الطريقة "
+"فعلًا."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "cost impact"
+msgstr "الأثر على التكلفة"
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "probability"
+msgstr "الاحتمالية"
+
+#. module: atmta_construction_cost
+#: model:ir.model.fields,help:atmta_construction_cost.field_realestate_construction_risk__inherent_score
+msgid ""
+"probability × overall impact. A sortable number, not a quantification — "
+"multiplying ordinal scales is a convention, and `management_rating` exists "
+"for when it misleads."
+msgstr ""
+"الاحتمالية × الأثر الإجمالي. رقم قابل للفرز وليس قياسًا كميًا — فضرب "
+"المقاييس الترتيبية مجرد عرف، والحقل `management_rating` موجود للحالات التي "
+"يكون فيها مضللًا."
+
+#. module: atmta_construction_cost
+#. odoo-python
+#: code:addons/atmta_construction_cost/models/risk_issue.py:0
+msgid "schedule impact"
+msgstr "الأثر على الجدول الزمني"

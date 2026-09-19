@@ -7,6 +7,7 @@ class SaleContract(models.Model):
     _description = 'Property Sale Contract'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = 'contract_date desc, id desc'
+    _check_company_auto = True
 
     name = fields.Char(string='Reference', copy=False, required=True, readonly=True, default=lambda self: _('New'))
     partner_id = fields.Many2one('res.partner', string='Buyer', required=True, tracking=True)
@@ -14,8 +15,12 @@ class SaleContract(models.Model):
         'realestate.property', string='Unit',
         required=True, ondelete='restrict', tracking=True,
     )
-    project_id = fields.Many2one(related='property_id.project_id', store=True, readonly=True)
+    project_id = fields.Many2one(related='property_id.project_id', store=True, readonly=True, index=True)
     phase_id = fields.Many2one(related='property_id.phase_id', store=True, readonly=True)
+    company_id = fields.Many2one(
+        'res.company', related='property_id.company_id', store=True,
+        readonly=True, index=True,
+    )
 
     reservation_id = fields.Many2one('realestate.unit.reservation', string='Origin Reservation', readonly=True)
     agent_id = fields.Many2one('res.users', string='Sales Agent', default=lambda self: self.env.user, tracking=True)

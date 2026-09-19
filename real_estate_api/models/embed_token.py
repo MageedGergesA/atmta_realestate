@@ -200,8 +200,12 @@ class EmbedToken(models.Model):
             raise MissingError(_("Token expired."))
 
         if rec.allowed_origins != '*':
-            allowed = {o.strip() for o in rec.allowed_origins.split(',') if o.strip()}
-            if origin not in allowed:
+            # Normalised the way the visual grant check does it: an origin
+            # typed with a trailing slash, or in a different case, is the same
+            # origin and must not refuse the embed.
+            allowed = {o.strip().rstrip('/').lower()
+                       for o in rec.allowed_origins.split(',') if o.strip()}
+            if (origin or '').strip().rstrip('/').lower() not in allowed:
                 raise AccessError(_("Origin not allowed for this embed token."))
 
         rec.write({

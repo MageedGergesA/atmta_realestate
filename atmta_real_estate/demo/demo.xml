@@ -27,6 +27,7 @@
     <record id="demo_prop_1" model="realestate.property">
     <field name="name">Riyadh Heights — Main Compound</field>
     <field name="property_code">PROP-00001</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">compound</field>
     <field name="state">available</field>
     <field name="city">Riyadh</field>
@@ -41,6 +42,7 @@
     <record id="demo_prop_2" model="realestate.property">
     <field name="name">RH — Tower A</field>
     <field name="property_code">PROP-00002</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">building</field>
     <field name="state">available</field>
     <field name="city">Riyadh</field>
@@ -56,6 +58,7 @@
     <record id="demo_prop_4" model="realestate.property">
     <field name="name">Unit 101</field>
     <field name="property_code">PROP-00004</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">rented</field>
     <field name="city">Riyadh</field>
@@ -72,6 +75,7 @@
     <record id="demo_prop_5" model="realestate.property">
     <field name="name">Unit 102</field>
     <field name="property_code">PROP-00005</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">reserved</field>
     <field name="city">Riyadh</field>
@@ -88,6 +92,7 @@
     <record id="demo_prop_6" model="realestate.property">
     <field name="name">Unit 103</field>
     <field name="property_code">PROP-00006</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">rented</field>
     <field name="city">Riyadh</field>
@@ -104,6 +109,7 @@
     <record id="demo_prop_7" model="realestate.property">
     <field name="name">Unit 104</field>
     <field name="property_code">PROP-00007</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">maintenance</field>
     <field name="city">Riyadh</field>
@@ -120,6 +126,7 @@
     <record id="demo_prop_8" model="realestate.property">
     <field name="name">Unit 105</field>
     <field name="property_code">PROP-00008</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">rented</field>
     <field name="city">Riyadh</field>
@@ -136,6 +143,7 @@
     <record id="demo_prop_3" model="realestate.property">
     <field name="name">RH — Tower B</field>
     <field name="property_code">PROP-00003</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">building</field>
     <field name="state">available</field>
     <field name="city">Riyadh</field>
@@ -151,6 +159,7 @@
     <record id="demo_prop_10" model="realestate.property">
     <field name="name">Unit 107</field>
     <field name="property_code">PROP-00010</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">reserved</field>
     <field name="city">Riyadh</field>
@@ -167,6 +176,7 @@
     <record id="demo_prop_11" model="realestate.property">
     <field name="name">Unit 108</field>
     <field name="property_code">PROP-00011</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">reserved</field>
     <field name="city">Riyadh</field>
@@ -183,6 +193,7 @@
     <record id="demo_prop_12" model="realestate.property">
     <field name="name">Unit 109</field>
     <field name="property_code">PROP-00012</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">rented</field>
     <field name="city">Riyadh</field>
@@ -199,6 +210,7 @@
     <record id="demo_prop_13" model="realestate.property">
     <field name="name">Unit 110</field>
     <field name="property_code">PROP-00013</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">rented</field>
     <field name="city">Riyadh</field>
@@ -215,6 +227,7 @@
     <record id="demo_prop_9" model="realestate.property">
     <field name="name">Unit 106</field>
     <field name="property_code">PROP-00009</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">rented</field>
     <field name="city">Riyadh</field>
@@ -231,6 +244,7 @@
     <record id="demo_prop_14" model="realestate.property">
     <field name="name">JCR — Corniche Compound</field>
     <field name="property_code">PROP-00014</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">compound</field>
     <field name="state">available</field>
     <field name="city">Jeddah</field>
@@ -245,6 +259,7 @@
     <record id="demo_prop_15" model="realestate.property">
     <field name="name">JCR — Block A</field>
     <field name="property_code">PROP-00015</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">building</field>
     <field name="state">available</field>
     <field name="city">Jeddah</field>
@@ -260,6 +275,7 @@
     <record id="demo_prop_17" model="realestate.property">
     <field name="name">JCR Unit 111</field>
     <field name="property_code">PROP-00017</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">rented</field>
     <field name="city">Jeddah</field>
@@ -276,6 +292,7 @@
     <record id="demo_prop_18" model="realestate.property">
     <field name="name">JCR Unit 112</field>
     <field name="property_code">PROP-00018</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">rented</field>
     <field name="city">Jeddah</field>
@@ -292,6 +309,7 @@
     <record id="demo_prop_19" model="realestate.property">
     <field name="name">JCR Unit 113</field>
     <field name="property_code">PROP-00019</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">rented</field>
     <field name="city">Jeddah</field>
@@ -308,6 +326,7 @@
     <record id="demo_prop_20" model="realestate.property">
     <field name="name">JCR Unit 114</field>
     <field name="property_code">PROP-00020</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">rented</field>
     <field name="city">Jeddah</field>
@@ -324,6 +343,7 @@
     <record id="demo_prop_21" model="realestate.property">
     <field name="name">JCR Unit 115</field>
     <field name="property_code">PROP-00021</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">reserved</field>
     <field name="city">Jeddah</field>
@@ -340,6 +360,7 @@
     <record id="demo_prop_16" model="realestate.property">
     <field name="name">JCR — Block B</field>
     <field name="property_code">PROP-00016</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">building</field>
     <field name="state">available</field>
     <field name="city">Jeddah</field>
@@ -355,6 +376,7 @@
     <record id="demo_prop_22" model="realestate.property">
     <field name="name">JCR Unit 116</field>
     <field name="property_code">PROP-00022</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">rented</field>
     <field name="city">Jeddah</field>
@@ -371,6 +393,7 @@
     <record id="demo_prop_23" model="realestate.property">
     <field name="name">JCR Unit 117</field>
     <field name="property_code">PROP-00023</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">rented</field>
     <field name="city">Jeddah</field>
@@ -387,6 +410,7 @@
     <record id="demo_prop_24" model="realestate.property">
     <field name="name">JCR Unit 118</field>
     <field name="property_code">PROP-00024</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">reserved</field>
     <field name="city">Jeddah</field>
@@ -403,6 +427,7 @@
     <record id="demo_prop_25" model="realestate.property">
     <field name="name">JCR Unit 119</field>
     <field name="property_code">PROP-00025</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">available</field>
     <field name="city">Jeddah</field>
@@ -419,6 +444,7 @@
     <record id="demo_prop_26" model="realestate.property">
     <field name="name">JCR Unit 120</field>
     <field name="property_code">PROP-00026</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">maintenance</field>
     <field name="city">Jeddah</field>
@@ -435,6 +461,7 @@
     <record id="demo_prop_27" model="realestate.property">
     <field name="name">Al Yasmin Villa A1</field>
     <field name="property_code">PROP-00027</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">available</field>
     <field name="city">Riyadh</field>
@@ -450,6 +477,7 @@
     <record id="demo_prop_28" model="realestate.property">
     <field name="name">Al Yasmin Villa A2</field>
     <field name="property_code">PROP-00028</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">available</field>
     <field name="city">Riyadh</field>
@@ -465,6 +493,7 @@
     <record id="demo_prop_29" model="realestate.property">
     <field name="name">Obhur Villa V1</field>
     <field name="property_code">PROP-00029</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">rented</field>
     <field name="city">Jeddah</field>
@@ -480,6 +509,7 @@
     <record id="demo_prop_30" model="realestate.property">
     <field name="name">Al Fanateer Villa F1</field>
     <field name="property_code">PROP-00030</field>
+    <field name="company_id" ref="base.main_company"/>
     <field name="hierarchy_level">unit</field>
     <field name="state">available</field>
     <field name="property_type_id" ref="atmta_real_estate.demo_ptype_villa"/>
@@ -794,40 +824,9 @@
     <field name="country_id" ref="base.sa"/>
     </record>
 
-    <record id="demo_plan_1" model="realestate.payment.plan">
-    <field name="start_after" eval="0"/>
-    <field name="start_after_unit">month</field>
-    <field name="interval" eval="1"/>
-    <field name="unit">month</field>
-    </record>
 
-    <record id="demo_plan_2" model="realestate.payment.plan">
-    <field name="start_after" eval="1"/>
-    <field name="start_after_unit">month</field>
-    <field name="interval" eval="3"/>
-    <field name="unit">month</field>
-    </record>
 
-    <record id="demo_plan_3" model="realestate.payment.plan">
-    <field name="start_after" eval="0"/>
-    <field name="start_after_unit">day</field>
-    <field name="interval" eval="1"/>
-    <field name="unit">week</field>
-    </record>
 
-    <record id="demo_plan_4" model="realestate.payment.plan">
-    <field name="start_after" eval="0"/>
-    <field name="start_after_unit">month</field>
-    <field name="interval" eval="6"/>
-    <field name="unit">month</field>
-    </record>
-
-    <record id="demo_plan_5" model="realestate.payment.plan">
-    <field name="start_after" eval="0"/>
-    <field name="start_after_unit">month</field>
-    <field name="interval" eval="1"/>
-    <field name="unit">year</field>
-    </record>
 
     <record id="demo_rule_4" model="realestate.contract.increment.rule">
     <field name="start_month" eval="0"/>
@@ -881,7 +880,6 @@
     <field name="state">draft</field>
     <field name="partner_id" ref="demo_tenant_74"/>
     <field name="property_id" ref="atmta_real_estate.demo_prop_4"/>
-    <field name="payment_plan_ids" eval="[(6, 0, [ref(&quot;atmta_real_estate.demo_plan_1&quot;)])]"/>
     <field name="increment_rule_ids" eval="[(6, 0, [ref(&quot;demo_rule_1&quot;)])]"/>
     </record>
 
@@ -892,7 +890,6 @@
     <field name="state">draft</field>
     <field name="partner_id" ref="demo_tenant_75"/>
     <field name="property_id" ref="atmta_real_estate.demo_prop_6"/>
-    <field name="payment_plan_ids" eval="[(6, 0, [ref(&quot;atmta_real_estate.demo_plan_1&quot;)])]"/>
     <field name="increment_rule_ids" eval="[(6, 0, [ref(&quot;demo_rule_3&quot;),ref(&quot;demo_rule_1&quot;)])]"/>
     </record>
 
@@ -903,7 +900,6 @@
     <field name="state">draft</field>
     <field name="partner_id" ref="demo_tenant_76"/>
     <field name="property_id" ref="atmta_real_estate.demo_prop_8"/>
-    <field name="payment_plan_ids" eval="[(6, 0, [ref(&quot;atmta_real_estate.demo_plan_2&quot;)])]"/>
     <field name="increment_rule_ids" eval="[(6, 0, [ref(&quot;demo_rule_1&quot;),ref(&quot;demo_rule_2&quot;)])]"/>
     </record>
 
@@ -914,7 +910,6 @@
     <field name="state">draft</field>
     <field name="partner_id" ref="demo_tenant_77"/>
     <field name="property_id" ref="atmta_real_estate.demo_prop_9"/>
-    <field name="payment_plan_ids" eval="[(6, 0, [ref(&quot;atmta_real_estate.demo_plan_1&quot;)])]"/>
     <field name="discount_rule_ids" eval="[(6, 0, [ref(&quot;demo_rule_4&quot;)])]"/>
     </record>
 
@@ -925,7 +920,6 @@
     <field name="state">draft</field>
     <field name="partner_id" ref="demo_tenant_78"/>
     <field name="property_id" ref="atmta_real_estate.demo_prop_12"/>
-    <field name="payment_plan_ids" eval="[(6, 0, [ref(&quot;atmta_real_estate.demo_plan_1&quot;)])]"/>
     <field name="increment_rule_ids" eval="[(6, 0, [ref(&quot;demo_rule_1&quot;)])]"/>
     </record>
 
@@ -936,7 +930,6 @@
     <field name="state">draft</field>
     <field name="partner_id" ref="demo_tenant_79"/>
     <field name="property_id" ref="atmta_real_estate.demo_prop_13"/>
-    <field name="payment_plan_ids" eval="[(6, 0, [ref(&quot;atmta_real_estate.demo_plan_4&quot;)])]"/>
     </record>
 
     <record id="demo_contract_8" model="realestate.contract">
@@ -946,7 +939,6 @@
     <field name="state">draft</field>
     <field name="partner_id" ref="demo_tenant_80"/>
     <field name="property_id" ref="atmta_real_estate.demo_prop_17"/>
-    <field name="payment_plan_ids" eval="[(6, 0, [ref(&quot;atmta_real_estate.demo_plan_3&quot;)])]"/>
     </record>
 
     <record id="demo_contract_9" model="realestate.contract">
@@ -956,7 +948,6 @@
     <field name="state">draft</field>
     <field name="partner_id" ref="demo_tenant_81"/>
     <field name="property_id" ref="atmta_real_estate.demo_prop_18"/>
-    <field name="payment_plan_ids" eval="[(6, 0, [ref(&quot;atmta_real_estate.demo_plan_1&quot;)])]"/>
     <field name="increment_rule_ids" eval="[(6, 0, [ref(&quot;demo_rule_1&quot;),ref(&quot;demo_rule_2&quot;),ref(&quot;demo_rule_5&quot;)])]"/>
     </record>
 
@@ -967,7 +958,6 @@
     <field name="state">draft</field>
     <field name="partner_id" ref="demo_tenant_82"/>
     <field name="property_id" ref="atmta_real_estate.demo_prop_19"/>
-    <field name="payment_plan_ids" eval="[(6, 0, [ref(&quot;atmta_real_estate.demo_plan_1&quot;)])]"/>
     <field name="increment_rule_ids" eval="[(6, 0, [ref(&quot;demo_rule_3&quot;)])]"/>
     <field name="discount_rule_ids" eval="[(6, 0, [ref(&quot;demo_rule_4&quot;)])]"/>
     </record>
@@ -979,7 +969,6 @@
     <field name="state">draft</field>
     <field name="partner_id" ref="demo_tenant_83"/>
     <field name="property_id" ref="atmta_real_estate.demo_prop_20"/>
-    <field name="payment_plan_ids" eval="[(6, 0, [ref(&quot;atmta_real_estate.demo_plan_1&quot;)])]"/>
     <field name="increment_rule_ids" eval="[(6, 0, [ref(&quot;demo_rule_1&quot;)])]"/>
     </record>
 

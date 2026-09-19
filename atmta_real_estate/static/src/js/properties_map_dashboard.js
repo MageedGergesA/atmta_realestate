@@ -5,6 +5,8 @@ import { Component, onMounted, onWillUnmount, useRef, useState } from "@odoo/owl
 import { useService } from "@web/core/utils/hooks";
 import { _t } from "@web/core/l10n/translation";
 
+import { STREET_TILES, statusColor } from "./map_tiles";
+
 const LEAFLET_IMAGE_BASE = "/atmta_real_estate/static/src/lib/leaflet/images";
 const WORLD_CENTER = [20, 0];
 const WORLD_ZOOM = 2;
@@ -16,13 +18,7 @@ const STATE_LABELS = {
     maintenance: _t("Under Maintenance"),
     inactive: _t("Inactive"),
 };
-const STATE_COLORS = {
-    available: "#28a745",
-    reserved: "#fd7e14",
-    rented: "#0d6efd",
-    maintenance: "#ffc107",
-    inactive: "#6c757d",
-};
+// Status colours come from map_tiles.js, shared with the Overview map card.
 const STATE_ORDER = ["available", "reserved", "rented", "maintenance", "inactive"];
 
 const LEVEL_LABELS = {
@@ -44,6 +40,56 @@ function patchLeafletDefaults() {
         shadowUrl: `${LEAFLET_IMAGE_BASE}/marker-shadow.png`,
     });
     leafletDefaultsPatched = true;
+}
+
+/**
+ * A marker's popup, built from DOM nodes.
+ *
+ * It used to be an HTML string: the unit name, code and city escaped only
+ * `<`, and the property type and country names were not escaped at all, so a
+ * property type named with markup was interpreted as HTML in every map user's
+ * browser. Every value is now set as text.
+ */
+export function buildPropertyPopup(p, onOpen) {
+    const el = (tag, className, text) => {
+        const node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text !== undefined) node.textContent = text;
+        return node;
+    };
+    const root = el("div", "o_pmd_popup");
+
+    const head = el("div", "d-flex align-items-start gap-2");
+    const img = el("img", "o_pmd_popup_img");
+    img.src = `/web/image/realestate.property/${Number(p.id)}/image_128`;
+    img.alt = "";
+    img.addEventListener("error", () => { img.style.display = "none"; });
+    const info = el("div", "flex-grow-1");
+    const typeName = p.property_type_id ? p.property_type_id[1] : "";
+    const countryName = p.country_id ? p.country_id[1] : "";
+    const place = [typeName, countryName, p.city || ""].filter(Boolean).join(" · ");
+    info.append(
+        el("div", "small text-muted", p.property_code || ""),
+        el("div", "fw-bold", p.name || ""),
+        el("div", "small text-muted", place),
+    );
+    head.append(img, info);
+
+    const badges = el("div", "mt-2 d-flex align-items-center gap-2");
+    const state = el("span", "badge", STATE_LABELS[p.state] || p.state || "");
+    state.style.background = statusColor(p.state);
+    badges.append(state);
+    const levelLabel = LEVEL_LABELS[p.hierarchy_level] || p.hierarchy_level || "";
+    if (levelLabel) {
+        badges.append(el("span", "badge bg-secondary", levelLabel));
+    }
+
+    const open = el("button", "btn btn-sm btn-primary w-100 mt-2 o_pmd_open_btn", _t("Open"));
+    open.type = "button";
+    open.addEventListener("click", () => onOpen(p.id));
+
+    root.append(head, badges, open);
+    return root;
 }
 
 export class PropertiesMapDashboard extends Component {
@@ -159,15 +205,7 @@ export class PropertiesMapDashboard extends Component {
             worldCopyJump: true,
         });
 
-        const streets = L.tileLayer(
-            "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
-            {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-                maxZoom: 20,
-                subdomains: "abcd",
-                crossOrigin: true,
-            }
-        );
+        const streets = L.tileLayer(STREET_TILES.url, STREET_TILES.options);
         const satellite = L.tileLayer(
             "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
             {
@@ -217,7 +255,7 @@ export class PropertiesMapDashboard extends Component {
         const filtered = this._filterProperties();
         const markers = [];
         for (const p of filtered) {
-            const color = STATE_COLORS[p.state] || "#6c757d";
+            const color = statusColor(p.state);
             const marker = L.circleMarker([p.latitude, p.longitude], {
                 radius: 8,
                 color: "#ffffff",
@@ -226,12 +264,6 @@ export class PropertiesMapDashboard extends Component {
                 fillOpacity: 0.9,
             });
             marker.bindPopup(() => this._popupHtml(p), { maxWidth: 320, minWidth: 240 });
-            marker.on("popupopen", (ev) => {
-                const root = ev.popup.getElement();
-                if (!root) return;
-                const btn = root.querySelector(".o_pmd_open_btn");
-                if (btn) btn.addEventListener("click", () => this._openProperty(p.id));
-            });
             markers.push(marker);
         }
         this.cluster.addLayers(markers);
@@ -243,32 +275,7 @@ export class PropertiesMapDashboard extends Component {
     }
 
     _popupHtml(p) {
-        const stateLabel = STATE_LABELS[p.state] || p.state || "";
-        const stateColor = STATE_COLORS[p.state] || "#6c757d";
-        const levelLabel = LEVEL_LABELS[p.hierarchy_level] || p.hierarchy_level || "";
-        const typeName = p.property_type_id ? p.property_type_id[1] : "";
-        const countryName = p.country_id ? p.country_id[1] : "";
-        const img = `/web/image/realestate.property/${p.id}/image_128`;
-        const name = (p.name || "").replace(/</g, "&lt;");
-        const code = (p.property_code || "").replace(/</g, "&lt;");
-        const city = (p.city || "").replace(/</g, "&lt;");
-        return `
-            <div class="o_pmd_popup">
-                <div class="d-flex align-items-start gap-2">
-                    <img src="${img}" alt="" class="o_pmd_popup_img" onerror="this.style.display='none'"/>
-                    <div class="flex-grow-1">
-                        <div class="small text-muted">${code}</div>
-                        <div class="fw-bold">${name}</div>
-                        <div class="small text-muted">${typeName}${typeName && countryName ? " · " : ""}${countryName}${city ? " · " + city : ""}</div>
-                    </div>
-                </div>
-                <div class="mt-2 d-flex align-items-center gap-2">
-                    <span class="badge" style="background:${stateColor}">${stateLabel}</span>
-                    ${levelLabel ? `<span class="badge bg-secondary">${levelLabel}</span>` : ""}
-                </div>
-                <button type="button" class="btn btn-sm btn-primary w-100 mt-2 o_pmd_open_btn">Open</button>
-            </div>
-        `;
+        return buildPropertyPopup(p, (id) => this._openProperty(id));
     }
 
     _openProperty(id) {
@@ -336,7 +343,7 @@ export class PropertiesMapDashboard extends Component {
     // --- Computed getters used in template ---
 
     get stateOptions() {
-        return STATE_ORDER.map((k) => ({ id: k, name: STATE_LABELS[k], color: STATE_COLORS[k] }));
+        return STATE_ORDER.map((k) => ({ id: k, name: STATE_LABELS[k], color: statusColor(k) }));
     }
 
     get levelOptions() {
@@ -344,7 +351,7 @@ export class PropertiesMapDashboard extends Component {
     }
 
     get legendItems() {
-        return STATE_ORDER.map((k) => ({ label: STATE_LABELS[k], color: STATE_COLORS[k] }));
+        return STATE_ORDER.map((k) => ({ label: STATE_LABELS[k], color: statusColor(k) }));
     }
 }
 

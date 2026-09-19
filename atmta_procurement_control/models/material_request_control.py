@@ -34,7 +34,7 @@ class MaterialRequestControl(models.Model):
             self.project_id, self.company_id)
         approved_states = ('approved', 'sourcing')
         if policy != 'none' and self.state in approved_states \
-                and self.project_id and not self.reservation_ids:
+                and self.project_id and not self.sudo().reservation_ids:
             findings.append(_(
                 "Approved demand with no reservation, under a %s policy.")
                 % policy)
@@ -149,7 +149,12 @@ class MaterialRequestControl(models.Model):
         Control = self.env['realestate.procurement.control']
         code_ids = list({line._control_cost_code_id()
                          for line in self.line_ids})
-        ignore = self.reservation_ids.filtered(
+        # Same narrow elevation as `_compute_reservation`: reading the
+        # position is something everyone who may open the requisition does —
+        # the requester raising it, the wizard that shows them what they are
+        # asking to exceed — and none of them is being handed the right to
+        # edit a reservation by hand.
+        ignore = self.sudo().reservation_ids.filtered(
             lambda r: r.state == 'reserved') if ignore_own_reservations \
             else None
         return Control.positions_by_cost_code(
@@ -543,6 +548,11 @@ class MaterialRequestControl(models.Model):
         approver-group decision stands in; that path carries exactly the same
         separation-of-duties and budget checks, because a company with no
         matrix configured is the one most likely to need them.
+
+        Only the steps this user may decide are taken. The header button used
+        to walk every pending step, so an approver pressing it on a two-step
+        requisition was refused by the *manager's* step and lost their own
+        approval with it — the whole call rolls back together.
         """
         for rec in self:
             if rec.state != 'submitted':
@@ -550,10 +560,23 @@ class MaterialRequestControl(models.Model):
             steps = rec.approval_step_ids.filtered(
                 lambda s: s.decision == 'pending')
             if steps:
-                for step in steps.sorted('sequence'):
+                mine = steps.filtered(lambda s: s._may_be_decided_by(
+                    self.env.user))
+                if not mine:
+                    raise UserError(_(
+                        "None of the approvals %s is still waiting for is "
+                        "yours to decide.") % rec.name)
+                decided = False
+                for step in mine.sorted('sequence'):
                     if step._blocking_predecessors():
+                        # Somebody else has to go first. Said out loud when
+                        # this user has decided nothing, because a button
+                        # that quietly does nothing reads as a failure.
+                        if not decided:
+                            step._check_may_decide()
                         break
                     step.action_approve()
+                    decided = True
                 continue
             if not self.env.user.has_group(
                     'atmta_roles.group_procurement_approver'):

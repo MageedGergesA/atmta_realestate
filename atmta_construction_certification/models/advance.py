@@ -209,9 +209,15 @@ class ConstructionAdvance(models.Model):
         return True
 
     @api.model
-    def outstanding_for(self, project, contractor=None):
-        """What is still owed back to the project by advances it has paid."""
+    def outstanding_for(self, project, contractor=None, side='contractor'):
+        """What is still outstanding on one side's advances.
+
+        One side at a time. Advances paid to contractors are an asset and
+        advances received from the owner a liability; summing them reported
+        the owner's money as contractor advances still to recover.
+        """
         domain = [('project_id', '=', project.id),
+                  ('side', '=', side),
                   ('state', 'in', ('confirmed', 'paid'))]
         if contractor:
             domain.append(('contractor_id', '=', contractor.id))

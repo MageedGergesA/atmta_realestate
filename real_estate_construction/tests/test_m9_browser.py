@@ -14,7 +14,7 @@ from dateutil.relativedelta import relativedelta
 from odoo import fields
 from odoo.tests.common import HttpCase, tagged
 
-from .common import ConstructionCommon
+from .common import ConstructionCommon, optional_group
 
 
 @tagged('post_install', '-at_install', 'atmta_construction')
@@ -72,7 +72,7 @@ class TestControlTowerBrowser(ConstructionCommon, HttpCase):
             | self.env.ref('real_estate_construction.group_construction_cost')
             | self.env.ref(
                 'real_estate_construction.group_construction_commercial')
-            | self.env.ref('atmta_real_estate.group_realestate_user'))
+            | optional_group(self.env, 'atmta_real_estate.group_realestate_user'))
         developer_group = self.env.ref('real_estate_developer.group_dev_manager',
                                        raise_if_not_found=False)
         if developer_group:

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Customer Service is its own application, not a section of the Rental menu. -->
+    <menuitem id="menu_customer_service_root" name="Customer Service"
+              sequence="60"
+              groups="real_estate_customer_service.group_service_user"/>
+
+    <menuitem id="menu_customer_tickets" name="Tickets"
+              parent="menu_customer_service_root"
+              action="action_customer_ticket" sequence="10"/>
+
+    <menuitem id="menu_customer_service_config" name="Configuration"
+              parent="menu_customer_service_root"
+              sequence="20"
+              groups="real_estate_customer_service.group_service_manager"/>
+
+    <menuitem id="menu_customer_service_categories" name="Categories"
+              parent="menu_customer_service_config"
+              action="action_category" sequence="10"/>
+</odoo>

@@ -1,0 +1,742 @@
+# Translation of Odoo Server.
+# This file contains the Arabic translation of the following modules:
+# 	* real_estate_customer_service
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:14+0000\n"
+"PO-Revision-Date: 2026-09-17 10:14+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__message_needaction
+msgid "Action Needed"
+msgstr "إجراء مطلوب"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket_category__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__activity_ids
+msgid "Activities"
+msgstr "الأنشطة"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "زخرفة استثناء النشاط"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
+
+#. module: real_estate_customer_service
+#: model:res.groups,name:real_estate_customer_service.group_service_agent
+msgid "Agent"
+msgstr "الوكيل"
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/service_dashboard.py:0
+msgid "All Tickets"
+msgstr "جميع التذاكر"
+
+#. module: real_estate_customer_service
+#: model_terms:ir.ui.view,arch_db:real_estate_customer_service.view_ticket_form
+msgid "Assign"
+msgstr "تكليف"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields.selection,name:real_estate_customer_service.selection__realestate_customer_ticket__state__assigned
+msgid "Assigned"
+msgstr "مكلف"
+
+#. module: real_estate_customer_service
+#: model_terms:ir.ui.view,arch_db:real_estate_customer_service.view_ticket_search
+msgid "Assigned to Me"
+msgstr "المكلفة إليّ"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__assignee_id
+#: model_terms:ir.ui.view,arch_db:real_estate_customer_service.view_ticket_search
+msgid "Assignee"
+msgstr "المكلف"
+
+#. module: real_estate_customer_service
+#: model_terms:ir.ui.view,arch_db:real_estate_customer_service.view_ticket_kanban
+msgid "Assignee:"
+msgstr "المكلف:"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: real_estate_customer_service
+#: model_terms:ir.ui.view,arch_db:real_estate_customer_service.view_ticket_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields.selection,name:real_estate_customer_service.selection__realestate_customer_ticket__state__cancelled
+msgid "Cancelled"
+msgstr "ملغى"
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/ticket.py:0
+msgid "Cannot start from state %s."
+msgstr "لا يمكن البدء من الحالة %s."
+
+#. module: real_estate_customer_service
+#: model:ir.ui.menu,name:real_estate_customer_service.menu_customer_service_categories
+msgid "Categories"
+msgstr "الفئات"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__category_id
+#: model_terms:ir.ui.view,arch_db:real_estate_customer_service.view_ticket_search
+msgid "Category"
+msgstr "الفئة"
+
+#. module: real_estate_customer_service
+#: model_terms:ir.ui.view,arch_db:real_estate_customer_service.view_ticket_form
+msgid "Close"
+msgstr "إغلاق"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields.selection,name:real_estate_customer_service.selection__realestate_customer_ticket__state__closed
+#: model_terms:ir.ui.view,arch_db:real_estate_customer_service.view_ticket_search
+msgid "Closed"
+msgstr "مغلق"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__closed_on
+msgid "Closed On"
+msgstr "تاريخ الإغلاق"
+
+#. module: real_estate_customer_service
+#: model:ir.ui.menu,name:real_estate_customer_service.menu_customer_service_config
+msgid "Configuration"
+msgstr "الإعدادات"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__create_uid
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket_category__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__create_date
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket_category__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/service_dashboard.py:0
+#: model:ir.ui.menu,name:real_estate_customer_service.menu_customer_service_root
+msgid "Customer Service"
+msgstr "خدمة العملاء"
+
+#. module: real_estate_customer_service
+#: model:ir.actions.client,name:real_estate_customer_service.action_service_dashboard
+#: model:ir.model,name:real_estate_customer_service.model_realestate_service_dashboard
+msgid "Customer Service Dashboard"
+msgstr "لوحة معلومات خدمة العملاء"
+
+#. module: real_estate_customer_service
+#: model:ir.actions.server,name:real_estate_customer_service.ir_cron_refresh_sla_breaches_ir_actions_server
+msgid "Customer Service: refresh SLA breaches"
+msgstr "خدمة العملاء: تحديث حالات تجاوز اتفاقية مستوى الخدمة"
+
+#. module: real_estate_customer_service
+#: model:ir.model,name:real_estate_customer_service.model_realestate_customer_ticket_category
+msgid "Customer Ticket Category"
+msgstr "فئة تذكرة العميل"
+
+#. module: real_estate_customer_service
+#: model:ir.actions.act_window,name:real_estate_customer_service.action_customer_ticket
+msgid "Customer Tickets"
+msgstr "تذاكر العملاء"
+
+#. module: real_estate_customer_service
+#: model:ir.ui.menu,name:real_estate_customer_service.menu_customer_service_dashboard
+msgid "Dashboard"
+msgstr "لوحة المعلومات"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket_category__default_assignee_id
+msgid "Default Assignee"
+msgstr "المكلف الافتراضي"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket_category__default_sla_hours
+msgid "Default SLA (hours)"
+msgstr "مدة مستوى الخدمة الافتراضية (بالساعات)"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,help:real_estate_customer_service.field_realestate_customer_ticket_category__default_sla_hours
+msgid "Default resolution SLA when a ticket is created in this category."
+msgstr ""
+"مدة الحل الافتراضية وفق اتفاقية مستوى الخدمة عند إنشاء تذكرة ضمن هذه الفئة."
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__description
+#: model_terms:ir.ui.view,arch_db:real_estate_customer_service.view_ticket_form
+msgid "Description"
+msgstr "الوصف"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__display_name
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket_category__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,help:real_estate_customer_service.field_realestate_customer_ticket__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "أيقونة Font Awesome، مثل fa-tasks"
+
+#. module: real_estate_customer_service
+#: model_terms:ir.ui.view,arch_db:real_estate_customer_service.view_ticket_search
+msgid "Group By"
+msgstr "تجميع حسب"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__has_message
+msgid "Has Message"
+msgstr "يحتوي على رسالة"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields.selection,name:real_estate_customer_service.selection__realestate_customer_ticket__priority__2
+msgid "High"
+msgstr "عالية"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__id
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket_category__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__activity_exception_icon
+msgid "Icon"
+msgstr "الأيقونة"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,help:real_estate_customer_service.field_realestate_customer_ticket__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "أيقونة للإشارة إلى نشاط استثنائي."
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,help:real_estate_customer_service.field_realestate_customer_ticket__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا كان محددًا، فهناك رسائل جديدة تتطلب انتباهك."
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,help:real_estate_customer_service.field_realestate_customer_ticket__message_has_error
+#: model:ir.model.fields,help:real_estate_customer_service.field_realestate_customer_ticket__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا كان محددًا، فبعض الرسائل بها خطأ في التسليم."
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields.selection,name:real_estate_customer_service.selection__realestate_customer_ticket__state__in_progress
+msgid "In Progress"
+msgstr "قيد التنفيذ"
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/ticket.py:0
+msgid "Install real_estate_procurement to use this."
+msgstr "ثبت الوحدة real_estate_procurement لاستخدام هذه الميزة."
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__write_uid
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket_category__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__write_date
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket_category__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields.selection,name:real_estate_customer_service.selection__realestate_customer_ticket__priority__0
+msgid "Low"
+msgstr "منخفضة"
+
+#. module: real_estate_customer_service
+#: model:res.groups,name:real_estate_customer_service.group_service_manager
+msgid "Manager"
+msgstr "المدير"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__material_request_id
+msgid "Material Request"
+msgstr "طلب مواد"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__material_request_available
+msgid "Material Request Available"
+msgstr "طلب المواد متاح"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,help:real_estate_customer_service.field_realestate_customer_ticket__material_request_available
+msgid ""
+"Material requests belong to Procurement. Without it the link has no model "
+"behind it, so the field and its button are hidden."
+msgstr ""
+"طلبات المواد تابعة لتطبيق المشتريات. بدونه لا يوجد نموذج خلف الرابط، لذا "
+"يُخفى الحقل وزره."
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "موعد نشاطي النهائي"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket_category__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/ticket.py:0
+#: model:ir.model.fields.selection,name:real_estate_customer_service.selection__realestate_customer_ticket__state__new
+msgid "New"
+msgstr "جديد"
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/service_dashboard.py:0
+msgid "New Ticket"
+msgstr "تذكرة جديدة"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "حدث التقويم للنشاط التالي"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/service_dashboard.py:0
+msgid "No Category"
+msgstr "بدون فئة"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields.selection,name:real_estate_customer_service.selection__realestate_customer_ticket__priority__1
+msgid "Normal"
+msgstr "طبيعية"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,help:real_estate_customer_service.field_realestate_customer_ticket__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراء"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,help:real_estate_customer_service.field_realestate_customer_ticket__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي بها خطأ في التسليم"
+
+#. module: real_estate_customer_service
+#: model_terms:ir.ui.view,arch_db:real_estate_customer_service.view_ticket_form
+msgid "One-line summary..."
+msgstr "ملخص في سطر واحد..."
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/ticket.py:0
+msgid "Only resolved/closed tickets can be reopened."
+msgstr "لا يمكن إعادة فتح إلا التذاكر المحلولة/المغلقة."
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/service_dashboard.py:0
+#: model_terms:ir.ui.view,arch_db:real_estate_customer_service.view_ticket_search
+msgid "Open"
+msgstr "فتح"
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/service_dashboard.py:0
+msgid "Open Tickets"
+msgstr "التذاكر المفتوحة"
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/service_dashboard.py:0
+msgid "Open Tickets by Category"
+msgstr "التذاكر المفتوحة حسب الفئة"
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/service_dashboard.py:0
+msgid "Open tickets nobody is working on yet."
+msgstr "تذاكر مفتوحة لم يبدأ أحد العمل عليها بعد."
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/service_dashboard.py:0
+msgid "Opened"
+msgstr "مفتوحة"
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/service_dashboard.py:0
+msgid "Opened vs Resolved"
+msgstr "المفتوحة مقابل المحلولة"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,help:real_estate_customer_service.field_realestate_customer_ticket_category__default_assignee_id
+msgid "Optional. Auto-assigned to any new ticket in this category."
+msgstr "اختياري. يُكلف تلقائيًا بأي تذكرة جديدة ضمن هذه الفئة."
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/ticket.py:0
+msgid "Pick an assignee before assigning."
+msgstr "اختر المكلف قبل التكليف."
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__priority
+msgid "Priority"
+msgstr "الأولوية"
+
+#. module: real_estate_customer_service
+#: model_terms:ir.ui.view,arch_db:real_estate_customer_service.view_ticket_kanban
+msgid "Priority:"
+msgstr "الأولوية:"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__project_id
+#: model_terms:ir.ui.view,arch_db:real_estate_customer_service.view_ticket_search
+msgid "Project"
+msgstr "المشروع"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__property_id
+msgid "Property"
+msgstr "العقار"
+
+#. module: real_estate_customer_service
+#: model_terms:ir.ui.view,arch_db:real_estate_customer_service.view_ticket_form
+msgid "Raise Material Request"
+msgstr "إنشاء طلب مواد"
+
+#. module: real_estate_customer_service
+#: model:ir.module.category,name:real_estate_customer_service.module_category_realestate_service
+msgid "Real Estate Customer Service"
+msgstr "خدمة العملاء العقارية"
+
+#. module: real_estate_customer_service
+#: model:ir.model,name:real_estate_customer_service.model_realestate_customer_ticket
+msgid "Real Estate Customer Ticket"
+msgstr "تذكرة عميل عقارية"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__name
+msgid "Reference"
+msgstr "المرجع"
+
+#. module: real_estate_customer_service
+#: model_terms:ir.ui.view,arch_db:real_estate_customer_service.view_ticket_form
+msgid "Reopen"
+msgstr "إعادة فتح"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__partner_id
+msgid "Reporter"
+msgstr "مقدم البلاغ"
+
+#. module: real_estate_customer_service
+#: model_terms:ir.ui.view,arch_db:real_estate_customer_service.view_ticket_form
+msgid "Resolve"
+msgstr "حل"
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/ticket.py:0
+msgid "Resolve the ticket before closing."
+msgstr "يجب حل التذكرة قبل إغلاقها."
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/service_dashboard.py:0
+#: model:ir.model.fields.selection,name:real_estate_customer_service.selection__realestate_customer_ticket__state__resolved
+#: model_terms:ir.ui.view,arch_db:real_estate_customer_service.view_ticket_search
+msgid "Resolved"
+msgstr "تمت المعالجة"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__resolved_on
+msgid "Resolved On"
+msgstr "تاريخ الحل"
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/service_dashboard.py:0
+msgid "Resolved This Month"
+msgstr "المحلولة هذا الشهر"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/service_dashboard.py:0
+#: model_terms:ir.ui.view,arch_db:real_estate_customer_service.view_ticket_search
+msgid "SLA Breached"
+msgstr "تجاوز اتفاقية مستوى الخدمة"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__sla_deadline
+msgid "SLA Deadline"
+msgstr "الموعد النهائي لمستوى الخدمة"
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/service_dashboard.py:0
+msgid "SLA Due in 24 Hours"
+msgstr "مستوى الخدمة مستحق خلال 24 ساعة"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "خطأ في إرسال الرسائل النصية القصيرة"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket_category__sequence
+msgid "Sequence"
+msgstr "المسلسل"
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/service_dashboard.py:0
+msgid "Service Level"
+msgstr "مستوى الخدمة"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__sla_breached
+msgid "Sla Breached"
+msgstr "تجاوز مستوى الخدمة"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,help:real_estate_customer_service.field_realestate_customer_ticket__material_request_id
+msgid "Spawned when the ticket needs materials/parts."
+msgstr "يُنشأ عندما تحتاج التذكرة إلى مواد/قطع غيار."
+
+#. module: real_estate_customer_service
+#: model_terms:ir.ui.view,arch_db:real_estate_customer_service.view_ticket_form
+msgid "Start Work"
+msgstr "بدء العمل"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__state
+#: model_terms:ir.ui.view,arch_db:real_estate_customer_service.view_ticket_search
+msgid "State"
+msgstr "الحالة"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,help:real_estate_customer_service.field_realestate_customer_ticket__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الحالة بناءً على الأنشطة\n"
+"متأخرة: تاريخ الاستحقاق قد مضى\n"
+"اليوم: تاريخ النشاط هو اليوم\n"
+"مخطط لها: أنشطة مستقبلية."
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/service_dashboard.py:0
+msgid "The last six months"
+msgstr "الأشهر الستة الأخيرة"
+
+#. module: real_estate_customer_service
+#: model:ir.actions.act_window,name:real_estate_customer_service.action_category
+msgid "Ticket Categories"
+msgstr "فئات التذاكر"
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/service_dashboard.py:0
+msgid "Ticket Queue"
+msgstr "قائمة انتظار التذاكر"
+
+#. module: real_estate_customer_service
+#: model:ir.ui.menu,name:real_estate_customer_service.menu_customer_tickets
+msgid "Tickets"
+msgstr "التذاكر"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__title
+msgid "Title"
+msgstr "العنوان"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,help:real_estate_customer_service.field_realestate_customer_ticket__sla_breached
+msgid "True when the ticket is unresolved past its SLA deadline."
+msgstr ""
+"صحيح عندما تبقى التذكرة دون حل بعد تجاوز الموعد النهائي لمستوى الخدمة."
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,help:real_estate_customer_service.field_realestate_customer_ticket__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع النشاط الاستثنائي في السجل."
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/service_dashboard.py:0
+msgid "Unassigned"
+msgstr "غير مخصص"
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/service_dashboard.py:0
+#: model:ir.model.fields.selection,name:real_estate_customer_service.selection__realestate_customer_ticket__priority__3
+msgid "Urgent"
+msgstr "عاجلة"
+
+#. module: real_estate_customer_service
+#: model:res.groups,name:real_estate_customer_service.group_service_user
+msgid "User"
+msgstr "المستخدم"
+
+#. module: real_estate_customer_service
+#: model_terms:ir.ui.view,arch_db:real_estate_customer_service.view_ticket_form
+msgid "Wait Customer"
+msgstr "انتظار العميل"
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/service_dashboard.py:0
+#: model:ir.model.fields.selection,name:real_estate_customer_service.selection__realestate_customer_ticket__state__waiting
+msgid "Waiting on Customer"
+msgstr "بانتظار العميل"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__website_message_ids
+msgid "Website Messages"
+msgstr "رسائل الموقع الإلكتروني"
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,help:real_estate_customer_service.field_realestate_customer_ticket__website_message_ids
+msgid "Website communication history"
+msgstr "سجل التواصل عبر الموقع الإلكتروني"
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/service_dashboard.py:0
+msgid "Where the queue is coming from"
+msgstr "مصادر التذاكر الواردة"
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/ticket.py:0
+msgid "Cannot resolve a ticket from state %s."
+msgstr "لا يمكن حل تذكرة في الحالة %s."
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,field_description:real_estate_customer_service.field_realestate_customer_ticket__sla_deadline_manual
+msgid "Deadline Set Manually"
+msgstr "الموعد النهائي محدد يدوياً"
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/ticket.py:0
+msgid "Only a ticket in progress can wait on the customer."
+msgstr "لا يمكن تعليق التذكرة بانتظار العميل إلا وهي قيد المعالجة."
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/ticket.py:0
+msgid "Only an open ticket can be cancelled."
+msgstr "لا يمكن إلغاء إلا تذكرة مفتوحة."
+
+#. module: real_estate_customer_service
+#: model:ir.model.fields,help:real_estate_customer_service.field_realestate_customer_ticket__sla_deadline_manual
+msgid ""
+"The deadline was written by hand rather than derived from the category, so a"
+" category change leaves it alone."
+msgstr "تم إدخال الموعد النهائي يدوياً بدلاً من اشتقاقه من الفئة، لذا لا يغيّره تغيير الفئة."
+
+#. module: real_estate_customer_service
+#. odoo-python
+#: code:addons/real_estate_customer_service/models/ticket.py:0
+msgid ""
+"You are not allowed to raise material requests. Ask a Procurement user to "
+"raise one for ticket %s."
+msgstr "غير مصرح لك برفع طلبات المواد. اطلب من أحد مستخدمي المشتريات رفع طلب للتذكرة %s."

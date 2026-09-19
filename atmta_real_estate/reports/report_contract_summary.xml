@@ -14,32 +14,26 @@
                     <strong>Status:</strong> <t t-esc="contract.state"/>
                 </div>
 
-                <!-- Contract Lines -->
-                <h4 style="margin-top:20px; border-bottom:1px solid #ccc;">Contract Units</h4>
+                <!-- Units -->
+                <h4 style="margin-top:20px; border-bottom:1px solid #ccc;">Units</h4>
                 <table class="table table-sm table-bordered" style="width: 100%; font-size: 12px;">
                     <thead style="background-color: #f8f8f8;">
                         <tr>
                             <th>Unit</th>
-                            <th>Price</th>
+                            <th>Allocated Rent</th>
                             <th>Start</th>
                             <th>End</th>
-                            <th>Status</th>
-                            <th>Payment Plans</th>
+                            <th>Lease Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <t t-foreach="contract.line_ids" t-as="line">
+                        <t t-foreach="contract.property_line_ids" t-as="line">
                             <tr>
                                 <td><t t-esc="line.property_id.name"/></td>
-                                <td><t t-esc="line.price"/></td>
+                                <td><span t-field="line.allocated_rent"/></td>
                                 <td><t t-esc="line.start_date"/></td>
                                 <td><t t-esc="line.end_date"/></td>
-                                <td><t t-esc="line.state"/></td>
-                                <td>
-                                    <t t-foreach="line.payment_plan_ids" t-as="plan">
-                                        <div><t t-esc="plan.name"/></div>
-                                    </t>
-                                </td>
+                                <td><span t-field="line.lifecycle_state"/></td>
                             </tr>
                         </t>
                     </tbody>
@@ -48,10 +42,10 @@
                 <!-- Totals -->
                 <h4 style="margin-top: 20px;">Summary</h4>
                 <ul>
-                    <li>Total Scheduled: <t t-esc="sum(p.amount for p in contract.payment_ids)"/> EGP</li>
-                    <li>Total Paid: <t t-esc="sum(p.amount for p in contract.payment_ids if p.state == 'paid')"/> EGP</li>
+                    <li>Total Scheduled: <t t-esc="sum(p.amount for p in contract.contract_payment_ids)"/> EGP</li>
+                    <li>Total Paid: <t t-esc="sum(p.amount for p in contract.contract_payment_ids if p.state == 'paid')"/> EGP</li>
                     <li>Remaining:
-                        <t t-esc="sum(p.amount for p in contract.payment_ids) - sum(p.amount for p in contract.payment_ids if p.state == 'paid')"/> EGP
+                        <t t-esc="sum(p.amount for p in contract.contract_payment_ids) - sum(p.amount for p in contract.contract_payment_ids if p.state == 'paid')"/> EGP
                     </li>
                 </ul>
 
@@ -65,7 +59,7 @@
     </t>
 </template>
     <record id="action_report_contract_full" model="ir.actions.report">
-        <field name="name">Contract Summary</field>
+        <field name="name">Lease Summary</field>
         <field name="model">realestate.contract</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">atmta_real_estate.report_contract_full</field>

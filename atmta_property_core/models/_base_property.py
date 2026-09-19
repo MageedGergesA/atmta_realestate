@@ -52,9 +52,9 @@ class RealEstateProperty(models.Model):
     # module above this one would mean Property Core could not be installed
     # multi-company-correct on its own.
     #
-    # Materialised from the delegated product template so it can carry a
-    # database index and scope the uniqueness constraints. Writing it writes the
-    # product template.
+    # Semantics carried over unchanged: materialised from the delegated product
+    # template so it can carry a database index and scope the uniqueness
+    # constraints. Writing it writes the product template.
     company_id = fields.Many2one(
         'res.company', string='Company',
         related='product_tmpl_id.company_id', store=True, readonly=False,
@@ -136,7 +136,9 @@ class RealEstateProperty(models.Model):
         ('available', 'Available'),
         ('partial', 'Partially Rented'),
         ('rented', 'Fully Rented'),
-    ], string="Occupancy", compute='_compute_occupancy_state', store=True)
+    ], string="Occupancy (legacy)", compute='_compute_occupancy_state', store=True,
+        help="DEPRECATED. Mirrors the authoritative `occupancy_status` "
+             "dimension; kept because downstream views still reference it.")
     next_available_date = fields.Date(string="Next Available Date", tracking=True)
 
     # Ownership
@@ -174,15 +176,19 @@ class RealEstateProperty(models.Model):
     number_of_parking_lots = fields.Integer(string='Number Of Parking Lots')
     number_of_ac = fields.Integer(string='Number Of ACs')
     is_furnished = fields.Boolean(string='Is Furnished')
+    # Selection labels are plain strings: ``_()`` here runs at import time,
+    # before any language context exists, so it never actually translated and
+    # logged a stack trace on every registry load. Odoo extracts and translates
+    # selection labels on its own.
     ac_type = fields.Selection([
-        ('split', _('Split AC')),
-        ('window', _('Window AC')),
-        ('central', _('Central AC')),
-        ('cassette', _('Cassette AC')),
-        ('portable', _('Portable AC')),
-        ('floor_standing', _('Floor Standing AC')),
-        ('ducted', _('Ducted AC')),
-        ('vrf', _('VRF AC')),
+        ('split', 'Split AC'),
+        ('window', 'Window AC'),
+        ('central', 'Central AC'),
+        ('cassette', 'Cassette AC'),
+        ('portable', 'Portable AC'),
+        ('floor_standing', 'Floor Standing AC'),
+        ('ducted', 'Ducted AC'),
+        ('vrf', 'VRF AC'),
     ], string='AC Type')
 
     # Utility meters
@@ -198,9 +204,11 @@ class RealEstateProperty(models.Model):
         default=lambda self: self.env.company.currency_id,
     )
 
-    _sql_constraints = [
-        ('property_code_uniq', 'UNIQUE(property_code)', 'Property Code must be unique.'),
-    ]
+    # NOTE: property-code uniqueness is declared in property_identity.py,
+    # scoped to the company. It is NOT declared here: Odoo merges
+    # _sql_constraints across inheriting classes rather than replacing them, so
+    # a global UNIQUE(property_code) left here would survive and keep two
+    # companies from using the same coding scheme.
 
     @api.constrains('property_code')
     def _check_unique_code(self):

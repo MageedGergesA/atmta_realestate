@@ -88,12 +88,26 @@ class ContractPackageConstruction(models.Model):
 
     # ----- Consumed value -----
     def _consumed_value(self):
-        """What has already been certified or invoiced under this package."""
+        """What has already been certified or invoiced under this package.
+
+        Scoped to the package. Summing by project and contractor refused an
+        omission on a contractor's second package with what was certified
+        under the first — a certificate draws down the package it names, the
+        same rule the certificate's own cumulative ceiling applies.
+
+        Certificates raised without a package (project-level, or from before
+        packages existed) cannot be attributed to one package. They are still
+        counted against every package of that contractor on the project,
+        deliberately: an omission that might take a contract below value
+        certified under it is refused, not assumed safe.
+        """
         self.ensure_one()
         certificates = self.env[
             'realestate.construction.payment.certificate'].sudo().search([
-                ('project_id', '=', self.project_id.id),
                 ('contractor_id', '=', self.contractor_id.id),
                 ('state', 'in', ('certified', 'invoiced', 'paid')),
+                '|', ('package_id', '=', self.id),
+                '&', ('project_id', '=', self.project_id.id),
+                ('package_id', '=', False),
             ])
         return sum(certificates.mapped('gross_amount'))

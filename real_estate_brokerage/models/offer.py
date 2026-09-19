@@ -127,6 +127,10 @@ class Offer(models.Model):
             'listing_id': self.listing_id.id,
             'offer_id': self.id,
             'buyer_id': self.partner_id.id,
+            # As the form's onchange does, preferring the owner who instructed
+            # us on the listing over the property's registered owner.
+            'seller_id': (self.listing_id.owner_partner_id
+                          or self.listing_id.property_id.owner_id).id,
             'sale_price': self.amount,
             'deposit_amount': self.deposit_amount,
             'closing_date': self.proposed_closing_date,

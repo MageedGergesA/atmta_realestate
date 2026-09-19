@@ -253,7 +253,12 @@ class SourcingEvent(models.Model):
         """
         self.ensure_one()
         self._assert_editable_basis()
-        if request.state not in ('approved', 'ordered', 'partially_ordered'):
+        # `sourcing` is approved demand that the buyer has already enquired
+        # about through the requisition's own RFQs. It stays tenderable, but
+        # only for what those orders do not already cover — see
+        # `_quantity_covered_by_orders`.
+        if request.state not in ('approved', 'sourcing', 'ordered',
+                                 'partially_ordered'):
             raise UserError(_(
                 "%s is not approved demand, so it cannot authorise a tender.")
                 % request.display_name)
@@ -274,15 +279,21 @@ class SourcingEvent(models.Model):
             quantity = (quantities or {}).get(line.id, line.qty)
             if not quantity:
                 continue
-            remaining = line.qty - Allocation._sourced_quantity(line)
+            remaining = (line.qty - Allocation._sourced_quantity(line)
+                         - self._quantity_covered_by_orders(line))
             if quantity > remaining + 1e-6:
                 raise UserError(_(
                     "%(line)s has %(remaining)s left to source and this event "
                     "asks for %(asked)s. Sourcing the same demand twice would "
-                    "put one requirement in two tenders.",
-                    line=line.display_name, remaining=remaining,
+                    "put one requirement in two tenders, or in a tender and "
+                    "an RFQ already sent for it.",
+                    line=line.display_name, remaining=max(remaining, 0.0),
                     asked=quantity))
-            sourcing_line = self._line_for(line)
+            # The tender line carries what is being sourced *now*, not the
+            # whole requisition line: allocating 40 of 100 and presenting 100
+            # to the market would invite vendors to price demand this event
+            # has no authority over.
+            sourcing_line = self._line_for(line, quantity)
             created |= Allocation.create({
                 'event_id': self.id,
                 'sourcing_line_id': sourcing_line.id,
@@ -296,8 +307,42 @@ class SourcingEvent(models.Model):
                             % request.display_name)
         return created
 
-    def _line_for(self, request_line):
-        """One tender line per product/description, quantities accumulated."""
+    def _quantity_covered_by_orders(self, request_line):
+        """How much of a requisition line is already out to market *outside*
+        any tender — on the requisition's own RFQs and orders.
+
+        Tender RFQs are left out: what a tender takes is counted by its
+        allocation, and counting its RFQ lines too would count it twice.
+
+        Confirmed orders add up — each one buys its own quantity. Live
+        quotations do not: the RFQ path sends the same enquiry to every
+        vendor named, so three draft RFQs for 60 are one enquiry for 60, and
+        the largest of them is what is covered. Cancelled ones cover nothing.
+        """
+        self.ensure_one()
+        lines = request_line.sudo().po_line_ids.filtered(
+            lambda l: l.order_id.state != 'cancel' and not l.display_type)
+        tender_orders = self.env[
+            'realestate.procurement.sourcing.invitation'].sudo().search([
+                ('purchase_order_id', 'in', lines.order_id.ids),
+            ]).purchase_order_id
+        lines = lines.filtered(lambda l: l.order_id not in tender_orders)
+        confirmed = sum(lines.filtered(
+            lambda l: l.order_id.state in ('purchase', 'done')
+        ).mapped('product_qty'))
+        enquired = [sum(lines.filtered(
+            lambda l, o=order: l.order_id == o).mapped('product_qty'))
+            for order in lines.order_id.filtered(
+                lambda o: o.state in ('draft', 'sent', 'to approve'))]
+        return min(request_line.qty,
+                   confirmed + (max(enquired) if enquired else 0.0))
+
+    def _line_for(self, request_line, quantity):
+        """One tender line per product/description, quantities accumulated.
+
+        `quantity` is the allocated quantity, which is less than the
+        requisition line's own when only part of the demand comes here.
+        """
         self.ensure_one()
         Line = self.env['realestate.procurement.sourcing.line']
         label = (request_line.description
@@ -308,14 +353,14 @@ class SourcingEvent(models.Model):
                 and (bool(l.product_id) or l.name == lb)))
         if existing:
             line = existing[0]
-            line.quantity += request_line.qty
+            line.quantity += quantity
             return line
         return Line.create({
             'event_id': self.id,
             'name': label,
             'product_id': request_line.product_id.id,
             'product_uom_id': request_line.uom_id.id,
-            'quantity': request_line.qty,
+            'quantity': quantity,
             'required_date': request_line.required_on_site_date,
         })
 

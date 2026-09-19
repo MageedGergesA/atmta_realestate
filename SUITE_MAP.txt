@@ -1,0 +1,1177 @@
+════════════════════════════════════════════════════════════════════════════════
+ ATMTA `atmta_realestate` SUITE — FULL MODULE MAP & CYCLE REFERENCE
+ Odoo 18 · 14 modules · Snapshot 2026-08-04
+════════════════════════════════════════════════════════════════════════════════
+
+TABLE OF CONTENTS
+─────────────────
+ 1. Suite overview
+ 2. Module dependency graph
+ 3. Master data / hierarchy
+ 4. Per-module cycles (all 14)
+ 5. Cross-module data-flow
+ 6. Financial flow map (money-in + money-out)
+ 7. Analytic-account propagation (cost center map)
+ 8. State machines inventory (24 total)
+ 9. Security groups matrix
+10. Integration points with Odoo core
+11. Reports & PDFs
+12. Public REST API + iframe embeds
+13. Common workflows end-to-end
+14. What's shared across modules ("the spine")
+
+
+════════════════════════════════════════════════════════════════════════════════
+1. SUITE OVERVIEW
+════════════════════════════════════════════════════════════════════════════════
+
+The suite is composed of 14 loosely-coupled modules that share:
+- One property model (realestate.property) — hierarchy compound→building→floor→unit→room
+- One project model (realestate.project) — plus phases
+- One partner engine (res.partner via Odoo core)
+- One accounting engine (account.move / account.payment via Odoo core)
+- One purchase engine (purchase.order via Odoo core)
+- One stock engine (stock.picking / stock.move via Odoo core)
+
+Modules can be installed independently (min set is atmta_real_estate).
+Each downstream module extends the shared master data instead of duplicating it.
+
+Module list:
+   1. atmta_real_estate              — RENTAL CORE + property master
+   2. real_estate_developer          — SALES: project→phase→reservation→sale
+   3. real_estate_brokerage          — SALES AGENCY: listings/leads/offers
+   4. real_estate_construction       — CONSTRUCTION: milestones/BOQ/certs
+   5. real_estate_procurement        — SUPPLY CHAIN: material requests + POs
+   6. real_estate_handover           — HANDOVER: snagging + warranty
+   7. real_estate_portal             — CUSTOMER SELF-SERVICE
+   8. real_estate_api                — PUBLIC REST API + embed tokens
+   9. real_estate_investment         — FEASIBILITY: NPV / IRR / DCF
+  10. real_estate_maquette           — 3D VIEWER (glTF)
+  11. real_estate_plan               — 2D DRILL-DOWN (image + polygons)
+  12. real_estate_contract_template  — WORD/PDF DOC GEN (Jinja2)
+  13. real_estate_checks             — PDC MANAGEMENT ⭐
+  14. real_estate_customer_service   — POST-HANDOVER TICKETS ⭐
+
+
+════════════════════════════════════════════════════════════════════════════════
+2. MODULE DEPENDENCY GRAPH
+════════════════════════════════════════════════════════════════════════════════
+
+Only ATMTA-internal dependencies shown. All modules also depend on Odoo core
+(base, mail, product, uom, account, etc.) — that's assumed.
+
+    atmta_real_estate  (root — property + rental + contract_payment)
+        │
+        ├── real_estate_developer  (project, phase, reservation, sale)
+        │       │
+        │       ├── real_estate_brokerage  (listings, leads, transactions)
+        │       │
+        │       ├── real_estate_construction  (milestones, BOQ, certs)
+        │       │       │
+        │       │       └── depends on real_estate_procurement (below)
+        │       │
+        │       ├── real_estate_handover  (snagging, warranty)
+        │       │
+        │       ├── real_estate_investment  (feasibility, NPV/IRR)
+        │       │
+        │       ├── real_estate_maquette  (3D glTF viewer)
+        │       │       │
+        │       │       └── real_estate_plan  (2D overlay editor)
+        │       │
+        │       ├── real_estate_contract_template  (Word/PDF gen)
+        │       │
+        │       └── real_estate_checks  (PDC lifecycle) ⭐
+        │
+        ├── real_estate_procurement  (material request + PO)
+        │       │
+        │       └── depends on: purchase, stock, product
+        │
+        ├── real_estate_customer_service  (standalone tickets) ⭐
+        │
+        ├── real_estate_portal  (customer self-service views)
+        │
+        └── real_estate_api  (public REST + embed tokens)
+                │
+                └── depends on real_estate_maquette + real_estate_plan
+                    (needed to serve iframe embeds)
+
+
+Recommended install order for a fresh DB:
+    atmta_real_estate
+    → real_estate_developer
+    → real_estate_procurement
+    → real_estate_construction  (needs both dev + procurement)
+    → real_estate_checks
+    → real_estate_customer_service
+    → real_estate_handover
+    → real_estate_brokerage
+    → real_estate_contract_template
+    → real_estate_maquette
+    → real_estate_plan  (needs maquette)
+    → real_estate_investment
+    → real_estate_portal
+    → real_estate_api  (needs maquette + plan for embeds)
+
+
+════════════════════════════════════════════════════════════════════════════════
+3. MASTER DATA / HIERARCHY
+════════════════════════════════════════════════════════════════════════════════
+
+  realestate.project (real_estate_developer)
+      │  code, name, project_type (residential/commercial/mixed/land/industrial)
+      │  expected_budget, currency, stock_location_id
+      │  analytic_account_id (auto-generated by construction)
+      │
+      ├─ realestate.phase (real_estate_developer)
+      │
+      └─ realestate.property (atmta_real_estate)
+              │  hierarchy_level: compound → building → floor → unit → room
+              │  inherits product.template (so it plays with sales/stock)
+              │  40+ fields (rooms, utilities, ownership, location, media)
+              │  state: available / reserved / rented / maintenance / inactive
+              │
+              └─ children via parent_id (tree structure)
+
+
+All money-tracking downstream models FK to realestate.project (for cost centers)
+or realestate.property (for per-unit tracking). Nothing lives orphaned.
+
+
+════════════════════════════════════════════════════════════════════════════════
+4. PER-MODULE CYCLES
+════════════════════════════════════════════════════════════════════════════════
+
+────────────────────────────────────────
+4.1  atmta_real_estate  (RENTAL CORE)
+────────────────────────────────────────
+
+  MODELS:
+    realestate.property           — the shared property master
+    realestate.contract           — rental contract
+    realestate.contract.payment   — scheduled payment on rental contract
+    realestate.contract.payment.line — charge line under a payment
+
+  RENTAL CYCLE:
+    (1) Create property (unit)
+          state: available
+    (2) Create rental contract (partner, start, end, deposit_state)
+          state: draft
+    (3) Generate payment schedule
+          action_generate_payment_lines() → creates realestate.contract.payment rows
+          each row has Hijri + Gregorian dates
+    (4) Confirm contract
+          state: draft → ready → confirmed → invoiced → active
+          Property state: available → rented
+    (5) Each period the linked payment auto-invoices
+          contract_payment.state: draft → invoiced → paid
+          Related invoice via move_id + move_state + payment_state
+    (6) Charges added (maintenance, utility, etc.)
+          via charge_line_ids on contract_payment
+          amount_total = base + Σ(charges)
+    (7) Contract expires
+          state: active → expired
+          Property state: rented → available
+    (8) Deposit refunded or forfeited
+          deposit_state: held → refunded / forfeited / partial_refund
+
+
+────────────────────────────────────────
+4.2  real_estate_developer  (SALES)
+────────────────────────────────────────
+
+  MODELS:
+    realestate.project             — top-level project
+    realestate.phase               — project phase
+    realestate.unit.reservation    — hold-and-book (first-class object)
+    realestate.sale.contract       — sale contract
+    realestate.sale.installment    — installment on sale contract
+
+  SALES CYCLE:
+    (1) Create project (residential/commercial/mixed/land/industrial)
+    (2) Create phases + units under project
+    (3) Create reservation
+          state: hold
+          hold_expiry_at = now + hold_duration_hours (default 72h)
+          booking_fee captured
+          proposed_price vs base_price → proposed_vs_base %
+          Property state: available → reserved
+    (4) Reservation confirmed (buyer commits)
+          state: hold → booked → confirmed
+    (5) Sale contract created from reservation
+          reservation.sale_contract_id set
+          sale_contract.state: draft
+          Property state: reserved → sold (via sale_status field)
+    (6) Installments generated on sale contract
+          installments: down / installment / balloon kinds
+    (7) Each installment invoiced individually
+          action_generate_invoice() → posts account.move
+          installment.state: pending → invoiced → paid
+    (8) Payment received → automatic reconciliation
+    (9) Contract completed
+          sale_contract.state: signed → completed
+
+
+────────────────────────────────────────
+4.3  real_estate_brokerage  (SALES AGENCY)
+────────────────────────────────────────
+
+  MODELS:
+    realestate.listing         — property listing
+    realestate.lead            — sales lead
+    realestate.viewing         — scheduled property viewing
+    realestate.offer           — buyer offer
+    realestate.transaction     — closure record
+    realestate.commission      — agent commission
+    realestate.marketing.channel — lead source taxonomy
+    realestate.lost.reason     — lost-lead reason taxonomy
+
+  BROKERAGE CYCLE:
+    (1) Property listed
+          listing.state: draft → active
+    (2) Lead created (web-to-lead API or manual)
+          lead.state: new
+    (3) Lead qualified
+          lead.state: new → qualified → matched
+    (4) Viewing scheduled
+          viewing.state: scheduled
+          lead.state: matched → viewing_scheduled
+    (5) Viewing completed
+          viewing.state: scheduled → completed
+    (6) Offer submitted
+          offer.state: submitted
+          lead.state: viewing_scheduled → offer
+          listing.state: active → under_offer
+    (7) Offer accepted
+          offer.state: submitted → accepted
+    (8) Transaction created
+          transaction.state: draft
+          transaction_type: in_house / brokerage
+    (9) Deposit received → contract signed → closed
+          transaction.state: draft → deposit_received → contract_signed → closed
+          listing.state: under_offer → sold
+          lead.state: offer → converted
+    (10) Commission recorded
+           commission.role: lister / selling / referrer / brokerage / other
+           calculation_method: percentage OR fixed
+           amount auto-computed from sale_price
+    (11) Commission paid → account.payment posted
+
+
+────────────────────────────────────────
+4.4  real_estate_construction  (CONSTRUCTION)
+────────────────────────────────────────
+
+  MODELS:
+    realestate.contractor
+    realestate.construction.milestone
+    realestate.construction.task
+    realestate.construction.cost.line
+    realestate.construction.payment.certificate
+    realestate.construction.payment.certificate.line  ⭐
+    realestate.boq                                     ⭐
+    realestate.boq.line                                ⭐
+    realestate.work.item + .category                   ⭐
+    realestate.owner.progress.billing                  ⭐
+    realestate.owner.progress.billing.deduction        ⭐
+    realestate.construction.labor.log                  ⭐
+    realestate.construction.dashboard (AbstractModel)
+    (extends realestate.project with analytic_account_id) ⭐
+
+  CONSTRUCTION CYCLE:
+    (1) Contractor onboarded
+          specialization (civil/MEP/finishing/...), rating (A/B/C)
+          default retention_pct (e.g. 5%)
+    (2) Milestones defined on project
+          category (excavation/foundation/structure/MEP/finishing/...)
+          weight (%), expected dates, budget_amount, contractor_id
+          milestone.state: not_started
+    (3) BOQ created for milestone (engineering budget)
+          boq.state: draft
+          lines with work_item + quantity + unit_rate
+          total_amount = Σ(qty × rate)
+    (4) BOQ approved
+          boq.state: draft → approved → locked
+          Lines now available for certification
+    (5) BOQ → material request auto-generated
+          For lines with linked products, spawns a MR
+    (6) Milestone tasks tracked
+          task.state: pending → in_progress → done / skipped
+          task.completion_pct rolls up to milestone.completion_percentage
+    (7) Labor logged daily
+          workers × hours × hourly_rate → total_cost
+          Auto-creates cost_line (category='labor')
+          Cost_line inherits project analytic_account
+    (8) Cost lines accumulate (material/labor/equipment/subcontract/permit/other)
+          project.actual_cost = Σ(cost_lines)
+          project.cost_variance = actual - expected_budget
+    (9) Payment certificate created (contractor progress billing)
+          pc.state: draft
+          contract_value + previously_certified_pct + current_certified_pct
+          OR line_ids populated with BOQ lines (quantity mode)
+          gross_amount = contract_value × current_pct
+                       OR Σ(line.qty × line.unit_rate) if BOQ mode
+          retention_amount = gross × retention_pct
+          net_payable = gross - retention
+    (10) Payment certificate certified
+           pc.state: draft → certified
+           If PO-linked: qty_received bumped on the PO line
+    (11) Vendor bill created from certificate
+           pc.state: certified → invoiced
+           account.move in_invoice created with:
+             - main line (or per-BOQ-line breakout)
+             - retention withheld line (negative amount)
+           analytic_distribution applied to every line
+    (12) Vendor paid
+           pc.state: invoiced → paid
+    (13) OWNER-side progress billing (parallel)
+           opb.state: draft
+           contract_value × current_pct → gross
+           Deductions (mobilization/materials/retention/penalty/other)
+           net_invoiced = gross - Σ(deductions)
+    (14) Owner billing certified + invoiced to customer
+           opb.state: draft → certified → invoiced → paid
+           account.move out_invoice with main line + deduction lines
+    (15) Milestone completed
+           milestone.state: in_progress → completed
+           Project construction_progress recomputes (weighted avg)
+
+
+────────────────────────────────────────
+4.5  real_estate_procurement  (SUPPLY CHAIN)
+────────────────────────────────────────
+
+  MODELS:
+    realestate.material.request
+    realestate.material.request.line
+    realestate.procurement.approval.rule   ⭐
+    realestate.procurement.approval.step   ⭐
+    (extends purchase.order with re_project_id, re_source_model, re_source_id)
+    (extends purchase.order.line with re_material_request_line_id)
+    (extends res.partner with is_realestate_vendor + 7 tag taxonomy)
+    (extends product.template with 4 flag taxonomy)
+
+  PROCUREMENT CYCLE:
+    (1) Approval rules defined (one-time setup)
+          rule: min_amount, max_amount, group_id, sequence
+          Multiple rules can match one MR
+    (2) Material request raised (from any source)
+          source_ref: polymorphic to construction task/milestone,
+                      handover defect, rental contract, ticket, etc.
+          project + property auto-derived from source
+          analytic_account auto-derived from project
+          mr.state: draft
+    (3) Lines added (product, qty, uom, description)
+          estimated_total = Σ(line qty × price_hint)
+    (4) MR submitted
+          mr.state: draft → submitted
+          If priority='urgent': skips approval, jumps to 'approved'
+          Otherwise: approval steps generated from matching rules
+    (5) Approval steps approved individually
+          Each step's approver_id/approval_date recorded
+          When all_approvals_done: auto-promote to 'approved'
+          mr.state: submitted → approved
+    (6) Purchase orders created (grouped by supplier)
+          action_create_purchase_orders()
+          Lines grouped by product.preferred_supplier
+          One PO per supplier
+          analytic_distribution applied to each PO line
+          Confirmed automatically
+          mr.state: approved → ordered
+    (7) Stock picking generated (project-routed)
+          _prepare_stock_moves override sets location_dest_id
+            to project.stock_location_id
+    (8) Receipts validated → qty_received propagates back
+          mr.state: ordered → partial → received
+    (9) Vendor bill posted → payment
+          mr.state: received → done
+
+
+────────────────────────────────────────
+4.6  real_estate_handover  (SNAGGING + WARRANTY)
+────────────────────────────────────────
+
+  MODELS:
+    realestate.handover
+    realestate.snagging.issue
+    realestate.warranty
+    realestate.handover.checklist.template + .item
+    realestate.handover.dashboard
+
+  HANDOVER CYCLE:
+    (1) Sale contract completed → handover scheduled
+          handover.state: scheduled
+          Linked to sale_contract_id
+    (2) Inspection walkthrough
+          handover.state: scheduled → inspection
+    (3) Snags recorded per property
+          snag.state: open
+          severity: minor / major / critical
+          snag.description + reported_date + reported_by
+    (4) Snags assigned to contractor/staff
+          snag.state: open → assigned → in_progress
+    (5) Snags resolved
+          snag.state: in_progress → resolved → verified / rejected
+          handover.state: inspection → snagging
+    (6) All snags cleared → handover completed
+          handover.state: snagging → completed
+          Property.state: reserved → sold (via developer)
+    (7) Warranty period starts
+          warranty.period_months + start_date + auto-computed end_date
+          Warranty active for period_months
+    (8) Post-handover defects reported
+          Can spawn customer service ticket
+          Can spawn material request for parts
+
+
+────────────────────────────────────────
+4.7  real_estate_portal  (CUSTOMER SELF-SERVICE)
+────────────────────────────────────────
+
+  MODELS:
+    (Extends crm.lead with realestate fields)
+
+  PORTAL CYCLE:
+    (1) Customer logs into /my portal
+    (2) Sees their sale contracts + installment schedules
+    (3) Can view outstanding installments (highlighted overdue)
+    (4) Can view their handover defects (state visible)
+    (5) Can log new defects via portal form
+    (6) Can view portal-scoped rental payments (if renter)
+    (7) Payment methods offered via Odoo payment provider integration
+
+
+────────────────────────────────────────
+4.8  real_estate_api  (PUBLIC REST + EMBED)
+────────────────────────────────────────
+
+  MODELS:
+    realestate.api.ratelimit
+    realestate.embed.token
+    (extends crm.lead with realestate_api_source, project_id, property_id)
+
+  API CYCLE:
+    (1) Admin creates API key (or shares public endpoints)
+    (2) External web/mobile app hits /api/v1/*
+          - /api/v1/projects → project catalog (JSON)
+          - /api/v1/units → available units
+          - /api/v1/maps → geo data
+          - /api/v1/health, /api/v1/version → status
+          - /api/v1/partners/by-ref/{ref}/statement.pdf → PDF
+          - ...15 partner-scoped download endpoints
+    (3) Rate limiting applied per API key
+    (4) Public lead capture:
+          POST /api/v1/interest → creates crm.lead with realestate_api_source
+    (5) Iframe embed:
+          Admin generates realestate.embed.token
+          kind: plan-2d OR maquette-3d
+          allowed_origins + expires_at
+          External site embeds <iframe src="/embed/{token}">
+          Server validates origin + expiry
+
+
+────────────────────────────────────────
+4.9  real_estate_investment  (FEASIBILITY)
+────────────────────────────────────────
+
+  MODELS:
+    realestate.investment.feasibility
+    realestate.investment.scenario
+    realestate.investment.cash.flow
+    realestate.investment.dashboard
+
+  INVESTMENT CYCLE:
+    (1) Feasibility study created
+          name + discount_rate (default 10%) + analysis_period_years + base_year
+          state: draft
+    (2) Cash flows added per period (year 0 to year N)
+          period_index + year + inflow + outflow
+          net_flow = inflow - outflow
+          discounted_flow = net_flow / (1 + discount_rate) ^ period
+    (3) Metrics auto-computed
+          NPV = Σ(discounted_flow)
+          IRR = Newton-Raphson root of NPV(rate)=0, then × 100
+          payback_period = periods until Σ(net_flow) ≥ 0 (fractional)
+          total_inflow, total_outflow, net_undiscounted
+          Positive_NPV flag drives green/red ribbon
+    (4) Scenarios created (optional)
+          types: best / expected / worst / custom
+          Each scenario has its own metrics
+    (5) Study approved
+          state: draft → approved / rejected → archived
+
+
+────────────────────────────────────────
+4.10  real_estate_maquette  (3D)
+────────────────────────────────────────
+
+  MODELS:
+    (extends realestate.project with maquette_glb, env_hdr, default_camera)
+    (extends realestate.property with maquette_mesh_name, floor_plan_image,
+     floor_plan_pdf, interior_glb, elevation_sheet, maquette_color_override)
+    realestate.building.floor       — per-floor row (shared with plan)
+    realestate.building.region      — 3D building region (2D master plan)
+    realestate.building.preview     — preview images
+    realestate.maquette.unit.picker — click-to-pick wizard (TransientModel)
+    realestate.spec.tag             — searchable amenity tags
+
+  3D CYCLE (Setup):
+    (1) Admin exports building from Blender/Rhino/Revit → .glb file
+          Each unit is a named mesh (naming convention = property_code)
+    (2) Upload .glb to project.maquette_glb
+    (3) Optional: upload .hdr environment, save default camera
+    (4) Run auto-match — assigns mesh_name to properties by matching code
+    (5) Upload per-unit floor_plan_image + pdf + interior_glb
+    (6) (Building level) upload elevation_sheet + define building.floor rows
+
+  3D CYCLE (Runtime):
+    (1) Sales agent opens project → clicks "Open 3D Maquette"
+    (2) Three.js viewer loads .glb via /web/content/{id}
+    (3) Loads .hdr + restores camera position
+    (4) User orbits/zooms/pans
+    (5) User clicks a mesh:
+          → mesh has mesh_name → jumps to unit's side panel
+          → mesh has no name → unit_picker wizard opens
+             → user picks the unit → mesh gets learned for next time
+    (6) Side panel shows unit price/area/state/floor_plan/spec_tags
+    (7) Actions: view details / reserve / 3D interior / view gallery
+    (8) Reserve → creates realestate.unit.reservation → mesh color changes
+
+
+────────────────────────────────────────
+4.11  real_estate_plan  (2D)
+────────────────────────────────────────
+
+  MODELS:
+    (extends realestate.property with plan_image, plan_region_ids)
+    (extends realestate.project with main_property_id, action_open_plan_viewer)
+    realestate.plan.region
+    realestate.building.floor (shared with maquette)
+
+  2D CYCLE (Setup):
+    (1) Upload plan_image to any property (compound/building/floor/villa)
+    (2) Open plan editor client action
+    (3) Click "Add region" → click vertices (min 3) → Finish
+          Coordinates auto-normalized to [0-100]% of image
+    (4) Region has parent_property_id + target_property_id (must be direct child)
+          + polygon JSON + color + label
+    (5) Optionally set project.main_property_id as viewer entry point
+
+  2D CYCLE (Runtime):
+    (1) User opens project → "Open Drill-Down Viewer"
+          OR opens any property with plan_image
+    (2) Fullscreen SVG-overlay viewer loads plan_image + all plan_region_ids
+    (3) Regions rendered as color-coded polygons (state-derived)
+    (4) User hovers polygon → tooltip label
+    (5) User clicks polygon → navigates to target_property
+    (6) Recurse until reaching leaf 'unit'
+    (7) Unit action panel opens (reserve / details)
+
+
+────────────────────────────────────────
+4.12  real_estate_contract_template  (DOCX GEN)
+────────────────────────────────────────
+
+  MODELS:
+    realestate.contract.template
+    realestate.contract.document
+    realestate.contract.generate.wizard
+    realestate.contract.generate.mixin
+    realestate.placeholder.catalog.line
+    realestate.placeholder.catalog.wizard
+    realestate.placeholder.autofill.line
+    realestate.placeholder.autofill.wizard
+    (extends realestate.contract, .sale.contract, .transaction, .contractor
+     with contract_document buttons)
+
+  DOC-GEN CYCLE:
+    (1) Admin uploads .docx template with Jinja2 placeholders
+          fields: name, kind, jurisdiction, language, target_model_id, docx_template
+    (2) User opens any target record (contract/sale/transaction)
+    (3) Clicks "Generate Document" button
+    (4) Wizard opens showing available templates + auto-detected placeholders
+    (5) User picks template + reviews auto-filled placeholder values
+    (6) Wizard renders template with Jinja2 → produces docx
+    (7) Optional: convert docx → pdf via LibreOffice headless
+    (8) Result stored as realestate.contract.document (state: generated)
+    (9) User downloads or emails
+
+
+────────────────────────────────────────
+4.13  real_estate_checks  ⭐ (PDC)
+────────────────────────────────────────
+
+  MODELS:
+    realestate.check
+    realestate.check.deposit
+    realestate.check.bounce
+    realestate.check.bulk.wizard
+    realestate.check.deposit.wizard
+    realestate.check.bounce.wizard
+    (extends realestate.sale.contract with check smart stats)
+
+  PDC CYCLE:
+    (1) Bulk-create checks from sale contract installments
+          Wizard: sale_contract + bank + first_check_number + journal
+          Generates N checks with sequential numbers
+          check.state: registered
+          Each check linked to its sale_installment_id
+    (2) Register additional individual checks manually (optional)
+          check.state: draft → registered
+    (3) Group registered checks into deposit slip
+          Deposit wizard: pick checks + journal + bank_slip_ref
+          deposit.state: draft
+    (4) Confirm deposit
+          deposit.state: draft → confirmed
+          All contained checks: registered → deposited
+    (5a) Clear-all successful path
+          deposit.action_clear_all()
+          Each check.action_mark_cleared():
+            - creates account.payment inbound
+            - reconciles with linked installment invoice
+          check.state: deposited → cleared
+          deposit.state: confirmed → cleared
+    (5b) Bounce path (partial or full)
+          Register bounce via bounce_wizard
+          bounce reason: insufficient/stop_payment/signature/closed/technical/other
+          check.state: deposited → bounced
+          deposit.state: confirmed → partial (if only some bounced)
+          Optional: penalty_amount → auto-invoice drawer
+    (6) Replacement check (bounced only)
+          Create new check → link via replaces_check_id
+          Old check's replacement_check_id set
+          Old check.state: bounced → replaced
+    (7) Reconciliation
+          Cleared checks' payments reconcile with installment invoices
+          Sale contract check_amount_cleared updates
+
+
+────────────────────────────────────────
+4.14  real_estate_customer_service  ⭐ (TICKETS)
+────────────────────────────────────────
+
+  MODELS:
+    realestate.customer.ticket.category
+    realestate.customer.ticket
+
+  TICKET CYCLE:
+    (1) Category defined (name, default_sla_hours, default_assignee)
+          7 seeded: Maintenance/Billing/Complaint/Warranty/Amenity/Security/Other
+    (2) Ticket created (title, reporter, property, category, priority)
+          ticket.state: new
+          SLA deadline auto = create_date + category.default_sla_hours
+          Default assignee applied → if set, auto-flip to 'assigned'
+    (3) Assigned to agent
+          ticket.state: new → assigned
+    (4) Agent starts work
+          ticket.state: assigned → in_progress
+    (5) Waiting for customer feedback (optional)
+          ticket.state: in_progress → waiting
+    (6) Ticket resolved
+          ticket.state: any → resolved
+          resolved_on set
+    (7) Ticket closed
+          ticket.state: resolved → closed
+          closed_on set
+    (8) Reopen if issue returns
+          ticket.state: resolved/closed → assigned (or new via reopen)
+          resolved_on/closed_on cleared
+    (9) SLA breach detection
+          If unresolved past sla_deadline: sla_breached=True
+          Kanban color-codes breached tickets
+    (10) Ticket → Material request escalation
+           action_create_material_request()
+           Spawns MR w/ source_ref pointing back to ticket
+           MR project/property auto-derived from ticket's property
+
+
+════════════════════════════════════════════════════════════════════════════════
+5. CROSS-MODULE DATA FLOW
+════════════════════════════════════════════════════════════════════════════════
+
+Arrows show which data flows from source module → target module at runtime.
+
+  atmta_real_estate.property
+    ↓ (parent for hierarchy)
+  atmta_real_estate.property (children compound→building→floor→unit)
+    ↓ (used everywhere)
+  ─→ developer.reservation.property_id
+  ─→ developer.sale_contract.property_id
+  ─→ developer.sale_installment.property_id (related)
+  ─→ brokerage.listing.property_id
+  ─→ construction.milestone.project_id.property_ids
+  ─→ handover.snag.property_id
+  ─→ checks.check.property_id (via sale_contract auto-derive)
+  ─→ customer_service.ticket.property_id
+  ─→ plan.region.parent_property_id + target_property_id
+  ─→ maquette.property_maquette (mesh_name)
+  ─→ api.embed.token.resource_id
+  ─→ procurement.material_request.property_id
+
+  developer.project
+    ↓
+  ─→ construction.milestone.project_id
+  ─→ construction.cost_line.project_id
+  ─→ construction.boq.project_id
+  ─→ construction.owner_progress_billing.project_id
+  ─→ construction.labor_log.project_id
+  ─→ procurement.material_request.project_id
+  ─→ procurement.purchase.order.re_project_id
+  ─→ construction.payment_certificate.project_id
+  ─→ maquette.project_maquette (glb, env_hdr)
+  ─→ plan.project (main_property_id)
+
+  developer.sale_contract
+    ↓
+  ─→ developer.sale_installment.sale_contract_id (O2M)
+  ─→ checks.check.sale_contract_id
+  ─→ checks.check.sale_installment_id
+  ─→ handover.handover.sale_contract_id
+  ─→ handover.warranty.sale_contract_id
+  ─→ contract_template can generate docs from any sale_contract
+  ─→ construction.owner_progress_billing.sale_contract_id
+
+  developer.sale_installment
+    ↓
+  ─→ account.move (invoice via action_generate_invoice)
+  ─→ checks.check.sale_installment_id (bulk wizard creates N checks)
+  ─→ checks.check.payment_id → account.payment reconciles with move_id
+
+  construction.milestone
+    ↓
+  ─→ construction.task.milestone_id
+  ─→ construction.cost_line.milestone_id
+  ─→ construction.boq.milestone_id
+  ─→ construction.payment_certificate.milestone_id
+  ─→ construction.labor_log.milestone_id
+  ─→ procurement.material_request.source_ref (polymorphic)
+
+  construction.boq.line
+    ↓
+  ─→ construction.payment_certificate.line.boq_line_id
+  ─→ certified_qty/remaining_qty roll back via inverse relation
+  ─→ optional product_id → spawns procurement.material_request via
+     BOQ.action_create_material_request
+
+  construction.contractor
+    ↓
+  ─→ construction.milestone.contractor_id
+  ─→ construction.cost_line.contractor_id
+  ─→ construction.payment_certificate.contractor_id
+  ─→ construction.labor_log.contractor_id
+  ─→ procurement.purchase.order (subcontract POs via SubcontractPOWizard)
+
+  procurement.material_request
+    ↓
+  ─→ procurement.approval.step.request_id (approval matrix)
+  ─→ procurement.purchase.order (auto-created)
+  ─→ purchase.order.line.re_material_request_line_id (traceability)
+
+  procurement.purchase.order
+    ↓
+  ─→ stock.picking (via Odoo core purchase→stock chain)
+  ─→ stock.move.location_dest_id set to project.stock_location_id
+     (via our _prepare_stock_moves override)
+  ─→ account.move.line (vendor bill w/ analytic_distribution)
+
+  checks.check.action_mark_cleared
+    ↓
+  ─→ account.payment (inbound)
+  ─→ Attempts to reconcile with sale_installment.move_id
+
+  customer_service.ticket
+    ↓
+  ─→ procurement.material_request.source_ref (via escalation)
+
+  handover.snag
+    ↓
+  ─→ Optional: customer_service.ticket
+  ─→ Optional: procurement.material_request.source_ref
+
+  brokerage.transaction
+    ↓
+  ─→ brokerage.commission.transaction_id (O2M)
+  ─→ commission.amount → account.payment (agent payout)
+
+  investment.feasibility
+    ↓
+  ─→ investment.cash.flow.feasibility_id (O2M)
+  ─→ investment.scenario.feasibility_id (O2M)
+  ─→ Metrics compute in Python (NPV/IRR/payback)
+
+  api.embed.token
+    ↓
+  ─→ Resource_id resolves to project/property
+  ─→ Iframe renders 2D plan OR 3D maquette based on kind
+  ─→ Uses maquette.maquette_glb OR plan.property.plan_image
+
+
+════════════════════════════════════════════════════════════════════════════════
+6. FINANCIAL FLOW MAP
+════════════════════════════════════════════════════════════════════════════════
+
+MONEY-IN (Customer → Developer)
+───────────────────────────────
+
+  Path A — Sale installment via invoice
+    sale_installment.action_generate_invoice
+      → account.move (out_invoice, posted)
+      → account.payment (inbound, reconciled)
+      → installment.state: pending → invoiced → paid
+
+  Path B — Sale installment via PDC check ⭐
+    sale_contract.action_bulk_create_checks (wizard)
+      → N × realestate.check (state=registered, sale_installment_id set)
+    Later:
+      → deposit_wizard → deposit.action_confirm
+        → checks flip to state=deposited
+      → deposit.action_clear_all
+        → each check.action_mark_cleared:
+          → account.payment (inbound)
+          → attempt reconcile with sale_installment.move_id
+          → check.state=cleared
+        → deposit.state=cleared
+
+  Path C — Bounced PDC ⭐
+    check.action_open_bounce_wizard → bounce_wizard
+      → realestate.check.bounce created (reason + penalty_amount)
+      → check.state=bounced
+      → deposit.state=partial (if only some bounced)
+      → Optional: bounce.action_issue_penalty_invoice
+        → account.move (out_invoice, drawer partner_id)
+
+  Path D — Owner progress billing (build-to-order) ⭐
+    opb.action_certify → opb.action_create_customer_invoice
+      → account.move (out_invoice)
+      → 1 line for gross + 1 line per deduction (negative amounts)
+      → analytic_distribution on every line
+
+  Path E — Brokerage commission (agent-to-developer, or reverse if agent-received)
+    transaction closed → commission auto-computed
+      → payment via account.payment
+
+  Path F — Rental payment
+    contract_payment.action_register_payment → account.payment
+      → reconciled against contract_payment invoice
+
+MONEY-OUT (Developer → Contractor / Supplier)
+─────────────────────────────────────────────
+
+  Path A — Material request → PO → vendor bill
+    material_request.action_create_purchase_orders
+      → grouped by preferred_supplier → 1 PO per supplier
+      → PO confirm → picking (routed to project's stock location)
+      → receipt validated → vendor bill via Odoo core
+
+  Path B — Payment certificate → vendor bill
+    payment_certificate.action_certify
+      → pc.state=certified
+      → If PO-linked: qty_received bumped
+    payment_certificate.action_create_vendor_bill
+      → account.move (in_invoice)
+      → line 1: gross amount OR per-BOQ-line breakout
+      → line 2..N: retention withheld (negative)
+      → analytic_distribution applied
+    payment_certificate.action_mark_paid
+      → account.payment posted
+
+  Path C — Labor cost (implicit)
+    labor_log.create → auto-syncs cost_line (category='labor')
+      → cost_line rolls up to project.actual_cost
+      → No cash outlay yet (books later via payroll)
+
+  Path D — Subcontract PO
+    subcontract_po_wizard → 1 master PO per contractor
+      → 1 line per milestone in scope
+      → analytic_distribution per line
+
+  Path E — Bounce penalty received (money-in flow, but adjacent)
+    See Path C above
+
+
+════════════════════════════════════════════════════════════════════════════════
+7. ANALYTIC-ACCOUNT PROPAGATION (COST CENTER MAP)
+════════════════════════════════════════════════════════════════════════════════
+
+Each project gets a single analytic account (auto-generated).
+That analytic account propagates DOWNSTREAM through 5 layers:
+
+    realestate.project.analytic_account_id
+        │
+        │ (auto-generated on demand via
+        │  action_generate_analytic_account, using sudo())
+        │
+        ├──▶ realestate.construction.cost_line.analytic_account_id
+        │       (compute from cost_line.project_id.analytic_account_id)
+        │
+        ├──▶ realestate.material.request.analytic_account_id
+        │       (compute from mr.project_id.analytic_account_id)
+        │        │
+        │        └──▶ purchase.order.line.analytic_distribution
+        │                (set at PO creation time in action_create_purchase_orders)
+        │                 │
+        │                 └──▶ account.move.line.analytic_distribution
+        │                         (via Odoo core 3-way match: PO→bill)
+        │
+        ├──▶ realestate.construction.payment.certificate.analytic_account_id
+        │       (compute from pc.project_id.analytic_account_id)
+        │        │
+        │        └──▶ account.move.line.analytic_distribution
+        │                (set on every bill line in action_create_vendor_bill,
+        │                 including retention withheld line and per-BOQ lines)
+        │
+        └──▶ realestate.owner.progress.billing.analytic_account_id
+                 │
+                 └──▶ account.move.line.analytic_distribution
+                         (customer invoice lines get tagged, including
+                          deduction lines)
+
+Result: One analytic account per project → full project P&L in one report.
+
+
+════════════════════════════════════════════════════════════════════════════════
+8. STATE MACHINES INVENTORY (24 total)
+════════════════════════════════════════════════════════════════════════════════
+
+  MODULE                MODEL                                STATES
+  ────────────────────  ───────────────────────────────────  ─────────────────
+  atmta_real_estate     property.state                       available/reserved/rented/maintenance/inactive
+  atmta_real_estate     contract.state                       draft/ready/confirmed/invoiced/active/expired
+  atmta_real_estate     contract.deposit_state               none/held/refunded/forfeited/partial_refund
+  atmta_real_estate     contract_payment.state               draft/invoiced/paid/cancelled
+  developer             reservation.state                    hold/booked/confirmed/expired/cancelled
+  developer             sale_contract.state                  draft/signed/completed
+  developer             sale_installment.state               pending/invoiced/paid/cancelled
+  brokerage             listing.state                        draft/active/under_offer/sold/withdrawn/expired
+  brokerage             lead.state                           new/qualified/matched/viewing_scheduled/offer/converted/lost
+  brokerage             viewing.state                        scheduled/completed/cancelled
+  brokerage             offer.state                          submitted/accepted/rejected
+  brokerage             transaction.state                    draft/deposit_received/contract_signed/closed/cancelled
+  construction          milestone.state                      not_started/in_progress/completed/delayed/cancelled
+  construction          task.state                           pending/in_progress/done/skipped
+  construction          boq.state                            draft/approved/locked/cancelled
+  construction          payment_certificate.state            draft/certified/invoiced/paid/cancelled
+  construction          owner_progress_billing.state         draft/certified/invoiced/paid/cancelled
+  procurement           material_request.state               draft/submitted/approved/ordered/partial/received/done/cancelled
+  procurement           approval_step.approved (bool)        pending/approved
+  handover              handover.state                       scheduled/inspection/snagging/completed/cancelled
+  handover              snagging.issue.state                 open/assigned/in_progress/resolved/verified/rejected
+  checks                check.state                          draft/registered/deposited/cleared/bounced/replaced/cancelled
+  checks                deposit.state                        draft/confirmed/cleared/partial/cancelled
+  checks                bounce.resolved (bool)               unresolved/resolved
+  customer_service      ticket.state                         new/assigned/in_progress/waiting/resolved/closed/cancelled
+  investment            feasibility.state                    draft/approved/rejected/archived
+
+
+════════════════════════════════════════════════════════════════════════════════
+9. SECURITY GROUPS MATRIX
+════════════════════════════════════════════════════════════════════════════════
+
+  MODULE                            USER            MID-TIER          MANAGER
+  ────────────────────────────────  ──────────────  ────────────────  ─────────────
+  atmta_real_estate                 Read-only       —                 Manager
+  real_estate_developer             Read-only       Sales Agent       Manager
+  real_estate_brokerage             User            Agent             Manager
+  real_estate_construction          User            —                 Manager
+  real_estate_procurement           User (create MR)Approver          Manager
+  real_estate_handover              User            —                 Manager
+  real_estate_customer_service      User            Agent             Manager
+  real_estate_checks                User (register) Treasurer (clear) Manager
+  real_estate_api                   User            —                 Manager
+
+Category-based, so admin can grant fine-grained access per user.
+All groups implied upward (Manager includes User + Mid).
+
+
+════════════════════════════════════════════════════════════════════════════════
+10. INTEGRATION POINTS WITH ODOO CORE
+════════════════════════════════════════════════════════════════════════════════
+
+  res.partner
+    - Extended by procurement: is_realestate_vendor + 7-tag taxonomy
+    - Extended by api: realestate ext fields
+    - Used by every model with partner_id (contract, ticket, check, etc.)
+
+  product.template / product.product
+    - Extended by procurement: 4 real-estate product flags
+    - Used by realestate.property (property IS a product.template)
+    - Used by material_request.line.product_id
+
+  account.move / account.move.line
+    - Sale installment → out_invoice
+    - Payment certificate → in_invoice with retention line
+    - Owner progress billing → out_invoice with deductions
+    - Bounce penalty → out_invoice
+    - Every line supports analytic_distribution
+
+  account.payment
+    - Check clear → auto-created inbound payment (with memo)
+    - Attempts reconciliation with linked installment invoice
+    - Contract_payment.action_register_payment → outbound payment
+
+  purchase.order / purchase.order.line
+    - Extended with re_project_id, re_source_model, re_source_id
+    - Material request → grouped by supplier → auto-created PO
+    - Payment certificate → linked PO line (qty_received bumped)
+
+  stock.picking / stock.move
+    - Project-scoped receipts via _prepare_stock_moves override
+    - Location_dest_id auto-set to project.stock_location_id
+
+  account.analytic.account / account.analytic.plan
+    - Auto-generated per project (via sudo)
+    - Propagates through 5 layers (see section 7)
+
+  mail.thread + mail.activity.mixin
+    - Every important model inherits (chatter, activities, followers)
+
+  ir.sequence
+    - CHK-XXXXXX, DEP-XXXXX, BNC-XXXXX, TCK-XXXXXX, MR-XXXXX, CERT-XXXXX,
+      OPB-XXXXX, BOQ-XXXXX, LAB-XXXXXX
+
+
+════════════════════════════════════════════════════════════════════════════════
+11. REPORTS & PDFs
+════════════════════════════════════════════════════════════════════════════════
+
+  Module                     Report                                  Format
+  ─────────────────────────  ──────────────────────────────────────  ─────────
+  real_estate_api            Customer Statement                      QWeb PDF
+  atmta_real_estate          Rental Contract                         QWeb PDF
+  real_estate_developer      Sale Contract                           QWeb PDF
+  real_estate_developer      Installment Schedule                    QWeb PDF
+  real_estate_contract_...   Any target model (Word/PDF via docx)    docx/pdf
+  real_estate_construction   Construction Dashboard                  HTML (JS)
+  real_estate_investment     Feasibility Dashboard                   HTML (JS)
+  atmta_real_estate          Rental Dashboard                        HTML (JS)
+  real_estate_brokerage      Brokerage Dashboard                     HTML (JS)
+
+
+════════════════════════════════════════════════════════════════════════════════
+12. PUBLIC REST API + IFRAME EMBEDS
+════════════════════════════════════════════════════════════════════════════════
+
+  Base URL: /api/v1/
+
+  Public read endpoints:
+    GET  /api/v1/projects              — project catalog
+    GET  /api/v1/units                 — available units
+    GET  /api/v1/maps                  — geo data
+    GET  /api/v1/health                — status
+    GET  /api/v1/version               — API version
+
+  Partner-scoped download endpoints (15 total):
+    GET  /api/v1/partners/by-ref/{ref}/statement.pdf
+    GET  /api/v1/partners/by-ref/{ref}/contracts
+    GET  /api/v1/partners/by-ref/{ref}/contracts/{id}/download
+    ... etc.
+
+  Lead capture:
+    POST /api/v1/interest              — creates crm.lead
+
+  Iframe embed:
+    Admin creates realestate.embed.token
+      kind: plan-2d OR maquette-3d
+      resource_model + resource_id
+      allowed_origins + expires_at
+    Third-party embeds:
+      <iframe src="/embed/{token}" />
+    Server validates origin + expiry
+
+
+════════════════════════════════════════════════════════════════════════════════
+13. COMMON END-TO-END WORKFLOWS
+════════════════════════════════════════════════════════════════════════════════
+
+WORKFLOW A: "Sell a unit with PDC checks"
+─────────────────────────────────────────
+1. developer:  Create project + phase + unit
+2. plan/maq:   Upload plan_image OR maquette_glb
+3. api:        Embed 3D viewer on public website
+4. api:        Lead comes in via /api/v1/interest → crm.lead
+5. brokerage:  Lead qualified → matched → viewing scheduled
+6. plan:       Sales agent uses drill-down viewer → picks unit
+7. developer:  Reservation created (hold 72h)
+8. developer:  Sale contract signed (partner + property + sale_price)
+9. developer:  Installments generated (down + N × installment + balloon)
+10. checks:    Bulk-create wizard → N checks (state=registered)
+11. checks:    Group into deposit → confirm → clear
+12. Odoo:      Auto-payments reconciled with installment invoices
+13. handover:  On completion → handover scheduled
+14. handover:  Snag list → resolve → warranty starts
+15. customer_service: Post-handover tickets tracked with SLA
+
+
+WORKFLOW B: "Track construction with retention"
+───────────────────────────────────────────────
+1. developer:  Project created
+2. construction:  Generate analytic account for project
+3. construction:  Contractor onboarded (retention 5%)
+4. construction:  Milestone defined (weight 20%, budget $100k)
+5. construction:  BOQ approved (200 units × $350 = $70k)
+6. procurement:  Approval rule defined (>$100 needs manager approval)
+7. construction:  Labor logged daily → cost_lines auto-populate
+8. construction:  Payment certificate certified (100 × $350 = $35k)
+9. construction:  Vendor bill created ($33,250 after 5% retention withheld)
+10. construction: Owner progress billing (customer side, 20% cert)
+11. construction: Customer invoice ($90k after $10k mobilization deduction)
+12. Every money movement carries the project's analytic account
+
+
+WORKFLOW C: "Bounce a check + issue penalty"
+─────────────────────────────────────────────
+1. checks:  Check on deposit, state=deposited
+2. checks:  Bank returns unpaid — register bounce
+3. checks:  Bounce wizard → reason=insufficient, penalty=$500
+4. checks:  Check state → bounced
+5. checks:  Deposit state → partial (if others cleared)
+6. checks:  Auto-invoice drawer for penalty ($500)
+7. checks:  Optional: create replacement check
+8. checks:  Old check.state: bounced → replaced
+
+
+WORKFLOW D: "Escalate a ticket to a material request"
+─────────────────────────────────────────────────────
+1. customer_service:  Tenant reports "AC broken" via portal
+2. customer_service:  Ticket created (state=new)
+3. customer_service:  Category=Maintenance auto-assigns SLA (24h)
+4. customer_service:  Auto-assign default_assignee → state=assigned
+5. customer_service:  Agent needs parts — click "Raise Material Request"
+6. procurement:       MR created with source_ref → back to ticket
+7. procurement:       Project + property auto-derived from ticket
+8. procurement:       MR follows normal approval → PO → receipt cycle
+9. customer_service:  Once parts arrive, agent completes repair → resolved
+10. customer_service: Ticket closed → closed_on stamped
+
+
+════════════════════════════════════════════════════════════════════════════════
+14. WHAT'S SHARED ACROSS MODULES ("THE SPINE")
+════════════════════════════════════════════════════════════════════════════════
+
+The following 5 things are shared across the entire suite. Change any of them
+and MANY modules react:
+
+  (1) realestate.property (atmta_real_estate)
+      — Extended by developer, construction, procurement, handover, checks,
+        customer_service, plan, maquette, api.
+      — Hierarchy + state + all extension fields live on ONE model.
+
+  (2) realestate.project (developer)
+      — Extended by construction (analytic_account_id, milestone rollups)
+      — Referenced by procurement, checks, handover, api.
+      — Master data for cost centers.
+
+  (3) res.partner (Odoo core)
+      — Extended by procurement (vendor tags), api (RE fields).
+      — Every partner-facing document links here (contract, ticket, check, etc.).
+
+  (4) The analytic account per project (construction extension)
+      — Propagates through cost_line, MR, PO line, vendor bill, customer invoice.
+      — This is the "project P&L" backbone.
+
+  (5) The polymorphic source_ref on material_request (procurement)
+      — Handover defects, rental contracts, customer tickets, construction tasks,
+        construction milestones all register as valid source models.
+      — Downstream modules only need to ADD to the selection; no schema change.
+
+
+═══ END OF DOCUMENT ═══

@@ -57,8 +57,11 @@
                             <div class="o_dv_sub">signed</div>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <div class="o_dv_kpi o_dv_teal">
+                    <!-- Dropped, not zeroed, for a user who may not read the
+                         payments it is summed from: the server omits the key. -->
+                    <div class="col-md-2" t-if="state.data.kpis.paid_mtd !== undefined">
+                        <div class="o_dv_kpi o_dv_teal" style="cursor: pointer;"
+                             t-on-click="() => this.openCollectedMtd()">
                             <div class="o_dv_label">Revenue MTD</div>
                             <div class="o_dv_value"><t t-esc="state.data.currency"/> <t t-esc="formatMoney(state.data.kpis.paid_mtd)"/></div>
                             <div class="o_dv_sub">collected</div>

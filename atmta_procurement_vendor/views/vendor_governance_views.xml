@@ -422,7 +422,8 @@
                             <field name="template_id"
                                    readonly="state != 'draft'"/>
                             <field name="template_version"/>
-                            <field name="assessor_id"/>
+                            <field name="assessor_id"
+                                   readonly="state not in ('draft', 'submitted', 'under_review')"/>
                             <field name="reviewer_id"/>
                             <field name="approver_id" invisible="not approver_id"/>
                         </group>

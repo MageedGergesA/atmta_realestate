@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_check_bounce_list" model="ir.ui.view">
+        <field name="name">realestate.check.bounce.list</field>
+        <field name="model">realestate.check.bounce</field>
+        <field name="arch" type="xml">
+            <list decoration-success="resolved"
+                  decoration-danger="not resolved"
+                  decoration-bf="requires_manual_accounting and not accounting_handled">
+                <field name="name"/>
+                <field name="check_id"/>
+                <field name="partner_id"/>
+                <field name="sale_contract_id" optional="show"/>
+                <field name="amount" sum="Face Value"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="bounce_date"/>
+                <field name="reason"/>
+                <field name="bank_charge_amount" sum="Bank Charges" optional="hide"/>
+                <field name="penalty_amount" sum="Penalties" optional="show"/>
+                <field name="penalty_invoice_id" optional="hide"/>
+                <field name="accounting_handled" optional="show"/>
+                <field name="requires_manual_accounting" optional="show"/>
+                <field name="resolution" widget="badge"
+                       decoration-danger="resolution == 'pending'"
+                       decoration-success="resolution in ('re_presented','replaced','settled_cash')"/>
+                <field name="resolved" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_check_bounce_form" model="ir.ui.view">
+        <field name="name">realestate.check.bounce.form</field>
+        <field name="model">realestate.check.bounce</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_authorize_representation" type="object"
+                            string="Authorise Re-presentation"
+                            invisible="resolution != 'pending'"
+                            class="oe_highlight"
+                            groups="real_estate_checks.group_checks_treasurer"
+                            help="Sends the SAME cheque back to the bank as a new attempt. This bounce is preserved."/>
+                    <button name="action_open_replacement_wizard" type="object"
+                            string="Take Replacement Cheque"
+                            invisible="resolution != 'pending'"
+                            groups="real_estate_checks.group_checks_treasurer"/>
+                    <button name="action_mark_accounting_done" type="object"
+                            string="Accounting Done"
+                            invisible="not requires_manual_accounting or accounting_handled"
+                            class="oe_highlight"
+                            groups="real_estate_checks.group_checks_treasurer"
+                            help="Confirms Accounting has reversed, cancelled or unreconciled the original payment. Refused while that payment still settles the receivable."/>
+                    <button name="action_issue_penalty_invoice" type="object"
+                            string="Invoice Penalty"
+                            invisible="penalty_invoice_id or penalty_amount &lt;= 0"
+                            groups="real_estate_checks.group_checks_treasurer"/>
+                    <button name="action_mark_resolved" type="object" string="Mark Resolved"
+                            invisible="resolved"
+                            groups="real_estate_checks.group_checks_treasurer"/>
+                    <field name="resolution" widget="statusbar"
+                           statusbar_visible="pending,re_presented,replaced,settled_cash"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Manual Accounting Needed"
+                            bg_color="text-bg-danger"
+                            invisible="not requires_manual_accounting or accounting_handled"/>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <!--
+                        The accounting note is never decoration. When a bounce
+                        could not be unwound automatically this is the only
+                        place that says what Accounting must still do, so it
+                        sits above the fold rather than in a tab.
+                    -->
+                    <div class="alert alert-danger" role="alert"
+                         invisible="not requires_manual_accounting or accounting_handled">
+                        <field name="accounting_note" readonly="1" nolabel="1"/>
+                    </div>
+                    <div class="alert alert-success" role="status"
+                         invisible="not accounting_handled">
+                        <field name="accounting_note" readonly="1" nolabel="1"/>
+                    </div>
+                    <group>
+                        <group string="Instrument">
+                            <field name="check_id"/>
+                            <field name="presentation_id"/>
+                            <field name="partner_id"/>
+                            <field name="amount"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Return">
+                            <field name="bounce_date"/>
+                            <field name="reason"/>
+                            <field name="bank_reference"/>
+                            <field name="returned_document" filename="returned_document_name"/>
+                            <field name="returned_document_name" invisible="1"/>
+                        </group>
+                        <group string="Cost to Us">
+                            <field name="bank_charge_amount"/>
+                            <field name="bank_charge_move_id" readonly="1"/>
+                        </group>
+                        <group string="Charge to Customer">
+                            <field name="penalty_amount"/>
+                            <field name="penalty_invoice_id" readonly="1"/>
+                        </group>
+                        <group string="Accounting Effect">
+                            <field name="payment_id" readonly="1"/>
+                            <field name="accounting_handled" readonly="1"/>
+                            <field name="requires_manual_accounting" readonly="1"/>
+                        </group>
+                        <group string="Resolution">
+                            <field name="resolved"/>
+                            <field name="resolved_date"/>
+                            <field name="replacement_check_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <field name="notes" placeholder="Notes about this return..."/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_check_bounce_search" model="ir.ui.view">
+        <field name="name">realestate.check.bounce.search</field>
+        <field name="model">realestate.check.bounce</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="check_id"/>
+                <field name="partner_id"/>
+                <filter name="unresolved" string="Unresolved"
+                        domain="[('resolution','=','pending')]"/>
+                <filter name="manual_accounting" string="Needs Manual Accounting"
+                        domain="[('requires_manual_accounting','=',True), ('accounting_handled','=',False)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_reason" string="Reason" context="{'group_by':'reason'}"/>
+                    <filter name="group_resolution" string="Resolution"
+                            context="{'group_by':'resolution'}"/>
+                    <filter name="group_partner" string="Drawer" context="{'group_by':'partner_id'}"/>
+                    <filter name="group_month" string="Month"
+                            context="{'group_by':'bounce_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_check_bounce" model="ir.actions.act_window">
+        <field name="name">Bounces</field>
+        <field name="res_model">realestate.check.bounce</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_check_bounce_search"/>
+    </record>
+</odoo>

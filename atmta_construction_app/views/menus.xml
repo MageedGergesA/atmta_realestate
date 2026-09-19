@@ -6,8 +6,7 @@
     <menuitem id="menu_root"
               name="Construction"
               web_icon="atmta_construction_app,static/description/icon.png"
-              sequence="28"
-              groups="atmta_v2_pilot.group_atmta_v2_pilot"/>
+              sequence="28"/>
 
     <!-- ======================== WORKSPACE ======================== -->
     <menuitem id="menu_control_tower"
@@ -26,13 +25,13 @@
               groups="real_estate_construction.group_construction_cost"/>
     <menuitem id="menu_budgets"
               name="Budgets" parent="menu_cost" sequence="10"
-              action="real_estate_construction.action_construction_budget"/>
+              action="atmta_construction_cost.action_construction_budget"/>
     <menuitem id="menu_forecasts"
               name="Forecasts" parent="menu_cost" sequence="20"
-              action="real_estate_construction.action_construction_forecast"/>
+              action="atmta_construction_cost.action_construction_forecast"/>
     <menuitem id="menu_cost_lines"
               name="Cost Lines" parent="menu_cost" sequence="30"
-              action="real_estate_construction.action_cost_line"/>
+              action="atmta_construction_site.action_cost_line"/>
     <menuitem id="menu_wbs"
               name="WBS" parent="menu_cost" sequence="40"
               action="atmta_construction_core.action_construction_wbs"/>
@@ -45,17 +44,17 @@
               groups="real_estate_construction.group_construction_cost"/>
     <menuitem id="menu_boq"
               name="Bills of Quantities" parent="menu_boq_sec" sequence="10"
-              action="real_estate_construction.action_boq"/>
+              action="atmta_construction_site.action_boq"/>
     <menuitem id="menu_work_items"
               name="Work Items" parent="menu_boq_sec" sequence="20"
-              action="real_estate_construction.action_work_item"/>
+              action="atmta_construction_site.action_work_item"/>
 
     <!-- ========================= COMMERCIAL ========================= -->
     <menuitem id="menu_commercial" name="Commercial" parent="menu_root" sequence="30"
               groups="real_estate_construction.group_construction_commercial"/>
     <menuitem id="menu_packages"
               name="Contract Packages" parent="menu_commercial" sequence="10"
-              action="real_estate_construction.action_construction_package"/>
+              action="atmta_construction_cost.action_construction_package"/>
     <menuitem id="menu_change_events"
               name="Change Events" parent="menu_commercial" sequence="20"
               action="real_estate_construction.action_change_event"/>
@@ -64,19 +63,19 @@
               action="real_estate_construction.action_change_order"/>
     <menuitem id="menu_payment_certificates"
               name="Payment Certificates" parent="menu_commercial" sequence="40"
-              action="real_estate_construction.action_payment_certificate"/>
+              action="atmta_construction_certification.action_payment_certificate"/>
     <menuitem id="menu_owner_billing"
               name="Owner Progress Billing" parent="menu_commercial" sequence="50"
-              action="real_estate_construction.action_owner_billing"/>
+              action="atmta_construction_certification.action_owner_billing"/>
     <menuitem id="menu_retention"
               name="Retention Register" parent="menu_commercial" sequence="60"
-              action="real_estate_construction.action_retention"/>
+              action="atmta_construction_certification.action_retention"/>
     <menuitem id="menu_retention_releases"
               name="Retention Releases" parent="menu_commercial" sequence="65"
-              action="real_estate_construction.action_retention_release"/>
+              action="atmta_construction_certification.action_retention_release"/>
     <menuitem id="menu_advances"
               name="Advances" parent="menu_commercial" sequence="70"
-              action="real_estate_construction.action_advance"/>
+              action="atmta_construction_certification.action_advance"/>
     <menuitem id="menu_subcontract_pos"
               name="Subcontract POs" parent="menu_commercial" sequence="80"
               action="real_estate_construction.action_construction_subcontract_pos"/>
@@ -84,56 +83,58 @@
     <!-- ============================ SITE ============================ -->
     <menuitem id="menu_site" name="Site" parent="menu_root" sequence="40"
               groups="real_estate_construction.group_construction_user"/>
+    <menuitem id="menu_projects" name="Projects" parent="menu_site" sequence="5"
+              action="real_estate_construction.action_construction_projects"/>
     <menuitem id="menu_milestones"
               name="Milestones" parent="menu_site" sequence="10"
-              action="real_estate_construction.action_milestone"/>
+              action="atmta_construction_site.action_milestone"/>
     <menuitem id="menu_tasks"
               name="Tasks" parent="menu_site" sequence="20"
-              action="real_estate_construction.action_construction_task"/>
+              action="atmta_construction_site.action_construction_task"/>
     <menuitem id="menu_daily_reports"
               name="Daily Site Reports" parent="menu_site" sequence="30"
-              action="real_estate_construction.action_daily_report"/>
+              action="atmta_construction_site.action_daily_report"/>
     <menuitem id="menu_labour"
               name="Daily Labour" parent="menu_site" sequence="40"
-              action="real_estate_construction.action_labor_log"/>
+              action="atmta_construction_site.action_labor_log"/>
 
     <!-- ========================== QUALITY ========================== -->
     <menuitem id="menu_quality" name="Quality" parent="menu_root" sequence="50"
               groups="real_estate_construction.group_construction_user"/>
     <menuitem id="menu_itp"
               name="Inspection &amp; Test Plans" parent="menu_quality" sequence="10"
-              action="real_estate_construction.action_itp"/>
+              action="atmta_construction_quality.action_itp"/>
     <menuitem id="menu_inspection_requests"
               name="Inspection Requests" parent="menu_quality" sequence="20"
-              action="real_estate_construction.action_inspection_request"/>
+              action="atmta_construction_quality.action_inspection_request"/>
     <menuitem id="menu_inspections"
               name="Inspections" parent="menu_quality" sequence="25"
-              action="real_estate_construction.action_inspection"/>
+              action="atmta_construction_quality.action_inspection"/>
     <menuitem id="menu_ncr"
               name="Non-Conformance Reports" parent="menu_quality" sequence="30"
-              action="real_estate_construction.action_ncr"/>
+              action="atmta_construction_quality.action_ncr"/>
     <menuitem id="menu_observations"
               name="Observations" parent="menu_quality" sequence="40"
-              action="real_estate_construction.action_observation"/>
+              action="atmta_construction_quality.action_observation"/>
 
     <!-- ======================== INFORMATION ======================== -->
     <menuitem id="menu_information" name="Information" parent="menu_root" sequence="60"
               groups="real_estate_construction.group_construction_user"/>
     <menuitem id="menu_rfis"
               name="RFIs" parent="menu_information" sequence="10"
-              action="real_estate_construction.action_rfi"/>
+              action="atmta_construction_documents.action_rfi"/>
     <menuitem id="menu_submittals"
               name="Submittals" parent="menu_information" sequence="20"
-              action="real_estate_construction.action_submittal"/>
+              action="atmta_construction_documents.action_submittal"/>
     <menuitem id="menu_documents"
               name="Document Register" parent="menu_information" sequence="30"
-              action="real_estate_construction.action_document"/>
+              action="atmta_construction_documents.action_document"/>
     <menuitem id="menu_doc_revisions"
               name="Revision Register" parent="menu_information" sequence="35"
-              action="real_estate_construction.action_document_revision"/>
+              action="atmta_construction_documents.action_document_revision"/>
     <menuitem id="menu_transmittals"
               name="Transmittals" parent="menu_information" sequence="40"
-              action="real_estate_construction.action_transmittal"/>
+              action="atmta_construction_documents.action_transmittal"/>
 
     <!-- ======================= CLAIMS &amp; RISK ======================= -->
     <menuitem id="menu_claims" name="Claims &amp; Risk" parent="menu_root" sequence="70"
@@ -170,9 +171,9 @@
               groups="real_estate_construction.group_construction_manager"/>
     <menuitem id="menu_cfg_checklists"
               name="Checklist Templates" parent="menu_config" sequence="10"
-              action="real_estate_construction.action_checklist_template"/>
+              action="atmta_construction_quality.action_checklist_template"/>
     <menuitem id="menu_cfg_work_item_categories"
               name="Work Item Categories" parent="menu_config" sequence="20"
-              action="real_estate_construction.action_work_item_category"/>
+              action="atmta_construction_site.action_work_item_category"/>
 
 </odoo>

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
+    <!-- create="0" on both views: a document only ever comes from the generate
+         wizard, and every meaningful field on the form is readonly, so "New"
+         could do nothing but fail on a required field. -->
     <record id="view_contract_document_list" model="ir.ui.view">
         <field name="name">realestate.contract.document.list</field>
         <field name="model">realestate.contract.document</field>
         <field name="arch" type="xml">
-            <list string="Generated Documents"
+            <list string="Generated Documents" create="0"
                   decoration-info="state == 'draft'"
                   decoration-warning="state == 'under_review'"
                   decoration-success="state in ('approved','signed','active')"
@@ -32,13 +35,14 @@
         <field name="name">realestate.contract.document.form</field>
         <field name="model">realestate.contract.document</field>
         <field name="arch" type="xml">
-            <form string="Generated Document">
+            <form string="Generated Document" create="0">
                 <header>
                     <button name="action_submit_for_review" type="object"
                             string="Submit for Review" class="btn-primary"
                             invisible="state != 'draft'"/>
                     <button name="action_approve" type="object"
                             string="Approve" class="btn-primary"
+                            groups="atmta_real_estate.group_realestate_manager"
                             invisible="state != 'under_review'"/>
                     <button name="action_send_for_signature" type="object"
                             string="Send for Signature" class="btn-primary"
@@ -48,6 +52,7 @@
                             invisible="state not in ('approved','sent_for_signature')"/>
                     <button name="action_activate" type="object"
                             string="Activate" class="btn-primary"
+                            groups="atmta_real_estate.group_realestate_manager"
                             invisible="state != 'signed'"/>
                     <button name="action_mark_expired" type="object"
                             string="Mark Expired" class="btn-secondary"
@@ -59,7 +64,8 @@
                             string="Reset to Draft" class="btn-secondary"
                             invisible="state not in ('under_review','cancelled')"/>
                     <button name="action_download" type="object"
-                            string="Download" class="btn-secondary"/>
+                            string="Download" class="btn-secondary"
+                            invisible="not file_data"/>
                     <field name="state" widget="statusbar"
                            statusbar_visible="draft,under_review,approved,sent_for_signature,signed,active"/>
                 </header>
@@ -96,7 +102,7 @@
                             <field name="output_format" readonly="1"/>
                             <field name="file_name" readonly="1"/>
                             <field name="file_data" filename="file_name" readonly="1"/>
-                            <field name="file_size" widget="float" readonly="1"/>
+                            <field name="file_size" string="File Size (bytes)" readonly="1"/>
                         </group>
                         <group string="Lifecycle">
                             <field name="reviewer_id"/>

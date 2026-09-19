@@ -54,7 +54,7 @@
                                             <span t-field="payment.date_due"/>
                                         </td>
                                         <td>
-                                            <span t-field="payment.contract_line_id.property_id"/>
+                                            <span t-field="payment.property_id"/>
                                         </td>
                                         <td class="text-right">
                                             <span t-field="payment.amount"/>
@@ -118,7 +118,7 @@
         </t>
     </template>
     <record id="action_report_payment_schedule" model="ir.actions.report">
-        <field name="name">Contract Payments Details</field>
+        <field name="name">Lease Billing Schedule</field>
         <field name="model">realestate.contract</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">atmta_real_estate.report_payment_schedule</field>

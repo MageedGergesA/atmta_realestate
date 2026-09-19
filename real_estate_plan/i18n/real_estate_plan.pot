@@ -1,0 +1,713 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* real_estate_plan
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 10:14+0000\n"
+"PO-Revision-Date: 2026-09-17 10:14+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_project_form_boundary_overlay
+msgid "2D Master Plan overlay"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_project_form_plan_inherit
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid "2D Plan"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_project__main_property_id
+msgid "2D Plan Entry Property"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_property__plan_image
+msgid "2D Plan Image"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model,name:real_estate_plan.model_realestate_plan_region
+msgid "2D Plan Region"
+msgstr ""
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid "<b>1.</b> Upload the plan image and save the record."
+msgstr ""
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid ""
+"<b>2.</b> Hover the image to reveal pencil (upload) and trash (clear) icons,"
+" or use <b>Remove plan image</b> above."
+msgstr ""
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid "<b>3.</b> Click <b>Edit regions</b> → <b>+ Add region</b>."
+msgstr ""
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid ""
+"<b>4.</b> Click on the image to drop polygon points (3 or more), then click "
+"<b>Finish</b>."
+msgstr ""
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid "<b>5.</b> Pick the child property the region links to (form opens)."
+msgstr ""
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid ""
+"<b>6.</b> Drag vertices to reshape; right-click vertex to remove; or use the"
+" <b>Regions</b> list to delete a whole region."
+msgstr ""
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_project_form_plan_inherit
+msgid ""
+"<i class=\"fa fa-arrows-alt me-1\"/>Open 2D Drill-Down Viewer\n"
+"                            <span class=\"ms-1 text-white-50\">\n"
+"                                (drill into the entry property →)\n"
+"                            </span>"
+msgstr ""
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid ""
+"<i class=\"fa fa-arrows-alt me-1\"/>Open Plan Viewer\n"
+"                            <span class=\"ms-1 text-white-50\">(drill into children →)</span>"
+msgstr ""
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid "<i class=\"fa fa-trash me-1\"/>Remove plan image"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.constraint,message:real_estate_plan.constraint_realestate_plan_region_unique_target_per_parent
+msgid "A child property can only have one region on its parent plan."
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-python
+#: code:addons/real_estate_plan/models/plan_region.py:0
+msgid "A region cannot point back to its own parent property."
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-python
+#: code:addons/real_estate_plan/models/plan_region.py:0
+msgid "A region needs at least 3 vertices."
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Add region"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Area"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Back"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Base price"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Bathrooms"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Bedrooms"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model,name:real_estate_plan.model_realestate_building_floor
+msgid "Building Floor"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Cancel"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Children on this plan:"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Click"
+msgstr ""
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_project_form_plan_inherit
+msgid ""
+"Click <b>Open 2D Drill-Down Viewer</b>: the viewer\n"
+"                                    will jump straight into that property and let you\n"
+"                                    drill compound → buildings → floors → units, never\n"
+"                                    showing other unrelated properties."
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Click a region to edit its shape, or add a new one."
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Click to add points • Press"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Close"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__company_id
+msgid "Company"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,help:real_estate_plan.field_realestate_plan_region__target_state
+msgid ""
+"DEPRECATED compatibility bridge, derived from the status dimensions. Kept "
+"because downstream ATMTA modules and the public API still read it. Write the"
+" dimension you own instead."
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Delete"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Delete this region (remove its coordinates from the image)"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Done"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Done editing"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid ""
+"Drag vertices to reshape • Right-click vertex to remove • Click edge dot to "
+"add."
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-python
+#: code:addons/real_estate_plan/models/plan_region.py:0
+msgid "Each vertex must be [x, y] with numeric coordinates."
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Edit info"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Edit region info"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Edit regions"
+msgstr ""
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_project_form_plan_inherit
+msgid "Entry property"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Esc"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Exit"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Exit viewer"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__color
+msgid "Fill Color"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Finish"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Floor"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_property__has_plan_image
+msgid "Has Plan Image"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,help:real_estate_plan.field_realestate_plan_region__color
+msgid "Hex color used to render the polygon overlay (semi-transparent)."
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__target_hierarchy_level
+msgid "Hierarchy Level"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__label
+msgid "Hover Label"
+msgstr ""
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_project_form_plan_inherit
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid "How it works"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__id
+msgid "ID"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Images"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,help:real_estate_plan.field_realestate_plan_region__polygon
+msgid ""
+"JSON list of [x%, y%] points relative to the plan image, e.g. \"[[10, 12], "
+"[40, 12], [40, 35], [10, 35]]\"."
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_project_form_plan_inherit
+msgid ""
+"Leave the field empty to see the project-level picker\n"
+"                                    (all top-level properties under this project)."
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Loading…"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid ""
+"No child properties yet — create children first so you can link regions to "
+"them."
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "No images uploaded yet — click"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "No property selected."
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Open"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Open Carousel"
+msgstr ""
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_plan_region_form
+msgid "Open Target"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Open form"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Open the form and upload a plan image under the"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Other children (no plan image — open form to configure):"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__parent_property_id
+msgid "Parent Property"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,help:real_estate_plan.field_realestate_building_floor__unit_id
+msgid ""
+"Pick any unit on the floor — its Floor Number and Usage drive this row."
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "Plan"
+msgstr ""
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid "Plan Image"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_property__plan_image_filename
+msgid "Plan Image Filename"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_property__plan_region_count
+msgid "Plan Region Count"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_property__plan_region_ids
+msgid "Plan Regions"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__polygon
+msgid "Polygon (JSON)"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-python
+#: code:addons/real_estate_plan/models/plan_region.py:0
+msgid "Polygon must be valid JSON: %s"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,help:real_estate_plan.field_realestate_plan_region__target_hierarchy_level
+msgid ""
+"Position in the property tree. A child's level must be deeper than its "
+"parent's."
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model,name:real_estate_plan.model_realestate_project
+msgid "Real Estate Development Project"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model,name:real_estate_plan.model_realestate_property
+msgid "Real Estate Property"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-python
+#: code:addons/real_estate_plan/models/plan_region.py:0
+msgid "Region target '%(t)s' must be a direct child of '%(p)s'."
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Regions on this plan ("
+msgstr ""
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_property_form_plan_inherit
+msgid "Remove the 2D plan image and keep regions?"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Reset"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Save the property first to draw regions."
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_project_form_plan_inherit
+msgid ""
+"Set <b>2D Plan Entry Property</b> to the top-level\n"
+"                                    property (typically the compound) whose own 2D plan\n"
+"                                    + regions you've already configured."
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,help:real_estate_plan.field_realestate_plan_region__label
+msgid "Short text shown on hover. Defaults to the target's name."
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,help:real_estate_plan.field_realestate_property__plan_image
+msgid ""
+"Site plan / building elevation / floor plan / villa lot map. Polygon regions"
+" drawn under the 2D Plan tab overlay this image."
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__target_state
+msgid "Status (legacy)"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,help:real_estate_plan.field_realestate_plan_region__company_id
+msgid ""
+"Stored related on the property carrying the plan. Phase 0 found this model "
+"readable and writable across companies by every internal user."
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_plan_region__target_property_id
+msgid "Target Property"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,help:real_estate_plan.field_realestate_plan_region__target_property_id
+msgid "The child property this region links to."
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,help:real_estate_plan.field_realestate_plan_region__parent_property_id
+msgid "The property whose plan image carries this region."
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "This"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Undo"
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,field_description:real_estate_plan.field_realestate_building_floor__unit_id
+msgid "Unit"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Upload a plan image above to start drawing regions."
+msgstr ""
+
+#. module: real_estate_plan
+#: model_terms:ir.ui.view,arch_db:real_estate_plan.view_project_form_boundary_overlay
+msgid ""
+"Upload a top-down site plan (PNG/JPG). It renders\n"
+"                            georeferenced across the polygon on the map below\n"
+"                            once you have 3+ boundary points."
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-python
+#: code:addons/real_estate_plan/models/plan_region.py:0
+msgid "Vertex coordinates must be percentages in [0, 100]."
+msgstr ""
+
+#. module: real_estate_plan
+#: model:ir.model.fields,help:real_estate_plan.field_realestate_project__main_property_id
+msgid ""
+"When set, the 2D Drill-Down Viewer jumps straight into this property (e.g. "
+"the compound) and shows only its hierarchy. Useful when the project has no "
+"master_plan_2d of its own but the compound underneath has its plan + regions"
+" fully set up."
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Zoom in"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "Zoom out"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "breadcrumb"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid ""
+"has no 2D plan image of its own —\n"
+"                            pick a child below to drill into its configured plan."
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "has no 2D plan image yet."
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "image"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "plan thumb"
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid ""
+"tab,\n"
+"                            or configure regions on a child property — they'll appear here."
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "to cancel."
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_editor.xml:0
+msgid "to remove a region's coordinates from the image."
+msgstr ""
+
+#. module: real_estate_plan
+#. odoo-javascript
+#: code:addons/real_estate_plan/static/src/xml/plan_viewer.xml:0
+msgid "to upload some."
+msgstr ""
