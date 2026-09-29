@@ -30,6 +30,9 @@ export class RentalDashboard extends Component {
         this.action = useService("action");
         this.notification = useService("notification");
 
+        // The full list, for the loading skeleton. What is actually drawn is
+        // `visibleCharts`: the backend omits a chart whose model the user may
+        // not read, and an empty panel would read as "no data".
         this.chartDefs = CHART_DEFS;
 
         this.state = useState({
@@ -181,6 +184,12 @@ export class RentalDashboard extends Component {
     chartPayload(chartKey) {
         const charts = (this.state.trends && this.state.trends.charts) || {};
         return charts[chartKey] || null;
+    }
+
+    /** Only the charts the backend actually sent for this user. */
+    get visibleCharts() {
+        const charts = (this.state.trends && this.state.trends.charts) || {};
+        return CHART_DEFS.filter((def) => def.key in charts);
     }
 
     // ------------------------------------------------------------------

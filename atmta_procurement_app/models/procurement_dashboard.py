@@ -14,6 +14,17 @@ REQUEST_CLOSED = ('received', 'done', 'rejected', 'cancelled')
 EVALUATION_OPEN = ('technical_open', 'technical_final', 'commercial_open', 'commercial_final')
 AGE_BUCKETS = ((0, 2), (3, 7), (8, 14), (15, None))
 
+#: An undecided step and a step somebody is waiting for are not the same
+#: thing. `_check_may_decide` refuses a decision unless the requisition is
+#: still submitted, so a pending step on any other requisition is work nobody
+#: can ever clear. `action_cancel` now withdraws the steps it leaves behind,
+#: but requisitions cancelled before that fix still carry pending ones — and
+#: cancellation never covered the other half anyway: a requisition that moved
+#: forward to approved, ordered or received keeps its pending steps too.
+#: Counting either kind fills an approval inbox that cannot be emptied.
+PENDING_STEP = [('decision', '=', 'pending'),
+                ('request_id.state', '=', 'submitted')]
+
 
 class ProcurementDashboard(models.AbstractModel):
     _name = 'realestate.procurement.dashboard'
@@ -31,7 +42,7 @@ class ProcurementDashboard(models.AbstractModel):
         Step = 'realestate.procurement.approval.step'
         Event = 'realestate.procurement.sourcing.event'
         PO = 'purchase.order'
-        pending = [('decision', '=', 'pending')]
+        pending = list(PENDING_STEP)
         request_open = [('state', 'not in', REQUEST_CLOSED)]
         project_po = [('is_realestate_po', '=', True)]
         return [
@@ -124,7 +135,7 @@ class ProcurementDashboard(models.AbstractModel):
             Model = self.env[Step]
             labels, data, drill = [], [], []
             for low, high in AGE_BUCKETS:
-                domain = [('decision', '=', 'pending'), ('waiting_days', '>=', low)]
+                domain = PENDING_STEP + [('waiting_days', '>=', low)]
                 if high is not None:
                     domain.append(('waiting_days', '<=', high))
                     label = _("%(low)s-%(high)s days", low=low, high=high)

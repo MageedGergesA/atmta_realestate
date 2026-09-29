@@ -5,8 +5,9 @@ Each test reproduces one defect the end-to-end cycle found: a deal walked from
 mandate to commission the way an office actually does it, through the forms.
 """
 
-from datetime import datetime, time, timedelta
+from datetime import date, datetime, time, timedelta
 
+from freezegun import freeze_time
 from lxml import etree
 
 from odoo import fields
@@ -15,6 +16,9 @@ from odoo.tests import Form, tagged
 from odoo.tools.safe_eval import safe_eval
 
 from .common import BrokerageCommon, module_installed
+
+#: 22:00 UTC on the last day of August — already 1 September at UTC+14.
+UTC_EVENING_BEFORE_MONTH_END = '2026-08-31 22:00:00'
 
 
 @tagged('post_install', '-at_install')
@@ -271,3 +275,141 @@ class TestLifecycleFindings(BrokerageCommon):
             self.skipTest('atmta_brokerage_app is not installed')
         menu = self.env.ref('atmta_brokerage_app.menu_cfg_lost_reasons')
         self.assertEqual(menu.action.res_model, 'crm.lost.reason')
+
+
+@tagged('post_install', '-at_install')
+class TestBrokerageDashboardFindings(BrokerageCommon):
+    """The app-level Brokerage dashboard, read the way a manager reads it.
+
+    `atmta_brokerage_app` offers `Brokerage > Dashboard` to Read-only, Agent
+    and Manager. None of those three groups carries CRM rights, and the
+    figures here are money figures whose labels say "this month".
+    """
+
+    def _dashboard(self, user=None):
+        Dashboard = self.env['realestate.brokerage.dashboard']
+        return (Dashboard.with_user(user) if user else Dashboard).get_data()
+
+    def _role_user(self, group, login):
+        """A user holding exactly one Brokerage role and nothing else."""
+        return self.env['res.users'].with_context(
+            no_reset_password=True).create({
+                'name': login, 'login': '%s@test.example' % login,
+                'company_id': self.company.id,
+                'company_ids': [(6, 0, [self.company.id])],
+                'groups_id': [(6, 0, [
+                    self.env.ref('base.group_user').id,
+                    self.env.ref(group).id])],
+            })
+
+    # ------------------------------------------------------------------
+    # The dashboard has to open for the roles its menu is offered to
+    # ------------------------------------------------------------------
+    def test_dashboard_opens_for_every_role_the_menu_is_offered_to(self):
+        """Lead figures are dropped for a user without CRM, never zeroed.
+
+        Granting CRM rights is the open product decision behind the Lead Lost
+        Reasons screen; the dashboard must not depend on it either way.
+        """
+        for group in ('real_estate_brokerage.group_realestate_sales_readonly',
+                      'real_estate_brokerage.group_realestate_sales_agent',
+                      'real_estate_brokerage.group_realestate_sales_manager'):
+            with self.subTest(group=group):
+                user = self._role_user(group, group.rsplit('.', 1)[1])
+                self.assertFalse(
+                    self.env['crm.lead'].with_user(user).has_access('read'),
+                    "the premise of this test is a role without CRM rights")
+
+                data = self._dashboard(user)
+
+                # Dropped, not shown as a zero that reads as "no pipeline".
+                for key in ('open_leads', 'hot_leads', 'conversion_rate'):
+                    self.assertNotIn(key, data['kpis'])
+                for key in ('lead_funnel', 'recent_leads'):
+                    self.assertNotIn(key, data)
+                # Everything the role *can* read still answers.
+                self.assertIn('active_listings', data['kpis'])
+                self.assertIn('listing_states', data)
+
+    def test_dashboard_still_reports_the_pipeline_to_a_crm_user(self):
+        """The counterpart: nothing is dropped from somebody who may read it."""
+        data = self._dashboard()
+        for key in ('open_leads', 'hot_leads', 'conversion_rate'):
+            self.assertIn(key, data['kpis'])
+        self.assertIn('lead_funnel', data)
+        self.assertIn('recent_leads', data)
+
+    # ------------------------------------------------------------------
+    # "this month" means up to today, not up to whenever
+    # ------------------------------------------------------------------
+    def test_commission_mtd_ignores_a_payout_dated_after_today(self):
+        """"Commission MTD — paid out" is cash that has left this month."""
+        txn = self._closed_deal(gross_percentage=2.0)
+        line = self._commission(txn, calculation_method='share',
+                                share_percentage=50.0)
+        line.action_approve()
+        line.action_create_vendor_bill()
+        line.action_mark_paid()
+        self.assertTrue(line.paid)
+        before = self._dashboard()['kpis']['commissions_mtd']
+        self.assertGreater(before, 0.0)
+
+        line.payment_date = fields.Date.context_today(line) + timedelta(days=45)
+
+        self.assertAlmostEqual(
+            self._dashboard()['kpis']['commissions_mtd'],
+            before - line.amount,
+            msg="a payout dated next month has not gone out this month")
+
+    def test_sold_mtd_ignores_a_listing_sold_after_today(self):
+        before = self._dashboard()['kpis']['sold_mtd']
+        listing = self._listing()
+        self.env.cr.execute(
+            "UPDATE realestate_listing SET state='sold', sold_date=%s "
+            "WHERE id=%s",
+            (fields.Date.context_today(listing) + timedelta(days=40),
+             listing.id))
+        listing.invalidate_recordset()
+
+        self.assertEqual(
+            self._dashboard()['kpis']['sold_mtd'], before,
+            "a listing whose sale completes next month is not sold this month")
+
+    @freeze_time(UTC_EVENING_BEFORE_MONTH_END)
+    def test_the_month_starts_on_the_users_own_calendar(self):
+        """At UTC+14 the new month opens fourteen hours before UTC agrees."""
+        self.env.user.tz = 'Pacific/Kiritimati'
+        self.assertEqual(fields.Date.today(), date(2026, 8, 31))
+        self.assertEqual(fields.Date.context_today(self.env.user),
+                         date(2026, 9, 1),
+                         "the premise: the user is already in September")
+
+        listing = self._listing()
+        self.env.cr.execute(
+            "UPDATE realestate_listing SET state='sold', sold_date=%s "
+            "WHERE id=%s", (date(2026, 8, 15), listing.id))
+        listing.invalidate_recordset()
+
+        self.assertEqual(
+            self._dashboard()['kpis']['sold_mtd'], 0,
+            "a sale from last month must not count in the user's new month")
+
+    # ------------------------------------------------------------------
+    # The map plots places, so it needs both coordinates
+    # ------------------------------------------------------------------
+    def test_the_map_leaves_out_a_listing_with_only_one_coordinate(self):
+        """An unset latitude reads 0.0, and 0.0 is a real place.
+
+        The Developer map requires both coordinates; this one accepted either,
+        so a listing that had only ever been given a longitude was pinned on
+        the equator, hundreds of kilometres from anything.
+        """
+        listing = self._mandated_listing()
+        listing.action_activate()
+        listing.property_id.write({'latitude': 0.0, 'longitude': 31.2357})
+
+        plotted = [row['id'] for row in self._dashboard()['map_props']]
+
+        self.assertNotIn(
+            listing.property_id.id, plotted,
+            "a property with no latitude has no place on the map")

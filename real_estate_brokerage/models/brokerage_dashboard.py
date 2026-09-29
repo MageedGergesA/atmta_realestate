@@ -7,6 +7,24 @@ class BrokerageDashboard(models.AbstractModel):
     _description = 'Brokerage Dashboard data provider'
 
     @api.model
+    def _can_read_leads(self):
+        """Whether this user may read the CRM pipeline the lead figures need.
+
+        `atmta_brokerage_app` offers this dashboard to Read-only, Agent and
+        Manager, and not one of those three groups carries CRM rights —
+        whether Brokerage should grant them is the open product decision that
+        also leaves the Lead Lost Reasons screen unresolved. Until it is
+        settled, the pipeline figures are DROPPED for a reader who cannot open
+        them, the way every ATMTA dashboard drops a tile on a model its reader
+        has no access to (`atmta_dashboard/models/dashboard_provider.py`).
+
+        A zero would read as "no pipeline", and letting the AccessError out
+        takes the whole screen down with it — which is what it did.
+        """
+        return ('crm.lead' in self.env
+                and self.env['crm.lead'].has_access('read'))
+
+    @api.model
     def get_data(self):
         Listing = self.env['realestate.listing']
         # Opportunities live on crm.lead since 0.2 (crm_lead.py); the legacy
@@ -24,7 +42,12 @@ class BrokerageDashboard(models.AbstractModel):
         Commission = self.env['realestate.commission']
         Property = self.env['realestate.property']
 
-        today = fields.Date.today()
+        can_read_leads = self._can_read_leads()
+
+        # The reader's own calendar, not the server's. At UTC+14 a new month
+        # opens fourteen hours before `fields.Date.today()` agrees, and every
+        # figure below that says "this month" would answer for the old one.
+        today = fields.Date.context_today(self)
         month_start = today.replace(day=1)
         week_start = today - timedelta(days=today.weekday())
         # `scheduled_at` is a datetime: bound the week by the next Monday's
@@ -36,14 +59,12 @@ class BrokerageDashboard(models.AbstractModel):
         # ---- KPIs ----
         active_listings = Listing.search_count([('state', '=', 'active')])
         under_offer = Listing.search_count([('state', '=', 'under_offer')])
+        # Bounded at both ends: a sale that completes next month has not
+        # happened this month, whatever its scheduled date says.
         sold_mtd = Listing.search_count([
-            ('state', '=', 'sold'), ('sold_date', '>=', month_start),
+            ('state', '=', 'sold'),
+            ('sold_date', '>=', month_start), ('sold_date', '<=', today),
         ])
-        # Open = neither lost (archived) nor won.
-        open_domain = re_opportunities + [('stage_id.is_won', '=', False)]
-        open_leads = Lead.search_count(open_domain)
-        hot_leads = Lead.search_count(
-            open_domain + [('priority', 'in', ('2', '3'))])
         viewings_this_week = Viewing.search_count([
             ('scheduled_at', '>=', week_start),
             ('scheduled_at', '<', week_end),
@@ -51,16 +72,12 @@ class BrokerageDashboard(models.AbstractModel):
         ])
         pending_offers = Offer.search_count([('state', 'in', ('submitted', 'countered'))])
 
-        # Conversion: closed leads / total touched
-        AllLeads = Lead.with_context(active_test=False)
-        total_leads = AllLeads.search_count(re_opportunities)
-        converted_leads = AllLeads.search_count(
-            re_opportunities + [('stage_id.is_won', '=', True)])
-        conversion_rate = round((converted_leads / total_leads * 100.0), 1) if total_leads else 0.0
-
-        # Revenue (commissions paid)
+        # Revenue (commissions paid). Bounded at today for the same reason as
+        # `sold_mtd`: "paid out" is cash that has already left this month, not
+        # a payout somebody has scheduled for a later one.
         commissions_mtd = sum(Commission.search([
-            ('payment_date', '>=', month_start), ('paid', '=', True),
+            ('payment_date', '>=', month_start),
+            ('payment_date', '<=', today), ('paid', '=', True),
         ] + live_commission).mapped('amount'))
         total_commission_pipeline = sum(Commission.search([
             ('transaction_id.state', 'in', ('contract_signed', 'closed')),
@@ -70,14 +87,27 @@ class BrokerageDashboard(models.AbstractModel):
             'active_listings': active_listings,
             'under_offer': under_offer,
             'sold_mtd': sold_mtd,
-            'open_leads': open_leads,
-            'hot_leads': hot_leads,
             'viewings_this_week': viewings_this_week,
             'pending_offers': pending_offers,
-            'conversion_rate': conversion_rate,
             'commissions_mtd': commissions_mtd,
             'total_pipeline': total_commission_pipeline,
         }
+        if can_read_leads:
+            # Open = neither lost (archived) nor won.
+            open_domain = re_opportunities + [('stage_id.is_won', '=', False)]
+            # Conversion: closed leads / total touched
+            AllLeads = Lead.with_context(active_test=False)
+            total_leads = AllLeads.search_count(re_opportunities)
+            converted_leads = AllLeads.search_count(
+                re_opportunities + [('stage_id.is_won', '=', True)])
+            kpis.update({
+                'open_leads': Lead.search_count(open_domain),
+                'hot_leads': Lead.search_count(
+                    open_domain + [('priority', 'in', ('2', '3'))]),
+                'conversion_rate': round(
+                    (converted_leads / total_leads * 100.0), 1
+                ) if total_leads else 0.0,
+            })
 
         # ---- Listing states (donut) ----
         listing_states = {}
@@ -87,11 +117,12 @@ class BrokerageDashboard(models.AbstractModel):
         # ---- Lead funnel (bar) ----
         # One bar per pipeline stage, in pipeline order, keyed by stage name.
         lead_funnel = {}
-        for stage, count in Lead._read_group(
-                re_opportunities, groupby=['stage_id'], aggregates=['__count'],
-                order='stage_id'):
-            if stage:
-                lead_funnel[stage.name] = count
+        if can_read_leads:
+            for stage, count in Lead._read_group(
+                    re_opportunities, groupby=['stage_id'],
+                    aggregates=['__count'], order='stage_id'):
+                if stage:
+                    lead_funnel[stage.name] = count
 
         # ---- Days on market histogram ----
         active_with_dom = Listing.search_read([('state', '=', 'active')], ['days_on_market'])
@@ -131,9 +162,12 @@ class BrokerageDashboard(models.AbstractModel):
         # ---- Map: active + under_offer listings only ----
         active_listings_recs = Listing.search([('state', 'in', ('active', 'under_offer'))])
         prop_ids = active_listings_recs.mapped('property_id').ids
+        # BOTH coordinates, as the Developer map requires: an unset latitude
+        # reads 0.0, and accepting either one pinned a listing that had only a
+        # longitude onto the equator.
         map_props = Property.search_read(
             [('id', 'in', prop_ids),
-             '|', ('latitude', '!=', 0), ('longitude', '!=', 0)],
+             ('latitude', '!=', 0), ('longitude', '!=', 0)],
             ['id', 'name', 'property_code', 'latitude', 'longitude', 'city'],
         )
         # Attach the listing state to each property dict
@@ -145,16 +179,19 @@ class BrokerageDashboard(models.AbstractModel):
             p['listing_state'] = prop_to_listing_state.get(p['id'], 'active')
 
         # ---- Recent leads list ----
-        recent_leads = Lead.search(re_opportunities, order='create_date desc', limit=10)
-        recent_leads_list = [{
-            'id': l.id, 'name': l.name,
-            'partner_name': l.partner_id.name or l.partner_name or l.contact_name or '',
-            'source': l.source_id.name or '',
-            'state': l.stage_id.name or '',
-            'agent': l.user_id.name or '',
-            'priority': l.priority,
-            'create_date': l.create_date.isoformat() if l.create_date else None,
-        } for l in recent_leads]
+        recent_leads_list = []
+        if can_read_leads:
+            recent_leads = Lead.search(
+                re_opportunities, order='create_date desc', limit=10)
+            recent_leads_list = [{
+                'id': l.id, 'name': l.name,
+                'partner_name': l.partner_id.name or l.partner_name or l.contact_name or '',
+                'source': l.source_id.name or '',
+                'state': l.stage_id.name or '',
+                'agent': l.user_id.name or '',
+                'priority': l.priority,
+                'create_date': l.create_date.isoformat() if l.create_date else None,
+            } for l in recent_leads]
 
         # ---- Upcoming viewings ----
         upcoming = Viewing.search([
@@ -183,10 +220,9 @@ class BrokerageDashboard(models.AbstractModel):
             'expiry_date': o.expiry_date.isoformat() if o.expiry_date else None,
         } for o in offers_list_recs]
 
-        return {
+        data = {
             'kpis': kpis,
             'listing_states': listing_states,
-            'lead_funnel': lead_funnel,
             'dom_buckets': dom_buckets,
             'top_agents': top_agents,
             'velocity': {
@@ -195,8 +231,14 @@ class BrokerageDashboard(models.AbstractModel):
                 'revenue': velocity_revenue,
             },
             'map_props': map_props,
-            'recent_leads': recent_leads_list,
             'upcoming_viewings': viewings_list,
             'pending_offers': offers_list,
             'currency': self.env.company.currency_id.symbol or '',
         }
+        # Omitted, not emptied, for a reader without CRM: the front end hides
+        # the funnel and the leads card when the keys are absent, which is the
+        # honest answer — "not yours to see", not "there is nothing here".
+        if can_read_leads:
+            data['lead_funnel'] = lead_funnel
+            data['recent_leads'] = recent_leads_list
+        return data

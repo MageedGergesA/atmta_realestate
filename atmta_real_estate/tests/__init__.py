@@ -55,3 +55,4 @@ from . import test_tenant_balance_currency
 from . import test_dashboard_map
 from . import test_cycle_regressions
 from . import test_lifecycle_findings
+from . import test_dashboard_access

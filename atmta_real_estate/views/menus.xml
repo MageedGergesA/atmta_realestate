@@ -93,11 +93,16 @@
               web_icon="atmta_real_estate,static/description/icon.png"
               sequence="10"/>
 
+    <!-- Named its roles like every other Rental menu: without them the
+         Overview (and with it the whole Rental app) was offered to every
+         internal user, and the dashboard counts units and leases they have no
+         right to read. -->
     <menuitem id="menu_rental_dashboard"
               name="Overview"
               parent="real_estate_menu_root"
               action="action_rental_dashboard"
-              sequence="1"/>
+              sequence="1"
+              groups="atmta_real_estate.group_rental_user,atmta_real_estate.group_realestate_readonly"/>
 
     <!-- ============================================================= -->
     <!-- Leases                                                         -->

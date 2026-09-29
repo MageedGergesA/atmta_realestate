@@ -120,8 +120,12 @@ export class CheckTreasuryDashboard extends Component {
         if (!risk) {
             return [];
         }
-        return ["bounced", "unresolved_bounces", "replacements_outstanding"]
-            .map((key) => ({ key, ...risk[key] }));
+        return [
+            "bounced",
+            "unresolved_bounces",
+            "manual_accounting",
+            "replacements_outstanding",
+        ].map((key) => ({ key, ...risk[key] }));
     }
 
     get coverageCards() {

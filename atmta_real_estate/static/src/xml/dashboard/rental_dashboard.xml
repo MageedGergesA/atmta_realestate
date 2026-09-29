@@ -264,7 +264,7 @@
                         </t>
                     </div>
                     <div t-else="" class="o_re_chart_grid">
-                        <t t-foreach="chartDefs" t-as="def" t-key="def.key">
+                        <t t-foreach="visibleCharts" t-as="def" t-key="def.key">
                             <DashboardChart
                                 definition="def"
                                 payload="chartPayload(def.key)"

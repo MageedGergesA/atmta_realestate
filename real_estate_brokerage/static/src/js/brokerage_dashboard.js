@@ -150,8 +150,11 @@ export class BrokerageDashboard extends Component {
 
     _renderFunnel() {
         const el = this.barFunnelRef.el; if (!el) return;
-        el.setAttribute("data-key", "barFunnel");
+        // Dropped, not zeroed, for a reader without CRM rights: the server
+        // omits the key and the card is not in the DOM at all.
         const d = this.state.data.lead_funnel;
+        if (d === undefined) return;
+        el.setAttribute("data-key", "barFunnel");
         this._draw(el, "bar", {
             labels: Object.keys(d).map(k => LEAD_STATE_LABELS[k] || k),
             datasets: [{ label: "Leads", data: Object.values(d), backgroundColor: "#6a1b9a" }],

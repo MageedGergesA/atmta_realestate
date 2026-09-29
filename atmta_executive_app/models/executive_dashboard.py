@@ -34,6 +34,16 @@ class ExecutiveDashboard(models.AbstractModel):
             return domain + [('currency_id', '=', self.env.company.currency_id.id)]
         return domain
 
+    def _money_note(self):
+        """What `_money` leaves out, said on the tile.
+
+        A total that silently drops the cheque written in dollars is not the
+        figure its label promises; Rental's own arrears tile names the
+        currency in its hint, and these tiles count the same kind of money.
+        """
+        return _("Counted in %s only: amounts in another currency are not added in.",
+                 self.env.company.currency_id.name)
+
     # ------------------------------------------------------------------
     # Tile specs
     # ------------------------------------------------------------------
@@ -46,14 +56,19 @@ class ExecutiveDashboard(models.AbstractModel):
         Model = self.env[Property]
         leasable = Model.search_count([('is_leasable', '=', True)] + self._company_domain(Property))
         occupied = Model.search_count(occupied_domain + self._company_domain(Property))
-        return [
+        # A share of nothing is not 0%. With no leasable unit there is no
+        # occupancy to report, and a zero would be read as an empty portfolio,
+        # so the figure is dropped the way a tile nobody may read is.
+        occupancy = [
             {'key': 'occupancy', 'label': _("Occupancy"), 'model': Property, 'domain': occupied_domain,
-             'value': round(occupied / leasable * 100.0, 1) if leasable else 0.0, 'format': 'percent',
+             'value': round(occupied / leasable * 100.0, 1), 'format': 'percent',
              'action_name': _("Occupied Units"), 'hint': _("Occupied units as a share of leasable units.")},
+        ] if leasable else []
+        return occupancy + [
             {'key': 'outstanding_rent', 'label': _("Outstanding Rent"), 'model': 'realestate.contract.payment',
              'domain': self._money('realestate.contract.payment',
                                    [('state', '=', 'invoiced'), ('amount_residual', '>', 0)]),
-             'measure': 'amount_residual', 'warning_above': 0},
+             'measure': 'amount_residual', 'warning_above': 0, 'hint': self._money_note()},
             {'key': 'leases_expiring', 'label': _("Leases Expiring in 90 Days"), 'model': 'realestate.contract',
              'domain': [('lifecycle_state', 'in', LIVE_LEASE), ('end_date', '>=', today),
                         ('end_date', '<=', today + timedelta(days=90))]},
@@ -98,7 +113,8 @@ class ExecutiveDashboard(models.AbstractModel):
              'model': Payment, 'domain': domain + [('id', 'in', collected.ids)],
              'measure': 'amount', 'action_name': _("Payments Received"),
              'hint': _("Money received this month against sale instalments, by "
-                       "payment date — whenever the instalment itself falls due.")},
+                       "payment date — whenever the instalment itself falls due.")
+                     + " " + self._money_note()},
         ]
 
     def _sales_tiles(self, today):
@@ -111,7 +127,7 @@ class ExecutiveDashboard(models.AbstractModel):
             {'key': 'instalments_overdue', 'label': _("Overdue Instalments"), 'model': Instalment,
              'domain': self._money(Instalment, [('state', 'in', INSTALMENT_OPEN), ('date_due', '<', today),
                                                 ('is_cancelled', '=', False)]),
-             'measure': 'residual_amount', 'warning_above': 0},
+             'measure': 'residual_amount', 'warning_above': 0, 'hint': self._money_note()},
         ] + self._collected_tiles(today)
 
     def _construction_tiles(self, today):
@@ -129,7 +145,7 @@ class ExecutiveDashboard(models.AbstractModel):
             {'key': 'cheques_due_30', 'label': _("Cheques Due in 30 Days"), 'model': Check,
              'domain': self._money(Check, [('state', 'in', CHECK_ON_HAND), ('due_date', '>=', today),
                                            ('due_date', '<=', today + timedelta(days=30))]),
-             'measure': 'amount'},
+             'measure': 'amount', 'hint': self._money_note()},
             {'key': 'bounces_unresolved', 'label': _("Unresolved Bounced Cheques"), 'model': 'realestate.check.bounce',
              'domain': [('resolution', '=', 'pending')], 'warning_above': 0},
         ]

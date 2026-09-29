@@ -370,10 +370,16 @@
                 </div>
                 <ul class="list-group list-group-flush">
                     <t t-foreach="state.payload.exceptions.exceptions" t-as="exc" t-key="exc.key">
-                        <li class="list-group-item d-flex align-items-center gap-2 o_drill"
+                        <li class="list-group-item d-flex align-items-center gap-2"
+                            t-att-class="exc.openable ? 'o_drill' : ''"
                             t-on-click="() => this.openAction(exc.action)">
                             <span class="badge text-bg-light border" t-esc="exc.class"/>
                             <span t-esc="exc.message"/>
+                            <!-- The count stands; the records behind it are
+                                 not this reader's to open. -->
+                            <span t-if="!exc.openable" class="ms-auto small text-muted">
+                                Not available to your role
+                            </span>
                         </li>
                     </t>
                 </ul>

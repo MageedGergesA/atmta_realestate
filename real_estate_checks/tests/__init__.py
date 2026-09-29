@@ -19,3 +19,4 @@ from . import test_dashboard_browser
 from . import test_workflow_browser
 from . import test_maturity_read_only
 from . import test_lifecycle_findings
+from . import test_dashboard_findings

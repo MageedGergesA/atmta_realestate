@@ -159,8 +159,16 @@ class TestMultiCompanyIsolation(ConstructionCommon):
         #    it with `sudo()` is deliberate, because a domain that only looks
         #    isolated because a record rule filtered it afterwards is not
         #    isolated — it is lucky.
-        Sheet = self.env['realestate.construction.cost.sheet'].with_user(
-            user).with_context(allowed_company_ids=allowed)
+        #
+        #    The drilldown is asked for as a reader who can actually open the
+        #    column. Commitment opens `purchase.order.line` and actual opens
+        #    `account.analytic.line`; a Construction Manager holds neither
+        #    right, so `drilldown()` hands them `False` by design — that
+        #    refusal is pinned by its own test below. The question here is
+        #    whether the domain is company-scoped, so both companies stay
+        #    active while it is built and the answer is unchanged.
+        Sheet = self.env['realestate.construction.cost.sheet'].with_context(
+            allowed_company_ids=allowed)
 
         commitment = Sheet.drilldown(self.project_a, 'current_commitment')
         po_lines = self.env[commitment['res_model']].sudo().search(
@@ -190,6 +198,37 @@ class TestMultiCompanyIsolation(ConstructionCommon):
         self.assertEqual(payload_b['cost']['current_commitment'],
                          7_000_000.0)
         self.assertEqual(payload_b['cost']['actual_cost'], 3_000_000.0)
+
+    def test_a_construction_manager_is_offered_no_drilldown_they_cannot_open(self):
+        """The refusal the isolation test above deliberately steps around.
+
+        Two columns leave the construction domain, and the canonical role
+        bridge gives a Construction Manager no Purchase and no Accounting
+        rights — so the cost sheet must answer `False` rather than hand back
+        an action that dies on the first click. The cost module pins this from
+        its own side; it is pinned again here because this is the install
+        where the bridge exists, and a bridge that quietly implied a purchase
+        group would change the answer without that other test noticing.
+        """
+        user = self._user('m10.drill', [self.company_a],
+                          'group_construction_manager')
+        Sheet = self.env['realestate.construction.cost.sheet'].with_user(user)
+
+        for column, model in (('current_commitment', 'purchase.order.line'),
+                              ('actual_cost', 'account.analytic.line')):
+            # Stated as the right, not as the group list, because the right is
+            # what the drilldown asks about and what the click would need.
+            self.assertFalse(
+                self.env[model].with_user(user).has_access('read'),
+                "A Construction Manager gained read on %s; the drilldown "
+                "assertion below no longer tests what it claims." % model)
+            self.assertFalse(
+                Sheet.drilldown(self.project_a, column),
+                "drilldown() offered %s on %s to a Construction Manager, who "
+                "cannot open it." % (column, model))
+
+        # The fix drops the columns that fail, not the ones that work.
+        self.assertTrue(Sheet.drilldown(self.project_a, 'original_budget'))
 
     def test_switching_the_active_company_does_not_change_a_projects_figures(self):
         """A project's cost is a property of the project, not of a toggle."""

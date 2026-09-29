@@ -53,12 +53,21 @@ class ConstructionExceptions(models.AbstractModel):
 
     # ------------------------------------------------------------------
     def _entry(self, key, cls, count, message, model, domain):
+        # A figure and the records behind it must agree *and* the reader must
+        # be able to open them. Some counts are deliberately taken with sudo
+        # so that the people who see the panel get the number — the uncoded
+        # purchase lines are the case — but the records themselves still need
+        # their own rights. Offering a click that can only end in an
+        # AccessError is worse than offering none, so an exception the reader
+        # may not open says so instead of carrying an action that fails.
+        openable = model in self.env and self.env[model].has_access('read')
         return {
             'key': key,
             'class': cls,
             'count': count,
             'message': message,
-            'action': {
+            'openable': openable,
+            'action': openable and {
                 'type': 'ir.actions.act_window',
                 'name': message,
                 'res_model': model,

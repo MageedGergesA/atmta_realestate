@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """Regressions found by the procurement lifecycle run, on demand and plans."""
+from unittest.mock import patch
+
 from lxml import etree
 
 from odoo.exceptions import UserError
@@ -126,3 +128,39 @@ class TestRequestLifecycleFindings(TransactionCase):
                               "stays on the superseded plan")
         self.assertEqual(result['res_model'], 'realestate.procurement.plan')
         self.assertEqual(result['res_id'], plan.superseded_by_id.id)
+
+    # -- R3: cancelling withdraws the approvals it will never decide ------
+    def test_cancelling_withdraws_the_undecided_approvals(self):
+        """Rejection and a return to draft both withdraw the open steps.
+
+        Cancelling left them behind, so a cancelled requisition kept live
+        approval steps for ever: they sat in approvers' queues and counted as
+        work nobody could ever clear. Approval steps belong to Control, which
+        this module does not depend on, so what is asserted here is the seam
+        Control fills — the same seam `action_back_to_draft` already uses.
+        """
+        request = self._request(self.requester)
+        request.action_submit()
+        Request = type(self.Request)
+        with patch.object(Request, '_cancel_pending_approvals',
+                          autospec=True,
+                          side_effect=Request._cancel_pending_approvals
+                          ) as withdraw:
+            request.action_cancel()
+        self.assertEqual(request.state, 'cancelled')
+        self.assertTrue(
+            withdraw.called,
+            "action_cancel left the undecided approval steps behind.")
+
+    def test_returning_to_draft_still_withdraws_them(self):
+        """The behaviour cancellation is being aligned with, pinned."""
+        request = self._request(self.requester)
+        request.action_submit()
+        Request = type(self.Request)
+        with patch.object(Request, '_cancel_pending_approvals',
+                          autospec=True,
+                          side_effect=Request._cancel_pending_approvals
+                          ) as withdraw:
+            request.action_back_to_draft()
+        self.assertEqual(request.state, 'draft')
+        self.assertTrue(withdraw.called)

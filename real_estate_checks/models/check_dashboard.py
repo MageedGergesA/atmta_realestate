@@ -107,9 +107,14 @@ class CheckDashboard(models.AbstractModel):
             ],
             'deposit': [
                 self._kpi('in_clearing', _('At Bank / In Clearing'), at_bank),
+                # A slip is created in `draft` with today's date and its
+                # cheques still `registered` in the safe: nothing has left the
+                # building and Odoo has registered no payment. Counting it here
+                # put the same paper under "On Hand" and under "At the Bank" at
+                # once. Only a slip that was actually presented counts.
                 self._kpi('deposits_today', _('Deposits Today'),
                           base + [('deposit_date', '=', today),
-                                  ('state', '!=', 'cancelled')],
+                                  ('state', 'not in', ('draft', 'cancelled'))],
                           model='realestate.check.deposit',
                           field='total_amount'),
                 self._kpi('awaiting_reconciliation',
@@ -149,6 +154,16 @@ class CheckDashboard(models.AbstractModel):
         base = [('company_id', 'in', companies.ids)]
         bounced_domain = base + [('state', '=', 'bounced')]
         unresolved_domain = base + [('resolution', '=', 'pending')]
+        # The ledger backlog, which neither figure above keeps in view. When
+        # the bank had already matched the receipt, `_restore_receivable`
+        # refuses to unwind it and leaves the work to Accounting: the cheque is
+        # bounced but the customer still reads as having paid. Recording a
+        # commercial resolution moves the cheque out of `bounced` and the
+        # bounce out of `pending`, and the overstated receivable then had
+        # nothing reporting it. Same domain as the bounce list's "Needs Manual
+        # Accounting" filter.
+        manual_domain = base + [('requires_manual_accounting', '=', True),
+                                ('accounting_handled', '=', False)]
         outstanding_replacements = base + [
             ('replaces_check_id', '!=', False),
             ('state', 'in', list(CHECK_ON_HAND + CHECK_AT_BANK))]
@@ -161,6 +176,8 @@ class CheckDashboard(models.AbstractModel):
             base + [('presented_date', '!=', False)])
         unresolved, unresolved_amount = self._agg(
             unresolved_domain, model='realestate.check.bounce')
+        manual, manual_amount = self._agg(
+            manual_domain, model='realestate.check.bounce')
         replacements, replacement_amount = self._agg(outstanding_replacements)
 
         return {
@@ -178,6 +195,11 @@ class CheckDashboard(models.AbstractModel):
                 'amount': unresolved_amount, 'kind': 'paper',
                 'model': 'realestate.check.bounce',
                 'domain': unresolved_domain},
+            'manual_accounting': {
+                'label': _('Bounces Awaiting Manual Accounting'),
+                'count': manual, 'amount': manual_amount, 'kind': 'paper',
+                'model': 'realestate.check.bounce',
+                'domain': manual_domain},
             'replacements_outstanding': {
                 'label': _('Replacement Cheques Outstanding'),
                 'count': replacements, 'amount': replacement_amount,
@@ -203,9 +225,15 @@ class CheckDashboard(models.AbstractModel):
         Company scoping is not weakened: `companies` comes from the caller's
         own `env.companies`, and the domain below pins it explicitly, so sudo
         buys access to the model and not to another company's data. Only
-        aggregate amounts leave this method — no obligation is identified, and
-        the drill-down domain it publishes is re-checked against the user's own
-        rights when they click it.
+        aggregate amounts leave this method — no obligation is identified.
+
+        What sudo buys the figure it must not buy the drill-down. A card that
+        carries a `model` is clickable, and a Treasury Officer clicking
+        "Future Obligations" got an `AccessError` on Developer's model — the
+        one role this block exists for. The model and domain are therefore
+        published only to a user who may read them; without them the card
+        renders its figure and opens nothing, exactly as `unsecured` already
+        does.
         """
         Installment = self.env['realestate.sale.installment'].sudo()
         domain = [('company_id', 'in', companies.ids),
@@ -221,11 +249,15 @@ class CheckDashboard(models.AbstractModel):
             count = 0
         future = max((current or 0.0) - (paid or 0.0), 0.0)
         secured = min(secured or 0.0, future)
+        may_open = self.env['realestate.sale.installment'].has_access('read')
+        obligations = {
+            'label': _('Future Obligations'), 'amount': future,
+            'count': count, 'kind': 'obligation'}
+        if may_open:
+            obligations.update(model='realestate.sale.installment',
+                               domain=domain)
         return {
-            'future_obligations': {
-                'label': _('Future Obligations'), 'amount': future,
-                'count': count, 'kind': 'obligation',
-                'model': 'realestate.sale.installment', 'domain': domain},
+            'future_obligations': obligations,
             'pdc_received': {
                 'label': _('PDC Amount Received (Face Value)'),
                 'amount': secured, 'kind': 'paper',

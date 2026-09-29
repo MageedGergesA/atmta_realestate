@@ -872,3 +872,51 @@ class TestDeveloperManagerCanAddMedia(DeveloperCommon):
             self.assertFalse(images.has_access(operation), operation)
         with self.assertRaises(AccessError):
             image.with_user(self.readonly).write({'name': 'Renamed'})
+
+
+@tagged('post_install', '-at_install', 'atmta_developer')
+class TestDashboardSoldUnitsCard(ContractCommon):
+    """The Overview card a sales manager reads first.
+
+    `Development & Sales > Overview` renders the Sold Units card as
+
+        Sold Units
+        <sold_units>
+        of <total_units> · <sales_progress>%
+
+    V1 computed `sales_progress` as sold ÷ total, so the three numbers were
+    one statement. V2 redefined it as (sold + contracted) ÷ total — the right
+    commercial figure, because a signed contract is a unit off the market —
+    but the card was not retold, so the percentage no longer divides the two
+    numbers printed beside it.
+    """
+
+    def test_progress_counts_contracted_units_the_card_does_not_call_sold(self):
+        """The arithmetic behind the card, stated once."""
+        contract = self._contract(payment_plan_id=self._plan().id)
+        contract.action_sign()
+        self.assertEqual(contract.property_id.commercial_status, 'contracted')
+
+        data = self.env['realestate.developer.dashboard'].with_context(
+            allowed_company_ids=[self.company.id]).get_data()
+
+        self.assertEqual(data['kpis']['sold_units'], 0)
+        self.assertGreater(
+            data['kpis']['sales_progress'], 0.0,
+            "a contracted unit is commercial progress even though nothing "
+            "has been transferred yet")
+
+    def test_the_card_says_what_its_percentage_measures(self):
+        """"0 of 1 · 100%" is not a statement anybody can act on."""
+        from odoo.tools.misc import file_path
+        path = file_path('real_estate_developer/static/src/xml/'
+                         'developer_dashboard.xml')
+        with open(path, encoding='utf-8') as handle:
+            lines = [line for line in handle
+                     if 'kpis.sales_progress' in line]
+        self.assertTrue(lines, "the Sold Units card must still render the "
+                               "progress figure")
+        self.assertIn(
+            'contracted', ''.join(lines),
+            "`sales_progress` counts sold AND contracted units, so the line "
+            "that prints it beside `sold_units` has to say so")

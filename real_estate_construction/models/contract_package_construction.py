@@ -53,16 +53,27 @@ class ContractPackageConstruction(models.Model):
         claims that ask for time and have not yet produced one — otherwise a
         claim for sixty days would be invisible until somebody remembered to
         raise an EOT record for it.
+
+        Read as the system, because the two fields this feeds do not agree on
+        how to read: `approved_eot_days` is stored (so Odoo computes it with
+        sudo) and `claimed_eot_days` is not, and the registry says as much at
+        start-up. The unsudoed half then raised AccessError on 'Extension of
+        Time' for every site and cost reader, which is how a Control Tower
+        Risk panel and Health card turned into an error banner for the people
+        the tower is mostly for. Only two day counts leave this method; the
+        claim's money and its negotiating position stay behind their own
+        group, as `_claims` and the field groups already arrange.
         """
         self.ensure_one()
-        implemented = self.eot_ids.filtered(
+        package = self.sudo()
+        implemented = package.eot_ids.filtered(
             lambda e: e.state == 'implemented')
         approved = sum(implemented.mapped('determined_days'))
-        pending = self.eot_ids.filtered(
+        pending = package.eot_ids.filtered(
             lambda e: e.state not in ('implemented', 'rejected',
                                       'withdrawn', 'superseded'))
         claimed = sum(pending.mapped('claimed_days'))
-        claims_without_eot = self.claim_ids.filtered(
+        claims_without_eot = package.claim_ids.filtered(
             lambda c: c.claimed_days and c.state in OPEN_CLAIM_STATES
             and not c.eot_ids)
         claimed += sum(claims_without_eot.mapped('claimed_days'))

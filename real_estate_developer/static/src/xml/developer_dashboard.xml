@@ -40,7 +40,10 @@
                         <div class="o_dv_kpi o_dv_green">
                             <div class="o_dv_label">Sold Units</div>
                             <div class="o_dv_value"><t t-esc="state.data.kpis.sold_units"/></div>
-                            <div class="o_dv_sub">of <t t-esc="state.data.kpis.total_units"/> · <t t-esc="state.data.kpis.sales_progress"/>%</div>
+                            <!-- `sales_progress` counts sold AND contracted
+                                 units, so it does not divide the two figures
+                                 printed beside it: say which it measures. -->
+                            <div class="o_dv_sub">of <t t-esc="state.data.kpis.total_units"/> · <t t-esc="state.data.kpis.sales_progress"/>% sold or contracted</div>
                         </div>
                     </div>
                     <div class="col-md-2">

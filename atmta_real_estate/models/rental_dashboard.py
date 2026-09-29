@@ -21,6 +21,12 @@ company isolation apply in both.
 not security: the drilldown opens an ordinary list, so ACLs and record rules
 still decide what the user sees.
 
+**What cannot be read is dropped.** On top of the role filter, a tile, a chart
+or a quick action whose model the user may not read is left out of the payload
+-- the convention ``atmta_dashboard/models/dashboard_provider.py`` sets for
+every ATMTA dashboard. Never an ``AccessError`` in the user's face, and never a
+zero that would read as "nothing to do".
+
 Occupancy is measured on leasable units only: compounds, buildings and floors
 are containers, not units that can be let.
 """
@@ -97,16 +103,25 @@ class RentalDashboard(models.AbstractModel):
 
     @api.model
     def get_trends(self):
-        """The charts, loaded after the tiles."""
+        """The charts, loaded after the tiles.
+
+        A chart whose model the user may not read is omitted, like a tile: the
+        front end draws only the charts it is sent, so nobody is shown a flat
+        zero line for money they are not allowed to see.
+        """
         today = fields.Date.context_today(self)
         company_ids = self.env.companies.ids
+        charts = {}
+        if self._can_read('realestate.contract.payment'):
+            charts['billed_vs_collected'] = self._billed_vs_collected(today, company_ids)
+            charts['arrears_aging'] = self._arrears_aging(company_ids)
+        if self._can_read('realestate.contract'):
+            charts['expiries_by_month'] = self._expiries_by_month(today, company_ids)
+        if (self._can_read('realestate.contract.property.line')
+                and self._can_read('realestate.property')):
+            charts['occupancy_trend'] = self._occupancy_trend(today, company_ids)
         return {
-            'charts': {
-                'billed_vs_collected': self._billed_vs_collected(today, company_ids),
-                'arrears_aging': self._arrears_aging(company_ids),
-                'expiries_by_month': self._expiries_by_month(today, company_ids),
-                'occupancy_trend': self._occupancy_trend(today, company_ids),
-            },
+            'charts': charts,
             'currency_id': self.env.company.currency_id.id,
         }
 
@@ -173,6 +188,18 @@ class RentalDashboard(models.AbstractModel):
         return [('work', _('My Work')), ('portfolio', _('Portfolio Health'))]
 
     @api.model
+    def _can_read(self, model_name):
+        """May this user read ``model_name`` at all?
+
+        The same helper (and the same purpose) as
+        ``atmta.dashboard.provider._can_read``: a figure the user could not
+        open is dropped rather than counted.
+        """
+        if model_name not in self.env:
+            return False
+        return self.env[model_name].has_access('read')
+
+    @api.model
     def _check_scope(self, scope):
         if scope not in SCOPES:
             raise UserError(_("Unknown dashboard scope '%s'.") % scope)
@@ -214,6 +241,8 @@ class RentalDashboard(models.AbstractModel):
         ``measure`` (``count``, ``sum:<field>`` or ``ratio:<num>/<den>``),
         ``format``, ``groups`` (an xmlid, or None for everyone), ``warn`` (show
         a warning when non-zero), ``hint`` and ``title`` (the drilldown's name).
+        ``reads`` names the model the figure queries when that is not ``model``
+        -- a computed ratio has no model to open but still reads one.
         The *Mine* restriction is already applied to ``domain``.
         """
         uid = self.env.uid
@@ -297,6 +326,7 @@ class RentalDashboard(models.AbstractModel):
                  domain=leasable + self._occupied_on(today)),
             dict(key='occupancy_rate', section='portfolio', label=_('Occupancy'),
                  model=None, groups=None, measure='ratio:occupied_units/leasable_units',
+                 reads='realestate.property',
                  format='percent', hint=_("Occupied units as a share of leasable units.")),
             dict(key='active_leases', section='portfolio', label=_('Active Leases'),
                  model='realestate.contract', groups=None,
@@ -332,7 +362,13 @@ class RentalDashboard(models.AbstractModel):
             tile.setdefault('warn', False)
             tile.setdefault('hint', '')
             tile.setdefault('domain', [])
+            tile.setdefault('reads', tile['model'])
             if tile['groups'] and not user.has_group(tile['groups']):
+                continue
+            # A figure the user could not open is dropped, never counted and
+            # never sent as a zero. Roles and ACLs are maintained separately,
+            # so the two can disagree; the ACL is the one that decides.
+            if tile['reads'] and not self._can_read(tile['reads']):
                 continue
             tiles.append(tile)
         return tiles
@@ -376,21 +412,34 @@ class RentalDashboard(models.AbstractModel):
     # ==================================================================
     @api.model
     def _quick_actions(self):
+        """``model`` is what the button opens; ``create`` means it opens a new
+        one, which needs more than read."""
         return [
-            dict(key='new_lease', label=_('New Lease'), icon='fa-plus', groups=AGENT),
+            dict(key='new_lease', label=_('New Lease'), icon='fa-plus', groups=AGENT,
+                 model='realestate.contract', create=True),
             dict(key='available_units', label=_('Find Available Unit'), icon='fa-search',
-                 groups=None),
-            dict(key='move_in', label=_('Move-In'), icon='fa-sign-in', groups=PROPERTY_MANAGER),
+                 groups=None, model='realestate.property', create=False),
+            dict(key='move_in', label=_('Move-In'), icon='fa-sign-in', groups=PROPERTY_MANAGER,
+                 model='realestate.move.in', create=True),
             dict(key='move_out', label=_('Move-Out'), icon='fa-sign-out',
-                 groups=PROPERTY_MANAGER),
+                 groups=PROPERTY_MANAGER, model='realestate.move.out', create=True),
         ]
+
+    @api.model
+    def _quick_available(self, action):
+        """A button that could only end in an access error is not offered."""
+        if not self._can_read(action['model']):
+            return False
+        return (not action['create']
+                or self.env[action['model']].has_access('create'))
 
     @api.model
     def _visible_quick_actions(self):
         user = self.env.user
         return [{'key': action['key'], 'label': action['label'], 'icon': action['icon']}
                 for action in self._quick_actions()
-                if not action['groups'] or user.has_group(action['groups'])]
+                if (not action['groups'] or user.has_group(action['groups']))
+                and self._quick_available(action)]
 
     @api.model
     def action_quick(self, key):
@@ -436,7 +485,17 @@ class RentalDashboard(models.AbstractModel):
         return {'labels': labels, 'occupancy_pct': values}
 
     def _billed_vs_collected(self, today, company_ids):
-        """One grouped query for 12 months instead of 12 searches."""
+        """One grouped query for 12 months instead of 12 searches.
+
+        Grouped by the month an obligation FELL DUE, for all three series. The
+        paid figure is therefore "how much of that month's rent has been paid
+        so far", not cash banked in that month -- ``amount_paid`` is read from
+        the invoice's residual and carries no payment date of its own. The
+        chart's labels say which question it answers
+        (``static/src/js/dashboard/dashboard_schema.js``). A true cash-basis
+        series would have to come from ``account.payment``, which no Rental
+        role may read (``security/leasing_groups.xml``).
+        """
         start = today.replace(day=1) - relativedelta(months=TREND_MONTHS - 1)
         groups = self.env['realestate.contract.payment']._read_group(
             [('company_id', 'in', company_ids),

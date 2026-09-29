@@ -75,6 +75,15 @@ class ConstructionControlTower(models.AbstractModel):
                 sections + ['cost', 'forecast', 'cost_sheet', 'change',
                             'commercial', 'claims', 'certificates',
                             'procurement']))
+        # `procurement` reads Purchase with the reader's own rights, and no
+        # construction role carries Purchase. A panel the reader may not read
+        # is *absent*, like every other one here — letting it run and fail put
+        # "You are not allowed to access 'Purchase Order Line'" on a
+        # construction manager's control tower.
+        if 'procurement' in sections and not all(
+                self.env[model].has_access('read')
+                for model in ('purchase.order', 'purchase.order.line')):
+            sections.remove('procurement')
         return sections
 
     # ------------------------------------------------------------------

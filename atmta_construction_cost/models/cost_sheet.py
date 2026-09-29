@@ -282,12 +282,16 @@ class ConstructionCostSheet(models.AbstractModel):
     # ------------------------------------------------------------------
     @api.model
     def drilldown(self, project, column, cost_code_id=None):
-        """`(action_xmlid_or_model, domain, context)` for one cell.
+        """`(action_xmlid_or_model, domain, context)` for one cell, or `False`.
 
         Every column on the sheet must open the records behind it. Domains are
         built here rather than in JavaScript so that the number and the list
         cannot drift apart, and so that record rules apply to the drilldown
         exactly as they applied to the aggregate.
+
+        It is `False` for an unknown column, and for a column this reader may
+        not open — see the access note below. Every caller gets that answer,
+        which is why the check is here and not in a template.
         """
         project = self._as_project(project)
         code_domain = []
@@ -296,64 +300,83 @@ class ConstructionCostSheet(models.AbstractModel):
         elif cost_code_id == UNASSIGNED:
             code_domain = [('cost_code_id', '=', False)]
 
-        budget = self.env['realestate.construction.budget'].current_for(project)
+        def budget_lines():
+            budget = self.env[
+                'realestate.construction.budget'].current_for(project)
+            return ([('budget_id', '=', budget.id if budget else 0)]
+                    + code_domain)
+
+        # Each domain is built only when its own column is the one asked for.
+        # One column's source must not be able to break the other eight, and a
+        # column the reader may not open must not be queried at all.
         specs = {
             'original_budget': (
                 'realestate.construction.budget.line',
-                [('budget_id', '=', budget.id if budget else 0)] + code_domain,
+                budget_lines,
                 _('Baseline budget lines')),
             'approved_budget_changes': (
                 'realestate.construction.change.order.line',
-                [('order_id.project_id', '=', project.id),
-                 ('order_id.state', '=', 'implemented'),
-                 ('impact_side', '=', 'budget')] + code_domain,
+                lambda: [('order_id.project_id', '=', project.id),
+                         ('order_id.state', '=', 'implemented'),
+                         ('impact_side', '=', 'budget')] + code_domain,
                 _('Implemented budget changes')),
             'current_commitment': (
                 'purchase.order.line',
-                [('order_id.re_project_id', '=', project.id),
-                 ('order_id.state', 'in', ('purchase', 'done'))]
+                lambda: [('order_id.re_project_id', '=', project.id),
+                         ('order_id.state', 'in', ('purchase', 'done'))]
                 + ([('re_cost_code_id', '=', cost_code_id)]
                    if cost_code_id and cost_code_id != UNASSIGNED else []),
                 _('Purchase order lines')),
             'approved_commitment_changes': (
                 'realestate.construction.change.order.line',
-                [('order_id.project_id', '=', project.id),
-                 ('order_id.state', '=', 'implemented'),
-                 ('impact_side', '=', 'commitment')] + code_domain,
+                lambda: [('order_id.project_id', '=', project.id),
+                         ('order_id.state', '=', 'implemented'),
+                         ('impact_side', '=', 'commitment')] + code_domain,
                 _('Implemented commitment changes')),
             'actual_cost': (
                 'account.analytic.line',
-                self._actual_drilldown_domain(project, cost_code_id),
+                lambda: self._actual_drilldown_domain(project, cost_code_id),
                 _('Analytic postings')),
             'certified_amount': (
                 'realestate.construction.payment.certificate',
-                [('project_id', '=', project.id),
-                 ('state', 'in', ('certified', 'invoiced', 'paid'))]
+                lambda: [('project_id', '=', project.id),
+                         ('state', 'in', ('certified', 'invoiced', 'paid'))]
                 + code_domain,
                 _('Payment certificates')),
             'etc': (
                 'realestate.construction.forecast.line',
-                [('forecast_id.project_id', '=', project.id),
-                 ('forecast_id.state', '=', 'approved')] + code_domain,
+                lambda: [('forecast_id.project_id', '=', project.id),
+                         ('forecast_id.state', '=', 'approved')] + code_domain,
                 _('Approved forecast lines')),
             'potential_cost_exposure': (
                 'realestate.construction.change.event',
-                [('project_id', '=', project.id),
-                 ('state', 'in', list(OPEN_EVENT_STATES))] + code_domain,
+                lambda: [('project_id', '=', project.id),
+                         ('state', 'in', list(OPEN_EVENT_STATES))]
+                + code_domain,
                 _('Open change events')),
             'retention': (
                 'realestate.construction.retention',
-                [('project_id', '=', project.id)],
+                lambda: [('project_id', '=', project.id)],
                 _('Retention register')),
         }
         if column not in specs:
             return False
-        model, domain, name = specs[column]
+        model, build_domain, name = specs[column]
+        # The aggregate and the records behind it are two different rights.
+        # Two columns leave the construction domain — commitment opens
+        # `purchase.order.line` and actual opens `account.analytic.line` — and
+        # no construction role carries Purchase or Accounting rights, so the
+        # action handed to a cost controller or a construction manager could
+        # only ever end in an AccessError. The figure stays theirs; the column
+        # simply does not open. Same rule, and the same reason, as
+        # `real_estate_construction`'s control exceptions.
+        if model not in self.env or not self.env[model].has_access('read'):
+            return False
         return {
             'type': 'ir.actions.act_window',
             'name': name,
             'res_model': model,
-            'domain': domain,
+            'domain': build_domain(),
             'view_mode': 'list,form',
             # `views` is not optional for an action handed straight to the
             # web client: it maps over them, and an inline act_window without

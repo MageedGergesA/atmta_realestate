@@ -37,7 +37,7 @@
                             <div class="o_bd_sub"><t t-esc="state.data.kpis.under_offer"/> under offer</div>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2" t-if="state.data.kpis.open_leads !== undefined">
                         <div class="o_bd_kpi o_bd_purple">
                             <div class="o_bd_label">Open Leads</div>
                             <div class="o_bd_value"><t t-esc="state.data.kpis.open_leads"/></div>
@@ -55,7 +55,7 @@
                         <div class="o_bd_kpi o_bd_orange">
                             <div class="o_bd_label">Sold (MTD)</div>
                             <div class="o_bd_value"><t t-esc="state.data.kpis.sold_mtd"/></div>
-                            <div class="o_bd_sub"><t t-esc="state.data.kpis.conversion_rate"/>% conv</div>
+                            <div class="o_bd_sub" t-if="state.data.kpis.conversion_rate !== undefined"><t t-esc="state.data.kpis.conversion_rate"/>% conv</div>
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -96,7 +96,7 @@
 
                 <!-- FUNNEL + AGENTS + VELOCITY -->
                 <div class="row mb-3">
-                    <div class="col-md-4">
+                    <div class="col-md-4" t-if="state.data.lead_funnel">
                         <div class="o_bd_card">
                             <div class="o_bd_card_title">Lead Funnel</div>
                             <div class="o_bd_chart_lg"><canvas t-ref="barFunnel"/></div>
@@ -118,7 +118,7 @@
 
                 <!-- LISTS -->
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4" t-if="state.data.recent_leads">
                         <div class="o_bd_card">
                             <div class="o_bd_card_title"><i class="fa fa-user-plus me-2"/>Recent Leads</div>
                             <div class="o_bd_list">

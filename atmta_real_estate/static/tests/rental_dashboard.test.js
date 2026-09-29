@@ -242,6 +242,25 @@ describe("charts", () => {
         expect(".o_re_chart_panel canvas").toHaveCount(4);
     });
 
+    test("a chart the backend did not send is not drawn at all", async () => {
+        // `get_trends` omits a chart whose model the user may not read. An
+        // empty panel would read as "no data"; the panel must not be there.
+        serve({
+            trends: () => ({
+                charts: {
+                    expiries_by_month: { labels: ["Aug 2026"], counts: [4] },
+                },
+                currency_id: 1,
+            }),
+        });
+        await mountDashboard();
+
+        expect(".o_re_chart_panel").toHaveCount(1);
+        expect(queryAllTexts(".o_re_chart_panel .o_re_panel_title")).toEqual([
+            "Lease Expiries by Month",
+        ]);
+    });
+
     test("empty trend data renders an empty state instead of crashing", async () => {
         serve({ trends: makeEmptyTrends });
         await mountDashboard();

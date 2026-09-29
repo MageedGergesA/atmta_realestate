@@ -103,3 +103,47 @@ class TestExecutiveLifecycleFindings(TransactionCase):
         self.assertTrue(records)
         self.assertAlmostEqual(
             self._collected(), sum(records.mapped(spec['measure'])), 2)
+
+    def test_occupancy_is_dropped_when_nothing_can_be_leased(self):
+        """A share of nothing was rendered as 0%, which an executive reads as
+        an empty portfolio. A company that leases nothing has no occupancy;
+        the convention of the provider is to drop such a figure, never to show
+        a zero that reads as "nothing is let"."""
+        Property = self.env['realestate.property']
+        # `is_leasable` is derived from the usage, so the estate is turned
+        # into common areas rather than the flag being written.
+        Property.search([('is_leasable', '=', True)]).write({'usage_category': 'common_area'})
+        self.assertFalse(Property.search_count([('is_leasable', '=', True)]))
+        tiles = self._tiles()
+        self.assertNotIn('occupancy', tiles)
+        # The rest of the section is about money, not about units: it stays.
+        self.assertIn('outstanding_rent', tiles)
+        self.assertIn('leases_expiring', tiles)
+
+    def test_occupancy_stays_while_there_is_something_to_let(self):
+        """The tile must not disappear merely because nothing is occupied."""
+        self.env['realestate.property'].create({
+            'name': 'EXH-LEASABLE', 'hierarchy_level': 'unit',
+            'usage_category': 'apartment', 'company_id': self.env.company.id})
+        tiles = self._tiles()
+        self.assertIn('occupancy', tiles)
+        self.assertEqual(tiles['occupancy']['format'], 'percent')
+
+    def test_a_money_figure_says_which_currency_it_counts(self):
+        """Every money tile is restricted to the company currency, so amounts
+        in other currencies are silently left out of the total -- and nothing
+        on the tile said so. Rental's own arrears tile names the currency in
+        its hint; the Suite Overview dropped that when it re-counted the same
+        money."""
+        currency = self.env.company.currency_id
+        tiles = self._tiles()
+        narrowed = [
+            key for key, tile in tiles.items()
+            if tile['format'] == 'monetary'
+            and ('currency_id', '=', currency.id)
+            in (self.Dashboard._find_tile_spec(key, 'team').get('domain') or [])
+        ]
+        self.assertTrue(narrowed)
+        for key in narrowed:
+            with self.subTest(tile=key):
+                self.assertIn(currency.name, tiles[key]['hint'])

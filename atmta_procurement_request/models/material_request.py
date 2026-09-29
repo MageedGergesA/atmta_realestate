@@ -772,6 +772,12 @@ class MaterialRequest(models.Model):
                 ))
             rec._release_reservations(_("Requisition cancelled."))
             rec.state = 'cancelled'
+            # A cancelled requisition will never be decided, so the steps
+            # waiting on a decision have to go with it. Leaving them pending
+            # kept them in their approvers' queues for ever and counted them
+            # as work outstanding. Rejection and `action_back_to_draft`
+            # already withdraw them; cancellation is the same ending.
+            rec._cancel_pending_approvals()
 
     def _prepare_rfq_line(self, line):
         """Values for one RFQ line, carrying the control dimensions.
