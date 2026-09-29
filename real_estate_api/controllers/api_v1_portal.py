@@ -384,7 +384,6 @@ class PortalApiV1(http.Controller):
             'increase_amount': p.increase_amount or 0.0,
             'discount_amount': p.discount_amount or 0.0,
             'date_due': _iso(p.date_due),
-            'hijri_date_due': p.hijri_date_due or '',
             'state': p.state or '',
             'invoice_state': p.move_state or '',
             'payment_state': p.payment_state or '',

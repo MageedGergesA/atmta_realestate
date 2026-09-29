@@ -307,7 +307,6 @@
     <tr><td><code>partner_id</code></td><td class="type">M2o · related</td><td class="en">Tenant.</td><td class="ar">المستأجر.</td></tr>
     <tr><td><code>property_id</code></td><td class="type">M2o</td><td class="en">The property the rent is for.</td><td class="ar">العقار اللي الإيجار بتاعه.</td></tr>
     <tr><td><code>date_due / date_due_deadline</code></td><td class="type">Date</td><td class="en">Due date + 30-day grace deadline.</td><td class="ar">معاد الدفع + معاد الإنذار بعد 30 يوم.</td></tr>
-    <tr><td><code>hijri_date_due / hijri_date_due_deadline</code></td><td class="type">Char · computed</td><td class="en">Same dates in Hijri calendar.</td><td class="ar">نفس المواعيد بالتاريخ الهجري.</td></tr>
     <tr><td><code>amount</code></td><td class="type">Float · required</td><td class="en">Payment amount (already includes increment/discount rules applied).</td><td class="ar">قيمة الدفعة (بعد ما اتطبقت قواعد الزيادة والخصم).</td></tr>
     <tr><td><code>state</code></td><td class="type">Selection</td><td class="en">draft / invoiced / paid / cancelled.</td><td class="ar">مسودة، اتعملت فاتورة، مدفوعة، أو ملغية.</td></tr>
     <tr><td><code>move_id / move_state</code></td><td class="type">M2o → account.move</td><td class="en">Link to the actual invoice + its state.</td><td class="ar">لينك للفاتورة وحالتها.</td></tr>

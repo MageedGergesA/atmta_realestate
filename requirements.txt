@@ -1,0 +1,17 @@
+# Python packages this suite needs beyond Odoo 18's own requirements.txt.
+#
+# Odoo refuses to install a module whose external_dependencies are missing, so a
+# deployment without these fails at install time with
+#   "External dependency <name> not installed"
+# rather than at runtime. Install them into the same interpreter that runs
+# odoo-bin (a virtualenv's python, not the system one, if you use a venv):
+#
+#   pip install -r requirements.txt
+#
+# real_estate_contract_template also needs the `libreoffice` binary on PATH to
+# render DOCX templates to PDF; that one is an OS package, not a pip install
+# (Debian/Ubuntu: apt install libreoffice).
+
+# real_estate_contract_template — DOCX contract template rendering
+docxtpl>=0.20.0
+python-docx>=1.2.0

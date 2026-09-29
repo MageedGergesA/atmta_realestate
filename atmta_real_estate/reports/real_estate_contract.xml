@@ -908,28 +908,21 @@
                             <!-- Header Row -->
                             <tr style="border-bottom:0.01em solid #02594f !important; background-color: #e3e9e3; height: 48px;">
                                 <!--            <td style="width: 5%; text-align: center; padding: 8px; vertical-align: middle;">.No</td>-->
-                                <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">القيمة
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">القيمة
                                     <br/>Amount
                                 </td>
-                                <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">نهاية
-                                    مهلة السداد<br/>End of payment deadline(AH)
-                                </td>
-                                <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">تاريخ
-                                    الاستحقاق<br/>Due Date(AH)
-                                </td>
-
-                                <td style="width: 10%; text-align: center; padding: 8px; vertical-align: middle;">الفترة
+                                <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">الفترة
                                     الإيجارية<br/>Rental Period
                                 </td>
-                                <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">نهاية
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">نهاية
                                     مهلة السداد<br/>End of payment deadline(AD)
                                 </td>
 
-                                <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">اريخ
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">اريخ
                                     الاستحقاق<br/>Due Date(AD)
                                 </td>
 
-                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">:الرقم
+                                <td style="width: 25%; text-align: right; padding: 8px; vertical-align: middle;">:الرقم
                                     المسلسل
                                 </td>
                             </tr>
@@ -943,42 +936,28 @@
                                     <!--                <td style="width: 5%; text-align: center; padding: 8px; vertical-align: middle;">-->
                                     <!--                    <span t-esc="counter"/>-->
                                     <!--                </td>-->
-                                    <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
                                         <span t-esc="line.amount" t-options="{'widget': 'float', 'precision': 2}"/>
                                     </td>
 
-                                    <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">
-                                        <span t-esc="line.hijri_date_due_deadline"/>
-                                    </td>
-
-                                    <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">
-                                        <span t-esc="line.hijri_date_due"/>
-                                    </td>
-
-                                    <!-- Payment Deadline (AH) -->
-                                    <!-- Amount -->
-
-
                                     <!-- Rental Period -->
-                                    <td style="width: 10%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">
                                         <span></span>يوم
                                     </td>
 
-                                    <!-- Due Date (AH) -->
-
                                     <!-- Due Date (AD) -->
-                                    <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
                                         <span t-esc="line.date_due_deadline"/>
                                     </td>
 
-                                    <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">
+                                    <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
                                         <span t-esc="line.date_due"/>
                                     </td>
 
                                     <!-- Payment Deadline (AD) -->
 
                                     <!-- Arabic Serial Number -->
-                                    <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">
+                                    <td style="width: 25%; text-align: right; padding: 8px; vertical-align: middle;">
                                         :
                                         <span t-esc="counter"/>
                                     </td>
@@ -990,16 +969,14 @@
 
                             <!-- Total Row -->
                             <tr style="border-bottom:0.01em solid #02594f !important; background-color: #e3e9e3; height: 48px;">
-                                <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;">
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;">
                                     <span t-esc="total_amount"
                                           t-options="{'widget': 'float', 'precision': 2}"/>
                                 </td>
                                 <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;"></td>
-                                <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;"></td>
-                                <td style="width: 10%; text-align: center; padding: 8px; vertical-align: middle;"></td>
-                                <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;"></td>
-                                <td style="width: 15%; text-align: center; padding: 8px; vertical-align: middle;"></td>
-                                <td style="width: 15%; text-align: right; padding: 8px; vertical-align: middle;">
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;"></td>
+                                <td style="width: 20%; text-align: center; padding: 8px; vertical-align: middle;"></td>
+                                <td style="width: 25%; text-align: right; padding: 8px; vertical-align: middle;">
                                     :المجموع
                                 </td>
                             </tr>

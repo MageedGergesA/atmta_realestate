@@ -158,7 +158,7 @@ or realestate.property (for per-unit tracking). Nothing lives orphaned.
           state: draft
     (3) Generate payment schedule
           action_generate_payment_lines() → creates realestate.contract.payment rows
-          each row has Hijri + Gregorian dates
+          each row has its due date and payment deadline
     (4) Confirm contract
           state: draft → ready → confirmed → invoiced → active
           Property state: available → rented

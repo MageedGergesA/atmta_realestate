@@ -16,9 +16,7 @@ class RealEstateContract(models.Model):
                        default=lambda self: _('New'))
     partner_id = fields.Many2one('res.partner', string="Tenant", required=True, tracking=True)
     start_date = fields.Date(string="Start Date", required=True, tracking=True)
-    # hijri_start_date = fields.Date(string="Hijri Start Date", compute='_compute_hijri_date', store=True)
     end_date = fields.Date(string="End Date", required=True, tracking=True)
-    # hijri_end_date = fields.Date(string="Hijri End Date", compute='_compute_hijri_date', store=True)
     state = fields.Selection([
         ('draft', 'Draft'),
         ('ready', 'Ready'),
@@ -119,13 +117,6 @@ class RealEstateContract(models.Model):
                                            'atmta_real_estate.multi_property_contract') == 'True')
     _sql_constraints = [('contract_name_unique', 'unique(name)', 'Contract name already exists')]
 
-    # @api.depends('start_date', 'end_date')
-    # def _compute_hijri_date(self):
-    #     for rec in self:
-    #         if rec.start_date:
-    #             rec.hijri_start_date = Hijriah(rec.start_date)
-    #         if rec.end_date:
-    #             rec.hijri_end_date = Hijriah(rec.end_date)
     @api.constrains('name')
     def _check_unique_code(self):
         for rec in self:

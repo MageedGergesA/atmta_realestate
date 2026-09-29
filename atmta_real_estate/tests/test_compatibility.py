@@ -9,6 +9,7 @@ audit, not guessed at.
 from dateutil.relativedelta import relativedelta
 
 from odoo.exceptions import UserError
+from odoo.modules.module import get_manifest
 from odoo.tests.common import tagged
 
 from .common import LeaseCase
@@ -129,9 +130,28 @@ class TestDownstreamCompatibility(LeaseCase):
         obligation = lease.contract_payment_ids[0]
         for field in ('amount', 'amount_total', 'date_due', 'state',
                       'move_id', 'property_id', 'contract_id',
-                      'charge_line_ids', 'hijri_date_due'):
+                      'charge_line_ids'):
             self.assertIn(field, obligation._fields,
                           "%s is referenced downstream and must survive" % field)
+
+    def test_the_hijri_columns_are_gone(self):
+        """Withdrawn deliberately: the schedule is Gregorian only.
+
+        ``hijri_date_due`` and ``hijri_date_due_deadline`` were the only reason
+        the module carried the ``hijridate`` dependency, which meant a
+        deployment without that package could not install Rental at all. They
+        are removed, and with them the manifest's external_dependencies. This
+        pins the removal so neither the fields nor the import come back by
+        accident -- and so does the absence of the import, because a stray
+        ``from hijridate import ...`` would break the module on a host that
+        never installs it.
+        """
+        obligation = self.env['realestate.contract.payment']
+        for field in ('hijri_date_due', 'hijri_date_due_deadline'):
+            self.assertNotIn(field, obligation._fields)
+
+        self.assertFalse(get_manifest('atmta_real_estate').get('external_dependencies'),
+                         "Rental must install without any external package")
 
     def test_checks_module_can_still_link_a_rental_payment(self):
         """real_estate_checks/check.py has a m2o to this model."""

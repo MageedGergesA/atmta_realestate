@@ -18,7 +18,7 @@ here is leasing itself.
 * Properties map dashboard (Leaflet)
 * Rental contracts (single-unit + multi-unit)
 * Payment plans + increment / discount rules
-* Auto-generated payment schedules (with Hijri dates)
+* Auto-generated payment schedules
 * Utility line tracking per contract
 * Rental history audit trail
 * Security deposit lifecycle
@@ -28,7 +28,7 @@ here is leasing itself.
 """,
     'author': "Atmta",
     'license': 'LGPL-3',
-    'version': '0.11',
+    'version': '0.12',
     'category': 'Real Estate',
     'depends': [
         'atmta_account_tools',
@@ -53,9 +53,6 @@ here is leasing itself.
         'stock',
         'web_hierarchy',
     ],
-    'external_dependencies': {
-        'python': ['hijridate'],
-    },
     'data': [
         # security (must load first)
         'security/security.xml',

@@ -12,7 +12,8 @@
 ### A.1 Manifest / structure
 - Odoo 18 module, LGPL-3, `application=True`, version 0.3.
 - `depends`: `base, product, mail, sale, sale_stock, account, stock, web_hierarchy`
-- External python dep: `hijridate` (for Hijri/Gregorian conversion).
+- External python deps: none (the `hijridate` dependency was withdrawn in 0.12
+  together with the two Hijri date fields it served).
 - `post_init_hook`: `_sync_property_code_sequence` + `_backfill_unit_stock`.
 - 28 Python modules (models + wizard + rental_dashboard abstract), 8 OWL/JS assets (Leaflet, Chart.js, rental dashboard, properties map, property_map widget), 20+ QWeb views/actions/reports.
 

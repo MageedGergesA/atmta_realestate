@@ -2486,7 +2486,7 @@ curl -H "Authorization: Bearer $API_KEY" \
 
 Fields: `contract_id`, `contract_ref`, `property_id`, `property_name`,
 `label`, `amount`, `amount_total` (base + charges), `increase_amount`,
-`discount_amount`, `date_due`, `hijri_date_due`, `state`
+`discount_amount`, `date_due`, `state`
 (`draft`|`invoiced`|`paid`|`cancelled`), `invoice_state`, `payment_state`.
 
 `amount_total` is the number to display — it already includes any utility

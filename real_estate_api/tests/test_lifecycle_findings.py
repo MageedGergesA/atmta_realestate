@@ -9,6 +9,7 @@ Python method returned.
 import base64
 import json
 
+from odoo import fields
 from odoo.tests.common import tagged
 
 from odoo.addons.real_estate_maquette.tests.common import _ONE_PIXEL_PNG
@@ -271,3 +272,55 @@ class TestInterestOnUnitsNotForSale(ApiCommon):
         project = self._public_project()
         unit = self._unit(project)
         self.assertEqual(self._interest(unit).status_code, 201)
+
+
+@tagged('post_install', '-at_install')
+class TestRentalPaymentsPayload(ApiCommon):
+    """`/payments` serves rental obligations; nothing exercised it before.
+
+    The route builds its rows field by field off ``realestate.contract.payment``,
+    so a field removed from that model turns every call into a 500 and no test
+    would have noticed. It carried ``hijri_date_due`` until 0.12 withdrew the
+    Hijri columns.
+    """
+
+    def _lease_with_an_obligation(self, tenant):
+        today = fields.Date.today()
+        unit = self.env['realestate.property'].create({
+            'name': 'Rental Unit A-101',
+            'property_code': 'API-RENT-101',
+            'hierarchy_level': 'unit',
+            'usage_category': 'apartment',
+            'area_sqm': 100.0,
+        })
+        lease = self.env['realestate.contract'].create({
+            'partner_id': tenant.id,
+            'property_id': unit.id,
+            'is_single_property': True,
+            'is_multi_property': False,
+            'start_date': today,
+            'end_date': fields.Date.add(today, years=1, days=-1),
+            'price': 5000.0,
+        })
+        self.env['realestate.contract.payment'].create({
+            'contract_id': lease.id,
+            'date_due': today,
+            'amount': 5000.0,
+        })
+        return lease
+
+    def test_the_payments_route_answers_and_carries_no_hijri_key(self):
+        tenant = self._api_partner('Rental Tenant', 'rp-1')
+        self._lease_with_an_obligation(tenant)
+        _user, key = self._api_key_for(
+            'real_estate_api.group_realestate_api_manager')
+
+        response = self._get('/api/v1/partners/by-ref/rp-1/payments', key=key)
+
+        self.assertEqual(response.status_code, 200, response.content[:400])
+        payload = _json(response)
+        self.assertEqual(payload['total_count'], 1)
+        row = payload['results'][0]
+        self.assertEqual(row['amount'], 5000.0)
+        self.assertTrue(row['date_due'], "the Gregorian due date still ships")
+        self.assertNotIn('hijri_date_due', row)
