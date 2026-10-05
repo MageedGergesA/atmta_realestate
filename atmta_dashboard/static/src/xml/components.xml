@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <!-- ===================================================================
+         Sparkline. Inline SVG, so it scales with page zoom and prints.
+         `vector-effect` keeps the stroke 1.5px at any viewBox scale.
+         =================================================================== -->
+    <t t-name="atmta_dashboard.Sparkline">
+        <svg t-if="geometry" class="o_ad_spark" role="img" aria-hidden="true" focusable="false"
+             t-att-viewBox="'0 0 ' + props.width + ' ' + props.height"
+             preserveAspectRatio="none">
+            <path t-att-d="geometry.area"
+                  t-attf-fill="var(--ad-{{ props.tone }})" fill-opacity="0.12" stroke="none"/>
+            <path t-att-d="geometry.line" fill="none"
+                  t-attf-stroke="var(--ad-{{ props.tone }})" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  vector-effect="non-scaling-stroke"/>
+            <circle t-att-cx="geometry.last[0]" t-att-cy="geometry.last[1]" r="1.8"
+                    t-attf-fill="var(--ad-{{ props.tone }})"/>
+        </svg>
+    </t>
+
+    <!-- ===================================================================
+         KPI card
+         =================================================================== -->
+    <t t-name="atmta_dashboard.KpiCard">
+        <div t-att-class="rootClass"
+             t-att-role="tile.drill ? 'button' : null"
+             t-att-tabindex="tile.drill ? 0 : null"
+             t-att-aria-label="ariaLabel"
+             t-att-data-tile="tile.key"
+             t-on-click="onClick"
+             t-on-keydown="onKeydown">
+
+            <div class="o_ad_kpi_icon" aria-hidden="true">
+                <i t-attf-class="fa {{ icon }}"/>
+            </div>
+
+            <div class="o_ad_kpi_body">
+                <div class="o_ad_kpi_label">
+                    <span t-esc="tile.label"/>
+                    <!-- The tooltip carries the definition. A financial KPI
+                         whose formula is a guess gets argued about, not used. -->
+                    <sup t-if="tile.hint" class="o_ad_kpi_hint" t-att-title="tile.hint">
+                        <i class="fa fa-question-circle-o" role="img" t-att-aria-label="tile.hint"/>
+                    </sup>
+                </div>
+
+                <div class="o_ad_kpi_value" t-esc="formattedValue"/>
+
+                <span t-if="qualifier" class="o_ad_badge"
+                      t-attf-class="o_ad_badge_{{ qualifier.tone }}"
+                      t-esc="qualifier.label"/>
+
+                <!-- The second fact. A bare count answers "how many" and
+                     stops; this says what it is out of, how old the worst one
+                     is, or what it is made of. It is shown rather than hidden
+                     in the tooltip because it is the part people actually
+                     need to judge the number. -->
+                <div t-if="tile.context" class="o_ad_kpi_context" t-esc="tile.context"/>
+
+                <div class="o_ad_kpi_foot">
+                    <div t-if="hasDelta">
+                        <span class="o_ad_delta" t-att-class="deltaClass">
+                            <i t-attf-class="fa {{ deltaIcon }}" aria-hidden="true"/>
+                            <span t-esc="deltaLabel"/>
+                        </span>
+                        <span class="o_ad_delta_caption" t-esc="comparisonCaption"/>
+                    </div>
+                    <div t-else=""/>
+                    <Sparkline t-if="tile.spark and tile.spark.length > 1"
+                               points="tile.spark" tone="sparkTone"/>
+                </div>
+
+                <!-- Status is never colour-only: a warning also carries an
+                     icon and a text label, for screen readers and for the
+                     8% of men who cannot tell the amber from the grey. -->
+                <div t-if="tile.warning" class="o_ad_kpi_status">
+                    <i class="fa fa-exclamation-triangle" role="img" aria-hidden="true"/>
+                    <span t-esc="tile.warning_label or 'Needs attention'"/>
+                </div>
+            </div>
+
+            <div t-if="tile.drill" class="o_ad_kpi_drill" aria-hidden="true">
+                <i class="fa fa-arrow-right"/>
+            </div>
+        </div>
+    </t>
+
+    <!-- ===================================================================
+         Card shell
+         =================================================================== -->
+    <t t-name="atmta_dashboard.Card">
+        <div class="o_ad_card" t-att-class="props.className">
+            <div t-if="props.title" class="o_ad_card_head">
+                <div>
+                    <h3 class="o_ad_card_title">
+                        <i t-if="props.icon" t-attf-class="fa {{ props.icon }}" aria-hidden="true"/>
+                        <span t-esc="props.title"/>
+                    </h3>
+                    <p t-if="props.subtitle" class="o_ad_delta_caption" t-esc="props.subtitle"/>
+                </div>
+                <button t-if="props.linkLabel" class="o_ad_card_link" t-on-click="() => props.onLink()">
+                    <span t-esc="props.linkLabel"/>
+                    <i class="fa fa-arrow-right ms-1" aria-hidden="true"/>
+                </button>
+            </div>
+            <t t-slot="default"/>
+        </div>
+    </t>
+
+    <!-- ===================================================================
+         Row list — alerts and work queues
+         =================================================================== -->
+    <t t-name="atmta_dashboard.RowList">
+        <div t-if="!visibleRows.length" class="o_ad_empty" role="status">
+            <i class="fa fa-check-circle o_ad_empty_icon" aria-hidden="true"/>
+            <p class="o_ad_empty_text" t-esc="emptyText"/>
+        </div>
+        <div t-else="" class="o_ad_rows">
+            <button t-foreach="visibleRows" t-as="row" t-key="row.key"
+                    class="o_ad_row" t-att-class="row.severityClass"
+                    t-att-data-row="row.key"
+                    t-on-click="() => this.onRow(row)"
+                    t-on-keydown="(ev) => this.onKeydown(ev, row)">
+                <span t-if="row.icon" class="o_ad_row_go" aria-hidden="true">
+                    <i t-attf-class="fa {{ row.icon }}"/>
+                </span>
+                <span t-if="row.badge" t-att-class="row.badgeClass" t-esc="row.badge"/>
+                <span t-else="" class="o_ad_row_count" t-esc="row.formatted"/>
+                <span class="o_ad_row_label">
+                    <span t-esc="row.label"/>
+                    <span t-if="row.sublabel" class="o_ad_row_sub" t-esc="row.sublabel"/>
+                </span>
+                <span class="o_ad_row_go" aria-hidden="true"><i class="fa fa-angle-right"/></span>
+            </button>
+        </div>
+    </t>
+
+    <!-- ===================================================================
+         Data table
+         =================================================================== -->
+    <t t-name="atmta_dashboard.DataTable">
+        <div t-if="!props.rows.length" class="o_ad_empty" role="status">
+            <i class="fa fa-table o_ad_empty_icon" aria-hidden="true"/>
+            <p class="o_ad_empty_text" t-esc="emptyText"/>
+        </div>
+        <div t-else="" class="o_ad_table_wrap">
+            <table class="o_ad_table">
+                <thead>
+                    <tr>
+                        <th t-foreach="props.columns" t-as="col" t-key="col.key"
+                            t-att-class="col.numeric ? 'o_ad_num' : ''" t-esc="col.label"/>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="props.rows" t-as="row" t-key="row.id or row_index"
+                        t-att-class="row.id ? 'o_ad_table_click' : ''"
+                        t-on-click="() => this.onRow(row)">
+                        <td t-foreach="props.columns" t-as="col" t-key="col.key"
+                            t-att-class="col.numeric ? 'o_ad_num' : ''">
+                            <!-- Named `value`, not `cell`: `t-set="cell"` would
+                                 shadow the component's own `cell()` method in
+                                 the template context, and the call on the very
+                                 next line then fails with
+                                 `ctx.cell is not a function`. -->
+                            <t t-set="value" t-value="cell(row, col)"/>
+                            <t t-if="value.kind === 'meter'">
+                                <div class="d-flex align-items-center gap-2 justify-content-end">
+                                    <span t-esc="value.text"/>
+                                    <span class="o_ad_meter">
+                                        <span class="o_ad_meter_fill"
+                                              t-attf-style="inline-size: {{ value.pct }}%;"/>
+                                    </span>
+                                </div>
+                            </t>
+                            <t t-elif="value.kind === 'badge'">
+                                <span class="o_ad_badge" t-attf-class="o_ad_badge_{{ value.tone }}"
+                                      t-esc="value.text"/>
+                            </t>
+                            <t t-else="" t-esc="value.text"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </t>
+
+    <!-- ===================================================================
+         Skeleton — the page keeps its shape while it loads
+         =================================================================== -->
+    <t t-name="atmta_dashboard.Skeleton">
+        <div aria-busy="true" aria-live="polite">
+            <span class="visually-hidden">Loading the dashboard…</span>
+            <div class="o_ad_kpi_grid mb-3">
+                <div t-foreach="kpiRange" t-as="i" t-key="i" class="o_ad_kpi">
+                    <div class="o_ad_kpi_icon o_ad_skeleton"/>
+                    <div class="o_ad_kpi_body">
+                        <div class="o_ad_skeleton o_ad_skeleton_line" style="inline-size: 55%;"/>
+                        <div class="o_ad_skeleton o_ad_skeleton_value"/>
+                    </div>
+                </div>
+            </div>
+            <div class="o_ad_grid">
+                <div t-foreach="panelRange" t-as="i" t-key="i" class="o_ad_card o_ad_col_4">
+                    <div class="o_ad_skeleton o_ad_skeleton_line" style="inline-size: 40%;"/>
+                    <div class="o_ad_skeleton" style="block-size: 12rem;"/>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <!-- ===================================================================
+         Empty state
+         =================================================================== -->
+    <t t-name="atmta_dashboard.EmptyState">
+        <div class="o_ad_empty" role="status">
+            <i t-attf-class="fa {{ props.icon or 'fa-inbox' }} o_ad_empty_icon" aria-hidden="true"/>
+            <p class="o_ad_empty_text" t-esc="props.text"/>
+            <button t-if="props.actionLabel" class="btn btn-sm btn-primary"
+                    t-on-click="() => props.onAction()" t-esc="props.actionLabel"/>
+        </div>
+    </t>
+
+    <!-- ===================================================================
+         Filter bar
+         =================================================================== -->
+    <t t-name="atmta_dashboard.FilterBar">
+        <div class="o_ad_filters" role="group" aria-label="Dashboard filters">
+            <label t-foreach="props.filters" t-as="filter" t-key="filter.key"
+                   class="o_ad_filter" t-att-data-filter="filter.key">
+                <i t-attf-class="fa {{ filter.icon or 'fa-filter' }}" aria-hidden="true"/>
+                <span class="visually-hidden" t-esc="filter.label"/>
+                <select class="o_ad_filter_select"
+                        t-att-value="props.values[filter.key] or 'all'"
+                        t-on-change="(ev) => this.onSelect(filter.key, ev)">
+                    <option value="all" t-esc="filter.all_label or ('All ' + filter.label)"/>
+                    <option t-foreach="filter.options or []" t-as="option" t-key="option.key"
+                            t-att-value="option.key"
+                            t-att-selected="isSelected(filter, option)"
+                            t-esc="option.label"/>
+                </select>
+            </label>
+
+            <label t-if="props.onPeriod" class="o_ad_filter" data-filter="period">
+                <i class="fa fa-calendar" aria-hidden="true"/>
+                <span class="visually-hidden">Period</span>
+                <select class="o_ad_filter_select" t-att-value="props.period"
+                        t-on-change="(ev) => props.onPeriod(ev.target.value)">
+                    <option t-foreach="periods" t-as="p" t-key="p.key"
+                            t-att-value="p.key"
+                            t-att-selected="props.period === p.key" t-esc="p.label"/>
+                </select>
+            </label>
+
+            <!-- Active filters, spelled out and individually removable. -->
+            <span t-foreach="chips" t-as="chip" t-key="chip.key" class="o_ad_chip">
+                <span t-esc="chip.label"/>
+                <button class="o_ad_chip_x" t-att-aria-label="'Remove ' + chip.label"
+                        t-on-click="() => this.clear(chip.key)">×</button>
+            </span>
+
+            <button t-if="hasActiveFilters" class="o_ad_filter_reset" t-on-click="() => props.onReset()">
+                Reset filters
+            </button>
+        </div>
+    </t>
+
+    <!-- ===================================================================
+         Donut + legend
+         =================================================================== -->
+    <t t-name="atmta_dashboard.Donut">
+        <div class="o_ad_donut_wrap">
+            <div t-if="isEmpty" class="o_ad_empty" role="status">
+                <i class="fa fa-pie-chart o_ad_empty_icon" aria-hidden="true"/>
+                <p class="o_ad_empty_text">Nothing to break down yet.</p>
+            </div>
+            <t t-else="">
+                <div class="o_ad_donut">
+                    <svg t-att-viewBox="viewBox" role="img" aria-hidden="true" focusable="false">
+                        <!-- `transform` starts the first segment at 12 o'clock
+                             instead of 3 o'clock, which is where every reader
+                             expects a ring to begin. -->
+                        <g t-attf-transform="rotate(-90 {{ props.size / 2 }} {{ props.size / 2 }})">
+                            <circle t-foreach="arcs" t-as="arc" t-key="arc.key"
+                                    t-att-cx="arc.centre" t-att-cy="arc.centre" t-att-r="arc.radius"
+                                    fill="none"
+                                    t-attf-stroke="var(--ad-{{ arc.tone }})"
+                                    t-att-stroke-width="props.thickness"
+                                    t-att-stroke-dasharray="arc.dash"
+                                    t-att-stroke-dashoffset="arc.offset"/>
+                        </g>
+                    </svg>
+                    <div t-if="props.total !== undefined and props.total !== false" class="o_ad_donut_centre">
+                        <div class="o_ad_donut_total" t-esc="props.total"/>
+                        <div class="o_ad_donut_caption" t-esc="props.totalLabel"/>
+                    </div>
+                </div>
+
+                <ul class="o_ad_legend">
+                    <li t-foreach="legend" t-as="item" t-key="item.key">
+                        <button class="o_ad_legend_row" t-on-click="() => this.onSegment(item)">
+                            <span class="o_ad_map_dot" t-attf-style="background: var(--ad-{{ item.tone }});"/>
+                            <span class="o_ad_legend_label" t-esc="item.label"/>
+                            <span class="o_ad_legend_value" t-esc="item.value"/>
+                            <span class="o_ad_legend_pct" t-esc="item.percent + '%'"/>
+                        </button>
+                    </li>
+                </ul>
+            </t>
+        </div>
+    </t>
+
+    <!-- ===================================================================
+         Map card
+         =================================================================== -->
+    <t t-name="atmta_dashboard.MapCard">
+        <div class="o_ad_map_wrap">
+            <div t-if="isEmpty" class="o_ad_empty" role="status">
+                <i class="fa fa-map-o o_ad_empty_icon" aria-hidden="true"/>
+                <p class="o_ad_empty_text" t-esc="emptyText"/>
+            </div>
+            <t t-else="">
+                <div class="o_ad_map" t-ref="map" role="region" aria-label="Map"/>
+                <ul t-if="props.legend" class="o_ad_map_legend">
+                    <li t-foreach="props.legend" t-as="item" t-key="item.label">
+                        <span class="o_ad_map_dot"
+                              t-attf-style="background: var(--ad-{{ item.tone }});"
+                              aria-hidden="true"/>
+                        <span t-esc="item.label"/>
+                        <strong t-if="item.count !== undefined" class="ms-1" t-esc="item.count"/>
+                    </li>
+                </ul>
+                <div t-if="state.selected" class="o_ad_map_detail">
+                    <strong t-esc="state.selected.label"/>
+                    <span t-if="state.selected.sublabel" class="o_ad_row_sub"
+                          t-esc="state.selected.sublabel"/>
+                </div>
+            </t>
+        </div>
+    </t>
+
+</templates>

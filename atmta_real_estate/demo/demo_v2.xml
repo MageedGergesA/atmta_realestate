@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- A let portfolio with a past: leases staggered over two years, ending
+         on a spread of dates so the 30/60/90 day buckets are each populated,
+         monthly obligations across the whole collection window, and moves in
+         the week either side of today. Generated relative to today so the
+         Overview still reads correctly next quarter. -->
+    <function model="realestate.demo.rental" name="_build"/>
+</odoo>

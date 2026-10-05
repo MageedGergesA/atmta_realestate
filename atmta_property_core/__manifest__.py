@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'ATMTA — Property Core',
-    'version': '18.0.1.1.0',
+    'version': '18.0.1.1.1',
     'category': 'Real Estate/Core',
     'summary': 'Authoritative definition of Property and its reference data.',
     'description': """

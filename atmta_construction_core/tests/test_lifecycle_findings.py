@@ -78,7 +78,13 @@ class TestConstructionSiteUserReadsTheProperty(TransactionCase):
                 continue
             spec[name] = ({'fields': {'display_name': {}}}
                           if field.type in ('many2one', 'many2many', 'one2many') else {})
-        rows = model.web_search_read([], spec, limit=20)
+        # Domain-scoped to this test's own record. An unfiltered limit-20
+        # read asserts that the fixture happens to be among the twenty
+        # oldest properties in the database, which stops being true the
+        # moment the suite carries more demo data -- and that says nothing
+        # about what this test is for. The ACL assertion is unchanged: a
+        # site user must be able to run the project screen's read.
+        rows = model.web_search_read([('id', '=', self.property.id)], spec, limit=20)
         ids = [row['id'] for row in rows['records']]
         self.assertIn(self.property.id, ids)
         model.browse(ids[:5]).web_read(spec)
@@ -88,7 +94,8 @@ class TestConstructionSiteUserReadsTheProperty(TransactionCase):
         # which search the project's units.
         self.assertIn(self.property.id,
                       [r['id'] for r in model.web_search_read(
-                          [], {'display_name': {}}, limit=20)['records']])
+                          [('id', '=', self.property.id)],
+                          {'display_name': {}}, limit=20)['records']])
         self.assertIn(self.property.id, model.search([]).ids)
 
     def test_a_site_user_never_writes_the_property(self):

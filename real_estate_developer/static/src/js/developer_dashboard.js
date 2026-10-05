@@ -1,253 +1,272 @@
 /** @odoo-module **/
 
+import { Component, useState } from "@odoo/owl";
+import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
-import { Component, onMounted, onWillStart, onWillUnmount, useEffect, useRef, useState } from "@odoo/owl";
-import { loadBundle } from "@web/core/assets";
 import { useService } from "@web/core/utils/hooks";
 
-const PROJ_COLORS = {
-    planning: "#6c757d", construction: "#fb8c00", marketing: "#0d6efd",
-    handover: "#9c27b0", completed: "#28a745", cancelled: "#dc3545",
-};
-const PROJ_LABELS = {
-    planning: "Planning", construction: "Construction", marketing: "Marketing",
-    handover: "Handover", completed: "Completed", cancelled: "Cancelled",
-};
-const UNIT_COLORS = {
-    available: "#28a745", reserved: "#fd7e14", rented: "#0d6efd",
-    maintenance: "#ffc107", inactive: "#6c757d",
-};
-const UNIT_LABELS = {
-    available: "Available", reserved: "Reserved", rented: "Sold/Rented",
-    maintenance: "Maintenance", inactive: "Inactive",
-};
+// The shared dashboard system, so Development & Sales, Rental and Brokerage
+// are visibly the same product rather than three custom screens.
+import { AtmtaKpiCard } from "@atmta_dashboard/js/components/kpi_card";
+import {
+    AtmtaCard, AtmtaDataTable, AtmtaRowList, AtmtaSkeleton,
+} from "@atmta_dashboard/js/components/panels";
+import { AtmtaFilterBar } from "@atmta_dashboard/js/components/filters";
+import { AtmtaDonut } from "@atmta_dashboard/js/components/donut";
+import { AtmtaDashboardChart } from "@atmta_dashboard/js/atmta_dashboard";
+import { AtmtaMapCard } from "@atmta_dashboard/js/components/map_card";
 
-let leafletPatched = false;
-function patchLeaflet() {
-    if (leafletPatched || typeof L === "undefined") return;
-    const base = "/atmta_real_estate/static/src/lib/leaflet/images";
-    delete L.Icon.Default.prototype._getIconUrl;
-    L.Icon.Default.mergeOptions({
-        iconRetinaUrl: `${base}/marker-icon-2x.png`,
-        iconUrl: `${base}/marker-icon.png`,
-        shadowUrl: `${base}/marker-shadow.png`,
-    });
-    leafletPatched = true;
-}
-
+/**
+ * Development & Sales Overview.
+ *
+ * A developer sells inventory once and collects for years, so the screen
+ * answers two questions side by side: are we selling, and are we collecting.
+ * Blurring them is how a project looks healthy while the money never arrives,
+ * which is why the velocity chart and the collection chart are both here and
+ * are different series.
+ */
 export class DeveloperDashboard extends Component {
     static template = "real_estate_developer.DeveloperDashboard";
+    static components = {
+        AtmtaKpiCard, AtmtaCard, AtmtaDataTable, AtmtaRowList, AtmtaSkeleton,
+        AtmtaFilterBar, AtmtaDonut, AtmtaDashboardChart, AtmtaMapCard,
+    };
     static props = ["*"];
 
     setup() {
-        // Chart.js is loaded on demand from Odoo's own `web.chartjs_lib`
-        // bundle. This dashboard previously relied on a copy that
-        // atmta_real_estate pushed into web.assets_backend for every page;
-        // that duplicate was removed in atmta_real_estate 0.4, so each
-        // consumer now loads the library itself, as Odoo's graph view does.
-        onWillStart(() => loadBundle("web.chartjs_lib"));
-
         this.orm = useService("orm");
         this.action = useService("action");
-        this.mapRef = useRef("map");
-        this.donutProjRef = useRef("donutProj");
-        this.donutUnitRef = useRef("donutUnit");
-        this.barProjectsRef = useRef("barProjects");
-        this.lineVelocityRef = useRef("lineVelocity");
+        this.notification = useService("notification");
         this.state = useState({
-            loading: true, data: null, lastUpdate: null,
-            autoRefresh: true, refreshInterval: 30000,
+            status: "loading", data: null, filters: {},
+            errorMessage: "", refreshing: false, loadedAt: null,
         });
-        this.map = null; this.cluster = null; this.charts = {};
-        this.refreshTimer = null;
-
-        onMounted(async () => {
-            await this.load();
-            if (this.state.autoRefresh)
-                this.refreshTimer = setInterval(() => this.refresh(), this.state.refreshInterval);
-        });
-        useEffect(() => {
-            if (this.state.data) Promise.resolve().then(() => this.renderAll());
-        }, () => [this.state.data]);
-        onWillUnmount(() => this._teardown());
+        this.load();
     }
 
-    async load() {
-        this.state.loading = true;
+    async load({ silent = false } = {}) {
+        if (!silent) {
+            this.state.status = "loading";
+        }
         try {
-            this.state.data = await this.orm.call("realestate.developer.dashboard", "get_data", []);
-            this.state.lastUpdate = new Date().toLocaleTimeString();
-        } finally { this.state.loading = false; }
-    }
-    async refresh() { await this.load(); }
-    toggleAutoRefresh() {
-        this.state.autoRefresh = !this.state.autoRefresh;
-        if (this.state.autoRefresh)
-            this.refreshTimer = setInterval(() => this.refresh(), this.state.refreshInterval);
-        else { clearInterval(this.refreshTimer); this.refreshTimer = null; }
-    }
-
-    renderAll() {
-        if (!this.state.data) return;
-        this._renderMap();
-        this._renderProjStates();
-        this._renderUnitStates();
-        this._renderTopProjects();
-        this._renderVelocity();
-    }
-
-    _renderMap() {
-        if (typeof L === "undefined" || !this.mapRef.el) return;
-        patchLeaflet();
-        if (!this.map) {
-            this.map = L.map(this.mapRef.el, { center: [24.7136, 46.6753], zoom: 5, preferCanvas: true });
-            // OpenStreetMap's own tiles: free, no API key (CARTO now requires one).
-            const streets = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 19,
-            });
-            const satellite = L.tileLayer(
-                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-                { attribution: "Tiles &copy; Esri", maxZoom: 19 }
+            this.state.data = await this.orm.call(
+                "realestate.developer.dashboard", "get_overview",
+                ["team", { ...this.state.filters }]
             );
-            const hybridLabels = L.tileLayer(
-                "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
-                { attribution: "", maxZoom: 19, opacity: 0.9 }
-            );
-            const hybrid = L.layerGroup([satellite, hybridLabels]);
-            streets.addTo(this.map);
-            L.control.layers(
-                { "Streets": streets, "Satellite": satellite, "Satellite + Labels": hybrid },
-                null,
-                { position: "topright", collapsed: true }
-            ).addTo(this.map);
-            this.cluster = L.markerClusterGroup({ chunkedLoading: true });
-            this.map.addLayer(this.cluster);
+            this.state.loadedAt = new Date();
+            this.state.errorMessage = "";
+            this.state.status = "ready";
+        } catch (error) {
+            console.error("Developer dashboard failed to load", error);
+            this.state.errorMessage =
+                (error && error.data && error.data.message) ||
+                _t("The dashboard data could not be loaded.");
+            this.state.status = "error";
         }
-        this.cluster.clearLayers();
-        if (this.polygonsLayer) { this.map.removeLayer(this.polygonsLayer); }
-        this.polygonsLayer = L.layerGroup().addTo(this.map);
-        const projs = this.state.data.map_projs || [];
-        const markers = [];
-        const allBounds = [];
-        for (const p of projs) {
-            const color = PROJ_COLORS[p.state] || "#888";
-            const name = (p.name || "").replace(/</g, "&lt;");
-            const popupHtml = `<div><div class="small text-muted">${p.code || ''}</div>
-                <div><strong>${name}</strong></div>
-                <div class="small">${p.city || ''} · ${p.project_type}</div>
-                <span class="badge" style="background:${color}">${PROJ_LABELS[p.state]}</span></div>`;
-            // Polygon boundary (if defined)
-            if (p.boundary && p.boundary.length >= 3) {
-                const poly = L.polygon(p.boundary, {
-                    color: color, weight: 2, fillColor: color, fillOpacity: 0.25,
-                });
-                poly.bindPopup(popupHtml);
-                this.polygonsLayer.addLayer(poly);
-                allBounds.push(poly.getBounds());
-            }
-            // Centroid marker
-            const m = L.circleMarker([p.latitude, p.longitude], {
-                radius: 10, color: "#fff", weight: 2, fillColor: color, fillOpacity: 0.9,
-            });
-            m.bindPopup(popupHtml);
-            markers.push(m);
+    }
+
+    async onRefresh() {
+        if (this.state.refreshing) {
+            return;
         }
-        this.cluster.addLayers(markers);
-        // Fit to all markers + polygons
-        if (markers.length || allBounds.length) {
-            let bounds = this.cluster.getBounds();
-            for (const b of allBounds) {
-                bounds = bounds.isValid() ? bounds.extend(b) : b;
-            }
-            if (bounds.isValid()) this.map.fitBounds(bounds, { padding: [40, 40], maxZoom: 12 });
+        this.state.refreshing = true;
+        try {
+            await this.load({ silent: this.state.status === "ready" });
+        } finally {
+            this.state.refreshing = false;
         }
-        setTimeout(() => this.map && this.map.invalidateSize(), 100);
     }
 
-    _draw(refEl, type, data, options) {
-        if (typeof Chart === "undefined" || !refEl) return;
-        const key = refEl.getAttribute("data-key") || refEl.id;
-        if (this.charts[key]) this.charts[key].destroy();
-        this.charts[key] = new Chart(refEl, { type, data, options });
+    async setFilter(key, value) {
+        if (value === "all" || !value) {
+            delete this.state.filters[key];
+        } else {
+            this.state.filters[key] = value;
+        }
+        await this.load({ silent: this.state.status === "ready" });
     }
 
-    _renderProjStates() {
-        const el = this.donutProjRef.el; if (!el) return;
-        el.setAttribute("data-key", "donutProj");
-        const d = this.state.data.proj_states;
-        this._draw(el, "doughnut", {
-            labels: Object.keys(d).map(k => PROJ_LABELS[k] || k),
-            datasets: [{ data: Object.values(d),
-                backgroundColor: Object.keys(d).map(k => PROJ_COLORS[k] || "#888"), borderWidth: 1 }],
-        }, { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: "bottom" } } });
+    async resetFilters() {
+        this.state.filters = {};
+        await this.load({ silent: this.state.status === "ready" });
     }
 
-    _renderUnitStates() {
-        const el = this.donutUnitRef.el; if (!el) return;
-        el.setAttribute("data-key", "donutUnit");
-        const d = this.state.data.unit_states;
-        this._draw(el, "doughnut", {
-            labels: Object.keys(d).map(k => UNIT_LABELS[k] || k),
-            datasets: [{ data: Object.values(d),
-                backgroundColor: Object.keys(d).map(k => UNIT_COLORS[k] || "#888"), borderWidth: 1 }],
-        }, { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: "bottom" } } });
+    get isLoading() { return this.state.status === "loading"; }
+    get isError() { return this.state.status === "error"; }
+    get isReady() { return this.state.status === "ready" && !!this.state.data; }
+    get data() { return this.state.data || {}; }
+    get currencyId() { return this.data.currency_id || false; }
+
+    get lastUpdatedLabel() {
+        if (!this.state.loadedAt) {
+            return "";
+        }
+        const minutes = Math.round((Date.now() - this.state.loadedAt.getTime()) / 60000);
+        return minutes < 1 ? _t("Updated just now") : _t("Updated %s min ago", minutes);
     }
 
-    _renderTopProjects() {
-        const el = this.barProjectsRef.el; if (!el) return;
-        el.setAttribute("data-key", "barProjects");
-        const t = this.state.data.top_projects || [];
-        this._draw(el, "bar", {
-            labels: t.map(x => x[0]),
-            datasets: [{ label: "Contracted Value", data: t.map(x => x[1]), backgroundColor: "#283593" }],
-        }, { responsive: true, maintainAspectRatio: false, indexAxis: "y",
-             plugins: { legend: { display: false } } });
+    get inventory() { return this.data.inventory || { segments: [], total: 0 }; }
+
+    get velocityChart() {
+        const velocity = this.data.velocity;
+        if (!velocity || !velocity.value || !velocity.value.some((v) => v)) {
+            return null;
+        }
+        return {
+            key: "velocity",
+            title: _t("Sales Velocity"),
+            subtitle: _t("Value contracted, by the month the contract was signed"),
+            icon: "fa-line-chart",
+            span: "o_ad_col_5",
+            type: "bar",
+            labels: velocity.labels,
+            series: [{
+                name: "value", label: _t("Contracted"),
+                data: velocity.value, format: "monetary",
+            }],
+            drillable: velocity.labels.map(() => false),
+        };
     }
 
-    _renderVelocity() {
-        const el = this.lineVelocityRef.el; if (!el) return;
-        el.setAttribute("data-key", "lineVelocity");
-        const v = this.state.data.velocity;
-        this._draw(el, "bar", {
-            labels: v.labels,
-            datasets: [
-                { label: "Contracts Signed", data: v.count, type: "bar",
-                  backgroundColor: "#0d6efd", yAxisID: "y" },
-                { label: "Revenue", data: v.revenue, type: "line",
-                  borderColor: "#28a745", yAxisID: "y1", tension: 0.3 },
+    get collectionChart() {
+        const collections = this.data.collections;
+        if (!collections || !collections.scheduled
+            || !collections.scheduled.some((v) => v)) {
+            return null;
+        }
+        return {
+            key: "collections",
+            title: _t("Scheduled vs Collected"),
+            // The GAP between the two bars is the collection problem, which is
+            // why they belong on one chart rather than two separate cards.
+            subtitle: _t("Collection rate %s%", collections.rate.toFixed(1)),
+            icon: "fa-credit-card",
+            span: "o_ad_col_4",
+            type: "bar",
+            labels: collections.labels,
+            series: [
+                { name: "scheduled", label: _t("Scheduled"), data: collections.scheduled, format: "monetary" },
+                { name: "collected", label: _t("Collected"), data: collections.collected, format: "monetary" },
             ],
-        }, {
-            responsive: true, maintainAspectRatio: false,
-            scales: {
-                y: { type: "linear", position: "left" },
-                y1: { type: "linear", position: "right", grid: { drawOnChartArea: false } },
-            },
-        });
+            drillable: collections.labels.map(() => false),
+        };
     }
 
-    _teardown() {
-        if (this.refreshTimer) clearInterval(this.refreshTimer);
-        if (this.map) { this.map.remove(); this.map = null; }
-        for (const k in this.charts) { try { this.charts[k].destroy(); } catch {} }
-        this.charts = {};
+    get mapData() { return this.data.map || { points: [], legend: [] }; }
+    get pipeline() { return this.data.pipeline || { segments: [], total: 0 }; }
+
+    get ageingChart() {
+        const ageing = this.data.ageing;
+        if (!ageing || !ageing.amounts || !ageing.amounts.some((v) => v)) {
+            return null;
+        }
+        return {
+            key: "ageing",
+            title: _t("Receivables Ageing"),
+            subtitle: _t("Overdue balance by how long it has been overdue"),
+            icon: "fa-hourglass-half",
+            span: "o_ad_col_4",
+            type: "bar",
+            labels: ageing.labels,
+            series: [{
+                name: "amounts", label: _t("Outstanding"),
+                data: ageing.amounts, format: "monetary",
+            }],
+            drillable: ageing.labels.map(() => false),
+        };
     }
 
-    openProject(id) { this.action.doAction({ type:"ir.actions.act_window", res_model:"realestate.project", res_id:id, views:[[false,"form"]] }); }
-    openContract(id) { this.action.doAction({ type:"ir.actions.act_window", res_model:"realestate.sale.contract", res_id:id, views:[[false,"form"]] }); }
-    openReservation(id) { this.action.doAction({ type:"ir.actions.act_window", res_model:"realestate.unit.reservation", res_id:id, views:[[false,"form"]] }); }
-    openInstallment(id) { this.action.doAction({ type:"ir.actions.act_window", res_model:"realestate.sale.installment", res_id:id, views:[[false,"form"]] }); }
-
-    // Revenue MTD opens the very payments it is the sum of: the server
-    // returns the action built from the same domain it summed, so the figure
-    // and the records behind it cannot drift apart.
-    async openCollectedMtd() {
-        const action = await this.orm.call("realestate.developer.dashboard", "action_collected_mtd", []);
-        this.action.doAction(action);
+    get priceColumns() {
+        return [
+            { key: "type", label: _t("Unit Type") },
+            { key: "units", label: _t("Units"), numeric: true },
+            { key: "avg_area", label: _t("Avg Area (sqm)"), numeric: true },
+            { key: "rate", label: _t("Price / sqm"), numeric: true, format: "monetary" },
+            { key: "absorption", label: _t("Absorption"), numeric: true, type: "meter" },
+        ];
     }
 
-    formatMoney(n) {
-        if (n === null || n === undefined) return "0";
-        return new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(n);
+    get handoverColumns() {
+        return [
+            { key: "unit", label: _t("Unit") },
+            { key: "buyer", label: _t("Buyer") },
+            { key: "handover", label: _t("Expected Handover") },
+            { key: "outstanding", label: _t("Outstanding"), numeric: true, format: "monetary" },
+            { key: "status", label: _t("Status"), type: "badge" },
+        ];
+    }
+
+    get buyerColumns() {
+        return [
+            { key: "buyer", label: _t("Buyer") },
+            { key: "contracts", label: _t("Contracts"), numeric: true },
+            { key: "value", label: _t("Contracted"), numeric: true, format: "monetary" },
+            { key: "outstanding", label: _t("Outstanding"), numeric: true, format: "monetary" },
+        ];
+    }
+
+    async openMapProject(point) {
+        if (point && point.id) {
+            await this.action.doAction({
+                type: "ir.actions.act_window",
+                res_model: "realestate.project",
+                res_id: point.id,
+                views: [[false, "form"]],
+            });
+        }
+    }
+
+    get projectColumns() {
+        return [
+            { key: "project", label: _t("Project") },
+            { key: "units", label: _t("Units"), numeric: true },
+            { key: "released", label: _t("Released"), numeric: true },
+            { key: "committed", label: _t("Committed"), numeric: true },
+            { key: "value", label: _t("Contracted Value"), numeric: true, format: "monetary" },
+            { key: "sell_through", label: _t("Sell-Through"), numeric: true, type: "meter" },
+        ];
+    }
+
+    get planColumns() {
+        return [
+            { key: "plan", label: _t("Payment Plan") },
+            { key: "contracts", label: _t("Contracts"), numeric: true },
+            { key: "scheduled", label: _t("Scheduled"), numeric: true, format: "monetary" },
+            { key: "collected", label: _t("Collected"), numeric: true, format: "monetary" },
+            { key: "rate", label: _t("Collection Rate"), numeric: true, type: "meter" },
+        ];
+    }
+
+    async runBackendAction(method, args, failureMessage) {
+        try {
+            const action = await this.orm.call("realestate.developer.dashboard", method, args);
+            await this.action.doAction(action);
+        } catch (error) {
+            console.error("Developer dashboard action failed", method, args, error);
+            this.notification.add(failureMessage, { type: "warning" });
+        }
+    }
+
+    async drill(key) {
+        if (key) {
+            await this.runBackendAction("action_drill", [key],
+                _t("Could not open the records behind this figure."));
+        }
+    }
+
+    async runQuickAction(key) {
+        await this.runBackendAction("action_quick", [key], _t("Could not open this screen."));
+    }
+
+    async openProject(row) {
+        if (row && row.id) {
+            await this.action.doAction({
+                type: "ir.actions.act_window",
+                res_model: "realestate.project",
+                res_id: row.id,
+                views: [[false, "form"]],
+            });
+        }
     }
 }
 

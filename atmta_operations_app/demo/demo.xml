@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Operations is the screen whose job is to show what is going wrong, so
+         a demo where everything reads zero demonstrates nothing. This spreads
+         maintenance and service across every state and deliberately includes
+         the awkward ones: work past its scheduled date, tickets nobody has
+         picked up, and SLAs that have already expired. -->
+    <function model="realestate.demo.operations" name="_build"/>
+</odoo>

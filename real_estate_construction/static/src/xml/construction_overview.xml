@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="real_estate_construction.ConstructionOverview">
+        <div class="o_ad_dashboard o_action">
+            <div class="o_ad_scroll">
+
+                <header class="o_ad_header">
+                    <div>
+                        <h1 class="o_ad_title">Construction</h1>
+                        <p class="o_ad_subtitle" t-if="isReady">
+                            <span t-esc="data.company_name"/>
+                            <span class="o_ad_sep" aria-hidden="true">·</span>
+                            <span class="o_ad_asof">
+                                <i class="fa fa-calendar-o" aria-hidden="true"/>
+                                <span>As of <t t-esc="data.as_of"/></span>
+                            </span>
+                            <t t-if="lastUpdatedLabel">
+                                <span class="o_ad_sep" aria-hidden="true">·</span>
+                                <span t-esc="lastUpdatedLabel"/>
+                            </t>
+                        </p>
+                    </div>
+                    <div class="o_ad_header_actions">
+                        <t t-foreach="data.quick_actions or []" t-as="quick" t-key="quick.key">
+                            <button class="btn btn-sm"
+                                    t-att-class="quick_first ? 'btn-primary' : 'btn-secondary'"
+                                    t-on-click="() => this.runQuickAction(quick.key)">
+                                <i t-attf-class="fa {{ quick.icon }} me-1" aria-hidden="true"/>
+                                <span t-esc="quick.label"/>
+                            </button>
+                        </t>
+                        <button class="btn btn-sm btn-secondary" t-on-click="onRefresh"
+                                t-att-disabled="state.refreshing" aria-label="Refresh the dashboard">
+                            <i class="fa fa-refresh" t-att-class="{ 'fa-spin': state.refreshing }"
+                               aria-hidden="true"/>
+                            <span class="d-none d-md-inline ms-1">Refresh</span>
+                        </button>
+                    </div>
+                </header>
+
+                <AtmtaFilterBar t-if="isReady and (data.filters or []).length"
+                                filters="data.filters" values="state.filters"
+                                onChange="(key, value) => this.setFilter(key, value)"
+                                onReset="() => this.resetFilters()"/>
+
+                <AtmtaSkeleton t-if="isLoading" kpis="6" panels="3"/>
+
+                <div t-elif="isError" class="o_ad_state" role="alert">
+                    <i class="fa fa-exclamation-circle o_ad_state_icon" aria-hidden="true"/>
+                    <h2 class="o_ad_state_title">The dashboard could not be loaded</h2>
+                    <p class="o_ad_state_text" t-esc="state.errorMessage"/>
+                    <button class="btn btn-primary" t-on-click="onRefresh">Retry</button>
+                </div>
+
+                <t t-else="">
+                    <div class="o_ad_kpi_grid o_ad_section">
+                        <AtmtaKpiCard t-foreach="data.kpis or []" t-as="tile" t-key="tile.key"
+                                      tile="tile" currencyId="currencyId"
+                                      onDrill="(key) => this.drill(key)"/>
+                    </div>
+
+                    <div class="o_ad_grid o_ad_section">
+                        <AtmtaCard className="'o_ad_col_3'" title="'Programme'"
+                                   icon="'fa-cubes'" subtitle="'Milestones by state'">
+                            <AtmtaDonut segments="programme.segments"
+                                        total="programme.total"
+                                        totalLabel="programme.total_label"
+                                        onSegment="(key) => this.drill(key)"/>
+                        </AtmtaCard>
+
+                        <AtmtaCard className="'o_ad_col_3'" title="'Quality'"
+                                   icon="'fa-exclamation-triangle'"
+                                   subtitle="'One critical and twenty minors is a different site from twenty-one minors'">
+                            <AtmtaDonut segments="quality.segments"
+                                        total="quality.total"
+                                        totalLabel="quality.total_label"
+                                        onSegment="(key) => this.drill(key)"/>
+                        </AtmtaCard>
+
+                        <AtmtaDashboardChart t-if="activityChart" chart="activityChart"
+                                             currencyId="currencyId"/>
+                        <AtmtaCard t-else="" className="'o_ad_col_6'"
+                                   title="'Site Activity'" icon="'fa-calendar-check-o'">
+                            <AtmtaRowList rows="[]"
+                                          emptyText="'No daily report has been filed in the last eight weeks.'"/>
+                        </AtmtaCard>
+                    </div>
+
+                    <div class="o_ad_grid o_ad_section">
+                        <AtmtaCard className="'o_ad_col_6'" title="'Attention Required'"
+                                   icon="'fa-exclamation-triangle'">
+                            <AtmtaRowList rows="data.alerts or []"
+                                          onRow="(key) => this.drill(key)"
+                                          emptyText="'Nothing needs your attention.'"/>
+                        </AtmtaCard>
+                        <AtmtaCard className="'o_ad_col_6'" title="'My Work'"
+                                   icon="'fa-check-square-o'">
+                            <AtmtaRowList rows="data.work_queue or []"
+                                          onRow="(key) => this.drill(key)"
+                                          emptyText="'Your queue is clear.'"/>
+                        </AtmtaCard>
+                    </div>
+
+                    <div class="o_ad_grid o_ad_section">
+                        <AtmtaCard className="'o_ad_col_7'" title="'Programme at Risk'"
+                                   icon="'fa-clock-o'"
+                                   subtitle="'Sorted by how late, not by sequence'">
+                            <AtmtaDataTable columns="milestoneColumns"
+                                            rows="data.milestones_table or []"
+                                            currencyId="currencyId"
+                                            emptyText="'No milestone is open.'"/>
+                        </AtmtaCard>
+                        <AtmtaCard className="'o_ad_col_5'" title="'Sites'"
+                                   icon="'fa-map-marker'"
+                                   subtitle="'Red where the programme is slipping'">
+                            <AtmtaMapCard points="mapData.points" legend="mapData.legend"
+                                          onPoint="(point) => this.openProject(point)"
+                                          emptyText="'No project under construction has coordinates set.'"/>
+                        </AtmtaCard>
+                    </div>
+
+                    <div class="o_ad_grid o_ad_section">
+                        <AtmtaCard className="'o_ad_col_12'" title="'Contract Packages'"
+                                   icon="'fa-file-text-o'">
+                            <AtmtaDataTable columns="packageColumns"
+                                            rows="data.packages_table or []"
+                                            currencyId="currencyId"
+                                            emptyText="'No contract package yet.'"/>
+                        </AtmtaCard>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+
+</templates>

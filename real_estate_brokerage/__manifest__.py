@@ -20,6 +20,9 @@ Counterpart to the rental module. Manages the for-sale lifecycle of properties:
     'version': '0.4',
     'category': 'Real Estate',
     'depends': [
+        # The Overview renders through the shared dashboard component
+        # library, so the whole suite has one visual language.
+        'atmta_dashboard',
         'atmta_property_core',
         'atmta_account_tools',
         'real_estate_developer',
@@ -37,6 +40,9 @@ Counterpart to the rental module. Manages the for-sale lifecycle of properties:
         'crm',
         'mail',
         'account',
+    ],
+    'demo': [
+        'demo/demo.xml',
     ],
     'data': [
         # security

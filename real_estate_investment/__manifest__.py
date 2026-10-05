@@ -20,7 +20,11 @@ Real Estate Investment Analysis
     # nothing else from the Development application -- no model, no group,
     # no view, no menu parent, no XML ID -- so the dependency now points at
     # the core it actually needs.
-    'depends': ['atmta_project_core'],
+    'depends': [
+        'atmta_dashboard','atmta_project_core'],
+    'demo': [
+        'demo/demo.xml',
+    ],
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',

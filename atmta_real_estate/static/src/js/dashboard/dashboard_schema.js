@@ -87,3 +87,53 @@ export const CHART_DEFS = [
         yMax: 100,
     },
 ];
+
+/**
+ * The two analytical charts on the Overview.
+ *
+ * Separate from CHART_DEFS above, which describes the older four-chart strip.
+ * These two carry the questions the Overview is read for: is occupancy going
+ * the right way, and are we collecting what we billed.
+ */
+export const OVERVIEW_CHARTS = {
+    occupancy: {
+        key: "occupancy_trend",
+        get title() { return _t("Occupancy Trend"); },
+        get subtitle() { return _t("Share of leasable units under a live allocation, month end"); },
+        type: "line",
+        yFormat: FORMAT.PERCENT,
+        series: [{
+            name: "occupancy",
+            get label() { return _t("Occupancy"); },
+            color: "--re-chart-1",
+            fill: true,
+        }],
+    },
+    arrears: {
+        key: "arrears_aging",
+        get title() { return _t("Arrears Ageing"); },
+        get subtitle() { return _t("Unpaid balance by how long it has been overdue"); },
+        type: "bar",
+        yFormat: FORMAT.MONETARY,
+        series: [{
+            name: "amounts",
+            get label() { return _t("Outstanding"); },
+            color: "--re-chart-warn",
+        }],
+    },
+    collection: {
+        key: "collection",
+        get title() { return _t("Rent Collection vs Billed"); },
+        // Both series are grouped by the month the obligation FELL DUE, so
+        // "collected" means how much of that month's rent has been paid so
+        // far -- not cash banked in that month. Saying so on the chart stops
+        // it being read as a cash-flow statement.
+        get subtitle() { return _t("By the month rent fell due"); },
+        type: "bar",
+        yFormat: FORMAT.MONETARY,
+        series: [
+            { name: "billed", get label() { return _t("Billed"); }, color: "--re-chart-2" },
+            { name: "collected", get label() { return _t("Collected"); }, color: "--re-chart-1" },
+        ],
+    },
+};

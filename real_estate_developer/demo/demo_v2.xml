@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        The flagship development, carried through the commercial lifecycle.
+
+        This also builds the shared property foundation on first run. That
+        foundation deliberately is not built by atmta_property_core itself:
+        that module sits below `account` and `stock` in the dependency graph,
+        and both add NOT NULL columns to the tables involved, so a record
+        created at its position dies on a fresh install. See
+        atmta_property_core/models/demo_builder.py.
+    -->
+    <function model="realestate.demo.developer" name="_build"/>
+</odoo>

@@ -26,3 +26,5 @@ from . import commission_v2
 from . import commission_migration
 from . import sla
 from . import brokerage_dashboard
+from . import demo_builder
+from . import brokerage_overview

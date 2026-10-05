@@ -23,6 +23,29 @@
               groups="base.group_no_one"
               sequence="99"/>
 
+    <!--
+      The current operational surface. A NEW action and tag, deliberately not
+      a repointing of action_construction_dashboard: that one is frozen as
+      deprecated and test_m10_freeze_invariants asserts it stays out of reach
+      of ordinary construction users. Reusing it would have made the test pass
+      while reversing the decision behind it.
+
+      Money is not shown here. The Control Tower remains the canonical
+      financial surface, and two screens disagreeing about the same word is
+      the failure M9AS forbids.
+    -->
+    <record id="action_construction_overview" model="ir.actions.client">
+        <field name="name">Construction Overview</field>
+        <field name="tag">realestate.construction_overview</field>
+    </record>
+
+    <menuitem id="menu_construction_overview"
+              name="Overview"
+              parent="menu_construction_root"
+              action="action_construction_overview"
+              groups="real_estate_construction.group_construction_user"
+              sequence="1"/>
+
     <record id="action_control_tower" model="ir.actions.client">
         <field name="name">Control Tower</field>
         <field name="tag">construction_control_tower</field>

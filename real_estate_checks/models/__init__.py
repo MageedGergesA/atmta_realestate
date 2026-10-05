@@ -11,3 +11,5 @@ from . import bounce
 from . import check_exposure
 from . import sale_contract
 from . import check_dashboard
+from . import demo_builder
+from . import treasury_overview

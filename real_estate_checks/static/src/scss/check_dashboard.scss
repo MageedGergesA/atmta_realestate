@@ -7,8 +7,21 @@
 // on `.o_action_manager`.
 
 .o_re_check_dashboard {
-    overflow-y: auto;
-    height: 100%;
+    // The root carries `o_action`, and Odoo's layout sets
+    // `.o_web_client > .o_action_manager > .o_action { overflow: hidden }`,
+    // which is more specific than this selector. `overflow-y: auto` here was
+    // therefore dead: the dashboard is ~2000px tall, the action area ~830px,
+    // and everything from the Risk section down was unreachable with no
+    // scrollbar. The root stays Odoo's full-height flex column; the body
+    // scrolls inside it.
+    block-size: 100%;
+
+    .o_re_check_body {
+        flex: 1 1 auto;
+        min-block-size: 0;   // a flex child only shrinks below its content with this
+        overflow-y: auto;
+        overflow-x: hidden;  // a wide table scrolls in its own region, not the page
+    }
 
     .o_re_check_kpi {
         cursor: pointer;

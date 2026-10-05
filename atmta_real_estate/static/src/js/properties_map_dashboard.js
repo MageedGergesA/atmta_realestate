@@ -5,9 +5,9 @@ import { Component, onMounted, onWillUnmount, useRef, useState } from "@odoo/owl
 import { useService } from "@web/core/utils/hooks";
 import { _t } from "@web/core/l10n/translation";
 
-import { STREET_TILES, statusColor } from "./map_tiles";
+import { SATELLITE_TILES, STREET_TILES, statusColor } from "./map_tiles";
 
-const LEAFLET_IMAGE_BASE = "/atmta_real_estate/static/src/lib/leaflet/images";
+const LEAFLET_IMAGE_BASE = "/atmta_dashboard/static/src/lib/leaflet/images";
 const WORLD_CENTER = [20, 0];
 const WORLD_ZOOM = 2;
 
@@ -206,14 +206,7 @@ export class PropertiesMapDashboard extends Component {
         });
 
         const streets = L.tileLayer(STREET_TILES.url, STREET_TILES.options);
-        const satellite = L.tileLayer(
-            "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-            {
-                attribution: 'Tiles &copy; Esri',
-                maxZoom: 19,
-                crossOrigin: true,
-            }
-        );
+        const satellite = L.tileLayer(SATELLITE_TILES.url, SATELLITE_TILES.options);
         streets.addTo(this.map);
         L.control.layers(
             { "Streets": streets, "Satellite": satellite },

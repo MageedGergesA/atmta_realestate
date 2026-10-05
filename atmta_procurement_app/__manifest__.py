@@ -29,6 +29,15 @@ at `atmta_procurement_award` and `atmta_procurement_receipt` per
     'version': '18.0.0.4.0',
     'category': 'Real Estate',
     'depends': ['real_estate_procurement', 'atmta_roles', 'atmta_dashboard'],
+    'demo': [
+        'demo/demo.xml',
+    ],
+    'assets': {
+        'web.assets_backend': [
+            'atmta_procurement_app/static/src/js/procurement_dashboard.js',
+            'atmta_procurement_app/static/src/xml/procurement_dashboard.xml',
+        ],
+    },
     'data': [
         'data/workspace_actions.xml',
         # Wave 11 — procurement policy on the project form; see the file header.

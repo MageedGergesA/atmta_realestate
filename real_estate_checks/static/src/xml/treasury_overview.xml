@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="real_estate_checks.TreasuryOverview">
+        <div class="o_ad_dashboard o_action">
+            <div class="o_ad_scroll">
+
+                <header class="o_ad_header">
+                    <div>
+                        <h1 class="o_ad_title">Treasury</h1>
+                        <p class="o_ad_subtitle" t-if="isReady">
+                            <span t-esc="data.company_name"/>
+                            <span class="o_ad_sep" aria-hidden="true">·</span>
+                            <span class="o_ad_asof">
+                                <i class="fa fa-calendar-o" aria-hidden="true"/>
+                                <span>As of <t t-esc="data.as_of"/></span>
+                            </span>
+                            <t t-if="lastUpdatedLabel">
+                                <span class="o_ad_sep" aria-hidden="true">·</span>
+                                <span t-esc="lastUpdatedLabel"/>
+                            </t>
+                        </p>
+                    </div>
+                    <div class="o_ad_header_actions">
+                        <t t-foreach="data.quick_actions or []" t-as="quick" t-key="quick.key">
+                            <button class="btn btn-sm"
+                                    t-att-class="quick_first ? 'btn-primary' : 'btn-secondary'"
+                                    t-on-click="() => this.runQuickAction(quick.key)">
+                                <i t-attf-class="fa {{ quick.icon }} me-1" aria-hidden="true"/>
+                                <span t-esc="quick.label"/>
+                            </button>
+                        </t>
+                        <button class="btn btn-sm btn-secondary" t-on-click="onRefresh"
+                                t-att-disabled="state.refreshing" aria-label="Refresh the dashboard">
+                            <i class="fa fa-refresh" t-att-class="{ 'fa-spin': state.refreshing }"
+                               aria-hidden="true"/>
+                            <span class="d-none d-md-inline ms-1">Refresh</span>
+                        </button>
+                    </div>
+                </header>
+
+                <!-- The one thing this screen exists to say. -->
+                <div class="alert alert-info o_ad_section" role="note">
+                    <strong>Paper is not cash.</strong>
+                    Figures marked <span class="o_ad_badge o_ad_badge_neutral">Paper</span>
+                    are the face value of instruments held or presented. Only
+                    <span class="o_ad_badge o_ad_badge_success">Cash</span> is money the
+                    bank has honoured and Odoo has reconciled. The two are never added.
+                </div>
+
+                <AtmtaFilterBar t-if="isReady and (data.filters or []).length"
+                                filters="data.filters" values="state.filters"
+                                onChange="(key, value) => this.setFilter(key, value)"
+                                onReset="() => this.resetFilters()"/>
+
+                <AtmtaSkeleton t-if="isLoading" kpis="6" panels="3"/>
+
+                <div t-elif="isError" class="o_ad_state" role="alert">
+                    <i class="fa fa-exclamation-circle o_ad_state_icon" aria-hidden="true"/>
+                    <h2 class="o_ad_state_title">The dashboard could not be loaded</h2>
+                    <p class="o_ad_state_text" t-esc="state.errorMessage"/>
+                    <button class="btn btn-primary" t-on-click="onRefresh">Retry</button>
+                </div>
+
+                <t t-else="">
+                    <div class="o_ad_kpi_grid o_ad_section">
+                        <AtmtaKpiCard t-foreach="data.kpis or []" t-as="tile" t-key="tile.key"
+                                      tile="tile" currencyId="currencyId"
+                                      onDrill="(key) => this.drill(key)"/>
+                    </div>
+
+                    <div class="o_ad_grid o_ad_section">
+                        <AtmtaCard className="'o_ad_col_3'" title="'Cheque Lifecycle'"
+                                   icon="'fa-exchange'" subtitle="'Where the book sits today'">
+                            <AtmtaDonut segments="lifecycle.segments"
+                                        total="lifecycle.total"
+                                        totalLabel="lifecycle.total_label"
+                                        onSegment="(key) => this.drill(key)"/>
+                        </AtmtaCard>
+
+                        <AtmtaDashboardChart t-if="maturityChart" chart="maturityChart"
+                                             currencyId="currencyId"/>
+                        <AtmtaCard t-else="" className="'o_ad_col_6'"
+                                   title="'Maturity Forecast'" icon="'fa-calendar'">
+                            <AtmtaRowList rows="[]"
+                                          emptyText="'No cheque on hand matures in the next six months.'"/>
+                        </AtmtaCard>
+
+                        <AtmtaCard className="'o_ad_col_3'" title="'Bank Concentration'"
+                                   icon="'fa-bank'"
+                                   subtitle="'One bank holding the book is a risk no total shows'">
+                            <AtmtaDataTable columns="bankColumns"
+                                            rows="data.banks_table or []"
+                                            currencyId="currencyId"
+                                            emptyText="'No cheque is registered.'"/>
+                        </AtmtaCard>
+                    </div>
+
+                    <div class="o_ad_grid o_ad_section">
+                        <AtmtaCard className="'o_ad_col_6'" title="'Attention Required'"
+                                   icon="'fa-exclamation-triangle'">
+                            <AtmtaRowList rows="data.alerts or []"
+                                          onRow="(key) => this.drill(key)"
+                                          emptyText="'Nothing needs your attention.'"/>
+                        </AtmtaCard>
+                        <AtmtaCard className="'o_ad_col_6'" title="'My Work'"
+                                   icon="'fa-check-square-o'">
+                            <AtmtaRowList rows="data.work_queue or []"
+                                          onRow="(key) => this.drill(key)"
+                                          emptyText="'Your queue is clear.'"/>
+                        </AtmtaCard>
+                    </div>
+
+                    <div class="o_ad_grid o_ad_section">
+                        <AtmtaCard className="'o_ad_col_12'" title="'Next to Mature'"
+                                   icon="'fa-clock-o'"
+                                   subtitle="'Overdue first — paper past its date is money nobody is collecting'">
+                            <AtmtaDataTable columns="upcomingColumns"
+                                            rows="data.upcoming_table or []"
+                                            currencyId="currencyId"
+                                            emptyText="'No cheque is on hand.'"/>
+                        </AtmtaCard>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+
+</templates>

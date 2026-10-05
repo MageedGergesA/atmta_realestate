@@ -6,65 +6,19 @@ import { localization } from "@web/core/l10n/localization";
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
-import { formatFloat, formatInteger, formatMonetary, formatPercentage } from "@web/views/fields/formatters";
+// One implementation of the KPI card, the formatter and the panels, shared by
+// every dashboard in the suite. They live in ./components so a module-specific
+// dashboard can import them without importing this client action.
+import { AtmtaKpiCard, formatDashboardValue } from "./components/kpi_card";
+import { AtmtaCard, AtmtaDataTable, AtmtaEmptyState, AtmtaRowList, AtmtaSkeleton } from "./components/panels";
+import { AtmtaFilterBar } from "./components/filters";
 
-/**
- * Format a figure with Odoo's own formatters, so separators, currency symbol
- * position and precision follow the user's language and the company currency.
- */
-export function formatDashboardValue(value, format, currencyId) {
-    const number = Number.isFinite(value) ? value : 0;
-    switch (format) {
-        case "monetary":
-            return formatMonetary(number, { currencyId });
-        case "percent":
-            // Providers publish percentages as 0-100.
-            return formatPercentage(number / 100, { digits: [false, 1] });
-        case "decimal":
-            return formatFloat(number, { digits: [false, 1] });
-        default:
-            return formatInteger(number);
-    }
-}
+export { AtmtaKpiCard, formatDashboardValue };
 
-const CHART_COLORS = ["#017e84", "#71639e", "#5b899e", "#a5757d", "#b5651d", "#adb5bd"];
-
-export class AtmtaKpiCard extends Component {
-    static template = "atmta_dashboard.KpiCard";
-    static props = {
-        tile: Object,
-        currencyId: { type: [Number, Boolean], optional: true },
-        onDrill: { type: Function, optional: true },
-    };
-
-    get formattedValue() {
-        return formatDashboardValue(this.props.tile.value, this.props.tile.format, this.props.currencyId);
-    }
-
-    get ariaLabel() {
-        const parts = [this.props.tile.label, this.formattedValue];
-        if (this.props.tile.warning) {
-            parts.push(_t("Needs attention"));
-        }
-        if (this.props.tile.drill) {
-            parts.push(_t("Opens the underlying records"));
-        }
-        return parts.join(". ");
-    }
-
-    onClick() {
-        if (this.props.tile.drill && this.props.onDrill) {
-            this.props.onDrill(this.props.tile.key);
-        }
-    }
-
-    onKeydown(ev) {
-        if (this.props.tile.drill && (ev.key === "Enter" || ev.key === " ")) {
-            ev.preventDefault();
-            this.onClick();
-        }
-    }
-}
+// The dashboard palette, so a chart here and a chart on any other screen in
+// the suite are the same colours. Kept in step with `--ad-series-*` in
+// atmta_dashboard.scss.
+const CHART_COLORS = ["#7645d9", "#0ca678", "#3b82c4", "#e8912d", "#b0589a", "#58a7b0"];
 
 export class AtmtaDashboardChart extends Component {
     static template = "atmta_dashboard.Chart";
@@ -110,17 +64,34 @@ export class AtmtaDashboardChart extends Component {
         const isRTL = localization.direction === "rtl";
         const circular = ["doughnut", "pie"].includes(chart.type);
         const format = (chart.series[0] && chart.series[0].format) || "integer";
-        const datasets = chart.series.map((series, index) => ({
-            label: series.label,
-            data: series.data,
-            backgroundColor: circular
-                ? chart.labels.map((_, i) => CHART_COLORS[i % CHART_COLORS.length])
-                : CHART_COLORS[index % CHART_COLORS.length],
-            borderColor: circular ? "#fff" : CHART_COLORS[index % CHART_COLORS.length],
-            borderWidth: chart.type === "line" ? 2 : circular ? 2 : 0,
-            borderRadius: chart.type === "bar" ? 3 : 0,
-            tension: 0.3,
-        }));
+        // Mixed charts. A series may override the chart's own type, so a
+        // running total can ride as a line over the bars it is the total of.
+        // Drawing a cumulative curve as bars asks the reader to compare
+        // heights that are not independent quantities, which is the one thing
+        // a bar chart is supposed to mean.
+        const datasets = chart.series.map((series, index) => {
+            const override = !circular && series.type ? series.type : null;
+            const effective = override || chart.type;
+            const color = CHART_COLORS[index % CHART_COLORS.length];
+            return {
+                label: series.label,
+                data: series.data,
+                ...(override ? { type: override } : {}),
+                // Chart.js draws lower `order` last, so the line lands on top
+                // of the bars rather than behind them.
+                order: effective === "line" ? 0 : 1,
+                backgroundColor: circular
+                    ? chart.labels.map((_, i) => CHART_COLORS[i % CHART_COLORS.length])
+                    : color,
+                borderColor: circular ? "#fff" : color,
+                borderWidth: effective === "line" ? 2 : circular ? 2 : 0,
+                borderRadius: effective === "bar" ? 3 : 0,
+                // An area fill under a cumulative curve hides the bars it is
+                // drawn over.
+                fill: false,
+                tension: 0.3,
+            };
+        });
         const self = this;
         this.instance = new Chart(canvas, {
             type: chart.type,
@@ -187,7 +158,9 @@ export class AtmtaDashboardChart extends Component {
  */
 export class AtmtaDashboard extends Component {
     static template = "atmta_dashboard.Dashboard";
-    static components = { AtmtaKpiCard, AtmtaDashboardChart };
+    static components = { AtmtaKpiCard, AtmtaDashboardChart, AtmtaCard,
+                          AtmtaRowList, AtmtaDataTable, AtmtaSkeleton,
+                          AtmtaEmptyState, AtmtaFilterBar };
     static props = ["*"];
 
     setup() {
@@ -196,7 +169,18 @@ export class AtmtaDashboard extends Component {
         this.notification = useService("notification");
         const params = (this.props.action && this.props.action.params) || {};
         this.provider = params.provider;
-        this.state = useState({ status: "loading", data: null, scope: params.scope || "team", error: "" });
+        this.state = useState({
+            status: "loading",
+            data: null,
+            scope: params.scope || "team",
+            error: "",
+            // Filter values live here, not on the server: changing one
+            // re-asks for the payload, so the dashboard and the records a
+            // tile opens can never disagree about what is selected.
+            filters: {},
+            period: params.period || "month",
+            loadedAt: null,
+        });
         onWillStart(() => this.load());
     }
 
@@ -207,7 +191,10 @@ export class AtmtaDashboard extends Component {
             return;
         }
         try {
-            this.state.data = await this.orm.call(this.provider, "get_dashboard", [this.state.scope]);
+            this.state.data = await this.orm.call(this.provider, "get_dashboard", [this.state.scope], {
+                filters: { ...this.state.filters, period: this.state.period },
+            });
+            this.state.loadedAt = new Date();
             this.state.status = "ready";
         } catch (error) {
             this.state.status = "error";
@@ -229,6 +216,48 @@ export class AtmtaDashboard extends Component {
 
     get data() {
         return this.state.data || {};
+    }
+
+    get filterDefs() {
+        return this.data.filters || [];
+    }
+
+    /**
+     * "Updated 2 min ago" rather than a bare timestamp: a dashboard whose age
+     * is not obvious gets trusted when it is stale.
+     */
+    get lastUpdatedLabel() {
+        if (!this.state.loadedAt) {
+            return "";
+        }
+        const seconds = Math.round((Date.now() - this.state.loadedAt.getTime()) / 1000);
+        if (seconds < 60) {
+            return _t("Updated just now");
+        }
+        const minutes = Math.round(seconds / 60);
+        if (minutes < 60) {
+            return _t("Updated %s min ago", minutes);
+        }
+        return _t("Updated at %s", this.state.loadedAt.toLocaleTimeString());
+    }
+
+    async setFilter(key, value) {
+        if (value === "all") {
+            delete this.state.filters[key];
+        } else {
+            this.state.filters[key] = value;
+        }
+        await this.load();
+    }
+
+    async setPeriod(period) {
+        this.state.period = period;
+        await this.load();
+    }
+
+    async resetFilters() {
+        this.state.filters = {};
+        await this.load();
     }
 
     async open(method, args) {

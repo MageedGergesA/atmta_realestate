@@ -5,3 +5,4 @@ from . import property_type
 # usage_category on the property and the type; must follow both base models.
 from . import property_usage_category
 from . import property_image
+from . import demo_builder

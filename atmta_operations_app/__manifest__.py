@@ -38,6 +38,9 @@ contract), **Scheduled Payments** (duplicate destination for
         'atmta_dashboard',
     ],
     'uninstall_hook': 'uninstall_hook',
+    'demo': [
+        'demo/demo.xml',
+    ],
     'data': ['data/workspace_actions.xml', 'views/menus.xml', 'views/dashboard_views.xml', 'data/retire_legacy_navigation.xml'],
     'installable': True,
     'application': True,

@@ -54,6 +54,9 @@ data-control exceptions.
         'mail',
         'atmta_roles',
     ],
+    'demo': [
+        'demo/demo.xml',
+    ],
     'data': [
         'data/sequences.xml',
         'data/date_refresh_cron.xml',

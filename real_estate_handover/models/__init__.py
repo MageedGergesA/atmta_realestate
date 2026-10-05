@@ -5,3 +5,5 @@ from . import snagging_issue
 from . import warranty
 from . import property_handover
 from . import handover_dashboard
+from . import demo_builder
+from . import handover_provider

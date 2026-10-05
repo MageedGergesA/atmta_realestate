@@ -19,6 +19,8 @@ Track construction progress for projects and phases:
     'version': '1.0.1',
     'category': 'Real Estate',
     'depends': [
+        # Renders through the shared dashboard component library.
+        'atmta_dashboard',
         'atmta_account_tools',
         # Projects and phases belong to `atmta_project_core`; Construction
         # extends their screens and uses nothing from the developer application.
@@ -51,6 +53,9 @@ Track construction progress for projects and phases:
         # Named for the bridge below, which gives each legacy construction
         # group its canonical twin.
         'atmta_roles',
+    ],
+    'demo': [
+        'demo/demo.xml',
     ],
     'data': [
         # Wave 21 — the screens for BOQ, tasks, cost lines, labour, milestones,
@@ -90,10 +95,13 @@ Track construction progress for projects and phases:
         'web.assets_backend': [
             '/real_estate_construction/static/src/scss/construction_dashboard.scss',
             '/real_estate_construction/static/src/scss/control_tower.scss',
-            '/real_estate_construction/static/src/js/control_tower/control_tower.js',
-            '/real_estate_construction/static/src/xml/control_tower.xml',
+            '/real_estate_construction/static/src/js/control_tower/tower_format.js',
+            '/real_estate_construction/static/src/js/control_tower/tower_view.js',
+            '/real_estate_construction/static/src/xml/tower_view.xml',
             '/real_estate_construction/static/src/js/construction_dashboard.js',
+            '/real_estate_construction/static/src/js/construction_overview.js',
             '/real_estate_construction/static/src/xml/construction_dashboard.xml',
+            '/real_estate_construction/static/src/xml/construction_overview.xml',
         ],
     },
     'application': True,

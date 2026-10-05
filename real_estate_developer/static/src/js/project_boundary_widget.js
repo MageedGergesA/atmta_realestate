@@ -4,11 +4,12 @@ import { registry } from "@web/core/registry";
 import { Component, onMounted, onWillUnmount, useRef, useState, useEffect } from "@odoo/owl";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
 import { useService } from "@web/core/utils/hooks";
+import { SATELLITE_LABEL_TILES, SATELLITE_TILES } from "@atmta_dashboard/js/map_tiles";
 
 let leafletPatched = false;
 function patchLeaflet() {
     if (leafletPatched || typeof L === "undefined") return;
-    const base = "/atmta_real_estate/static/src/lib/leaflet/images";
+    const base = "/atmta_dashboard/static/src/lib/leaflet/images";
     delete L.Icon.Default.prototype._getIconUrl;
     L.Icon.Default.mergeOptions({
         iconRetinaUrl: `${base}/marker-icon-2x.png`,
@@ -127,14 +128,12 @@ export class BoundaryPickerField extends Component {
             "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
             { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 19 }
         );
-        const satellite = L.tileLayer(
-            "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-            { attribution: "Tiles &copy; Esri", maxZoom: 19 }
-        );
+        // Shared with the property picker and Units -> Map: one URL, one
+        // zoom ceiling, so Esri's "Map data not yet available" tiles cannot
+        // come back here after being fixed there.
+        const satellite = L.tileLayer(SATELLITE_TILES.url, SATELLITE_TILES.options);
         const hybridLabels = L.tileLayer(
-            "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
-            { attribution: "", maxZoom: 19, opacity: 0.9 }
-        );
+            SATELLITE_LABEL_TILES.url, SATELLITE_LABEL_TILES.options);
         const hybrid = L.layerGroup([satellite, hybridLabels]);
 
         streets.addTo(this.map);

@@ -11,7 +11,7 @@ const FEAS_LABELS = { draft: "Draft", approved: "Approved", rejected: "Rejected"
 let leafletPatched = false;
 function patchLeaflet() {
     if (leafletPatched || typeof L === "undefined") return;
-    const base = "/atmta_real_estate/static/src/lib/leaflet/images";
+    const base = "/atmta_dashboard/static/src/lib/leaflet/images";
     delete L.Icon.Default.prototype._getIconUrl;
     L.Icon.Default.mergeOptions({
         iconRetinaUrl: `${base}/marker-icon-2x.png`,

@@ -19,6 +19,8 @@ Manages off-plan and finished-property developer sales:
     'version': '0.5',
     'category': 'Real Estate',
     'depends': [
+        # The Overview renders through the shared dashboard component library.
+        'atmta_dashboard',
         'atmta_property_core',
         'atmta_property_stock',
         'atmta_account_tools',
@@ -80,6 +82,7 @@ Manages off-plan and finished-property developer sales:
     },
     'demo': [
         'demo/demo.xml',
+        'demo/demo_v2.xml',
     ],
     'application': True,
 }

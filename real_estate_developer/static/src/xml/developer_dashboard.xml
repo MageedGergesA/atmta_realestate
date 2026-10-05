@@ -1,170 +1,191 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
 
+    <!-- Development and Sales Overview. Same layout, components and reading
+         order as Rental and Brokerage: KPIs, then why, then what is wrong,
+         then what I do about it, then the detail. -->
     <t t-name="real_estate_developer.DeveloperDashboard">
-        <div class="o_action o_dev_dashboard d-flex flex-column h-100">
+        <div class="o_ad_dashboard o_re_dashboard o_action">
+            <div class="o_ad_scroll">
 
-            <div class="o_dv_toolbar d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
-                <div>
-                    <h3 class="mb-0 d-inline-block me-3"><i class="fa fa-building me-2"/>Developer Dashboard</h3>
-                    <span class="text-muted small">Last update: <t t-esc="state.lastUpdate or '—'"/></span>
-                </div>
-                <div class="d-flex align-items-center gap-2">
-                    <button class="btn btn-sm btn-primary" t-on-click="() => this.refresh()">
-                        <i class="fa fa-refresh me-1"/>Refresh
-                    </button>
-                    <button class="btn btn-sm btn-outline-secondary"
-                            t-att-class="{ 'btn-success text-white': state.autoRefresh }"
-                            t-on-click="() => this.toggleAutoRefresh()">
-                        <i class="fa fa-clock-o me-1"/>
-                        <t t-if="state.autoRefresh">Auto ON</t><t t-else="">Auto OFF</t>
-                    </button>
-                </div>
-            </div>
+                <header class="o_ad_header">
+                    <div>
+                        <h1 class="o_ad_title">Development &amp; Sales</h1>
+                        <p class="o_ad_subtitle" t-if="isReady">
+                            <span t-esc="data.company_name"/>
+                            <span class="o_ad_sep" aria-hidden="true">·</span>
+                            <span class="o_ad_asof">
+                                <i class="fa fa-calendar-o" aria-hidden="true"/>
+                                <span>As of <t t-esc="data.as_of"/></span>
+                            </span>
+                            <t t-if="lastUpdatedLabel">
+                                <span class="o_ad_sep" aria-hidden="true">·</span>
+                                <span t-esc="lastUpdatedLabel"/>
+                            </t>
+                        </p>
+                    </div>
+                    <div class="o_ad_header_actions">
+                        <t t-foreach="data.quick_actions or []" t-as="quick" t-key="quick.key">
+                            <button class="btn btn-sm"
+                                    t-att-class="quick_first ? 'btn-primary' : 'btn-secondary'"
+                                    t-on-click="() => this.runQuickAction(quick.key)">
+                                <i t-attf-class="fa {{ quick.icon }} me-1" aria-hidden="true"/>
+                                <span t-esc="quick.label"/>
+                            </button>
+                        </t>
+                        <button class="btn btn-sm btn-secondary" t-on-click="onRefresh"
+                                t-att-disabled="state.refreshing" aria-label="Refresh the dashboard">
+                            <i class="fa fa-refresh" t-att-class="{ 'fa-spin': state.refreshing }"
+                               aria-hidden="true"/>
+                            <span class="d-none d-md-inline ms-1">Refresh</span>
+                        </button>
+                    </div>
+                </header>
 
-            <div t-if="state.loading" class="text-center p-5">
-                <i class="fa fa-spinner fa-spin fa-3x text-muted"/>
-            </div>
+                <AtmtaFilterBar t-if="isReady and (data.filters or []).length"
+                                filters="data.filters" values="state.filters"
+                                onChange="(key, value) => this.setFilter(key, value)"
+                                onReset="() => this.resetFilters()"/>
 
-            <div t-if="state.data" class="o_dv_body p-3">
+                <AtmtaSkeleton t-if="isLoading" kpis="6" panels="3"/>
 
-                <div class="row mb-3">
-                    <div class="col-md-2">
-                        <div class="o_dv_kpi o_dv_blue">
-                            <div class="o_dv_label">Active Projects</div>
-                            <div class="o_dv_value"><t t-esc="state.data.kpis.active_projects"/></div>
-                            <div class="o_dv_sub"><t t-esc="state.data.kpis.construction_projects"/> in construction</div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="o_dv_kpi o_dv_green">
-                            <div class="o_dv_label">Sold Units</div>
-                            <div class="o_dv_value"><t t-esc="state.data.kpis.sold_units"/></div>
-                            <!-- `sales_progress` counts sold AND contracted
-                                 units, so it does not divide the two figures
-                                 printed beside it: say which it measures. -->
-                            <div class="o_dv_sub">of <t t-esc="state.data.kpis.total_units"/> · <t t-esc="state.data.kpis.sales_progress"/>% sold or contracted</div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="o_dv_kpi o_dv_orange">
-                            <div class="o_dv_label">Reservations</div>
-                            <div class="o_dv_value"><t t-esc="state.data.kpis.active_reservations"/></div>
-                            <div class="o_dv_sub">held / booked</div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="o_dv_kpi o_dv_purple">
-                            <div class="o_dv_label">Active Contracts</div>
-                            <div class="o_dv_value"><t t-esc="state.data.kpis.signed_contracts"/></div>
-                            <div class="o_dv_sub">signed</div>
-                        </div>
-                    </div>
-                    <!-- Dropped, not zeroed, for a user who may not read the
-                         payments it is summed from: the server omits the key. -->
-                    <div class="col-md-2" t-if="state.data.kpis.paid_mtd !== undefined">
-                        <div class="o_dv_kpi o_dv_teal" style="cursor: pointer;"
-                             t-on-click="() => this.openCollectedMtd()">
-                            <div class="o_dv_label">Revenue MTD</div>
-                            <div class="o_dv_value"><t t-esc="state.data.currency"/> <t t-esc="formatMoney(state.data.kpis.paid_mtd)"/></div>
-                            <div class="o_dv_sub">collected</div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="o_dv_kpi o_dv_red">
-                            <div class="o_dv_label">Overdue</div>
-                            <div class="o_dv_value"><t t-esc="state.data.currency"/> <t t-esc="formatMoney(state.data.overdue_amount)"/></div>
-                            <div class="o_dv_sub"><t t-esc="state.data.overdue_count"/> installment(s)</div>
-                        </div>
-                    </div>
+                <div t-elif="isError" class="o_ad_state" role="alert">
+                    <i class="fa fa-exclamation-circle o_ad_state_icon" aria-hidden="true"/>
+                    <h2 class="o_ad_state_title">The dashboard could not be loaded</h2>
+                    <p class="o_ad_state_text" t-esc="state.errorMessage"/>
+                    <button class="btn btn-primary" t-on-click="onRefresh">Retry</button>
                 </div>
 
-                <div class="row mb-3">
-                    <div class="col-md-8">
-                        <div class="o_dv_card">
-                            <div class="o_dv_card_title"><i class="fa fa-map-marker me-2"/>Project Locations</div>
-                            <div t-ref="map" class="o_dv_map"/>
-                        </div>
+                <t t-else="">
+                    <div class="o_ad_kpi_grid o_ad_section">
+                        <AtmtaKpiCard t-foreach="data.kpis or []" t-as="tile" t-key="tile.key"
+                                      tile="tile" currencyId="currencyId"
+                                      onDrill="(key) => this.drill(key)"/>
                     </div>
-                    <div class="col-md-4">
-                        <div class="o_dv_card mb-3">
-                            <div class="o_dv_card_title">Projects by State</div>
-                            <div class="o_dv_chart"><canvas t-ref="donutProj"/></div>
-                        </div>
-                        <div class="o_dv_card">
-                            <div class="o_dv_card_title">Units by State</div>
-                            <div class="o_dv_chart"><canvas t-ref="donutUnit"/></div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <div class="o_dv_card">
-                            <div class="o_dv_card_title">Sales Velocity — 6 months</div>
-                            <div class="o_dv_chart_lg"><canvas t-ref="lineVelocity"/></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="o_dv_card">
-                            <div class="o_dv_card_title">Top Projects by Contracted Value</div>
-                            <div class="o_dv_chart_lg"><canvas t-ref="barProjects"/></div>
-                        </div>
-                    </div>
-                </div>
+                    <!-- Are we selling, and are we collecting. Two questions,
+                         two series, deliberately side by side. -->
+                    <div class="o_ad_grid o_ad_section">
+                        <AtmtaCard className="'o_ad_col_3'" title="'Inventory'"
+                                   icon="'fa-th'"
+                                   subtitle="'Every unit in exactly one commercial state'">
+                            <AtmtaDonut segments="inventory.segments"
+                                        total="inventory.total"
+                                        totalLabel="inventory.total_label"
+                                        onSegment="(key) => this.drill(key)"/>
+                        </AtmtaCard>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="o_dv_card">
-                            <div class="o_dv_card_title"><i class="fa fa-hourglass-half me-2 text-warning"/>Expiring Reservations</div>
-                            <div class="o_dv_list">
-                                <div t-foreach="state.data.expiring_reservations" t-as="r" t-key="r.id"
-                                     class="o_dv_item" t-on-click="() => this.openReservation(r.id)">
-                                    <div class="d-flex justify-content-between">
-                                        <strong><t t-esc="r.property"/></strong>
-                                        <span class="badge bg-warning text-dark"><t t-esc="r.expiry"/></span>
-                                    </div>
-                                    <div class="small text-muted"><t t-esc="r.partner"/></div>
-                                </div>
-                                <div t-if="!state.data.expiring_reservations.length" class="text-muted text-center p-3">No expiring holds</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="o_dv_card">
-                            <div class="o_dv_card_title"><i class="fa fa-calendar-check-o me-2 text-info"/>Upcoming Installments (30d)</div>
-                            <div class="o_dv_list">
-                                <div t-foreach="state.data.upcoming_installments" t-as="i" t-key="i.id"
-                                     class="o_dv_item" t-on-click="() => this.openInstallment(i.id)">
-                                    <div class="d-flex justify-content-between">
-                                        <strong><t t-esc="i.partner"/></strong>
-                                        <span class="text-success"><t t-esc="state.data.currency"/> <t t-esc="formatMoney(i.amount)"/></span>
-                                    </div>
-                                    <div class="small text-muted"><t t-esc="i.contract"/> · <t t-esc="i.date_due"/> · <t t-esc="i.kind"/></div>
-                                </div>
-                                <div t-if="!state.data.upcoming_installments.length" class="text-muted text-center p-3">No installments due</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="o_dv_card">
-                            <div class="o_dv_card_title"><i class="fa fa-file-text me-2 text-success"/>Recent Contracts</div>
-                            <div class="o_dv_list">
-                                <div t-foreach="state.data.recent_contracts" t-as="c" t-key="c.id"
-                                     class="o_dv_item" t-on-click="() => this.openContract(c.id)">
-                                    <div class="d-flex justify-content-between">
-                                        <strong><t t-esc="c.partner"/></strong>
-                                        <span class="badge bg-secondary"><t t-esc="c.state"/></span>
-                                    </div>
-                                    <div class="small text-muted"><t t-esc="c.property"/></div>
-                                    <div class="small text-success"><t t-esc="state.data.currency"/> <t t-esc="formatMoney(c.sale_price)"/></div>
-                                </div>
-                                <div t-if="!state.data.recent_contracts.length" class="text-muted text-center p-3">No contracts yet</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                        <AtmtaDashboardChart t-if="velocityChart" chart="velocityChart"
+                                             currencyId="currencyId"/>
+                        <AtmtaCard t-else="" className="'o_ad_col_5'"
+                                   title="'Sales Velocity'" icon="'fa-line-chart'">
+                            <AtmtaRowList rows="[]"
+                                          emptyText="'No contract has been signed in the last six months.'"/>
+                        </AtmtaCard>
 
+                        <AtmtaDashboardChart t-if="collectionChart" chart="collectionChart"
+                                             currencyId="currencyId"/>
+                        <AtmtaCard t-else="" className="'o_ad_col_4'"
+                                   title="'Scheduled vs Collected'" icon="'fa-credit-card'">
+                            <AtmtaRowList rows="[]"
+                                          emptyText="'No instalment has fallen due yet.'"/>
+                        </AtmtaCard>
+                    </div>
+
+                    <div class="o_ad_grid o_ad_section">
+                        <AtmtaCard className="'o_ad_col_6'" title="'Attention Required'"
+                                   icon="'fa-exclamation-triangle'">
+                            <AtmtaRowList rows="data.alerts or []"
+                                          onRow="(key) => this.drill(key)"
+                                          emptyText="'Nothing needs your attention.'"/>
+                        </AtmtaCard>
+                        <AtmtaCard className="'o_ad_col_6'" title="'My Work'"
+                                   icon="'fa-check-square-o'">
+                            <AtmtaRowList rows="data.work_queue or []"
+                                          onRow="(key) => this.drill(key)"
+                                          emptyText="'Your queue is clear.'"/>
+                        </AtmtaCard>
+                    </div>
+
+                    <!-- ==== Where the projects are, and the pipeline ==== -->
+                    <div class="o_ad_grid o_ad_section">
+                        <AtmtaCard className="'o_ad_col_6'" title="'Project Locations'"
+                                   icon="'fa-map-marker'"
+                                   subtitle="'Plot boundaries where they are drawn, pins where they are not'">
+                            <AtmtaMapCard points="mapData.points" legend="mapData.legend"
+                                          onPoint="(point) => this.openMapProject(point)"
+                                          emptyText="'No project has coordinates set.'"/>
+                        </AtmtaCard>
+
+                        <AtmtaCard className="'o_ad_col_2'" title="'Pipeline'"
+                                   icon="'fa-filter'"
+                                   subtitle="'Counts, not money'">
+                            <AtmtaDonut segments="pipeline.segments"
+                                        total="pipeline.total"
+                                        totalLabel="pipeline.total_label"
+                                        onSegment="(key) => this.drill(key)"/>
+                        </AtmtaCard>
+
+                        <AtmtaDashboardChart t-if="ageingChart" chart="ageingChart"
+                                             currencyId="currencyId"/>
+                        <AtmtaCard t-else="" className="'o_ad_col_4'"
+                                   title="'Receivables Ageing'" icon="'fa-hourglass-half'">
+                            <AtmtaRowList rows="[]"
+                                          emptyText="'Nothing is overdue. Every invoiced instalment is settled.'"/>
+                        </AtmtaCard>
+                    </div>
+
+                    <div class="o_ad_grid o_ad_section">
+                        <AtmtaCard className="'o_ad_col_6'" title="'Price and Absorption by Unit Type'"
+                                   icon="'fa-tags'"
+                                   subtitle="'Forty apartments and eight shops are not the same business; the rate per sqm is where that shows'">
+                            <AtmtaDataTable columns="priceColumns"
+                                            rows="data.price_bands or []"
+                                            currencyId="currencyId"
+                                            emptyText="'No unit carries both an area and a price.'"/>
+                        </AtmtaCard>
+                        <AtmtaCard className="'o_ad_col_6'" title="'Upcoming Handovers'"
+                                   icon="'fa-key'"
+                                   subtitle="'Handing over a unit whose instalments are unpaid loses the only leverage there is'">
+                            <AtmtaDataTable columns="handoverColumns"
+                                            rows="data.handovers or []"
+                                            currencyId="currencyId"
+                                            emptyText="'No handover is due in the next twelve months.'"/>
+                        </AtmtaCard>
+                    </div>
+
+                    <div class="o_ad_grid o_ad_section">
+                        <AtmtaCard className="'o_ad_col_7'" title="'Project Performance'"
+                                   icon="'fa-building'"
+                                   subtitle="'Sell-through measures committed units against RELEASED stock, not total build'">
+                            <AtmtaDataTable columns="projectColumns"
+                                            rows="data.projects_table or []"
+                                            currencyId="currencyId"
+                                            onRow="(row) => this.openProject(row)"
+                                            emptyText="'No project has released inventory yet.'"/>
+                        </AtmtaCard>
+
+                        <AtmtaCard className="'o_ad_col_5'" title="'Payment Plan Performance'"
+                                   icon="'fa-calendar'"
+                                   subtitle="'A plan that sells well and collects badly is the most expensive thing a developer can have'">
+                            <AtmtaDataTable columns="planColumns"
+                                            rows="data.plans_table or []"
+                                            currencyId="currencyId"
+                                            emptyText="'No payment plan carries a live contract yet.'"/>
+                        </AtmtaCard>
+                    </div>
+
+                    <div class="o_ad_grid o_ad_section">
+                        <AtmtaCard className="'o_ad_col_12'" title="'Buyer Concentration'"
+                                   icon="'fa-users'"
+                                   subtitle="'Where the exposure sits if one buyer stops paying'">
+                            <AtmtaDataTable columns="buyerColumns"
+                                            rows="data.top_buyers or []"
+                                            currencyId="currencyId"
+                                            emptyText="'No live contract yet.'"/>
+                        </AtmtaCard>
+                    </div>
+                </t>
             </div>
         </div>
     </t>

@@ -21,6 +21,11 @@ export const STREET_TILES = {
 };
 
 
+// The satellite layer lives in `atmta_dashboard`, which owns the Leaflet
+// assets and which Developer also depends on -- Developer cannot import from
+// here. Re-exported so this module's own widgets keep one import path.
+export { SATELLITE_TILES } from "@atmta_dashboard/js/map_tiles";
+
 /**
  * One set of unit-status colours for every map, marker, popup and legend.
  *

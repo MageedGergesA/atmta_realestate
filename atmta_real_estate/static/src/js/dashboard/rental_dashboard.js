@@ -5,72 +5,72 @@ import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 
-import { CHART_DEFS, SECTION_ICONS } from "./dashboard_schema";
+// The shared dashboard system. Rental renders through exactly the same
+// primitives as Sales, Brokerage, Construction, Procurement and Treasury, so
+// the suite reads as one product rather than nine modules with their own CSS.
+import { AtmtaKpiCard } from "@atmta_dashboard/js/components/kpi_card";
+import { AtmtaCard, AtmtaDataTable, AtmtaRowList, AtmtaSkeleton } from "@atmta_dashboard/js/components/panels";
+import { AtmtaFilterBar } from "@atmta_dashboard/js/components/filters";
+import { AtmtaDonut } from "@atmta_dashboard/js/components/donut";
+
+import { OVERVIEW_CHARTS } from "./dashboard_schema";
 import { DashboardChart } from "./dashboard_chart";
 import { DashboardMap } from "./dashboard_map";
-import { KpiCard, formatKpiValue } from "./kpi_card";
 
 /**
- * Rental Dashboard.
+ * Rental Overview.
  *
- * Two calls: `get_work` renders the tiles, then `get_trends` fills in the
- * charts, so the numbers a user acts on never wait for the charts.
+ * One backend call (`get_overview`) returns the whole screen. The previous
+ * version made two -- tiles, then charts -- which was right while the charts
+ * were decoration. They are not: the occupancy sparkline on the KPI card and
+ * the occupancy trend chart below it are the SAME series, and fetching it
+ * twice is both slower and a chance for the headline figure and the chart
+ * beside it to disagree.
  *
- * Business logic lives in the backend: which tiles a user sees, what each one
- * counts and what it opens. This component formats, lays out, and asks the
- * backend for actions by key.
+ * Reading order is deliberate and is the whole point of the redesign:
+ * KPIs (what is happening) -> trends (why) -> problems (what is wrong) ->
+ * my work (what I do about it) -> detail. Not twelve equal-weight boxes.
  */
 export class RentalDashboard extends Component {
     static template = "atmta_real_estate.RentalDashboard";
-    static components = { KpiCard, DashboardChart, DashboardMap };
+    static components = {
+        AtmtaKpiCard, AtmtaCard, AtmtaDataTable, AtmtaRowList, AtmtaSkeleton, AtmtaFilterBar,
+        AtmtaDonut, DashboardChart, DashboardMap,
+    };
     static props = ["*"];
 
     setup() {
         this.orm = useService("orm");
         this.action = useService("action");
         this.notification = useService("notification");
-
-        // The full list, for the loading skeleton. What is actually drawn is
-        // `visibleCharts`: the backend omits a chart whose model the user may
-        // not read, and an empty panel would read as "no data".
-        this.chartDefs = CHART_DEFS;
+        this.charts = OVERVIEW_CHARTS;
 
         this.state = useState({
-            /** "loading" | "ready" | "error" for the tiles. */
             status: "loading",
-            work: null,
-            /** "loading" | "ready" | "error" for the charts, independently. */
-            trendsStatus: "loading",
-            trends: null,
+            data: null,
             scope: "mine",
+            filters: {},
             errorMessage: "",
             refreshing: false,
+            loadedAt: null,
         });
 
-        // Not onWillStart: the component renders its loading skeleton at once
-        // and re-renders when each payload lands.
-        this.loadAll();
+        this.load();
     }
 
     // ------------------------------------------------------------------
     // Data
     // ------------------------------------------------------------------
-    async loadAll({ silent = false } = {}) {
-        await this.loadWork({ silent });
-        if (this.state.status === "ready") {
-            await this.loadTrends({ silent });
-        }
-    }
-
-    async loadWork({ silent = false } = {}) {
+    async load({ silent = false } = {}) {
         if (!silent) {
             this.state.status = "loading";
         }
         try {
-            const work = await this.orm.call(
-                "realestate.rental.dashboard", "get_work", [this.state.scope]
+            this.state.data = await this.orm.call(
+                "realestate.rental.dashboard", "get_overview",
+                [this.state.scope, { ...this.state.filters }]
             );
-            this.state.work = work;
+            this.state.loadedAt = new Date();
             this.state.errorMessage = "";
             this.state.status = "ready";
         } catch (error) {
@@ -86,110 +86,128 @@ export class RentalDashboard extends Component {
         }
     }
 
-    async loadTrends({ silent = false } = {}) {
-        if (!silent) {
-            this.state.trendsStatus = "loading";
-        }
-        try {
-            this.state.trends = await this.orm.call(
-                "realestate.rental.dashboard", "get_trends", []
-            );
-            this.state.trendsStatus = "ready";
-        } catch (error) {
-            console.error("Rental dashboard trends failed to load", error);
-            this.state.trendsStatus = "error";
-        }
-    }
-
     async onRefresh() {
         if (this.state.refreshing) {
             return;
         }
         this.state.refreshing = true;
         try {
-            await this.loadAll({ silent: this.state.status === "ready" });
+            await this.load({ silent: this.state.status === "ready" });
         } finally {
             this.state.refreshing = false;
         }
     }
 
-    async onRetry() {
-        await this.loadAll();
-    }
-
-    /** Mine / Team only changes the tiles; the charts are portfolio-wide. */
     async setScope(scope) {
-        if (scope === this.state.scope) {
-            return;
+        if (scope !== this.state.scope) {
+            this.state.scope = scope;
+            await this.load({ silent: this.state.status === "ready" });
         }
-        this.state.scope = scope;
-        await this.loadWork({ silent: this.state.status === "ready" });
+    }
+
+    async setFilter(key, value) {
+        if (value === "all" || !value) {
+            delete this.state.filters[key];
+        } else {
+            this.state.filters[key] = value;
+        }
+        await this.load({ silent: this.state.status === "ready" });
+    }
+
+    async resetFilters() {
+        this.state.filters = {};
+        await this.load({ silent: this.state.status === "ready" });
     }
 
     // ------------------------------------------------------------------
-    // Derived presentation values
+    // Derived values
     // ------------------------------------------------------------------
-    get isLoading() {
-        return this.state.status === "loading";
+    get isLoading() { return this.state.status === "loading"; }
+    get isError() { return this.state.status === "error"; }
+    get isReady() { return this.state.status === "ready" && !!this.state.data; }
+    get data() { return this.state.data || {}; }
+    get currencyId() { return this.data.currency_id || false; }
+
+    /**
+     * "Updated 2 min ago" rather than a bare clock time: a dashboard whose age
+     * is not obvious gets trusted when it is stale.
+     */
+    get lastUpdatedLabel() {
+        if (!this.state.loadedAt) {
+            return "";
+        }
+        const minutes = Math.round((Date.now() - this.state.loadedAt.getTime()) / 60000);
+        if (minutes < 1) {
+            return _t("Updated just now");
+        }
+        return _t("Updated %s min ago", minutes);
     }
 
-    get isError() {
-        return this.state.status === "error";
+    get occupancyPayload() {
+        const trend = this.data.occupancy_trend;
+        return trend ? { labels: trend.labels, occupancy: trend.values } : null;
     }
 
-    get isReady() {
-        return this.state.status === "ready" && !!this.state.work;
+    get collectionPayload() {
+        const collection = this.data.collection;
+        return collection
+            ? { labels: collection.labels, billed: collection.billed, collected: collection.collected }
+            : null;
     }
 
-    get currencyId() {
-        return (this.state.work && this.state.work.currency_id) || false;
+    get collectionSubtitle() {
+        const collection = this.data.collection;
+        if (!collection) {
+            return "";
+        }
+        return _t("Collection rate %s%", collection.rate.toFixed(1));
     }
 
-    get companyName() {
-        return (this.state.work && this.state.work.company_name) || "";
+    get leaseStatus() {
+        return this.data.lease_status || { segments: [], total: 0 };
     }
 
-    get asOf() {
-        return (this.state.work && this.state.work.as_of) || "";
+    get unitMix() {
+        return this.data.unit_mix || { segments: [], total: 0 };
     }
 
-    get quickActions() {
-        return (this.state.work && this.state.work.quick_actions) || [];
+    get arrearsPayload() {
+        const arrears = this.data.arrears;
+        if (!arrears || !arrears.amounts || !arrears.amounts.some((v) => v)) {
+            return null;
+        }
+        return { labels: arrears.labels, amounts: arrears.amounts };
     }
 
-    /** Render-ready sections, straight from the backend's tile list. */
-    get sections() {
-        const sections = (this.state.work && this.state.work.sections) || [];
-        return sections.map((section) => ({
-            id: section.id,
-            title: section.title,
-            icon: SECTION_ICONS[section.id] || "fa-th-large",
-            cards: section.tiles.map((tile) => this.buildCard(tile)),
-        }));
+    /** Columns are declared here so a provider can add one without a template change. */
+    get unitTypeColumns() {
+        return [
+            { key: "type", label: _t("Unit Type") },
+            { key: "occupied", label: _t("Occupied"), numeric: true },
+            { key: "available", label: _t("Available"), numeric: true },
+            { key: "occupancy", label: _t("Occupancy"), numeric: true, type: "meter" },
+        ];
     }
 
-    buildCard(tile) {
-        const value = Number.isFinite(tile.value) ? tile.value : 0;
-        return {
-            key: tile.key,
-            label: tile.label,
-            value,
-            formattedValue: formatKpiValue(value, tile.format, { currencyId: this.currencyId }),
-            hint: tile.hint || "",
-            warning: !!tile.warning,
-            clickable: !!tile.drill,
-        };
+    get topPropertyColumns() {
+        return [
+            { key: "property", label: _t("Property") },
+            { key: "units", label: _t("Units"), numeric: true },
+            { key: "rent", label: _t("Monthly Rent"), numeric: true, format: "monetary" },
+            { key: "arrears", label: _t("Arrears"), numeric: true, format: "monetary" },
+            { key: "occupancy", label: _t("Occupancy"), numeric: true, type: "meter" },
+        ];
     }
 
-    chartPayload(chartKey) {
-        const charts = (this.state.trends && this.state.trends.charts) || {};
-        return charts[chartKey] || null;
-    }
-
-    /** Only the charts the backend actually sent for this user. */
-    get visibleCharts() {
-        const charts = (this.state.trends && this.state.trends.charts) || {};
-        return CHART_DEFS.filter((def) => def.key in charts);
+    async openProperty(row) {
+        if (row && row.id) {
+            await this.action.doAction({
+                type: "ir.actions.act_window",
+                res_model: "realestate.property",
+                res_id: row.id,
+                views: [[false, "form"]],
+            });
+        }
     }
 
     // ------------------------------------------------------------------
@@ -205,7 +223,7 @@ export class RentalDashboard extends Component {
         }
     }
 
-    /** Open the records behind a tile, with the domain the tile counted. */
+    /** Open the records behind a figure, with the domain that figure counted. */
     async drill(key) {
         if (!key) {
             return;
@@ -216,17 +234,12 @@ export class RentalDashboard extends Component {
         );
     }
 
-    async drillArrearsBucket(bucket) {
-        await this.runBackendAction(
-            "action_drill_arrears_bucket", [bucket],
-            _t("Could not open the records behind this segment.")
-        );
+    async runQuickAction(key) {
+        await this.runBackendAction("action_quick", [key], _t("Could not open this screen."));
     }
 
-    async runQuickAction(key) {
-        await this.runBackendAction(
-            "action_quick", [key], _t("Could not open this screen.")
-        );
+    async openMap() {
+        await this.runBackendAction("action_open_map", [], _t("Could not open the map."));
     }
 
     /**
@@ -241,10 +254,7 @@ export class RentalDashboard extends Component {
         if (action.type !== "ir.actions.act_window" || action.views) {
             return action;
         }
-        const modes = (action.view_mode || "list,form")
-            .split(",")
-            .map((mode) => mode.trim())
-            .filter(Boolean);
+        const modes = (action.view_mode || "list,form").split(",").map((m) => m.trim()).filter(Boolean);
         return { ...action, views: modes.map((mode) => [false, mode]) };
     }
 }

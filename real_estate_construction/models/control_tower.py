@@ -52,6 +52,38 @@ class ConstructionControlTower(models.AbstractModel):
         return values
 
     @api.model
+    def projects_for_picker(self):
+        """The project list, ordered so the one worth opening comes first.
+
+        The front end used to take the alphabetically first project, which
+        meant the Control Tower opened on whichever name sorted earliest --
+        usually a project with no contract, no budget and no progress, so the
+        whole screen read N/A and looked broken. A cost control screen should
+        open on a project that has costs to control.
+
+        Projects that carry construction data sort first, each group still
+        alphabetical inside itself, so the picker stays predictable.
+        """
+        Project = self.env['realestate.project']
+        if not Project.has_access('read'):
+            return []
+        projects = Project.search([], order='name', limit=200)
+        if not projects:
+            return []
+
+        def has_data(project):
+            """Does anything in this project give the tower something to say?"""
+            for field in ('contract_package_ids', 'cost_line_ids',
+                          'milestone_ids', 'boq_ids'):
+                if field in project._fields and project[field]:
+                    return True
+            return bool(project.analytic_account_id)
+
+        with_data = projects.filtered(has_data)
+        return [{'id': p.id, 'display_name': p.display_name, 'has_data': p in with_data}
+                for p in (with_data + (projects - with_data))]
+
+    @api.model
     def _may(self, group):
         return self.env.user.has_group(
             'real_estate_construction.%s' % group)
@@ -65,7 +97,7 @@ class ConstructionControlTower(models.AbstractModel):
         template does with it.
         """
         sections = ['header', 'health', 'progress', 'quality', 'information',
-                    'risk', 'exceptions']
+                    'risk', 'exceptions', 'site_map']
         if self._may('group_construction_cost'):
             sections += ['cost', 'forecast', 'cost_sheet']
         if self._may('group_construction_commercial'):
@@ -122,6 +154,7 @@ class ConstructionControlTower(models.AbstractModel):
             'procurement': self._procurement,
             'exceptions': self._exceptions,
             'health': self._health,
+            'site_map': self._site_map,
         }
         for section in wanted:
             builder = builders.get(section)
@@ -550,6 +583,88 @@ class ConstructionControlTower(models.AbstractModel):
                 ('state', 'in', ('draft', 'sent', 'to approve'))]),
             'uncoded_po_lines': uncoded,
         }
+
+    #: Construction status -> the suite's tone vocabulary.
+    #:
+    #: `planning` is neutral rather than a colour: nothing is wrong with a
+    #: block that has not started, and painting it amber would put every
+    #: untouched plot on the warning list.
+    SITE_TONE = {
+        'planning': 'neutral',
+        'under_construction': 'warning',
+        'finishing': 'info',
+        'ready': 'success',
+        'delivered': 'primary',
+    }
+
+    def _site_map(self, project):
+        """The project's site: its structures, coloured by what state they are in.
+
+        Blocks, not apartments. Every unit carries the same coordinates as the
+        building it sits in, so plotting all of them stacks forty pins on one
+        spot and says nothing; the compound and its buildings are the things
+        that have a construction status worth seeing on a map.
+
+        Falls back to units only where a project has no building level at all,
+        which is the case for a single-plot development.
+        """
+        Property = self.env['realestate.property']
+        if not Property.has_access('read'):
+            return {'points': [], 'legend': []}
+
+        located = [('project_id', '=', project.id),
+                   ('latitude', '!=', 0), ('longitude', '!=', 0)]
+        structures = Property.search(
+            located + [('hierarchy_level', 'in', ('compound', 'building'))],
+            limit=200)
+        if not structures:
+            structures = Property.search(
+                located + [('hierarchy_level', '=', 'unit')], limit=200)
+
+        # Units per structure, so a pin can say how much is riding on it.
+        unit_counts = {}
+        for parent, total in Property._read_group(
+                [('id', 'child_of', structures.ids),
+                 ('hierarchy_level', '=', 'unit')],
+                groupby=['parent_id'], aggregates=['__count']):
+            if parent:
+                unit_counts[parent.id] = total
+
+        boundaries = {}
+        if self.env['realestate.project.boundary.point'].has_access('read'):
+            for point in self.env['realestate.project.boundary.point'].search_read(
+                    [('project_id', '=', project.id)],
+                    ['latitude', 'longitude'], order='sequence'):
+                boundaries.setdefault(project.id, []).append(
+                    [point['latitude'], point['longitude']])
+
+        labels = dict(Property._fields['construction_status'].selection)
+        points, tally = [], {}
+        for record in structures:
+            status = record.construction_status or 'planning'
+            # Tallied by STATUS, not by tone: two statuses share the neutral
+            # tone, and counting tones would make the legend figures disagree
+            # with the pins.
+            tally[status] = tally.get(status, 0) + 1
+            units = unit_counts.get(record.id, 0)
+            points.append({
+                'id': record.id,
+                'label': record.display_name,
+                'sublabel': '%s · %s' % (
+                    labels.get(status, status),
+                    _("%s unit(s)", units) if units else _("no units recorded")),
+                'lat': record.latitude,
+                'lng': record.longitude,
+                'tone': self.SITE_TONE.get(status, 'neutral'),
+                # The plot outline belongs to the project, so it is drawn once
+                # rather than repeated under every building standing on it.
+                'boundary': boundaries.pop(project.id, []),
+            })
+        legend = [{'tone': self.SITE_TONE.get(status, 'neutral'),
+                   'label': labels.get(status, status),
+                   'count': count}
+                  for status, count in sorted(tally.items())]
+        return {'points': points, 'legend': legend}
 
     def _exceptions(self, project):
         return self.env[

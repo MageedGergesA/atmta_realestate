@@ -50,8 +50,10 @@
     --re-text-muted: var(--o-main-text-color-light, #6b7280);
 
     // Chart palette. Muted and distinguishable, not a rainbow.
-    --re-chart-1: #017e84;
-    --re-chart-2: #71639e;
+    // Aligned with the shared dashboard palette so a Rental chart and a
+    // Brokerage chart on the next screen are the same colours.
+    --re-chart-1: #7645d9;
+    --re-chart-2: #0ca678;
     --re-chart-3: #5b899e;
     --re-chart-4: #a5757d;
     --re-chart-warn: #b5651d;
@@ -577,3 +579,86 @@
     font-variant-numeric: tabular-nums;
     color: var(--re-text);
 }
+
+// ---------------------------------------------------------------------------
+// Overview: the Rental panels sit in the shared 12-column dashboard grid.
+//
+// `.o_re_panel` was written for a flex strip and carries `flex: 1 1 auto`,
+// which inside a grid cell makes a panel ignore its column and size itself
+// from its content -- which is how the Occupancy Trend ended up in a 90px
+// column next to a Lease Status card three times its width.
+// ---------------------------------------------------------------------------
+.o_ad_grid > .o_re_panel,
+.o_ad_grid > [class*="o_ad_col_"] > .o_re_panel {
+    flex: none;
+    inline-size: 100%;
+    block-size: 100%;
+    margin: 0;
+}
+
+.o_ad_grid > [class*="o_ad_col_"] {
+    min-inline-size: 0;     // a grid child only shrinks below its content with this
+}
+
+// The chart panels keep their own template but wear the shared card's chrome,
+// so a chart card and a KPI card on the same row are visibly the same object.
+.o_ad_grid .o_re_panel {
+    background: var(--ad-surface);
+    border: 1px solid var(--ad-border);
+    border-radius: var(--ad-radius);
+    box-shadow: var(--ad-shadow);
+    padding: var(--ad-pad);
+}
+
+.o_ad_grid .o_re_panel_head { margin-block-end: .875rem; }
+
+.o_ad_grid .o_re_panel_title {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--ad-text);
+}
+
+.o_ad_grid .o_re_panel_subtitle {
+    font-size: .6875rem;
+    color: var(--ad-text-faint);
+    margin: .125rem 0 0;
+}
+
+// ---------------------------------------------------------------------------
+// Map inside the dashboard grid
+//
+// Grid rows stretch every cell to the tallest card in the row, and the map
+// canvas had a fixed 360px height. Next to a twelve-row work queue that left
+// ~230px of white inside the map card. The card becomes a column and the
+// canvas takes the slack, so the map fills whatever height the row ends up
+// being. `min-block-size` keeps it usable when it is the tallest card itself.
+// ---------------------------------------------------------------------------
+.o_ad_grid .o_re_map_card {
+    display: flex;
+    flex-direction: column;
+}
+
+.o_ad_grid .o_re_map_card .o_re_map_canvas,
+.o_ad_grid .o_re_map_card .o_re_map_loading,
+.o_ad_grid .o_re_map_card .o_re_map_empty {
+    flex: 1 1 auto;
+    block-size: auto;
+    min-block-size: 18rem;
+}
+
+.o_ad_grid .o_re_map_card .o_re_map_legend { flex: 0 0 auto; }
+
+// Panels whose content is shorter than their row push it to the top rather
+// than floating it in the middle of the card.
+.o_ad_grid > [class*="o_ad_col_"] > .o_ad_card,
+.o_ad_grid > .o_ad_card {
+    display: flex;
+    flex-direction: column;
+}
+
+.o_ad_grid .o_ad_card > .o_ad_rows,
+.o_ad_grid .o_ad_card > .o_ad_table_wrap { flex: 0 0 auto; }

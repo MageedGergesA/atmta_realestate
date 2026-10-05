@@ -38,7 +38,10 @@ export class DashboardMap extends Component {
             noLibrary: false,
         });
 
-        onMounted(() => this.load());
+        onMounted(() => {
+            this.load();
+            this.watchResize();
+        });
         useEffect(
             (ready, count) => {
                 if (ready && count) {
@@ -140,6 +143,10 @@ export class DashboardMap extends Component {
     }
 
     teardown() {
+        if (this.resizeObserver) {
+            this.resizeObserver.disconnect();
+            this.resizeObserver = null;
+        }
         if (this.map) {
             this.map.remove();
             this.map = null;
@@ -171,6 +178,48 @@ export class DashboardMap extends Component {
     // ------------------------------------------------------------------
     // Actions: the backend returns them
     // ------------------------------------------------------------------
+    /**
+     * Keep Leaflet in step with its container, without looping.
+     *
+     * `invalidateSize()` itself changes layout, so an unguarded observer
+     * re-fires on its own effect and the renderer locks up -- which is
+     * exactly what it did. Two guards: the callback only acts when the box
+     * has actually changed by more than a pixel, and the call is deferred to
+     * the next frame so it never runs inside the observer's own delivery.
+     */
+    watchResize() {
+        const element = this.mapRef.el;
+        if (!element || typeof ResizeObserver === "undefined") {
+            return;
+        }
+        let frame = null;
+        this.resizeObserver = new ResizeObserver(() => {
+            if (frame) {
+                return;
+            }
+            frame = requestAnimationFrame(() => {
+                frame = null;
+                if (!this.map || !this.resizeObserver) {
+                    return;
+                }
+                // Stop observing across the call. `invalidateSize()` relays
+                // the map, which changes the card height, which changes the
+                // grid row, which resizes the map again -- a genuine
+                // oscillation that a "did it change by more than a pixel"
+                // test cannot break, because it really does keep changing.
+                // Detaching for the duration ends it in one pass.
+                this.resizeObserver.unobserve(element);
+                this.map.invalidateSize({ animate: false });
+                requestAnimationFrame(() => {
+                    if (this.resizeObserver) {
+                        this.resizeObserver.observe(element);
+                    }
+                });
+            });
+        });
+        this.resizeObserver.observe(element);
+    }
+
     async openUnit(unitId) {
         await this.runBackendAction("action_open_unit", [unitId], _t("Could not open this unit."));
     }

@@ -22,3 +22,4 @@ from . import exposure
 from . import project_controls
 from . import risk_issue
 from . import date_refresh
+from . import demo_builder

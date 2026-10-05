@@ -46,6 +46,7 @@ a payment or edits a posted entry.
     'version': '0.2',
     'category': 'Real Estate',
     'depends': [
+        'atmta_dashboard',
         'atmta_real_estate',
         'real_estate_developer',
         'account',
@@ -55,6 +56,9 @@ a payment or edits a posted entry.
     # late-bound: when the model is in the registry a deposit's payments are
     # grouped into one batch so a single bank line reconciles them; when it is
     # not, each payment reconciles individually and nothing else changes.
+    'demo': [
+        'demo/demo.xml',
+    ],
     'data': [
         # security → data → views → menus
         'security/security.xml',
@@ -84,7 +88,9 @@ a payment or edits a posted entry.
             # guarantees one version and keeps the backend bundle small.
             '/real_estate_checks/static/src/scss/check_dashboard.scss',
             '/real_estate_checks/static/src/js/check_dashboard.js',
+            '/real_estate_checks/static/src/js/treasury_overview.js',
             '/real_estate_checks/static/src/xml/check_dashboard.xml',
+            '/real_estate_checks/static/src/xml/treasury_overview.xml',
         ],
         'web.assets_tests': [
             '/real_estate_checks/static/tests/tours/treasury_dashboard_tour.js',

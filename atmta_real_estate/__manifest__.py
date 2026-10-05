@@ -31,6 +31,11 @@ here is leasing itself.
     'version': '0.12',
     'category': 'Real Estate',
     'depends': [
+        # The Rental Overview renders through the shared dashboard component
+        # library (KPI card, filter bar, row list, donut, skeleton), so the
+        # whole suite has one visual language instead of nine. atmta_dashboard
+        # depends only on `web`, so this adds no cycle.
+        'atmta_dashboard',
         'atmta_account_tools',
         # Declares realestate.property, property.type, property.usage and
         # property.image. Listed first because this module extends all of
@@ -107,11 +112,9 @@ here is leasing itself.
     ],
     'assets': {
         'web.assets_backend': [
-            '/atmta_real_estate/static/src/lib/leaflet/leaflet.css',
-            '/atmta_real_estate/static/src/lib/leaflet/markercluster/MarkerCluster.css',
-            '/atmta_real_estate/static/src/lib/leaflet/markercluster/MarkerCluster.Default.css',
-            '/atmta_real_estate/static/src/lib/leaflet/leaflet.js',
-            '/atmta_real_estate/static/src/lib/leaflet/markercluster/leaflet.markercluster.js',
+            # Leaflet moved to atmta_dashboard, which this module depends
+            # on, so every dashboard that draws a map gets it from one place
+            # instead of relying on this module happening to be installed.
             # Chart.js is NOT bundled here. The dashboard lazy-loads Odoo's
             # own 'web.chartjs_lib' (v4.4.1) via loadBundle(), the same way
             # the graph view and gauge field do. That avoids shipping a
@@ -147,6 +150,8 @@ here is leasing itself.
     },
     'demo': [
         'demo/demo.xml',
+    
+        'demo/demo_v2.xml',
     ],
     'application': True,
     'post_init_hook': 'post_init_hook',

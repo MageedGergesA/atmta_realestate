@@ -19,7 +19,7 @@ import {
     money,
     percent,
     STATUS_LABELS,
-} from "@real_estate_construction/js/control_tower/control_tower";
+} from "@real_estate_construction/js/control_tower/tower_format";
 
 describe("Control Tower formatting", () => {
     test("an unknown amount is N/A, never zero", () => {

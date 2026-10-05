@@ -249,6 +249,15 @@ class TestAnalyticArchitecture(ConstructionCommon):
         Ten projects sharing five cost codes need five cost-code accounts, not
         fifty. This is the whole reason the codes are a catalogue.
         """
+        plan = self.env.ref('atmta_construction_core.analytic_plan_cost_codes')
+        Account = self.env['account.analytic.account']
+        # Counted as a DELTA, not as a total. The invariant is "five codes
+        # across ten projects produce five accounts, not fifty"; asserting the
+        # database holds exactly five cost-code accounts also asserts that
+        # nothing else in the database has any, which stops being true the
+        # moment the suite carries demo data and says nothing about scale.
+        before = Account.search_count([('plan_id', '=', plan.id)])
+
         codes = [self._cost_code('CC%02d' % i, 'Code %d' % i, 'material')
                  for i in range(5)]
         projects = [self._project() for _ in range(10)]
@@ -256,11 +265,9 @@ class TestAnalyticArchitecture(ConstructionCommon):
             for code in codes:
                 self.Analytic.distribution_for(project, code)
 
-        cost_code_accounts = self.env['account.analytic.account'].search([
-            ('plan_id', '=', self.env.ref(
-                'atmta_construction_core.analytic_plan_cost_codes').id)])
+        after = Account.search_count([('plan_id', '=', plan.id)])
 
-        self.assertEqual(len(cost_code_accounts), 5)
+        self.assertEqual(after - before, 5)
 
 
 @tagged('post_install', '-at_install', 'atmta_construction')

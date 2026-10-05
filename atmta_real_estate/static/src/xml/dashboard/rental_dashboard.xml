@@ -124,33 +124,42 @@
     <!-- ============================================================= -->
     <!-- Dashboard                                                      -->
     <!-- ============================================================= -->
-    <t t-name="atmta_real_estate.RentalDashboard">
-        <!-- No `dir` attribute: direction is inherited from the action manager,
-             which rtlcss mirrors for right-to-left languages. -->
-        <div class="o_re_dashboard o_action">
-          <!-- The root is Odoo's `.o_action`: a full-height column whose overflow
-               Odoo hides, and that rule outranks ours. This inner box scrolls,
-               the way `.o_content` does in Odoo's own views. -->
-          <div class="o_re_scroll">
+    <!-- =================================================================
+         Rental Overview.
 
-            <!-- – Header – -->
-            <header class="o_re_header">
-                <div class="o_re_header_titles">
-                    <h1 class="o_re_title">Rental</h1>
-                    <p class="o_re_subtitle">
-                        <t t-if="companyName">
-                            <span t-esc="companyName"/>
-                            <span class="o_re_sep" aria-hidden="true">·</span>
-                        </t>
-                        <t t-if="asOf">
-                            <span>As of <t t-esc="asOf"/></span>
-                        </t>
-                    </p>
-                </div>
-                <div class="o_re_header_actions">
-                    <div t-if="quickActions.length" class="o_re_quick_actions">
-                        <t t-foreach="quickActions" t-as="quick" t-key="quick.key">
-                            <button class="btn o_re_quick_action"
+         Reading order, top to bottom: what is happening (KPIs), why
+         (trends), what is wrong (Attention Required), what I do about it
+         (My Work). The first viewport carries the figures somebody acts on;
+         detail goes below the fold.
+         ================================================================= -->
+    <t t-name="atmta_real_estate.RentalDashboard">
+        <!-- Both root classes on purpose: `o_ad_dashboard` brings the shared
+             design tokens and `o_re_dashboard` the Rental chart palette. The
+             scroll lives on `.o_ad_scroll` because Odoo styles `.o_action`
+             `overflow: hidden` at a higher specificity than anything here. -->
+        <div class="o_ad_dashboard o_re_dashboard o_action">
+            <div class="o_ad_scroll">
+
+                <header class="o_ad_header">
+                    <div>
+                        <h1 class="o_ad_title">Rental</h1>
+                        <p class="o_ad_subtitle" t-if="isReady">
+                            <span t-esc="data.company_name"/>
+                            <span class="o_ad_sep" aria-hidden="true">·</span>
+                            <span class="o_ad_asof">
+                                <i class="fa fa-calendar-o" aria-hidden="true"/>
+                                <span>As of <t t-esc="data.as_of"/></span>
+                            </span>
+                            <t t-if="lastUpdatedLabel">
+                                <span class="o_ad_sep" aria-hidden="true">·</span>
+                                <span t-esc="lastUpdatedLabel"/>
+                            </t>
+                        </p>
+                    </div>
+
+                    <div class="o_ad_header_actions">
+                        <t t-foreach="data.quick_actions or []" t-as="quick" t-key="quick.key">
+                            <button class="btn btn-sm"
                                     t-att-class="quick_first ? 'btn-primary' : 'btn-secondary'"
                                     t-att-data-quick-action="quick.key"
                                     t-on-click="() => this.runQuickAction(quick.key)">
@@ -158,123 +167,139 @@
                                 <span t-esc="quick.label"/>
                             </button>
                         </t>
+                        <div class="btn-group" role="group" aria-label="Whose work to show">
+                            <button class="btn btn-sm" data-scope="mine"
+                                    t-att-class="state.scope === 'mine' ? 'btn-primary' : 'btn-outline-secondary'"
+                                    t-on-click="() => this.setScope('mine')">Mine</button>
+                            <button class="btn btn-sm" data-scope="team"
+                                    t-att-class="state.scope === 'team' ? 'btn-primary' : 'btn-outline-secondary'"
+                                    t-on-click="() => this.setScope('team')">
+                                <i class="fa fa-users me-1" aria-hidden="true"/>Team</button>
+                        </div>
+                        <button class="btn btn-sm btn-secondary" t-on-click="onRefresh"
+                                t-att-disabled="state.refreshing" aria-label="Refresh the dashboard">
+                            <i class="fa fa-refresh" t-att-class="{ 'fa-spin': state.refreshing }"
+                               aria-hidden="true"/>
+                            <span class="d-none d-md-inline ms-1">Refresh</span>
+                        </button>
                     </div>
-                    <div class="btn-group o_re_scope" role="group" aria-label="Whose work to show">
-                        <button class="btn btn-sm"
-                                t-att-class="state.scope === 'mine' ? 'btn-primary' : 'btn-outline-secondary'"
-                                t-att-aria-pressed="state.scope === 'mine' ? 'true' : 'false'"
-                                data-scope="mine"
-                                t-on-click="() => this.setScope('mine')">Mine</button>
-                        <button class="btn btn-sm"
-                                t-att-class="state.scope === 'team' ? 'btn-primary' : 'btn-outline-secondary'"
-                                t-att-aria-pressed="state.scope === 'team' ? 'true' : 'false'"
-                                data-scope="team"
-                                t-on-click="() => this.setScope('team')">Team</button>
-                    </div>
-                    <button class="btn btn-secondary o_re_refresh"
-                            t-on-click="onRefresh"
-                            t-att-disabled="state.refreshing"
-                            aria-label="Refresh the dashboard">
-                        <i class="fa fa-refresh"
-                           t-att-class="{ 'fa-spin': state.refreshing }" aria-hidden="true"/>
-                        <span class="d-none d-md-inline ms-1">Refresh</span>
-                    </button>
+                </header>
+
+                <AtmtaFilterBar t-if="isReady and (data.filters or []).length"
+                                filters="data.filters" values="state.filters"
+                                onChange="(key, value) => this.setFilter(key, value)"
+                                onReset="() => this.resetFilters()"/>
+
+                <AtmtaSkeleton t-if="isLoading" kpis="6" panels="4"/>
+
+                <div t-elif="isError" class="o_ad_state" role="alert">
+                    <i class="fa fa-exclamation-circle o_ad_state_icon" aria-hidden="true"/>
+                    <h2 class="o_ad_state_title">The dashboard could not be loaded</h2>
+                    <p class="o_ad_state_text" t-esc="state.errorMessage"/>
+                    <button class="btn btn-primary" t-on-click="onRefresh">Retry</button>
                 </div>
-            </header>
 
-            <!-- – Error – -->
-            <div t-if="isError" class="o_re_state o_re_state_error" role="alert">
-                <i class="fa fa-exclamation-circle o_re_state_icon" aria-hidden="true"/>
-                <h2 class="o_re_state_title">The dashboard could not be loaded</h2>
-                <p class="o_re_state_text" t-esc="state.errorMessage"/>
-                <button class="btn btn-primary" t-on-click="onRetry">
-                    <i class="fa fa-refresh me-1" aria-hidden="true"/>
-                    <span>Retry</span>
-                </button>
-            </div>
+                <t t-else="">
+                    <!-- ==== The six figures the page is read for ========== -->
+                    <div class="o_ad_kpi_grid o_ad_section">
+                        <AtmtaKpiCard t-foreach="data.kpis or []" t-as="tile" t-key="tile.key"
+                                      tile="tile" currencyId="currencyId"
+                                      onDrill="(key) => this.drill(key)"/>
+                    </div>
 
-            <!-- – Loading skeleton: placeholders, never a fake zero – -->
-            <div t-elif="isLoading" class="o_re_body" aria-busy="true">
-                <t t-foreach="['work', 'portfolio']" t-as="section" t-key="section">
-                    <section class="o_re_section">
-                        <div class="o_re_kpi_grid">
-                            <t t-foreach="[1, 2, 3, 4]" t-as="i" t-key="i">
-                                <div class="o_re_kpi o_re_skeleton">
-                                    <div class="o_re_skel_line o_re_skel_label"/>
-                                    <div class="o_re_skel_line o_re_skel_value"/>
-                                </div>
-                            </t>
+                    <!-- ==== Why it is happening =========================== -->
+                    <div class="o_ad_grid o_ad_section">
+                        <div class="o_ad_col_4">
+                            <DashboardChart t-if="occupancyPayload"
+                                            definition="charts.occupancy" payload="occupancyPayload"
+                                            currencyId="currencyId"/>
                         </div>
-                    </section>
-                </t>
-                <span class="visually-hidden">Loading dashboard data…</span>
-            </div>
 
-            <!-- – Ready – -->
-            <div t-else="" class="o_re_body">
+                        <AtmtaCard className="'o_ad_col_3'" title="'Lease Status'" icon="'fa-file-text-o'">
+                            <AtmtaDonut segments="leaseStatus.segments"
+                                        total="leaseStatus.total"
+                                        totalLabel="leaseStatus.total_label"
+                                        onSegment="(key) => this.drill(key)"/>
+                        </AtmtaCard>
 
-                <t t-foreach="sections" t-as="section" t-key="section.id">
-                    <section class="o_re_section" t-att-data-section="section.id">
-                        <h2 class="o_re_section_title">
-                            <i t-attf-class="fa {{ section.icon }}" aria-hidden="true"/>
-                            <span t-esc="section.title"/>
-                        </h2>
-                        <div class="o_re_kpi_grid">
-                            <t t-foreach="section.cards" t-as="card" t-key="card.key">
-                                <div class="o_re_kpi_slot" t-att-data-tile="card.key">
-                                    <KpiCard
-                                        label="card.label"
-                                        value="card.value"
-                                        formattedValue="card.formattedValue"
-                                        hint="card.hint"
-                                        warning="card.warning"
-                                        clickable="card.clickable"
-                                        onDrill="() => this.drill(card.key)"/>
-                                </div>
-                            </t>
+                        <div class="o_ad_col_3">
+                            <DashboardChart t-if="collectionPayload"
+                                            definition="charts.collection" payload="collectionPayload"
+                                            currencyId="currencyId"/>
                         </div>
-                    </section>
+
+                        <AtmtaCard className="'o_ad_col_2'" title="'Expirations &amp; Renewals'"
+                                   icon="'fa-calendar'">
+                            <AtmtaRowList rows="data.expirations or []"
+                                          onRow="(key) => this.drill(key)"
+                                          emptyText="'Nothing expiring in the next 90 days.'"/>
+                        </AtmtaCard>
+                    </div>
+
+                    <!-- ==== What is wrong, and what I do about it ========= -->
+                    <div class="o_ad_grid o_ad_section">
+                        <div class="o_ad_col_5">
+                            <DashboardMap/>
+                        </div>
+
+                        <AtmtaCard className="'o_ad_col_4'" title="'Attention Required'"
+                                   icon="'fa-exclamation-triangle'">
+                            <AtmtaRowList rows="data.alerts or []"
+                                          onRow="(key) => this.drill(key)"
+                                          emptyText="'Nothing needs your attention.'"/>
+                        </AtmtaCard>
+
+                        <AtmtaCard className="'o_ad_col_3'" title="'My Work'"
+                                   icon="'fa-check-square-o'">
+                            <AtmtaRowList rows="data.work_queue or []"
+                                          onRow="(key) => this.drill(key)"
+                                          emptyText="'Your queue is clear.'"/>
+                        </AtmtaCard>
+                    </div>
+
+                    <!-- ==== Where the vacancy and the money actually are ==== -->
+                    <div class="o_ad_grid o_ad_section">
+                        <AtmtaCard className="'o_ad_col_3'" title="'Unit Availability'"
+                                   icon="'fa-th'">
+                            <AtmtaDonut segments="unitMix.segments"
+                                        total="unitMix.total"
+                                        totalLabel="unitMix.total_label"
+                                        onSegment="(key) => this.drill(key)"/>
+                        </AtmtaCard>
+
+                        <AtmtaCard className="'o_ad_col_4'" title="'Occupancy by Unit Type'"
+                                   icon="'fa-home'"
+                                   subtitle="'One portfolio figure hides which type is empty'">
+                            <AtmtaDataTable columns="unitTypeColumns"
+                                            rows="data.unit_types or []"
+                                            currencyId="currencyId"
+                                            emptyText="'No leasable units match these filters.'"/>
+                        </AtmtaCard>
+
+                        <div class="o_ad_col_5">
+                            <DashboardChart t-if="arrearsPayload"
+                                            definition="charts.arrears" payload="arrearsPayload"
+                                            currencyId="currencyId"/>
+                            <AtmtaCard t-else="" title="'Arrears Ageing'" icon="'fa-clock-o'">
+                                <AtmtaRowList rows="[]"
+                                              emptyText="'Nothing overdue. Every invoiced obligation is settled.'"/>
+                            </AtmtaCard>
+                        </div>
+                    </div>
+
+                    <div class="o_ad_grid o_ad_section">
+                        <AtmtaCard className="'o_ad_col_12'" title="'Property Performance'"
+                                   icon="'fa-building-o'"
+                                   subtitle="'Ranked by monthly rent, because occupancy alone ranks a full studio block above a half-empty tower'">
+                            <AtmtaDataTable columns="topPropertyColumns"
+                                            rows="data.top_properties or []"
+                                            currencyId="currencyId"
+                                            onRow="(row) => this.openProperty(row)"
+                                            emptyText="'No let property matches these filters.'"/>
+                        </AtmtaCard>
+                    </div>
                 </t>
-
-                <!-- Map: portfolio-wide, loads on its own after the tiles -->
-                <section class="o_re_section" data-section="map">
-                    <h2 class="o_re_section_title">
-                        <i class="fa fa-map-marker" aria-hidden="true"/>
-                        <span>Map</span>
-                    </h2>
-                    <DashboardMap/>
-                </section>
-
-                <!-- Trends: loaded after the tiles -->
-                <section class="o_re_section" data-section="trends">
-                    <h2 class="o_re_section_title">
-                        <i class="fa fa-line-chart" aria-hidden="true"/>
-                        <span>Trends</span>
-                    </h2>
-                    <div t-if="state.trendsStatus === 'error'" class="o_re_empty" role="status">
-                        <i class="fa fa-exclamation-circle o_re_empty_icon" aria-hidden="true"/>
-                        <p class="o_re_empty_text">The trend charts could not be loaded.</p>
-                    </div>
-                    <div t-elif="state.trendsStatus === 'loading'" class="o_re_chart_grid" aria-busy="true">
-                        <t t-foreach="chartDefs" t-as="def" t-key="def.key">
-                            <div class="o_re_panel o_re_skeleton o_re_chart_skeleton">
-                                <div class="o_re_skel_line o_re_skel_label"/>
-                                <div class="o_re_skel_chart"/>
-                            </div>
-                        </t>
-                    </div>
-                    <div t-else="" class="o_re_chart_grid">
-                        <t t-foreach="visibleCharts" t-as="def" t-key="def.key">
-                            <DashboardChart
-                                definition="def"
-                                payload="chartPayload(def.key)"
-                                currencyId="currencyId"
-                                onSegmentClick="(bucket) => this.drillArrearsBucket(bucket)"/>
-                        </t>
-                    </div>
-                </section>
             </div>
-          </div>
         </div>
     </t>
 

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- A post-dated cheque book against the sale schedule, spread across the
+         whole lifecycle: on hand, deposited, in clearing, cleared and two
+         bounced. The Treasury screen exists to say that paper is not cash,
+         and it can only say it with cheques in every state. -->
+    <function model="realestate.demo.checks" name="_build"/>
+</odoo>

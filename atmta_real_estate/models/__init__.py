@@ -67,3 +67,5 @@ from . import rent_roll               # Phase 24
 from . import rental_dashboard        # Phase 26
 from . import calendar_refresh        # date-derived stored values
 from . import accounting_access       # money buttons follow Invoicing rights
+from . import rental_overview
+from . import demo_builder

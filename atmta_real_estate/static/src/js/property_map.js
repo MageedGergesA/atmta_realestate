@@ -4,9 +4,9 @@ import { registry } from "@web/core/registry";
 import { Component, onMounted, onWillUpdateProps, onWillUnmount, useRef, useState } from "@odoo/owl";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
 import { _t } from "@web/core/l10n/translation";
-import { STREET_TILES } from "./map_tiles";
+import { SATELLITE_TILES, STREET_TILES } from "./map_tiles";
 
-const LEAFLET_IMAGE_BASE = "/atmta_real_estate/static/src/lib/leaflet/images";
+const LEAFLET_IMAGE_BASE = "/atmta_dashboard/static/src/lib/leaflet/images";
 const DEFAULT_CENTER = [24.7136, 46.6753]; // Riyadh
 const DEFAULT_ZOOM = 12;   // City level (was 5 = country)
 const LOCATED_ZOOM = 18;   // Street / building level
@@ -87,15 +87,10 @@ export class PropertyMap extends Component {
         // so this widget, Units -> Map and the Overview card cannot drift apart.
         const streetsLayer = L.tileLayer(STREET_TILES.url, STREET_TILES.options);
 
-        // Satellite layer — Esri World Imagery (no API key required)
-        const satelliteLayer = L.tileLayer(
-            "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-            {
-                attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics',
-                maxZoom: 19,
-                crossOrigin: true,
-            }
-        );
+        // Satellite layer — shared with the other maps so the zoom ceiling
+        // that keeps Esri's "Map data not yet available" tiles off the screen
+        // is declared in one place.
+        const satelliteLayer = L.tileLayer(SATELLITE_TILES.url, SATELLITE_TILES.options);
 
         streetsLayer.addTo(this.map);
 

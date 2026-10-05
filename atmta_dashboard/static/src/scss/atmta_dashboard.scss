@@ -1,255 +1,847 @@
-// ATMTA application dashboard.
+// ============================================================================
+// ATMTA dashboard design system.
 //
-// Logical properties only (inline/block), so the screen mirrors in Arabic
-// without [dir="rtl"] overrides. Colours follow Odoo theme variables.
+// ONE visual language for every dashboard in the suite. Rental, Sales,
+// Brokerage, Construction, Procurement, Treasury, Handover and Investment all
+// render through these tokens and classes, so the product reads as a single
+// platform instead of nine modules with their own CSS.
+//
+// Two rules this file does not break:
+//
+// 1. Logical properties only (`inline`/`block`, `start`/`end`). rtlcss flips
+//    physical properties automatically, so a hand-flipped `left` would be
+//    double-flipped and land back on the wrong side in Arabic.
+// 2. The root carries `.o_action`, which Odoo styles `overflow: hidden` at a
+//    higher specificity than anything here. The root therefore never scrolls
+//    itself; `.o_ad_scroll` does. See atmta_dashboard/tests for the guard.
+// ============================================================================
 
 .o_ad_dashboard {
-    --ad-gap: 1rem;
-    --ad-radius: 6px;
-    --ad-border: var(--border-color, #dee2e6);
-    --ad-surface: var(--o-view-background-color, #fff);
-    --ad-surface-muted: var(--o-gray-100, #f8f9fa);
-    --ad-text-muted: var(--o-main-text-color-light, #6b7280);
-    --ad-accent: #017e84;
-    --ad-warn-bg: #fff8f0;
-    --ad-warn-border: #f0c9a0;
-    --ad-warn-text: #a1521a;
+    // The dashboards render inside a web client whose own text colour changes
+    // with its theme. Naming the base colour here means every element below
+    // inherits a token this file controls, and a heading that forgets to set
+    // one degrades to something readable instead of to whatever the chrome
+    // happens to use.
+    color: var(--ad-text);
+
+    // ---- Geometry -------------------------------------------------------
+    --ad-gap: 1.25rem;              // 20px between cards and sections
+    --ad-radius: 12px;              // soft, not pill
+    --ad-pad: 1.25rem;              // card padding
+    --ad-pad-sm: 0.875rem;
+
+    // ---- Surfaces -------------------------------------------------------
+    // Light neutral page, white cards, borders so subtle they read as edges
+    // rather than boxes. Grouping is done with whitespace, not outlines.
+    --ad-bg: #f6f7fb;
+    --ad-surface: #ffffff;
+    --ad-surface-muted: #f6f7fb;
+    --ad-border: #e8eaf0;
+    --ad-border-strong: #d7dae3;
+    --ad-shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 1px 3px rgba(16, 24, 40, .06);
+    --ad-shadow-hover: 0 4px 12px rgba(16, 24, 40, .10);
+
+    // ---- Type -----------------------------------------------------------
+    --ad-text: #101828;
+    --ad-text-muted: #667085;
+    --ad-text-faint: #98a2b3;
+
+    // ---- Semantic colour ------------------------------------------------
+    // Colour carries meaning here and nothing else. A card is not purple
+    // because it is a card; it is amber because something is expiring.
+    --ad-primary: #7645d9;          // product / primary
+    --ad-primary-soft: #f3eeff;
+    --ad-success: #0ca678;          // healthy
+    --ad-success-soft: #e6f7f1;
+    --ad-warning: #e8912d;          // upcoming / needs a look
+    --ad-warning-soft: #fdf4e7;
+    --ad-danger: #e14f4f;           // overdue / broken
+    --ad-danger-soft: #fdeded;
+    --ad-info: #3b82c4;             // neutral information
+    --ad-info-soft: #eaf2fa;
+    --ad-neutral: #98a2b3;
+    --ad-neutral-soft: #eef0f4;
+
+    // ---- Chart series ---------------------------------------------------
+    --ad-series-1: #7645d9;
+    --ad-series-2: #0ca678;
+    --ad-series-3: #3b82c4;
+    --ad-series-4: #e8912d;
+    --ad-series-5: #b0589a;
+    --ad-series-6: #58a7b0;
 
     block-size: 100%;
-    background: var(--ad-surface-muted);
+    background: var(--ad-bg);
+    color: var(--ad-text);
 }
 
-// Odoo's `.o_action` column hides overflow; this inner box scrolls.
+// Dark mode. Odoo sets `.o_web_client.o_dark_mode`; the tokens move, nothing
+// else in this file has to know.
+.o_dark_mode .o_ad_dashboard {
+    --ad-bg: #16181d;
+    --ad-surface: #1e2127;
+    --ad-surface-muted: #16181d;
+    --ad-border: #2c3038;
+    --ad-border-strong: #3a3f49;
+    --ad-shadow: 0 1px 2px rgba(0, 0, 0, .35);
+    --ad-shadow-hover: 0 4px 12px rgba(0, 0, 0, .45);
+    --ad-text: #e7e9ee;
+    --ad-text-muted: #9aa2b1;
+    --ad-text-faint: #6f7786;
+    --ad-primary-soft: #2a2140;
+    --ad-success-soft: #13301f;
+    --ad-warning-soft: #332616;
+    --ad-danger-soft: #341c1c;
+    --ad-info-soft: #16293a;
+}
+
+// ---------------------------------------------------------------------------
+// Scroll container
+// ---------------------------------------------------------------------------
 .o_ad_scroll {
     flex: 1 1 auto;
-    min-block-size: 0;
+    min-block-size: 0;      // a flex child only shrinks below its content with this
     overflow-y: auto;
     overflow-x: hidden;
-    padding-block: 1rem 2rem;
-    padding-inline: 1rem;
+    padding-block: 1rem 2.5rem;
+    padding-inline: 1.25rem;
+    scroll-behavior: smooth;
 }
 
+// ---------------------------------------------------------------------------
+// Header
+// ---------------------------------------------------------------------------
 .o_ad_header {
     display: flex;
     flex-wrap: wrap;
     gap: var(--ad-gap);
     align-items: flex-start;
     justify-content: space-between;
-    margin-block-end: 1.25rem;
+    margin-block-end: 1rem;
+}
+
+.o_ad_title {
+    font-size: 1.75rem;
+    font-weight: 650;
+    letter-spacing: -.02em;
+    margin: 0;
+    line-height: 1.15;
+    // Stated, not inherited. With no colour of its own the heading took
+    // whatever the surrounding web client supplied, which on these light
+    // dashboard surfaces came out pale grey on near-white -- the largest
+    // text on the screen and the hardest to read. Every other line in the
+    // header already named its own token; this one did not.
+    color: var(--ad-text);
+}
+
+.o_ad_subtitle {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem;
+    margin: .25rem 0 0;
+    font-size: .8125rem;
+    color: var(--ad-text-muted);
+}
+
+.o_ad_sep { color: var(--ad-text-faint); }
+
+.o_ad_asof {
+    display: inline-flex;
+    align-items: center;
+    gap: .375rem;
 }
 
 .o_ad_header_actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: .5rem;
     align-items: center;
 }
 
-.o_ad_title {
-    font-size: 1.375rem;
-    font-weight: 600;
-    margin: 0;
+// ---------------------------------------------------------------------------
+// Filter bar
+// ---------------------------------------------------------------------------
+.o_ad_filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    align-items: center;
+    margin-block-end: var(--ad-gap);
 }
 
-.o_ad_subtitle {
-    margin: 0.125rem 0 0;
-    font-size: 0.8125rem;
+.o_ad_filter {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    background: var(--ad-surface);
+    border: 1px solid var(--ad-border);
+    border-radius: 10px;
+    padding-block: .4375rem;
+    padding-inline: .75rem;
+    font-size: .8125rem;
+    color: var(--ad-text);
+    cursor: pointer;
+    transition: border-color .12s ease, box-shadow .12s ease;
+
+    &:hover { border-color: var(--ad-border-strong); }
+    &:focus-visible {
+        outline: 2px solid var(--ad-primary);
+        outline-offset: 1px;
+    }
+
+    > .fa:first-child { color: var(--ad-text-faint); }
+}
+
+.o_ad_filter_select {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    padding: 0;
+    padding-inline-end: 1rem;
+    cursor: pointer;
+
+    &:focus { outline: none; }
+}
+
+// Active filters read as removable chips, so it is always obvious why a
+// figure is smaller than someone expected.
+.o_ad_chip {
+    display: inline-flex;
+    align-items: center;
+    gap: .375rem;
+    background: var(--ad-primary-soft);
+    color: var(--ad-primary);
+    border: 0;
+    border-radius: 999px;
+    padding-block: .25rem;
+    padding-inline: .625rem;
+    font-size: .75rem;
+    font-weight: 500;
+
+    .o_ad_chip_x {
+        border: 0;
+        background: transparent;
+        color: inherit;
+        line-height: 1;
+        padding: 0;
+        cursor: pointer;
+        opacity: .7;
+        &:hover { opacity: 1; }
+    }
+}
+
+.o_ad_filter_reset {
+    border: 0;
+    background: transparent;
     color: var(--ad-text-muted);
+    font-size: .8125rem;
+    text-decoration: underline;
+    cursor: pointer;
+    &:hover { color: var(--ad-text); }
 }
 
-.o_ad_sep {
-    margin-inline: 0.4rem;
-}
+// ---------------------------------------------------------------------------
+// Sections
+// ---------------------------------------------------------------------------
+.o_ad_section { margin-block-end: var(--ad-gap); }
 
-.o_ad_section {
-    margin-block-end: 1.75rem;
+.o_ad_section_subtitle {
+    margin: -.35rem 0 .6rem;
+    font-size: .8125rem;
+    color: var(--ad-muted);
 }
 
 .o_ad_section_title {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.75rem;
+    gap: .5rem;
+    font-size: .75rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: .06em;
     color: var(--ad-text-muted);
-    margin-block-end: 0.625rem;
+    margin-block-end: .625rem;
 }
 
+// ---------------------------------------------------------------------------
+// Card primitive
+// ---------------------------------------------------------------------------
+.o_ad_card {
+    background: var(--ad-surface);
+    border: 1px solid var(--ad-border);
+    border-radius: var(--ad-radius);
+    box-shadow: var(--ad-shadow);
+    padding: var(--ad-pad);
+    min-inline-size: 0;     // lets a card shrink inside a grid track
+}
+
+.o_ad_card_head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+    margin-block-end: .875rem;
+}
+
+.o_ad_card_title {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--ad-text);
+}
+
+.o_ad_card_link {
+    font-size: .8125rem;
+    color: var(--ad-primary);
+    text-decoration: none;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    &:hover { text-decoration: underline; }
+}
+
+// ---------------------------------------------------------------------------
+// KPI card — icon, value, delta against the previous period, sparkline
+// ---------------------------------------------------------------------------
 .o_ad_kpi_grid {
     display: grid;
+    // `auto-fit`, so the row always reaches both edges. `auto-fill` keeps the
+    // empty tracks, which left a row of five stopping two thirds of the way
+    // across a wide screen; capping the track instead pushed the fifth card
+    // onto a line of its own, which is worse again. auto-fit with a `1fr` max
+    // collapses the empty tracks and shares the width between the cards that
+    // exist, so five fill the row exactly.
+    //
+    // The cost is that a row of two stretches wide. Sections with only a
+    // couple of tiles use `o_ad_kpi_grid_tight` below, which keeps them
+    // card-sized.
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
     gap: var(--ad-gap);
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
 }
 
 .o_ad_kpi {
     position: relative;
     display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+    gap: .875rem;
     background: var(--ad-surface);
     border: 1px solid var(--ad-border);
     border-radius: var(--ad-radius);
-    padding: 0.875rem 1rem;
-    min-block-size: 92px;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: var(--ad-shadow);
+    padding: var(--ad-pad);
+    min-inline-size: 0;
+    transition: box-shadow .14s ease, transform .14s ease, border-color .14s ease;
 }
 
+.o_ad_kpi_icon {
+    flex: 0 0 auto;
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.0625rem;
+    background: var(--ad-primary-soft);
+    color: var(--ad-primary);
+}
+
+.o_ad_kpi_body { flex: 1 1 auto; min-inline-size: 0; }
+
 .o_ad_kpi_label {
-    font-size: 0.75rem;
-    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+    font-size: .8125rem;
     color: var(--ad-text-muted);
-    line-height: 1.3;
+    margin-block-end: .125rem;
 }
 
 .o_ad_kpi_hint {
-    margin-inline-start: 0.25rem;
+    color: var(--ad-text-faint);
     cursor: help;
-    opacity: 0.55;
+    font-size: .6875rem;
 }
 
 .o_ad_kpi_value {
-    font-size: 1.5rem;
-    font-weight: 600;
+    // Same reasoning as the title: the figure is the point of the card, so
+    // it names its own colour rather than inheriting one.
+    color: var(--ad-text);
+    font-size: 1.75rem;          // 28px
+    font-weight: 650;
     line-height: 1.15;
+    letter-spacing: -.02em;
     overflow-wrap: anywhere;
-    font-variant-numeric: tabular-nums;
 }
 
-.o_ad_kpi_status {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    font-size: 0.6875rem;
-    font-weight: 500;
-    color: var(--ad-warn-text);
+.o_ad_kpi_grid_tight {
+    // For a panel holding two or three tiles, where stretching them across
+    // the full width would turn a KPI into a banner.
+    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
 }
 
-.o_ad_kpi_drill {
-    position: absolute;
-    inset-block-start: 0.75rem;
-    inset-inline-end: 0.75rem;
-    font-size: 0.75rem;
-    opacity: 0;
+.o_ad_kpi_context {
+    margin-block-start: .2rem;
+    font-size: .75rem;
+    line-height: 1.35;
     color: var(--ad-text-muted);
-    transition: opacity 0.15s ease;
+}
 
-    [dir="rtl"] & .fa {
-        transform: scaleX(-1);
-    }
+.o_ad_kpi_foot {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: .5rem;
+    margin-block-start: .5rem;
+}
+
+// The delta knows whether up is good. `positive`/`negative` are about the
+// BUSINESS, not the arithmetic sign: outstanding rent rising is negative.
+.o_ad_delta {
+    display: inline-flex;
+    align-items: center;
+    gap: .25rem;
+    font-size: .8125rem;
+    font-weight: 600;
+    line-height: 1.2;
+
+    &.o_ad_delta_good { color: var(--ad-success); }
+    &.o_ad_delta_bad { color: var(--ad-danger); }
+    &.o_ad_delta_flat { color: var(--ad-text-faint); }
+}
+
+.o_ad_delta_caption {
+    display: block;
+    font-size: .6875rem;
+    font-weight: 400;
+    color: var(--ad-text-faint);
+    margin-block-start: .0625rem;
+}
+
+.o_ad_spark {
+    flex: 0 0 auto;
+    inline-size: 5rem;
+    block-size: 2rem;
+    opacity: .9;
 }
 
 .o_ad_kpi_clickable {
     cursor: pointer;
-
-    &:hover,
-    &:focus-visible {
-        border-color: var(--ad-accent);
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-
-        .o_ad_kpi_drill {
-            opacity: 1;
-        }
+    &:hover, &:focus-visible {
+        box-shadow: var(--ad-shadow-hover);
+        border-color: var(--ad-border-strong);
+        transform: translateY(-1px);
     }
+    &:focus-visible { outline: 2px solid var(--ad-primary); outline-offset: 1px; }
+}
 
-    &:focus-visible {
-        outline: 2px solid var(--ad-accent);
-        outline-offset: 2px;
+// Tone is never colour-only: the icon tint changes with it and the warning
+// state also carries an icon and a text label.
+// Tone lives in its own namespace. It used to be `.o_ad_kpi_#{$tone}`, which
+// for `warning` produced `.o_ad_kpi_warning` -- the same class as the
+// needs-attention STATE below. Every amber-toned tile therefore rendered with
+// the alert border whether or not anything was wrong, which is exactly how a
+// dashboard teaches people to ignore its warnings.
+@each $tone in (primary, success, warning, danger, info) {
+    .o_ad_tone_#{$tone} .o_ad_kpi_icon {
+        background: var(--ad-#{$tone}-soft);
+        color: var(--ad-#{$tone});
     }
+}
+
+.o_ad_kpi_pending {
+    // Not authorised, and it must not read as a baseline. A dashed edge says
+    // "this is not in the budget" without needing a legend.
+    border-style: dashed;
+    border-color: var(--ad-border-strong);
 }
 
 .o_ad_kpi_warning {
-    background: var(--ad-warn-bg);
-    border-color: var(--ad-warn-border);
+    border-color: var(--ad-warning);
+    .o_ad_kpi_icon { background: var(--ad-warning-soft); color: var(--ad-warning); }
 }
 
-.o_ad_panel {
-    background: var(--ad-surface);
-    border: 1px solid var(--ad-border);
-    border-radius: var(--ad-radius);
-    padding: 1rem;
+.o_ad_kpi_status {
+    display: inline-flex;
+    align-items: center;
+    gap: .3125rem;
+    font-size: .75rem;
+    font-weight: 500;
+    color: var(--ad-warning);
+    margin-block-start: .375rem;
+}
+
+.o_ad_kpi_drill {
+    position: absolute;
+    inset-block-start: .75rem;
+    inset-inline-end: .75rem;
+    color: var(--ad-text-faint);
+    opacity: 0;
+    transition: opacity .14s ease;
+    .o_ad_kpi_clickable:hover & { opacity: 1; }
+}
+
+// ---------------------------------------------------------------------------
+// Analytics grid
+// ---------------------------------------------------------------------------
+.o_ad_grid {
+    display: grid;
+    gap: var(--ad-gap);
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+@each $n in (2, 3, 4, 5, 6, 7, 8, 9, 10, 12) {
+    .o_ad_col_#{$n} { grid-column: span #{$n} / span #{$n}; }
+}
+
+// 1366 and 1440 laptops: the twelve-column grid collapses to six before it
+// collapses to one, so a three-panel row becomes 2 + 1 rather than 1 + 1 + 1.
+@media (max-width: 1399.98px) {
+    @each $n in (2, 3, 4, 5) {
+        .o_ad_col_#{$n} { grid-column: span 6 / span 6; }
+    }
+    .o_ad_col_7, .o_ad_col_8, .o_ad_col_9 { grid-column: span 12 / span 12; }
+}
+
+@media (max-width: 991.98px) {
+    .o_ad_grid > [class*="o_ad_col_"] { grid-column: span 12 / span 12; }
+    .o_ad_kpi_grid { grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); }
+}
+
+@media (max-width: 575.98px) {
+    .o_ad_scroll { padding-inline: 1rem; }
+    .o_ad_kpi_grid { grid-template-columns: 1fr 1fr; }
+    .o_ad_kpi { flex-direction: column; gap: .5rem; }
+    .o_ad_kpi_value { font-size: 1.5rem; }
+    .o_ad_spark { display: none; }
+}
+
+// ---------------------------------------------------------------------------
+// Chart card
+// ---------------------------------------------------------------------------
+.o_ad_chart_canvas_wrap {
+    position: relative;
+    block-size: 15rem;      // Chart.js with maintainAspectRatio:false collapses
+}                           // to zero inside a flex/grid parent without this.
+
+.o_ad_chart_tall .o_ad_chart_canvas_wrap { block-size: 19rem; }
+
+// ---------------------------------------------------------------------------
+// Alert panel / work queue — compact rows, not another wall of cards
+// ---------------------------------------------------------------------------
+.o_ad_rows { display: flex; flex-direction: column; }
+
+.o_ad_row {
     display: flex;
-    flex-direction: column;
-    min-inline-size: 0;
+    align-items: center;
+    gap: .75rem;
+    padding-block: .625rem;
+    border-block-end: 1px solid var(--ad-border);
+    background: transparent;
+    border-inline: 0;
+    border-block-start: 0;
+    inline-size: 100%;
+    text-align: start;
+    color: inherit;
+    cursor: pointer;
+
+    &:last-child { border-block-end: 0; }
+    &:hover { background: var(--ad-surface-muted); }
+    &:focus-visible { outline: 2px solid var(--ad-primary); outline-offset: -2px; }
 }
 
-.o_ad_panel_title {
-    font-size: 0.875rem;
-    font-weight: 600;
-    margin: 0;
-}
-
-.o_ad_panel_subtitle {
-    margin: 0.125rem 0 0.75rem;
-    font-size: 0.75rem;
+.o_ad_row_count {
+    flex: 0 0 auto;
+    min-inline-size: 2rem;
+    text-align: center;
+    font-weight: 650;
+    font-size: .9375rem;
+    border-radius: 8px;
+    padding-block: .1875rem;
+    padding-inline: .375rem;
+    background: var(--ad-surface-muted);
     color: var(--ad-text-muted);
 }
 
-.o_ad_chart_grid {
-    display: grid;
-    gap: var(--ad-gap);
-    grid-template-columns: repeat(auto-fit, minmax(#{"min(380px, 100%)"}, 1fr));
+.o_ad_row_label { flex: 1 1 auto; min-inline-size: 0; font-size: .875rem; }
+.o_ad_row_sub { display: block; font-size: .75rem; color: var(--ad-text-faint); }
+.o_ad_row_go { flex: 0 0 auto; color: var(--ad-text-faint); }
+
+// Severity. A row only shouts when it has something to shout about: a zero
+// count is rendered quiet whatever its configured severity.
+.o_ad_row_critical {
+    background: var(--ad-danger-soft);
+    border-radius: 8px;
+    padding-inline: .625rem;
+    border-block-end-color: transparent;
+    .o_ad_row_count { background: var(--ad-danger); color: #fff; }
+    .o_ad_row_label { color: var(--ad-danger); font-weight: 600; }
 }
 
-.o_ad_chart_panel {
-    min-block-size: 300px;
+.o_ad_row_warning {
+    background: var(--ad-warning-soft);
+    border-radius: 8px;
+    padding-inline: .625rem;
+    border-block-end-color: transparent;
+    .o_ad_row_count { background: var(--ad-warning); color: #fff; }
+    .o_ad_row_label { color: var(--ad-warning); font-weight: 600; }
 }
 
-.o_ad_chart_canvas_wrap {
-    position: relative;
-    flex: 1 1 auto;
-    min-block-size: 220px;
+// ---------------------------------------------------------------------------
+// Status badge
+// ---------------------------------------------------------------------------
+.o_ad_badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .25rem;
+    border-radius: 999px;
+    padding-block: .125rem;
+    padding-inline: .5rem;
+    font-size: .6875rem;
+    font-weight: 600;
+}
+
+@each $tone in (primary, success, warning, danger, info, neutral) {
+    .o_ad_badge_#{$tone} {
+        background: var(--ad-#{$tone}-soft);
+        color: var(--ad-#{$tone});
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Data table
+// ---------------------------------------------------------------------------
+.o_ad_table_wrap { overflow-x: auto; }
+
+.o_ad_table {
     inline-size: 100%;
+    border-collapse: collapse;
+    font-size: .8125rem;
+
+    th {
+        text-align: start;
+        font-weight: 600;
+        font-size: .6875rem;
+        text-transform: uppercase;
+        letter-spacing: .05em;
+        color: var(--ad-text-muted);
+        padding-block: .5rem;
+        border-block-end: 1px solid var(--ad-border);
+        white-space: nowrap;
+    }
+
+    td {
+        padding-block: .625rem;
+        border-block-end: 1px solid var(--ad-border);
+        color: var(--ad-text);
+    }
+
+    tbody tr:last-child td { border-block-end: 0; }
+    tbody tr.o_ad_table_click { cursor: pointer; }
+    tbody tr.o_ad_table_click:hover { background: var(--ad-surface-muted); }
+
+    .o_ad_num { text-align: end; font-variant-numeric: tabular-nums; }
 }
 
-.o_ad_empty {
-    flex: 1 1 auto;
+// A bar drawn inside a table cell beats a second chart for "how full is this".
+.o_ad_meter {
+    position: relative;
+    block-size: .375rem;
+    border-radius: 999px;
+    background: var(--ad-surface-muted);
+    overflow: hidden;
+    min-inline-size: 3.5rem;
+}
+
+.o_ad_meter_fill {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    border-radius: 999px;
+    background: var(--ad-primary);
+}
+
+// ---------------------------------------------------------------------------
+// Donut + legend
+// ---------------------------------------------------------------------------
+.o_ad_donut_wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.o_ad_donut {
+    position: relative;
+    flex: 0 0 auto;
+    inline-size: 10rem;
+    block-size: 10rem;
+
+    svg { inline-size: 100%; block-size: 100%; }
+}
+
+.o_ad_donut_centre {
+    position: absolute;
+    inset: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    padding-block: 2rem;
+    text-align: center;
+    pointer-events: none;
+}
+
+.o_ad_donut_total { font-size: 1.5rem; font-weight: 650; line-height: 1.1; }
+.o_ad_donut_caption { font-size: .6875rem; color: var(--ad-text-muted); }
+
+.o_ad_legend {
+    flex: 1 1 11rem;
+    min-inline-size: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.o_ad_legend_row {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    inline-size: 100%;
+    border: 0;
+    background: transparent;
+    padding-block: .25rem;
+    color: inherit;
+    font-size: .8125rem;
+    text-align: start;
+    cursor: pointer;
+    border-radius: 6px;
+
+    &:hover { background: var(--ad-surface-muted); }
+    &:focus-visible { outline: 2px solid var(--ad-primary); outline-offset: -2px; }
+}
+
+.o_ad_legend_label { flex: 1 1 auto; min-inline-size: 0; }
+.o_ad_legend_value { font-weight: 650; font-variant-numeric: tabular-nums; }
+.o_ad_legend_pct {
+    inline-size: 2.5rem;
+    text-align: end;
+    color: var(--ad-text-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+// ---------------------------------------------------------------------------
+// Map card
+// ---------------------------------------------------------------------------
+.o_ad_map {
+    block-size: 19rem;
+    inline-size: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 0;     // keep Leaflet panes under the dashboard's own dropdowns
+}
+
+.o_ad_map_legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+    margin-block-start: .625rem;
+    font-size: .75rem;
     color: var(--ad-text-muted);
 }
 
-.o_ad_empty_icon {
-    font-size: 1.5rem;
-    opacity: 0.35;
+.o_ad_map_dot {
+    display: inline-block;
+    inline-size: .5rem;
+    block-size: .5rem;
+    border-radius: 50%;
+    margin-inline-end: .3125rem;
 }
 
-.o_ad_empty_text {
-    margin: 0;
-    font-size: 0.8125rem;
+// ---------------------------------------------------------------------------
+// Empty / error / loading
+// ---------------------------------------------------------------------------
+.o_ad_empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    padding-block: 2.5rem;
+    text-align: center;
+    color: var(--ad-text-muted);
 }
+
+.o_ad_empty_icon { font-size: 1.75rem; color: var(--ad-text-faint); }
+.o_ad_empty_text { margin: 0; font-size: .875rem; }
 
 .o_ad_state {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.75rem;
+    gap: .75rem;
+    padding-block: 4rem;
     text-align: center;
-    padding: 3rem 1rem;
-    background: var(--ad-surface);
-    border: 1px solid var(--ad-border);
-    border-radius: var(--ad-radius);
 }
 
-.o_ad_state_icon {
-    font-size: 2rem;
-    color: var(--ad-warn-text);
-    opacity: 0.8;
+.o_ad_state_icon { font-size: 2.5rem; color: var(--ad-text-faint); }
+.o_ad_state_title { font-size: 1.125rem; font-weight: 600; margin: 0; }
+.o_ad_state_text { color: var(--ad-text-muted); margin: 0; max-inline-size: 32rem; }
+
+// Skeletons, not spinners: the page keeps its shape while it loads, so
+// nothing jumps when the numbers arrive.
+.o_ad_skeleton {
+    background: linear-gradient(90deg,
+        var(--ad-surface-muted) 25%, var(--ad-border) 37%, var(--ad-surface-muted) 63%);
+    background-size: 400% 100%;
+    animation: o_ad_shimmer 1.4s ease-in-out infinite;
+    border-radius: 6px;
 }
 
-.o_ad_state_title {
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 0;
+.o_ad_skeleton_line { block-size: .75rem; margin-block-end: .5rem; }
+.o_ad_skeleton_value { block-size: 1.75rem; inline-size: 60%; }
+
+@keyframes o_ad_shimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
 }
 
-.o_ad_state_text {
-    margin: 0;
-    font-size: 0.8125rem;
-    color: var(--ad-text-muted);
+@media (prefers-reduced-motion: reduce) {
+    .o_ad_skeleton { animation: none; }
+    .o_ad_kpi, .o_ad_filter { transition: none; }
+    .o_ad_kpi_clickable:hover { transform: none; }
+    .o_ad_scroll { scroll-behavior: auto; }
+}
+
+.o_ad_map_wrap {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-block-size: 0;
+}
+
+// The map takes the slack in its card rather than sitting at a fixed height,
+// so it fills whatever the grid row ends up being instead of leaving a gap.
+.o_ad_map_wrap .o_ad_map {
+    flex: 1 1 auto;
+    block-size: auto;
+    min-block-size: 17rem;
+    // Bounded on purpose. The map grows to fill its cell, but an unbounded
+    // flex child whose own relayout changes the row height can oscillate;
+    // a ceiling makes any such loop terminate instead of hanging the tab.
+    max-block-size: 32rem;
+}
+
+.o_ad_map_legend li {
+    display: inline-flex;
+    align-items: center;
+    margin-inline-end: 1rem;
+}
+
+.o_ad_map_detail {
+    margin-block-start: .5rem;
+    font-size: .8125rem;
 }

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="real_estate_construction.ConstructionTower">
+        <div class="o_ad_dashboard o_construction_tower o_action">
+            <div class="o_ad_scroll">
+
+                <header class="o_ad_header">
+                    <div>
+                        <h1 class="o_ad_title">Construction Control Tower</h1>
+                        <p class="o_ad_subtitle o_tower_freshness" t-if="isReady">
+                            <span t-esc="payload.project_name"/>
+                            <span class="o_ad_sep" aria-hidden="true">·</span>
+                            <span class="o_ad_asof">
+                                <i class="fa fa-calendar-o" aria-hidden="true"/>
+                                <span>Data as of <t t-esc="payload.as_of"/></span>
+                            </span>
+                            <t t-if="payload.header and payload.header.forecast_reference">
+                                <span class="o_ad_sep" aria-hidden="true">·</span>
+                                <span>Forecast: <t t-esc="payload.header.forecast_reference"/></span>
+                            </t>
+                            <t t-if="lastUpdatedLabel">
+                                <span class="o_ad_sep" aria-hidden="true">·</span>
+                                <span t-esc="lastUpdatedLabel"/>
+                            </t>
+                        </p>
+                    </div>
+                    <div class="o_ad_header_actions">
+                        <button class="btn btn-sm btn-secondary" t-on-click="onRefresh"
+                                t-att-disabled="state.refreshing" aria-label="Refresh the control tower">
+                            <i class="fa fa-refresh" t-att-class="{ 'fa-spin': state.refreshing }"
+                               aria-hidden="true"/>
+                            <span class="d-none d-md-inline ms-1">Refresh</span>
+                        </button>
+                    </div>
+                </header>
+
+                <AtmtaFilterBar t-if="filters.length" filters="filters"
+                                values="filterValues"
+                                onChange="(key, value) => this.setFilter(key, value)"/>
+
+                <AtmtaSkeleton t-if="isLoading" kpis="6" panels="3"/>
+
+                <div t-elif="isError" class="o_ad_state" role="alert">
+                    <i class="fa fa-exclamation-circle o_ad_state_icon" aria-hidden="true"/>
+                    <h2 class="o_ad_state_title">The control tower could not be loaded</h2>
+                    <p class="o_ad_state_text" t-esc="state.errorMessage"/>
+                    <button class="btn btn-primary" t-on-click="onRefresh">Retry</button>
+                </div>
+
+                <div t-elif="isEmpty" class="o_ad_state">
+                    <i class="fa fa-cubes o_ad_state_icon" aria-hidden="true"/>
+                    <h2 class="o_ad_state_title">No project to report on</h2>
+                    <p class="o_ad_state_text">
+                        Create a project with a contract, a budget or a programme and
+                        the tower will have something to control.
+                    </p>
+                </div>
+
+                <t t-else="">
+
+                    <!-- ===== Status: the verdict, with its reasons attached ===== -->
+                    <div class="o_ad_grid o_ad_section">
+                        <AtmtaCard className="'o_ad_col_6 o_tower_health'" title="'Project Status'"
+                                   icon="'fa-heartbeat'"
+                                   subtitle="'Each dimension answers separately — no weighted composite, because nobody can act on 68 out of 100'">
+                            <div class="o_ad_status_head">
+                                <span class="o_ad_badge"
+                                      t-attf-class="o_ad_badge_{{ healthStatus.tone }}"
+                                      t-esc="healthStatus.label"/>
+                                <ul class="o_tower_reasons">
+                                    <li t-foreach="payload.health.reasons or []" t-as="reason"
+                                        t-key="reason_index" t-esc="reason"/>
+                                </ul>
+                            </div>
+                            <AtmtaRowList rows="healthRows"
+                                          emptyText="'No dimension reported a status.'"/>
+                        </AtmtaCard>
+
+                        <AtmtaCard className="'o_ad_col_6 o_tower_exceptions'" title="'Data Control'"
+                                   icon="'fa-exclamation-triangle'"
+                                   subtitle="'Why a figure is missing, rather than a quiet zero in its place'">
+                            <AtmtaRowList rows="exceptionRows"
+                                          onRow="(key) => this.openException(key)"
+                                          emptyText="'Nothing is blocking the figures on this screen.'"/>
+                        </AtmtaCard>
+                    </div>
+
+                    <!-- ===== Cost position ===== -->
+                    <section t-if="costTiles.length" class="o_ad_section o_tower_cost">
+                        <h2 class="o_ad_section_title">
+                            <i class="fa fa-money" aria-hidden="true"/>
+                            <span>Cost Position</span>
+                        </h2>
+                        <p class="o_ad_section_subtitle">
+                            Posted cost is money spent; everything forecast is modelled
+                        </p>
+                        <div class="o_ad_kpi_grid">
+                            <AtmtaKpiCard t-foreach="costTiles" t-as="tile" t-key="tile.key"
+                                          tile="tile" currencyId="currencyId"/>
+                        </div>
+                    </section>
+
+                    <!-- ===== Cost by code + physical progress ===== -->
+                    <div class="o_ad_grid o_ad_section" t-if="costChart or progressDonut">
+                        <AtmtaDashboardChart t-if="costChart" chart="costChart"
+                                             currencyId="currencyId"/>
+                        <AtmtaCard t-if="progressDonut" className="'o_ad_col_4'"
+                                   title="'Physical Progress'" icon="'fa-tasks'"
+                                   subtitle="'Milestone weight × completion'">
+                            <AtmtaDonut segments="progressDonut.segments"
+                                        total="progressDonut.total"
+                                        totalLabel="progressDonut.totalLabel"/>
+                        </AtmtaCard>
+                    </div>
+
+                    <!-- ===== Where the work is =====
+                         Blocks on the plan, coloured by what state each one is
+                         in. A cost sheet says how much; this says where. -->
+                    <div class="o_ad_grid o_ad_section" t-if="siteMap">
+                        <AtmtaCard className="'o_ad_col_12'"
+                                   title="'Site'" icon="'fa-map-o'"
+                                   subtitle="'Structures on the plot, coloured by construction status'">
+                            <AtmtaMapCard points="siteMap.points"
+                                          legend="siteMap.legend"
+                                          fitMaxZoom="16"
+                                          onPoint="(point) => this.openSiteProperty(point)"
+                                          emptyText="'No structure on this project carries coordinates.'"/>
+                        </AtmtaCard>
+                    </div>
+
+                    <!-- ===== Progress measures ===== -->
+                    <div class="o_ad_grid o_ad_section">
+                        <AtmtaCard className="'o_ad_col_6 o_tower_progress'" title="'Progress'"
+                                   icon="'fa-tasks'"
+                                   subtitle="'Four measures, each said in its own terms — they are not interchangeable'">
+                            <AtmtaRowList rows="progressRows"
+                                          emptyText="'No progress has been recorded.'"/>
+                        </AtmtaCard>
+
+                        <AtmtaCard t-if="changeTiles.length" className="'o_ad_col_6 o_tower_pending'"
+                                   title="'Not Authorised — Reported Separately'"
+                                   icon="'fa-exclamation-circle'"
+                                   subtitle="'Outside the budget and outside the EAC, which is exactly why it is shown apart'">
+                            <div class="o_ad_kpi_grid o_ad_kpi_grid_tight">
+                                <AtmtaKpiCard t-foreach="changeTiles" t-as="tile" t-key="tile.key"
+                                              tile="tile" currencyId="currencyId"/>
+                            </div>
+                        </AtmtaCard>
+                    </div>
+
+                    <!-- ===== Cost sheet ===== -->
+                    <div class="o_ad_grid o_ad_section" t-if="costSheetRows.length">
+                        <AtmtaCard className="'o_ad_col_12 o_cost_sheet'" title="'Cost Sheet'"
+                                   icon="'fa-table'"
+                                   subtitle="'Worst overrun first — a project total cannot say which line is in trouble'">
+                            <AtmtaDataTable columns="costSheetColumns"
+                                            rows="costSheetRows"
+                                            currencyId="currencyId"
+                                            emptyText="'No cost code carries a budget.'"/>
+                        </AtmtaCard>
+                    </div>
+
+                    <!-- ===== The secondary dimensions =====
+                         Three to a row as compact readings rather than five
+                         near-identical bands of KPI cards. Each still carries
+                         its own severity, so a high-severity NCR is as loud
+                         here as it was on a card. -->
+                    <div class="o_ad_grid o_ad_section">
+                        <AtmtaCard t-if="qualityRows.length" className="'o_ad_col_4'"
+                                   title="'Quality'" icon="'fa-check-square-o'"
+                                   subtitle="'What was built against what was specified'">
+                            <AtmtaRowList rows="qualityRows" currencyId="currencyId"
+                                          emptyText="'No inspection has been recorded.'"/>
+                        </AtmtaCard>
+
+                        <AtmtaCard t-if="informationRows.length" className="'o_ad_col_4'"
+                                   title="'Information Management'" icon="'fa-folder-open-o'"
+                                   subtitle="'Questions and documents the site is waiting on'">
+                            <AtmtaRowList rows="informationRows" currencyId="currencyId"
+                                          emptyText="'Nothing is outstanding.'"/>
+                        </AtmtaCard>
+
+                        <AtmtaCard t-if="riskRows.length" className="'o_ad_col_4'"
+                                   title="'Risk and Issues'" icon="'fa-shield'"
+                                   subtitle="'What could still go wrong, and what already has'">
+                            <AtmtaRowList rows="riskRows" currencyId="currencyId"
+                                          emptyText="'No risk or issue is open.'"/>
+                        </AtmtaCard>
+                    </div>
+
+                    <div class="o_ad_grid o_ad_section"
+                         t-if="claimRows.length or certificateRows.length">
+                        <AtmtaCard t-if="claimRows.length" className="'o_ad_col_6'"
+                                   title="'Claims'" icon="'fa-gavel'"
+                                   subtitle="'Asked for, assessed and granted are three different numbers'">
+                            <AtmtaRowList rows="claimRows" currencyId="currencyId"
+                                          emptyText="'No claim has been submitted.'"/>
+                        </AtmtaCard>
+
+                        <AtmtaCard t-if="certificateRows.length" className="'o_ad_col_6'"
+                                   title="'Certification'" icon="'fa-certificate'"
+                                   subtitle="'What has been certified, and what is still held back'">
+                            <AtmtaRowList rows="certificateRows" currencyId="currencyId"
+                                          emptyText="'No payment certificate has been issued.'"/>
+                        </AtmtaCard>
+                    </div>
+
+                </t>
+            </div>
+        </div>
+    </t>
+
+</templates>

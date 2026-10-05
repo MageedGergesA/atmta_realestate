@@ -148,12 +148,18 @@ class PropertyOccupancy(models.Model):
     # Archival that respects live leases
     # ------------------------------------------------------------------
     def set_property_inactive(self):
-        """Flips the commercial dimension only, and refuses while a lease is
-        live -- the lease, not this button, decides when a unit is free."""
-        for rec in self:
-            if rec.occupancy_status != 'vacant':
-                continue
-            rec.commercial_status = 'blocked'
+        """Rental adds ONE refusal to the rule Property Core already has: a
+        unit with a live lease is not this button's to block, because the
+        lease -- not this button -- decides when a unit is free.
+
+        It filters and then delegates. Replacing Core's implementation
+        outright silently dropped Core's own guard, so a unit that was
+        reserved, sold or under maintenance got blocked anyway the moment it
+        happened to be vacant. Extending a rule means adding a condition to
+        it, not writing a new one that happens to be shorter.
+        """
+        lettable = self.filtered(lambda rec: rec.occupancy_status == 'vacant')
+        return super(PropertyOccupancy, lettable).set_property_inactive()
 
     def set_property_available(self):
         for rec in self:

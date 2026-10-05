@@ -3,8 +3,7 @@
 
     <record id="action_procurement_dashboard" model="ir.actions.client">
         <field name="name">Procurement Dashboard</field>
-        <field name="tag">atmta_dashboard</field>
-        <field name="params" eval="{'provider': 'realestate.procurement.dashboard'}"/>
+        <field name="tag">realestate.procurement_dashboard</field>
     </record>
 
     <menuitem id="menu_overview" name="Overview" parent="menu_root" sequence="1"

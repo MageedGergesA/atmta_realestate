@@ -63,3 +63,5 @@ from . import delay_daily_link
 # integrity audit, the dashboard and the data-control exceptions. They
 # consume every module below and add no figure of their own, which is why
 # they sit with the screens rather than in a capability of their own.
+from . import demo_builder
+from . import construction_overview

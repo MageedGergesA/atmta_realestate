@@ -15,7 +15,11 @@ Real Estate Handover
     'license': 'LGPL-3',
     'version': '0.1',
     'category': 'Real Estate',
-    'depends': ['atmta_property_core', 'real_estate_developer', 'real_estate_construction'],
+    'depends': [
+        'atmta_dashboard','atmta_property_core', 'real_estate_developer', 'real_estate_construction'],
+    'demo': [
+        'demo/demo.xml',
+    ],
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',
